@@ -13,6 +13,85 @@ templates.
   its own pnpm package/lock for **fflate only** and CLI/PowerShell tests. Shard evaluator
   restores do not install it; publication adds no Node Azure SDK dependencies.
 
+## Extending a shard job
+
+The shared `eng/common/pipelines/templates/jobs/eval-shard.yml` owns checkout,
+Node/Vally installation, MCP staging, git fixture initialization and Copilot login.
+Its defaults preserve the standard Prepare/Eval/Summary pipeline behavior.
+Repo-local adapters can customize it without copying that infrastructure:
+
+| Parameter | Contract |
+| --- | --- |
+| `matrixStageName` | Stage containing `generate_eval_matrix`; defaults to `Prepare`. The eval stage must depend on it. |
+| `artifactPrefix` | Optional literal prefix, e.g. `forced-`. Common adds no separator: `eval-result-forced-<shard>-<attempt>` / `eval-debug-forced-<shard>-<attempt>` / `eval-summary-forced-<attempt>`. Empty preserves existing names. Available through the stage and jobs; shard and summary prefixes must match. |
+| `preEvalTemplate` / `postEvalTemplate` | Existing parameter-free setup/teardown step templates. |
+| `evalInvokeTemplate` | Existing invocation template accepting `vallyRoot`, `UseAzSdkAuthentication` and `threshold`. |
+| `azureSubscription` | Caller-owned Azure service connection, forwarded by the stage/job to the common invoke template. Defaults to empty. Required when `UseAzSdkAuthentication: true`; unauthenticated runs need no connection. |
+| `vallyArguments` | Optional array of supplementary Vally option/value pairs. Strings are required except that trial/worker counts also accept numbers. Available through the stage, shard job and common invoke template. Defaults to `[]`. |
+
+Supported supplementary options are `--tag`, `--runs`, `--workers` and `--timeout`.
+For example, `['--tag', 'mode=forced', '--runs', '3']` selects a local benchmark
+configuration without replacing the common runner. Trial/worker counts must be
+positive integer strings or safe integer numbers. Azure template expansion can
+serialize numeric parameters as JSON numbers even when using `format`; the runner
+validates and converts only `--runs` / `--workers` numeric values to strings.
+All other options and values must be strings. Both authentication branches forward the array as JSON in
+`VALLY_ARGUMENTS_JSON`; the runner passes literal arguments to the pinned CLI using
+Node directly, without a shell or whitespace splitting of supplementary values.
+The template JSON-escapes dollar signs before agent macro expansion; the runner's
+JSON decoding restores them. Tags such as `build=$(Build.BuildId)` stay literal,
+even when the pipeline variable exists.
+Unsupported flags (including aliases and `--flag=value`) are rejected. Eval
+selection, output paths, JUnit, plugins and verdict settings remain framework-owned.
+Legacy custom invoke templates retain their existing parameter contract when the
+array is empty. A custom template opting into a non-empty array must declare its
+own `vallyArguments` parameter; otherwise template compilation rejects it.
+
+`--runs` greater than 1 must not be combined with `failOnFailedTests: true`.
+Use `failOnFailedTests: false` (the default) for multi-run observations;
+explicit `--runs 1` may still be used with the gate enabled. Unsupported
+combinations fail the common shard's configuration check before installation or
+evaluation. When composing shard and summary jobs directly, pass the same
+`failOnFailedTests` value to both. This check covers explicit `--runs` values in
+`vallyArguments` only; Summary does not infer run counts from results. Callers must
+ensure that repetition configured in `.vally.yaml` or custom invoke templates is
+not combined with the enabled gate.
+
+`--tag` filters stimuli during execution only; it does not filter Prepare's matrix.
+The caller must align `evalGlobs` (or its custom matrix) with the tags so every
+planned eval retains at least one matching stimulus. For example, `--tag area=github`
+alone does not remove other areas from the matrix: also restrict the selected files
+to the intended GitHub evals. Recheck this alignment when adding evals or changing tags.
+Zero-match evals are not treated as successful skips; a zero-trial shard still fails
+the verdict/completeness checks even with `failOnFailedTests: false`.
+
+Use the existing pre/post-eval and MCP setup hooks for repository-specific work.
+Authenticated callers must explicitly configure `azureSubscription`; common has
+no deployment-specific connection fallback. An empty or whitespace-only value
+fails with a configuration error without creating an `AzureCLI@2` task.
+Do not replace authentication, result collection or retry/completeness checks.
+Supplementary reports must not rewrite JUnit thresholds or raw results.
+
+For multiple tracks in one build, use an artifact prefix and configure
+the common summary's `matrixStageName`, `evalStageName` and `artifactPrefix`
+to match the shard job. Each Summary downloads only result-file patterns matching
+its prefix; an empty prefix retains the build-wide `eval-result-*` download.
+Each Summary stage must depend on both its Prepare and
+Eval stages. Timeline attempts are checked against that exact Eval stage, and
+only that track's latest verified attempts are selected. Prefixed tracks
+support artifact-only summaries: dashboard bundles/publication are rejected
+because the archive identity currently represents one build-wide Summary.
+Prefixes and shard names must start with an ASCII letter, digit or underscore,
+contain only ASCII letters, digits, underscores or hyphens, and be at most 200
+characters; prefixes may also be empty. Include any desired separator
+in the prefix: `forced-` and `forced` are used exactly as supplied. Existing shard
+names, including names with hyphens, remain supported.
+
+The caller must ensure final artifact names are unique across all tracks in the
+build, including unprefixed tracks. Different prefixes alone do not guarantee this:
+`forced-` + `area-foo` and `forced-area-` + `foo` produce the same name.
+Common does not perform cross-track collision detection.
+
 ## Complete build results and direct Blob publishing
 
 Shards now retain the newest invocation's raw JSONL, JUnit and a completion marker
@@ -149,6 +228,9 @@ then `node --experimental-strip-types --test` from this directory.
 These shared Node tests do not need Tools-owned CI files, PowerShell tests or
 the consuming repository's redirect settings. A consumer-copy regression runs
 them without Tools files or Git history, with absent and different redirect templates.
+Template contract checks use bounded text assertions, not a YAML parser, and need
+no evaluator dependencies. They do not evaluate Azure template expressions;
+server-side expansion and service-connection authorization require separate validation.
 
 In Tools, run `Invoke-Pester -Path eng/common-tests/eval/Publish-EvalResults.Tests.ps1 -CI`
 from the repository root for the **PowerShell 7.4+ / Pester 5 / Azure CLI** tests. That Tools-only

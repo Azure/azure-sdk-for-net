@@ -37,6 +37,7 @@ extends:
       - 'workflows/live/*.eval.yaml'
     # Run each shard under AzureCLI@2 so the real MCP's DevOps calls are authenticated.
     UseAzSdkAuthentication: true
+    azureSubscription: opensource-api-connection
     failOnFailedTests: true
     # Live scenarios are end-to-end, so give each shard more headroom than the report-only tiers.
     shardTimeoutInMinutes: 45
