@@ -180,6 +180,28 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 writer.WritePropertyName("authorizedTransceiver"u8);
                 writer.WriteObjectValue(AuthorizedTransceiver, options);
             }
+            if (Optional.IsDefined(SecretArchiveSettings, _secretArchiveSettingsIsDefined))
+            {
+                if (SecretArchiveSettings != null)
+                {
+                    writer.WritePropertyName("secretArchiveSettings"u8);
+                    writer.WriteObjectValue(SecretArchiveSettings, options);
+                }
+                else
+                {
+                    writer.WriteNull("secretArchiveSettings"u8);
+                }
+            }
+            if (Optional.IsCollectionDefined(UpgradeProfile))
+            {
+                writer.WritePropertyName("upgradeProfile"u8);
+                writer.WriteStartArray();
+                foreach (UpgradeProfilePropertiesPatchProperties item in UpgradeProfile)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -238,6 +260,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             QosPatchProperties qosConfiguration = default;
             IList<NetworkFabricFeatureFlag> featureFlags = default;
             AuthorizedTransceiverPatchProperties authorizedTransceiver = default;
+            bool secretArchiveSettingsIsDefined = false;
+            SecretArchivePatchSettings secretArchiveSettings = default;
+            IList<UpgradeProfilePropertiesPatchProperties> upgradeProfile = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -402,6 +427,31 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     authorizedTransceiver = AuthorizedTransceiverPatchProperties.DeserializeAuthorizedTransceiverPatchProperties(prop.Value, options);
                     continue;
                 }
+                if (prop.NameEquals("secretArchiveSettings"u8))
+                {
+                    secretArchiveSettingsIsDefined = true;
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        secretArchiveSettings = null;
+                        continue;
+                    }
+                    secretArchiveSettings = SecretArchivePatchSettings.DeserializeSecretArchivePatchSettings(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("upgradeProfile"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<UpgradeProfilePropertiesPatchProperties> array = new List<UpgradeProfilePropertiesPatchProperties>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        array.Add(UpgradeProfilePropertiesPatchProperties.DeserializeUpgradeProfilePropertiesPatchProperties(item, options));
+                    }
+                    upgradeProfile = array;
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
@@ -424,7 +474,12 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 qosConfiguration,
                 featureFlags ?? new ChangeTrackingList<NetworkFabricFeatureFlag>(),
                 authorizedTransceiver,
-                additionalBinaryDataProperties);
+                secretArchiveSettings,
+                upgradeProfile ?? new ChangeTrackingList<UpgradeProfilePropertiesPatchProperties>(),
+                additionalBinaryDataProperties)
+            {
+                _secretArchiveSettingsIsDefined = secretArchiveSettingsIsDefined
+            };
         }
     }
 }

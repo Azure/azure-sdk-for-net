@@ -130,6 +130,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 writer.WritePropertyName("serialNumber"u8);
                 writer.WriteStringValue(SerialNumber);
             }
+            if (options.Format != "W" && Optional.IsDefined(OperationalState))
+            {
+                writer.WritePropertyName("operationalState"u8);
+                writer.WriteStringValue(OperationalState.Value.ToString());
+            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -170,6 +175,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             string ipv4Address = default;
             string ipv6Address = default;
             string serialNumber = default;
+            OperationalState? operationalState = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("annotation"u8))
@@ -248,6 +254,15 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     serialNumber = prop.Value.GetString();
                     continue;
                 }
+                if (prop.NameEquals("operationalState"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    operationalState = new OperationalState(prop.Value.GetString());
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
@@ -266,7 +281,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 additionalDescription,
                 ipv4Address,
                 ipv6Address,
-                serialNumber);
+                serialNumber,
+                operationalState);
         }
     }
 }

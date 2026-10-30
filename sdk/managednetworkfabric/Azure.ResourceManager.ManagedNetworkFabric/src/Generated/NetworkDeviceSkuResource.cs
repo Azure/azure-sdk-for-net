@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         {
             TryGetApiVersion(ResourceType, out string networkDeviceSkuApiVersion);
             _networkDeviceSkusClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ManagedNetworkFabric", ResourceType.Namespace, Diagnostics);
-            _networkDeviceSkusRestClient = new NetworkDeviceSkus(_networkDeviceSkusClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, networkDeviceSkuApiVersion ?? "2025-07-15");
+            _networkDeviceSkusRestClient = new NetworkDeviceSkus(_networkDeviceSkusClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, networkDeviceSkuApiVersion ?? "2026-01-15-preview");
             ValidateResourceId(id);
         }
 
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-15. </description>
+        /// <description> 2026-01-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-15. </description>
+        /// <description> 2026-01-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>

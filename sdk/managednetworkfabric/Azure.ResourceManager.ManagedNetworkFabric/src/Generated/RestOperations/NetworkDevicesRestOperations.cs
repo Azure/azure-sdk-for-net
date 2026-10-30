@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.ManagedNetworkFabric/networkDevices/", false);
             uri.AppendPath(networkDeviceName, true);
-            uri.AppendQuery("api-version", _apiVersion ?? "2025-07-15", true);
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-01-15-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.ManagedNetworkFabric/networkDevices/", false);
             uri.AppendPath(networkDeviceName, true);
-            uri.AppendQuery("api-version", _apiVersion ?? "2025-07-15", true);
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-01-15-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.ManagedNetworkFabric/networkDevices/", false);
             uri.AppendPath(networkDeviceName, true);
-            uri.AppendQuery("api-version", _apiVersion ?? "2025-07-15", true);
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-01-15-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.ManagedNetworkFabric/networkDevices/", false);
             uri.AppendPath(networkDeviceName, true);
-            uri.AppendQuery("api-version", _apiVersion ?? "2025-07-15", true);
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-01-15-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.ManagedNetworkFabric/networkDevices", false);
-            uri.AppendQuery("api-version", _apiVersion ?? "2025-07-15", true);
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-01-15-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            uri.UpdateQuery("api-version", _apiVersion ?? "2025-07-15");
+            uri.UpdateQuery("api-version", _apiVersion ?? "2026-01-15-preview");
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/providers/Microsoft.ManagedNetworkFabric/networkDevices", false);
-            uri.AppendQuery("api-version", _apiVersion ?? "2025-07-15", true);
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-01-15-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            uri.UpdateQuery("api-version", _apiVersion ?? "2025-07-15");
+            uri.UpdateQuery("api-version", _apiVersion ?? "2026-01-15-preview");
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             uri.AppendPath("/providers/Microsoft.ManagedNetworkFabric/networkDevices/", false);
             uri.AppendPath(networkDeviceName, true);
             uri.AppendPath("/reboot", false);
-            uri.AppendQuery("api-version", _apiVersion ?? "2025-07-15", true);
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-01-15-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             uri.AppendPath("/providers/Microsoft.ManagedNetworkFabric/networkDevices/", false);
             uri.AppendPath(networkDeviceName, true);
             uri.AppendPath("/refreshConfiguration", false);
-            uri.AppendQuery("api-version", _apiVersion ?? "2025-07-15", true);
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-01-15-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -260,7 +260,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             uri.AppendPath("/providers/Microsoft.ManagedNetworkFabric/networkDevices/", false);
             uri.AppendPath(networkDeviceName, true);
             uri.AppendPath("/updateAdministrativeState", false);
-            uri.AppendQuery("api-version", _apiVersion ?? "2025-07-15", true);
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-01-15-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -283,7 +283,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             uri.AppendPath("/providers/Microsoft.ManagedNetworkFabric/networkDevices/", false);
             uri.AppendPath(networkDeviceName, true);
             uri.AppendPath("/upgrade", false);
-            uri.AppendQuery("api-version", _apiVersion ?? "2025-07-15", true);
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-01-15-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -306,7 +306,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             uri.AppendPath("/providers/Microsoft.ManagedNetworkFabric/networkDevices/", false);
             uri.AppendPath(networkDeviceName, true);
             uri.AppendPath("/runRoCommand", false);
-            uri.AppendQuery("api-version", _apiVersion ?? "2025-07-15", true);
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-01-15-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -329,7 +329,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             uri.AppendPath("/providers/Microsoft.ManagedNetworkFabric/networkDevices/", false);
             uri.AppendPath(networkDeviceName, true);
             uri.AppendPath("/runRwCommand", false);
-            uri.AppendQuery("api-version", _apiVersion ?? "2025-07-15", true);
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-01-15-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -352,7 +352,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             uri.AppendPath("/providers/Microsoft.ManagedNetworkFabric/networkDevices/", false);
             uri.AppendPath(networkDeviceName, true);
             uri.AppendPath("/resyncPasswords", false);
-            uri.AppendQuery("api-version", _apiVersion ?? "2025-07-15", true);
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-01-15-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -373,7 +373,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             uri.AppendPath("/providers/Microsoft.ManagedNetworkFabric/networkDevices/", false);
             uri.AppendPath(networkDeviceName, true);
             uri.AppendPath("/resyncCertificates", false);
-            uri.AppendQuery("api-version", _apiVersion ?? "2025-07-15", true);
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-01-15-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;

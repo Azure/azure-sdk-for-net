@@ -47,11 +47,12 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="configurationState"> Configuration state of the resource. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="administrativeState"> Administrative state of the resource. </param>
+        /// <param name="operationalState"> Operational state of networkDevice indicating if the device is reachable and services are available. </param>
         /// <param name="secretRotationStatus"> Secret rotation status for the device's secrets. </param>
         /// <param name="certificateRotationStatus"> Certificate rotation status for the device's certificates. </param>
         /// <param name="networkFabricId"> Associated Network Fabric Resource ID. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkDeviceProperties(string annotation, string hostName, string serialNumber, NetworkFabricIdentitySelector identitySelector, string version, string networkDeviceSku, NetworkDeviceRole? networkDeviceRole, ResourceIdentifier networkRackId, IPAddress managementIPv4Address, string managementIPv6Address, string rwDeviceConfig, LastOperationProperties lastOperation, NetworkFabricConfigurationState? configurationState, NetworkFabricProvisioningState? provisioningState, NetworkFabricAdministrativeState? administrativeState, IReadOnlyList<NetworkFabricSecretRotationStatus> secretRotationStatus, IReadOnlyList<NetworkFabricCertificateRotationStatus> certificateRotationStatus, ResourceIdentifier networkFabricId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal NetworkDeviceProperties(string annotation, string hostName, string serialNumber, NetworkFabricIdentitySelector identitySelector, string version, string networkDeviceSku, NetworkDeviceRole? networkDeviceRole, ResourceIdentifier networkRackId, IPAddress managementIPv4Address, string managementIPv6Address, string rwDeviceConfig, LastOperationProperties lastOperation, NetworkFabricConfigurationState? configurationState, NetworkFabricProvisioningState? provisioningState, NetworkFabricAdministrativeState? administrativeState, OperationalState? operationalState, IReadOnlyList<NetworkFabricSecretRotationStatus> secretRotationStatus, IReadOnlyList<NetworkFabricCertificateRotationStatus> certificateRotationStatus, ResourceIdentifier networkFabricId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Annotation = annotation;
             HostName = hostName;
@@ -68,6 +69,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             ConfigurationState = configurationState;
             ProvisioningState = provisioningState;
             AdministrativeState = administrativeState;
+            OperationalState = operationalState;
             SecretRotationStatus = secretRotationStatus;
             CertificateRotationStatus = certificateRotationStatus;
             NetworkFabricId = networkFabricId;
@@ -118,6 +120,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 
         /// <summary> Administrative state of the resource. </summary>
         public NetworkFabricAdministrativeState? AdministrativeState { get; }
+
+        /// <summary> Operational state of networkDevice indicating if the device is reachable and services are available. </summary>
+        public OperationalState? OperationalState { get; }
 
         /// <summary> Secret rotation status for the device's secrets. </summary>
         public IReadOnlyList<NetworkFabricSecretRotationStatus> SecretRotationStatus { get; } = new ChangeTrackingList<NetworkFabricSecretRotationStatus>();

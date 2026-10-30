@@ -15,29 +15,29 @@ using Azure.ResourceManager.ManagedNetworkFabric.Models;
 namespace Azure.ResourceManager.ManagedNetworkFabric
 {
     /// <summary></summary>
-    internal partial class ValidateConfigurationResultOperationSource : IOperationSource<ValidateConfigurationResult>
+    internal partial class ValidateConfigurationResponseV2OperationSource : IOperationSource<ValidateConfigurationResponseV2>
     {
         /// <summary></summary>
-        internal ValidateConfigurationResultOperationSource()
+        internal ValidateConfigurationResponseV2OperationSource()
         {
         }
 
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        ValidateConfigurationResult IOperationSource<ValidateConfigurationResult>.CreateResult(Response response, CancellationToken cancellationToken)
+        ValidateConfigurationResponseV2 IOperationSource<ValidateConfigurationResponseV2>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            return ValidateConfigurationResult.DeserializeValidateConfigurationResult(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return ValidateConfigurationResponseV2.DeserializeValidateConfigurationResponseV2(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        async ValueTask<ValidateConfigurationResult> IOperationSource<ValidateConfigurationResult>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<ValidateConfigurationResponseV2> IOperationSource<ValidateConfigurationResponseV2>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return ValidateConfigurationResult.DeserializeValidateConfigurationResult(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return ValidateConfigurationResponseV2.DeserializeValidateConfigurationResponseV2(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }
 }

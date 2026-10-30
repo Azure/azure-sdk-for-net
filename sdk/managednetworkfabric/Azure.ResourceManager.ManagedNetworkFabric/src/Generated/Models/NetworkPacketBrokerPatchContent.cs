@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
@@ -21,13 +22,35 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <summary> Initializes a new instance of <see cref="NetworkPacketBrokerPatchContent"/>. </summary>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> NetworkPacketBroker patch properties. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
-        internal NetworkPacketBrokerPatchContent(IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, NetworkFabricManagedServiceIdentityPatch identity) : base(tags, additionalBinaryDataProperties)
+        internal NetworkPacketBrokerPatchContent(IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, NetworkPacketBrokerPatchProperties properties, NetworkFabricManagedServiceIdentityPatch identity) : base(tags, additionalBinaryDataProperties)
         {
+            Properties = properties;
             Identity = identity;
         }
 
+        /// <summary> NetworkPacketBroker patch properties. </summary>
+        internal NetworkPacketBrokerPatchProperties Properties { get; set; }
+
         /// <summary> The managed service identities assigned to this resource. </summary>
         public NetworkFabricManagedServiceIdentityPatch Identity { get; set; }
+
+        /// <summary> ARM resource ID of the source Network Tap Rule. </summary>
+        public ResourceIdentifier SourceNetworkTapRuleId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SourceNetworkTapRuleId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new NetworkPacketBrokerPatchProperties();
+                }
+                Properties.SourceNetworkTapRuleId = value;
+            }
+        }
     }
 }

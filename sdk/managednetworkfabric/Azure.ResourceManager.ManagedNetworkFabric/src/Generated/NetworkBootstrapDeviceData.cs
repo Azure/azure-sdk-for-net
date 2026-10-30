@@ -100,6 +100,19 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             }
         }
 
+        /// <summary> Control Plane Access Control List ARM resource IDs. </summary>
+        public IList<ResourceIdentifier> ControlPlaneAcls
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new NetworkBootstrapDeviceProperties();
+                }
+                return Properties.ControlPlaneAcls;
+            }
+        }
+
         /// <summary> Current version of the device as defined in SKU. </summary>
         public string Version
         {
@@ -204,6 +217,28 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             get
             {
                 return Properties is null ? default : Properties.ConfigurationState;
+            }
+        }
+
+        /// <summary> Operational state of networkBootstrapDevice indicating if the device is reachable and services are available. </summary>
+        public OperationalState? OperationalState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.OperationalState;
+            }
+        }
+
+        /// <summary> Secret rotation status for the terminal server's secrets. </summary>
+        public IReadOnlyList<NetworkFabricSecretRotationStatus> SecretRotationStatus
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new NetworkBootstrapDeviceProperties();
+                }
+                return Properties.SecretRotationStatus;
             }
         }
     }

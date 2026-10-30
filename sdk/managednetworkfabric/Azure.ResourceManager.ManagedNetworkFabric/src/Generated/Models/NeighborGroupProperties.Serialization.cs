@@ -147,6 +147,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 writer.WritePropertyName("configurationState"u8);
                 writer.WriteStringValue(ConfigurationState.Value.ToString());
             }
+            if (options.Format != "W" && Optional.IsDefined(AdministrativeState))
+            {
+                writer.WritePropertyName("administrativeState"u8);
+                writer.WriteStringValue(AdministrativeState.Value.ToString());
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -197,6 +202,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             LastOperationProperties lastOperation = default;
             NetworkFabricProvisioningState? provisioningState = default;
             NetworkFabricConfigurationState? configurationState = default;
+            NetworkFabricAdministrativeState? administrativeState = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -300,6 +306,15 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     configurationState = new NetworkFabricConfigurationState(prop.Value.GetString());
                     continue;
                 }
+                if (prop.NameEquals("administrativeState"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    administrativeState = new NetworkFabricAdministrativeState(prop.Value.GetString());
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
@@ -314,6 +329,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 lastOperation,
                 provisioningState,
                 configurationState,
+                administrativeState,
                 additionalBinaryDataProperties);
         }
     }
