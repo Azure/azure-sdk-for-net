@@ -2,8 +2,6 @@
 
 #nullable disable
 
-using System;
-using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using OpenAI.Responses;
 
@@ -13,9 +11,6 @@ namespace Azure.AI.Extensions.OpenAI
     [Experimental("AAIP002")]
     public partial class AgentWorkflowPreviewActionResponseItem : ResponseItem
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
-
         /// <summary> The kind of CSDL action (e.g., 'SetVariable', 'InvokeAzureAgent'). </summary>
         public string CSDLActionKind { get; set; }
 

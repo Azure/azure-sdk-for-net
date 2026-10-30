@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Network
         {
             get
             {
-                return Properties is null ? default : Properties.StartOn;
+                return Properties is null ? default : Properties.StartsOn;
             }
         }
 
@@ -138,6 +138,16 @@ namespace Azure.ResourceManager.Network
             get
             {
                 return Properties is null ? default : Properties.MonitoringStatus;
+            }
+        }
+
+        /// <summary> Type of connection monitor. </summary>
+        [WirePath("properties.connectionMonitorType")]
+        public ConnectionMonitorType? ConnectionMonitorType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ConnectionMonitorType;
             }
         }
     }

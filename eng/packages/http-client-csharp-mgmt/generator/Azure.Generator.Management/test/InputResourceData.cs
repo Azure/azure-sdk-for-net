@@ -566,7 +566,8 @@ namespace Azure.Generator.Management.Tests.Common
         /// does NOT include a tags property. Tag methods should NOT be generated because the PATCH body
         /// cannot carry tag changes.
         /// </summary>
-        public static (InputClient InputClient, IReadOnlyList<InputModelType> InputModels) ClientWithResourcePatchBodyWithoutTags()
+        public static (InputClient InputClient, IReadOnlyList<InputModelType> InputModels) ClientWithResourcePatchBodyWithoutTags(
+            string resourceName = "ResponseType", bool sharedBody = false, bool resourceNameIsExplicit = false, bool clientNameOverride = false)
         {
             const string TestClientName = "TestClient";
             const string ResourceModelName = "ResponseType";
@@ -588,13 +589,15 @@ namespace Azure.Generator.Management.Tests.Common
                         [
                             InputFactory.Property("description", InputPrimitiveType.String, isReadOnly: false),
                         ],
-                        decorators: []);
+                        decorators: clientNameOverride
+                            ? [new InputDecoratorInfo("Azure.ResourceManager.@hasClientNameOverride", new Dictionary<string, BinaryData>())]
+                            : []);
             var responseType = InputFactory.OperationResponse(statusCodes: [200], bodytype: responseModel);
             var uuidType = new InputPrimitiveType(InputPrimitiveTypeKind.String, "uuid", "Azure.Core.uuid");
             var subsIdOpParameter = InputFactory.PathParameter("subscriptionId", uuidType, isRequired: true);
             var rgOpParameter = InputFactory.PathParameter("resourceGroupName", InputPrimitiveType.String, isRequired: true);
             var testNameOpParameter = InputFactory.PathParameter("testName", InputPrimitiveType.String, isRequired: true);
-            var dataOpParameter = InputFactory.BodyParameter("data", responseModel, isRequired: true);
+            var dataOpParameter = InputFactory.BodyParameter("data", sharedBody ? patchModel : responseModel, isRequired: true);
             var patchOpParameter = InputFactory.BodyParameter("patch", patchModel, isRequired: true);
             var getOperation = InputFactory.Operation(name: "get", responses: [responseType], parameters: [subsIdOpParameter, rgOpParameter, testNameOpParameter], path: "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Tests/tests/{testName}");
             var createOperation = InputFactory.Operation(name: "createTest", responses: [responseType], parameters: [subsIdOpParameter, rgOpParameter, testNameOpParameter, dataOpParameter], path: "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Tests/tests/{testName}", httpMethod: "PUT");
@@ -603,7 +606,7 @@ namespace Azure.Generator.Management.Tests.Common
             var subscriptionIdParameter = InputFactory.MethodParameter("subscriptionId", uuidType, location: InputRequestLocation.Path);
             var resourceGroupParameter = InputFactory.MethodParameter("resourceGroupName", InputPrimitiveType.String, location: InputRequestLocation.Path);
             var testNameParameter = InputFactory.MethodParameter("testName", InputPrimitiveType.String, location: InputRequestLocation.Path, isRequired: true);
-            var dataParameter = InputFactory.MethodParameter("data", responseModel, location: InputRequestLocation.Body, isRequired: true);
+            var dataParameter = InputFactory.MethodParameter("data", sharedBody ? patchModel : responseModel, location: InputRequestLocation.Body, isRequired: true);
             var patchParameter = InputFactory.MethodParameter("patch", patchModel, location: InputRequestLocation.Body, isRequired: true);
             var getMethod = InputFactory.BasicServiceMethod("get", getOperation, parameters: [testNameParameter, subscriptionIdParameter, resourceGroupParameter], crossLanguageDefinitionId: Guid.NewGuid().ToString());
             var createMethod = InputFactory.BasicServiceMethod("createTest", createOperation, parameters: [testNameParameter, subscriptionIdParameter, resourceGroupParameter, dataParameter], crossLanguageDefinitionId: Guid.NewGuid().ToString());
@@ -614,7 +617,7 @@ namespace Azure.Generator.Management.Tests.Common
                 new ResourceMethod(ResourceOperationKind.Read, getMethod, new RequestPathPattern(getMethod.Operation.Path), new ArmScopeInfo(ResourceScope.ResourceGroup, resourceIdPattern, null), null!),
                 new ResourceMethod(ResourceOperationKind.Create, createMethod, new RequestPathPattern(createMethod.Operation.Path), new ArmScopeInfo(ResourceScope.ResourceGroup, resourceIdPattern, null), null!),
                 new ResourceMethod(ResourceOperationKind.Update, updateMethod, new RequestPathPattern(updateMethod.Operation.Path), new ArmScopeInfo(ResourceScope.ResourceGroup, resourceIdPattern, null), null!)
-            ], resourceIdPattern, "Microsoft.Tests/tests", null, ResourceScope.ResourceGroup, "ResponseType");
+            ], resourceIdPattern, "Microsoft.Tests/tests", null, ResourceScope.ResourceGroup, resourceName, resourceNameIsExplicit);
 
             var client = InputFactory.Client(
                 TestClientName,
@@ -1479,10 +1482,10 @@ namespace Azure.Generator.Management.Tests.Common
                     .. hasName ? new[] { InputFactory.MethodParameter("resourceName", InputPrimitiveType.String, location: InputRequestLocation.Path, isRequired: true) } : []];
         }
 
-        private static InputDecoratorInfo BuildArmProviderSchema(InputModelType resourceModel, IReadOnlyList<ResourceMethod> methods, RequestPathPattern resourceIdPattern, string resourceType, string? singletonResourceName, ResourceScope resourceScope, string? resourceName)
+        private static InputDecoratorInfo BuildArmProviderSchema(InputModelType resourceModel, IReadOnlyList<ResourceMethod> methods, RequestPathPattern resourceIdPattern, string resourceType, string? singletonResourceName, ResourceScope resourceScope, string? resourceName, bool resourceNameIsExplicit = false)
         {
             return BuildArmProviderSchemaMultiResource([
-                new ResourceSchemaInput(resourceModel, methods, resourceIdPattern.SerializedPath, resourceType, singletonResourceName, resourceScope, resourceName, null, GetDefaultScopeIdPattern(resourceScope))
+                new ResourceSchemaInput(resourceModel, methods, resourceIdPattern.SerializedPath, resourceType, singletonResourceName, resourceScope, resourceName, null, GetDefaultScopeIdPattern(resourceScope), ResourceNameIsExplicit: resourceNameIsExplicit)
             ]);
         }
 
@@ -1510,6 +1513,7 @@ namespace Azure.Generator.Management.Tests.Common
                     ["methods"] = r.Methods.Select(SerializeResourceMethod).ToList(),
                     ["singletonResourceName"] = r.SingletonResourceName,
                     ["resourceName"] = r.ResourceName,
+                    ["resourceNameIsExplicit"] = r.ResourceNameIsExplicit,
                 };
                 if (r.ParentResourceId is not null)
                 {
@@ -1564,6 +1568,7 @@ namespace Azure.Generator.Management.Tests.Common
             string? ResourceName,
             string? ParentResourceId,
             string ScopeIdPattern,
-            string? ScopeResourceType = null);
+            string? ScopeResourceType = null,
+            bool ResourceNameIsExplicit = false);
     }
 }

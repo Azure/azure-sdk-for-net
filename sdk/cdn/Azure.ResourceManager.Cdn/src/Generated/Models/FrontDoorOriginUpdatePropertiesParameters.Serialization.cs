@@ -119,11 +119,6 @@ namespace Azure.ResourceManager.Cdn.Models
                 writer.WritePropertyName("sharedPrivateLinkResource"u8);
                 writer.WriteObjectValue(SharedPrivateLinkResource, options);
             }
-            if (Optional.IsDefined(OriginCapacityResource))
-            {
-                writer.WritePropertyName("originCapacityResource"u8);
-                writer.WriteObjectValue(OriginCapacityResource, options);
-            }
             if (Optional.IsDefined(EnabledState))
             {
                 writer.WritePropertyName("enabledState"u8);
@@ -133,6 +128,26 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 writer.WritePropertyName("enforceCertificateNameCheck"u8);
                 writer.WriteBooleanValue(EnforceCertificateNameCheck.Value);
+            }
+            if (Optional.IsDefined(CertificateNameCheckValidationMode))
+            {
+                writer.WritePropertyName("certificateNameCheckValidationMode"u8);
+                writer.WriteStringValue(CertificateNameCheckValidationMode.Value.ToString());
+            }
+            if (Optional.IsCollectionDefined(CustomCertificateSubjects))
+            {
+                writer.WritePropertyName("customCertificateSubjects"u8);
+                writer.WriteStartArray();
+                foreach (string item in CustomCertificateSubjects)
+                {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -185,9 +200,10 @@ namespace Azure.ResourceManager.Cdn.Models
             int? priority = default;
             int? weight = default;
             SharedPrivateLinkResourceProperties sharedPrivateLinkResource = default;
-            FrontDoorOriginCapacitySettings originCapacityResource = default;
             EnabledState? enabledState = default;
             bool? enforceCertificateNameCheck = default;
+            CertificateNameCheckValidationMode? certificateNameCheckValidationMode = default;
+            IList<string> customCertificateSubjects = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -260,15 +276,6 @@ namespace Azure.ResourceManager.Cdn.Models
                     sharedPrivateLinkResource = SharedPrivateLinkResourceProperties.DeserializeSharedPrivateLinkResourceProperties(prop.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("originCapacityResource"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    originCapacityResource = FrontDoorOriginCapacitySettings.DeserializeFrontDoorOriginCapacitySettings(prop.Value, options);
-                    continue;
-                }
                 if (prop.NameEquals("enabledState"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -287,6 +294,36 @@ namespace Azure.ResourceManager.Cdn.Models
                     enforceCertificateNameCheck = prop.Value.GetBoolean();
                     continue;
                 }
+                if (prop.NameEquals("certificateNameCheckValidationMode"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    certificateNameCheckValidationMode = new CertificateNameCheckValidationMode(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("customCertificateSubjects"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
+                    }
+                    customCertificateSubjects = array;
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
@@ -302,9 +339,10 @@ namespace Azure.ResourceManager.Cdn.Models
                 priority,
                 weight,
                 sharedPrivateLinkResource,
-                originCapacityResource,
                 enabledState,
                 enforceCertificateNameCheck,
+                certificateNameCheckValidationMode,
+                customCertificateSubjects ?? new ChangeTrackingList<string>(),
                 additionalBinaryDataProperties);
         }
     }

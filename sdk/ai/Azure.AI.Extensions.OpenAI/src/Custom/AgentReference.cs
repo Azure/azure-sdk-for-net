@@ -21,7 +21,6 @@ public partial class AgentReference
     {
         Name = name;
         Version = version;
-        _additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
     }
 
     /// <summary> Converts a string assistant or agent identifier into an <see cref="AgentReference"/>. </summary>

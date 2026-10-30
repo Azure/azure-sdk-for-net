@@ -39,5 +39,21 @@ namespace Azure.ResourceManager.Network.Models
             TunnelIPAddresses = tunnelIPAddresses;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+
+        /// <summary> The ID of IP configuration which belongs to gateway. </summary>
+        [WirePath("ipconfigurationId")]
+        public string IPConfigurationId { get; set; }
+
+        /// <summary> The list of default BGP peering addresses which belong to IP configuration. </summary>
+        [WirePath("defaultBgpIpAddresses")]
+        public IReadOnlyList<string> DefaultBgpIPAddresses { get; }
+
+        /// <summary> The list of custom BGP peering addresses which belong to IP configuration. </summary>
+        [WirePath("customBgpIpAddresses")]
+        public IList<string> CustomBgpIPAddresses { get; }
+
+        /// <summary> The list of tunnel public IP addresses which belong to IP configuration. </summary>
+        [WirePath("tunnelIpAddresses")]
+        public IReadOnlyList<string> TunnelIPAddresses { get; }
     }
 }

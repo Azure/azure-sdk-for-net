@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     public partial class RecoveryPlanShutdownGroupTaskDetails : RecoveryPlanGroupTaskDetails
     {
         /// <summary> Initializes a new instance of <see cref="RecoveryPlanShutdownGroupTaskDetails"/>. </summary>
-        internal RecoveryPlanShutdownGroupTaskDetails()
+        internal RecoveryPlanShutdownGroupTaskDetails() : base("RecoveryPlanShutdownGroupTaskDetails")
         {
         }
 

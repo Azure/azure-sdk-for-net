@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="provisioningState"> The provisioning state of the ConnectionPolicy resource. </param>
         /// <param name="associatedConnections"> List of connection names (e.g. VpnConnection, HubVirtualNetworkConnection) associated with this ConnectionPolicy. These are resource names, not Azure resource IDs, consistent with the established VirtualWAN pattern used by HubRouteTable.associatedConnections. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ConnectionPolicyProperties(bool? enableInternetSecurity, RoutingConfigurationNfv routingConfiguration, NetworkProvisioningState? provisioningState, IReadOnlyList<string> associatedConnections, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ConnectionPolicyProperties(bool? enableInternetSecurity, RoutingConfiguration routingConfiguration, NetworkProvisioningState? provisioningState, IReadOnlyList<string> associatedConnections, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             EnableInternetSecurity = enableInternetSecurity;
             RoutingConfiguration = routingConfiguration;
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> The Routing Configuration indicating the associated and propagated route tables on this connection. </summary>
         [WirePath("routingConfiguration")]
-        public RoutingConfigurationNfv RoutingConfiguration { get; set; }
+        public RoutingConfiguration RoutingConfiguration { get; set; }
 
         /// <summary> The provisioning state of the ConnectionPolicy resource. </summary>
         [WirePath("provisioningState")]

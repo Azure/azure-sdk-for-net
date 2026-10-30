@@ -60,6 +60,16 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<FrontDoorRuleSetData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
+        /// <param name="frontDoorRuleSetData"> The <see cref="FrontDoorRuleSetData"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(FrontDoorRuleSetData frontDoorRuleSetData)
+        {
+            if (frontDoorRuleSetData == null)
+            {
+                return null;
+            }
+            return RequestContent.Create(frontDoorRuleSetData, ModelSerializationExtensions.WireOptions);
+        }
+
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="FrontDoorRuleSetData"/> from. </param>
         internal static FrontDoorRuleSetData FromResponse(Response response)
         {
