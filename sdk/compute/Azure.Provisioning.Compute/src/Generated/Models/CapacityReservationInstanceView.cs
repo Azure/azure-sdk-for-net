@@ -15,6 +15,7 @@ namespace Azure.Provisioning.Compute
     {
         private CapacityReservationUtilization _utilizationInfo;
         private BicepList<InstanceViewStatus> _statuses;
+        private CapacityReservationStateInfo _reservationStateInfo;
 
         /// <summary> Creates a new CapacityReservationInstanceView. </summary>
         public CapacityReservationInstanceView()
@@ -41,12 +42,32 @@ namespace Azure.Provisioning.Compute
             }
         }
 
+        /// <summary> Gets the ReservationStateInfo. </summary>
+        internal CapacityReservationStateInfo ReservationStateInfo
+        {
+            get
+            {
+                Initialize();
+                return _reservationStateInfo;
+            }
+        }
+
+        /// <summary> Gets the ReservationState. </summary>
+        public BicepValue<ReservationState> ReservationState
+        {
+            get
+            {
+                return ReservationStateInfo is null ? default : ReservationStateInfo.ReservationState;
+            }
+        }
+
         /// <summary> Define all the provisionable properties for CapacityReservationInstanceView. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
             _utilizationInfo = DefineModelProperty<CapacityReservationUtilization>(nameof(UtilizationInfo), new string[] { "utilizationInfo" });
             _statuses = DefineListProperty<InstanceViewStatus>(nameof(Statuses), new string[] { "statuses" });
+            _reservationStateInfo = DefineModelProperty<CapacityReservationStateInfo>(nameof(ReservationStateInfo), new string[] { "reservationStateInfo" });
             DefineAdditionalProperties();
         }
 

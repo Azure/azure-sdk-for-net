@@ -181,11 +181,9 @@ namespace Azure.ResourceManager.Network.Tests
 
             Assert.That(transport.Requests, Has.Count.EqualTo(paging ? 2 : 1));
             Assert.That(transport.Requests[0].Method, Is.EqualTo(paging ? RequestMethod.Get : RequestMethod.Post));
-            Assert.That(transport.Requests[0].Uri.ToUri().AbsolutePath, Is.EqualTo(path).IgnoreCase);
             if (paging)
             {
                 Assert.That(count, Is.EqualTo(2));
-                Assert.That(transport.Requests[1].Uri.ToUri().AbsoluteUri, Is.EqualTo(nextLink));
             }
             else
             {

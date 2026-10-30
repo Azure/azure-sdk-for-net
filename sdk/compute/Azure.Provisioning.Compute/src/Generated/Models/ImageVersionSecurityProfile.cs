@@ -10,9 +10,10 @@ using Azure.Provisioning.Primitives;
 namespace Azure.Provisioning.Compute
 {
     /// <summary> The security profile of a gallery image version. </summary>
-    internal partial class ImageVersionSecurityProfile : ProvisionableConstruct
+    public partial class ImageVersionSecurityProfile : ProvisionableConstruct
     {
         private GalleryImageVersionUefiSettings _uefiSettings;
+        private SecretsProvisioningSettings _secretsProvisioningSettings;
 
         /// <summary> Creates a new ImageVersionSecurityProfile. </summary>
         public ImageVersionSecurityProfile()
@@ -34,11 +35,27 @@ namespace Azure.Provisioning.Compute
             }
         }
 
+        /// <summary> Gets or sets the SecretsProvisioningSettings. </summary>
+        public SecretsProvisioningSettings SecretsProvisioningSettings
+        {
+            get
+            {
+                Initialize();
+                return _secretsProvisioningSettings;
+            }
+            set
+            {
+                Initialize();
+                AssignOrReplace(ref _secretsProvisioningSettings, value);
+            }
+        }
+
         /// <summary> Define all the provisionable properties for ImageVersionSecurityProfile. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
             _uefiSettings = DefineModelProperty<GalleryImageVersionUefiSettings>(nameof(UefiSettings), new string[] { "uefiSettings" });
+            _secretsProvisioningSettings = DefineModelProperty<SecretsProvisioningSettings>(nameof(SecretsProvisioningSettings), new string[] { "secretsProvisioningSettings" });
             DefineAdditionalProperties();
         }
 

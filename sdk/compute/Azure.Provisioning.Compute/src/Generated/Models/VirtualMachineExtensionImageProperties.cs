@@ -18,6 +18,11 @@ namespace Azure.Provisioning.Compute
         private BicepValue<string> _handlerSchema;
         private BicepValue<bool> _virtualMachineScaleSetEnabled;
         private BicepValue<bool> _supportsMultipleExtensions;
+        private BicepValue<string> _releaseNotes;
+        private BicepValue<ReleaseCategory> _releaseCategory;
+        private BicepValue<UrgencyLevel> _urgencyLevel;
+        private BicepValue<RunProfile> _runProfile;
+        private ExtensionFeatureMetadata _extensionFeatureMetadata;
 
         /// <summary> Creates a new VirtualMachineExtensionImageProperties. </summary>
         public VirtualMachineExtensionImageProperties()
@@ -74,6 +79,65 @@ namespace Azure.Provisioning.Compute
             }
         }
 
+        /// <summary> Gets the ReleaseNotes. </summary>
+        public BicepValue<string> ReleaseNotes
+        {
+            get
+            {
+                Initialize();
+                return _releaseNotes;
+            }
+        }
+
+        /// <summary> Gets the ReleaseCategory. </summary>
+        public BicepValue<ReleaseCategory> ReleaseCategory
+        {
+            get
+            {
+                Initialize();
+                return _releaseCategory;
+            }
+        }
+
+        /// <summary> Gets the UrgencyLevel. </summary>
+        public BicepValue<UrgencyLevel> UrgencyLevel
+        {
+            get
+            {
+                Initialize();
+                return _urgencyLevel;
+            }
+        }
+
+        /// <summary> Gets the RunProfile. </summary>
+        public BicepValue<RunProfile> RunProfile
+        {
+            get
+            {
+                Initialize();
+                return _runProfile;
+            }
+        }
+
+        /// <summary> Gets the ExtensionFeatureMetadata. </summary>
+        internal ExtensionFeatureMetadata ExtensionFeatureMetadata
+        {
+            get
+            {
+                Initialize();
+                return _extensionFeatureMetadata;
+            }
+        }
+
+        /// <summary> Gets the ExtensionFeatureTags. </summary>
+        public BicepList<ExtensionFeatureTag> ExtensionFeatureTags
+        {
+            get
+            {
+                return ExtensionFeatureMetadata is null ? default : ExtensionFeatureMetadata.ExtensionFeatureTags;
+            }
+        }
+
         /// <summary> Define all the provisionable properties for VirtualMachineExtensionImageProperties. </summary>
         protected override void DefineProvisionableProperties()
         {
@@ -83,6 +147,11 @@ namespace Azure.Provisioning.Compute
             _handlerSchema = DefineProperty<string>(nameof(HandlerSchema), new string[] { "handlerSchema" });
             _virtualMachineScaleSetEnabled = DefineProperty<bool>(nameof(VirtualMachineScaleSetEnabled), new string[] { "vmScaleSetEnabled" });
             _supportsMultipleExtensions = DefineProperty<bool>(nameof(SupportsMultipleExtensions), new string[] { "supportsMultipleExtensions" });
+            _releaseNotes = DefineProperty<string>(nameof(ReleaseNotes), new string[] { "releaseNotes" }, isOutput: true);
+            _releaseCategory = DefineProperty<ReleaseCategory>(nameof(ReleaseCategory), new string[] { "releaseCategory" }, isOutput: true);
+            _urgencyLevel = DefineProperty<UrgencyLevel>(nameof(UrgencyLevel), new string[] { "urgencyLevel" }, isOutput: true);
+            _runProfile = DefineProperty<RunProfile>(nameof(RunProfile), new string[] { "runProfile" }, isOutput: true);
+            _extensionFeatureMetadata = DefineModelProperty<ExtensionFeatureMetadata>(nameof(ExtensionFeatureMetadata), new string[] { "extensionFeatureMetadata" }, isOutput: true);
             DefineAdditionalProperties();
         }
 

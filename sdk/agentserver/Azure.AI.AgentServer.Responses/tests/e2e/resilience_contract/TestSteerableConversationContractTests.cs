@@ -93,7 +93,6 @@ public class TestSteerableConversationContractTests
                 },
                 configureTestServices: services =>
                 {
-                    services.SetResilientTasksEnabled();
                     services.AddSingleton<ITaskStore>(spy);
                     services.AddSingleton(_ => new FileResponsesProvider(responsesDir));
                 });
@@ -173,7 +172,6 @@ public class TestSteerableConversationContractTests
                 },
                 configureTestServices: services =>
                 {
-                    services.SetResilientTasksEnabled();
                     services.AddSingleton<ITaskStore>(spy);
                     services.AddSingleton(_ => new FileResponsesProvider(responsesDir));
                 });
@@ -255,13 +253,11 @@ public class TestSteerableConversationContractTests
     }
 
     [Test]
-    public async Task ConcurrentTurn_DefaultOptions_MapsToConversationLocked409()
+    public async Task ConcurrentTurn_ResilientBackgroundWithoutSteering_MapsToConversationLocked409()
     {
         // Gap A (US5 acceptance scenario 4, FR-051): a conversation_id chain MUST get concurrency
-        // protection even with DEFAULT options (ResilientBackground=false, SteerableConversations=false).
-        // Parity with Python `_pick_primitive`: any conversation_id routes through the multi-turn task
-        // (registered non-steerable here), so a concurrent turn overlapping the active turn is a Core
-        // lock conflict → HTTP 409 conversation_locked — independent of both feature options.
+        // protection when Responses tasks are enabled without steering. A conversation_id routes
+        // through a non-steerable multi-turn task, so overlap is a Core lock conflict → HTTP 409.
         var spy = new SpyTaskStore(new LocalTaskStore(TempTasksDir(out var root)))
         {
             ThrowOnCreate = new ResilientTaskException(ResilientTaskErrorCode.Conflict) { CurrentStatus = TaskRunStatus.InProgress },
@@ -271,9 +267,9 @@ public class TestSteerableConversationContractTests
             using var factory = NewFactory(
                 spy,
                 root,
-                _ =>
+                options =>
                 {
-                    // DEFAULT options — deliberately set neither flag.
+                    options.ResilientBackground = true;
                 });
             using var client = factory.CreateClient();
 
@@ -295,12 +291,36 @@ public class TestSteerableConversationContractTests
     }
 
     [Test]
-    public async Task ForegroundConcurrentTurn_DefaultOptions_MapsToConversationLocked409()
+    public async Task CoreOnlyOptIn_DoesNotRouteResponsesConversationThroughTask()
+    {
+        var spy = new SpyTaskStore(new LocalTaskStore(TempTasksDir(out var root)))
+        {
+            ThrowOnCreate = new ResilientTaskException(ResilientTaskErrorCode.Conflict),
+        };
+        try
+        {
+            using var factory = NewFactory(spy, root, _ => { }, coreOptIn: true);
+            using var client = factory.CreateClient();
+
+            var response = await client.PostAsync(
+                "/responses",
+                Json(new { model = "test", background = true, conversation = "conv-no-response-optin" }));
+
+            Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
+            Assert.That(spy.LastTaskName, Is.Null);
+        }
+        finally
+        {
+            CleanupRoot(root);
+        }
+    }
+
+    [Test]
+    public async Task ForegroundConcurrentTurn_ResilientBackgroundWithoutSteering_MapsToConversationLocked409()
     {
         // Finding D (FR-052 concurrent-overlap lock): a FOREGROUND (background=false) conversation turn
-        // must route through the multi-turn task too (parity with Python `_pick_primitive`, which is
-        // NOT background-gated). A concurrent turn overlapping the active turn is a Core lock conflict
-        // → HTTP 409 conversation_locked, even with DEFAULT options.
+        // must route through a multi-turn task when Responses enables Core, even though foreground
+        // work is not eligible for handler re-invocation. Overlap becomes HTTP 409 conversation_locked.
         var spy = new SpyTaskStore(new LocalTaskStore(TempTasksDir(out var root)))
         {
             ThrowOnCreate = new ResilientTaskException(ResilientTaskErrorCode.Conflict) { CurrentStatus = TaskRunStatus.InProgress },
@@ -310,9 +330,9 @@ public class TestSteerableConversationContractTests
             using var factory = NewFactory(
                 spy,
                 root,
-                _ =>
+                options =>
                 {
-                    // DEFAULT options — deliberately set neither flag.
+                    options.ResilientBackground = true;
                 });
             using var client = factory.CreateClient();
 
@@ -335,7 +355,7 @@ public class TestSteerableConversationContractTests
     }
 
     [Test]
-    public async Task ForegroundForkTurn_DefaultOptions_MapsToConversationForkNotSupported409()
+    public async Task ForegroundForkTurn_ResilientBackgroundWithoutSteering_MapsToConversationForkNotSupported409()
     {
         // Finding D (FR-051 fork rejection): a FOREGROUND fork (previous_response_id not the chain head)
         // must be rejected with HTTP 409 conversation_fork_not_supported — the same as background,
@@ -361,13 +381,12 @@ public class TestSteerableConversationContractTests
         try
         {
             using var factory = new TestWebApplicationFactory(
-                configureOptions: _ =>
+                configureOptions: options =>
                 {
-                    // DEFAULT options — foreground fork rejection is not gated on either flag.
+                    options.ResilientBackground = true;
                 },
                 configureTestServices: services =>
                 {
-                    services.SetResilientTasksEnabled();
                     services.AddSingleton<ITaskStore>(spy);
                     services.AddSingleton(_ => new FileResponsesProvider(responsesDir));
                 });
@@ -407,24 +426,19 @@ public class TestSteerableConversationContractTests
     }
 
     [Test]
-    public async Task StoredBackgroundTurn_DefaultOptions_RoutesToOneShotTaskWithMarkFailedDisposition()
+    public async Task StoredBackgroundTurn_SteeringOnly_UsesMultiTurnTaskWithMarkFailedDisposition()
     {
-        // Gap B (FR-012 Row 2, FR-013): a stored, background, NON-resilient response (default options)
-        // must be tracked by a Core one-shot task so a next-lifetime crash-recovery scan marks it failed
-        // (disposition=mark-failed). Parity assertion: the task input payload carries the mark-failed
-        // disposition (DecideDisposition(store:true, background:true, resilientBackground:false)). The
-        // spy passes through to the real LocalTaskStore so the real engine dispatches and the endpoint
-        // reaches its normal handler path (default TestHandler yields response.created → completed);
-        // the captured TaskCreateRequest carries the wire payload the endpoint attempted to persist.
+        // Steering-only activation tracks a stored background response in a multi-turn task.
+        // Recovery marks an interrupted handler failed instead of re-invoking it.
         var spy = new SpyTaskStore(new LocalTaskStore(TempTasksDir(out var root)));
         try
         {
             using var factory = NewFactory(
                 spy,
                 root,
-                _ =>
+                options =>
                 {
-                    // DEFAULT options — non-resilient, non-steerable.
+                    options.SteerableConversations = true;
                 });
             using var client = factory.CreateClient();
 
@@ -433,16 +447,13 @@ public class TestSteerableConversationContractTests
                 Json(new { model = "test", background = true }));
 
             Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
-            Assert.That(spy.LastTaskName, Is.EqualTo(ResponsesResilientTaskHandler.OneShotTaskName));
-            // One-shot invariant: task id == input id == response id. Observed via the create
-            // request id + the persisted last_input_id (the endpoint supplies an explicit InputId
-            // for the one-shot, so the engine stamps last_input_id = InputId = response id).
+            Assert.That(spy.LastTaskName, Is.EqualTo(ResponsesResilientTaskHandler.MultiTurnTaskName));
             Assert.That(spy.LastCreateRequest?.Id, Is.Not.Null.And.Not.Empty);
-            Assert.That(spy.LastLastInputId, Is.EqualTo(spy.LastCreateRequest!.Id));
+            Assert.That(spy.LastLastInputId, Is.Not.Null.And.Not.Empty);
 
             // The tracked task carries the Row 2 mark-failed disposition so recovery fails (not re-invokes) it.
             var payload = spy.LastResponsePayload;
-            Assert.That(payload, Is.Not.Null, "the one-shot task input must deserialize as a ResponseRecoveryPayload");
+            Assert.That(payload, Is.Not.Null, "the task input must deserialize as a ResponseRecoveryPayload");
             Assert.That(payload!.Disposition, Is.EqualTo(ResponseRecoveryPayload.DispositionMarkFailed));
             Assert.That(
                 ResponseResilienceDispatch.DecideDisposition(store: true, background: true, resilientBackground: false),
@@ -605,7 +616,6 @@ public class TestSteerableConversationContractTests
                 },
                 configureTestServices: services =>
                 {
-                    services.SetResilientTasksEnabled();
                     services.AddSingleton<ITaskStore>(_ => new LocalTaskStore(tasksDir));
                     services.AddSingleton(_ => new FileResponsesProvider(responsesDir));
                 });
@@ -661,7 +671,6 @@ public class TestSteerableConversationContractTests
                 },
                 configureTestServices: services =>
                 {
-                    services.SetResilientTasksEnabled();
                     services.AddSingleton<ITaskStore>(_ => new LocalTaskStore(tasksDir));
                     services.AddSingleton(_ => new FileResponsesProvider(responsesDir));
                 });
@@ -936,10 +945,10 @@ public class TestSteerableConversationContractTests
                 {
                     // Non-steerable → a concurrent turn is a lock conflict (not a steering enqueue).
                     o.SteerableConversations = false;
+                    o.ResilientBackground = true;
                 },
                 configureTestServices: services =>
                 {
-                    services.SetResilientTasksEnabled();
                     services.AddSingleton<ITaskStore>(_ => new LocalTaskStore(tasksDir));
                     services.AddSingleton(_ => new FileResponsesProvider(responsesDir));
                 });
@@ -1072,10 +1081,11 @@ public class TestSteerableConversationContractTests
     private static TestWebApplicationFactory NewFactory(
         SpyTaskStore spy,
         string root,
-        Action<ResponsesServerOptions> configureOptions)
+        Action<ResponsesServerOptions> configureOptions,
+        bool coreOptIn = false)
     {
         // Isolate the Core task/response stores at fresh empty dirs (created by TempTasksDir /
-        // NewSpyStore) so the always-on durability service's cold-start scan finds nothing and
+        // NewSpyStore) so the activated durability service's cold-start scan finds nothing and
         // cannot pick up shared/leftover state. The responses dir is a sibling of the tasks dir
         // under the same GUID-scoped root.
         var responsesDir = Path.Combine(root, "responses");
@@ -1083,7 +1093,11 @@ public class TestSteerableConversationContractTests
             configureOptions: configureOptions,
             configureTestServices: services =>
             {
-                services.SetResilientTasksEnabled();
+                if (coreOptIn)
+                {
+                    services.SetResilientTasksEnabled();
+                }
+
                 services.AddSingleton<ITaskStore>(spy);
                 services.AddSingleton(_ => new FileResponsesProvider(responsesDir));
             });

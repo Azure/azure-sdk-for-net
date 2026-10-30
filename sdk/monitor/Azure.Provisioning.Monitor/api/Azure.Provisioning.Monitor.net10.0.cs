@@ -585,6 +585,7 @@ namespace Azure.Provisioning.Monitor
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.Monitor.DiagnosticSettingsCategory Properties { get { throw null; } }
+        public Azure.Provisioning.Primitives.ProvisionableResource Scope { get { throw null; } set { } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
         public static Azure.Provisioning.Monitor.DiagnosticSettingsCategoryResource FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
@@ -1863,6 +1864,7 @@ namespace Azure.Provisioning.Monitor
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Monitor.OnboardingStatus> OnboardingStatus { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> ResourceId { get { throw null; } }
+        public Azure.Provisioning.Primitives.ProvisionableResource Scope { get { throw null; } set { } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
         public static Azure.Provisioning.Monitor.VMInsightsOnboardingStatus FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }

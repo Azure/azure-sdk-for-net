@@ -133,7 +133,7 @@ namespace Azure.Provisioning.Sql
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _properties = DefineModelProperty<AdvancedThreatProtectionProperties>(nameof(Properties), new string[] { "properties" });
-            _parent = DefineResource<ManagedDatabase>(nameof(Parent), new string[] { "parent" }, isRequired: true);
+            _parent = DefineResource<ManagedDatabase>(nameof(Parent), new string[] { "parent" });
             DefineAdditionalProperties();
         }
 

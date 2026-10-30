@@ -93,6 +93,23 @@ namespace Azure.ResourceManager.Compute.Models
             }
         }
 
+        /// <summary> The private IP address prefix length. If specified and the allocation method is dynamic, the service will allocate a CIDR block instead of a single IP address. </summary>
+        public int? PrivateIPAddressPrefixLength
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PrivateIPAddressPrefixLength;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VirtualMachineScaleSetIPConfigurationProperties();
+                }
+                Properties.PrivateIPAddressPrefixLength = value;
+            }
+        }
+
         /// <summary> Specifies an array of references to backend address pools of application gateways. A scale set can reference backend address pools of multiple application gateways. Multiple scale sets cannot use the same application gateway. </summary>
         public IList<ComputeWriteableSubResourceData> ApplicationGatewayBackendAddressPoolResources
         {

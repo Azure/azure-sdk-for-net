@@ -21,6 +21,7 @@ namespace Azure.Provisioning.Compute
         private ImageVersionSecurityProfile _securityProfile;
         private BicepValue<bool> _isRestoreEnabled;
         private GalleryImageValidationsProfile _validationsProfile;
+        private BicepList<ImageMetadataProfile> _imageMetadataProfiles;
 
         /// <summary> Creates a new GalleryImageVersionProperties. </summary>
         public GalleryImageVersionProperties()
@@ -93,7 +94,7 @@ namespace Azure.Provisioning.Compute
         }
 
         /// <summary> Gets or sets the SecurityProfile. </summary>
-        internal ImageVersionSecurityProfile SecurityProfile
+        public ImageVersionSecurityProfile SecurityProfile
         {
             get
             {
@@ -132,20 +133,13 @@ namespace Azure.Provisioning.Compute
             }
         }
 
-        /// <summary> Gets or sets the UefiSettings. </summary>
-        public GalleryImageVersionUefiSettings SecurityUefiSettings
+        /// <summary> Gets the ImageMetadataProfiles. </summary>
+        public BicepList<ImageMetadataProfile> ImageMetadataProfiles
         {
             get
             {
-                return SecurityProfile is null ? default : SecurityProfile.UefiSettings;
-            }
-            set
-            {
-                if (SecurityProfile is null)
-                {
-                    SecurityProfile = new ImageVersionSecurityProfile();
-                }
-                SecurityProfile.UefiSettings = value;
+                Initialize();
+                return _imageMetadataProfiles;
             }
         }
 
@@ -161,6 +155,7 @@ namespace Azure.Provisioning.Compute
             _securityProfile = DefineModelProperty<ImageVersionSecurityProfile>(nameof(SecurityProfile), new string[] { "securityProfile" });
             _isRestoreEnabled = DefineProperty<bool>(nameof(IsRestoreEnabled), new string[] { "restore" });
             _validationsProfile = DefineModelProperty<GalleryImageValidationsProfile>(nameof(ValidationsProfile), new string[] { "validationsProfile" }, isOutput: true);
+            _imageMetadataProfiles = DefineListProperty<ImageMetadataProfile>(nameof(ImageMetadataProfiles), new string[] { "imageMetadataProfiles" }, isOutput: true);
             DefineAdditionalProperties();
         }
 

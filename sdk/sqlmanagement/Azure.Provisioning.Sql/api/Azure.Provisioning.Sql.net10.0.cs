@@ -1018,7 +1018,7 @@ namespace Azure.Provisioning.Sql
         public Azure.Provisioning.BicepList<Azure.Provisioning.Sql.MaintenanceWindowTimeRange> MaintenanceWindowCycles { get { throw null; } }
         public Azure.Provisioning.BicepValue<int> MinCycles { get { throw null; } }
         public Azure.Provisioning.BicepValue<int> MinDurationInMinutes { get { throw null; } }
-        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.Sql.SqlDatabase Parent { get { throw null; } set { } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         public Azure.Provisioning.BicepValue<int> TimeGranularityInMinutes { get { throw null; } }
@@ -1037,7 +1037,7 @@ namespace Azure.Provisioning.Sql
     {
         public MaintenanceWindows(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
-        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.Sql.SqlDatabase Parent { get { throw null; } set { } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         public Azure.Provisioning.BicepList<Azure.Provisioning.Sql.MaintenanceWindowTimeRange> TimeRanges { get { throw null; } set { } }
@@ -2579,7 +2579,7 @@ namespace Azure.Provisioning.Sql
     {
         public SqlAgentConfiguration(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
-        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.Sql.ManagedInstance Parent { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Sql.SqlAgentConfigurationPropertiesState> State { get { throw null; } set { } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
@@ -2831,7 +2831,7 @@ namespace Azure.Provisioning.Sql
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Sql.AutomaticTuningMode> ActualState { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Sql.AutomaticTuningMode> DesiredState { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
-        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.BicepDictionary<Azure.Provisioning.Sql.AutomaticTuningOptions> Options { get { throw null; } }
         public Azure.Provisioning.Sql.SqlDatabase Parent { get { throw null; } set { } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
@@ -3641,7 +3641,7 @@ namespace Azure.Provisioning.Sql
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Sql.AutomaticTuningServerMode> ActualState { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Sql.AutomaticTuningServerMode> DesiredState { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
-        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.BicepDictionary<Azure.Provisioning.Sql.AutomaticTuningServerOptions> Options { get { throw null; } }
         public Azure.Provisioning.Sql.SqlServer Parent { get { throw null; } set { } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }

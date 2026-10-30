@@ -7,14 +7,23 @@
 
 namespace Azure.Provisioning.Compute
 {
-    /// <summary> Specifies the priority for a standalone virtual machine or the virtual machines in the scale set. 'Low' enum will be deprecated in the future, please use 'Spot' as the enum to deploy Azure Spot VM/VMSS. </summary>
+    /// <summary> Specifies the priority for a standalone virtual machine or the virtual machines in the scale set. </summary>
     public enum VirtualMachinePriorityType
     {
-        /// <summary> Regular. </summary>
+        /// <summary>
+        /// Regular Priority for a standalone virtual machine or the virtual machines in the scale set.
+        /// This is the default priority and it will be used to deploy regular VM/VMSS.
+        /// </summary>
         Regular = 0,
-        /// <summary> Low. </summary>
+        /// <summary> Low priority for a standalone virtual machine or the virtual machines in the scale set. Will be Deprecated, use Spot instead. </summary>
         Low = 1,
-        /// <summary> Spot. </summary>
-        Spot = 2
+        /// <summary> Spot priority for a standalone virtual machine or the virtual machines in the scale set. </summary>
+        Spot = 2,
+        /// <summary>
+        /// SpotPlus priority for a standalone virtual machine or the virtual machines in the scale set.
+        /// This is an enum value that will be used to deploy Azure Spot Plus VM/VMSS, which is the next
+        /// generation of Azure Spot VM/VMSS with more reliability and longer running time.
+        /// </summary>
+        SpotPlus = 3
     }
 }

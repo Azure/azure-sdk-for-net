@@ -427,7 +427,7 @@ namespace Azure.Provisioning.EventHubs
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepList<Azure.Provisioning.EventHubs.EventHubsNetworkRuleSetIPRules> IPRules { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.AzureLocation> Location { get { throw null; } }
-        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.EventHubs.EventHubsNamespace Parent { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.EventHubs.EventHubsPublicNetworkAccessFlag> PublicNetworkAccess { get { throw null; } set { } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }

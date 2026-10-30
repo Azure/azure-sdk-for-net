@@ -18,10 +18,10 @@ namespace Azure.Provisioning.Network
         /// <summary> Radius. </summary>
         Radius = 2,
         /// <summary> AAD. </summary>
-        AAD = 0,
-        /// <summary> Aad. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         [DataMember(Name = "AAD")]
-        Aad = 3
+        Aad = 3,
+        /// <summary> AAD. </summary>
+        AAD = 0
     }
 }

@@ -203,7 +203,8 @@ internal sealed class DefaultResilientTaskBuilder
             multiTurn,
             isSteerable,
             options,
-            inputTypeInfo);
+            inputTypeInfo,
+            () => _engine.IsCoreExplicitlyEnabled);
 
         registration.RecoverDispatch = (engineObj, record) =>
             ((TaskEngine)engineObj).RecoverAsync<TInput, TOutput>(registration, record);

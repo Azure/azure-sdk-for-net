@@ -12,25 +12,25 @@ namespace Azure.Provisioning.Network
     /// <summary> Parameters that define the configuration of traffic analytics. </summary>
     internal partial class TrafficAnalyticsProperties : ProvisionableConstruct
     {
-        private TrafficAnalyticsConfigurationProperties _networkWatcherFlowAnalyticsConfiguration;
+        private TrafficAnalyticsConfigurationProperties _trafficAnalyticsConfiguration;
 
         /// <summary> Creates a new TrafficAnalyticsProperties. </summary>
         public TrafficAnalyticsProperties()
         {
         }
 
-        /// <summary> Gets or sets the NetworkWatcherFlowAnalyticsConfiguration. </summary>
-        public TrafficAnalyticsConfigurationProperties NetworkWatcherFlowAnalyticsConfiguration
+        /// <summary> Gets or sets the TrafficAnalyticsConfiguration. </summary>
+        public TrafficAnalyticsConfigurationProperties TrafficAnalyticsConfiguration
         {
             get
             {
                 Initialize();
-                return _networkWatcherFlowAnalyticsConfiguration;
+                return _trafficAnalyticsConfiguration;
             }
             set
             {
                 Initialize();
-                AssignOrReplace(ref _networkWatcherFlowAnalyticsConfiguration, value);
+                AssignOrReplace(ref _trafficAnalyticsConfiguration, value);
             }
         }
 
@@ -38,7 +38,7 @@ namespace Azure.Provisioning.Network
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            _networkWatcherFlowAnalyticsConfiguration = DefineModelProperty<TrafficAnalyticsConfigurationProperties>(nameof(NetworkWatcherFlowAnalyticsConfiguration), new string[] { "networkWatcherFlowAnalyticsConfiguration" });
+            _trafficAnalyticsConfiguration = DefineModelProperty<TrafficAnalyticsConfigurationProperties>(nameof(TrafficAnalyticsConfiguration), new string[] { "networkWatcherFlowAnalyticsConfiguration" });
             DefineAdditionalProperties();
         }
 

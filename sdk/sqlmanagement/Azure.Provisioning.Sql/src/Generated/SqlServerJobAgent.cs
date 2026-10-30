@@ -200,7 +200,7 @@ namespace Azure.Provisioning.Sql
             _properties = DefineModelProperty<JobAgentProperties>(nameof(Properties), new string[] { "properties" });
             _sku = DefineModelProperty<SqlSku>(nameof(Sku), new string[] { "sku" });
             _identity = DefineModelProperty<JobAgentIdentity>(nameof(Identity), new string[] { "identity" });
-            _parent = DefineResource<SqlServer>(nameof(Parent), new string[] { "parent" }, isRequired: true);
+            _parent = DefineResource<SqlServer>(nameof(Parent), new string[] { "parent" });
             DefineAdditionalProperties();
         }
 

@@ -242,7 +242,7 @@ namespace Azure.Provisioning.Sql
             _properties = DefineModelProperty<FailoverGroupProperties>(nameof(Properties), new string[] { "properties" });
             _tags = DefineDictionaryProperty<string>(nameof(Tags), new string[] { "tags" });
             _location = DefineProperty<AzureLocation>(nameof(Location), new string[] { "location" }, isOutput: true);
-            _parent = DefineResource<SqlServer>(nameof(Parent), new string[] { "parent" }, isRequired: true);
+            _parent = DefineResource<SqlServer>(nameof(Parent), new string[] { "parent" });
             DefineAdditionalProperties();
         }
 

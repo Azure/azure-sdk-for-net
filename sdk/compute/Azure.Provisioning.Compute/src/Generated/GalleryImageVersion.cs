@@ -26,7 +26,7 @@ namespace Azure.Provisioning.Compute
         /// <summary> Creates a new GalleryImageVersion. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
         /// <param name="resourceVersion"> The resource API version. </param>
-        public GalleryImageVersion(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.Compute/galleries/images/versions", resourceVersion ?? "2025-12-03")
+        public GalleryImageVersion(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.Compute/galleries/images/versions", resourceVersion ?? "2026-03-03")
         {
         }
 
@@ -198,6 +198,23 @@ namespace Azure.Provisioning.Compute
             }
         }
 
+        /// <summary> Gets or sets the SecurityProfile. </summary>
+        public ImageVersionSecurityProfile SecurityProfile
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SecurityProfile;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new GalleryImageVersionProperties();
+                }
+                Properties.SecurityProfile = value;
+            }
+        }
+
         /// <summary> Gets or sets the IsRestoreEnabled. </summary>
         public BicepValue<bool> IsRestoreEnabled
         {
@@ -224,20 +241,16 @@ namespace Azure.Provisioning.Compute
             }
         }
 
-        /// <summary> Gets or sets the UefiSettings. </summary>
-        public GalleryImageVersionUefiSettings SecurityUefiSettings
+        /// <summary> Gets the ImageMetadataProfiles. </summary>
+        public BicepList<ImageMetadataProfile> ImageMetadataProfiles
         {
             get
-            {
-                return Properties is null ? default : Properties.SecurityUefiSettings;
-            }
-            set
             {
                 if (Properties is null)
                 {
                     Properties = new GalleryImageVersionProperties();
                 }
-                Properties.SecurityUefiSettings = value;
+                return Properties.ImageMetadataProfiles;
             }
         }
 
@@ -251,7 +264,7 @@ namespace Azure.Provisioning.Compute
             _tags = DefineDictionaryProperty<string>(nameof(Tags), new string[] { "tags" });
             _location = DefineProperty<AzureLocation>(nameof(Location), new string[] { "location" }, isRequired: true);
             _properties = DefineModelProperty<GalleryImageVersionProperties>(nameof(Properties), new string[] { "properties" });
-            _parent = DefineResource<GalleryImage>(nameof(Parent), new string[] { "parent" }, isRequired: true);
+            _parent = DefineResource<GalleryImage>(nameof(Parent), new string[] { "parent" });
             DefineAdditionalProperties();
         }
 
@@ -271,6 +284,8 @@ namespace Azure.Provisioning.Compute
         /// <summary></summary>
         public static partial class ResourceVersions
         {
+            /// <summary> API version "2026-03-03". </summary>
+            public static readonly string V2026_03_03 = "2026-03-03";
             /// <summary> API version "2025-12-03". </summary>
             public static readonly string V2025_12_03 = "2025-12-03";
             /// <summary> API version "2025-03-03". </summary>

@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Network
         {
             TryGetApiVersion(CloudServiceSwapResource.ResourceType, out string cloudServiceSwapApiVersion);
             _vipSwapClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", CloudServiceSwapResource.ResourceType.Namespace, Diagnostics);
-            _vipSwapRestClient = new VipSwap(_vipSwapClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, cloudServiceSwapApiVersion ?? "2026-01-01");
+            _vipSwapRestClient = new VipSwap(_vipSwapClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, cloudServiceSwapApiVersion ?? "2026-03-01");
             ValidateResourceId(id);
         }
 
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -373,7 +373,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -425,7 +425,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -481,7 +481,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>

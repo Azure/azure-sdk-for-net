@@ -569,7 +569,7 @@ namespace Azure.Provisioning.AppContainers
         public Azure.Provisioning.BicepValue<Azure.Core.AzureLocation> Location { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> ManagedBy { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> ManagedEnvironmentId { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> NetworkingOutboundVnetSubnetId { get { throw null; } set { } }
         public Azure.Provisioning.BicepList<System.Net.IPAddress> OutboundIPAddressList { get { throw null; } }
         public Azure.Provisioning.AppContainers.ContainerApp Parent { get { throw null; } set { } }
@@ -1447,7 +1447,7 @@ namespace Azure.Provisioning.AppContainers
         public Azure.Provisioning.BicepValue<string> KedaVersion { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Kind { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.AzureLocation> Location { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.AppContainers.OpenTelemetryConfiguration OpenTelemetryConfiguration { get { throw null; } set { } }
         public Azure.Provisioning.AppContainers.ContainerAppManagedEnvironment Parent { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<bool> PeerAuthenticationIsMtlsEnabled { get { throw null; } set { } }
