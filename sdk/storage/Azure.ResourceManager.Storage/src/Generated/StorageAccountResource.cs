@@ -63,12 +63,12 @@ namespace Azure.ResourceManager.Storage
                 Pipeline,
                 Diagnostics.ApplicationId,
                 Endpoint,
-                storageAccountApiVersion ?? "2026-09-01",
+                storageAccountApiVersion ?? "2026-12-01",
                 resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             _blobAccessPointConnectionTestsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Storage", ResourceType.Namespace, Diagnostics);
-            _blobAccessPointConnectionTestsRestClient = new BlobAccessPointConnectionTests(_blobAccessPointConnectionTestsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, storageAccountApiVersion ?? "2026-09-01");
+            _blobAccessPointConnectionTestsRestClient = new BlobAccessPointConnectionTests(_blobAccessPointConnectionTestsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, storageAccountApiVersion ?? "2026-12-01");
             _privateLinkResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Storage", ResourceType.Namespace, Diagnostics);
-            _privateLinkResourcesRestClient = new PrivateLinkResources(_privateLinkResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, storageAccountApiVersion ?? "2026-09-01");
+            _privateLinkResourcesRestClient = new PrivateLinkResources(_privateLinkResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, storageAccountApiVersion ?? "2026-12-01");
             ValidateResourceId(id);
         }
 
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Storage
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-09-01. </description>
+        /// <description> 2026-12-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Storage
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-09-01. </description>
+        /// <description> 2026-12-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.Storage
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-09-01. </description>
+        /// <description> 2026-12-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -271,7 +271,7 @@ namespace Azure.ResourceManager.Storage
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-09-01. </description>
+        /// <description> 2026-12-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -323,7 +323,7 @@ namespace Azure.ResourceManager.Storage
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-09-01. </description>
+        /// <description> 2026-12-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -374,7 +374,7 @@ namespace Azure.ResourceManager.Storage
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-09-01. </description>
+        /// <description> 2026-12-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -425,7 +425,7 @@ namespace Azure.ResourceManager.Storage
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-09-01. </description>
+        /// <description> 2026-12-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -484,7 +484,7 @@ namespace Azure.ResourceManager.Storage
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-09-01. </description>
+        /// <description> 2026-12-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -543,7 +543,7 @@ namespace Azure.ResourceManager.Storage
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-09-01. </description>
+        /// <description> 2026-12-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -592,7 +592,7 @@ namespace Azure.ResourceManager.Storage
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-09-01. </description>
+        /// <description> 2026-12-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -641,7 +641,7 @@ namespace Azure.ResourceManager.Storage
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-09-01. </description>
+        /// <description> 2026-12-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -694,7 +694,7 @@ namespace Azure.ResourceManager.Storage
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-09-01. </description>
+        /// <description> 2026-12-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -747,7 +747,7 @@ namespace Azure.ResourceManager.Storage
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-09-01. </description>
+        /// <description> 2026-12-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -797,7 +797,7 @@ namespace Azure.ResourceManager.Storage
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-09-01. </description>
+        /// <description> 2026-12-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -847,7 +847,7 @@ namespace Azure.ResourceManager.Storage
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-09-01. </description>
+        /// <description> 2026-12-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -901,7 +901,7 @@ namespace Azure.ResourceManager.Storage
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-09-01. </description>
+        /// <description> 2026-12-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -955,7 +955,7 @@ namespace Azure.ResourceManager.Storage
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-09-01. </description>
+        /// <description> 2026-12-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -1007,7 +1007,7 @@ namespace Azure.ResourceManager.Storage
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-09-01. </description>
+        /// <description> 2026-12-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -1059,7 +1059,7 @@ namespace Azure.ResourceManager.Storage
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-09-01. </description>
+        /// <description> 2026-12-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -1107,7 +1107,7 @@ namespace Azure.ResourceManager.Storage
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-09-01. </description>
+        /// <description> 2026-12-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -1155,7 +1155,7 @@ namespace Azure.ResourceManager.Storage
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-09-01. </description>
+        /// <description> 2026-12-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -1204,7 +1204,7 @@ namespace Azure.ResourceManager.Storage
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-09-01. </description>
+        /// <description> 2026-12-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -1253,7 +1253,7 @@ namespace Azure.ResourceManager.Storage
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-09-01. </description>
+        /// <description> 2026-12-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -1305,7 +1305,7 @@ namespace Azure.ResourceManager.Storage
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-09-01. </description>
+        /// <description> 2026-12-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -1357,7 +1357,7 @@ namespace Azure.ResourceManager.Storage
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-09-01. </description>
+        /// <description> 2026-12-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -1400,7 +1400,7 @@ namespace Azure.ResourceManager.Storage
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-09-01. </description>
+        /// <description> 2026-12-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -1443,7 +1443,7 @@ namespace Azure.ResourceManager.Storage
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-09-01. </description>
+        /// <description> 2026-12-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -1485,7 +1485,7 @@ namespace Azure.ResourceManager.Storage
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-09-01. </description>
+        /// <description> 2026-12-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -1837,6 +1837,13 @@ namespace Azure.ResourceManager.Storage
         public virtual StorageAccountManagementPolicyResource GetStorageAccountManagementPolicy()
         {
             return new StorageAccountManagementPolicyResource(Client, Id.AppendChildResource("managementPolicies", "default"));
+        }
+
+        /// <summary> Gets an object representing a <see cref="MetadataPolicyResource"/> along with the instance operations that can be performed on it in the <see cref="StorageAccountResource"/>. </summary>
+        /// <returns> Returns a <see cref="MetadataPolicyResource"/> object. </returns>
+        public virtual MetadataPolicyResource GetMetadataPolicy()
+        {
+            return new MetadataPolicyResource(Client, Id.AppendChildResource("metadataPolicies", "default"));
         }
 
         /// <summary> Gets an object representing a <see cref="BlobInventoryPolicyResource"/> along with the instance operations that can be performed on it in the <see cref="StorageAccountResource"/>. </summary>
