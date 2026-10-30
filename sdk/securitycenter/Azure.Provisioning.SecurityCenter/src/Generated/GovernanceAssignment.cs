@@ -21,7 +21,7 @@ namespace Azure.Provisioning.SecurityCenter
         private BicepValue<string> _name;
         private SystemData _systemData;
         private GovernanceAssignmentProperties _properties;
-        private ResourceReference<ProvisionableResource> _scope;
+        private ResourceReference<SecurityAssessment> _parent;
 
         /// <summary> Creates a new GovernanceAssignment. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -80,18 +80,18 @@ namespace Azure.Provisioning.SecurityCenter
             }
         }
 
-        /// <summary> Gets or sets the Scope. </summary>
-        public ProvisionableResource Scope
+        /// <summary> Gets or sets the Parent. </summary>
+        public SecurityAssessment Parent
         {
             get
             {
                 Initialize();
-                return _scope.Value;
+                return _parent.Value;
             }
             set
             {
                 Initialize();
-                _scope.Value = value;
+                _parent.Value = value;
             }
         }
 
@@ -205,7 +205,7 @@ namespace Azure.Provisioning.SecurityCenter
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _properties = DefineModelProperty<GovernanceAssignmentProperties>(nameof(Properties), new string[] { "properties" });
-            _scope = DefineResource<ProvisionableResource>(nameof(Scope), new string[] { "scope" });
+            _parent = DefineResource<SecurityAssessment>(nameof(Parent), new string[] { "parent" });
             DefineAdditionalProperties();
         }
 

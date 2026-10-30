@@ -24,6 +24,7 @@ namespace Azure.Provisioning.CostManagement
         private BicepValue<string> _startTime;
         private BicepValue<string> _endTime;
         private ExportRunErrorDetails _error;
+        private ResourceReference<ProvisionableResource> _scope;
 
         /// <summary> Creates a new GenerateDetailedCostReportOperationStatuses. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -117,6 +118,21 @@ namespace Azure.Provisioning.CostManagement
             }
         }
 
+        /// <summary> Gets or sets the Scope. </summary>
+        public ProvisionableResource Scope
+        {
+            get
+            {
+                Initialize();
+                return _scope.Value;
+            }
+            set
+            {
+                Initialize();
+                _scope.Value = value;
+            }
+        }
+
         /// <summary> Gets the ExpiryOn. </summary>
         public BicepValue<DateTimeOffset> ExpiryOn
         {
@@ -165,6 +181,7 @@ namespace Azure.Provisioning.CostManagement
             _startTime = DefineProperty<string>(nameof(StartTime), new string[] { "startTime" });
             _endTime = DefineProperty<string>(nameof(EndTime), new string[] { "endTime" });
             _error = DefineModelProperty<ExportRunErrorDetails>(nameof(Error), new string[] { "error" });
+            _scope = DefineResource<ProvisionableResource>(nameof(Scope), new string[] { "scope" });
             DefineAdditionalProperties();
         }
 

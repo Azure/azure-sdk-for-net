@@ -146,7 +146,7 @@ namespace Azure.Provisioning.AppConfiguration
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _properties = DefineModelProperty<ReplicaProperties>(nameof(Properties), new string[] { "properties" });
             _location = DefineProperty<AzureLocation>(nameof(Location), new string[] { "location" });
-            _parent = DefineResource<AppConfigurationStore>(nameof(Parent), new string[] { "parent" }, isRequired: true);
+            _parent = DefineResource<AppConfigurationStore>(nameof(Parent), new string[] { "parent" });
             DefineAdditionalProperties();
         }
 
