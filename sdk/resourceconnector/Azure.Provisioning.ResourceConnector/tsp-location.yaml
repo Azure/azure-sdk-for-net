@@ -1,0 +1,4 @@
+directory: specification/resourceconnector/resource-manager/Microsoft.ResourceConnector/ResourceConnector
+commit: 59ae66b8f1f0617806929c9bb799b4377c7d0ebf
+repo: cxznmhdcxz/azure-rest-api-specs
+emitterPackageJsonPath: "eng/azure-typespec-http-client-csharp-provisioning-emitter-package.json"

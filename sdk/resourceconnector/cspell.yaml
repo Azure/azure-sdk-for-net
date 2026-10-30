@@ -8,3 +8,10 @@ overrides:
       - kubeconfigs
       - kvaio
       - scvmm
+  - filename: '**/sdk/resourceconnector/Azure.Provisioning.ResourceConnector/**/*.cs'
+    words:
+      - AZPROVISION
+      - capi
+      - kvaio
+      - scvmm
+      - trycep
