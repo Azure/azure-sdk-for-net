@@ -156,6 +156,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WritePropertyName("diskEncryptionInfo"u8);
                 writer.WriteObjectValue(DiskEncryptionInfo, options);
             }
+            if (Optional.IsDefined(RecoveryConfidentialDataDiskEncryptionIdentity))
+            {
+                writer.WritePropertyName("recoveryConfidentialDataDiskEncryptionIdentity"u8);
+                writer.WriteStringValue(RecoveryConfidentialDataDiskEncryptionIdentity);
+            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -199,6 +204,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             ResourceIdentifier recoveryCapacityReservationGroupId = default;
             int? platformFaultDomain = default;
             SiteRecoveryDiskEncryptionInfo diskEncryptionInfo = default;
+            ResourceIdentifier recoveryConfidentialDataDiskEncryptionIdentity = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("instanceType"u8))
@@ -334,6 +340,15 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     diskEncryptionInfo = SiteRecoveryDiskEncryptionInfo.DeserializeSiteRecoveryDiskEncryptionInfo(prop.Value, options);
                     continue;
                 }
+                if (prop.NameEquals("recoveryConfidentialDataDiskEncryptionIdentity"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    recoveryConfidentialDataDiskEncryptionIdentity = new ResourceIdentifier(prop.Value.GetString());
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
@@ -355,7 +370,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 recoveryVirtualMachineScaleSetId,
                 recoveryCapacityReservationGroupId,
                 platformFaultDomain,
-                diskEncryptionInfo);
+                diskEncryptionInfo,
+                recoveryConfidentialDataDiskEncryptionIdentity);
         }
     }
 }

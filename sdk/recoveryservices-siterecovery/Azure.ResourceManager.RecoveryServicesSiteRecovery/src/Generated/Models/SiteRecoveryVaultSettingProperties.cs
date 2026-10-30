@@ -25,11 +25,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <summary> Initializes a new instance of <see cref="SiteRecoveryVaultSettingProperties"/>. </summary>
         /// <param name="migrationSolutionId"> The migration solution ARM Id. </param>
         /// <param name="vMwareToAzureProviderType"> VMware to Azure provider type. </param>
+        /// <param name="recoveryNetworkConfigAutoSync"> The vault level policy controlling whether the A2A recovery network configuration is automatically kept in sync with the source virtual machine. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SiteRecoveryVaultSettingProperties(ResourceIdentifier migrationSolutionId, string vMwareToAzureProviderType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SiteRecoveryVaultSettingProperties(ResourceIdentifier migrationSolutionId, string vMwareToAzureProviderType, RecoveryNetworkConfigAutoSyncPolicy? recoveryNetworkConfigAutoSync, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             MigrationSolutionId = migrationSolutionId;
             VMwareToAzureProviderType = vMwareToAzureProviderType;
+            RecoveryNetworkConfigAutoSync = recoveryNetworkConfigAutoSync;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -38,5 +40,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 
         /// <summary> VMware to Azure provider type. </summary>
         public string VMwareToAzureProviderType { get; }
+
+        /// <summary> The vault level policy controlling whether the A2A recovery network configuration is automatically kept in sync with the source virtual machine. </summary>
+        public RecoveryNetworkConfigAutoSyncPolicy? RecoveryNetworkConfigAutoSync { get; }
     }
 }

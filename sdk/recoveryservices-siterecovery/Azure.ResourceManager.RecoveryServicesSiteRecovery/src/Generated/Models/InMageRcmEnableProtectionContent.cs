@@ -65,7 +65,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="userSelectedOSName"> The OS name selected by user. </param>
         /// <param name="targetVmSecurityProfile"> The target VM security profile. </param>
         /// <param name="targetCapacityReservationGroupId"> The target capacity reservation group ARM Id. </param>
-        internal InMageRcmEnableProtectionContent(string instanceType, IDictionary<string, BinaryData> additionalBinaryDataProperties, string fabricDiscoveryMachineId, IList<InMageRcmDiskContent> disksToInclude, InMageRcmDisksDefaultContent disksDefault, ResourceIdentifier targetResourceGroupId, ResourceIdentifier targetNetworkId, ResourceIdentifier testNetworkId, string targetSubnetName, string testSubnetName, string targetVmName, string targetVmSize, SiteRecoveryLicenseType? licenseType, ResourceIdentifier targetAvailabilitySetId, string targetAvailabilityZone, ResourceIdentifier targetProximityPlacementGroupId, ResourceIdentifier targetBootDiagnosticsStorageAccountId, string runAsAccountId, Guid processServerId, string multiVmGroupName, SiteRecoverySqlServerLicenseType? sqlServerLicenseType, RecoveryServicesSiteRecoveryLinuxLicenseType? linuxLicenseType, IList<UserCreatedResourceTag> targetVmTags, IList<UserCreatedResourceTag> seedManagedDiskTags, IList<UserCreatedResourceTag> targetManagedDiskTags, IList<UserCreatedResourceTag> targetNicTags, string userSelectedOSName, RecoveryServicesSiteRecoverySecurityProfileProperties targetVmSecurityProfile, string targetCapacityReservationGroupId) : base(instanceType, additionalBinaryDataProperties)
+        /// <param name="targetExtendedLocation"> The target extended location. </param>
+        internal InMageRcmEnableProtectionContent(string instanceType, IDictionary<string, BinaryData> additionalBinaryDataProperties, string fabricDiscoveryMachineId, IList<InMageRcmDiskContent> disksToInclude, InMageRcmDisksDefaultContent disksDefault, ResourceIdentifier targetResourceGroupId, ResourceIdentifier targetNetworkId, ResourceIdentifier testNetworkId, string targetSubnetName, string testSubnetName, string targetVmName, string targetVmSize, SiteRecoveryLicenseType? licenseType, ResourceIdentifier targetAvailabilitySetId, string targetAvailabilityZone, ResourceIdentifier targetProximityPlacementGroupId, ResourceIdentifier targetBootDiagnosticsStorageAccountId, string runAsAccountId, Guid processServerId, string multiVmGroupName, SiteRecoverySqlServerLicenseType? sqlServerLicenseType, RecoveryServicesSiteRecoveryLinuxLicenseType? linuxLicenseType, IList<UserCreatedResourceTag> targetVmTags, IList<UserCreatedResourceTag> seedManagedDiskTags, IList<UserCreatedResourceTag> targetManagedDiskTags, IList<UserCreatedResourceTag> targetNicTags, string userSelectedOSName, RecoveryServicesSiteRecoverySecurityProfileProperties targetVmSecurityProfile, string targetCapacityReservationGroupId, SiteRecoveryExtendedLocation targetExtendedLocation) : base(instanceType, additionalBinaryDataProperties)
         {
             FabricDiscoveryMachineId = fabricDiscoveryMachineId;
             DisksToInclude = disksToInclude;
@@ -94,6 +95,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             UserSelectedOSName = userSelectedOSName;
             TargetVmSecurityProfile = targetVmSecurityProfile;
             TargetCapacityReservationGroupId = targetCapacityReservationGroupId;
+            TargetExtendedLocation = targetExtendedLocation;
         }
 
         /// <summary> The ARM Id of discovered machine. </summary>
@@ -176,5 +178,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 
         /// <summary> The target capacity reservation group ARM Id. </summary>
         public string TargetCapacityReservationGroupId { get; set; }
+
+        /// <summary> The target extended location. </summary>
+        public SiteRecoveryExtendedLocation TargetExtendedLocation { get; set; }
     }
 }

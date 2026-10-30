@@ -171,6 +171,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 writer.WriteEndArray();
             }
+            if (options.Format != "W" && Optional.IsDefined(IPVersion))
+            {
+                writer.WritePropertyName("ipVersion"u8);
+                writer.WriteStringValue(IPVersion.Value.ToString());
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -228,6 +233,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             IPAddress tfoStaticIPAddress = default;
             ResourceIdentifier tfoPublicIPAddressId = default;
             IReadOnlyList<string> tfoLBBackendAddressPoolIds = default;
+            IPVersion? ipVersion = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -366,6 +372,15 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     tfoLBBackendAddressPoolIds = array;
                     continue;
                 }
+                if (prop.NameEquals("ipVersion"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    ipVersion = new IPVersion(prop.Value.GetString());
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
@@ -387,6 +402,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 tfoStaticIPAddress,
                 tfoPublicIPAddressId,
                 tfoLBBackendAddressPoolIds ?? new ChangeTrackingList<string>(),
+                ipVersion,
                 additionalBinaryDataProperties);
         }
     }

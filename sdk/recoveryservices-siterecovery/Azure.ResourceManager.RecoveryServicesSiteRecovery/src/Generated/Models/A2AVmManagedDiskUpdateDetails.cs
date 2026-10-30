@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -28,8 +29,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="diskEncryptionInfo"> The recovery os disk encryption information. </param>
         /// <param name="failoverDiskName"> The target disk name for unplanned failover operation. </param>
         /// <param name="tfoDiskName"> The target disk name for test failover operation. </param>
+        /// <param name="confidentialDiskEncryptionInfo"> The confidential disk encryption info to update for the managed disk. Only the recovery target confidential disk encryption set can be changed through this update operation. Applicable to A2A CMK confidential VMs. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal A2AVmManagedDiskUpdateDetails(string diskId, string recoveryTargetDiskAccountType, string recoveryReplicaDiskAccountType, SiteRecoveryDiskEncryptionInfo diskEncryptionInfo, string failoverDiskName, string tfoDiskName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal A2AVmManagedDiskUpdateDetails(string diskId, string recoveryTargetDiskAccountType, string recoveryReplicaDiskAccountType, SiteRecoveryDiskEncryptionInfo diskEncryptionInfo, string failoverDiskName, string tfoDiskName, UpdateConfidentialDiskEncryptionInfo confidentialDiskEncryptionInfo, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DiskId = diskId;
             RecoveryTargetDiskAccountType = recoveryTargetDiskAccountType;
@@ -37,6 +39,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             DiskEncryptionInfo = diskEncryptionInfo;
             FailoverDiskName = failoverDiskName;
             TfoDiskName = tfoDiskName;
+            ConfidentialDiskEncryptionInfo = confidentialDiskEncryptionInfo;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -57,5 +60,25 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 
         /// <summary> The target disk name for test failover operation. </summary>
         public string TfoDiskName { get; set; }
+
+        /// <summary> The confidential disk encryption info to update for the managed disk. Only the recovery target confidential disk encryption set can be changed through this update operation. Applicable to A2A CMK confidential VMs. </summary>
+        internal UpdateConfidentialDiskEncryptionInfo ConfidentialDiskEncryptionInfo { get; set; }
+
+        /// <summary> The Azure resource ID of the confidential disk encryption set used for the target disk after failover. Applicable to CMK confidential VMs. </summary>
+        public ResourceIdentifier RecoveryTargetConfidentialDiskEncryptionSetId
+        {
+            get
+            {
+                return ConfidentialDiskEncryptionInfo is null ? default : ConfidentialDiskEncryptionInfo.RecoveryTargetConfidentialDiskEncryptionSetId;
+            }
+            set
+            {
+                if (ConfidentialDiskEncryptionInfo is null)
+                {
+                    ConfidentialDiskEncryptionInfo = new UpdateConfidentialDiskEncryptionInfo();
+                }
+                ConfidentialDiskEncryptionInfo.RecoveryTargetConfidentialDiskEncryptionSetId = value;
+            }
+        }
     }
 }
