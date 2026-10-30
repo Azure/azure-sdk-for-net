@@ -25,7 +25,7 @@ namespace Azure.Provisioning.HealthcareApis
         private HealthcareApisIotFhirDestinationProperties _properties;
         private BicepValue<ETag> _eTag;
         private BicepValue<AzureLocation> _location;
-        private ResourceReference<HealthcareApisIotConnector> _parent;
+        private ProvisioningResourceReference<HealthcareApisIotConnector> _parent;
 
         /// <summary> Creates a new HealthcareApisIotFhirDestination. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -203,7 +203,7 @@ namespace Azure.Provisioning.HealthcareApis
             _properties = DefineModelProperty<HealthcareApisIotFhirDestinationProperties>(nameof(Properties), new string[] { "properties" }, isRequired: true);
             _eTag = DefineProperty<ETag>(nameof(ETag), new string[] { "etag" });
             _location = DefineProperty<AzureLocation>(nameof(Location), new string[] { "location" });
-            _parent = DefineResource<HealthcareApisIotConnector>(nameof(Parent), new string[] { "parent" });
+            _parent = new ProvisioningResourceReference<HealthcareApisIotConnector>(DefineProperty<string>(nameof(Parent), new string[] { "parent" }));
             DefineAdditionalProperties();
         }
 

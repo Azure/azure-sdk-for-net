@@ -21,7 +21,7 @@ namespace Azure.Provisioning.Monitor
         private SystemData _systemData;
         private DataCollectionRuleAssociationProxyOnlyResourceProperties _properties;
         private BicepValue<ETag> _eTag;
-        private ResourceReference<ProvisionableResource> _scope;
+        private ProvisioningResourceReference<ProvisionableResource> _scope;
 
         /// <summary> Creates a new DataCollectionRuleAssociation. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -187,7 +187,7 @@ namespace Azure.Provisioning.Monitor
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _properties = DefineModelProperty<DataCollectionRuleAssociationProxyOnlyResourceProperties>(nameof(Properties), new string[] { "properties" });
             _eTag = DefineProperty<ETag>(nameof(ETag), new string[] { "etag" }, isOutput: true);
-            _scope = DefineResource<ProvisionableResource>(nameof(Scope), new string[] { "scope" });
+            _scope = new ProvisioningResourceReference<ProvisionableResource>(DefineProperty<string>(nameof(Scope), new string[] { "scope" }));
             DefineAdditionalProperties();
         }
 

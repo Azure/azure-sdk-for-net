@@ -25,7 +25,7 @@ namespace Azure.Provisioning.ServiceFabric
         private ApplicationResourceProperties _properties;
         private BicepValue<ETag> _eTag;
         private ManagedServiceIdentity _identity;
-        private ResourceReference<ServiceFabricCluster> _parent;
+        private ProvisioningResourceReference<ServiceFabricCluster> _parent;
 
         /// <summary> Creates a new ServiceFabricApplication. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -332,7 +332,7 @@ namespace Azure.Provisioning.ServiceFabric
             _properties = DefineModelProperty<ApplicationResourceProperties>(nameof(Properties), new string[] { "properties" });
             _eTag = DefineProperty<ETag>(nameof(ETag), new string[] { "etag" }, isOutput: true);
             _identity = DefineModelProperty<ManagedServiceIdentity>(nameof(Identity), new string[] { "identity" });
-            _parent = DefineResource<ServiceFabricCluster>(nameof(Parent), new string[] { "parent" });
+            _parent = new ProvisioningResourceReference<ServiceFabricCluster>(DefineProperty<string>(nameof(Parent), new string[] { "parent" }));
             DefineAdditionalProperties();
         }
 

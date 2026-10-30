@@ -24,7 +24,7 @@ namespace Azure.Provisioning.Network
         private SystemData _systemData;
         private BicepValue<AdminRuleKind> _kind;
         private BicepValue<ETag> _eTag;
-        private ResourceReference<AdminRuleGroup> _parent;
+        private ProvisioningResourceReference<AdminRuleGroup> _parent;
 
         /// <summary> Creates a new BaseAdminRule. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -112,7 +112,7 @@ namespace Azure.Provisioning.Network
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _kind = DefineProperty<AdminRuleKind>(nameof(Kind), new string[] { "kind" }, isRequired: true);
             _eTag = DefineProperty<ETag>(nameof(ETag), new string[] { "etag" }, isOutput: true);
-            _parent = DefineResource<AdminRuleGroup>(nameof(Parent), new string[] { "parent" });
+            _parent = new ProvisioningResourceReference<AdminRuleGroup>(DefineProperty<string>(nameof(Parent), new string[] { "parent" }));
             DefineAdditionalProperties();
         }
 

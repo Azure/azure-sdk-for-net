@@ -21,7 +21,7 @@ namespace Azure.Provisioning.Monitor
         private DiagnosticSettingsProperties _properties;
         private BicepValue<AzureLocation> _location;
         private BicepDictionary<string> _tags;
-        private ResourceReference<ProvisionableResource> _scope;
+        private ProvisioningResourceReference<ProvisionableResource> _scope;
 
         /// <summary> Creates a new ServiceDiagnosticSetting. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -232,7 +232,7 @@ namespace Azure.Provisioning.Monitor
             _properties = DefineModelProperty<DiagnosticSettingsProperties>(nameof(Properties), new string[] { "properties" });
             _location = DefineProperty<AzureLocation>(nameof(Location), new string[] { "location" }, isRequired: true);
             _tags = DefineDictionaryProperty<string>(nameof(Tags), new string[] { "tags" });
-            _scope = DefineResource<ProvisionableResource>(nameof(Scope), new string[] { "scope" });
+            _scope = new ProvisioningResourceReference<ProvisionableResource>(DefineProperty<string>(nameof(Scope), new string[] { "scope" }));
             DefineAdditionalProperties();
         }
 

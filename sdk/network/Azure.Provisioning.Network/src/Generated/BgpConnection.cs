@@ -19,7 +19,7 @@ namespace Azure.Provisioning.Network
         private BicepValue<string> _name;
         private BgpConnectionProperties _properties;
         private BicepValue<ETag> _eTag;
-        private ResourceReference<VirtualHub> _parent;
+        private ProvisioningResourceReference<VirtualHub> _parent;
 
         /// <summary> Creates a new BgpConnection. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -195,7 +195,7 @@ namespace Azure.Provisioning.Network
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _properties = DefineModelProperty<BgpConnectionProperties>(nameof(Properties), new string[] { "properties" });
             _eTag = DefineProperty<ETag>(nameof(ETag), new string[] { "etag" }, isOutput: true);
-            _parent = DefineResource<VirtualHub>(nameof(Parent), new string[] { "parent" });
+            _parent = new ProvisioningResourceReference<VirtualHub>(DefineProperty<string>(nameof(Parent), new string[] { "parent" }));
             DefineAdditionalProperties();
         }
 

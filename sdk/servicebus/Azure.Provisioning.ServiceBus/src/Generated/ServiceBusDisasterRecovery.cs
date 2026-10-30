@@ -21,7 +21,7 @@ namespace Azure.Provisioning.ServiceBus
         private SystemData _systemData;
         private ArmDisasterRecoveryProperties _properties;
         private BicepValue<AzureLocation> _location;
-        private ResourceReference<ServiceBusNamespace> _parent;
+        private ProvisioningResourceReference<ServiceBusNamespace> _parent;
 
         /// <summary> Creates a new ServiceBusDisasterRecovery. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -187,7 +187,7 @@ namespace Azure.Provisioning.ServiceBus
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _properties = DefineModelProperty<ArmDisasterRecoveryProperties>(nameof(Properties), new string[] { "properties" });
             _location = DefineProperty<AzureLocation>(nameof(Location), new string[] { "location" }, isOutput: true);
-            _parent = DefineResource<ServiceBusNamespace>(nameof(Parent), new string[] { "parent" });
+            _parent = new ProvisioningResourceReference<ServiceBusNamespace>(DefineProperty<string>(nameof(Parent), new string[] { "parent" }));
             DefineAdditionalProperties();
         }
 

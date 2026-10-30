@@ -21,7 +21,7 @@ namespace Azure.Provisioning.AppContainers
         private SystemData _systemData;
         private LogicAppWorkflowEnvelopeProperties _properties;
         private BicepValue<LogicAppWorkflowKind> _kind;
-        private ResourceReference<LogicApp> _parent;
+        private ProvisioningResourceReference<LogicApp> _parent;
 
         /// <summary> Creates a new LogicAppWorkflowEnvelope. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -109,7 +109,7 @@ namespace Azure.Provisioning.AppContainers
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _properties = DefineModelProperty<LogicAppWorkflowEnvelopeProperties>(nameof(Properties), new string[] { "properties" });
             _kind = DefineProperty<LogicAppWorkflowKind>(nameof(Kind), new string[] { "kind" });
-            _parent = DefineResource<LogicApp>(nameof(Parent), new string[] { "parent" });
+            _parent = new ProvisioningResourceReference<LogicApp>(DefineProperty<string>(nameof(Parent), new string[] { "parent" }));
             DefineAdditionalProperties();
         }
 

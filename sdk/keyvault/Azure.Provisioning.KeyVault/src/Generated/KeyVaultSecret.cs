@@ -22,7 +22,7 @@ namespace Azure.Provisioning.KeyVault
         private SecretProperties _properties;
         private BicepValue<AzureLocation> _location;
         private BicepDictionary<string> _tags;
-        private ResourceReference<KeyVaultService> _parent;
+        private ProvisioningResourceReference<KeyVaultService> _parent;
 
         /// <summary> Creates a new KeyVaultSecret. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -131,7 +131,7 @@ namespace Azure.Provisioning.KeyVault
             _properties = DefineModelProperty<SecretProperties>(nameof(Properties), new string[] { "properties" }, isRequired: true);
             _location = DefineProperty<AzureLocation>(nameof(Location), new string[] { "location" }, isOutput: true);
             _tags = DefineDictionaryProperty<string>(nameof(Tags), new string[] { "tags" });
-            _parent = DefineResource<KeyVaultService>(nameof(Parent), new string[] { "parent" });
+            _parent = new ProvisioningResourceReference<KeyVaultService>(DefineProperty<string>(nameof(Parent), new string[] { "parent" }));
             DefineAdditionalProperties();
         }
 

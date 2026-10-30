@@ -17,7 +17,7 @@ namespace Azure.Provisioning.Network
         private BicepValue<ResourceIdentifier> _id;
         private BicepValue<string> _name;
         private ExpressRouteConnectionProperties _properties;
-        private ResourceReference<ExpressRouteGateway> _parent;
+        private ProvisioningResourceReference<ExpressRouteGateway> _parent;
 
         /// <summary> Creates a new ExpressRouteConnection. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -220,7 +220,7 @@ namespace Azure.Provisioning.Network
             _id = DefineProperty<ResourceIdentifier>(nameof(Id), new string[] { "id" }, isOutput: true);
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _properties = DefineModelProperty<ExpressRouteConnectionProperties>(nameof(Properties), new string[] { "properties" });
-            _parent = DefineResource<ExpressRouteGateway>(nameof(Parent), new string[] { "parent" });
+            _parent = new ProvisioningResourceReference<ExpressRouteGateway>(DefineProperty<string>(nameof(Parent), new string[] { "parent" }));
             DefineAdditionalProperties();
         }
 

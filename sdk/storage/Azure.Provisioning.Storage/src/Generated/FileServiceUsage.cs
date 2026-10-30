@@ -19,7 +19,7 @@ namespace Azure.Provisioning.Storage
         private BicepValue<string> _name;
         private SystemData _systemData;
         private FileServiceUsageProperties _properties;
-        private ResourceReference<FileService> _parent;
+        private ProvisioningResourceReference<FileService> _parent;
 
         /// <summary> Creates a new FileServiceUsage. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -96,7 +96,7 @@ namespace Azure.Provisioning.Storage
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true, defaultValue: "default");
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _properties = DefineModelProperty<FileServiceUsageProperties>(nameof(Properties), new string[] { "properties" });
-            _parent = DefineResource<FileService>(nameof(Parent), new string[] { "parent" });
+            _parent = new ProvisioningResourceReference<FileService>(DefineProperty<string>(nameof(Parent), new string[] { "parent" }));
             DefineAdditionalProperties();
         }
 

@@ -20,7 +20,7 @@ namespace Azure.Provisioning.AppService
         private BicepValue<string> _name;
         private SystemData _systemData;
         private WorkflowRunActionProperties _properties;
-        private ResourceReference<WorkflowRun> _parent;
+        private ProvisioningResourceReference<WorkflowRun> _parent;
 
         /// <summary> Creates a new WorkflowRunAction. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -196,7 +196,7 @@ namespace Azure.Provisioning.AppService
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _properties = DefineModelProperty<WorkflowRunActionProperties>(nameof(Properties), new string[] { "properties" });
-            _parent = DefineResource<WorkflowRun>(nameof(Parent), new string[] { "parent" });
+            _parent = new ProvisioningResourceReference<WorkflowRun>(DefineProperty<string>(nameof(Parent), new string[] { "parent" }));
             DefineAdditionalProperties();
         }
 

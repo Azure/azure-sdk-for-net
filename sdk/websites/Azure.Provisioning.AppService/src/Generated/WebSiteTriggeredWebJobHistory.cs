@@ -20,7 +20,7 @@ namespace Azure.Provisioning.AppService
         private SystemData _systemData;
         private TriggeredJobHistoryProperties _properties;
         private BicepValue<string> _kind;
-        private ResourceReference<WebSiteTriggeredwebJob> _parent;
+        private ProvisioningResourceReference<WebSiteTriggeredwebJob> _parent;
 
         /// <summary> Creates a new WebSiteTriggeredWebJobHistory. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -117,7 +117,7 @@ namespace Azure.Provisioning.AppService
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _properties = DefineModelProperty<TriggeredJobHistoryProperties>(nameof(Properties), new string[] { "properties" });
             _kind = DefineProperty<string>(nameof(Kind), new string[] { "kind" });
-            _parent = DefineResource<WebSiteTriggeredwebJob>(nameof(Parent), new string[] { "parent" });
+            _parent = new ProvisioningResourceReference<WebSiteTriggeredwebJob>(DefineProperty<string>(nameof(Parent), new string[] { "parent" }));
             DefineAdditionalProperties();
         }
 

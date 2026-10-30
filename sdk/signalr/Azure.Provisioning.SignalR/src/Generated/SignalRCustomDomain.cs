@@ -20,7 +20,7 @@ namespace Azure.Provisioning.SignalR
         private BicepValue<string> _name;
         private SystemData _systemData;
         private CustomDomainProperties _properties;
-        private ResourceReference<SignalRService> _parent;
+        private ProvisioningResourceReference<SignalRService> _parent;
 
         /// <summary> Creates a new SignalRCustomDomain. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -149,7 +149,7 @@ namespace Azure.Provisioning.SignalR
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _properties = DefineModelProperty<CustomDomainProperties>(nameof(Properties), new string[] { "properties" }, isRequired: true);
-            _parent = DefineResource<SignalRService>(nameof(Parent), new string[] { "parent" });
+            _parent = new ProvisioningResourceReference<SignalRService>(DefineProperty<string>(nameof(Parent), new string[] { "parent" }));
             DefineAdditionalProperties();
         }
 

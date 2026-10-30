@@ -20,7 +20,7 @@ namespace Azure.Provisioning.AppService
         private SystemData _systemData;
         private ProcessModuleInfoProperties _properties;
         private BicepValue<string> _kind;
-        private ResourceReference<SiteProcess> _parent;
+        private ProvisioningResourceReference<SiteProcess> _parent;
 
         /// <summary> Creates a new SiteProcessModule. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -207,7 +207,7 @@ namespace Azure.Provisioning.AppService
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _properties = DefineModelProperty<ProcessModuleInfoProperties>(nameof(Properties), new string[] { "properties" });
             _kind = DefineProperty<string>(nameof(Kind), new string[] { "kind" });
-            _parent = DefineResource<SiteProcess>(nameof(Parent), new string[] { "parent" });
+            _parent = new ProvisioningResourceReference<SiteProcess>(DefineProperty<string>(nameof(Parent), new string[] { "parent" }));
             DefineAdditionalProperties();
         }
 

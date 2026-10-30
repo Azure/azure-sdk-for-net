@@ -24,7 +24,7 @@ namespace Azure.Provisioning.OperationalInsights
         private BicepValue<ETag> _eTag;
         private BicepValue<OperationalInsightsDataSourceKind> _kind;
         private BicepDictionary<string> _tags;
-        private ResourceReference<OperationalInsightsWorkspace> _parent;
+        private ProvisioningResourceReference<OperationalInsightsWorkspace> _parent;
 
         /// <summary> Creates a new OperationalInsightsDataSource. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -154,7 +154,7 @@ namespace Azure.Provisioning.OperationalInsights
             _eTag = DefineProperty<ETag>(nameof(ETag), new string[] { "etag" });
             _kind = DefineProperty<OperationalInsightsDataSourceKind>(nameof(Kind), new string[] { "kind" }, isRequired: true);
             _tags = DefineDictionaryProperty<string>(nameof(Tags), new string[] { "tags" });
-            _parent = DefineResource<OperationalInsightsWorkspace>(nameof(Parent), new string[] { "parent" });
+            _parent = new ProvisioningResourceReference<OperationalInsightsWorkspace>(DefineProperty<string>(nameof(Parent), new string[] { "parent" }));
             DefineAdditionalProperties();
         }
 

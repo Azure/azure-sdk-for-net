@@ -28,7 +28,7 @@ namespace Azure.Provisioning.AppContainers
         private ManagedServiceIdentity _identity;
         private BicepValue<string> _managedBy;
         private BicepValue<ContainerAppKind> _kind;
-        private ResourceReference<ContainerApp> _parent;
+        private ProvisioningResourceReference<ContainerApp> _parent;
 
         /// <summary> Creates a new ContainerAppDetectorProperty. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -412,7 +412,7 @@ namespace Azure.Provisioning.AppContainers
             _identity = DefineModelProperty<ManagedServiceIdentity>(nameof(Identity), new string[] { "identity" });
             _managedBy = DefineProperty<string>(nameof(ManagedBy), new string[] { "managedBy" });
             _kind = DefineProperty<ContainerAppKind>(nameof(Kind), new string[] { "kind" });
-            _parent = DefineResource<ContainerApp>(nameof(Parent), new string[] { "parent" });
+            _parent = new ProvisioningResourceReference<ContainerApp>(DefineProperty<string>(nameof(Parent), new string[] { "parent" }));
             DefineAdditionalProperties();
         }
 

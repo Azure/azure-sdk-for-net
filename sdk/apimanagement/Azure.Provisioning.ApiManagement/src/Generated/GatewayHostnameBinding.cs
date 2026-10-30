@@ -23,7 +23,7 @@ namespace Azure.Provisioning.ApiManagement
         private SystemData _systemData;
         private GatewayHostnameBindingBaseProperties _properties;
         private BicepValue<ETag> _eTag;
-        private ResourceReference<ApiGateway> _parent;
+        private ProvisioningResourceReference<ApiGateway> _parent;
 
         /// <summary> Creates a new GatewayHostnameBinding. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -172,7 +172,7 @@ namespace Azure.Provisioning.ApiManagement
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _properties = DefineModelProperty<GatewayHostnameBindingBaseProperties>(nameof(Properties), new string[] { "properties" }, isRequired: true);
             _eTag = DefineProperty<ETag>(nameof(ETag), new string[] { "etag" }, isOutput: true);
-            _parent = DefineResource<ApiGateway>(nameof(Parent), new string[] { "parent" });
+            _parent = new ProvisioningResourceReference<ApiGateway>(DefineProperty<string>(nameof(Parent), new string[] { "parent" }));
             DefineAdditionalProperties();
         }
 

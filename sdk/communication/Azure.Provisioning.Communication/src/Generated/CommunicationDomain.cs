@@ -22,7 +22,7 @@ namespace Azure.Provisioning.Communication
         private BicepDictionary<string> _tags;
         private BicepValue<AzureLocation> _location;
         private DomainProperties _properties;
-        private ResourceReference<EmailService> _parent;
+        private ProvisioningResourceReference<EmailService> _parent;
 
         /// <summary> Creates a new CommunicationDomain. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -240,7 +240,7 @@ namespace Azure.Provisioning.Communication
             _tags = DefineDictionaryProperty<string>(nameof(Tags), new string[] { "tags" });
             _location = DefineProperty<AzureLocation>(nameof(Location), new string[] { "location" }, isRequired: true);
             _properties = DefineModelProperty<DomainProperties>(nameof(Properties), new string[] { "properties" });
-            _parent = DefineResource<EmailService>(nameof(Parent), new string[] { "parent" });
+            _parent = new ProvisioningResourceReference<EmailService>(DefineProperty<string>(nameof(Parent), new string[] { "parent" }));
             DefineAdditionalProperties();
         }
 

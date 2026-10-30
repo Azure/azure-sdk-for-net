@@ -21,7 +21,7 @@ namespace Azure.Provisioning.Sql
         private SystemData _systemData;
         private SensitivityLabelProperties _properties;
         private BicepValue<string> _managedBy;
-        private ResourceReference<SqlDatabaseColumn> _parent;
+        private ProvisioningResourceReference<SqlDatabaseColumn> _parent;
 
         /// <summary> Gets the Id. </summary>
         public BicepValue<ResourceIdentifier> Id
@@ -138,7 +138,7 @@ namespace Azure.Provisioning.Sql
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _properties = DefineModelProperty<SensitivityLabelProperties>(nameof(Properties), new string[] { "properties" });
             _managedBy = DefineProperty<string>(nameof(ManagedBy), new string[] { "managedBy" }, isOutput: true);
-            _parent = DefineResource<SqlDatabaseColumn>(nameof(Parent), new string[] { "parent" });
+            _parent = new ProvisioningResourceReference<SqlDatabaseColumn>(DefineProperty<string>(nameof(Parent), new string[] { "parent" }));
             DefineAdditionalProperties();
         }
 

@@ -19,7 +19,7 @@ namespace Azure.Provisioning.Compute
         private BicepValue<string> _name;
         private SystemData _systemData;
         private VirtualMachineScaleSetLifecycleHookEventProperties _properties;
-        private ResourceReference<VirtualMachineScaleSet> _parent;
+        private ProvisioningResourceReference<VirtualMachineScaleSet> _parent;
 
         /// <summary> Creates a new VirtualMachineScaleSetLifecycleHookEvent. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -96,7 +96,7 @@ namespace Azure.Provisioning.Compute
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _properties = DefineModelProperty<VirtualMachineScaleSetLifecycleHookEventProperties>(nameof(Properties), new string[] { "properties" });
-            _parent = DefineResource<VirtualMachineScaleSet>(nameof(Parent), new string[] { "parent" });
+            _parent = new ProvisioningResourceReference<VirtualMachineScaleSet>(DefineProperty<string>(nameof(Parent), new string[] { "parent" }));
             DefineAdditionalProperties();
         }
 

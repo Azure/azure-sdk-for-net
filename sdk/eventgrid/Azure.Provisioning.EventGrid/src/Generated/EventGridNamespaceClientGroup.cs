@@ -21,7 +21,7 @@ namespace Azure.Provisioning.EventGrid
         private BicepValue<string> _name;
         private SystemData _systemData;
         private ClientGroupProperties _properties;
-        private ResourceReference<EventGridNamespace> _parent;
+        private ProvisioningResourceReference<EventGridNamespace> _parent;
 
         /// <summary> Creates a new EventGridNamespaceClientGroup. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -150,7 +150,7 @@ namespace Azure.Provisioning.EventGrid
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _properties = DefineModelProperty<ClientGroupProperties>(nameof(Properties), new string[] { "properties" });
-            _parent = DefineResource<EventGridNamespace>(nameof(Parent), new string[] { "parent" });
+            _parent = new ProvisioningResourceReference<EventGridNamespace>(DefineProperty<string>(nameof(Parent), new string[] { "parent" }));
             DefineAdditionalProperties();
         }
 

@@ -24,7 +24,7 @@ namespace Azure.Provisioning.ContainerInstance
         private BicepValue<AzureLocation> _location;
         private ContainerGroupProfileProperties _properties;
         private BicepList<string> _zones;
-        private ResourceReference<ContainerGroupProfile> _parent;
+        private ProvisioningResourceReference<ContainerGroupProfile> _parent;
 
         /// <summary> Creates a new ContainerGroupProfileRevision. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -469,7 +469,7 @@ namespace Azure.Provisioning.ContainerInstance
             _location = DefineProperty<AzureLocation>(nameof(Location), new string[] { "location" }, isRequired: true);
             _properties = DefineModelProperty<ContainerGroupProfileProperties>(nameof(Properties), new string[] { "properties" });
             _zones = DefineListProperty<string>(nameof(Zones), new string[] { "zones" });
-            _parent = DefineResource<ContainerGroupProfile>(nameof(Parent), new string[] { "parent" });
+            _parent = new ProvisioningResourceReference<ContainerGroupProfile>(DefineProperty<string>(nameof(Parent), new string[] { "parent" }));
             DefineAdditionalProperties();
         }
 

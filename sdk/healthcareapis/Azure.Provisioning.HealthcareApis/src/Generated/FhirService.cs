@@ -28,7 +28,7 @@ namespace Azure.Provisioning.HealthcareApis
         private BicepValue<ETag> _eTag;
         private ManagedServiceIdentity _identity;
         private BicepValue<FhirServiceKind> _kind;
-        private ResourceReference<HealthcareApisWorkspace> _parent;
+        private ProvisioningResourceReference<HealthcareApisWorkspace> _parent;
 
         /// <summary> Creates a new FhirService. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -382,7 +382,7 @@ namespace Azure.Provisioning.HealthcareApis
             _eTag = DefineProperty<ETag>(nameof(ETag), new string[] { "etag" });
             _identity = DefineModelProperty<ManagedServiceIdentity>(nameof(Identity), new string[] { "identity" });
             _kind = DefineProperty<FhirServiceKind>(nameof(Kind), new string[] { "kind" });
-            _parent = DefineResource<HealthcareApisWorkspace>(nameof(Parent), new string[] { "parent" });
+            _parent = new ProvisioningResourceReference<HealthcareApisWorkspace>(DefineProperty<string>(nameof(Parent), new string[] { "parent" }));
             DefineAdditionalProperties();
         }
 

@@ -19,7 +19,7 @@ namespace Azure.Provisioning.Cdn
         private BicepValue<string> _name;
         private SystemData _systemData;
         private CdnSecretProperties _secretProperties;
-        private ResourceReference<CdnProfile> _parent;
+        private ProvisioningResourceReference<CdnProfile> _parent;
 
         /// <summary> Creates a new FrontDoorSecret. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -157,7 +157,7 @@ namespace Azure.Provisioning.Cdn
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _secretProperties = DefineModelProperty<CdnSecretProperties>(nameof(SecretProperties), new string[] { "properties" });
-            _parent = DefineResource<CdnProfile>(nameof(Parent), new string[] { "parent" });
+            _parent = new ProvisioningResourceReference<CdnProfile>(DefineProperty<string>(nameof(Parent), new string[] { "parent" }));
             DefineAdditionalProperties();
         }
 

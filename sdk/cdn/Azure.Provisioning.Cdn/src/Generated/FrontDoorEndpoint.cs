@@ -22,7 +22,7 @@ namespace Azure.Provisioning.Cdn
         private BicepDictionary<string> _tags;
         private BicepValue<AzureLocation> _location;
         private FrontDoorEndpointProperties _properties;
-        private ResourceReference<CdnProfile> _parent;
+        private ProvisioningResourceReference<CdnProfile> _parent;
 
         /// <summary> Creates a new FrontDoorEndpoint. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -222,7 +222,7 @@ namespace Azure.Provisioning.Cdn
             _tags = DefineDictionaryProperty<string>(nameof(Tags), new string[] { "tags" });
             _location = DefineProperty<AzureLocation>(nameof(Location), new string[] { "location" }, isRequired: true);
             _properties = DefineModelProperty<FrontDoorEndpointProperties>(nameof(Properties), new string[] { "properties" });
-            _parent = DefineResource<CdnProfile>(nameof(Parent), new string[] { "parent" });
+            _parent = new ProvisioningResourceReference<CdnProfile>(DefineProperty<string>(nameof(Parent), new string[] { "parent" }));
             DefineAdditionalProperties();
         }
 

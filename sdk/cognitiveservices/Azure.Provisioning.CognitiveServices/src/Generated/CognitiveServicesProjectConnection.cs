@@ -20,7 +20,7 @@ namespace Azure.Provisioning.CognitiveServices
         private BicepValue<string> _name;
         private SystemData _systemData;
         private CognitiveServicesConnectionProperties _properties;
-        private ResourceReference<CognitiveServicesProject> _parent;
+        private ProvisioningResourceReference<CognitiveServicesProject> _parent;
 
         /// <summary> Creates a new CognitiveServicesProjectConnection. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -102,7 +102,7 @@ namespace Azure.Provisioning.CognitiveServices
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _properties = DefineModelProperty<CognitiveServicesConnectionProperties>(nameof(Properties), new string[] { "properties" }, isRequired: true);
-            _parent = DefineResource<CognitiveServicesProject>(nameof(Parent), new string[] { "parent" });
+            _parent = new ProvisioningResourceReference<CognitiveServicesProject>(DefineProperty<string>(nameof(Parent), new string[] { "parent" }));
             DefineAdditionalProperties();
         }
 

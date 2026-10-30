@@ -20,7 +20,7 @@ namespace Azure.Provisioning.Storage
         private BicepValue<string> _name;
         private SystemData _systemData;
         private ContextCacheContainerProperties _properties;
-        private ResourceReference<ContextCache> _parent;
+        private ProvisioningResourceReference<ContextCache> _parent;
 
         /// <summary> Creates a new ContextCacheContainer. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -102,7 +102,7 @@ namespace Azure.Provisioning.Storage
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _properties = DefineModelProperty<ContextCacheContainerProperties>(nameof(Properties), new string[] { "properties" }, isRequired: true);
-            _parent = DefineResource<ContextCache>(nameof(Parent), new string[] { "parent" });
+            _parent = new ProvisioningResourceReference<ContextCache>(DefineProperty<string>(nameof(Parent), new string[] { "parent" }));
             DefineAdditionalProperties();
         }
 

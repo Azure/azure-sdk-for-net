@@ -23,7 +23,7 @@ namespace Azure.Provisioning.Network
         private SystemData _systemData;
         private SecurityUserRuleCollectionPropertiesFormat _properties;
         private BicepValue<ETag> _eTag;
-        private ResourceReference<NetworkManagerSecurityUserConfiguration> _parent;
+        private ProvisioningResourceReference<NetworkManagerSecurityUserConfiguration> _parent;
 
         /// <summary> Creates a new NetworkManagerSecurityUserRules. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -176,7 +176,7 @@ namespace Azure.Provisioning.Network
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _properties = DefineModelProperty<SecurityUserRuleCollectionPropertiesFormat>(nameof(Properties), new string[] { "properties" });
             _eTag = DefineProperty<ETag>(nameof(ETag), new string[] { "etag" }, isOutput: true);
-            _parent = DefineResource<NetworkManagerSecurityUserConfiguration>(nameof(Parent), new string[] { "parent" });
+            _parent = new ProvisioningResourceReference<NetworkManagerSecurityUserConfiguration>(DefineProperty<string>(nameof(Parent), new string[] { "parent" }));
             DefineAdditionalProperties();
         }
 

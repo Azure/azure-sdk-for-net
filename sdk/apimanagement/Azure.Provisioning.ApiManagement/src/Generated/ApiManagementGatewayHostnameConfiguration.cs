@@ -21,7 +21,7 @@ namespace Azure.Provisioning.ApiManagement
         private BicepValue<string> _name;
         private SystemData _systemData;
         private GatewayHostnameConfigurationContractProperties _properties;
-        private ResourceReference<ApiManagementGateway> _parent;
+        private ProvisioningResourceReference<ApiManagementGateway> _parent;
 
         /// <summary> Creates a new ApiManagementGatewayHostnameConfiguration. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -205,7 +205,7 @@ namespace Azure.Provisioning.ApiManagement
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _properties = DefineModelProperty<GatewayHostnameConfigurationContractProperties>(nameof(Properties), new string[] { "properties" });
-            _parent = DefineResource<ApiManagementGateway>(nameof(Parent), new string[] { "parent" });
+            _parent = new ProvisioningResourceReference<ApiManagementGateway>(DefineProperty<string>(nameof(Parent), new string[] { "parent" }));
             DefineAdditionalProperties();
         }
 

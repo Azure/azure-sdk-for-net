@@ -21,7 +21,7 @@ namespace Azure.Provisioning.MySql
         private BicepValue<string> _name;
         private SystemData _systemData;
         private ServerBackupProperties _properties;
-        private ResourceReference<MySqlFlexibleServer> _parent;
+        private ProvisioningResourceReference<MySqlFlexibleServer> _parent;
 
         /// <summary> Creates a new MySqlFlexibleServerBackup. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -154,7 +154,7 @@ namespace Azure.Provisioning.MySql
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _properties = DefineModelProperty<ServerBackupProperties>(nameof(Properties), new string[] { "properties" });
-            _parent = DefineResource<MySqlFlexibleServer>(nameof(Parent), new string[] { "parent" });
+            _parent = new ProvisioningResourceReference<MySqlFlexibleServer>(DefineProperty<string>(nameof(Parent), new string[] { "parent" }));
             DefineAdditionalProperties();
         }
 

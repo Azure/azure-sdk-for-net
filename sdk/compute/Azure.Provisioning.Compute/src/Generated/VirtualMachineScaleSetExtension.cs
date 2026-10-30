@@ -19,7 +19,7 @@ namespace Azure.Provisioning.Compute
         private BicepValue<string> _name;
         private VirtualMachineScaleSetExtensionProperties _properties;
         private BicepValue<string> _vmssExtensionName;
-        private ResourceReference<VirtualMachineScaleSet> _parent;
+        private ProvisioningResourceReference<VirtualMachineScaleSet> _parent;
 
         /// <summary> Creates a new VirtualMachineScaleSetExtension. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -301,7 +301,7 @@ namespace Azure.Provisioning.Compute
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _properties = DefineModelProperty<VirtualMachineScaleSetExtensionProperties>(nameof(Properties), new string[] { "properties" });
             _vmssExtensionName = DefineProperty<string>(nameof(VmssExtensionName), new string[] { "vmssExtensionName" }, isOutput: true, isRequired: true);
-            _parent = DefineResource<VirtualMachineScaleSet>(nameof(Parent), new string[] { "parent" });
+            _parent = new ProvisioningResourceReference<VirtualMachineScaleSet>(DefineProperty<string>(nameof(Parent), new string[] { "parent" }));
             DefineAdditionalProperties();
         }
 

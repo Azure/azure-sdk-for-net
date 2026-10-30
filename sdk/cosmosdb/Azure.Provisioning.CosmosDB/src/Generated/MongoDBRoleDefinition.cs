@@ -19,7 +19,7 @@ namespace Azure.Provisioning.CosmosDB
         private BicepValue<string> _name;
         private SystemData _systemData;
         private MongoRoleDefinitionResource _properties;
-        private ResourceReference<CosmosDBAccount> _parent;
+        private ProvisioningResourceReference<CosmosDBAccount> _parent;
 
         /// <summary> Creates a new MongoDBRoleDefinition. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -186,7 +186,7 @@ namespace Azure.Provisioning.CosmosDB
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _properties = DefineModelProperty<MongoRoleDefinitionResource>(nameof(Properties), new string[] { "properties" });
-            _parent = DefineResource<CosmosDBAccount>(nameof(Parent), new string[] { "parent" });
+            _parent = new ProvisioningResourceReference<CosmosDBAccount>(DefineProperty<string>(nameof(Parent), new string[] { "parent" }));
             DefineAdditionalProperties();
         }
 

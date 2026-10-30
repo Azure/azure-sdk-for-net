@@ -20,7 +20,7 @@ namespace Azure.Provisioning.AppService
         private BicepValue<string> _name;
         private SystemData _systemData;
         private WorkflowTriggerHistoryProperties _properties;
-        private ResourceReference<WorkflowTrigger> _parent;
+        private ProvisioningResourceReference<WorkflowTrigger> _parent;
 
         /// <summary> Creates a new WorkflowTriggerHistory. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -205,7 +205,7 @@ namespace Azure.Provisioning.AppService
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _properties = DefineModelProperty<WorkflowTriggerHistoryProperties>(nameof(Properties), new string[] { "properties" });
-            _parent = DefineResource<WorkflowTrigger>(nameof(Parent), new string[] { "parent" });
+            _parent = new ProvisioningResourceReference<WorkflowTrigger>(DefineProperty<string>(nameof(Parent), new string[] { "parent" }));
             DefineAdditionalProperties();
         }
 

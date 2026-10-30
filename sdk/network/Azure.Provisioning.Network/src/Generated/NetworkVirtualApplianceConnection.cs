@@ -17,7 +17,7 @@ namespace Azure.Provisioning.Network
         private BicepValue<ResourceIdentifier> _id;
         private BicepValue<string> _name;
         private NetworkVirtualApplianceConnectionProperties _properties;
-        private ResourceReference<NetworkVirtualAppliance> _parent;
+        private ProvisioningResourceReference<NetworkVirtualAppliance> _parent;
 
         /// <summary> Creates a new NetworkVirtualApplianceConnection. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -203,7 +203,7 @@ namespace Azure.Provisioning.Network
             _id = DefineProperty<ResourceIdentifier>(nameof(Id), new string[] { "id" }, isOutput: true);
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _properties = DefineModelProperty<NetworkVirtualApplianceConnectionProperties>(nameof(Properties), new string[] { "properties" });
-            _parent = DefineResource<NetworkVirtualAppliance>(nameof(Parent), new string[] { "parent" });
+            _parent = new ProvisioningResourceReference<NetworkVirtualAppliance>(DefineProperty<string>(nameof(Parent), new string[] { "parent" }));
             DefineAdditionalProperties();
         }
 

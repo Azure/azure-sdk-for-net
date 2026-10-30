@@ -22,7 +22,7 @@ namespace Azure.Provisioning.Network
         private BicepValue<ETag> _eTag;
         private CommitProperties _properties;
         private SystemData _systemData;
-        private ResourceReference<NetworkManager> _parent;
+        private ProvisioningResourceReference<NetworkManager> _parent;
 
         /// <summary> Creates a new NetworkManagerConfigurationCommit. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -115,7 +115,7 @@ namespace Azure.Provisioning.Network
             _eTag = DefineProperty<ETag>(nameof(ETag), new string[] { "etag" }, isOutput: true);
             _properties = DefineModelProperty<CommitProperties>(nameof(Properties), new string[] { "properties" });
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
-            _parent = DefineResource<NetworkManager>(nameof(Parent), new string[] { "parent" });
+            _parent = new ProvisioningResourceReference<NetworkManager>(DefineProperty<string>(nameof(Parent), new string[] { "parent" }));
             DefineAdditionalProperties();
         }
 

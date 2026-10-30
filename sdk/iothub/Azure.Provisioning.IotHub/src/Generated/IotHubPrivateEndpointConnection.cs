@@ -20,7 +20,7 @@ namespace Azure.Provisioning.IotHub
         private BicepValue<string> _name;
         private SystemData _systemData;
         private IotHubPrivateEndpointConnectionProperties _properties;
-        private ResourceReference<IotHubDescription> _parent;
+        private ProvisioningResourceReference<IotHubDescription> _parent;
 
         /// <summary> Creates a new IotHubPrivateEndpointConnection. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -102,7 +102,7 @@ namespace Azure.Provisioning.IotHub
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _properties = DefineModelProperty<IotHubPrivateEndpointConnectionProperties>(nameof(Properties), new string[] { "properties" }, isRequired: true);
-            _parent = DefineResource<IotHubDescription>(nameof(Parent), new string[] { "parent" });
+            _parent = new ProvisioningResourceReference<IotHubDescription>(DefineProperty<string>(nameof(Parent), new string[] { "parent" }));
             DefineAdditionalProperties();
         }
 

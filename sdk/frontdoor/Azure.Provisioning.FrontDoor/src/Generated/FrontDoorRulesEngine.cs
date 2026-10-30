@@ -18,7 +18,7 @@ namespace Azure.Provisioning.FrontDoor
         private BicepValue<ResourceIdentifier> _id;
         private BicepValue<string> _name;
         private RulesEngineProperties _properties;
-        private ResourceReference<FrontDoorResource> _parent;
+        private ProvisioningResourceReference<FrontDoorResource> _parent;
 
         /// <summary> Creates a new FrontDoorRulesEngine. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -119,7 +119,7 @@ namespace Azure.Provisioning.FrontDoor
             _id = DefineProperty<ResourceIdentifier>(nameof(Id), new string[] { "id" }, isOutput: true);
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _properties = DefineModelProperty<RulesEngineProperties>(nameof(Properties), new string[] { "properties" });
-            _parent = DefineResource<FrontDoorResource>(nameof(Parent), new string[] { "parent" });
+            _parent = new ProvisioningResourceReference<FrontDoorResource>(DefineProperty<string>(nameof(Parent), new string[] { "parent" }));
             DefineAdditionalProperties();
         }
 
