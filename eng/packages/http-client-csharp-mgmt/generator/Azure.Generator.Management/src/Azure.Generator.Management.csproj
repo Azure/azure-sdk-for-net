@@ -11,6 +11,7 @@
 		<PackageReference Include="Azure.Generator" />
 		<PackageReference Include="Azure.ResourceManager" />
 		<PackageReference Include="Humanizer.Core" />
+		<PackageReference Include="Microsoft.CodeAnalysis.CSharp.Workspaces" />
 	</ItemGroup>
 
 	<ItemGroup>

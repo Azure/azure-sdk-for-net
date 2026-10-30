@@ -1,0 +1,6 @@
+<Project>
+  <ItemGroup>
+    <!-- Roslyn is a generator runtime dependency, not an analyzer-only dependency. -->
+    <PackageVersion Update="Microsoft.CodeAnalysis.CSharp.Workspaces" Version="5.9.0" PrivateAssets="None" />
+  </ItemGroup>
+</Project>

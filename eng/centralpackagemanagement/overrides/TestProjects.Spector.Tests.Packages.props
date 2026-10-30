@@ -1,5 +1,0 @@
-<Project>
-  <ItemGroup>
-    <PackageVersion Update="Microsoft.CodeAnalysis.CSharp.Workspaces" Version="5.9.0" />
-  </ItemGroup>
-</Project>

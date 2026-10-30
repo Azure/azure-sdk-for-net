@@ -28,7 +28,7 @@ namespace _Type.Model.Inheritance.Recursive
         string IPersistableModel<Extension>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
 
         /// <param name="extension"> The <see cref="Extension"/> to serialize into <see cref="RequestContent"/>. </param>
-        public static implicit operator RequestContent(Extension @extension) => throw null;
+        public static implicit operator RequestContent(Extension extension) => throw null;
 
         public static explicit operator Extension(Response response) => throw null;
 

@@ -14,7 +14,7 @@ namespace _Type.Model.Inheritance.Recursive
     {
         public Element() => throw null;
 
-        internal Element(IList<Extension> @extension, IDictionary<string, BinaryData> additionalBinaryDataProperties) => throw null;
+        internal Element(IList<Extension> extension, IDictionary<string, BinaryData> additionalBinaryDataProperties) => throw null;
 
         public IList<Extension> Extension => throw null;
     }
