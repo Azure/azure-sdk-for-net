@@ -2306,7 +2306,7 @@ namespace Azure.Provisioning.Network
         public DdosDetectionRule() { }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Network.DdosDetectionMode> DetectionMode { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.ETag> ETag { get { throw null; } }
-        public new Azure.Provisioning.BicepValue<string> Id { get { throw null; } }
+        public new Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Network.NetworkProvisioningState> ProvisioningState { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceType> ResourceType { get { throw null; } }
@@ -2324,7 +2324,7 @@ namespace Azure.Provisioning.Network
     {
         public DdosMitigationRule() { }
         public Azure.Provisioning.BicepValue<Azure.ETag> ETag { get { throw null; } }
-        public new Azure.Provisioning.BicepValue<string> Id { get { throw null; } }
+        public new Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.Network.DdosMitigationRulePropertiesFormat Properties { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Type { get { throw null; } }
@@ -3000,7 +3000,7 @@ namespace Azure.Provisioning.Network
     {
         public ExpressRouteLagLink() { }
         public Azure.Provisioning.BicepValue<string> ETag { get { throw null; } }
-        public new Azure.Provisioning.BicepValue<string> Id { get { throw null; } }
+        public new Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } }
         public Azure.Provisioning.Network.ExpressRouteLagLinkPropertiesFormat Properties { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceType> ResourceType { get { throw null; } }
@@ -3021,7 +3021,7 @@ namespace Azure.Provisioning.Network
     {
         public ExpressRouteLagMember() { }
         public Azure.Provisioning.BicepValue<string> ETag { get { throw null; } }
-        public new Azure.Provisioning.BicepValue<string> Id { get { throw null; } }
+        public new Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } }
         public Azure.Provisioning.Network.ExpressRouteLagMemberPropertiesFormat Properties { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceType> ResourceType { get { throw null; } }
@@ -3066,7 +3066,7 @@ namespace Azure.Provisioning.Network
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Network.ExpressRouteLinkAdminState> AdminState { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> ColoLocation { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Network.ExpressRouteLinkConnectorType> ConnectorType { get { throw null; } }
-        public Azure.Provisioning.BicepValue<string> ETag { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.ETag> ETag { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> InterfaceName { get { throw null; } }
         public Azure.Provisioning.Network.ExpressRouteLinkMacSecConfig MacSecConfig { get { throw null; } set { } }
@@ -3251,7 +3251,7 @@ namespace Azure.Provisioning.Network
     public partial class ExpressRouteProviderPort : Azure.Provisioning.Primitives.ProvisionableResource
     {
         internal ExpressRouteProviderPort() : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
-        public Azure.Provisioning.BicepValue<string> ETag { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.ETag> ETag { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.AzureLocation> Location { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
@@ -6361,7 +6361,7 @@ namespace Azure.Provisioning.Network
         internal NetworkVirtualApplianceSku() : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepList<Azure.Provisioning.Network.NetworkVirtualApplianceSkuInstances> AvailableScaleUnits { get { throw null; } }
         public Azure.Provisioning.BicepList<string> AvailableVersions { get { throw null; } }
-        public Azure.Provisioning.BicepValue<string> ETag { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.ETag> ETag { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.AzureLocation> Location { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
@@ -6806,7 +6806,7 @@ namespace Azure.Provisioning.Network
         public Azure.Provisioning.BicepValue<System.Guid> AuthResourceGuid { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Network.CircuitConnectionStatus> CircuitConnectionStatus { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> ConnectionName { get { throw null; } }
-        public Azure.Provisioning.BicepValue<string> ETag { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.ETag> ETag { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> ExpressRouteCircuitPeeringId { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
@@ -7682,7 +7682,7 @@ namespace Azure.Provisioning.Network
     {
         public ResourceNavigationLink() { }
         public Azure.Provisioning.BicepValue<Azure.ETag> ETag { get { throw null; } }
-        public new Azure.Provisioning.BicepValue<string> Id { get { throw null; } }
+        public new Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Link { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceType> LinkedResourceType { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
@@ -10353,7 +10353,7 @@ namespace Azure.Provisioning.Network
         public Azure.Provisioning.BicepList<Azure.Provisioning.Resources.WritableSubResource> EgressNatRules { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<bool> EnableBgp { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<bool> EnableRateLimiting { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> ETag { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.ETag> ETag { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<long> IngressBytesTransferred { get { throw null; } }
         public Azure.Provisioning.BicepList<Azure.Provisioning.Resources.WritableSubResource> IngressNatRules { get { throw null; } set { } }

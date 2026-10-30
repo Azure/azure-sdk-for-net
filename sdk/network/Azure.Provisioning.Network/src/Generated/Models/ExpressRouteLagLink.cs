@@ -14,7 +14,7 @@ namespace Azure.Provisioning.Network
     public partial class ExpressRouteLagLink : NetworkSubResource
     {
         private ExpressRouteLagLinkPropertiesFormat _properties;
-        private BicepValue<string> _id;
+        private BicepValue<ResourceIdentifier> _id;
         private BicepValue<ResourceType> _resourceType;
         private BicepValue<string> _name;
         private BicepValue<string> _eTag;
@@ -40,7 +40,7 @@ namespace Azure.Provisioning.Network
         }
 
         /// <summary> Gets the Id. </summary>
-        public new BicepValue<string> Id
+        public new BicepValue<ResourceIdentifier> Id
         {
             get
             {
@@ -84,7 +84,7 @@ namespace Azure.Provisioning.Network
         {
             base.DefineProvisionableProperties();
             _properties = DefineModelProperty<ExpressRouteLagLinkPropertiesFormat>(nameof(Properties), new string[] { "properties" });
-            _id = DefineProperty<string>(nameof(Id), new string[] { "id" }, isOutput: true, isRequired: true);
+            _id = DefineProperty<ResourceIdentifier>(nameof(Id), new string[] { "id" }, isOutput: true, isRequired: true);
             _resourceType = DefineProperty<ResourceType>(nameof(ResourceType), new string[] { "type" }, isOutput: true, isRequired: true);
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isOutput: true, isRequired: true);
             _eTag = DefineProperty<string>(nameof(ETag), new string[] { "etag" }, isOutput: true);
