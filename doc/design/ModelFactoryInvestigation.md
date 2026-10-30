@@ -35,13 +35,22 @@ public static VirtualMachineData VirtualMachineData(
 ```
 
 This API provides compile-time property names and types, IntelliSense, and access to
-models that do not have a usable public constructor. Its public signature is coupled
-to the model shape, so it also participates in the SDK's compatibility contract.
+models that do not have a usable public constructor. However, it also has several
+API design costs:
 
-The investigation began because maintaining these methods became increasingly
-complex for management-plane models with flattened properties. The full customer
-scenario and API comparison are captured in the
-[Model Factory API Review](https://gist.github.com/pshao25/59c20f79f930a72ffbb7ed3edc415246).
+- The public factory API is coupled to the shape of each model.
+- As a model gains properties, its factory method gains parameters.
+- Factory methods for large ARM resource models may contain dozens of parameters.
+- Adding, removing, renaming, or changing properties may require compatibility
+  handling in the generated factory API.
+
+These API costs motivated the investigation of alternative construction and mocking
+experiences. The full customer scenarios and initial API comparison are captured in
+the [Model Factory API Review](https://gist.github.com/pshao25/59c20f79f930a72ffbb7ed3edc415246).
+
+Property flattening is a separate implementation concern. It amplifies the generator
+complexity required to produce and preserve the current factory API, but it is not
+the underlying API design drawback that prompted this investigation.
 
 ## Requirements
 
