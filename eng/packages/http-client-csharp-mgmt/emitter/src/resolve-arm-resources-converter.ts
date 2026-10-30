@@ -71,15 +71,8 @@ import {
 } from "@azure-tools/typespec-client-generator-core";
 import { getAllSdkClients } from "./sdk-client-utils.js";
 import {
-  extensionResourceOperationName,
   isResourceCollectionAction,
-  legacyExtensionResourceOperationName,
-  legacyResourceOperationName,
-  builtInResourceOperationName,
-  armResourceReadName,
-  armResourceCreateOrUpdateName,
-  armResourceUpdateName,
-  armResourceDeleteName
+  getExplicitResourceName
 } from "./sdk-context-options.js";
 import {
   buildScopeInfo,
@@ -634,8 +627,7 @@ function formatResourceType(resourceType: ResourceType): string {
 
 /**
  * Extracts the explicit resource name from a resolved resource's operations.
- * Checks the CRUD operations' decorators for OverrideResourceName parameters
- * set via @extensionResourceOperation or @legacyExtensionResourceOperation.
+ * Checks public lifecycle and private resource-operation decorators.
  */
 function getExplicitResourceNameFromOperations(
   resolvedResource: ResolvedResource
@@ -659,44 +651,9 @@ function getExplicitResourceNameFromOperations(
   }
 
   for (const operation of operations) {
-    const decorators = operation.decorators;
-    for (const decorator of decorators) {
-      const name = decorator.definition?.name;
-      if (
-        name === armResourceReadName ||
-        name === armResourceCreateOrUpdateName ||
-        name === armResourceUpdateName ||
-        name === armResourceDeleteName
-      ) {
-        const value = decorator.args[1]?.jsValue;
-        if (typeof value === "string" && value.length > 0) {
-          return value;
-        }
-      }
-      if (
-        name === extensionResourceOperationName ||
-        name === legacyExtensionResourceOperationName ||
-        name === legacyResourceOperationName
-      ) {
-        // For extensionResourceOperation: args are (TargetResource, ExtensionResource, kind, ResourceName) — index 3
-        // For legacyExtensionResourceOperation/legacyResourceOperation: args are (Resource, kind, ResourceName) — index 2
-        const argIndex = name === extensionResourceOperationName ? 3 : 2;
-        if (
-          decorator.args.length > argIndex &&
-          decorator.args[argIndex].jsValue &&
-          typeof decorator.args[argIndex].jsValue === "string" &&
-          (decorator.args[argIndex].jsValue as string).length > 0
-        ) {
-          return decorator.args[argIndex].jsValue as string;
-        }
-      }
-      // For builtInResourceOperation: args are (ParentResource, BuiltInResource, kind, ResourceName) — index 3
-      if (name === builtInResourceOperationName) {
-        const value = decorator.args[3]?.jsValue;
-        if (typeof value === "string" && value.length > 0) {
-          return value;
-        }
-      }
+    const name = getExplicitResourceName(operation);
+    if (name !== undefined) {
+      return name;
     }
   }
 

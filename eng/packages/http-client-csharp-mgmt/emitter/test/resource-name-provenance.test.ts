@@ -62,14 +62,23 @@ interface Widgets {
       const sdkContext = await createCSharpSdkContext(
         createEmitterContext(program)
       );
-      const schema = resolveArmResources(program, sdkContext);
-      expect(schema.resources).toHaveLength(1);
-      expect(
-        convertResourceMetadataToArguments(schema.resources[0].metadata)
-      ).toMatchObject({
-        resourceName: name ?? "IpWidget",
-        resourceNameIsExplicit: name !== undefined
-      });
+      const [root] = createModel(sdkContext);
+      for (const schema of [
+        buildArmProviderSchema(sdkContext, root),
+        resolveArmResources(program, sdkContext)
+      ]) {
+        expect(schema.resources).toHaveLength(1);
+        const expected = {
+          resourceName: name ?? "IpWidget",
+          resourceNameIsExplicit: name !== undefined
+        };
+        expect(
+          convertResourceMetadataToArguments(schema.resources[0].metadata)
+        ).toMatchObject(expected);
+        expect(
+          convertArmProviderSchemaToArguments(schema).resources[0]
+        ).toMatchObject(expected);
+      }
     }
   );
 

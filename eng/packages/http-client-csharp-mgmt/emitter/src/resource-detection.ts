@@ -44,15 +44,11 @@ import {
   armProviderSchema,
   armResourceInternal,
   armResourceWithParameter,
-  builtInResourceOperationName,
   customAzureResource,
-  extensionResourceOperationName,
   isResourceCollectionAction,
-  legacyExtensionResourceOperationName,
-  legacyResourceOperationName
+  getExplicitResourceName
 } from "./sdk-context-options.js";
 import {
-  DecoratorApplication,
   Model,
   NoTarget,
   getPattern,
@@ -167,7 +163,7 @@ export function buildArmProviderSchema(
     // to a literal
     const path = resolveFixedEnumNameSegments(sdkMethod, rawPath);
 
-    let explicitResourceName = getExplicitResourceName(sdkMethod);
+    let explicitResourceName = getExplicitResourceName(sdkMethod?.__raw);
     let resourceNameOverrideMap: Map<string, string> | undefined;
     const clientOptionOverride = extractResourceNameOverride(
       sdkMethod,
@@ -269,7 +265,7 @@ export function buildArmProviderSchema(
       entry.instancePath.equals(opPath)
     );
     if (!matched) continue;
-    matched.explicitResourceName ??= getExplicitResourceName(sdkMethod);
+    matched.explicitResourceName ??= getExplicitResourceName(sdkMethod?.__raw);
     matched.methods.push({
       methodId: method.crossLanguageDefinitionId,
       kind,
@@ -701,32 +697,6 @@ function operationPathEndsWithResourceType(
     lastTypeSegment !== undefined &&
     operationPath.segments[operationPath.length - 1] === lastTypeSegment
   );
-}
-
-// Only legacy/built-in operation decorators carry an explicit resource name.
-function getExplicitResourceName(
-  method: SdkMethod<SdkHttpOperation> | undefined
-): string | undefined {
-  for (const decorator of method?.__raw?.decorators ?? []) {
-    switch (decorator.definition?.name) {
-      case extensionResourceOperationName:
-        return getStringLiteralArg(decorator, 3);
-      case legacyExtensionResourceOperationName:
-      case legacyResourceOperationName:
-        return getStringLiteralArg(decorator, 2);
-      case builtInResourceOperationName:
-        return getStringLiteralArg(decorator, 3);
-    }
-  }
-  return undefined;
-}
-
-function getStringLiteralArg(
-  decorator: DecoratorApplication,
-  index: number
-): string | undefined {
-  const value = decorator.args[index]?.jsValue;
-  return typeof value === "string" && value.length > 0 ? value : undefined;
 }
 
 /**
