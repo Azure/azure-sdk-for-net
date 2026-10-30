@@ -100,22 +100,27 @@ public abstract class ProvisionableConstruct : Provisionable, IBicepValue
 
         // Aggregate all the properties into a single nested dictionary
         Dictionary<string, object> body = [];
-        foreach (IBicepValue property in ProvisionableProperties.Values.Where(p => !p.IsEmpty))
+        foreach (KeyValuePair<string, IBicepValue> entry in ProvisionableProperties.Where(p =>
+            !p.Value.IsEmpty || p.Value.Self is BicepValueReference self && self.Construct != this))
         {
+            IBicepValue property = entry.Value;
+            IReadOnlyList<string> path =
+                property.Self?.Construct == this && property.Self.BicepPath is { Count: > 0 } bicepPath ?
+                    bicepPath : [entry.Key];
             // Some of the properties are nested paths and need to be expanded
             // into multiple levels of hierarchy
             Dictionary<string, object> obj = body;
-            for (int i = 0; i < property.Self!.BicepPath!.Count - 1; i++) // Properties always have Self/BicepPath defined
+            for (int i = 0; i < path.Count - 1; i++)
             {
-                if (!obj.TryGetValue(property.Self.BicepPath[i], out object? next) ||
+                if (!obj.TryGetValue(path[i], out object? next) ||
                     next is not Dictionary<string, object> dict)
                 {
                     dict = [];
-                    obj[property.Self.BicepPath[i]] = dict;
+                    obj[path[i]] = dict;
                 }
                 obj = dict;
             }
-            obj[property.Self.BicepPath[property.Self.BicepPath.Count - 1]] = property;
+            obj[path[path.Count - 1]] = property;
         }
         return CompileValues(body);
 
@@ -283,7 +288,7 @@ public abstract class ProvisionableConstruct : Provisionable, IBicepValue
     /// </summary>
     protected void Initialize()
     {
-        if (_kind == BicepValueKind.Unset && ProvisionableProperties.Count == 0)
+        if (_kind == BicepValueKind.Unset)
         {
             _kind = BicepValueKind.Literal;
             DefineProvisionableProperties();
