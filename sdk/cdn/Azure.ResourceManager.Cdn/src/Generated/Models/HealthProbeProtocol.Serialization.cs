@@ -17,7 +17,6 @@ namespace Azure.ResourceManager.Cdn.Models
             HealthProbeProtocol.NotSet => "NotSet",
             HealthProbeProtocol.Http => "Http",
             HealthProbeProtocol.Https => "Https",
-            HealthProbeProtocol.Grpc => "Grpc",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown HealthProbeProtocol value.")
         };
 
@@ -35,10 +34,6 @@ namespace Azure.ResourceManager.Cdn.Models
             if (StringComparer.OrdinalIgnoreCase.Equals(value, "Https"))
             {
                 return HealthProbeProtocol.Https;
-            }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Grpc"))
-            {
-                return HealthProbeProtocol.Grpc;
             }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown HealthProbeProtocol value.");
         }

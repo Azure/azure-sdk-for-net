@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
             {
                 throw new FormatException($"The model {nameof(FluxServicePrincipalPatch)} does not support writing '{format}' format.");
             }
-            if (_clientIdIsDefined || Optional.IsDefined(ClientId))
+            if (Optional.IsDefined(ClientId, _clientIdIsDefined))
             {
                 if (ClientId != null)
                 {
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
                     writer.WriteNull("clientId"u8);
                 }
             }
-            if (_tenantIdIsDefined || Optional.IsDefined(TenantId))
+            if (Optional.IsDefined(TenantId, _tenantIdIsDefined))
             {
                 if (TenantId != null)
                 {
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
                     writer.WriteNull("tenantId"u8);
                 }
             }
-            if (_clientSecretIsDefined || Optional.IsDefined(ClientSecret))
+            if (Optional.IsDefined(ClientSecret, _clientSecretIsDefined))
             {
                 if (ClientSecret != null)
                 {
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
                 writer.WritePropertyName("clientCertificate"u8);
                 writer.WriteStringValue(ClientCertificate);
             }
-            if (_clientCertificatePasswordIsDefined || Optional.IsDefined(ClientCertificatePassword))
+            if (Optional.IsDefined(ClientCertificatePassword, _clientCertificatePasswordIsDefined))
             {
                 if (ClientCertificatePassword != null)
                 {

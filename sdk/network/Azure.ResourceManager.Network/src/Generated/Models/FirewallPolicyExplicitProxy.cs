@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
         private bool? _enableExplicitProxy;
-        internal bool _enableExplicitProxyIsDefined;
+        private bool _enableExplicitProxyIsDefined;
         private bool? _enablePacFile;
-        internal bool _enablePacFileIsDefined;
+        private bool _enablePacFileIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="FirewallPolicyExplicitProxy"/>. </summary>
         public FirewallPolicyExplicitProxy()

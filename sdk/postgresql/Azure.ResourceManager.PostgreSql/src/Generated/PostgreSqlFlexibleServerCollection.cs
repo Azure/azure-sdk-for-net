@@ -39,9 +39,8 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal PostgreSqlFlexibleServerCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(PostgreSqlFlexibleServerResource.ResourceType, out string postgreSqlFlexibleServerApiVersion);
             _serversClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.PostgreSql.FlexibleServers", PostgreSqlFlexibleServerResource.ResourceType.Namespace, Diagnostics);
-            _serversRestClient = new Servers(_serversClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, postgreSqlFlexibleServerApiVersion ?? "2026-04-01-preview");
+            _serversRestClient = new Servers(_serversClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.DBforPostgreSQL/flexibleServers", out string serversApiVersionOverride) ? serversApiVersionOverride : "2026-04-01-preview");
             ValidateResourceId(id);
         }
 

@@ -39,9 +39,8 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ContainerServiceFleetCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ContainerServiceFleetResource.ResourceType, out string containerServiceFleetApiVersion);
             _fleetsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ContainerServiceFleet", ContainerServiceFleetResource.ResourceType.Namespace, Diagnostics);
-            _fleetsRestClient = new Fleets(_fleetsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, containerServiceFleetApiVersion ?? "2026-06-02-preview");
+            _fleetsRestClient = new Fleets(_fleetsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.ContainerService/fleets", out string fleetsApiVersionOverride) ? fleetsApiVersionOverride : "2026-06-02-preview");
             ValidateResourceId(id);
         }
 

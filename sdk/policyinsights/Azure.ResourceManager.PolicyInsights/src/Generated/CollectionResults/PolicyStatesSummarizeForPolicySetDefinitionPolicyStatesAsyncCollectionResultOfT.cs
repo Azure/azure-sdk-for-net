@@ -7,6 +7,8 @@
 
 using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
+using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
@@ -57,9 +59,17 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of PolicyStatesSummarizeForPolicySetDefinitionPolicyStatesAsyncCollectionResultOfT as an enumerable collection. </returns>
-        public override async IAsyncEnumerable<Page<PolicySummary>> AsPages(string continuationToken, int? pageSizeHint)
+        public override IAsyncEnumerable<Page<PolicySummary>> AsPages(string continuationToken, int? pageSizeHint)
         {
-            Response response = await GetNextResponseAsync(pageSizeHint, null).ConfigureAwait(false);
+            return AsPagesAsync(continuationToken, pageSizeHint, _context?.CancellationToken ?? default);
+        }
+
+        /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
+        /// <param name="pageSizeHint"> The number of items per page. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        private async IAsyncEnumerable<Page<PolicySummary>> AsPagesAsync(string continuationToken, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken)
+        {
+            Response response = await GetNextResponseAsync(pageSizeHint, null, cancellationToken).ConfigureAwait(false);
             SummarizeResults result = SummarizeResults.FromResponse(response);
             yield return Page<PolicySummary>.FromValues((IReadOnlyList<PolicySummary>)result.Value, null, response);
         }
@@ -67,14 +77,23 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <summary> Get next page. </summary>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
-        private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, string continuationToken)
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, string continuationToken, CancellationToken cancellationToken)
         {
             HttpMessage message = _client.CreateSummarizeForPolicySetDefinitionPolicyStatesRequest(_subscriptionId, _policyStatesSummaryResource, _policySetDefinitionName, _maxCount, _from, _to, _filter, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {
-                return await _client.Pipeline.ProcessMessageAsync(message, _context).ConfigureAwait(false);
+                ErrorOptions errorOptions = _context?.ErrorOptions ?? ErrorOptions.Default;
+                await _client.Pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+
+                if (message.Response.IsError && (errorOptions & ErrorOptions.NoThrow) != ErrorOptions.NoThrow)
+                {
+                    throw new RequestFailedException(message.Response);
+                }
+
+                return message.Response;
             }
             catch (Exception e)
             {

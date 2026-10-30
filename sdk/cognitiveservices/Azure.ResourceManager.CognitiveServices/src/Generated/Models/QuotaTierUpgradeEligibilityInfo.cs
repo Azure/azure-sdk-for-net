@@ -17,11 +17,11 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
         private string _nextTierName;
-        internal bool _nextTierNameIsDefined;
+        private bool _nextTierNameIsDefined;
         private DateTimeOffset? _upgradeApplicableOn;
-        internal bool _upgradeApplicableOnIsDefined;
+        private bool _upgradeApplicableOnIsDefined;
         private string _upgradeUnavailabilityReason;
-        internal bool _upgradeUnavailabilityReasonIsDefined;
+        private bool _upgradeUnavailabilityReasonIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="QuotaTierUpgradeEligibilityInfo"/>. </summary>
         internal QuotaTierUpgradeEligibilityInfo()

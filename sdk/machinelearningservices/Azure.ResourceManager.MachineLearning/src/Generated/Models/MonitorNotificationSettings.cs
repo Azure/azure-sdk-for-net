@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
         private MonitorEmailNotificationSettings _emailNotificationSettings;
-        internal bool _emailNotificationSettingsIsDefined;
+        private bool _emailNotificationSettingsIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="MonitorNotificationSettings"/>. </summary>
         public MonitorNotificationSettings()

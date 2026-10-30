@@ -1,6 +1,20 @@
 # Release History
 
-## 1.0.0-beta.9 (Unreleased)
+## 1.0.0-beta.10 (Unreleased)
+
+### Features Added
+- Either `ResilientBackground` or `SteerableConversations` now activates the Core
+  durable task runtime without a separate `SetResilientTasksEnabled()` call. Steering-only
+  deployments retain durable task bookkeeping but mark interrupted background responses
+  failed instead of re-invoking their handlers.
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 1.0.0-beta.9 (2026-10-15)
 
 ### Features Added
 - Hosted durable multi-turn task IDs are now scoped by `FOUNDRY_AGENT_SESSION_GUID`, preventing
@@ -13,7 +27,13 @@
   which bind a new `ResponsesServerSettings : ClientSettings` (the Foundry credential, `Endpoint`,
   and option flags) from a single configuration section. Because response storage and
   resilient-task storage bind the same identity and endpoint from one section, the two cannot
-  diverge. This is the required entry point in hosted Foundry environments.
+  diverge. This is the required entry point in hosted Foundry environments. In a hosted
+  container, values the section does not provide default to the platform: `Endpoint` to
+  `FOUNDRY_PROJECT_ENDPOINT`, and an absent `Credential` section to a `DefaultAzureCredential`
+  limited by default to the production credentials (environment, workload identity and managed
+  identity; `AZURE_TOKEN_CREDENTIALS` overrides the selection), so
+  `ResponsesServer.Run<THandler>()` needs no configuration. A `Credential` section that does not
+  resolve still fails startup.
 - Added `ResponseContext.ClientCancellation` (a `CancellationToken`) alongside
   `ResponseContext.Shutdown`, so an explicit client cancel is composable as a token.
 
@@ -30,9 +50,10 @@
 - Hosted registration now uses the `ClientSettings` pattern. The
   `AddResponsesServer(IServiceCollection, Action<ResponsesServerOptions>)` overload remains for
   local / non-hosted scenarios and now throws in a hosted Foundry environment (use the
-  `IHostApplicationBuilder` overload there). The internal `FOUNDRY_PROJECT_ENDPOINT` /
-  `DEFAULT_FETCH_HISTORY_ITEM_COUNT` environment-variable reads and the ambient `TokenCredential`
-  registration were removed; the HTTPS-in-non-development check now honors
+  `IHostApplicationBuilder` overload there). The internal `DEFAULT_FETCH_HISTORY_ITEM_COUNT`
+  environment-variable read and the ambient `TokenCredential` registration were removed
+  (`FOUNDRY_PROJECT_ENDPOINT` is now only the fallback for an unconfigured
+  `ResponsesServer:Endpoint`); the HTTPS-in-non-development check now honors
   `IHostEnvironment.IsDevelopment()` rather than reading `ASPNETCORE_ENVIRONMENT` /
   `DOTNET_ENVIRONMENT` directly.
 - `ResponseEventStream.Checkpoint()` was renamed to the virtual `CreateCheckpointEvent()`, and
@@ -56,6 +77,11 @@
 - Hosted `ResponsesServer.Run` and `AgentHostBuilder.AddResponses` now bind through the
   `ResponsesServer` settings section instead of routing through the local-only service-collection
   registration path.
+- Hosted `ResponsesServer.Run<THandler>()` and `AgentHostBuilder.AddResponses` no longer fail at
+  startup in a hosted Foundry container that provides only the platform environment
+  (`FOUNDRY_PROJECT_ENDPOINT` and a managed identity). Unconfigured values fall back to the
+  platform, and the fallback is logged at startup. A configured but unresolvable `Credential`
+  section still fails startup.
 - The Foundry response-storage HTTP pipeline is now private to its provider, preventing unrelated
   ambient pipeline registrations from replacing the configured credential-bound pipeline.
 - Task-bound SSE relays now observe durable task completion failures, emit the existing SSE error

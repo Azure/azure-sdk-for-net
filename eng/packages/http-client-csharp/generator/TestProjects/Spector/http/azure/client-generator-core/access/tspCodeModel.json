@@ -785,7 +785,6 @@
                 "$id": "60",
                 "name": "noDecoratorInPublic",
                 "isExactName": false,
-                "resourceName": "PublicOperation",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -930,7 +929,6 @@
                 "$id": "68",
                 "name": "publicDecoratorInPublic",
                 "isExactName": false,
-                "resourceName": "PublicOperation",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -1125,7 +1123,6 @@
                 "$id": "80",
                 "name": "noDecoratorInInternal",
                 "isExactName": false,
-                "resourceName": "InternalOperation",
                 "accessibility": "internal",
                 "parameters": [
                   {
@@ -1270,7 +1267,6 @@
                 "$id": "88",
                 "name": "internalDecoratorInInternal",
                 "isExactName": false,
-                "resourceName": "InternalOperation",
                 "accessibility": "internal",
                 "parameters": [
                   {
@@ -1415,7 +1411,6 @@
                 "$id": "96",
                 "name": "publicDecoratorInInternal",
                 "isExactName": false,
-                "resourceName": "InternalOperation",
                 "accessibility": "internal",
                 "parameters": [
                   {
@@ -1610,7 +1605,6 @@
                 "$id": "108",
                 "name": "public",
                 "isExactName": false,
-                "resourceName": "SharedModelInOperation",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -1755,7 +1749,6 @@
                 "$id": "116",
                 "name": "internal",
                 "isExactName": false,
-                "resourceName": "SharedModelInOperation",
                 "accessibility": "internal",
                 "parameters": [
                   {
@@ -1951,7 +1944,6 @@
                 "$id": "128",
                 "name": "operation",
                 "isExactName": false,
-                "resourceName": "RelativeModelInOperation",
                 "doc": "Expected query parameter: name=\"Madge\"\nExpected response body:\n```json\n{\n  \"name\": \"Madge\",\n  \"inner\":\n  {\n    \"name\": \"Madge\"\n  }\n}\n```",
                 "accessibility": "internal",
                 "parameters": [
@@ -2098,7 +2090,6 @@
                 "$id": "136",
                 "name": "discriminator",
                 "isExactName": false,
-                "resourceName": "RelativeModelInOperation",
                 "doc": "Expected query parameter: kind=\"real\"\nExpected response body:\n```json\n{\n  \"name\": \"Madge\",\n  \"kind\": \"real\"\n}\n```",
                 "accessibility": "internal",
                 "parameters": [

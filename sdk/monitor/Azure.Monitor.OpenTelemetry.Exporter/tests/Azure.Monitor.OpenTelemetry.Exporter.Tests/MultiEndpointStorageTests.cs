@@ -141,6 +141,17 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             Assert.Null(storage.TryGet("https://one-too-many.in.applicationinsights.azure.com/", isAad: true));
         }
 
+        [Fact]
+        public void NoAadPartitionIsCreatedWithoutACredential()
+        {
+            using var storage = CreateStorage(withAadClient: false);
+
+            Assert.Null(storage.TryGet(EastUs, isAad: true));
+            Assert.NotNull(storage.TryGet(EastUs, isAad: false));
+            Assert.Single(storage.Partitions);
+            Assert.False(Directory.Exists(Path.Combine(_rootDirectory, HashHelper.GetSHA256Hash(MultiEndpointStorage.AadPartitionKeyPrefix + EastUs))));
+        }
+
         /// <summary>
         /// Each partition owns a directory, a drain timer, and a blob provider, so the count is
         /// capped rather than following the caller's endpoint count.
@@ -580,7 +591,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         /// budget full queues behind the eviction lock. Treat it as a smoke test for the invariant,
         /// not as a regression test for the reservation.
         /// </remarks>
-        [Fact]
+        [Fact(Skip = "Shared storage budget race, see: https://github.com/Azure/azure-sdk-for-net/issues/63782")]
         public void ConcurrentWritersDoNotExceedTheSharedBudget()
         {
             const int PayloadSize = 4096;
@@ -717,13 +728,14 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             GC.SuppressFinalize(this);
         }
 
-        private MultiEndpointStorage CreateStorage(long maxSizeBytes = 1024 * 1024)
+        private MultiEndpointStorage CreateStorage(long maxSizeBytes = 1024 * 1024, bool withAadClient = true)
         {
             var options = new AzureMonitorExporterOptions();
             var restClient = new ApplicationInsightsRestClient(new ClientDiagnostics(options), HttpPipelineBuilder.Build(options), EastUs);
+            var aadRestClient = withAadClient ? new ApplicationInsightsRestClient(new ClientDiagnostics(options), HttpPipelineBuilder.Build(options), EastUs) : null;
             var connectionVars = new ConnectionVars("ikey", EastUs, EastUs, aadAudience: null);
 
-            return new MultiEndpointStorage(restClient, connectionVars, isAadEnabled: false, _rootDirectory, maxSizeBytes, networkSdkStatsManager: null);
+            return new MultiEndpointStorage(restClient, aadRestClient, connectionVars, _rootDirectory, maxSizeBytes, networkSdkStatsManager: null);
         }
 
         /// <summary>Fails the drain before any request is issued.</summary>

@@ -39,9 +39,8 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal OperationalInsightsClusterCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(OperationalInsightsClusterResource.ResourceType, out string operationalInsightsClusterApiVersion);
             _clustersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.OperationalInsights", OperationalInsightsClusterResource.ResourceType.Namespace, Diagnostics);
-            _clustersRestClient = new Clusters(_clustersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, operationalInsightsClusterApiVersion ?? "2026-03-01");
+            _clustersRestClient = new Clusters(_clustersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.OperationalInsights/clusters", out string clustersApiVersionOverride) ? clustersApiVersionOverride : "2026-03-01");
             ValidateResourceId(id);
         }
 

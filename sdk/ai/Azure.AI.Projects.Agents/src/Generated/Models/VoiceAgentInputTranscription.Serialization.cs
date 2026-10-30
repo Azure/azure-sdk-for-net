@@ -10,8 +10,8 @@ using System.Text.Json;
 namespace Azure.AI.Projects.Agents
 {
     /// <summary>
-    /// Asynchronous input-audio transcription configuration. Extends the OpenAI Realtime transcription
-    /// options with the Azure and MAI transcription models, custom speech models, and phrase hints.
+    /// Settings for transcribing input audio, including the transcription model, Custom Speech deployments,
+    /// and phrase hints.
     /// </summary>
     public partial class VoiceAgentInputTranscription : IJsonModel<VoiceAgentInputTranscription>
     {
@@ -156,6 +156,11 @@ namespace Azure.AI.Projects.Agents
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsDefined(ProfanityFilter))
+            {
+                writer.WritePropertyName("profanity_filter"u8);
+                writer.WriteStringValue(ProfanityFilter.Value.ToString());
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -206,6 +211,7 @@ namespace Azure.AI.Projects.Agents
             VoiceAgentInputTranscriptionModel model = default;
             IDictionary<string, string> customSpeech = default;
             IList<string> phraseList = default;
+            VoiceAgentProfanityFilterMode? profanityFilter = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -317,6 +323,15 @@ namespace Azure.AI.Projects.Agents
                     phraseList = array;
                     continue;
                 }
+                if (prop.NameEquals("profanity_filter"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    profanityFilter = new VoiceAgentProfanityFilterMode(prop.Value.GetString());
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
@@ -331,6 +346,7 @@ namespace Azure.AI.Projects.Agents
                 model,
                 customSpeech ?? new ChangeTrackingDictionary<string, string>(),
                 phraseList ?? new ChangeTrackingList<string>(),
+                profanityFilter,
                 additionalBinaryDataProperties);
         }
     }

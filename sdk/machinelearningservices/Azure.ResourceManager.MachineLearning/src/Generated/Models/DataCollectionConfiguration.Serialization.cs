@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 throw new FormatException($"The model {nameof(DataCollectionConfiguration)} does not support writing '{format}' format.");
             }
-            if (_clientIdIsDefined || Optional.IsDefined(ClientId))
+            if (Optional.IsDefined(ClientId, _clientIdIsDefined))
             {
                 if (ClientId != null)
                 {
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WritePropertyName("dataCollectionMode"u8);
                 writer.WriteStringValue(DataCollectionMode.Value.ToString());
             }
-            if (_dataIdIsDefined || Optional.IsDefined(DataId))
+            if (Optional.IsDefined(DataId, _dataIdIsDefined))
             {
                 if (DataId != null)
                 {

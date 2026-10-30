@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
         private int? _minCapacity;
-        internal bool _minCapacityIsDefined;
+        private bool _minCapacityIsDefined;
         private int? _maxCapacity;
-        internal bool _maxCapacityIsDefined;
+        private bool _maxCapacityIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="AzureFirewallAutoscaleConfiguration"/>. </summary>
         public AzureFirewallAutoscaleConfiguration()

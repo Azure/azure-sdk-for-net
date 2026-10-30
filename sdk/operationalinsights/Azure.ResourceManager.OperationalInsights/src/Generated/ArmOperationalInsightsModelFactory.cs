@@ -1216,7 +1216,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         /// <param name="additionalProperties"></param>
         /// <returns> A new <see cref="Models.OperationalInsightsWorkspaceFeatures"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static OperationalInsightsWorkspaceFeatures OperationalInsightsWorkspaceFeatures(bool? isDataExportEnabled = default, bool? immediatePurgeDataOn30Days = default, bool? isLogAccessUsingOnlyResourcePermissionsEnabled = default, ResourceIdentifier clusterResourceId = default, bool? isLocalAuthDisabled = default, bool? isUnifiedSentinelBillingOnly = default, IEnumerable<string> associations = default, IDictionary<string, BinaryData> additionalProperties = default)
+        public static OperationalInsightsWorkspaceFeatures OperationalInsightsWorkspaceFeatures(bool? isDataExportEnabled, bool? immediatePurgeDataOn30Days, bool? isLogAccessUsingOnlyResourcePermissionsEnabled, ResourceIdentifier clusterResourceId, bool? isLocalAuthDisabled, bool? isUnifiedSentinelBillingOnly, IEnumerable<string> associations, IDictionary<string, BinaryData> additionalProperties)
         {
             return new OperationalInsightsWorkspaceFeatures(
                 isDataExportEnabled,
@@ -1249,7 +1249,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         /// <param name="isTotalRetentionInDaysAsDefault"> True - Value originates from retention in days, False - Customer specific. </param>
         /// <returns> A new <see cref="OperationalInsights.OperationalInsightsTableData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static OperationalInsightsTableData OperationalInsightsTableData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, int? retentionInDays = default, int? totalRetentionInDays = default, int? archiveRetentionInDays = default, OperationalInsightsTableSearchResults searchResults = default, OperationalInsightsTableRestoredLogs restoredLogs = default, OperationalInsightsTableResultStatistics resultStatistics = default, OperationalInsightsTablePlan? plan = default, string lastPlanModifiedDate = default, OperationalInsightsSchema schema = default, OperationalInsightsTableProvisioningState? provisioningState = default, bool? isRetentionInDaysAsDefault = default, bool? isTotalRetentionInDaysAsDefault = default)
+        public static OperationalInsightsTableData OperationalInsightsTableData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, int? retentionInDays, int? totalRetentionInDays, int? archiveRetentionInDays, OperationalInsightsTableSearchResults searchResults, OperationalInsightsTableRestoredLogs restoredLogs, OperationalInsightsTableResultStatistics resultStatistics, OperationalInsightsTablePlan? plan, string lastPlanModifiedDate, OperationalInsightsSchema schema, OperationalInsightsTableProvisioningState? provisioningState, bool? isRetentionInDaysAsDefault, bool? isTotalRetentionInDaysAsDefault)
         {
             return new OperationalInsightsTableData(
                 id,
@@ -1293,7 +1293,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         /// <param name="totalRetentionInDaysAsDefault"></param>
         /// <returns> A new <see cref="OperationalInsights.OperationalInsightsTableData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static OperationalInsightsTableData OperationalInsightsTableData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, int? retentionInDays = default, int? totalRetentionInDays = default, int? archiveRetentionInDays = default, OperationalInsightsTableSearchResults searchResults = default, OperationalInsightsTableRestoredLogs restoredLogs = default, OperationalInsightsTableResultStatistics resultStatistics = default, OperationalInsightsTablePlan? plan = default, string lastPlanModifiedDate = default, OperationalInsightsSchema schema = default, OperationalInsightsTableProvisioningState? provisioningState = default, RetentionInDaysAsDefaultState? retentionInDaysAsDefault = default, TotalRetentionInDaysAsDefaultState? totalRetentionInDaysAsDefault = default)
+        public static OperationalInsightsTableData OperationalInsightsTableData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, int? retentionInDays, int? totalRetentionInDays, int? archiveRetentionInDays, OperationalInsightsTableSearchResults searchResults, OperationalInsightsTableRestoredLogs restoredLogs, OperationalInsightsTableResultStatistics resultStatistics, OperationalInsightsTablePlan? plan, string lastPlanModifiedDate, OperationalInsightsSchema schema, OperationalInsightsTableProvisioningState? provisioningState, RetentionInDaysAsDefaultState? retentionInDaysAsDefault, TotalRetentionInDaysAsDefaultState? totalRetentionInDaysAsDefault)
         {
             return new OperationalInsightsTableData(
                 id,
@@ -1340,7 +1340,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         /// <param name="replication"> Cluster's replication properties. </param>
         /// <returns> A new <see cref="OperationalInsights.OperationalInsightsClusterData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static OperationalInsightsClusterData OperationalInsightsClusterData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ManagedServiceIdentity identity = default, OperationalInsightsClusterSku sku = default, Guid? clusterId = default, OperationalInsightsClusterEntityStatus? provisioningState = default, bool? isDoubleEncryptionEnabled = default, bool? isAvailabilityZonesEnabled = default, OperationalInsightsBillingType? billingType = default, OperationalInsightsKeyVaultProperties keyVaultProperties = default, DateTimeOffset? lastModifiedOn = default, DateTimeOffset? createdOn = default, IEnumerable<OperationalInsightsClusterAssociatedWorkspace> associatedWorkspaces = default, OperationalInsightsCapacityReservationProperties capacityReservationProperties = default, OperationalInsightsClusterReplicationProperties replication = default)
+        public static OperationalInsightsClusterData OperationalInsightsClusterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, OperationalInsightsClusterSku sku, Guid? clusterId, OperationalInsightsClusterEntityStatus? provisioningState, bool? isDoubleEncryptionEnabled, bool? isAvailabilityZonesEnabled, OperationalInsightsBillingType? billingType, OperationalInsightsKeyVaultProperties keyVaultProperties, DateTimeOffset? lastModifiedOn, DateTimeOffset? createdOn, IEnumerable<OperationalInsightsClusterAssociatedWorkspace> associatedWorkspaces, OperationalInsightsCapacityReservationProperties capacityReservationProperties, OperationalInsightsClusterReplicationProperties replication)
         {
             return new OperationalInsightsClusterData(
                 id,
@@ -1378,7 +1378,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         /// <param name="provisioningState"> The provisioning state of the linked service. </param>
         /// <returns> A new <see cref="OperationalInsights.OperationalInsightsLinkedServiceData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static OperationalInsightsLinkedServiceData OperationalInsightsLinkedServiceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, ResourceIdentifier resourceId = default, ResourceIdentifier writeAccessResourceId = default, OperationalInsightsLinkedServiceEntityStatus? provisioningState = default)
+        public static OperationalInsightsLinkedServiceData OperationalInsightsLinkedServiceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, ResourceIdentifier resourceId, ResourceIdentifier writeAccessResourceId, OperationalInsightsLinkedServiceEntityStatus? provisioningState)
         {
             return new OperationalInsightsLinkedServiceData(
                 id,
@@ -1405,7 +1405,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         /// <param name="tags"> The tags attached to the saved search. </param>
         /// <returns> A new <see cref="OperationalInsights.OperationalInsightsSavedSearchData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static OperationalInsightsSavedSearchData OperationalInsightsSavedSearchData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ETag? etag = default, string category = default, string displayName = default, string query = default, string functionAlias = default, string functionParameters = default, long? version = default, IEnumerable<OperationalInsightsTag> tags = default)
+        public static OperationalInsightsSavedSearchData OperationalInsightsSavedSearchData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? etag, string category, string displayName, string query, string functionAlias, string functionParameters, long? version, IEnumerable<OperationalInsightsTag> tags)
         {
             return new OperationalInsightsSavedSearchData(
                 id,
@@ -1438,7 +1438,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         /// <param name="status"> The status of the storage insight. </param>
         /// <returns> A new <see cref="OperationalInsights.StorageInsightData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static StorageInsightData StorageInsightData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ETag? etag = default, IDictionary<string, string> tags = default, IEnumerable<string> containers = default, IEnumerable<string> tables = default, OperationalInsightsStorageAccount storageAccount = default, StorageInsightStatus status = default)
+        public static StorageInsightData StorageInsightData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? etag, IDictionary<string, string> tags, IEnumerable<string> containers, IEnumerable<string> tables, OperationalInsightsStorageAccount storageAccount, StorageInsightStatus status)
         {
             return new StorageInsightData(
                 id,
@@ -1477,7 +1477,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         /// <param name="failover"> workspace failover properties. </param>
         /// <returns> A new <see cref="OperationalInsights.OperationalInsightsWorkspaceData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static OperationalInsightsWorkspaceData OperationalInsightsWorkspaceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ManagedServiceIdentity identity = default, ETag? etag = default, OperationalInsightsWorkspaceEntityStatus? provisioningState = default, Guid? customerId = default, OperationalInsightsWorkspaceSku sku = default, int? retentionInDays = default, OperationalInsightsWorkspaceCapping workspaceCapping = default, DateTimeOffset? createdOn = default, DateTimeOffset? modifiedOn = default, OperationalInsightsPublicNetworkAccessType? publicNetworkAccessForIngestion = default, OperationalInsightsPublicNetworkAccessType? publicNetworkAccessForQuery = default, bool? forceCmkForQuery = default, IEnumerable<OperationalInsightsPrivateLinkScopedResourceInfo> privateLinkScopedResources = default, OperationalInsightsWorkspaceFeatures features = default, ResourceIdentifier defaultDataCollectionRuleResourceId = default, OperationalInsightsWorkspaceReplicationProperties replication = default, OperationalInsightsWorkspaceFailoverProperties failover = default)
+        public static OperationalInsightsWorkspaceData OperationalInsightsWorkspaceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, ETag? etag, OperationalInsightsWorkspaceEntityStatus? provisioningState, Guid? customerId, OperationalInsightsWorkspaceSku sku, int? retentionInDays, OperationalInsightsWorkspaceCapping workspaceCapping, DateTimeOffset? createdOn, DateTimeOffset? modifiedOn, OperationalInsightsPublicNetworkAccessType? publicNetworkAccessForIngestion, OperationalInsightsPublicNetworkAccessType? publicNetworkAccessForQuery, bool? forceCmkForQuery, IEnumerable<OperationalInsightsPrivateLinkScopedResourceInfo> privateLinkScopedResources, OperationalInsightsWorkspaceFeatures features, ResourceIdentifier defaultDataCollectionRuleResourceId, OperationalInsightsWorkspaceReplicationProperties replication, OperationalInsightsWorkspaceFailoverProperties failover)
         {
             return new OperationalInsightsWorkspaceData(
                 id,
@@ -1518,7 +1518,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         /// <param name="additionalProperties"></param>
         /// <returns> A new <see cref="Models.OperationalInsightsWorkspaceFeatures"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static OperationalInsightsWorkspaceFeatures OperationalInsightsWorkspaceFeatures(bool? isDataExportEnabled = default, bool? immediatePurgeDataOn30Days = default, bool? isLogAccessUsingOnlyResourcePermissionsEnabled = default, ResourceIdentifier clusterResourceId = default, bool? isLocalAuthDisabled = default, bool? isUnifiedSentinelBillingOnly = default, IDictionary<string, BinaryData> additionalProperties = default)
+        public static OperationalInsightsWorkspaceFeatures OperationalInsightsWorkspaceFeatures(bool? isDataExportEnabled, bool? immediatePurgeDataOn30Days, bool? isLogAccessUsingOnlyResourcePermissionsEnabled, ResourceIdentifier clusterResourceId, bool? isLocalAuthDisabled, bool? isUnifiedSentinelBillingOnly, IDictionary<string, BinaryData> additionalProperties)
         {
             return new OperationalInsightsWorkspaceFeatures(
                 isDataExportEnabled,
@@ -1557,7 +1557,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         /// <param name="etag"></param>
         /// <returns> A new <see cref="Models.OperationalInsightsWorkspacePatch"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static OperationalInsightsWorkspacePatch OperationalInsightsWorkspacePatch(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ManagedServiceIdentity identity = default, IDictionary<string, string> tags = default, OperationalInsightsWorkspaceEntityStatus? provisioningState = default, Guid? customerId = default, OperationalInsightsWorkspaceSku sku = default, int? retentionInDays = default, OperationalInsightsWorkspaceCapping workspaceCapping = default, DateTimeOffset? createdOn = default, DateTimeOffset? modifiedOn = default, OperationalInsightsPublicNetworkAccessType? publicNetworkAccessForIngestion = default, OperationalInsightsPublicNetworkAccessType? publicNetworkAccessForQuery = default, bool? forceCmkForQuery = default, IEnumerable<OperationalInsightsPrivateLinkScopedResourceInfo> privateLinkScopedResources = default, OperationalInsightsWorkspaceFeatures features = default, ResourceIdentifier defaultDataCollectionRuleResourceId = default, OperationalInsightsWorkspaceReplicationProperties replication = default, OperationalInsightsWorkspaceFailoverProperties failover = default, ETag? etag = default)
+        public static OperationalInsightsWorkspacePatch OperationalInsightsWorkspacePatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ManagedServiceIdentity identity, IDictionary<string, string> tags, OperationalInsightsWorkspaceEntityStatus? provisioningState, Guid? customerId, OperationalInsightsWorkspaceSku sku, int? retentionInDays, OperationalInsightsWorkspaceCapping workspaceCapping, DateTimeOffset? createdOn, DateTimeOffset? modifiedOn, OperationalInsightsPublicNetworkAccessType? publicNetworkAccessForIngestion, OperationalInsightsPublicNetworkAccessType? publicNetworkAccessForQuery, bool? forceCmkForQuery, IEnumerable<OperationalInsightsPrivateLinkScopedResourceInfo> privateLinkScopedResources, OperationalInsightsWorkspaceFeatures features, ResourceIdentifier defaultDataCollectionRuleResourceId, OperationalInsightsWorkspaceReplicationProperties replication, OperationalInsightsWorkspaceFailoverProperties failover, ETag? etag)
         {
             return new OperationalInsightsWorkspacePatch(
                 id,

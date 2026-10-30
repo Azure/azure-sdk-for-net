@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.FileShares.Models
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <returns> A new <see cref="FileShares.FileShareData"/> instance for mocking. </returns>
-        public static FileShareData FileShareData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, FileShareProperties properties, ManagedServiceIdentity identity)
+        public static FileShareData FileShareData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, FileShareProperties properties = default, ManagedServiceIdentity identity = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.FileShares.Models
         /// <param name="redundancyConversionInProgress"> Indicates whether a redundancy conversion is in progress for the file share. </param>
         /// <param name="encryption"> Encryption settings for the file share. </param>
         /// <returns> A new <see cref="Models.FileShareProperties"/> instance for mocking. </returns>
-        public static FileShareProperties FileShareProperties(string mountName, string hostName, FileShareMediaTier? mediaTier, FileShareRedundancyLevel? redundancy, FileShareProtocol? protocol, ScaleMode? scaleMode, int? provisionedStorageInGiB, DateTimeOffset? provisionedStorageNextAllowedDowngradeOn, int? provisionedIOPerSec, DateTimeOffset? provisionedIOPerSecNextAllowedDowngradeOn, int? provisionedThroughputMiBPerSec, DateTimeOffset? provisionedThroughputNextAllowedDowngradeOn, int? includedBurstIOPerSec, long? maxBurstIOPerSecCredits, NfsProtocolProperties nfsProtocolProperties, IEnumerable<string> publicAccessAllowedSubnets, FileShareProvisioningState? provisioningState, FileSharePublicNetworkAccess? publicNetworkAccess, IEnumerable<FileSharePrivateEndpointConnectionData> privateEndpointConnections, bool? redundancyConversionInProgress = default, FileShareEncryption encryption = default)
+        public static FileShareProperties FileShareProperties(string mountName = default, string hostName = default, FileShareMediaTier? mediaTier = default, FileShareRedundancyLevel? redundancy = default, FileShareProtocol? protocol = default, ScaleMode? scaleMode = default, int? provisionedStorageInGiB = default, DateTimeOffset? provisionedStorageNextAllowedDowngradeOn = default, int? provisionedIOPerSec = default, DateTimeOffset? provisionedIOPerSecNextAllowedDowngradeOn = default, int? provisionedThroughputMiBPerSec = default, DateTimeOffset? provisionedThroughputNextAllowedDowngradeOn = default, int? includedBurstIOPerSec = default, long? maxBurstIOPerSecCredits = default, NfsProtocolProperties nfsProtocolProperties = default, IEnumerable<string> publicAccessAllowedSubnets = default, FileShareProvisioningState? provisioningState = default, FileSharePublicNetworkAccess? publicNetworkAccess = default, IEnumerable<FileSharePrivateEndpointConnectionData> privateEndpointConnections = default, bool? redundancyConversionInProgress = default, FileShareEncryption encryption = default)
         {
             privateEndpointConnections ??= new ChangeTrackingList<FileSharePrivateEndpointConnectionData>();
 
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.FileShares.Models
         /// <param name="tags"> Resource tags. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <returns> A new <see cref="Models.FileSharePatch"/> instance for mocking. </returns>
-        public static FileSharePatch FileSharePatch(ManagedServiceIdentity identity, IDictionary<string, string> tags, FileSharePatchProperties properties)
+        public static FileSharePatch FileSharePatch(ManagedServiceIdentity identity = default, IDictionary<string, string> tags = default, FileSharePatchProperties properties = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -391,7 +391,7 @@ namespace Azure.ResourceManager.FileShares.Models
         /// <summary> Request structure for file share provisioning parameters recommendation API. </summary>
         /// <param name="properties"> The properties of the file share provisioning recommendation input. </param>
         /// <returns> A new <see cref="Models.FileShareProvisioningRecommendationContent"/> instance for mocking. </returns>
-        public static FileShareProvisioningRecommendationContent FileShareProvisioningRecommendationContent(FileShareProvisioningRecommendationInputProperties properties)
+        public static FileShareProvisioningRecommendationContent FileShareProvisioningRecommendationContent(FileShareProvisioningRecommendationInputProperties properties = default)
         {
             return new FileShareProvisioningRecommendationContent(properties, default);
         }
@@ -468,7 +468,7 @@ namespace Azure.ResourceManager.FileShares.Models
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <returns> A new <see cref="FileShares.FileShareData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static FileShareData FileShareData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, FileShareProperties properties = default)
+        public static FileShareData FileShareData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, FileShareProperties properties)
         {
             return new FileShareData(
                 id,
@@ -503,7 +503,7 @@ namespace Azure.ResourceManager.FileShares.Models
         /// <param name="privateEndpointConnections"> The list of associated private endpoint connections. </param>
         /// <returns> A new <see cref="Models.FileShareProperties"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static FileShareProperties FileShareProperties(string mountName = default, string hostName = default, FileShareMediaTier? mediaTier = default, FileShareRedundancyLevel? redundancy = default, FileShareProtocol? protocol = default, int? provisionedStorageInGiB = default, DateTimeOffset? provisionedStorageNextAllowedDowngradeOn = default, int? provisionedIOPerSec = default, DateTimeOffset? provisionedIOPerSecNextAllowedDowngradeOn = default, int? provisionedThroughputMiBPerSec = default, DateTimeOffset? provisionedThroughputNextAllowedDowngradeOn = default, int? includedBurstIOPerSec = default, long? maxBurstIOPerSecCredits = default, NfsProtocolProperties nfsProtocolProperties = default, IEnumerable<string> publicAccessAllowedSubnets = default, FileShareProvisioningState? provisioningState = default, FileSharePublicNetworkAccess? publicNetworkAccess = default, IEnumerable<FileSharePrivateEndpointConnectionData> privateEndpointConnections = default)
+        public static FileShareProperties FileShareProperties(string mountName, string hostName, FileShareMediaTier? mediaTier, FileShareRedundancyLevel? redundancy, FileShareProtocol? protocol, int? provisionedStorageInGiB, DateTimeOffset? provisionedStorageNextAllowedDowngradeOn, int? provisionedIOPerSec, DateTimeOffset? provisionedIOPerSecNextAllowedDowngradeOn, int? provisionedThroughputMiBPerSec, DateTimeOffset? provisionedThroughputNextAllowedDowngradeOn, int? includedBurstIOPerSec, long? maxBurstIOPerSecCredits, NfsProtocolProperties nfsProtocolProperties, IEnumerable<string> publicAccessAllowedSubnets, FileShareProvisioningState? provisioningState, FileSharePublicNetworkAccess? publicNetworkAccess, IEnumerable<FileSharePrivateEndpointConnectionData> privateEndpointConnections)
         {
             return new FileShareProperties(
                 mountName,
@@ -535,7 +535,7 @@ namespace Azure.ResourceManager.FileShares.Models
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <returns> A new <see cref="Models.FileSharePatch"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static FileSharePatch FileSharePatch(IDictionary<string, string> tags = default, FileSharePatchProperties properties = default)
+        public static FileSharePatch FileSharePatch(IDictionary<string, string> tags, FileSharePatchProperties properties)
         {
             return new FileSharePatch(default, tags ?? new ChangeTrackingDictionary<string, string>(), properties, default);
         }
@@ -544,7 +544,7 @@ namespace Azure.ResourceManager.FileShares.Models
         /// <param name="fileShareProvisioningRecommendationInputProvisionedStorageInGiB"> The desired provisioned storage size of the share in GiB. Will be use to calculate the values of remaining provisioning parameters. </param>
         /// <returns> A new <see cref="Models.FileShareProvisioningRecommendationContent"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static FileShareProvisioningRecommendationContent FileShareProvisioningRecommendationContent(int fileShareProvisioningRecommendationInputProvisionedStorageInGiB = 0)
+        public static FileShareProvisioningRecommendationContent FileShareProvisioningRecommendationContent(int fileShareProvisioningRecommendationInputProvisionedStorageInGiB)
         {
             return new FileShareProvisioningRecommendationContent(new FileShareProvisioningRecommendationInputProperties(fileShareProvisioningRecommendationInputProvisionedStorageInGiB, default, default, default, default), default);
         }

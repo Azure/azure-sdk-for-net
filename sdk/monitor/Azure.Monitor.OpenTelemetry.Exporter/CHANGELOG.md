@@ -5,10 +5,16 @@
 ### Features Added
 
 - Multi-endpoint routing reads a new `microsoft.ingestion_auth` attribute. Telemetry marked `"aad"` is sent and stored separately from instrumentation-key telemetry for the same endpoint, in preparation for Microsoft Entra ID support.
+- Multi-endpoint routing can now be used with `AzureMonitorExporterOptions.Credential`. Only telemetry marked `"aad"` is sent with a token, scoped to the audience in the `Azure.Monitor.OpenTelemetry.Exporter.MultiEndpointAadAudience` AppContext value (public cloud by default). Without a credential, telemetry marked `"aad"` is dropped.
+- Added the experimental `Azure.Monitor.OpenTelemetry.Exporter.Experimental.gen_ai_input_output_limit_increase` AppContext switch. When enabled, the custom property truncation limit for `gen_ai.input.messages` and `gen_ai.output.messages` increases from 256 KiB to 4 MiB (characters) to support GenAI multimodal content. Limits are unchanged by default: 256 KiB for GenAI attributes and 8 KiB for all other custom properties.
 
 ### Breaking Changes
 
 ### Bugs Fixed
+
+- Uploading telemetry from offline storage (at startup, on retry, and at shutdown) is no longer recorded as an HTTP dependency by HttpClient instrumentation.
+  ([#63821](https://github.com/Azure/azure-sdk-for-net/issues/63821))
+- Fixed `LogFilteringProcessor` behavior in .net 11 when `RandomTraceId` is set. ([64084](https://github.com/Azure/azure-sdk-for-net/pull/64084))
 
 ### Other Changes
 

@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.Automation.Models
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);
             }
-            if (_nextRunOnIsDefined || Optional.IsDefined(NextRunOn))
+            if (Optional.IsDefined(NextRunOn, _nextRunOnIsDefined))
             {
                 if (NextRunOn != null)
                 {

@@ -12,7 +12,7 @@ using Azure.ResourceManager.Cdn;
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> Request variable to compare with. </summary>
-    public readonly partial struct DeliveryRuleMatchVariable : IEquatable<DeliveryRuleMatchVariable>
+    internal readonly partial struct DeliveryRuleMatchVariable : IEquatable<DeliveryRuleMatchVariable>
     {
         private readonly string _value;
         private const string RemoteAddressValue = "RemoteAddress";

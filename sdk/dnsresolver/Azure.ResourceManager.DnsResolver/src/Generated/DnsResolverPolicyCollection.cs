@@ -41,7 +41,13 @@ namespace Azure.ResourceManager.DnsResolver
         {
             TryGetApiVersion(DnsResolverPolicyResource.ResourceType, out string dnsResolverPolicyApiVersion);
             _dnsResolverPoliciesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DnsResolver", DnsResolverPolicyResource.ResourceType.Namespace, Diagnostics);
-            _dnsResolverPoliciesRestClient = new DnsResolverPolicies(_dnsResolverPoliciesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, dnsResolverPolicyApiVersion ?? "2025-10-01-preview");
+            _dnsResolverPoliciesRestClient = new DnsResolverPolicies(
+                _dnsResolverPoliciesClientDiagnostics,
+                Pipeline,
+                Diagnostics.ApplicationId,
+                Endpoint,
+                dnsResolverPolicyApiVersion ?? "2025-10-01-preview",
+                resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 

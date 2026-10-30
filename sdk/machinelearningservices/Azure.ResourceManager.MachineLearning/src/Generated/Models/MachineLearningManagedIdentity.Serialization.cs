@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 throw new FormatException($"The model {nameof(MachineLearningManagedIdentity)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            if (_clientIdIsDefined || Optional.IsDefined(ClientId))
+            if (Optional.IsDefined(ClientId, _clientIdIsDefined))
             {
                 if (ClientId != null)
                 {
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("clientId"u8);
                 }
             }
-            if (_objectIdIsDefined || Optional.IsDefined(ObjectId))
+            if (Optional.IsDefined(ObjectId, _objectIdIsDefined))
             {
                 if (ObjectId != null)
                 {

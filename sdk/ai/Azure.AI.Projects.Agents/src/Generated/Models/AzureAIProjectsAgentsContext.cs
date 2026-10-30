@@ -85,9 +85,11 @@ namespace Azure.AI.Projects.Agents
     [ModelReaderWriterBuildable(typeof(BotServiceAuthorizationScheme))]
     [ModelReaderWriterBuildable(typeof(BotServiceRbacAuthorizationScheme))]
     [ModelReaderWriterBuildable(typeof(BotServiceTenantAuthorizationScheme))]
+#pragma warning disable CS0618 // global::Azure.AI.Projects.Agents.BrowserAutomationPreviewToolboxTool is obsolete and may be removed in future versions.
 #pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.BrowserAutomationPreviewToolboxTool is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(BrowserAutomationPreviewToolboxTool))]
 #pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.BrowserAutomationPreviewToolboxTool is experimental and may change in future versions.
+#pragma warning restore CS0618 // global::Azure.AI.Projects.Agents.BrowserAutomationPreviewToolboxTool is obsolete and may be removed in future versions.
     [ModelReaderWriterBuildable(typeof(BrowserAutomationToolboxTool))]
     [ModelReaderWriterBuildable(typeof(BrowserAutomationToolConnectionOptions))]
     [ModelReaderWriterBuildable(typeof(BrowserAutomationToolOptions))]
@@ -141,6 +143,12 @@ namespace Azure.AI.Projects.Agents
     [ModelReaderWriterBuildable(typeof(ManagedAgentIdentityBlueprintReference))]
     [ModelReaderWriterBuildable(typeof(McpProtocolConfiguration))]
     [ModelReaderWriterBuildable(typeof(MCPToolboxTool))]
+#pragma warning disable OPENAI001 // global::OpenAI.Responses.McpToolFilter is experimental and may change in future versions.
+    [ModelReaderWriterBuildable(typeof(McpToolFilter))]
+#pragma warning restore OPENAI001 // global::OpenAI.Responses.McpToolFilter is experimental and may change in future versions.
+#pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.MicrosoftCopilotHarness is experimental and may change in future versions.
+    [ModelReaderWriterBuildable(typeof(MicrosoftCopilotHarness))]
+#pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.MicrosoftCopilotHarness is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(ModelSamplingParams))]
     [ModelReaderWriterBuildable(typeof(OpenApiAuthenticationDetails))]
     [ModelReaderWriterBuildable(typeof(OpenApiFunctionDefinition))]
@@ -444,9 +452,6 @@ namespace Azure.AI.Projects.Agents
 #pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.VoiceResponseAudioOutput is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(VoiceResponseAudioOutput))]
 #pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.VoiceResponseAudioOutput is experimental and may change in future versions.
-#pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.VoiceResponseBase is experimental and may change in future versions.
-    [ModelReaderWriterBuildable(typeof(VoiceResponseBase))]
-#pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.VoiceResponseBase is experimental and may change in future versions.
 #pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.VoiceResult is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(VoiceResult))]
 #pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.VoiceResult is experimental and may change in future versions.
@@ -464,9 +469,11 @@ namespace Azure.AI.Projects.Agents
 #pragma warning disable OPENAI001 // global::OpenAI.Responses.WebSearchToolLocation is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(WebSearchToolLocation))]
 #pragma warning restore OPENAI001 // global::OpenAI.Responses.WebSearchToolLocation is experimental and may change in future versions.
+#pragma warning disable CS0618 // global::Azure.AI.Projects.Agents.WorkflowAgentDefinition is obsolete and may be removed in future versions.
 #pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.WorkflowAgentDefinition is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(WorkflowAgentDefinition))]
 #pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.WorkflowAgentDefinition is experimental and may change in future versions.
+#pragma warning restore CS0618 // global::Azure.AI.Projects.Agents.WorkflowAgentDefinition is obsolete and may be removed in future versions.
 #pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.WorkIQPreviewToolboxTool is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(WorkIQPreviewToolboxTool))]
 #pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.WorkIQPreviewToolboxTool is experimental and may change in future versions.

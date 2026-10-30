@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
         private string _assetId;
-        internal bool _assetIdIsDefined;
+        private bool _assetIdIsDefined;
         private Uri _blobUri;
-        internal bool _blobUriIsDefined;
+        private bool _blobUriIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="BlobReferenceSasContent"/>. </summary>
         public BlobReferenceSasContent()

@@ -12,7 +12,7 @@ using Azure.ResourceManager.Cdn;
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> The JSON object that contains the properties of the origin group. </summary>
-    public partial class FrontDoorOriginGroupProperties
+    internal partial class FrontDoorOriginGroupProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

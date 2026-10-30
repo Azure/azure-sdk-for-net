@@ -39,9 +39,8 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ScheduledQueryRuleCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ScheduledQueryRuleResource.ResourceType, out string scheduledQueryRuleApiVersion);
             _scheduledQueryRulesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Monitor", ScheduledQueryRuleResource.ResourceType.Namespace, Diagnostics);
-            _scheduledQueryRulesRestClient = new ScheduledQueryRules(_scheduledQueryRulesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, scheduledQueryRuleApiVersion ?? "2025-01-01-preview");
+            _scheduledQueryRulesRestClient = new ScheduledQueryRules(_scheduledQueryRulesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 

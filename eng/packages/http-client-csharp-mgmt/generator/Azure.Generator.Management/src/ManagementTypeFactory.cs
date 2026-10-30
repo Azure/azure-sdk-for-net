@@ -94,6 +94,84 @@ namespace Azure.Generator.Management
         }
 
         /// <inheritdoc/>
+        protected override CSharpType? CreateLastContractModelBaseCore(CSharpType previousBase, InputModelType currentModel)
+        {
+            if (!KnownManagementTypes.TryGetInheritableSystemType(previousBase, out var knownBase))
+            {
+                return null;
+            }
+
+            if (currentModel.BaseModel is null)
+            {
+                // Historical CLR properties may not expose wire names. Check MPG aliases with
+                // the same effective-shape policy before MTG treats them as model-local.
+                var systemBase = new SystemObjectModelProvider(knownBase, currentModel);
+                foreach (var property in currentModel.Properties)
+                {
+                    if (!ArmResourcePropertyProjection.TryGetAliasedName(property, out var propertyName))
+                    {
+                        continue;
+                    }
+
+                    var frameworkProperty = knownBase.FrameworkType.GetProperty(propertyName);
+                    if (frameworkProperty is null ||
+                        !IsLastContractModelBasePropertyCompatibleCore(knownBase, property, new PropertyProvider(
+                            null, MethodSignatureModifiers.Public, new CSharpType(frameworkProperty.PropertyType),
+                            propertyName, new AutoPropertyBody(frameworkProperty.SetMethod?.IsPublic == true), systemBase)))
+                    {
+                        return null;
+                    }
+                }
+            }
+
+            return knownBase;
+        }
+
+        /// <inheritdoc/>
+        protected override bool IsLastContractModelBasePropertyCompatibleCore(
+            CSharpType mappedBase,
+            InputModelProperty currentProperty,
+            PropertyProvider lastContractProperty)
+        {
+            if (!KnownManagementTypes.TryGetInheritableSystemType(mappedBase, out _) ||
+                CreateCSharpType(currentProperty.Type) is not { } currentType)
+            {
+                return base.IsLastContractModelBasePropertyCompatibleCore(mappedBase, currentProperty, lastContractProperty);
+            }
+
+            var hasSetter = !currentProperty.IsReadOnly;
+            string? expectedName;
+            if (ArmResourcePropertyProjection.TryGetHistoricalShape(currentProperty, currentType, out expectedName, out var historicalType))
+            {
+                currentType = historicalType;
+            }
+            else if (!ArmResourcePropertyProjection.TryGetName(currentProperty, currentType, out expectedName))
+            {
+                // The base check requires a CLR setter for writable input, but mutable lists and
+                // dictionaries can be modified through a getter. Check their accessors below instead
+                // of falling back; ReadOnlyMemory<T> still uses the normal base setter validation.
+                if (currentType is not { IsCollection: true, IsReadOnlyMemory: false })
+                {
+                    return base.IsLastContractModelBasePropertyCompatibleCore(mappedBase, currentProperty, lastContractProperty);
+                }
+
+                // Read-only input cannot reuse a mutable collection contract.
+                if (currentProperty.IsReadOnly)
+                {
+                    return false;
+                }
+                expectedName = currentProperty.IsExactName ? currentProperty.Name : currentProperty.Name.ToIdentifierName();
+                // Nullable collections need a setter so callers can assign null.
+                hasSetter = currentType.IsNullable;
+            }
+
+            return lastContractProperty.Name == expectedName &&
+                lastContractProperty.Type.WithNullable(false).Equals(currentType.WithNullable(false)) &&
+                (!currentType.IsValueType || lastContractProperty.Type.IsNullable == currentType.IsNullable) &&
+                lastContractProperty.Body.HasSetter == hasSetter;
+        }
+
+        /// <inheritdoc/>
         protected override ClientProvider? CreateClientCore(InputClient inputClient)
         {
             return new ManagementClientProvider(inputClient);

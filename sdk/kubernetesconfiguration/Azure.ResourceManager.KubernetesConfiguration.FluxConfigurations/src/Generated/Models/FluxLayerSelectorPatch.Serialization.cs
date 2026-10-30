@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
             {
                 throw new FormatException($"The model {nameof(FluxLayerSelectorPatch)} does not support writing '{format}' format.");
             }
-            if (_mediaTypeIsDefined || Optional.IsDefined(MediaType))
+            if (Optional.IsDefined(MediaType, _mediaTypeIsDefined))
             {
                 if (MediaType != null)
                 {
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
                     writer.WriteNull("mediaType"u8);
                 }
             }
-            if (_operationIsDefined || Optional.IsDefined(Operation))
+            if (Optional.IsDefined(Operation, _operationIsDefined))
             {
                 if (Operation != null)
                 {

@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                 throw new FormatException($"The model {nameof(AzureAppConfigProperties)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            if (_isConnectedWithKubernetesExtensionIsDefined || Optional.IsDefined(IsConnectedWithKubernetesExtension))
+            if (Optional.IsDefined(IsConnectedWithKubernetesExtension, _isConnectedWithKubernetesExtensionIsDefined))
             {
                 if (IsConnectedWithKubernetesExtension != null)
                 {

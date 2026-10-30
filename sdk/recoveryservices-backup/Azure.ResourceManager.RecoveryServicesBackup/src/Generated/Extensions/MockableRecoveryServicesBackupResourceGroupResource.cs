@@ -409,7 +409,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// <returns> An object representing collection of BackupProtectionPolicies and their operations over a BackupProtectionPolicyResource. </returns>
         public virtual BackupProtectionPolicyCollection GetBackupProtectionPolicies(string vaultName)
         {
-            return GetCachedClient(client => new BackupProtectionPolicyCollection(client, Id, vaultName));
+            return new BackupProtectionPolicyCollection(Client, Id, vaultName);
         }
 
         /// <summary>
@@ -479,7 +479,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// <returns> An object representing collection of BackupJobs and their operations over a BackupJobResource. </returns>
         public virtual BackupJobCollection GetBackupJobs(string vaultName)
         {
-            return GetCachedClient(client => new BackupJobCollection(client, Id, vaultName));
+            return new BackupJobCollection(Client, Id, vaultName);
         }
 
         /// <summary>
@@ -547,7 +547,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// <returns> An object representing collection of BackupEngines and their operations over a BackupEngineResource. </returns>
         public virtual BackupEngineCollection GetBackupEngines(string vaultName)
         {
-            return GetCachedClient(client => new BackupEngineCollection(client, Id, vaultName));
+            return new BackupEngineCollection(Client, Id, vaultName);
         }
 
         /// <summary>
@@ -619,7 +619,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// <returns> An object representing collection of ResourceGuardProxies and their operations over a ResourceGuardProxyResource. </returns>
         public virtual ResourceGuardProxyCollection GetResourceGuardProxies(string vaultName)
         {
-            return GetCachedClient(client => new ResourceGuardProxyCollection(client, Id, vaultName));
+            return new ResourceGuardProxyCollection(Client, Id, vaultName);
         }
 
         /// <summary>

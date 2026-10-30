@@ -38,11 +38,11 @@ namespace Azure.ResourceManager.HorizonDB.Mocking
 
         private ClientDiagnostics HorizonDBClustersClientDiagnostics => _horizonDBClustersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.HorizonDB.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private HorizonDBClusters HorizonDBClustersRestClient => _horizonDBClustersRestClient ??= new HorizonDBClusters(HorizonDBClustersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-05-01-preview");
+        private HorizonDBClusters HorizonDBClustersRestClient => _horizonDBClustersRestClient ??= new HorizonDBClusters(HorizonDBClustersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.HorizonDb/clusters", out string apiVersion) ? apiVersion : "2026-05-01-preview");
 
         private ClientDiagnostics HorizonDBParameterGroupsClientDiagnostics => _horizonDBParameterGroupsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.HorizonDB.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private HorizonDBParameterGroups HorizonDBParameterGroupsRestClient => _horizonDBParameterGroupsRestClient ??= new HorizonDBParameterGroups(HorizonDBParameterGroupsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-05-01-preview");
+        private HorizonDBParameterGroups HorizonDBParameterGroupsRestClient => _horizonDBParameterGroupsRestClient ??= new HorizonDBParameterGroups(HorizonDBParameterGroupsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.HorizonDb/parameterGroups", out string apiVersion0) ? apiVersion0 : "2026-05-01-preview");
 
         /// <summary>
         /// Lists all HorizonDB clusters in a subscription.

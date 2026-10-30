@@ -107,7 +107,7 @@ namespace Azure.Security.Attestation.Tests
             // The token is well formed and inside its validity window, so the missing signature is the only
             // reason to reject it.
             Assert.AreEqual("none", parsedToken.Algorithm);
-            Assert.IsFalse(await parsedToken.ValidateTokenAsync(new AttestationTokenValidationOptions(), null));
+            Assert.IsFalse(await parsedToken.ValidateTokenAsync(new AttestationTokenValidationOptions { ValidateIssuer = false }, null));
 
             // Callers who explicitly turn validation off still opt out entirely.
             Assert.IsTrue(await parsedToken.ValidateTokenAsync(new AttestationTokenValidationOptions { ValidateToken = false }, null));
@@ -166,11 +166,11 @@ namespace Azure.Security.Attestation.Tests
             var token = new AttestationToken(BinaryData.FromObjectAsJson(tokenBody), new AttestationTokenSigningKey(privateKey, fullCertificate));
             string serializedToken = token.Serialize();
 
-            // This check should fail since the token expired 5 seconds ago.
-            Assert.ThrowsAsync(typeof(Exception), async () => await ValidateSerializedToken(serializedToken, tokenBody));
+            // This check should fail since the token expired 5 seconds ago and no slack is allowed.
+            Assert.ThrowsAsync(typeof(Exception), async () => await ValidateSerializedToken(serializedToken, tokenBody, new AttestationTokenValidationOptions { TimeValidationSlack = 0, ValidateIssuer = false }));
 
             // This check should succeed since the token slack is greater than the 5 second expiration time.
-            await ValidateSerializedToken(serializedToken, tokenBody, new AttestationTokenValidationOptions { TimeValidationSlack = 10 });
+            await ValidateSerializedToken(serializedToken, tokenBody, new AttestationTokenValidationOptions { TimeValidationSlack = 10, ValidateIssuer = false });
         }
 
         [RecordedTest]
@@ -190,11 +190,11 @@ namespace Azure.Security.Attestation.Tests
             var token = new AttestationToken(BinaryData.FromObjectAsJson(tokenBody), new AttestationTokenSigningKey(privateKey, fullCertificate));
             string serializedToken = token.Serialize();
 
-            // This check should fail since the token won't be valid for another 5 seconds.
-            Assert.ThrowsAsync(typeof(Exception), async () => await ValidateSerializedToken(serializedToken, tokenBody));
+            // This check should fail since the token won't be valid for another 5 seconds and no slack is allowed.
+            Assert.ThrowsAsync(typeof(Exception), async () => await ValidateSerializedToken(serializedToken, tokenBody, new AttestationTokenValidationOptions { TimeValidationSlack = 0, ValidateIssuer = false }));
 
             // This check should succeed since the token slack is greater than the 10 seconds before it becomes valid.
-            await ValidateSerializedToken(serializedToken, tokenBody, new AttestationTokenValidationOptions { TimeValidationSlack = 10 });
+            await ValidateSerializedToken(serializedToken, tokenBody, new AttestationTokenValidationOptions { TimeValidationSlack = 10, ValidateIssuer = false });
         }
 
         [RecordedTest]
@@ -214,7 +214,7 @@ namespace Azure.Security.Attestation.Tests
             var token = new AttestationToken(BinaryData.FromObjectAsJson(tokenBody), new AttestationTokenSigningKey(privateKey, fullCertificate));
             string serializedToken = token.Serialize();
 
-            var validationOptions = new AttestationTokenValidationOptions();
+            var validationOptions = new AttestationTokenValidationOptions { ValidateIssuer = false };
 
             validationOptions.TokenValidated += (args) =>
             {
@@ -241,7 +241,10 @@ namespace Azure.Security.Attestation.Tests
         {
             var parsedToken = AttestationToken.Deserialize(serializedToken);
             await Task.Yield();
-            Assert.IsTrue(await parsedToken.ValidateTokenAsync(tokenOptions ?? new AttestationTokenValidationOptions { ValidateExpirationTime = true }, null));
+            // These test tokens are signed with the policy management certificate and have no issuer; issuer validation
+            // is covered by AttestationTokenIssuerValidationTests.
+            var signers = new[] { new AttestationSigner(new[] { TestEnvironment.PolicyManagementCertificate }, null) };
+            Assert.IsTrue(await parsedToken.ValidateTokenAsync(tokenOptions ?? new AttestationTokenValidationOptions { ValidateExpirationTime = true, ValidateIssuer = false }, signers));
 
             // The body of the token should match the expected body.
             Assert.AreEqual(JsonSerializer.Serialize(expectedBody), Encoding.UTF8.GetString(parsedToken.TokenBodyBytes.ToArray()));

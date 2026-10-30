@@ -3,13 +3,14 @@
 
 #nullable disable
 
-using System;
-using System.Collections.Generic;
+using System.ClientModel.Primitives;
 using OpenAI.Responses;
 
 namespace Azure.AI.Extensions.OpenAI;
 
 [CodeGenType("WorkflowActionOutputItem")]
+[CodeGenSuppress("Patch")]
+[CodeGenSuppress("_patch")]
 public partial class AgentWorkflowPreviewActionResponseItem
 {
     /// <summary> Gets the status of the workflow preview action. </summary>
@@ -25,26 +26,6 @@ public partial class AgentWorkflowPreviewActionResponseItem
         CSDLActionKind = kind;
         ActionId = actionId;
         Status = status;
-    }
-
-    /// <summary> Initializes a new instance of <see cref="AgentWorkflowPreviewActionResponseItem"/>. </summary>
-    /// <param name="id"></param>
-    /// <param name="agentReference"> The agent that created the item. </param>
-    /// <param name="responseId"> The response on which the item is created. </param>
-    /// <param name="kind"> The kind of CSDL action (e.g., 'SetVariable', 'InvokeAzureAgent'). </param>
-    /// <param name="actionId"> Unique identifier for the action. </param>
-    /// <param name="parentActionId"> ID of the parent action if this is a nested action. </param>
-    /// <param name="previousActionId"> ID of the previous action if this action follows another. </param>
-    /// <param name="status"> Status of the action (e.g., 'in_progress', 'completed', 'failed', 'cancelled'). </param>
-    /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-    internal AgentWorkflowPreviewActionResponseItem(string id, AgentReference agentReference, string responseId, string kind, string actionId, string parentActionId, string previousActionId, AgentWorkflowPreviewActionStatus? status, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(ResponseItemKind.WorkflowAction)
-    {
-        CSDLActionKind = kind;
-        ActionId = actionId;
-        ParentActionId = parentActionId;
-        PreviousActionId = previousActionId;
-        Status = status;
-        _additionalBinaryDataProperties = additionalBinaryDataProperties;
     }
 
     /// <summary> Initializes a new instance of <see cref="AgentWorkflowPreviewActionResponseItem"/> for deserialization. </summary>
@@ -65,15 +46,16 @@ public partial class AgentWorkflowPreviewActionResponseItem
     /// <param name="parentActionId"> ID of the parent action if this is a nested action. </param>
     /// <param name="previousActionId"> ID of the previous action if this action follows another. </param>
     /// <param name="status"> Status of the action (e.g., 'in_progress', 'completed', 'failed', 'cancelled'). </param>
-    /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-    internal AgentWorkflowPreviewActionResponseItem(ResponseItemKind @type, string id, AgentReference agentReference, string responseId, string csdlActionKind, string actionId, string parentActionId, string previousActionId, AgentWorkflowPreviewActionStatus? status, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type)
+    /// <param name="patch"></param>
+    internal AgentWorkflowPreviewActionResponseItem(ResponseItemKind @type, string id, AgentReference agentReference, string responseId, string csdlActionKind, string actionId, string parentActionId, string previousActionId, AgentWorkflowPreviewActionStatus? status, in JsonPatch patch) : base(@type)
     {
-        this.ApplyAgentAttribution(agentReference, responseId, additionalBinaryDataProperties);
+        Patch = patch;
+        this.ApplyAgentAttribution(agentReference, responseId, null);
+        Id = id;
         CSDLActionKind = csdlActionKind;
         ActionId = actionId;
         ParentActionId = parentActionId;
         PreviousActionId = previousActionId;
         Status = status;
-        _additionalBinaryDataProperties = additionalBinaryDataProperties;
     }
 }

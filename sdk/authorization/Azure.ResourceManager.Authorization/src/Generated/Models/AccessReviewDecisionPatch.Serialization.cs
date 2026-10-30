@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Authorization.Models
             {
                 throw new FormatException($"The model {nameof(AccessReviewDecisionPatch)} does not support writing '{format}' format.");
             }
-            if (options.Format != "W" && (_principalIsDefined || Optional.IsDefined(Principal)))
+            if (options.Format != "W" && Optional.IsDefined(Principal, _principalIsDefined))
             {
                 if (Principal != null)
                 {
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Authorization.Models
                     writer.WriteNull("principal"u8);
                 }
             }
-            if (options.Format != "W" && (_resourceIsDefined || Optional.IsDefined(Resource)))
+            if (options.Format != "W" && Optional.IsDefined(Resource, _resourceIsDefined))
             {
                 if (Resource != null)
                 {
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Authorization.Models
                 writer.WritePropertyName("justification"u8);
                 writer.WriteStringValue(Justification);
             }
-            if (options.Format != "W" && (_reviewedOnIsDefined || Optional.IsDefined(ReviewedOn)))
+            if (options.Format != "W" && Optional.IsDefined(ReviewedOn, _reviewedOnIsDefined))
             {
                 if (ReviewedOn != null)
                 {
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Authorization.Models
                     writer.WriteNull("reviewedDateTime"u8);
                 }
             }
-            if (options.Format != "W" && (_reviewedByIsDefined || Optional.IsDefined(ReviewedBy)))
+            if (options.Format != "W" && Optional.IsDefined(ReviewedBy, _reviewedByIsDefined))
             {
                 if (ReviewedBy != null)
                 {
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.Authorization.Models
                 writer.WritePropertyName("applyResult"u8);
                 writer.WriteStringValue(ApplyResult.Value.ToString());
             }
-            if (options.Format != "W" && (_appliedOnIsDefined || Optional.IsDefined(AppliedOn)))
+            if (options.Format != "W" && Optional.IsDefined(AppliedOn, _appliedOnIsDefined))
             {
                 if (AppliedOn != null)
                 {
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.Authorization.Models
                     writer.WriteNull("appliedDateTime"u8);
                 }
             }
-            if (options.Format != "W" && (_appliedByIsDefined || Optional.IsDefined(AppliedBy)))
+            if (options.Format != "W" && Optional.IsDefined(AppliedBy, _appliedByIsDefined))
             {
                 if (AppliedBy != null)
                 {
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.Authorization.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && (_principalResourceMembershipIsDefined || Optional.IsDefined(PrincipalResourceMembership)))
+            if (options.Format != "W" && Optional.IsDefined(PrincipalResourceMembership, _principalResourceMembershipIsDefined))
             {
                 if (PrincipalResourceMembership != null)
                 {

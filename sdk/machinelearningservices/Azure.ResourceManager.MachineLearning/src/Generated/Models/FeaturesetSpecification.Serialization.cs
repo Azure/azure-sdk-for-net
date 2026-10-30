@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 throw new FormatException($"The model {nameof(FeaturesetSpecification)} does not support writing '{format}' format.");
             }
-            if (_pathIsDefined || Optional.IsDefined(Path))
+            if (Optional.IsDefined(Path, _pathIsDefined))
             {
                 if (Path != null)
                 {

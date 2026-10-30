@@ -52,9 +52,8 @@ namespace Azure.ResourceManager.IotOperations
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal IotOperationsInstanceResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string iotOperationsInstanceApiVersion);
             _instanceClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.IotOperations", ResourceType.Namespace, Diagnostics);
-            _instanceRestClient = new Instance(_instanceClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, iotOperationsInstanceApiVersion ?? "2026-07-01");
+            _instanceRestClient = new Instance(_instanceClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.IoTOperations/instances", out string instanceApiVersionOverride) ? instanceApiVersionOverride : "2026-07-01");
             ValidateResourceId(id);
         }
 

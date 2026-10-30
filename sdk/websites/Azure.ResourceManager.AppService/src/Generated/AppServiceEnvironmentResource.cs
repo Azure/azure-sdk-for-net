@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.AppService
         {
             TryGetApiVersion(ResourceType, out string appServiceEnvironmentApiVersion);
             _appServiceEnvironmentResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, Diagnostics);
-            _appServiceEnvironmentResourcesRestClient = new AppServiceEnvironmentResources(_appServiceEnvironmentResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, appServiceEnvironmentApiVersion ?? "2026-03-15");
+            _appServiceEnvironmentResourcesRestClient = new AppServiceEnvironmentResources(_appServiceEnvironmentResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.Web/hostingEnvironments", out string appServiceEnvironmentResourcesApiVersionOverride) ? appServiceEnvironmentResourcesApiVersionOverride : "2026-03-15");
             _appServiceEnvironmentRecommendationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, Diagnostics);
             _appServiceEnvironmentRecommendationsRestClient = new AppServiceEnvironmentRecommendations(_appServiceEnvironmentRecommendationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, appServiceEnvironmentApiVersion ?? "2026-03-15");
             ValidateResourceId(id);

@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                 throw new FormatException($"The model {nameof(SecretAuthInfo)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            if (_nameIsDefined || Optional.IsDefined(Name))
+            if (Optional.IsDefined(Name, _nameIsDefined))
             {
                 if (Name != null)
                 {
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                     writer.WriteNull("name"u8);
                 }
             }
-            if (_secretInfoIsDefined || Optional.IsDefined(SecretInfo))
+            if (Optional.IsDefined(SecretInfo, _secretInfoIsDefined))
             {
                 if (SecretInfo != null)
                 {

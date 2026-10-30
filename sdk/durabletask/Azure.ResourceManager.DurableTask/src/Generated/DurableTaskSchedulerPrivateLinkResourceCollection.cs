@@ -38,9 +38,8 @@ namespace Azure.ResourceManager.DurableTask
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal DurableTaskSchedulerPrivateLinkResourceCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(DurableTaskSchedulerPrivateLinkResource.ResourceType, out string durableTaskSchedulerPrivateLinkResourceApiVersion);
             _schedulersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DurableTask", DurableTaskSchedulerPrivateLinkResource.ResourceType.Namespace, Diagnostics);
-            _schedulersRestClient = new Schedulers(_schedulersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, durableTaskSchedulerPrivateLinkResourceApiVersion ?? "2026-02-01");
+            _schedulersRestClient = new Schedulers(_schedulersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 
@@ -67,7 +66,7 @@ namespace Azure.ResourceManager.DurableTask
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-02-01. </description>
+        /// <description> 2026-07-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -116,7 +115,7 @@ namespace Azure.ResourceManager.DurableTask
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-02-01. </description>
+        /// <description> 2026-07-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -165,7 +164,7 @@ namespace Azure.ResourceManager.DurableTask
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-02-01. </description>
+        /// <description> 2026-07-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -199,7 +198,7 @@ namespace Azure.ResourceManager.DurableTask
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-02-01. </description>
+        /// <description> 2026-07-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -233,7 +232,7 @@ namespace Azure.ResourceManager.DurableTask
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-02-01. </description>
+        /// <description> 2026-07-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -290,7 +289,7 @@ namespace Azure.ResourceManager.DurableTask
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-02-01. </description>
+        /// <description> 2026-07-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -347,7 +346,7 @@ namespace Azure.ResourceManager.DurableTask
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-02-01. </description>
+        /// <description> 2026-07-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -408,7 +407,7 @@ namespace Azure.ResourceManager.DurableTask
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-02-01. </description>
+        /// <description> 2026-07-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>

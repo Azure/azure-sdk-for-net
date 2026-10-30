@@ -15,11 +15,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
     public partial class MachineLearningSweepJobLimits : MachineLearningJobLimits
     {
         private int? _maxConcurrentTrials;
-        internal bool _maxConcurrentTrialsIsDefined;
+        private bool _maxConcurrentTrialsIsDefined;
         private int? _maxTotalTrials;
-        internal bool _maxTotalTrialsIsDefined;
+        private bool _maxTotalTrialsIsDefined;
         private TimeSpan? _trialTimeout;
-        internal bool _trialTimeoutIsDefined;
+        private bool _trialTimeoutIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="MachineLearningSweepJobLimits"/>. </summary>
         public MachineLearningSweepJobLimits() : base(JobLimitsType.Sweep)

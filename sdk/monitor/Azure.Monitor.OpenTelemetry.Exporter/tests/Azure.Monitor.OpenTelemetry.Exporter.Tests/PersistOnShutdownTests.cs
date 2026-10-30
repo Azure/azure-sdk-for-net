@@ -133,6 +133,33 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             Assert.Empty(transmitter._fileBlobProvider!.GetBlobs());
         }
 
+        // Without suppression, HttpClient instrumentation records the drain's own POST as a dependency.
+        [Fact]
+        public void DrainUploadsWithInstrumentationSuppressed()
+        {
+            var suppressed = new List<bool>();
+            using var transmitter = CreateTransmitter(
+                _ =>
+                {
+                    lock (suppressed)
+                    {
+                        suppressed.Add(Sdk.SuppressInstrumentation);
+                    }
+
+                    return new MockResponse(200).SetContent("{\"itemsReceived\":1,\"itemsAccepted\":1,\"errors\":[]}");
+                },
+                out _);
+
+            SeedBlobs(transmitter, count: 1);
+            transmitter._transmitFromStorageHandler!.Drain();
+
+            SeedBlobs(transmitter, count: 1);
+            transmitter._transmitFromStorageHandler!.DrainAsync().Wait();
+
+            Assert.Equal(new[] { true, true }, suppressed);
+            Assert.False(Sdk.SuppressInstrumentation);
+        }
+
         [Fact]
         public void DrainIsolatesConstituentsWhenCoalescedBatchIsRejected()
         {

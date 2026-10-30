@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
         private MonitoringThreshold _threshold;
-        internal bool _thresholdIsDefined;
+        private protected bool _thresholdIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="DataDriftMetricThresholdBase"/>. </summary>
         /// <param name="dataType"> [Required] Specifies the data type of the metric threshold. </param>
