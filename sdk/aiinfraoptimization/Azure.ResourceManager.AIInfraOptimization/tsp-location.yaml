@@ -1,0 +1,6 @@
+directory: specification/aiinfraoptimization/resource-manager/Microsoft.AIInfraOptimization/AIInfraOptimization
+commit: ee1c09cd2df32d767172b038ba6c384fbf2ba782
+repo: Azure/azure-rest-api-specs
+additionalDirectories: 
+
+emitterPackageJsonPath: eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json

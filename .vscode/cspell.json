@@ -211,6 +211,15 @@
   ],
   "overrides": [
     {
+      "filename": "**/sdk/aiinfraoptimization/**/*",
+      "words": [
+        "aiinfraoptimization",
+        "gibibytes",
+        "tpot",
+        "ttft"
+      ]
+    },
+    {
       "filename": "**/eng/pipelines/templates/jobs/ci.yml",
       "words": [
         "warnaserror"
