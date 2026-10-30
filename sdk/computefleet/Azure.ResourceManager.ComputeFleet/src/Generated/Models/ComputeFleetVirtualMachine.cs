@@ -8,12 +8,11 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ComputeFleet.Models
 {
     /// <summary> A Launch mode Fleet's virtual machine. </summary>
-    public partial class ComputeFleetVirtualMachine : ResourceData
+    public partial class ComputeFleetVirtualMachine
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
@@ -24,18 +23,20 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ComputeFleetVirtualMachine"/>. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="name"> The name of the virtual machine. </param>
+        /// <param name="id"> The compute RP resource id of the virtual machine. subscriptions/{subId}/resourceGroups/{rgName}/providers/Microsoft.Compute/virtualMachines/{vmName}. </param>
+        /// <param name="type"> ARM resource type - virtual machine. </param>
         /// <param name="operationStatus"> This represents the operationStatus of the virtual machine in response to the last operation that was performed on it by Azure Fleet resource. </param>
         /// <param name="error"> Error information when `operationStatus` is `Failed`. </param>
         /// <param name="vmSize"> The VM size of the virtual machine. </param>
         /// <param name="zone"> The availability zone of the virtual machine. </param>
         /// <param name="priority"> The priority of the virtual machine. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ComputeFleetVirtualMachine(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ComputeFleetVmOperationStatus operationStatus, ComputeFleetApiError error, string vmSize, string zone, string priority, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
+        internal ComputeFleetVirtualMachine(string name, ResourceIdentifier id, string @type, ComputeFleetVmOperationStatus operationStatus, ComputeFleetApiError error, string vmSize, string zone, string priority, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
+            Name = name;
+            Id = id;
+            Type = @type;
             OperationStatus = operationStatus;
             Error = error;
             VmSize = vmSize;
@@ -43,6 +44,15 @@ namespace Azure.ResourceManager.ComputeFleet.Models
             Priority = priority;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+
+        /// <summary> The name of the virtual machine. </summary>
+        public string Name { get; }
+
+        /// <summary> The compute RP resource id of the virtual machine. subscriptions/{subId}/resourceGroups/{rgName}/providers/Microsoft.Compute/virtualMachines/{vmName}. </summary>
+        public ResourceIdentifier Id { get; }
+
+        /// <summary> ARM resource type - virtual machine. </summary>
+        public string Type { get; }
 
         /// <summary> This represents the operationStatus of the virtual machine in response to the last operation that was performed on it by Azure Fleet resource. </summary>
         public ComputeFleetVmOperationStatus OperationStatus { get; }
