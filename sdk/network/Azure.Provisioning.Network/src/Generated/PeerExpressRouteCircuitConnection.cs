@@ -19,7 +19,7 @@ namespace Azure.Provisioning.Network
         private BicepValue<string> _name;
         private PeerExpressRouteCircuitConnectionPropertiesFormat _properties;
         private BicepValue<string> _eTag;
-        private ResourceReference<ExpressRouteCircuitPeering> _parent;
+        private ProvisioningResourceReference<ExpressRouteCircuitPeering> _parent;
 
         /// <summary> Creates a new PeerExpressRouteCircuitConnection. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -159,7 +159,7 @@ namespace Azure.Provisioning.Network
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _properties = DefineModelProperty<PeerExpressRouteCircuitConnectionPropertiesFormat>(nameof(Properties), new string[] { "properties" });
             _eTag = DefineProperty<string>(nameof(ETag), new string[] { "etag" }, isOutput: true);
-            _parent = DefineResource<ExpressRouteCircuitPeering>(nameof(Parent), new string[] { "parent" });
+            _parent = new ProvisioningResourceReference<ExpressRouteCircuitPeering>(DefineProperty<string>(nameof(Parent), new string[] { "parent" }));
             DefineAdditionalProperties();
         }
 

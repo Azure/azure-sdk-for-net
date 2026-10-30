@@ -19,7 +19,7 @@ namespace Azure.Provisioning.Network
         private BicepValue<string> _name;
         private VpnConnectionProperties _properties;
         private BicepValue<ETag> _eTag;
-        private ResourceReference<VpnGateway> _parent;
+        private ProvisioningResourceReference<VpnGateway> _parent;
 
         /// <summary> Creates a new VpnConnection. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -391,7 +391,7 @@ namespace Azure.Provisioning.Network
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _properties = DefineModelProperty<VpnConnectionProperties>(nameof(Properties), new string[] { "properties" });
             _eTag = DefineProperty<ETag>(nameof(ETag), new string[] { "etag" }, isOutput: true);
-            _parent = DefineResource<VpnGateway>(nameof(Parent), new string[] { "parent" });
+            _parent = new ProvisioningResourceReference<VpnGateway>(DefineProperty<string>(nameof(Parent), new string[] { "parent" }));
             DefineAdditionalProperties();
         }
 

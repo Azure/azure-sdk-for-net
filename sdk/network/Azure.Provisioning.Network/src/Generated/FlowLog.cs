@@ -23,7 +23,7 @@ namespace Azure.Provisioning.Network
         private FlowLogPropertiesFormat _properties;
         private BicepValue<ETag> _eTag;
         private ManagedServiceIdentity _identity;
-        private ResourceReference<NetworkWatcher> _parent;
+        private ProvisioningResourceReference<NetworkWatcher> _parent;
 
         /// <summary> Creates a new FlowLog. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -304,7 +304,7 @@ namespace Azure.Provisioning.Network
             _properties = DefineModelProperty<FlowLogPropertiesFormat>(nameof(Properties), new string[] { "properties" });
             _eTag = DefineProperty<ETag>(nameof(ETag), new string[] { "etag" }, isOutput: true);
             _identity = DefineModelProperty<ManagedServiceIdentity>(nameof(Identity), new string[] { "identity" });
-            _parent = DefineResource<NetworkWatcher>(nameof(Parent), new string[] { "parent" });
+            _parent = new ProvisioningResourceReference<NetworkWatcher>(DefineProperty<string>(nameof(Parent), new string[] { "parent" }));
             DefineAdditionalProperties();
         }
 

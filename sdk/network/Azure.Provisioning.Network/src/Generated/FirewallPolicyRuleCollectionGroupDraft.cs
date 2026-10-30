@@ -16,7 +16,7 @@ namespace Azure.Provisioning.Network
     {
         private BicepValue<ResourceIdentifier> _id;
         private FirewallPolicyRuleCollectionGroupDraftProperties _properties;
-        private ResourceReference<FirewallPolicyRuleCollectionGroup> _parent;
+        private ProvisioningResourceReference<FirewallPolicyRuleCollectionGroup> _parent;
 
         /// <summary> Creates a new FirewallPolicyRuleCollectionGroupDraft. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -118,7 +118,7 @@ namespace Azure.Provisioning.Network
             base.DefineProvisionableProperties();
             _id = DefineProperty<ResourceIdentifier>(nameof(Id), new string[] { "id" }, isOutput: true);
             _properties = DefineModelProperty<FirewallPolicyRuleCollectionGroupDraftProperties>(nameof(Properties), new string[] { "properties" });
-            _parent = DefineResource<FirewallPolicyRuleCollectionGroup>(nameof(Parent), new string[] { "parent" });
+            _parent = new ProvisioningResourceReference<FirewallPolicyRuleCollectionGroup>(DefineProperty<string>(nameof(Parent), new string[] { "parent" }));
             DefineAdditionalProperties();
         }
 

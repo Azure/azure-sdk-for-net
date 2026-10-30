@@ -24,7 +24,7 @@ namespace Azure.Provisioning.Network
         private BicepValue<AzureLocation> _location;
         private IpamPoolProperties _properties;
         private BicepValue<ETag> _eTag;
-        private ResourceReference<NetworkManager> _parent;
+        private ProvisioningResourceReference<NetworkManager> _parent;
 
         /// <summary> Creates a new IpamPool. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -149,7 +149,7 @@ namespace Azure.Provisioning.Network
             _location = DefineProperty<AzureLocation>(nameof(Location), new string[] { "location" }, isRequired: true);
             _properties = DefineModelProperty<IpamPoolProperties>(nameof(Properties), new string[] { "properties" }, isRequired: true);
             _eTag = DefineProperty<ETag>(nameof(ETag), new string[] { "etag" }, isOutput: true);
-            _parent = DefineResource<NetworkManager>(nameof(Parent), new string[] { "parent" });
+            _parent = new ProvisioningResourceReference<NetworkManager>(DefineProperty<string>(nameof(Parent), new string[] { "parent" }));
             DefineAdditionalProperties();
         }
 

@@ -20,7 +20,7 @@ namespace Azure.Provisioning.Network
         private BicepValue<string> _name;
         private BicepValue<ETag> _eTag;
         private AddressPrefixSetPropertiesFormat _properties;
-        private ResourceReference<ApplicationSecurityGroup> _parent;
+        private ProvisioningResourceReference<ApplicationSecurityGroup> _parent;
 
         /// <summary> Creates a new AddressPrefixSet. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -102,7 +102,7 @@ namespace Azure.Provisioning.Network
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _eTag = DefineProperty<ETag>(nameof(ETag), new string[] { "etag" }, isOutput: true);
             _properties = DefineModelProperty<AddressPrefixSetPropertiesFormat>(nameof(Properties), new string[] { "properties" });
-            _parent = DefineResource<ApplicationSecurityGroup>(nameof(Parent), new string[] { "parent" });
+            _parent = new ProvisioningResourceReference<ApplicationSecurityGroup>(DefineProperty<string>(nameof(Parent), new string[] { "parent" }));
             DefineAdditionalProperties();
         }
 

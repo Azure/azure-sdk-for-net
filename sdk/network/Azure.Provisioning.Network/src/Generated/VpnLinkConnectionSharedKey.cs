@@ -16,7 +16,7 @@ namespace Azure.Provisioning.Network
     {
         private BicepValue<ResourceIdentifier> _id;
         private VpnLinkConnectionSharedKeyProperties _properties;
-        private ResourceReference<VpnSiteLinkConnection> _parent;
+        private ProvisioningResourceReference<VpnSiteLinkConnection> _parent;
 
         /// <summary> Creates a new VpnLinkConnectionSharedKey. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -71,7 +71,7 @@ namespace Azure.Provisioning.Network
             base.DefineProvisionableProperties();
             _id = DefineProperty<ResourceIdentifier>(nameof(Id), new string[] { "id" }, isOutput: true);
             _properties = DefineModelProperty<VpnLinkConnectionSharedKeyProperties>(nameof(Properties), new string[] { "properties" });
-            _parent = DefineResource<VpnSiteLinkConnection>(nameof(Parent), new string[] { "parent" });
+            _parent = new ProvisioningResourceReference<VpnSiteLinkConnection>(DefineProperty<string>(nameof(Parent), new string[] { "parent" }));
             DefineAdditionalProperties();
         }
 

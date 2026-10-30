@@ -19,7 +19,7 @@ namespace Azure.Provisioning.Network
         private BicepValue<string> _name;
         private VirtualNetworkGatewayNatRuleProperties _properties;
         private BicepValue<ETag> _eTag;
-        private ResourceReference<VirtualNetworkGateway> _parent;
+        private ProvisioningResourceReference<VirtualNetworkGateway> _parent;
 
         /// <summary> Creates a new VirtualNetworkGatewayNatRule. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -199,7 +199,7 @@ namespace Azure.Provisioning.Network
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _properties = DefineModelProperty<VirtualNetworkGatewayNatRuleProperties>(nameof(Properties), new string[] { "properties" });
             _eTag = DefineProperty<ETag>(nameof(ETag), new string[] { "etag" }, isOutput: true);
-            _parent = DefineResource<VirtualNetworkGateway>(nameof(Parent), new string[] { "parent" });
+            _parent = new ProvisioningResourceReference<VirtualNetworkGateway>(DefineProperty<string>(nameof(Parent), new string[] { "parent" }));
             DefineAdditionalProperties();
         }
 

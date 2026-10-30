@@ -22,7 +22,7 @@ namespace Azure.Provisioning.Network
         private SystemData _systemData;
         private AdminRuleCollectionPropertiesFormat _properties;
         private BicepValue<ETag> _eTag;
-        private ResourceReference<SecurityAdminConfiguration> _parent;
+        private ProvisioningResourceReference<SecurityAdminConfiguration> _parent;
 
         /// <summary> Creates a new AdminRuleGroup. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -175,7 +175,7 @@ namespace Azure.Provisioning.Network
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _properties = DefineModelProperty<AdminRuleCollectionPropertiesFormat>(nameof(Properties), new string[] { "properties" });
             _eTag = DefineProperty<ETag>(nameof(ETag), new string[] { "etag" }, isOutput: true);
-            _parent = DefineResource<SecurityAdminConfiguration>(nameof(Parent), new string[] { "parent" });
+            _parent = new ProvisioningResourceReference<SecurityAdminConfiguration>(DefineProperty<string>(nameof(Parent), new string[] { "parent" }));
             DefineAdditionalProperties();
         }
 

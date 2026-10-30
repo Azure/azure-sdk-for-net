@@ -19,7 +19,7 @@ namespace Azure.Provisioning.Network
         private BicepValue<string> _name;
         private NetworkInterfaceIPConfigurationPropertiesFormat _properties;
         private BicepValue<ETag> _eTag;
-        private ResourceReference<NetworkInterface> _parent;
+        private ProvisioningResourceReference<NetworkInterface> _parent;
 
         /// <summary> Creates a new NetworkInterfaceIPConfiguration. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -344,7 +344,7 @@ namespace Azure.Provisioning.Network
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _properties = DefineModelProperty<NetworkInterfaceIPConfigurationPropertiesFormat>(nameof(Properties), new string[] { "properties" });
             _eTag = DefineProperty<ETag>(nameof(ETag), new string[] { "etag" }, isOutput: true);
-            _parent = DefineResource<NetworkInterface>(nameof(Parent), new string[] { "parent" });
+            _parent = new ProvisioningResourceReference<NetworkInterface>(DefineProperty<string>(nameof(Parent), new string[] { "parent" }));
             DefineAdditionalProperties();
         }
 

@@ -24,7 +24,7 @@ namespace Azure.Provisioning.Network
         private BicepValue<ETag> _eTag;
         private BicepValue<AzureLocation> _location;
         private BicepDictionary<string> _tags;
-        private ResourceReference<NetworkWatcher> _parent;
+        private ProvisioningResourceReference<NetworkWatcher> _parent;
 
         /// <summary> Creates a new ConnectionMonitor. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -354,7 +354,7 @@ namespace Azure.Provisioning.Network
             _eTag = DefineProperty<ETag>(nameof(ETag), new string[] { "etag" }, isOutput: true);
             _location = DefineProperty<AzureLocation>(nameof(Location), new string[] { "location" });
             _tags = DefineDictionaryProperty<string>(nameof(Tags), new string[] { "tags" });
-            _parent = DefineResource<NetworkWatcher>(nameof(Parent), new string[] { "parent" });
+            _parent = new ProvisioningResourceReference<NetworkWatcher>(DefineProperty<string>(nameof(Parent), new string[] { "parent" }));
             DefineAdditionalProperties();
         }
 

@@ -20,7 +20,7 @@ namespace Azure.Provisioning.Network
         private RouteFilterRulePropertiesFormat _properties;
         private BicepValue<AzureLocation> _location;
         private BicepValue<ETag> _eTag;
-        private ResourceReference<RouteFilter> _parent;
+        private ProvisioningResourceReference<RouteFilter> _parent;
 
         /// <summary> Creates a new RouteFilterRule. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -182,7 +182,7 @@ namespace Azure.Provisioning.Network
             _properties = DefineModelProperty<RouteFilterRulePropertiesFormat>(nameof(Properties), new string[] { "properties" });
             _location = DefineProperty<AzureLocation>(nameof(Location), new string[] { "location" });
             _eTag = DefineProperty<ETag>(nameof(ETag), new string[] { "etag" }, isOutput: true);
-            _parent = DefineResource<RouteFilter>(nameof(Parent), new string[] { "parent" });
+            _parent = new ProvisioningResourceReference<RouteFilter>(DefineProperty<string>(nameof(Parent), new string[] { "parent" }));
             DefineAdditionalProperties();
         }
 

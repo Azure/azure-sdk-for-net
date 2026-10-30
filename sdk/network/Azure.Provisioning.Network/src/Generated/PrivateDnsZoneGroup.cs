@@ -17,7 +17,7 @@ namespace Azure.Provisioning.Network
         private BicepValue<string> _name;
         private BicepValue<ETag> _eTag;
         private PrivateDnsZoneGroupPropertiesFormat _properties;
-        private ResourceReference<PrivateEndpoint> _parent;
+        private ProvisioningResourceReference<PrivateEndpoint> _parent;
 
         /// <summary> Creates a new PrivateDnsZoneGroup. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -118,7 +118,7 @@ namespace Azure.Provisioning.Network
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _eTag = DefineProperty<ETag>(nameof(ETag), new string[] { "etag" }, isOutput: true);
             _properties = DefineModelProperty<PrivateDnsZoneGroupPropertiesFormat>(nameof(Properties), new string[] { "properties" });
-            _parent = DefineResource<PrivateEndpoint>(nameof(Parent), new string[] { "parent" });
+            _parent = new ProvisioningResourceReference<PrivateEndpoint>(DefineProperty<string>(nameof(Parent), new string[] { "parent" }));
             DefineAdditionalProperties();
         }
 

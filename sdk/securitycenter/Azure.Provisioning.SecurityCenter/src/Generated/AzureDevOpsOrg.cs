@@ -20,7 +20,7 @@ namespace Azure.Provisioning.SecurityCenter
         private BicepValue<string> _name;
         private SystemData _systemData;
         private AzureDevOpsOrgProperties _properties;
-        private ResourceReference<DevOpsConfiguration> _parent;
+        private ProvisioningResourceReference<DevOpsConfiguration> _parent;
 
         /// <summary> Creates a new AzureDevOpsOrg. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -102,7 +102,7 @@ namespace Azure.Provisioning.SecurityCenter
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _properties = DefineModelProperty<AzureDevOpsOrgProperties>(nameof(Properties), new string[] { "properties" });
-            _parent = DefineResource<DevOpsConfiguration>(nameof(Parent), new string[] { "parent" });
+            _parent = new ProvisioningResourceReference<DevOpsConfiguration>(DefineProperty<string>(nameof(Parent), new string[] { "parent" }));
             DefineAdditionalProperties();
         }
 

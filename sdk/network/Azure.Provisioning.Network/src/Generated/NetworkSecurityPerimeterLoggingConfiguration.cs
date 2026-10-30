@@ -20,7 +20,7 @@ namespace Azure.Provisioning.Network
         private BicepValue<string> _name;
         private SystemData _systemData;
         private NspLoggingConfigurationProperties _properties;
-        private ResourceReference<NetworkSecurityPerimeter> _parent;
+        private ProvisioningResourceReference<NetworkSecurityPerimeter> _parent;
 
         /// <summary> Creates a new NetworkSecurityPerimeterLoggingConfiguration. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -136,7 +136,7 @@ namespace Azure.Provisioning.Network
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _properties = DefineModelProperty<NspLoggingConfigurationProperties>(nameof(Properties), new string[] { "properties" });
-            _parent = DefineResource<NetworkSecurityPerimeter>(nameof(Parent), new string[] { "parent" });
+            _parent = new ProvisioningResourceReference<NetworkSecurityPerimeter>(DefineProperty<string>(nameof(Parent), new string[] { "parent" }));
             DefineAdditionalProperties();
         }
 

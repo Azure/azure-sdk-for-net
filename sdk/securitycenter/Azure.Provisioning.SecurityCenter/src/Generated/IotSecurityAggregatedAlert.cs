@@ -21,7 +21,7 @@ namespace Azure.Provisioning.SecurityCenter
         private SystemData _systemData;
         private IoTSecurityAggregatedAlertProperties _properties;
         private BicepDictionary<string> _tags;
-        private ResourceReference<IotSecuritySolutionAnalyticsModel> _parent;
+        private ProvisioningResourceReference<IotSecuritySolutionAnalyticsModel> _parent;
 
         /// <summary> Creates a new IotSecurityAggregatedAlert. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -226,7 +226,7 @@ namespace Azure.Provisioning.SecurityCenter
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _properties = DefineModelProperty<IoTSecurityAggregatedAlertProperties>(nameof(Properties), new string[] { "properties" });
             _tags = DefineDictionaryProperty<string>(nameof(Tags), new string[] { "tags" });
-            _parent = DefineResource<IotSecuritySolutionAnalyticsModel>(nameof(Parent), new string[] { "parent" });
+            _parent = new ProvisioningResourceReference<IotSecuritySolutionAnalyticsModel>(DefineProperty<string>(nameof(Parent), new string[] { "parent" }));
             DefineAdditionalProperties();
         }
 

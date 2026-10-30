@@ -22,7 +22,7 @@ namespace Azure.Provisioning.Network
         private BicepDictionary<string> _tags;
         private SystemData _systemData;
         private ConnectionAnalyzerProperties _properties;
-        private ResourceReference<NetworkWatcher> _parent;
+        private ProvisioningResourceReference<NetworkWatcher> _parent;
 
         /// <summary> Creates a new ConnectionAnalyzer. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -147,7 +147,7 @@ namespace Azure.Provisioning.Network
             _tags = DefineDictionaryProperty<string>(nameof(Tags), new string[] { "tags" });
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _properties = DefineModelProperty<ConnectionAnalyzerProperties>(nameof(Properties), new string[] { "properties" }, isRequired: true);
-            _parent = DefineResource<NetworkWatcher>(nameof(Parent), new string[] { "parent" });
+            _parent = new ProvisioningResourceReference<NetworkWatcher>(DefineProperty<string>(nameof(Parent), new string[] { "parent" }));
             DefineAdditionalProperties();
         }
 

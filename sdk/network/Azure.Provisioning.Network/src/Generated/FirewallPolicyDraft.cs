@@ -18,7 +18,7 @@ namespace Azure.Provisioning.Network
         private BicepValue<AzureLocation> _location;
         private BicepDictionary<string> _tags;
         private FirewallPolicyDraftProperties _properties;
-        private ResourceReference<FirewallPolicy> _parent;
+        private ProvisioningResourceReference<FirewallPolicy> _parent;
 
         /// <summary> Creates a new FirewallPolicyDraft. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -258,7 +258,7 @@ namespace Azure.Provisioning.Network
             _location = DefineProperty<AzureLocation>(nameof(Location), new string[] { "location" });
             _tags = DefineDictionaryProperty<string>(nameof(Tags), new string[] { "tags" });
             _properties = DefineModelProperty<FirewallPolicyDraftProperties>(nameof(Properties), new string[] { "properties" });
-            _parent = DefineResource<FirewallPolicy>(nameof(Parent), new string[] { "parent" });
+            _parent = new ProvisioningResourceReference<FirewallPolicy>(DefineProperty<string>(nameof(Parent), new string[] { "parent" }));
             DefineAdditionalProperties();
         }
 
