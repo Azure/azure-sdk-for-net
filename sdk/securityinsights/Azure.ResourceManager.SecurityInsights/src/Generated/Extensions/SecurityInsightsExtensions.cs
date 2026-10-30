@@ -3272,15 +3272,15 @@ namespace Azure.ResourceManager.SecurityInsights
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="threatIntelligenceFilteringCriteria"> The content of the action request. </param>
+        /// <param name="ThreatIntelligenceFilteringCriteria"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         /// <returns> A collection of <see cref="SecurityInsightsThreatIntelligenceIndicatorResource"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<SecurityInsightsThreatIntelligenceIndicatorResource> QueryThreatIntelligenceIndicatorsAsync(this ArmClient client, ResourceIdentifier scope, ThreatIntelligenceFilteringCriteria threatIntelligenceFilteringCriteria, CancellationToken cancellationToken = default)
+        public static AsyncPageable<SecurityInsightsThreatIntelligenceIndicatorResource> QueryThreatIntelligenceIndicatorsAsync(this ArmClient client, ResourceIdentifier scope, ThreatIntelligenceFilteringCriteria ThreatIntelligenceFilteringCriteria, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableSecurityInsightsArmClient(client).QueryThreatIntelligenceIndicatorsAsync(scope, threatIntelligenceFilteringCriteria, cancellationToken);
+            return GetMockableSecurityInsightsArmClient(client).QueryThreatIntelligenceIndicatorsAsync(scope, ThreatIntelligenceFilteringCriteria, cancellationToken);
         }
 
         /// <summary>
@@ -3292,15 +3292,15 @@ namespace Azure.ResourceManager.SecurityInsights
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="threatIntelligenceFilteringCriteria"> The content of the action request. </param>
+        /// <param name="ThreatIntelligenceFilteringCriteria"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         /// <returns> A collection of <see cref="SecurityInsightsThreatIntelligenceIndicatorResource"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<SecurityInsightsThreatIntelligenceIndicatorResource> QueryThreatIntelligenceIndicators(this ArmClient client, ResourceIdentifier scope, ThreatIntelligenceFilteringCriteria threatIntelligenceFilteringCriteria, CancellationToken cancellationToken = default)
+        public static Pageable<SecurityInsightsThreatIntelligenceIndicatorResource> QueryThreatIntelligenceIndicators(this ArmClient client, ResourceIdentifier scope, ThreatIntelligenceFilteringCriteria ThreatIntelligenceFilteringCriteria, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableSecurityInsightsArmClient(client).QueryThreatIntelligenceIndicators(scope, threatIntelligenceFilteringCriteria, cancellationToken);
+            return GetMockableSecurityInsightsArmClient(client).QueryThreatIntelligenceIndicators(scope, ThreatIntelligenceFilteringCriteria, cancellationToken);
         }
 
         /// <summary>
@@ -3312,14 +3312,14 @@ namespace Azure.ResourceManager.SecurityInsights
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="dataConnectorsCheckRequirements"> The parameters for requirements check message. </param>
+        /// <param name="DataConnectorsCheckRequirements"> The parameters for requirements check message. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        public static async Task<Response<DataConnectorRequirementsState>> PostAsync(this ArmClient client, ResourceIdentifier scope, Models.DataConnectorsCheckRequirements dataConnectorsCheckRequirements, CancellationToken cancellationToken = default)
+        public static async Task<Response<DataConnectorRequirementsState>> PostAsync(this ArmClient client, ResourceIdentifier scope, Models.DataConnectorsCheckRequirements DataConnectorsCheckRequirements, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return await GetMockableSecurityInsightsArmClient(client).PostAsync(scope, dataConnectorsCheckRequirements, cancellationToken).ConfigureAwait(false);
+            return await GetMockableSecurityInsightsArmClient(client).PostAsync(scope, DataConnectorsCheckRequirements, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -3331,14 +3331,14 @@ namespace Azure.ResourceManager.SecurityInsights
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="dataConnectorsCheckRequirements"> The parameters for requirements check message. </param>
+        /// <param name="DataConnectorsCheckRequirements"> The parameters for requirements check message. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        public static Response<DataConnectorRequirementsState> Post(this ArmClient client, ResourceIdentifier scope, Models.DataConnectorsCheckRequirements dataConnectorsCheckRequirements, CancellationToken cancellationToken = default)
+        public static Response<DataConnectorRequirementsState> Post(this ArmClient client, ResourceIdentifier scope, Models.DataConnectorsCheckRequirements DataConnectorsCheckRequirements, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableSecurityInsightsArmClient(client).Post(scope, dataConnectorsCheckRequirements, cancellationToken);
+            return GetMockableSecurityInsightsArmClient(client).Post(scope, DataConnectorsCheckRequirements, cancellationToken);
         }
 
         /// <summary>
