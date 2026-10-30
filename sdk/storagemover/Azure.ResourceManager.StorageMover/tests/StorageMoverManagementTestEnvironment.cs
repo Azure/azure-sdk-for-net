@@ -9,6 +9,10 @@ namespace Azure.ResourceManager.StorageMover.Tests
 {
     public class StorageMoverManagementTestEnvironment : TestEnvironment
     {
+        public string PrivateLinkServiceName => GetRecordedOptionalVariable("PRIVATE_LINK_SERVICE_NAME") ?? "test-pls-wcs";
+
+        public string SyntheticsSubscriptionId => GetRecordedVariable("SYNTHETICS_SUBSCRIPTION_ID");
+
         // The default developer credential chain in TestEnvironment is broker WAM (silent
         // acquire scoped to the Microsoft test tenant) -> VisualStudioCodeCredential. Neither
         // works reliably for headless / detached `dotnet test` runs against a work tenant,

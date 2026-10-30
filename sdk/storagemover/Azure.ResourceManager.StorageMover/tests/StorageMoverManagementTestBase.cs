@@ -47,12 +47,14 @@ namespace Azure.ResourceManager.StorageMover.Tests
         // scenario-tests task note). All resources live in subscription b6b34ad8-... ("XDataMove-Synthetics")
         // and region westcentralus, which is why these tests self-provision their own RG in WCUS instead of
         // sharing the static eastus "teststomover" RG used by the rest of the suite.
-        protected readonly string PrivateLinkServiceId = "/subscriptions/b6b34ad8-ca89-4f85-beb7-c2ec13702dac/resourceGroups/E2E-Management-RGsyn/providers/Microsoft.Network/privateLinkServices/test-pls-wcs";
+        protected string PrivateLinkServiceId => "/subscriptions/b6b34ad8-ca89-4f85-beb7-c2ec13702dac/resourceGroups/E2E-Management-RGsyn/providers/Microsoft.Network/privateLinkServices/" + TestEnvironment.PrivateLinkServiceName;
         protected readonly string AwsPrivateS3BucketId = "/subscriptions/b6b34ad8-ca89-4f85-beb7-c2ec13702dac/resourceGroups/aws_640698235822/providers/Microsoft.AWSConnector/s3Buckets/e2e-sm-rp-private-bucket";
         protected readonly string TestStorageAccountId = "/subscriptions/b6b34ad8-ca89-4f85-beb7-c2ec13702dac/resourceGroups/CP_Mover_IN_WCUS/providers/Microsoft.Storage/storageAccounts/cpmoveraccount";
         protected readonly string TestStorageBlobContainerName = "testsmcontainer";
         protected readonly string StorageBlobDataContributorRoleId = "ba92f5b4-2d11-453d-a403-e96b0029c9fe";
         protected AzureLocation WestCentralUsLocation = new("westcentralus");
+        protected AzureLocation EuapLocation = new("eastus2euap");
+        protected const string FakeStorageAccountId = "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/fakeRg/providers/Microsoft.Storage/storageAccounts/fakeAccount";
 
         [SetUp]
         public async Task CreateCommonClient()

@@ -67,6 +67,147 @@ namespace Azure.ResourceManager.StorageMover.Tests.Scenario
             jobRunResourceId = (await jobDefinition.StopJobAsync()).Value;
         }
 
+        [Test]
+        [RecordedTest]
+        public async Task CrossTenantJobValidationTest()
+        {
+            ResourceGroupResource resourceGroup = await CreateResourceGroup(DefaultSubscription, ResourceGroupNamePrefix, WestCentralUsLocation);
+            try
+            {
+                StorageMoverResource storageMover = (await resourceGroup.GetStorageMovers().CreateOrUpdateAsync(
+                    WaitUntil.Completed, Recording.GenerateAssetName(StorageMoverPrefix), new StorageMoverData(WestCentralUsLocation))).Value;
+                StorageMoverProjectResource project = (await storageMover.GetStorageMoverProjects().CreateOrUpdateAsync(
+                    WaitUntil.Completed, Recording.GenerateAssetName("project-"), new StorageMoverProjectData())).Value;
+                string sourceName = Recording.GenerateAssetName("blob-src-");
+                const string partnerAccountId = "/subscriptions/22222222-2222-2222-2222-222222222222/resourceGroups/partner-rg/providers/Microsoft.Storage/storageAccounts/partnersa";
+                const string partnerEndpointId = "/subscriptions/22222222-2222-2222-2222-222222222222/resourceGroups/partner-rg/providers/Microsoft.StorageMover/storageMovers/partner-sm/endpoints/partner-tgtep";
+                await storageMover.GetStorageMoverEndpoints().CreateOrUpdateAsync(WaitUntil.Completed, sourceName,
+                    new StorageMoverEndpointData(new AzureStorageBlobContainerEndpointProperties(FakeStorageAccountId, "testcontainer")
+                    {
+                        EndpointKind = StorageMoverEndpointKind.Source,
+                        EnableCrossTenantTransfer = true,
+                        AllowedStorageAccounts = { partnerAccountId },
+                    }));
+
+                JobDefinitionCollection jobs = project.GetJobDefinitions();
+                foreach (string invalidCase in new[] { "no-tenant", "no-resource", "no-flag", "not-c2c", "same-sub" })
+                {
+                    JobDefinitionData data = new JobDefinitionData(StorageMoverCopyMode.Additive, sourceName, "partner-tgtep")
+                    {
+                        JobType = JobType.CloudToCloud,
+                        IsCrossTenantJob = true,
+                        CrossTenantEndpointTenantId = "11111111-2222-3333-4444-555555555555",
+                        CrossTenantEndpointResourceId = new ResourceIdentifier(partnerEndpointId),
+                    };
+                    switch (invalidCase)
+                    {
+                        case "no-tenant":
+                            data.CrossTenantEndpointTenantId = null;
+                            break;
+                        case "no-resource":
+                            data.CrossTenantEndpointResourceId = null;
+                            break;
+                        case "no-flag":
+                            data.IsCrossTenantJob = null;
+                            break;
+                        case "not-c2c":
+                            data.JobType = JobType.OnPremToCloud;
+                            break;
+                        case "same-sub":
+                            data.CrossTenantEndpointResourceId = new ResourceIdentifier(storageMover.Id + "/endpoints/partner-tgtep");
+                            break;
+                    }
+
+                    RequestFailedException exception = Assert.ThrowsAsync<RequestFailedException>(async () =>
+                        await jobs.CreateOrUpdateAsync(WaitUntil.Completed, Recording.GenerateAssetName("jobdef-xt-" + invalidCase + "-"), data));
+                    Assert.AreEqual(400, exception.Status, invalidCase);
+                    Assert.AreEqual("InvalidRequestPropertyValue", exception.ErrorCode, invalidCase);
+                }
+
+                int count = 0;
+                await foreach (JobDefinitionResource _ in jobs.GetAllAsync())
+                {
+                    count++;
+                }
+                Assert.AreEqual(0, count);
+            }
+            finally
+            {
+                await resourceGroup.DeleteAsync(WaitUntil.Completed);
+            }
+        }
+
+        [Test]
+        [RecordedTest]
+        public async Task CreateAgentlessJobDefinitionTest()
+        {
+            ResourceGroupResource resourceGroup = await CreateResourceGroup(DefaultSubscription, ResourceGroupNamePrefix, EuapLocation);
+            try
+            {
+                StorageMoverResource storageMover = (await resourceGroup.GetStorageMovers().CreateOrUpdateAsync(
+                    WaitUntil.Completed, Recording.GenerateAssetName(StorageMoverPrefix), new StorageMoverData(EuapLocation))).Value;
+                StorageMoverProjectResource project = (await storageMover.GetStorageMoverProjects().CreateOrUpdateAsync(
+                    WaitUntil.Completed, Recording.GenerateAssetName("project-"), new StorageMoverProjectData())).Value;
+                string sourceName = Recording.GenerateAssetName("smb-src-");
+                string targetName = Recording.GenerateAssetName("smbfs-tgt-");
+                StorageMoverEndpointCollection endpoints = storageMover.GetStorageMoverEndpoints();
+                await endpoints.CreateOrUpdateAsync(WaitUntil.Completed, sourceName, new StorageMoverEndpointData(
+                    new SmbMountEndpointProperties("10.0.0.1", "testshare")
+                    {
+                        Credentials = new AzureKeyVaultSmbCredentials
+                        {
+                            UsernameUriString = "https://examples-azureKeyVault.vault.azure.net/secrets/examples-username",
+                            PasswordUriString = "https://examples-azureKeyVault.vault.azure.net/secrets/examples-password",
+                        },
+                    }));
+                await endpoints.CreateOrUpdateAsync(WaitUntil.Completed, targetName, new StorageMoverEndpointData(
+                    new AzureStorageSmbFileShareEndpointProperties(new ResourceIdentifier(FakeStorageAccountId), "testfileshare")));
+
+                JobDefinitionCollection jobs = project.GetJobDefinitions();
+                string jobName = Recording.GenerateAssetName("jobdef-agentless-");
+                JobDefinitionData data = new JobDefinitionData(StorageMoverCopyMode.Additive, sourceName, targetName)
+                {
+                    JobType = JobType.OnPremToCloudAgentLess,
+                    SourceSubpath = "/",
+                    TargetSubpath = "/",
+                };
+                RequestFailedException exception = Assert.ThrowsAsync<RequestFailedException>(async () =>
+                    await jobs.CreateOrUpdateAsync(WaitUntil.Completed, jobName, data));
+                Assert.AreEqual(400, exception.Status);
+                Assert.AreEqual("InvalidRequestPropertyValue", exception.ErrorCode);
+
+                ResourceIdentifier privateLinkServiceId = new ResourceIdentifier(
+                    $"/subscriptions/{TestEnvironment.SyntheticsSubscriptionId}/resourceGroups/E2E-Management-RGsyn/providers/Microsoft.Network/privateLinkServices/E2E-VPC-PLS-E2ETest.Test.ECY");
+                StorageMoverConnectionResource connection = (await storageMover.GetStorageMoverConnections().CreateOrUpdateAsync(
+                    WaitUntil.Completed, Recording.GenerateAssetName("conn-agentless-"),
+                    new StorageMoverConnectionData(new StorageMoverConnectionProperties(privateLinkServiceId)
+                    {
+                        Description = "ConnectionForAgentlessJob",
+                    }))).Value;
+                Assert.That(connection.Data.Properties.ConnectionStatus,
+                    Is.EqualTo(StorageMoverConnectionStatus.Pending).Or.EqualTo(StorageMoverConnectionStatus.Approved));
+
+                data.Connections.Add(connection.Id);
+                JobDefinitionResource job = (await jobs.CreateOrUpdateAsync(WaitUntil.Completed, jobName, data)).Value;
+                Assert.AreEqual(jobName, job.Data.Name);
+                Assert.AreEqual(JobType.OnPremToCloudAgentLess, job.Data.JobType);
+                CollectionAssert.AreEqual(new[] { connection.Id }, job.Data.Connections);
+                Assert.IsTrue(string.IsNullOrEmpty(job.Data.AgentName));
+
+                job = (await jobs.GetAsync(jobName)).Value;
+                Assert.AreEqual(JobType.OnPremToCloudAgentLess, job.Data.JobType);
+                CollectionAssert.AreEqual(new[] { connection.Id }, job.Data.Connections);
+
+                await job.DeleteAsync(WaitUntil.Completed);
+                await connection.DeleteAsync(WaitUntil.Completed);
+                Assert.IsFalse(await jobs.ExistsAsync(jobName));
+            }
+            finally
+            {
+                await resourceGroup.DeleteAsync(WaitUntil.Completed);
+            }
+        }
+
         // Row #31 in cross-language scenario-tests matrix. Mirrors the JS/Python/CLI ports of
         // StartC2CJobWithPrivateSourceTest. End-to-end cross-cloud copy from a private AWS S3
         // bucket (via Multi-Cloud Connector) to a Blob container, with Private Link Service
