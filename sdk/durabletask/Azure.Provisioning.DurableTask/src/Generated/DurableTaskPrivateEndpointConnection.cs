@@ -19,7 +19,7 @@ namespace Azure.Provisioning.DurableTask
         private BicepValue<string> _name;
         private SystemData _systemData;
         private DurableTaskPrivateEndpointConnectionProperties _properties;
-        private ResourceReference<DurableTaskScheduler> _parent;
+        private ProvisioningResourceReference<DurableTaskScheduler> _parent;
 
         /// <summary> Creates a new DurableTaskPrivateEndpointConnection. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -101,7 +101,7 @@ namespace Azure.Provisioning.DurableTask
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _properties = DefineModelProperty<DurableTaskPrivateEndpointConnectionProperties>(nameof(Properties), new string[] { "properties" });
-            _parent = DefineResource<DurableTaskScheduler>(nameof(Parent), new string[] { "parent" });
+            _parent = new ProvisioningResourceReference<DurableTaskScheduler>(DefineProperty<string>(nameof(Parent), new string[] { "parent" }));
             DefineAdditionalProperties();
         }
 

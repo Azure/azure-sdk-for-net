@@ -22,7 +22,7 @@ namespace Azure.Provisioning.ContainerRegistry
         private BicepDictionary<string> _tags;
         private BicepValue<AzureLocation> _location;
         private ReplicationProperties _properties;
-        private ResourceReference<ContainerRegistryService> _parent;
+        private ProvisioningResourceReference<ContainerRegistryService> _parent;
 
         /// <summary> Creates a new ContainerRegistryReplication. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -192,7 +192,7 @@ namespace Azure.Provisioning.ContainerRegistry
             _tags = DefineDictionaryProperty<string>(nameof(Tags), new string[] { "tags" });
             _location = DefineProperty<AzureLocation>(nameof(Location), new string[] { "location" }, isRequired: true);
             _properties = DefineModelProperty<ReplicationProperties>(nameof(Properties), new string[] { "properties" });
-            _parent = DefineResource<ContainerRegistryService>(nameof(Parent), new string[] { "parent" });
+            _parent = new ProvisioningResourceReference<ContainerRegistryService>(DefineProperty<string>(nameof(Parent), new string[] { "parent" }));
             DefineAdditionalProperties();
         }
 

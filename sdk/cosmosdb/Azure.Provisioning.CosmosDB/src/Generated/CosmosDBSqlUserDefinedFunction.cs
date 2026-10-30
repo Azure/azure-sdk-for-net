@@ -23,7 +23,7 @@ namespace Azure.Provisioning.CosmosDB
         private BicepValue<AzureLocation> _location;
         private CosmosDBSqlUserDefinedFunctionProperties _properties;
         private ManagedServiceIdentity _identity;
-        private ResourceReference<CosmosDBSqlContainer> _parent;
+        private ProvisioningResourceReference<CosmosDBSqlContainer> _parent;
 
         /// <summary> Creates a new CosmosDBSqlUserDefinedFunction. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -171,7 +171,7 @@ namespace Azure.Provisioning.CosmosDB
             _location = DefineProperty<AzureLocation>(nameof(Location), new string[] { "location" }, isRequired: true);
             _properties = DefineModelProperty<CosmosDBSqlUserDefinedFunctionProperties>(nameof(Properties), new string[] { "properties" });
             _identity = DefineModelProperty<ManagedServiceIdentity>(nameof(Identity), new string[] { "identity" });
-            _parent = DefineResource<CosmosDBSqlContainer>(nameof(Parent), new string[] { "parent" });
+            _parent = new ProvisioningResourceReference<CosmosDBSqlContainer>(DefineProperty<string>(nameof(Parent), new string[] { "parent" }));
             DefineAdditionalProperties();
         }
 

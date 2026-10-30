@@ -23,7 +23,7 @@ namespace Azure.Provisioning.Enclave
         private BicepDictionary<string> _tags;
         private BicepValue<AzureLocation> _location;
         private VirtualEnclaveWorkloadProperties _properties;
-        private ResourceReference<VirtualEnclave> _parent;
+        private ProvisioningResourceReference<VirtualEnclave> _parent;
 
         /// <summary> Creates a new VirtualEnclaveWorkload. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -137,7 +137,7 @@ namespace Azure.Provisioning.Enclave
             _tags = DefineDictionaryProperty<string>(nameof(Tags), new string[] { "tags" });
             _location = DefineProperty<AzureLocation>(nameof(Location), new string[] { "location" }, isRequired: true);
             _properties = DefineModelProperty<VirtualEnclaveWorkloadProperties>(nameof(Properties), new string[] { "properties" });
-            _parent = DefineResource<VirtualEnclave>(nameof(Parent), new string[] { "parent" });
+            _parent = new ProvisioningResourceReference<VirtualEnclave>(DefineProperty<string>(nameof(Parent), new string[] { "parent" }));
             DefineAdditionalProperties();
         }
 

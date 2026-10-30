@@ -21,7 +21,7 @@ namespace Azure.Provisioning.EventHubs
         private SystemData _systemData;
         private AuthorizationRuleProperties _properties;
         private BicepValue<AzureLocation> _location;
-        private ResourceReference<EventHubsNamespace> _parent;
+        private ProvisioningResourceReference<EventHubsNamespace> _parent;
 
         /// <summary> Creates a new EventHubsNamespaceAuthorizationRule. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -131,7 +131,7 @@ namespace Azure.Provisioning.EventHubs
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _properties = DefineModelProperty<AuthorizationRuleProperties>(nameof(Properties), new string[] { "properties" });
             _location = DefineProperty<AzureLocation>(nameof(Location), new string[] { "location" }, isOutput: true);
-            _parent = DefineResource<EventHubsNamespace>(nameof(Parent), new string[] { "parent" });
+            _parent = new ProvisioningResourceReference<EventHubsNamespace>(DefineProperty<string>(nameof(Parent), new string[] { "parent" }));
             DefineAdditionalProperties();
         }
 

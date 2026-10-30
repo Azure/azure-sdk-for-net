@@ -22,7 +22,7 @@ namespace Azure.Provisioning.ContainerService
         private SystemData _systemData;
         private ManagedClusterIdentityBindingProperties _properties;
         private BicepValue<ETag> _eTag;
-        private ResourceReference<ContainerServiceManagedCluster> _parent;
+        private ProvisioningResourceReference<ContainerServiceManagedCluster> _parent;
 
         /// <summary> Creates a new ManagedClusterIdentityBinding. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -115,7 +115,7 @@ namespace Azure.Provisioning.ContainerService
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _properties = DefineModelProperty<ManagedClusterIdentityBindingProperties>(nameof(Properties), new string[] { "properties" });
             _eTag = DefineProperty<ETag>(nameof(ETag), new string[] { "eTag" }, isOutput: true);
-            _parent = DefineResource<ContainerServiceManagedCluster>(nameof(Parent), new string[] { "parent" });
+            _parent = new ProvisioningResourceReference<ContainerServiceManagedCluster>(DefineProperty<string>(nameof(Parent), new string[] { "parent" }));
             DefineAdditionalProperties();
         }
 

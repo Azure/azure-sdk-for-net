@@ -22,7 +22,7 @@ namespace Azure.Provisioning.ContainerRegistry
         private SystemData _systemData;
         private CredentialSetProperties _properties;
         private ManagedServiceIdentity _identity;
-        private ResourceReference<ContainerRegistryService> _parent;
+        private ProvisioningResourceReference<ContainerRegistryService> _parent;
 
         /// <summary> Creates a new ContainerRegistryCredentialSet. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -180,7 +180,7 @@ namespace Azure.Provisioning.ContainerRegistry
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _properties = DefineModelProperty<CredentialSetProperties>(nameof(Properties), new string[] { "properties" });
             _identity = DefineModelProperty<ManagedServiceIdentity>(nameof(Identity), new string[] { "identity" });
-            _parent = DefineResource<ContainerRegistryService>(nameof(Parent), new string[] { "parent" });
+            _parent = new ProvisioningResourceReference<ContainerRegistryService>(DefineProperty<string>(nameof(Parent), new string[] { "parent" }));
             DefineAdditionalProperties();
         }
 

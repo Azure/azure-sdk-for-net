@@ -20,7 +20,7 @@ namespace Azure.Provisioning.CosmosDB
         private BicepValue<string> _name;
         private SystemData _systemData;
         private FleetspaceProperties _properties;
-        private ResourceReference<CosmosDBFleet> _parent;
+        private ProvisioningResourceReference<CosmosDBFleet> _parent;
 
         /// <summary> Creates a new CosmosDBFleetspace. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -183,7 +183,7 @@ namespace Azure.Provisioning.CosmosDB
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _properties = DefineModelProperty<FleetspaceProperties>(nameof(Properties), new string[] { "properties" });
-            _parent = DefineResource<CosmosDBFleet>(nameof(Parent), new string[] { "parent" });
+            _parent = new ProvisioningResourceReference<CosmosDBFleet>(DefineProperty<string>(nameof(Parent), new string[] { "parent" }));
             DefineAdditionalProperties();
         }
 

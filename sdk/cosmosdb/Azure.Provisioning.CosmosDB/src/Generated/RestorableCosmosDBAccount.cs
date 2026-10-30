@@ -21,7 +21,7 @@ namespace Azure.Provisioning.CosmosDB
         private SystemData _systemData;
         private RestorableDatabaseAccountProperties _properties;
         private BicepValue<AzureLocation> _location;
-        private ResourceReference<CosmosDBLocation> _parent;
+        private ProvisioningResourceReference<CosmosDBLocation> _parent;
 
         /// <summary> Creates a new RestorableCosmosDBAccount. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -163,7 +163,7 @@ namespace Azure.Provisioning.CosmosDB
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _properties = DefineModelProperty<RestorableDatabaseAccountProperties>(nameof(Properties), new string[] { "properties" });
             _location = DefineProperty<AzureLocation>(nameof(Location), new string[] { "location" });
-            _parent = DefineResource<CosmosDBLocation>(nameof(Parent), new string[] { "parent" });
+            _parent = new ProvisioningResourceReference<CosmosDBLocation>(DefineProperty<string>(nameof(Parent), new string[] { "parent" }));
             DefineAdditionalProperties();
         }
 
