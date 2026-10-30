@@ -17,6 +17,7 @@
 - `BrowserAutomationPreviewToolboxTool` is deprecated and hidden from IntelliSense. Please use `BrowserAutomationToolboxTool` instead.
 
 ### Bugs Fixed
+- Fixed `CreateAgentVersionFromCode` creating ZIP entries with `\` separators on Windows, which extracted as flat file names instead of nested directories on Linux hosted agents ([#63804](https://github.com/Azure/azure-sdk-for-net/issues/63804)).
 
 ### Other Changes
 

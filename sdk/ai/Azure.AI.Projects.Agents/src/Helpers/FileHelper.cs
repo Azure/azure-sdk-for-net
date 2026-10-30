@@ -31,13 +31,14 @@ internal class FileHelper
         {
             prefix += Path.DirectorySeparatorChar;
         }
+        // ZIP entry names always use '/' as the separator, whatever the local OS uses.
         foreach (string file in Directory.GetFiles(directoryPath))
         {
-            archive.CreateEntryFromFile(file, file.Substring(prefix.Length));
+            archive.CreateEntryFromFile(file, file.Substring(prefix.Length).Replace(Path.DirectorySeparatorChar, '/'));
         }
         foreach (string dir in Directory.GetDirectories(directoryPath))
         {
-            archive.CreateEntry(dir.Substring(prefix.Length) + Path.DirectorySeparatorChar);
+            archive.CreateEntry(dir.Substring(prefix.Length).Replace(Path.DirectorySeparatorChar, '/') + "/");
             DirWalk(archive, dir, prefix);
         }
     }
