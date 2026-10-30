@@ -269,8 +269,9 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         /// <param name="statusDetails"> Additional details about the migration operation's status in free text format. </param>
         /// <param name="createdOn"> The timestamp when the migration operation was created. </param>
         /// <param name="lastModifiedOn"> The timestamp when the migration operation was last updated. </param>
+        /// <param name="rollbackEligibilityExpiresOn"> The timestamp until which a successful migration remains eligible to be undone (rolled back) to the source cache. This property is only returned while the migration is in the Succeeded state, and is calculated from the time the migration succeeded plus the rollback window. After this time the source cache is released and the migration can no longer be undone. </param>
         /// <returns> A new <see cref="Models.RedisEnterpriseMigrationProperties"/> instance for mocking. </returns>
-        public static RedisEnterpriseMigrationProperties RedisEnterpriseMigrationProperties(string sourceType = default, ResourceIdentifier targetResourceId = default, RedisEnterpriseMigrationProvisioningState? provisioningState = default, string statusDetails = default, DateTimeOffset? createdOn = default, DateTimeOffset? lastModifiedOn = default)
+        public static RedisEnterpriseMigrationProperties RedisEnterpriseMigrationProperties(string sourceType = default, ResourceIdentifier targetResourceId = default, RedisEnterpriseMigrationProvisioningState? provisioningState = default, string statusDetails = default, DateTimeOffset? createdOn = default, DateTimeOffset? lastModifiedOn = default, DateTimeOffset? rollbackEligibilityExpiresOn = default)
         {
             return new UnknownRedisEnterpriseMigrationProperties(
                 sourceType is null ? default : new SourceType(sourceType),
@@ -279,6 +280,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                 statusDetails,
                 createdOn,
                 lastModifiedOn,
+                rollbackEligibilityExpiresOn,
                 default);
         }
 
@@ -288,12 +290,13 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         /// <param name="statusDetails"> Additional details about the migration operation's status in free text format. </param>
         /// <param name="createdOn"> The timestamp when the migration operation was created. </param>
         /// <param name="lastModifiedOn"> The timestamp when the migration operation was last updated. </param>
+        /// <param name="rollbackEligibilityExpiresOn"> The timestamp until which a successful migration remains eligible to be undone (rolled back) to the source cache. This property is only returned while the migration is in the Succeeded state, and is calculated from the time the migration succeeded plus the rollback window. After this time the source cache is released and the migration can no longer be undone. </param>
         /// <param name="sourceResourceId"> The source resource ID to migrate from. This is the resource ID of the Azure Cache for Redis. </param>
         /// <param name="isSwitchDns"> Sets whether the DNS is switched automatically after the data is transferred from the source cache to the target cache. This property must be true during the preview. </param>
-        /// <param name="isSkipDataMigration"> Sets whether the data is migrated from source to target or not. This property must be true during the preview. </param>
+        /// <param name="isSkipDataMigration"> Sets whether the data is migrated from source to target or not. Set this property to true to skip data migration. </param>
         /// <param name="isForceMigrate"> Sets whether to ignore warnings when performing validation of the migration request. If this property is true, warning-level disparities between the source and target resources will be ignored, and the request will only fail validation if there are error-level disparities. The default value is false. </param>
         /// <returns> A new <see cref="Models.AzureCacheForRedisMigrationProperties"/> instance for mocking. </returns>
-        public static AzureCacheForRedisMigrationProperties AzureCacheForRedisMigrationProperties(ResourceIdentifier targetResourceId = default, RedisEnterpriseMigrationProvisioningState? provisioningState = default, string statusDetails = default, DateTimeOffset? createdOn = default, DateTimeOffset? lastModifiedOn = default, ResourceIdentifier sourceResourceId = default, bool isSwitchDns = default, bool isSkipDataMigration = default, bool? isForceMigrate = default)
+        public static AzureCacheForRedisMigrationProperties AzureCacheForRedisMigrationProperties(ResourceIdentifier targetResourceId = default, RedisEnterpriseMigrationProvisioningState? provisioningState = default, string statusDetails = default, DateTimeOffset? createdOn = default, DateTimeOffset? lastModifiedOn = default, DateTimeOffset? rollbackEligibilityExpiresOn = default, ResourceIdentifier sourceResourceId = default, bool isSwitchDns = default, bool isSkipDataMigration = default, bool? isForceMigrate = default)
         {
             return new AzureCacheForRedisMigrationProperties(
                 SourceType.AzureCacheForRedis,
@@ -302,6 +305,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                 statusDetails,
                 createdOn,
                 lastModifiedOn,
+                rollbackEligibilityExpiresOn,
                 default,
                 sourceResourceId,
                 isSwitchDns,
@@ -309,14 +313,21 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                 isForceMigrate);
         }
 
+        /// <summary> Parameters supplied to the undo migration operation. </summary>
+        /// <param name="rollbackReason"> The reason for undoing (rolling back) the migration. Choose the value that best describes why the rollback is needed. This information helps us improve the migration experience and does not change how the rollback is performed. </param>
+        /// <returns> A new <see cref="Models.RedisEnterpriseMigrationUndoContent"/> instance for mocking. </returns>
+        public static RedisEnterpriseMigrationUndoContent RedisEnterpriseMigrationUndoContent(RedisEnterpriseMigrationRollbackReason? rollbackReason = default)
+        {
+            return new RedisEnterpriseMigrationUndoContent(rollbackReason, default);
+        }
+
         /// <summary> Properties for validating migration from Azure Cache for Redis to Redis Enterprise. </summary>
         /// <param name="sourceResourceId"> The source resource ID to validate migration from. This is the resource ID of the Azure Cache for Redis. </param>
         /// <param name="isSkipDataMigration"> Sets whether the data is migrated from source to target or not. The default value is true. </param>
-        /// <param name="isForceMigrate"> Sets whether to ignore warnings when validating if the source cache can be migrated to the target cache. If this property is true, the isValid property in the response will ignore warning-level disparities between the source and target resource. The default value is false. </param>
         /// <returns> A new <see cref="Models.RedisEnterpriseMigrationValidationRequestContent"/> instance for mocking. </returns>
-        public static RedisEnterpriseMigrationValidationRequestContent RedisEnterpriseMigrationValidationRequestContent(ResourceIdentifier sourceResourceId = default, bool? isSkipDataMigration = default, bool? isForceMigrate = default)
+        public static RedisEnterpriseMigrationValidationRequestContent RedisEnterpriseMigrationValidationRequestContent(ResourceIdentifier sourceResourceId = default, bool? isSkipDataMigration = default)
         {
-            return new RedisEnterpriseMigrationValidationRequestContent(sourceResourceId, isSkipDataMigration, isForceMigrate, default);
+            return new RedisEnterpriseMigrationValidationRequestContent(sourceResourceId, isSkipDataMigration, default);
         }
 
         /// <summary> Response for migration validation operation. </summary>
@@ -533,36 +544,18 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="provisioningState"> Current provisioning status of the access policy assignment. </param>
-        /// <param name="accessPolicyName"> <b>Deprecated.</b> This property always returns "default". Use `accessString` to configure custom Redis ACL permissions instead. </param>
-        /// <param name="accessString"> The Redis ACL permissions string applied to this assignment, for example `+@read ~cache:<i>`. Defaults to `+@all ~</i>` if not specified. </param>
-        /// <param name="provisioningError"> Provisioning error details when the access string failed to apply (e.g., invalid ACL syntax). Null when provisioning succeeded. </param>
+        /// <param name="accessPolicyName"> Name of access policy under specific access policy assignment. Only "default" policy is supported for now. </param>
         /// <param name="userObjectId"> The object ID of the user. </param>
         /// <returns> A new <see cref="RedisEnterprise.AccessPolicyAssignmentData"/> instance for mocking. </returns>
-        public static AccessPolicyAssignmentData AccessPolicyAssignmentData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, RedisEnterpriseProvisioningStatus? provisioningState = default, string accessPolicyName = default, string accessString = default, AccessPolicyAssignmentProvisioningError provisioningError = default, Guid? userObjectId = default)
+        public static AccessPolicyAssignmentData AccessPolicyAssignmentData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, RedisEnterpriseProvisioningStatus? provisioningState = default, string accessPolicyName = default, Guid? userObjectId = default)
         {
             return new AccessPolicyAssignmentData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                provisioningState is null && accessPolicyName is null && accessString is null && provisioningError is null && userObjectId is null ? default : new AccessPolicyAssignmentProperties(
-                    provisioningState,
-                    accessPolicyName,
-                    accessString,
-                    provisioningError,
-                    new AccessPolicyAssignmentPropertiesUser(userObjectId, default),
-                    default),
+                provisioningState is null && accessPolicyName is null && userObjectId is null ? default : new AccessPolicyAssignmentProperties(provisioningState, accessPolicyName, new AccessPolicyAssignmentPropertiesUser(userObjectId, default), default),
                 default);
-        }
-
-        /// <summary> Error details for access policy assignment provisioning failures. </summary>
-        /// <param name="code"> Machine-readable error code (e.g., "InvalidAccessString"). </param>
-        /// <param name="message"> Human-readable error message describing the failure. </param>
-        /// <param name="target"> The property that caused the error (e.g., "properties.accessString"). </param>
-        /// <returns> A new <see cref="Models.AccessPolicyAssignmentProvisioningError"/> instance for mocking. </returns>
-        public static AccessPolicyAssignmentProvisioningError AccessPolicyAssignmentProvisioningError(string code = default, string message = default, string target = default)
-        {
-            return new AccessPolicyAssignmentProvisioningError(code, message, target, default);
         }
 
         /// <param name="id"> The operation's unique id. </param>
@@ -768,33 +761,6 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                 accessKeysAuthentication,
                 default,
                 default), default);
-        }
-
-        /// <summary> Describes the access policy assignment of Redis Enterprise database. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="provisioningState"> Current provisioning status of the access policy assignment. </param>
-        /// <param name="accessPolicyName"> <b>Deprecated.</b> This property always returns "default". Use `accessString` to configure custom Redis ACL permissions instead. </param>
-        /// <param name="userObjectId"> The object ID of the user. </param>
-        /// <returns> A new <see cref="RedisEnterprise.AccessPolicyAssignmentData"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static AccessPolicyAssignmentData AccessPolicyAssignmentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, RedisEnterpriseProvisioningStatus? provisioningState, string accessPolicyName, Guid? userObjectId)
-        {
-            return new AccessPolicyAssignmentData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                provisioningState is null && accessPolicyName is null && userObjectId is null ? default : new AccessPolicyAssignmentProperties(
-                    provisioningState,
-                    accessPolicyName,
-                    default,
-                    default,
-                    new AccessPolicyAssignmentPropertiesUser(userObjectId, default),
-                    default),
-                default);
         }
 
         /// <summary> Describes the Redis Enterprise cluster. </summary>

@@ -116,9 +116,11 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
             SourceType sourceType = default;
             ResourceIdentifier targetResourceId = default;
             RedisEnterpriseMigrationProvisioningState? provisioningState = default;
+            bool statusDetailsIsDefined = false;
             string statusDetails = default;
             DateTimeOffset? createdOn = default;
             DateTimeOffset? lastModifiedOn = default;
+            DateTimeOffset? rollbackEligibilityExpiresOn = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -147,6 +149,12 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                 }
                 if (prop.NameEquals("statusDetails"u8))
                 {
+                    statusDetailsIsDefined = true;
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        statusDetails = null;
+                        continue;
+                    }
                     statusDetails = prop.Value.GetString();
                     continue;
                 }
@@ -168,6 +176,15 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                     lastModifiedOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
+                if (prop.NameEquals("rollbackEligibleUntil"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    rollbackEligibilityExpiresOn = prop.Value.GetDateTimeOffset("O");
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
@@ -180,7 +197,11 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                 statusDetails,
                 createdOn,
                 lastModifiedOn,
-                additionalBinaryDataProperties);
+                rollbackEligibilityExpiresOn,
+                additionalBinaryDataProperties)
+            {
+                _statusDetailsIsDefined = statusDetailsIsDefined
+            };
         }
     }
 }

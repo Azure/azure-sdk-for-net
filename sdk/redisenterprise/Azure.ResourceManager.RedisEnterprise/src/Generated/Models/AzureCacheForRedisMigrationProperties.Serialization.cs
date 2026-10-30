@@ -122,9 +122,11 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
             SourceType sourceType = default;
             ResourceIdentifier targetResourceId = default;
             RedisEnterpriseMigrationProvisioningState? provisioningState = default;
+            bool statusDetailsIsDefined = false;
             string statusDetails = default;
             DateTimeOffset? createdOn = default;
             DateTimeOffset? lastModifiedOn = default;
+            DateTimeOffset? rollbackEligibilityExpiresOn = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             ResourceIdentifier sourceResourceId = default;
             bool isSwitchDns = default;
@@ -157,6 +159,12 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                 }
                 if (prop.NameEquals("statusDetails"u8))
                 {
+                    statusDetailsIsDefined = true;
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        statusDetails = null;
+                        continue;
+                    }
                     statusDetails = prop.Value.GetString();
                     continue;
                 }
@@ -176,6 +184,15 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                         continue;
                     }
                     lastModifiedOn = prop.Value.GetDateTimeOffset("O");
+                    continue;
+                }
+                if (prop.NameEquals("rollbackEligibleUntil"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    rollbackEligibilityExpiresOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("sourceResourceId"u8))
@@ -214,11 +231,15 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                 statusDetails,
                 createdOn,
                 lastModifiedOn,
+                rollbackEligibilityExpiresOn,
                 additionalBinaryDataProperties,
                 sourceResourceId,
                 isSwitchDns,
                 isSkipDataMigration,
-                isForceMigrate);
+                isForceMigrate)
+            {
+                _statusDetailsIsDefined = statusDetailsIsDefined
+            };
         }
     }
 }

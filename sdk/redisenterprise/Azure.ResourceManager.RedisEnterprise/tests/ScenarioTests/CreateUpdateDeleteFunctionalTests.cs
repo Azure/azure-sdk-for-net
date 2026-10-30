@@ -23,9 +23,11 @@ namespace Azure.ResourceManager.RedisEnterprise.Tests
 
         private RedisEnterpriseClusterCollection Collection { get; set; }
 
-        private async Task SetCollectionsAsync()
+        private AzureLocation KeyspaceNotificationsLocation => new("centralindia");
+
+        private async Task SetCollectionsAsync(AzureLocation? location = null)
         {
-            ResourceGroup = await CreateResourceGroupAsync();
+            ResourceGroup = await CreateResourceGroupAsync(location);
             Collection = ResourceGroup.GetRedisEnterpriseClusters();
         }
 
@@ -118,7 +120,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Tests
         [TestCase(TestName = "CreateUpdateDeleteTest2")]
         public async Task CreateUpdateDeleteWithMaintenanceWindowsAndKeyspaceNotifications()
         {
-            await SetCollectionsAsync();
+            await SetCollectionsAsync(KeyspaceNotificationsLocation);
 
             string redisEnterpriseCacheName = Recording.GenerateAssetName("RedisEnterpriseBegin");
             var data = new RedisEnterpriseClusterData(

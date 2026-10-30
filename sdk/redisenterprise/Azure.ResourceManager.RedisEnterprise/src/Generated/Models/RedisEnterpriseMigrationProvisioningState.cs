@@ -31,6 +31,12 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         private const string CancelledValue = "Cancelled";
         /// <summary> The migration operation cancellation has failed. </summary>
         private const string CancellationFailedValue = "CancellationFailed";
+        /// <summary> The migrated endpoint is being unlinked from the cluster. </summary>
+        private const string UnlinkingValue = "Unlinking";
+        /// <summary> The migrated endpoint has been unlinked from the cluster. </summary>
+        private const string UnlinkedValue = "Unlinked";
+        /// <summary> Unlinking the migrated endpoint from the cluster has failed. </summary>
+        private const string UnlinkFailedValue = "UnlinkFailed";
 
         /// <summary> Initializes a new instance of <see cref="RedisEnterpriseMigrationProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -65,6 +71,15 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
 
         /// <summary> The migration operation cancellation has failed. </summary>
         public static RedisEnterpriseMigrationProvisioningState CancellationFailed { get; } = new RedisEnterpriseMigrationProvisioningState(CancellationFailedValue);
+
+        /// <summary> The migrated endpoint is being unlinked from the cluster. </summary>
+        public static RedisEnterpriseMigrationProvisioningState Unlinking { get; } = new RedisEnterpriseMigrationProvisioningState(UnlinkingValue);
+
+        /// <summary> The migrated endpoint has been unlinked from the cluster. </summary>
+        public static RedisEnterpriseMigrationProvisioningState Unlinked { get; } = new RedisEnterpriseMigrationProvisioningState(UnlinkedValue);
+
+        /// <summary> Unlinking the migrated endpoint from the cluster has failed. </summary>
+        public static RedisEnterpriseMigrationProvisioningState UnlinkFailed { get; } = new RedisEnterpriseMigrationProvisioningState(UnlinkFailedValue);
 
         /// <summary> Determines if two <see cref="RedisEnterpriseMigrationProvisioningState"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
