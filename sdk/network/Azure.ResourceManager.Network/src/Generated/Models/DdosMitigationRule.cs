@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network;
 
@@ -35,7 +36,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="type"> The resource type. </param>
         /// <param name="properties"> Properties of the DDoS mitigation rule. </param>
-        internal DdosMitigationRule(ResourceIdentifier id, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, string eTag, string @type, DdosMitigationRulePropertiesFormat properties) : base(id, additionalBinaryDataProperties)
+        internal DdosMitigationRule(ResourceIdentifier id, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, ETag? eTag, string @type, DdosMitigationRulePropertiesFormat properties) : base(id, additionalBinaryDataProperties)
         {
             Name = name;
             ETag = eTag;
@@ -49,7 +50,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
         [WirePath("etag")]
-        public string ETag { get; }
+        public ETag? ETag { get; }
 
         /// <summary> The resource type. </summary>
         [WirePath("type")]

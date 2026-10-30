@@ -3596,7 +3596,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="type"> The resource type. </param>
         /// <param name="properties"> Properties of the DDoS mitigation rule. </param>
         /// <returns> A new <see cref="Models.DdosMitigationRule"/> instance for mocking. </returns>
-        public static DdosMitigationRule DdosMitigationRule(ResourceIdentifier id = default, string name = default, string eTag = default, string @type = default, DdosMitigationRulePropertiesFormat properties = default)
+        public static DdosMitigationRule DdosMitigationRule(ResourceIdentifier id = default, string name = default, ETag? eTag = default, string @type = default, DdosMitigationRulePropertiesFormat properties = default)
         {
             return new DdosMitigationRule(
                 id,
@@ -4748,7 +4748,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="properties"> ExpressRouteLag authorization properties. </param>
         /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <returns> A new <see cref="Network.ExpressRouteLagAuthorizationData"/> instance for mocking. </returns>
-        public static ExpressRouteLagAuthorizationData ExpressRouteLagAuthorizationData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ExpressRouteLagAuthorizationPropertiesFormat properties = default, string eTag = default)
+        public static ExpressRouteLagAuthorizationData ExpressRouteLagAuthorizationData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ExpressRouteLagAuthorizationPropertiesFormat properties = default, ETag? eTag = default)
         {
             return new ExpressRouteLagAuthorizationData(
                 id,

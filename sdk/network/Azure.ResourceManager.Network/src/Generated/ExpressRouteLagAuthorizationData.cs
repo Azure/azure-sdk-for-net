@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Network.Models;
@@ -32,7 +33,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="properties"> ExpressRouteLag authorization properties. </param>
         /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ExpressRouteLagAuthorizationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ExpressRouteLagAuthorizationPropertiesFormat properties, string eTag, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
+        internal ExpressRouteLagAuthorizationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ExpressRouteLagAuthorizationPropertiesFormat properties, ETag? eTag, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
             ETag = eTag;
@@ -45,6 +46,6 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
         [WirePath("etag")]
-        public string ETag { get; }
+        public ETag? ETag { get; }
     }
 }

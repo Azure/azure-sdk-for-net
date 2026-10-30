@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Network.Tests
 
         [Test]
         public void NativeETagsRoundTrip(
-            [Values(typeof(HubIPConfigurationData), typeof(HubRouteTableData), typeof(IPAllocationData), typeof(InboundNatRuleData), typeof(InboundSecurityRuleData))] Type modelType,
+            [Values(typeof(HubIPConfigurationData), typeof(HubRouteTableData), typeof(IPAllocationData), typeof(InboundNatRuleData), typeof(InboundSecurityRuleData), typeof(ExpressRouteLagAuthorizationData), typeof(DdosMitigationRule))] Type modelType,
             [Values("J", "W")] string format,
             [Values("\"quoted\"", "W/\"weak\"")] string etag)
         {
@@ -109,6 +109,42 @@ namespace Azure.ResourceManager.Network.Tests
             {
                 Assert.That(value.GetString(), Is.EqualTo(etag));
                 Assert.That(document.RootElement.EnumerateObject().Count(p => p.Name == "etag"), Is.EqualTo(1));
+            }
+        }
+
+        [Test]
+        public void OptionalNativeETagsRemainNull(
+            [Values(typeof(ExpressRouteLagAuthorizationData), typeof(DdosMitigationRule))] Type modelType,
+            [Values("{}", """{"etag":null}""")] string json,
+            [Values("J", "W")] string format)
+        {
+            var options = new ModelReaderWriterOptions(format);
+            object model = ModelReaderWriter.Read(BinaryData.FromString(json), modelType, options, AzureResourceManagerNetworkContext.Default);
+            Assert.That(modelType.GetProperty("ETag").GetValue(model), Is.Null);
+            using JsonDocument document = JsonDocument.Parse(ModelReaderWriter.Write(model, options, AzureResourceManagerNetworkContext.Default));
+            Assert.That(document.RootElement.TryGetProperty("etag", out _), Is.False);
+        }
+
+        [TestCase(null)]
+        [TestCase("\"quoted\"")]
+        [TestCase("W/\"weak\"")]
+        public void OptionalNativeETagFactoriesRetainValues(string value)
+        {
+            ETag? etag = value is null ? null : new ETag(value);
+            var authorization = ArmNetworkModelFactory.ExpressRouteLagAuthorizationData(eTag: etag);
+            var rule = ArmNetworkModelFactory.DdosMitigationRule(eTag: etag, type: "Microsoft.Network/ddosMitigationRules");
+            Assert.That(authorization.ETag, Is.EqualTo(etag));
+            Assert.That(rule.ETag, Is.EqualTo(etag));
+            Assert.That(rule.Type, Is.EqualTo("Microsoft.Network/ddosMitigationRules"));
+            foreach (object model in new object[] { authorization, rule })
+            {
+                using JsonDocument document = JsonDocument.Parse(ModelReaderWriter.Write(model, ModelReaderWriterOptions.Json, AzureResourceManagerNetworkContext.Default));
+                Assert.That(document.RootElement.TryGetProperty("etag", out JsonElement persisted), Is.EqualTo(value is not null));
+                if (value is not null)
+                {
+                    Assert.That(persisted.ValueKind, Is.EqualTo(JsonValueKind.String));
+                    Assert.That(persisted.GetString(), Is.EqualTo(value));
+                }
             }
         }
 

@@ -9,6 +9,7 @@
 
 ### Breaking Changes
 
+- Changed `ExpressRouteLagAuthorizationData.ETag`, `DdosMitigationRule.ETag`, and their model factory parameters from `string` to nullable `ETag`.
 - Renamed `ProxyResourceVirtualNetworkApplianceCapabilityProperties` to `VirtualNetworkApplianceCapabilityBaseData`.
 - Replaced the `ProxyResourceWithReadOnlyID` base of `ExpressRouteLagAuthorizationData` with the common `ResourceData` base, exposing `ResourceType` and `SystemData` instead of the string `Type` property.
 - Replaced the string `Type` properties on `NetworkChildResourceData` and `NetworkProxyResourceData` with nullable `ResourceType` properties. Their model factory methods and affected derived model factory methods now accept `resourceType` and strongly typed `eTag` arguments.
