@@ -22,7 +22,7 @@ namespace Azure.Provisioning.AppService
         private WorkflowEnvelopeProperties _properties;
         private BicepValue<string> _kind;
         private BicepValue<AzureLocation> _location;
-        private ResourceReference<WebSiteSlot> _parent;
+        private ProvisioningResourceReference<WebSiteSlot> _parent;
 
         /// <summary> Creates a new SiteSlotWorkflow. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -121,7 +121,7 @@ namespace Azure.Provisioning.AppService
             _properties = DefineModelProperty<WorkflowEnvelopeProperties>(nameof(Properties), new string[] { "properties" });
             _kind = DefineProperty<string>(nameof(Kind), new string[] { "kind" });
             _location = DefineProperty<AzureLocation>(nameof(Location), new string[] { "location" });
-            _parent = DefineResource<WebSiteSlot>(nameof(Parent), new string[] { "parent" });
+            _parent = new ProvisioningResourceReference<WebSiteSlot>(DefineProperty<string>(nameof(Parent), new string[] { "parent" }));
             DefineAdditionalProperties();
         }
 

@@ -21,7 +21,7 @@ namespace Azure.Provisioning.AppService
         private SystemData _systemData;
         private MSDeployStatusProperties _properties;
         private BicepValue<string> _kind;
-        private ResourceReference<SiteInstance> _parent;
+        private ProvisioningResourceReference<SiteInstance> _parent;
 
         /// <summary> Creates a new SiteInstanceExtension. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -184,7 +184,7 @@ namespace Azure.Provisioning.AppService
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _properties = DefineModelProperty<MSDeployStatusProperties>(nameof(Properties), new string[] { "properties" });
             _kind = DefineProperty<string>(nameof(Kind), new string[] { "kind" });
-            _parent = DefineResource<SiteInstance>(nameof(Parent), new string[] { "parent" });
+            _parent = new ProvisioningResourceReference<SiteInstance>(DefineProperty<string>(nameof(Parent), new string[] { "parent" }));
             DefineAdditionalProperties();
         }
 

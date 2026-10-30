@@ -22,7 +22,7 @@ namespace Azure.Provisioning.AppService
         private BicepDictionary<string> _tags;
         private BicepValue<AzureLocation> _location;
         private WorkflowRunActionRepetitionProperties _properties;
-        private ResourceReference<WorkflowRunAction> _parent;
+        private ProvisioningResourceReference<WorkflowRunAction> _parent;
 
         /// <summary> Creates a new WorkflowRunActionRepetition. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -256,7 +256,7 @@ namespace Azure.Provisioning.AppService
             _tags = DefineDictionaryProperty<string>(nameof(Tags), new string[] { "tags" });
             _location = DefineProperty<AzureLocation>(nameof(Location), new string[] { "location" });
             _properties = DefineModelProperty<WorkflowRunActionRepetitionProperties>(nameof(Properties), new string[] { "properties" });
-            _parent = DefineResource<WorkflowRunAction>(nameof(Parent), new string[] { "parent" });
+            _parent = new ProvisioningResourceReference<WorkflowRunAction>(DefineProperty<string>(nameof(Parent), new string[] { "parent" }));
             DefineAdditionalProperties();
         }
 

@@ -23,7 +23,7 @@ namespace Azure.Provisioning.Sql
         private BicepDictionary<string> _tags;
         private BicepValue<AzureLocation> _location;
         private RestorableDroppedManagedDatabaseProperties _properties;
-        private ResourceReference<ManagedInstance> _parent;
+        private ProvisioningResourceReference<ManagedInstance> _parent;
 
         /// <summary> Creates a new RestorableDroppedManagedDatabase. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -158,7 +158,7 @@ namespace Azure.Provisioning.Sql
             _tags = DefineDictionaryProperty<string>(nameof(Tags), new string[] { "tags" });
             _location = DefineProperty<AzureLocation>(nameof(Location), new string[] { "location" });
             _properties = DefineModelProperty<RestorableDroppedManagedDatabaseProperties>(nameof(Properties), new string[] { "properties" });
-            _parent = DefineResource<ManagedInstance>(nameof(Parent), new string[] { "parent" });
+            _parent = new ProvisioningResourceReference<ManagedInstance>(DefineProperty<string>(nameof(Parent), new string[] { "parent" }));
             DefineAdditionalProperties();
         }
 

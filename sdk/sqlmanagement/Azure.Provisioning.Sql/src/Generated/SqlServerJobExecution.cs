@@ -21,7 +21,7 @@ namespace Azure.Provisioning.Sql
         private BicepValue<string> _name;
         private SystemData _systemData;
         private JobExecutionProperties _properties;
-        private ResourceReference<SqlServerJob> _parent;
+        private ProvisioningResourceReference<SqlServerJob> _parent;
 
         /// <summary> Creates a new SqlServerJobExecution. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -272,7 +272,7 @@ namespace Azure.Provisioning.Sql
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _properties = DefineModelProperty<JobExecutionProperties>(nameof(Properties), new string[] { "properties" });
-            _parent = DefineResource<SqlServerJob>(nameof(Parent), new string[] { "parent" });
+            _parent = new ProvisioningResourceReference<SqlServerJob>(DefineProperty<string>(nameof(Parent), new string[] { "parent" }));
             DefineAdditionalProperties();
         }
 

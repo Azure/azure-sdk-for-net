@@ -22,7 +22,7 @@ namespace Azure.Provisioning.Sql
         private FailoverGroupProperties _properties;
         private BicepDictionary<string> _tags;
         private BicepValue<AzureLocation> _location;
-        private ResourceReference<SqlServer> _parent;
+        private ProvisioningResourceReference<SqlServer> _parent;
 
         /// <summary> Creates a new FailoverGroup. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -242,7 +242,7 @@ namespace Azure.Provisioning.Sql
             _properties = DefineModelProperty<FailoverGroupProperties>(nameof(Properties), new string[] { "properties" });
             _tags = DefineDictionaryProperty<string>(nameof(Tags), new string[] { "tags" });
             _location = DefineProperty<AzureLocation>(nameof(Location), new string[] { "location" }, isOutput: true);
-            _parent = DefineResource<SqlServer>(nameof(Parent), new string[] { "parent" });
+            _parent = new ProvisioningResourceReference<SqlServer>(DefineProperty<string>(nameof(Parent), new string[] { "parent" }));
             DefineAdditionalProperties();
         }
 

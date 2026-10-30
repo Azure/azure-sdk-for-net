@@ -23,7 +23,7 @@ namespace Azure.Provisioning.Storage
         private SystemData _systemData;
         private FileShareProperties _fileShareProperties;
         private BicepValue<ETag> _eTag;
-        private ResourceReference<FileService> _parent;
+        private ProvisioningResourceReference<FileService> _parent;
 
         /// <summary> Creates a new FileShare. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -490,7 +490,7 @@ namespace Azure.Provisioning.Storage
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _fileShareProperties = DefineModelProperty<FileShareProperties>(nameof(FileShareProperties), new string[] { "properties" });
             _eTag = DefineProperty<ETag>(nameof(ETag), new string[] { "etag" }, isOutput: true);
-            _parent = DefineResource<FileService>(nameof(Parent), new string[] { "parent" });
+            _parent = new ProvisioningResourceReference<FileService>(DefineProperty<string>(nameof(Parent), new string[] { "parent" }));
             DefineAdditionalProperties();
         }
 

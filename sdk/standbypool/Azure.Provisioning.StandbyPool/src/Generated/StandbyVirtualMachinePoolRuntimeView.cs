@@ -20,7 +20,7 @@ namespace Azure.Provisioning.StandbyPool
         private BicepValue<string> _name;
         private SystemData _systemData;
         private StandbyVirtualMachinePoolRuntimeViewProperties _properties;
-        private ResourceReference<StandbyVirtualMachinePool> _parent;
+        private ProvisioningResourceReference<StandbyVirtualMachinePool> _parent;
 
         /// <summary> Creates a new StandbyVirtualMachinePoolRuntimeView. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -97,7 +97,7 @@ namespace Azure.Provisioning.StandbyPool
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _properties = DefineModelProperty<StandbyVirtualMachinePoolRuntimeViewProperties>(nameof(Properties), new string[] { "properties" });
-            _parent = DefineResource<StandbyVirtualMachinePool>(nameof(Parent), new string[] { "parent" });
+            _parent = new ProvisioningResourceReference<StandbyVirtualMachinePool>(DefineProperty<string>(nameof(Parent), new string[] { "parent" }));
             DefineAdditionalProperties();
         }
 

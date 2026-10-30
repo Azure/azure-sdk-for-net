@@ -21,7 +21,7 @@ namespace Azure.Provisioning.ServiceBus
         private SystemData _systemData;
         private SBAuthorizationRuleProperties _properties;
         private BicepValue<AzureLocation> _location;
-        private ResourceReference<ServiceBusQueue> _parent;
+        private ProvisioningResourceReference<ServiceBusQueue> _parent;
 
         /// <summary> Creates a new ServiceBusQueueAuthorizationRule. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -131,7 +131,7 @@ namespace Azure.Provisioning.ServiceBus
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _properties = DefineModelProperty<SBAuthorizationRuleProperties>(nameof(Properties), new string[] { "properties" });
             _location = DefineProperty<AzureLocation>(nameof(Location), new string[] { "location" }, isOutput: true);
-            _parent = DefineResource<ServiceBusQueue>(nameof(Parent), new string[] { "parent" });
+            _parent = new ProvisioningResourceReference<ServiceBusQueue>(DefineProperty<string>(nameof(Parent), new string[] { "parent" }));
             DefineAdditionalProperties();
         }
 

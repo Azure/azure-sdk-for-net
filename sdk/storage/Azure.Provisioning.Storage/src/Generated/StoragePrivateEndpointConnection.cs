@@ -19,7 +19,7 @@ namespace Azure.Provisioning.Storage
         private BicepValue<string> _name;
         private SystemData _systemData;
         private StoragePrivateEndpointConnectionProperties _properties;
-        private ResourceReference<StorageAccount> _parent;
+        private ProvisioningResourceReference<StorageAccount> _parent;
 
         /// <summary> Creates a new StoragePrivateEndpointConnection. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -144,7 +144,7 @@ namespace Azure.Provisioning.Storage
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _properties = DefineModelProperty<StoragePrivateEndpointConnectionProperties>(nameof(Properties), new string[] { "properties" });
-            _parent = DefineResource<StorageAccount>(nameof(Parent), new string[] { "parent" });
+            _parent = new ProvisioningResourceReference<StorageAccount>(DefineProperty<string>(nameof(Parent), new string[] { "parent" }));
             DefineAdditionalProperties();
         }
 

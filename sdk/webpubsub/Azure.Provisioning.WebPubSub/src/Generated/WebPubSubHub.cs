@@ -20,7 +20,7 @@ namespace Azure.Provisioning.WebPubSub
         private BicepValue<string> _name;
         private SystemData _systemData;
         private WebPubSubHubProperties _properties;
-        private ResourceReference<WebPubSubService> _parent;
+        private ProvisioningResourceReference<WebPubSubService> _parent;
 
         /// <summary> Creates a new WebPubSubHub. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -102,7 +102,7 @@ namespace Azure.Provisioning.WebPubSub
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _properties = DefineModelProperty<WebPubSubHubProperties>(nameof(Properties), new string[] { "properties" }, isRequired: true);
-            _parent = DefineResource<WebPubSubService>(nameof(Parent), new string[] { "parent" });
+            _parent = new ProvisioningResourceReference<WebPubSubService>(DefineProperty<string>(nameof(Parent), new string[] { "parent" }));
             DefineAdditionalProperties();
         }
 

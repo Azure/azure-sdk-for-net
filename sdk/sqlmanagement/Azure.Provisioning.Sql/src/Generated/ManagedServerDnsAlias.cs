@@ -20,7 +20,7 @@ namespace Azure.Provisioning.Sql
         private BicepValue<string> _name;
         private SystemData _systemData;
         private ManagedServerDnsAliasProperties _properties;
-        private ResourceReference<ManagedInstance> _parent;
+        private ProvisioningResourceReference<ManagedInstance> _parent;
 
         /// <summary> Creates a new ManagedServerDnsAlias. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -128,7 +128,7 @@ namespace Azure.Provisioning.Sql
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _properties = DefineModelProperty<ManagedServerDnsAliasProperties>(nameof(Properties), new string[] { "properties" });
-            _parent = DefineResource<ManagedInstance>(nameof(Parent), new string[] { "parent" });
+            _parent = new ProvisioningResourceReference<ManagedInstance>(DefineProperty<string>(nameof(Parent), new string[] { "parent" }));
             DefineAdditionalProperties();
         }
 

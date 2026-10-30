@@ -24,7 +24,7 @@ namespace Azure.Provisioning.Sql
         private BicepValue<AzureLocation> _location;
         private RestorableDroppedDatabaseProperties _properties;
         private SqlSku _sku;
-        private ResourceReference<SqlServer> _parent;
+        private ProvisioningResourceReference<SqlServer> _parent;
 
         /// <summary> Creates a new RestorableDroppedDatabase. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -197,7 +197,7 @@ namespace Azure.Provisioning.Sql
             _location = DefineProperty<AzureLocation>(nameof(Location), new string[] { "location" });
             _properties = DefineModelProperty<RestorableDroppedDatabaseProperties>(nameof(Properties), new string[] { "properties" });
             _sku = DefineModelProperty<SqlSku>(nameof(Sku), new string[] { "sku" });
-            _parent = DefineResource<SqlServer>(nameof(Parent), new string[] { "parent" });
+            _parent = new ProvisioningResourceReference<SqlServer>(DefineProperty<string>(nameof(Parent), new string[] { "parent" }));
             DefineAdditionalProperties();
         }
 

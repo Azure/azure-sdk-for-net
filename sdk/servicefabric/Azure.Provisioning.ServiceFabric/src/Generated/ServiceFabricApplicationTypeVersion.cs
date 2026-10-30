@@ -25,7 +25,7 @@ namespace Azure.Provisioning.ServiceFabric
         private BicepValue<AzureLocation> _location;
         private ApplicationTypeVersionResourceProperties _properties;
         private BicepValue<ETag> _eTag;
-        private ResourceReference<ServiceFabricApplicationType> _parent;
+        private ProvisioningResourceReference<ServiceFabricApplicationType> _parent;
 
         /// <summary> Creates a new ServiceFabricApplicationTypeVersion. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -193,7 +193,7 @@ namespace Azure.Provisioning.ServiceFabric
             _location = DefineProperty<AzureLocation>(nameof(Location), new string[] { "location" }, isRequired: true);
             _properties = DefineModelProperty<ApplicationTypeVersionResourceProperties>(nameof(Properties), new string[] { "properties" });
             _eTag = DefineProperty<ETag>(nameof(ETag), new string[] { "etag" }, isOutput: true);
-            _parent = DefineResource<ServiceFabricApplicationType>(nameof(Parent), new string[] { "parent" });
+            _parent = new ProvisioningResourceReference<ServiceFabricApplicationType>(DefineProperty<string>(nameof(Parent), new string[] { "parent" }));
             DefineAdditionalProperties();
         }
 

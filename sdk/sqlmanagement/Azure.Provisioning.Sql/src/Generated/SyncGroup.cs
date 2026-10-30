@@ -23,7 +23,7 @@ namespace Azure.Provisioning.Sql
         private SyncGroupProperties _properties;
         private SqlSku _sku;
         private DataSyncParticipantIdentity _identity;
-        private ResourceReference<SqlDatabase> _parent;
+        private ProvisioningResourceReference<SqlDatabase> _parent;
 
         /// <summary> Creates a new SyncGroup. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -329,7 +329,7 @@ namespace Azure.Provisioning.Sql
             _properties = DefineModelProperty<SyncGroupProperties>(nameof(Properties), new string[] { "properties" });
             _sku = DefineModelProperty<SqlSku>(nameof(Sku), new string[] { "sku" });
             _identity = DefineModelProperty<DataSyncParticipantIdentity>(nameof(Identity), new string[] { "identity" });
-            _parent = DefineResource<SqlDatabase>(nameof(Parent), new string[] { "parent" });
+            _parent = new ProvisioningResourceReference<SqlDatabase>(DefineProperty<string>(nameof(Parent), new string[] { "parent" }));
             DefineAdditionalProperties();
         }
 

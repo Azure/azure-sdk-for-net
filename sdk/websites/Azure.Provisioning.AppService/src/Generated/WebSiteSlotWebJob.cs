@@ -21,7 +21,7 @@ namespace Azure.Provisioning.AppService
         private SystemData _systemData;
         private WebJobProperties _properties;
         private BicepValue<string> _kind;
-        private ResourceReference<WebSiteSlot> _parent;
+        private ProvisioningResourceReference<WebSiteSlot> _parent;
 
         /// <summary> Creates a new WebSiteSlotWebJob. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -172,7 +172,7 @@ namespace Azure.Provisioning.AppService
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _properties = DefineModelProperty<WebJobProperties>(nameof(Properties), new string[] { "properties" });
             _kind = DefineProperty<string>(nameof(Kind), new string[] { "kind" });
-            _parent = DefineResource<WebSiteSlot>(nameof(Parent), new string[] { "parent" });
+            _parent = new ProvisioningResourceReference<WebSiteSlot>(DefineProperty<string>(nameof(Parent), new string[] { "parent" }));
             DefineAdditionalProperties();
         }
 

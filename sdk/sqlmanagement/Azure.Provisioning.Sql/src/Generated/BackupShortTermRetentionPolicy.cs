@@ -20,7 +20,7 @@ namespace Azure.Provisioning.Sql
         private BicepValue<string> _name;
         private SystemData _systemData;
         private BackupShortTermRetentionPolicyProperties _properties;
-        private ResourceReference<SqlDatabase> _parent;
+        private ProvisioningResourceReference<SqlDatabase> _parent;
 
         /// <summary> Creates a new BackupShortTermRetentionPolicy. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -119,7 +119,7 @@ namespace Azure.Provisioning.Sql
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _properties = DefineModelProperty<BackupShortTermRetentionPolicyProperties>(nameof(Properties), new string[] { "properties" });
-            _parent = DefineResource<SqlDatabase>(nameof(Parent), new string[] { "parent" });
+            _parent = new ProvisioningResourceReference<SqlDatabase>(DefineProperty<string>(nameof(Parent), new string[] { "parent" }));
             DefineAdditionalProperties();
         }
 

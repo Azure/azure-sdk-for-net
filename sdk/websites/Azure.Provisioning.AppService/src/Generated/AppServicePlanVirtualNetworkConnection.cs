@@ -20,7 +20,7 @@ namespace Azure.Provisioning.AppService
         private SystemData _systemData;
         private AppServiceVirtualNetworkProperties _properties;
         private BicepValue<string> _kind;
-        private ResourceReference<AppServicePlan> _parent;
+        private ProvisioningResourceReference<AppServicePlan> _parent;
 
         /// <summary> Creates a new AppServicePlanVirtualNetworkConnection. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -225,7 +225,7 @@ namespace Azure.Provisioning.AppService
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _properties = DefineModelProperty<AppServiceVirtualNetworkProperties>(nameof(Properties), new string[] { "properties" });
             _kind = DefineProperty<string>(nameof(Kind), new string[] { "kind" });
-            _parent = DefineResource<AppServicePlan>(nameof(Parent), new string[] { "parent" });
+            _parent = new ProvisioningResourceReference<AppServicePlan>(DefineProperty<string>(nameof(Parent), new string[] { "parent" }));
             DefineAdditionalProperties();
         }
 

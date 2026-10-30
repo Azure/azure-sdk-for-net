@@ -20,7 +20,7 @@ namespace Azure.Provisioning.Sphere
         private BicepValue<string> _name;
         private SystemData _systemData;
         private ImageProperties _properties;
-        private ResourceReference<SphereCatalog> _parent;
+        private ProvisioningResourceReference<SphereCatalog> _parent;
 
         /// <summary> Creates a new SphereImage. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -231,7 +231,7 @@ namespace Azure.Provisioning.Sphere
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _properties = DefineModelProperty<ImageProperties>(nameof(Properties), new string[] { "properties" });
-            _parent = DefineResource<SphereCatalog>(nameof(Parent), new string[] { "parent" });
+            _parent = new ProvisioningResourceReference<SphereCatalog>(DefineProperty<string>(nameof(Parent), new string[] { "parent" }));
             DefineAdditionalProperties();
         }
 

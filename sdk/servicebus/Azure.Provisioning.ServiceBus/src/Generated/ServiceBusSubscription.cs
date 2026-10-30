@@ -22,7 +22,7 @@ namespace Azure.Provisioning.ServiceBus
         private SystemData _systemData;
         private SBSubscriptionProperties _properties;
         private BicepValue<AzureLocation> _location;
-        private ResourceReference<ServiceBusTopic> _parent;
+        private ProvisioningResourceReference<ServiceBusTopic> _parent;
 
         /// <summary> Creates a new ServiceBusSubscription. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -431,7 +431,7 @@ namespace Azure.Provisioning.ServiceBus
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _properties = DefineModelProperty<SBSubscriptionProperties>(nameof(Properties), new string[] { "properties" });
             _location = DefineProperty<AzureLocation>(nameof(Location), new string[] { "location" }, isOutput: true);
-            _parent = DefineResource<ServiceBusTopic>(nameof(Parent), new string[] { "parent" });
+            _parent = new ProvisioningResourceReference<ServiceBusTopic>(DefineProperty<string>(nameof(Parent), new string[] { "parent" }));
             DefineAdditionalProperties();
         }
 

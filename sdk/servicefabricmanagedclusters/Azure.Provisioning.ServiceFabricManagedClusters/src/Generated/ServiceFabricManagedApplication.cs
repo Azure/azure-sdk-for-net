@@ -22,7 +22,7 @@ namespace Azure.Provisioning.ServiceFabricManagedClusters
         private BicepValue<AzureLocation> _location;
         private ApplicationResourceProperties _properties;
         private ManagedServiceIdentity _identity;
-        private ResourceReference<ServiceFabricManagedCluster> _parent;
+        private ProvisioningResourceReference<ServiceFabricManagedCluster> _parent;
 
         /// <summary> Creates a new ServiceFabricManagedApplication. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -233,7 +233,7 @@ namespace Azure.Provisioning.ServiceFabricManagedClusters
             _location = DefineProperty<AzureLocation>(nameof(Location), new string[] { "location" }, isRequired: true);
             _properties = DefineModelProperty<ApplicationResourceProperties>(nameof(Properties), new string[] { "properties" });
             _identity = DefineModelProperty<ManagedServiceIdentity>(nameof(Identity), new string[] { "identity" });
-            _parent = DefineResource<ServiceFabricManagedCluster>(nameof(Parent), new string[] { "parent" });
+            _parent = new ProvisioningResourceReference<ServiceFabricManagedCluster>(DefineProperty<string>(nameof(Parent), new string[] { "parent" }));
             DefineAdditionalProperties();
         }
 
