@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Dns
         /// <param name="subscriptionId"> The subscriptionId. </param>
         /// <param name="resourceGroupName"> The resourceGroupName. </param>
         /// <param name="zoneName"> The zoneName. </param>
-        /// <param name="aaaaRecordName"> The relativeRecordSetName. </param>
+        /// <param name="aaaaRecordName"> The aaaaRecordName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string zoneName, string aaaaRecordName)
         {
             string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/AAAA/{aaaaRecordName}";
