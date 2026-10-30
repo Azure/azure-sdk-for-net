@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.SecurityCenter
         }
 
         /// <summary> Generate the resource identifier for this resource. </summary>
-        /// <param name="subscriptionId"> The scopeId. </param>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
         /// <param name="pricingName"> The pricingName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string pricingName)
         {
