@@ -3,12 +3,14 @@
 ## 3.0.0-beta.6 (2026-10-30)
 
 ### Features Added
+- Added experimental Voice Agent post-call delivery to Event Grid connections and routines.
 - Added experimental Voice Agent soundscapes for telephony ambience and event cues.
 - Added Azure Speech streaming transcription and headset/personal noise suppression modes.
 - Added `ProjectsAgentProtocol.VoiceConversationEngine` for hosted voice conversation engines.
 - Enriched existing Foundry GenAI agent-creation traces with privacy-safe Voice Agent metadata and bounded instruction content under the existing opt-in setting. Other Voice Agent REST operations retain their existing SDK diagnostics.
 
 ### Breaking Changes
+- Added the `postCall` parameter before `store` in `ProjectsAgentsModelFactory.VoiceAgentDefinition`, affecting positional arguments.
 - Added the `soundscape` parameter before `outputModalities` in `ProjectsAgentsModelFactory.VoiceAgentDefinition`, affecting positional arguments.
 - `VoiceAgentAvatarVideoCrop.BottomRight` and `VoiceAgentAvatarVideoCrop.TopLeft` types were changed from `IList<object>` to `IList<uint>`.
 - `VoiceAgentAzureSemanticVadEnTurnDetection.IdleTimeoutMs` was renamed to `VoiceAgentAzureSemanticVadEnTurnDetection.IdleTimeout`.
@@ -19,6 +21,8 @@
 - `VoiceAgentMcpTool.AllowedTools` and `MCPToolboxTool.AllowedTools`, along with their model-factory parameters, now use `OpenAI.Responses.McpToolFilter` instead of `BinaryData`. `MCPToolboxTool.AllowedTools` now requires the `AAIP002` experimental opt-in.
 - `VoiceResult.Metadata` now uses `IDictionary<string, BinaryData>` instead of `OpenAI.InternalMetadataContainer`. The public `OpenAI.InternalMetadataContainer` type was removed.
 - `BrowserAutomationPreviewToolboxTool` is deprecated and hidden from IntelliSense. Please use `BrowserAutomationToolboxTool` instead.
+- `VoiceAgentSoundscapeSound` was converted from enumeration to structure allowing extensibility from the service side.
+- The `VoiceAgentSoundscapeWorkingTrackConfig` property `DelayMs` was renamed to `Delay`.
 
 ## 3.0.0-beta.5 (2026-10-16)
 

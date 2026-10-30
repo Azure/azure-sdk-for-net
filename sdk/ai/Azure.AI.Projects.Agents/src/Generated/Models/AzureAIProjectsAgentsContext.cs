@@ -368,6 +368,9 @@ namespace Azure.AI.Projects.Agents
 #pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.VoiceAgentEndOfUtteranceDetection is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(VoiceAgentEndOfUtteranceDetection))]
 #pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.VoiceAgentEndOfUtteranceDetection is experimental and may change in future versions.
+#pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.VoiceAgentEventGridPostCallDestination is experimental and may change in future versions.
+    [ModelReaderWriterBuildable(typeof(VoiceAgentEventGridPostCallDestination))]
+#pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.VoiceAgentEventGridPostCallDestination is experimental and may change in future versions.
 #pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.VoiceAgentFunctionTool is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(VoiceAgentFunctionTool))]
 #pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.VoiceAgentFunctionTool is experimental and may change in future versions.
@@ -392,6 +395,15 @@ namespace Azure.AI.Projects.Agents
 #pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.VoiceAgentNoiseReduction is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(VoiceAgentNoiseReduction))]
 #pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.VoiceAgentNoiseReduction is experimental and may change in future versions.
+#pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.VoiceAgentPostCallConfig is experimental and may change in future versions.
+    [ModelReaderWriterBuildable(typeof(VoiceAgentPostCallConfig))]
+#pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.VoiceAgentPostCallConfig is experimental and may change in future versions.
+#pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.VoiceAgentPostCallDestination is experimental and may change in future versions.
+    [ModelReaderWriterBuildable(typeof(VoiceAgentPostCallDestination))]
+#pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.VoiceAgentPostCallDestination is experimental and may change in future versions.
+#pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.VoiceAgentRoutinePostCallDestination is experimental and may change in future versions.
+    [ModelReaderWriterBuildable(typeof(VoiceAgentRoutinePostCallDestination))]
+#pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.VoiceAgentRoutinePostCallDestination is experimental and may change in future versions.
 #pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.VoiceAgentSemanticVadTurnDetection is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(VoiceAgentSemanticVadTurnDetection))]
 #pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.VoiceAgentSemanticVadTurnDetection is experimental and may change in future versions.

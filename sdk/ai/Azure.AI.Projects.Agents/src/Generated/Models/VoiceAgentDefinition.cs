@@ -60,6 +60,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="parallelToolCalls"> Whether the model may call multiple tools in parallel. </param>
         /// <param name="structuredInputs"> Set of structured inputs that participate in prompt template substitution, rendered per session before the live session starts. </param>
         /// <param name="subagentConfig"> Optional configuration for sibling Foundry text agents that this voice agent may consult as background specialists. </param>
+        /// <param name="postCall"> Optional post-call delivery configuration. After each session ends, the service notifies the configured destinations. </param>
         /// <param name="store">
         /// Whether conversations with this agent are persisted. A single, all-or-nothing persistence switch that defaults to
         /// `false` (privacy-safe: off by default). When `true`, Foundry persists the full conversation — the transcript/event
@@ -68,7 +69,7 @@ namespace Azure.AI.Projects.Agents
         /// time-to-first-audio, inter-token latency, interruption) is observability-only (customer trace / App Insights) and
         /// is not part of the persisted conversation content.
         /// </param>
-        internal VoiceAgentDefinition(ProjectsAgentKind kind, ContentFilterConfiguration contentFilterConfiguration, IDictionary<string, BinaryData> additionalBinaryDataProperties, VoiceModelType? modelType, string model, VoiceConversationEngine conversationEngine, string instructions, VoiceAgentGreetingConfig greeting, VoiceAgentAudioConfig audio, VoiceAgentSoundscapeConfig soundscape, IList<VoiceOutputModality> outputModalities, BinaryData internalMaxOutputTokens, IList<VoiceAgentSessionIncludeOption> include, VoiceAgentInterimResponseConfig interimResponse, VoiceAgentAvatarConfig avatar, IList<VoiceAgentTool> tools, BinaryData internalToolChoice, bool? parallelToolCalls, IDictionary<string, StructuredInputDefinition> structuredInputs, VoiceAgentSubagentConfig subagentConfig, bool? store) : base(kind, contentFilterConfiguration, additionalBinaryDataProperties)
+        internal VoiceAgentDefinition(ProjectsAgentKind kind, ContentFilterConfiguration contentFilterConfiguration, IDictionary<string, BinaryData> additionalBinaryDataProperties, VoiceModelType? modelType, string model, VoiceConversationEngine conversationEngine, string instructions, VoiceAgentGreetingConfig greeting, VoiceAgentAudioConfig audio, VoiceAgentSoundscapeConfig soundscape, IList<VoiceOutputModality> outputModalities, BinaryData internalMaxOutputTokens, IList<VoiceAgentSessionIncludeOption> include, VoiceAgentInterimResponseConfig interimResponse, VoiceAgentAvatarConfig avatar, IList<VoiceAgentTool> tools, BinaryData internalToolChoice, bool? parallelToolCalls, IDictionary<string, StructuredInputDefinition> structuredInputs, VoiceAgentSubagentConfig subagentConfig, VoiceAgentPostCallConfig postCall, bool? store) : base(kind, contentFilterConfiguration, additionalBinaryDataProperties)
         {
             ModelType = modelType;
             Model = model;
@@ -87,6 +88,7 @@ namespace Azure.AI.Projects.Agents
             ParallelToolCalls = parallelToolCalls;
             StructuredInputs = structuredInputs;
             SubagentConfig = subagentConfig;
+            PostCall = postCall;
             Store = store;
         }
 
@@ -144,6 +146,9 @@ namespace Azure.AI.Projects.Agents
 
         /// <summary> Optional configuration for sibling Foundry text agents that this voice agent may consult as background specialists. </summary>
         public VoiceAgentSubagentConfig SubagentConfig { get; set; }
+
+        /// <summary> Optional post-call delivery configuration. After each session ends, the service notifies the configured destinations. </summary>
+        public VoiceAgentPostCallConfig PostCall { get; set; }
 
         /// <summary>
         /// Whether conversations with this agent are persisted. A single, all-or-nothing persistence switch that defaults to

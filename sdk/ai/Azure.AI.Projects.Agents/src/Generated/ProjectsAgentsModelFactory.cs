@@ -457,6 +457,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="parallelToolCalls"> Whether the model may call multiple tools in parallel. </param>
         /// <param name="structuredInputs"> Set of structured inputs that participate in prompt template substitution, rendered per session before the live session starts. </param>
         /// <param name="subagentConfig"> Optional configuration for sibling Foundry text agents that this voice agent may consult as background specialists. </param>
+        /// <param name="postCall"> Optional post-call delivery configuration. After each session ends, the service notifies the configured destinations. </param>
         /// <param name="store">
         /// Whether conversations with this agent are persisted. A single, all-or-nothing persistence switch that defaults to
         /// `false` (privacy-safe: off by default). When `true`, Foundry persists the full conversation — the transcript/event
@@ -467,7 +468,7 @@ namespace Azure.AI.Projects.Agents
         /// </param>
         /// <returns> A new <see cref="Agents.VoiceAgentDefinition"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static VoiceAgentDefinition VoiceAgentDefinition(ContentFilterConfiguration contentFilterConfiguration = default, VoiceModelType? modelType = default, string model = default, VoiceConversationEngine conversationEngine = default, string instructions = default, VoiceAgentGreetingConfig greeting = default, VoiceAgentAudioConfig audio = default, VoiceAgentSoundscapeConfig soundscape = default, IEnumerable<VoiceOutputModality> outputModalities = default, BinaryData internalMaxOutputTokens = default, IEnumerable<VoiceAgentSessionIncludeOption> include = default, VoiceAgentInterimResponseConfig interimResponse = default, VoiceAgentAvatarConfig avatar = default, IEnumerable<VoiceAgentTool> tools = default, BinaryData internalToolChoice = default, bool? parallelToolCalls = default, IDictionary<string, StructuredInputDefinition> structuredInputs = default, VoiceAgentSubagentConfig subagentConfig = default, bool? store = default)
+        public static VoiceAgentDefinition VoiceAgentDefinition(ContentFilterConfiguration contentFilterConfiguration = default, VoiceModelType? modelType = default, string model = default, VoiceConversationEngine conversationEngine = default, string instructions = default, VoiceAgentGreetingConfig greeting = default, VoiceAgentAudioConfig audio = default, VoiceAgentSoundscapeConfig soundscape = default, IEnumerable<VoiceOutputModality> outputModalities = default, BinaryData internalMaxOutputTokens = default, IEnumerable<VoiceAgentSessionIncludeOption> include = default, VoiceAgentInterimResponseConfig interimResponse = default, VoiceAgentAvatarConfig avatar = default, IEnumerable<VoiceAgentTool> tools = default, BinaryData internalToolChoice = default, bool? parallelToolCalls = default, IDictionary<string, StructuredInputDefinition> structuredInputs = default, VoiceAgentSubagentConfig subagentConfig = default, VoiceAgentPostCallConfig postCall = default, bool? store = default)
         {
             outputModalities ??= new ChangeTrackingList<VoiceOutputModality>();
             include ??= new ChangeTrackingList<VoiceAgentSessionIncludeOption>();
@@ -495,6 +496,7 @@ namespace Azure.AI.Projects.Agents
                 parallelToolCalls,
                 structuredInputs,
                 subagentConfig,
+                postCall,
                 store);
         }
 
@@ -932,12 +934,12 @@ namespace Azure.AI.Projects.Agents
         /// <summary> A working-loop track with a delay measured from the first pending non-call-control tool. </summary>
         /// <param name="source"> The required audio source for this track. </param>
         /// <param name="gain"> Linear playback gain from 0 to 1, independent of agent speech volume. If omitted, the service defaults to 1. A value of 0 mutes this track. </param>
-        /// <param name="delayMs"> The delay in milliseconds before working audio starts, from 0 to 10000. If omitted, the service defaults to 1000 milliseconds. This delays only working audio, not tool execution, and is valid only on the working track. </param>
+        /// <param name="delay"> The delay in milliseconds before working audio starts, from 0 to 10000. If omitted, the service defaults to 1000 milliseconds. This delays only working audio, not tool execution, and is valid only on the working track. </param>
         /// <returns> A new <see cref="Agents.VoiceAgentSoundscapeWorkingTrackConfig"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static VoiceAgentSoundscapeWorkingTrackConfig VoiceAgentSoundscapeWorkingTrackConfig(VoiceAgentSoundscapeSourceConfig source = default, double? gain = default, TimeSpan? delayMs = default)
+        public static VoiceAgentSoundscapeWorkingTrackConfig VoiceAgentSoundscapeWorkingTrackConfig(VoiceAgentSoundscapeSourceConfig source = default, double? gain = default, TimeSpan? delay = default)
         {
-            return new VoiceAgentSoundscapeWorkingTrackConfig(source, gain, delayMs, additionalBinaryDataProperties: null);
+            return new VoiceAgentSoundscapeWorkingTrackConfig(source, gain, delay, additionalBinaryDataProperties: null);
         }
 
         /// <summary>
@@ -1253,6 +1255,49 @@ namespace Azure.AI.Projects.Agents
                 progressInstructions,
                 progressUpdateInterval,
                 additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Post-call delivery configuration. </summary>
+        /// <param name="destinations"> The destinations to notify. </param>
+        /// <param name="include"> Additional content to include in each delivery. The transcript is always delivered. `audio` is not supported in this preview; the service rejects it when the agent version is saved. </param>
+        /// <returns> A new <see cref="Agents.VoiceAgentPostCallConfig"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static VoiceAgentPostCallConfig VoiceAgentPostCallConfig(IEnumerable<VoiceAgentPostCallDestination> destinations = default, IEnumerable<VoiceAgentPostCallIncludeOption> include = default)
+        {
+            destinations ??= new ChangeTrackingList<VoiceAgentPostCallDestination>();
+            include ??= new ChangeTrackingList<VoiceAgentPostCallIncludeOption>();
+
+            return new VoiceAgentPostCallConfig(destinations.ToList(), include.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary>
+        /// A post-call destination.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Agents.VoiceAgentEventGridPostCallDestination"/> and <see cref="Agents.VoiceAgentRoutinePostCallDestination"/>.
+        /// </summary>
+        /// <param name="type"> The destination type. </param>
+        /// <returns> A new <see cref="Agents.VoiceAgentPostCallDestination"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static VoiceAgentPostCallDestination VoiceAgentPostCallDestination(string @type = default)
+        {
+            return new UnknownVoiceAgentPostCallDestination(new VoiceAgentPostCallDestinationType(@type), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> An Event Grid connection that receives post-call events. </summary>
+        /// <param name="connectionName"> The name of the Event Grid connection. </param>
+        /// <returns> A new <see cref="Agents.VoiceAgentEventGridPostCallDestination"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static VoiceAgentEventGridPostCallDestination VoiceAgentEventGridPostCallDestination(string connectionName = default)
+        {
+            return new VoiceAgentEventGridPostCallDestination(VoiceAgentPostCallDestinationType.EventGrid, additionalBinaryDataProperties: null, connectionName);
+        }
+
+        /// <summary> A routine that is dispatched with the post-call event. </summary>
+        /// <param name="name"> The name of the routine. </param>
+        /// <returns> A new <see cref="Agents.VoiceAgentRoutinePostCallDestination"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static VoiceAgentRoutinePostCallDestination VoiceAgentRoutinePostCallDestination(string name = default)
+        {
+            return new VoiceAgentRoutinePostCallDestination(VoiceAgentPostCallDestinationType.Routine, additionalBinaryDataProperties: null, name);
         }
 
         /// <summary> The AgentIdentity. </summary>

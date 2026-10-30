@@ -2,27 +2,93 @@
 
 #nullable disable
 
+using System;
+using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> The packaged sounds accepted by a built-in soundscape source. </summary>
     [Experimental("AAIP001")]
-    public enum VoiceAgentSoundscapeSound
+    public readonly partial struct VoiceAgentSoundscapeSound : IEquatable<VoiceAgentSoundscapeSound>
     {
+        private readonly string _value;
         /// <summary> Quiet office ambience. </summary>
-        Office,
+        private const string OfficeValue = "office";
         /// <summary> Busy call-center ambience. </summary>
-        CallCenter,
+        private const string CallCenterValue = "call_center";
         /// <summary> Busy street ambience. </summary>
-        BusyStreet,
+        private const string BusyStreetValue = "busy_street";
         /// <summary> Crowd conversation ambience. </summary>
-        PeopleTalking,
+        private const string PeopleTalkingValue = "people_talking";
         /// <summary> Street and metro-station ambience. </summary>
-        StreetAndMetroStation,
+        private const string StreetAndMetroStationValue = "street_and_metro_station";
         /// <summary> The first notification tone. </summary>
-        Ding1,
+        private const string Ding1Value = "ding1";
         /// <summary> The second notification tone. </summary>
-        Ding2
+        private const string Ding2Value = "ding2";
+
+        /// <summary> Initializes a new instance of <see cref="VoiceAgentSoundscapeSound"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public VoiceAgentSoundscapeSound(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Quiet office ambience. </summary>
+        public static VoiceAgentSoundscapeSound Office { get; } = new VoiceAgentSoundscapeSound(OfficeValue);
+
+        /// <summary> Busy call-center ambience. </summary>
+        public static VoiceAgentSoundscapeSound CallCenter { get; } = new VoiceAgentSoundscapeSound(CallCenterValue);
+
+        /// <summary> Busy street ambience. </summary>
+        public static VoiceAgentSoundscapeSound BusyStreet { get; } = new VoiceAgentSoundscapeSound(BusyStreetValue);
+
+        /// <summary> Crowd conversation ambience. </summary>
+        public static VoiceAgentSoundscapeSound PeopleTalking { get; } = new VoiceAgentSoundscapeSound(PeopleTalkingValue);
+
+        /// <summary> Street and metro-station ambience. </summary>
+        public static VoiceAgentSoundscapeSound StreetAndMetroStation { get; } = new VoiceAgentSoundscapeSound(StreetAndMetroStationValue);
+
+        /// <summary> The first notification tone. </summary>
+        public static VoiceAgentSoundscapeSound Ding1 { get; } = new VoiceAgentSoundscapeSound(Ding1Value);
+
+        /// <summary> The second notification tone. </summary>
+        public static VoiceAgentSoundscapeSound Ding2 { get; } = new VoiceAgentSoundscapeSound(Ding2Value);
+
+        /// <summary> Determines if two <see cref="VoiceAgentSoundscapeSound"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
+        public static bool operator ==(VoiceAgentSoundscapeSound left, VoiceAgentSoundscapeSound right) => left.Equals(right);
+
+        /// <summary> Determines if two <see cref="VoiceAgentSoundscapeSound"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
+        public static bool operator !=(VoiceAgentSoundscapeSound left, VoiceAgentSoundscapeSound right) => !left.Equals(right);
+
+        /// <summary> Converts a string to a <see cref="VoiceAgentSoundscapeSound"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator VoiceAgentSoundscapeSound(string value) => new VoiceAgentSoundscapeSound(value);
+
+        /// <summary> Converts a string to a <see cref="VoiceAgentSoundscapeSound"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator VoiceAgentSoundscapeSound?(string value) => value == null ? null : new VoiceAgentSoundscapeSound(value);
+
+        /// <inheritdoc/>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => obj is VoiceAgentSoundscapeSound other && Equals(other);
+
+        /// <inheritdoc/>
+        public bool Equals(VoiceAgentSoundscapeSound other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+
+        /// <inheritdoc/>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+
+        /// <inheritdoc/>
+        public override string ToString() => _value;
     }
 }

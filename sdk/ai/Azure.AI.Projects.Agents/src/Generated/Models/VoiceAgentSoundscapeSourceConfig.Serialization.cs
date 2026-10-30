@@ -78,7 +78,7 @@ namespace Azure.AI.Projects.Agents
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
             writer.WritePropertyName("name"u8);
-            writer.WriteStringValue(Name.ToSerialString());
+            writer.WriteStringValue(Name.ToString());
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -133,7 +133,7 @@ namespace Azure.AI.Projects.Agents
                 }
                 if (prop.NameEquals("name"u8))
                 {
-                    name = prop.Value.GetString().ToVoiceAgentSoundscapeSound();
+                    name = new VoiceAgentSoundscapeSound(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
