@@ -380,7 +380,7 @@ async function main(argv) {
     }
     selection = selectSummaryResults({ resultsRoot: options.resultsRoot,
       selectedRoot: options.selectedRoot, expectedShards, jobAttempts,
-      artifactNamespace: process.env.EVAL_ARTIFACT_NAMESPACE ?? "" });
+      artifactPrefix: process.env.EVAL_ARTIFACT_PREFIX ?? "" });
     if (!matrixValid) {
       selection.status.push({ shard: "Prepare", attempt: null, complete: false,
         reason: "The expected shard matrix is unavailable or invalid; check the Prepare stage." });
@@ -414,7 +414,9 @@ async function main(argv) {
 
   if (process.env.TF_BUILD) {
     console.log(`##vso[task.uploadsummary]${path.resolve(options.outputPath)}`);
-    if (selection) console.log(`##vso[task.setvariable variable=EvalSummaryComplete]${selection.complete}`);
+  }
+  if (process.env.TF_BUILD && selection) {
+    console.log(`##vso[task.setvariable variable=EvalSummaryComplete]${selection.complete}`);
   }
 
   // Completed evaluation failures remain governed by failOnFailedTests. Missing result

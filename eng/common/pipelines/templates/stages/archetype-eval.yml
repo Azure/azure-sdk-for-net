@@ -48,8 +48,13 @@ parameters:
     type: string
     default: ''
   - name: vallyArguments
+    # --tag does not filter Prepare's matrix; align evalGlobs so every eval has matching stimuli.
     type: object
     default: []
+  - name: artifactPrefix
+    # Literal artifact prefix, including any separator (e.g. 'forced-').
+    type: string
+    default: ''
   - name: threshold
     # Pass-rate gate forwarded to `vally eval --threshold` and the shard verdict. Repos may override.
     type: number
@@ -107,10 +112,12 @@ extends:
           - template: /eng/common/pipelines/templates/jobs/eval-shard.yml
             parameters:
               vallyRoot: ${{ parameters.vallyRoot }}
+              artifactPrefix: ${{ parameters.artifactPrefix }}
               evalInvokeTemplate: ${{ parameters.evalInvokeTemplate }}
               UseAzSdkAuthentication: ${{ parameters.UseAzSdkAuthentication }}
               azureSubscription: ${{ parameters.azureSubscription }}
               vallyArguments: ${{ parameters.vallyArguments }}
+              failOnFailedTests: ${{ parameters.failOnFailedTests }}
               threshold: ${{ parameters.threshold }}
               preEvalTemplate: ${{ parameters.preEvalTemplate }}
               postEvalTemplate: ${{ parameters.postEvalTemplate }}
@@ -123,6 +130,7 @@ extends:
         jobs:
           - template: /eng/common/pipelines/templates/jobs/eval-summarize.yml
             parameters:
+              artifactPrefix: ${{ parameters.artifactPrefix }}
               failOnFailedTests: ${{ parameters.failOnFailedTests }}
               createDashboardBundle: ${{ parameters.createDashboardBundle }}
               publishDashboardResults: ${{ parameters.publishDashboardResults }}
