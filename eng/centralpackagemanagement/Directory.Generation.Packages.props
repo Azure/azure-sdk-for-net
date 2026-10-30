@@ -1,6 +1,6 @@
 <Project>
   <PropertyGroup>
-    <UnbrandedGeneratorVersion>1.0.0-alpha.20261029.3</UnbrandedGeneratorVersion>
+    <UnbrandedGeneratorVersion>1.0.0-alpha.20261029.4</UnbrandedGeneratorVersion>
     <AzureGeneratorVersion>1.0.0-alpha.20261023.4</AzureGeneratorVersion>
     <AzureManagementGeneratorVersion>1.0.0-alpha.20261026.6</AzureManagementGeneratorVersion>
   </PropertyGroup>
