@@ -1,14 +1,14 @@
 # Release History
 
-## 1.18.0-beta.3 (Unreleased)
+## 1.18.0-beta.3 (2026-10-30)
 
 ### Features Added
 
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- Upgraded API version from 2026-01-01 to 2026-03-01.
+- Added support for managing ExpressRoute LAG authorizations, including retrieving authorization keys.
+- Added support for listing and retrieving virtual network appliance capabilities.
+- Added DDoS custom policy mitigation rules with traffic scopes, TCP and UDP mitigation settings, and source-specific policy overrides.
+- Exposed strongly typed `ETag` properties on `NetworkChildResourceData` and `NetworkProxyResourceData`.
 
 ## 1.18.0-beta.2 (2026-10-28)
 

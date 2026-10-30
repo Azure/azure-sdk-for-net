@@ -227,6 +227,15 @@ namespace Azure.ResourceManager.Network.Mocking
             return new ExpressRouteLagResource(Client, id);
         }
 
+        /// <summary> Gets an object representing a <see cref="ExpressRouteLagAuthorizationResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ExpressRouteLagAuthorizationResource"/> object. </returns>
+        public virtual ExpressRouteLagAuthorizationResource GetExpressRouteLagAuthorizationResource(ResourceIdentifier id)
+        {
+            ExpressRouteLagAuthorizationResource.ValidateResourceId(id);
+            return new ExpressRouteLagAuthorizationResource(Client, id);
+        }
+
         /// <summary> Gets an object representing a <see cref="FirewallPolicyResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="FirewallPolicyResource"/> object. </returns>
@@ -918,6 +927,15 @@ namespace Azure.ResourceManager.Network.Mocking
         {
             VirtualNetworkApplianceResource.ValidateResourceId(id);
             return new VirtualNetworkApplianceResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="VirtualNetworkApplianceCapabilityResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="VirtualNetworkApplianceCapabilityResource"/> object. </returns>
+        public virtual VirtualNetworkApplianceCapabilityResource GetVirtualNetworkApplianceCapabilityResource(ResourceIdentifier id)
+        {
+            VirtualNetworkApplianceCapabilityResource.ValidateResourceId(id);
+            return new VirtualNetworkApplianceCapabilityResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="ServiceGatewayResource"/> along with the instance operations that can be performed on it but with no data. </summary>

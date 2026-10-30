@@ -136,7 +136,7 @@ namespace Azure.Provisioning.Storage
             _tags = DefineDictionaryProperty<string>(nameof(Tags), new string[] { "tags" });
             _location = DefineProperty<AzureLocation>(nameof(Location), new string[] { "location" }, isRequired: true);
             _properties = DefineModelProperty<StorageConnectorProperties>(nameof(Properties), new string[] { "properties" }, isRequired: true);
-            _parent = DefineResource<StorageAccount>(nameof(Parent), new string[] { "parent" }, isRequired: true);
+            _parent = DefineResource<StorageAccount>(nameof(Parent), new string[] { "parent" });
             DefineAdditionalProperties();
         }
 

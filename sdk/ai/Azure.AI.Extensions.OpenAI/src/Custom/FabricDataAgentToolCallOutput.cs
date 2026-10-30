@@ -10,6 +10,7 @@ using OpenAI.Responses;
 namespace Azure.AI.Extensions.OpenAI;
 
 [CodeGenSuppress("Patch")]
+[CodeGenSuppress("_patch")]
 public partial class FabricDataAgentToolCallOutput
 {
     /// <summary> Initializes a new instance of <see cref="FabricDataAgentToolCallOutput"/> for deserialization. </summary>
@@ -31,7 +32,7 @@ public partial class FabricDataAgentToolCallOutput
     /// <param name="patch"></param>
     internal FabricDataAgentToolCallOutput(ResponseItemKind @type, string id, AgentReference agentReference, string responseId, string callId, BinaryData output, ToolCallStatus status, in JsonPatch patch) : base(@type)
     {
-        _patch = patch;
+        Patch = patch;
         Id = id;
         this.ApplyAgentAttribution(agentReference, responseId, null);
         CallId = callId;

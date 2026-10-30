@@ -89,6 +89,11 @@ namespace Azure.ResourceManager.Cdn.Models
                 writer.WritePropertyName("scope"u8);
                 writer.WriteStringValue(Scope.AbsoluteUri);
             }
+            if (Optional.IsDefined(TokenDestinationHeader))
+            {
+                writer.WritePropertyName("tokenDestinationHeader"u8);
+                writer.WriteStringValue(TokenDestinationHeader.Value.ToString());
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -134,6 +139,7 @@ namespace Azure.ResourceManager.Cdn.Models
             OriginAuthenticationType? authenticationType = default;
             CdnResourceReference userAssignedIdentity = default;
             Uri scope = default;
+            OriginAuthenticationTokenDestinationHeader? tokenDestinationHeader = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -164,12 +170,21 @@ namespace Azure.ResourceManager.Cdn.Models
                     scope = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
+                if (prop.NameEquals("tokenDestinationHeader"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    tokenDestinationHeader = new OriginAuthenticationTokenDestinationHeader(prop.Value.GetString());
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new OriginAuthenticationProperties(authenticationType, userAssignedIdentity, scope, additionalBinaryDataProperties);
+            return new OriginAuthenticationProperties(authenticationType, userAssignedIdentity, scope, tokenDestinationHeader, additionalBinaryDataProperties);
         }
     }
 }

@@ -149,7 +149,7 @@ namespace Azure.Provisioning.Sql
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _properties = DefineModelProperty<JobProperties>(nameof(Properties), new string[] { "properties" });
-            _parent = DefineResource<SqlServerJobAgent>(nameof(Parent), new string[] { "parent" }, isRequired: true);
+            _parent = DefineResource<SqlServerJobAgent>(nameof(Parent), new string[] { "parent" });
             DefineAdditionalProperties();
         }
 

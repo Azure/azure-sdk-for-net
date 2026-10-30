@@ -119,7 +119,7 @@ namespace Azure.Provisioning.Network
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _properties = DefineModelProperty<VirtualNetworkApplianceCapabilityProperties>(nameof(Properties), new string[] { "properties" });
             _kind = DefineProperty<VirtualNetworkApplianceCapabilityKind>(nameof(Kind), new string[] { "kind" }, isRequired: true);
-            _parent = DefineResource<VirtualNetworkAppliance>(nameof(Parent), new string[] { "parent" }, isRequired: true);
+            _parent = DefineResource<VirtualNetworkAppliance>(nameof(Parent), new string[] { "parent" });
             DefineAdditionalProperties();
         }
 

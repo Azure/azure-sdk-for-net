@@ -39,13 +39,18 @@ namespace Azure.Provisioning.ServiceBus
             }
         }
 
-        /// <summary> Gets the Name. </summary>
+        /// <summary> Gets or sets the Name. </summary>
         public BicepValue<string> Name
         {
             get
             {
                 Initialize();
                 return _name;
+            }
+            set
+            {
+                Initialize();
+                _name.Assign(value);
             }
         }
 
@@ -193,7 +198,7 @@ namespace Azure.Provisioning.ServiceBus
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _properties = DefineModelProperty<NetworkRuleSetProperties>(nameof(Properties), new string[] { "properties" });
             _location = DefineProperty<AzureLocation>(nameof(Location), new string[] { "location" }, isOutput: true);
-            _parent = DefineResource<ServiceBusNamespace>(nameof(Parent), new string[] { "parent" }, isRequired: true);
+            _parent = DefineResource<ServiceBusNamespace>(nameof(Parent), new string[] { "parent" });
             DefineAdditionalProperties();
         }
 

@@ -17,6 +17,8 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
     /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
+    [ModelReaderWriterBuildable(typeof(AcronymWidgetData))]
+    [ModelReaderWriterBuildable(typeof(AcronymWidgetResource))]
     [ModelReaderWriterBuildable(typeof(AllocatedToSubscription))]
     [ModelReaderWriterBuildable(typeof(ArmPlan))]
     [ModelReaderWriterBuildable(typeof(AzureGeneratorMgmtTypeSpecTestsPrivateEndpointConnectionData))]
@@ -96,6 +98,8 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
     [ModelReaderWriterBuildable(typeof(HcrpConfigurationAssignmentData))]
     [ModelReaderWriterBuildable(typeof(HcrpConfigurationAssignmentProperties))]
     [ModelReaderWriterBuildable(typeof(HcrpConfigurationAssignmentResource))]
+    [ModelReaderWriterBuildable(typeof(IPAddress))]
+    [ModelReaderWriterBuildable(typeof(IPv4Address))]
     [ModelReaderWriterBuildable(typeof(IssueTestBaseProperties))]
     [ModelReaderWriterBuildable(typeof(IssueTestResource))]
     [ModelReaderWriterBuildable(typeof(IssueTestResourceData))]

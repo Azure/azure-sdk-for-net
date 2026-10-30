@@ -1,6 +1,16 @@
 # Release History
 
-## 1.0.0-beta.8 (Unreleased)
+## 1.0.0-beta.9 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 1.0.0-beta.8 (2026-10-28)
 
 ### Features Added
 
@@ -11,10 +21,9 @@
   or changes to generic Invocations handlers.
 - Aligned the experimental Voice caller-interruption contract with `user.barge_in`, `VoiceUserBargeInEvent`, and `OnUserBargeInAsync`, preserving playback snapshots and application-owned cancellation/history. Voice Live senders must use the same event contract. Generic raw WebSocket handlers are unchanged.
 
-### Bugs Fixed
-
 ### Other Changes
 
+- Reference the published `Azure.AI.AgentServer.Core` 1.0.0-beta.30 package instead of the current Core project, so this release does not require publishing Core 1.0.0-beta.31.
 - Updated resilient task samples to call `SetResilientTasksEnabled()` explicitly; task
   registration alone no longer activates storage or recovery.
 - Updated the resilient research sample to use constructor-injected task handlers and

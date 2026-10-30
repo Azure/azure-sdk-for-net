@@ -128,8 +128,8 @@ namespace Azure.ResourceManager.Network
             }
             ResourceIdentifier id = default;
             string name = default;
-            string @type = default;
-            string eTag = default;
+            ResourceType? resourceType = default;
+            ETag? eTag = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             AddressPrefixSetPropertiesFormat properties = default;
             foreach (var prop in element.EnumerateObject())
@@ -150,12 +150,20 @@ namespace Azure.ResourceManager.Network
                 }
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    resourceType = new ResourceType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("etag"u8))
                 {
-                    eTag = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    eTag = new ETag(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("properties"u8))
@@ -175,7 +183,7 @@ namespace Azure.ResourceManager.Network
             return new AddressPrefixSetData(
                 id,
                 name,
-                @type,
+                resourceType,
                 eTag,
                 additionalBinaryDataProperties,
                 properties);

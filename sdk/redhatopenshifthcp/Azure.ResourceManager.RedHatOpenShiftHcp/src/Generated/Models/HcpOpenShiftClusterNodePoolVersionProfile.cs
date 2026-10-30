@@ -33,6 +33,8 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
         /// ChannelGroup is the name of the set to which this version belongs.
         /// Each version belongs to only a single set.
         /// If not specified, the default value is 'stable'.
+        /// This property is intended to be updateable, but that support is not yet
+        /// complete. Until then, changing this value after node pool creation is rejected.
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal HcpOpenShiftClusterNodePoolVersionProfile(string id, string channelGroup, IDictionary<string, BinaryData> additionalBinaryDataProperties)
@@ -49,6 +51,8 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
         /// ChannelGroup is the name of the set to which this version belongs.
         /// Each version belongs to only a single set.
         /// If not specified, the default value is 'stable'.
+        /// This property is intended to be updateable, but that support is not yet
+        /// complete. Until then, changing this value after node pool creation is rejected.
         /// </summary>
         public string ChannelGroup { get; set; }
     }

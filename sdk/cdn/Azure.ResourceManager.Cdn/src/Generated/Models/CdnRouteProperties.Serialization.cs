@@ -16,7 +16,7 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> The JSON object that contains the properties of the Routes to create. </summary>
-    public partial class CdnRouteProperties : IJsonModel<CdnRouteProperties>
+    internal partial class CdnRouteProperties : IJsonModel<CdnRouteProperties>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -166,11 +166,6 @@ namespace Azure.ResourceManager.Cdn.Models
                 writer.WritePropertyName("enabledState"u8);
                 writer.WriteStringValue(EnabledState.Value.ToString());
             }
-            if (Optional.IsDefined(GrpcState))
-            {
-                writer.WritePropertyName("grpcState"u8);
-                writer.WriteStringValue(GrpcState.Value.ToString());
-            }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
@@ -235,7 +230,6 @@ namespace Azure.ResourceManager.Cdn.Models
             LinkToDefaultDomain? linkToDefaultDomain = default;
             HttpsRedirect? httpsRedirect = default;
             EnabledState? enabledState = default;
-            FrontDoorRouteGrpcState? grpcState = default;
             FrontDoorProvisioningState? provisioningState = default;
             FrontDoorDeploymentStatus? deploymentStatus = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -375,15 +369,6 @@ namespace Azure.ResourceManager.Cdn.Models
                     enabledState = new EnabledState(prop.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("grpcState"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    grpcState = new FrontDoorRouteGrpcState(prop.Value.GetString());
-                    continue;
-                }
                 if (prop.NameEquals("provisioningState"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -420,7 +405,6 @@ namespace Azure.ResourceManager.Cdn.Models
                 linkToDefaultDomain,
                 httpsRedirect,
                 enabledState,
-                grpcState,
                 provisioningState,
                 deploymentStatus,
                 additionalBinaryDataProperties);

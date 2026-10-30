@@ -10,6 +10,7 @@ namespace Azure.AI.Extensions.OpenAI;
 
 [CodeGenType("WorkflowActionOutputItem")]
 [CodeGenSuppress("Patch")]
+[CodeGenSuppress("_patch")]
 public partial class AgentWorkflowPreviewActionResponseItem
 {
     /// <summary> Gets the status of the workflow preview action. </summary>
@@ -48,7 +49,7 @@ public partial class AgentWorkflowPreviewActionResponseItem
     /// <param name="patch"></param>
     internal AgentWorkflowPreviewActionResponseItem(ResponseItemKind @type, string id, AgentReference agentReference, string responseId, string csdlActionKind, string actionId, string parentActionId, string previousActionId, AgentWorkflowPreviewActionStatus? status, in JsonPatch patch) : base(@type)
     {
-        _patch = patch;
+        Patch = patch;
         this.ApplyAgentAttribution(agentReference, responseId, null);
         Id = id;
         CSDLActionKind = csdlActionKind;

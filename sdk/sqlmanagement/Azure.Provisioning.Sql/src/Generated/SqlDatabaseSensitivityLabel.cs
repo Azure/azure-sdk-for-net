@@ -138,7 +138,7 @@ namespace Azure.Provisioning.Sql
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _properties = DefineModelProperty<SensitivityLabelProperties>(nameof(Properties), new string[] { "properties" });
             _managedBy = DefineProperty<string>(nameof(ManagedBy), new string[] { "managedBy" }, isOutput: true);
-            _parent = DefineResource<SqlDatabaseColumn>(nameof(Parent), new string[] { "parent" }, isRequired: true);
+            _parent = DefineResource<SqlDatabaseColumn>(nameof(Parent), new string[] { "parent" });
             DefineAdditionalProperties();
         }
 

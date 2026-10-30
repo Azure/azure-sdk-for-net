@@ -16,7 +16,7 @@ complete output.
 | `createBodyResource.tsp` | Model inheritance, flattened properties, nullable values, and create-body settable analysis | `ItemTests` |
 | `childResource.tsp` | Parent and child resources | `ResourceTests.ResourceKinds` |
 | `sharedModelResource.tsp` | One input model shared by distinct resources | `ResourceTests.ResourceKinds` |
-| `extensionResource.tsp` | Extension resource scope | `ResourceTests.ResourceKinds` |
+| `extensionResource.tsp` | Billing-profile scopes, existing-only extensions, structural children, and mixed deployment scopes | `ExtensionResourceTests` and `ResourceTests.ResourceKinds` |
 | `singletonResource.tsp` | Decorator and legacy-operation singleton shapes | `SingletonResourceTests` |
 | `main.tsp` | Per-resource API versions, known collection types, and RBAC role helpers | Generated API plus `ResourceTests.RoleAssignment` |
 | `readOnlyResource.tsp` | Read-only resources | Generated API shape |
@@ -44,13 +44,16 @@ input because they cannot be assigned when defining infrastructure.
 | --- | --- |
 | `ConfigurationStore` | Tracked resource envelope and resource-level properties |
 | `KeyValue` | Child resource with a generated typed parent |
-| `Item` | Writable properties discovered from a separate create body |
+| `Item` | Writable properties discovered from a separate create body; deployment-scoped child composite names for deployable and existing resources |
 | `Profile` and `ProfileRevision` | Distinct resources generated from one input model |
 | `ResourceProfile` | Resource models exposed as model properties |
 | `DiscriminatedResourceProfile` and `SpecializedResourceProfile` | Resource inheritance with a discriminator |
 | `ResourceProfileRevision` | Read-only child resource used as a model property |
-| `ExtensionAssignment` | Extension resource with a generic scope |
-| `SingletonSetting` | `@singleton` resource with an immediate generated parent |
+| `ExtensionAssignment` | Billing-profile extension resource with an optional generic scope |
+| `ReadOnlyExtension` | Existing-only billing-profile singleton preserving scope without a public constructor |
+| `ExtensionChild` | Child of an extension resource with an optional typed parent and no duplicate scope; billing-scoped tests preserve external identity through the parent |
+| `MultiScopeAssignment` | Extension or resource-group identity with optional scope |
+| `SingletonSetting` | `@singleton` resource with an optional typed parent and an overridable relative default name |
 | `LegacySingleton` | Top-level singleton inferred from a legacy fixed route |
 | `OrphanedSingleton` | Two-layer singleton resource type without a generated parent |
 | `ConfigurationStorePrivateLinkResource` | Resource with no writable operations |
