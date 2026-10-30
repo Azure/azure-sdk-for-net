@@ -24,13 +24,17 @@ Authoritative references (baseline for these guidelines):
 - [Preview APIs — .NET](https://learn.microsoft.com/dotnet/fundamentals/runtime-libraries/preview-apis)
 - [`Experimental` attributes — C# reference](https://learn.microsoft.com/dotnet/csharp/language-reference/attributes/general#experimental-attributes)
 - [Choosing diagnostic IDs](https://learn.microsoft.com/dotnet/csharp/roslyn-sdk/choosing-diagnostic-ids)
+- [CA2252: Opt in to preview features](https://learn.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca2252)
 
 Key facts from the official docs:
 
 - `[Experimental]` requires **no** runtime or language preview features; it only
   signals that an API is not stable yet. This is different from
   `[RequiresPreviewFeatures]`, which is reserved for APIs that depend on runtime
-  or language preview behaviors and forces consumers to set
+  or language preview behaviors. The resulting [CA2252](https://learn.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca2252)
+  diagnostic can be satisfied either by annotating the calling member or type
+  with `[RequiresPreviewFeatures]` itself (propagating the requirement to just
+  that surface), or by opting in for the whole assembly with
   `<EnablePreviewFeatures>true</EnablePreviewFeatures>`.
 - Valid targets: assembly, module, class, struct, interface, enum, delegate,
   constructor, method, property, event, field. `Inherited = false`.
