@@ -25,7 +25,8 @@ namespace Azure.Provisioning.Network
         [DataMember(Name = "GCMAES128")]
         GcmAes128 = 5,
         /// <summary> GCMAES192. </summary>
-        GCMAES192 = 6,
+        [DataMember(Name = "GCMAES192")]
+        GcmAes192 = 6,
         /// <summary> GCMAES256. </summary>
         [DataMember(Name = "GCMAES256")]
         GcmAes256 = 4,
