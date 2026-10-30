@@ -1,14 +1,21 @@
 # Release History
 
-## 1.20.0-beta.1 (Unreleased)
+## 1.20.0-beta.1 (2026-10-30)
 
 ### Features Added
 
-### Breaking Changes
+- Upgraded api-version to `2026-08-15-preview`.
+- Added `ExternalClusterResource` and `ExternalSvmResource`, together with their collections and models, for external NetApp ONTAP clusters and storage virtual machines.
+- Added `ClusterPeerResource` and `SvmPeerResource`, together with their collections and models, for cluster and storage virtual machine peering.
+- Added `ExternalCacheResource` and `ExternalCacheConnectionResource`, together with their collections and models, for external caches and cache connections between external and Azure NetApp Files volumes.
+- Added `GeoNamespaceOriginVolume` to `NetAppVolumeData`, `NetAppVolumePatch`, and `NetAppVolumeGroupVolume`, with the `OriginVolume` enum for geographic namespace origin settings.
+- Added asynchronous directory deletion settings through `AsyncDirectoryDelete` and `AsyncDirectoryDeleteStatus` on volume and volume-group models.
+- Added SMB opportunistic locking settings through `SmbOplocks` on volume, volume-group, and `NetAppSmbSettings` models.
+- Added `UserAssignedIdentity` to `CertificateKeyVaultDetails` and `CredentialsKeyVaultDetails` for user-assigned managed identity access to Key Vault-backed bucket certificates and credentials.
 
 ### Bugs Fixed
 
-### Other Changes
+- Fixed account and account-patch Entra ID configuration property forwarding and JSON serialization, including nested Key Vault settings.
 
 ## 1.19.0 (2026-10-20)
 

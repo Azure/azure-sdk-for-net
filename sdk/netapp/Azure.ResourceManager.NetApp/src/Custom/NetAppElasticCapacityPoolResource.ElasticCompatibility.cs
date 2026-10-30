@@ -22,5 +22,5 @@ using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.NetApp
 {
-    public partial class NetAppElasticCapacityPoolResource : ArmResource { protected NetAppElasticCapacityPoolResource() { } internal NetAppElasticCapacityPoolResource(ArmClient client, ResourceIdentifier id) : base(client, id) { } }
+    public partial class NetAppElasticCapacityPoolResource : ArmResource { protected NetAppElasticCapacityPoolResource() { } internal NetAppElasticCapacityPoolResource(ArmClient client, ResourceIdentifier id) : base(client, id) { TryGetApiVersion(ResourceType, out string netAppElasticCapacityPoolApiVersion); _elasticCapacityPoolsClientDiagnostics = new Azure.Core.Pipeline.ClientDiagnostics("Azure.ResourceManager.NetApp", ResourceType.Namespace, Diagnostics); _elasticCapacityPoolsRestClient = new ElasticCapacityPools(_elasticCapacityPoolsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, netAppElasticCapacityPoolApiVersion ?? "2026-08-15-preview"); } }
 }

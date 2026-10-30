@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.NetApp
 
         internal NetAppActiveDirectoryConfigCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
+            TryGetApiVersion(NetAppActiveDirectoryConfigResource.ResourceType, out string netAppActiveDirectoryConfigApiVersion);
+            _activeDirectoryConfigsClientDiagnostics = new Azure.Core.Pipeline.ClientDiagnostics("Azure.ResourceManager.NetApp", NetAppActiveDirectoryConfigResource.ResourceType.Namespace, Diagnostics);
+            _activeDirectoryConfigsRestClient = new ActiveDirectoryConfigs(_activeDirectoryConfigsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, netAppActiveDirectoryConfigApiVersion ?? "2026-08-15-preview");
             ValidateResourceId(id);
         }
 

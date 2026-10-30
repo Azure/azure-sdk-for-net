@@ -11,13 +11,18 @@ namespace Azure.ResourceManager.NetApp
     // configuration objects. Preserve the old public properties for source compat.
     public partial class NetAppAccountData
     {
-        private EntraIdConfig _entraIdConfig;
-
         /// <summary> Entra ID configuration. </summary>
         public EntraIdConfig EntraIdConfig
         {
-            get => _entraIdConfig;
-            set => _entraIdConfig = value;
+            get => Properties is null ? default : Properties.EntraIdConfig;
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new AccountProperties();
+                }
+                Properties.EntraIdConfig = value;
+            }
         }
 
         /// <summary> LDAP configuration. </summary>

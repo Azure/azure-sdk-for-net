@@ -2614,149 +2614,6 @@ namespace Azure.ResourceManager.NetApp.Models
             return new NetAppUsageName(value, localizedValue, default);
         }
 
-        /// <summary> Volume patch resource. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="serviceLevel"> The service level of the file system. </param>
-        /// <param name="usageThreshold">
-        /// Maximum storage quota allowed for a file system in bytes. This is a soft quota used for alerting only. For regular volumes, valid values are in the range 50GiB to 100TiB.
-        /// For large volumes, valid values are in the range 100TiB to 500TiB, and on an exceptional basis, from to 2400GiB to 2400TiB.
-        /// For extra large volumes, valid values are in the range 2400GiB to 7200TiB. Values expressed in bytes as multiples of 1 GiB.
-        /// </param>
-        /// <param name="exportRules"> Export policy rule. </param>
-        /// <param name="protocolTypes">
-        /// Specify the protocol types for the volume. Supported values are NFSv3, NFSv4.1, and CIFS. For SMB volumes, specify CIFS.
-        /// The value SMB isn't supported in the protocolTypes property. Default: NFSv3
-        /// </param>
-        /// <param name="throughputMibps"> Maximum throughput in MiB/s that can be achieved by this volume and this will be accepted as input only for manual qosType volume. </param>
-        /// <param name="dataProtection"> DataProtection type volumes include an object containing details of the replication. </param>
-        /// <param name="isDefaultQuotaEnabled"> Specifies if default quota is enabled for the volume. </param>
-        /// <param name="defaultUserQuotaInKiBs"> Default user quota for volume in KiBs. If isDefaultQuotaEnabled is set, the minimum value of 4 KiBs applies . </param>
-        /// <param name="defaultGroupQuotaInKiBs"> Default group quota for volume in KiBs. If isDefaultQuotaEnabled is set, the minimum value of 4 KiBs applies. </param>
-        /// <param name="unixPermissions"> UNIX permissions for NFS volume accepted in octal 4 digit format. First digit selects the set user ID(4), set group ID (2) and sticky (1) attributes. Second digit selects permission for the owner of the file: read (4), write (2) and execute (1). Third selects permissions for other users in the same group. the fourth for other users not in the group. 0755 - gives read/write/execute permissions to owner and read/execute to group and other users. </param>
-        /// <param name="isCoolAccessEnabled"> Specifies whether Cool Access(tiering) is enabled for the volume. </param>
-        /// <param name="coolnessPeriod"> Specifies the number of days after which data that is not accessed by clients will be tiered. </param>
-        /// <param name="coolAccessRetrievalPolicy">
-        /// coolAccessRetrievalPolicy determines the data retrieval behavior from the cool tier to standard storage based on the read pattern for cool access enabled volumes. The possible values for this field are:
-        /// Default - Data will be pulled from cool tier to standard storage on random reads. This policy is the default.
-        /// OnRead - All client-driven data read is pulled from cool tier to standard storage on both sequential and random reads.
-        /// Never - No client-driven data is pulled from cool tier to standard storage.
-        /// </param>
-        /// <param name="coolAccessTieringPolicy"> coolAccessTieringPolicy determines which cold data blocks are moved to cool tier. The possible values for this field are: Auto - Moves cold user data blocks in both the Snapshot copies and the active file system to the cool tier tier. This policy is the default. SnapshotOnly - Moves user data blocks of the Volume Snapshot copies that are not associated with the active file system to the cool tier. </param>
-        /// <param name="isSnapshotDirectoryVisible"> If enabled (true) the volume will contain a read-only snapshot directory which provides access to each of the volume's snapshots. </param>
-        /// <param name="smbAccessBasedEnumeration"> Enables access-based enumeration share property for SMB Shares. Only applicable for SMB/DualProtocol volume. </param>
-        /// <param name="smbNonBrowsable"> Enables non-browsable property for SMB Shares. Only applicable for SMB/DualProtocol volume. </param>
-        /// <returns> A new <see cref="Models.NetAppVolumePatch"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static NetAppVolumePatch NetAppVolumePatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, NetAppFileServiceLevel? serviceLevel, long? usageThreshold, IEnumerable<NetAppVolumeExportPolicyRule> exportRules, IEnumerable<string> protocolTypes, float? throughputMibps, NetAppVolumePatchDataProtection dataProtection, bool? isDefaultQuotaEnabled, long? defaultUserQuotaInKiBs, long? defaultGroupQuotaInKiBs, string unixPermissions, bool? isCoolAccessEnabled, int? coolnessPeriod, CoolAccessRetrievalPolicy? coolAccessRetrievalPolicy, CoolAccessTieringPolicy? coolAccessTieringPolicy, bool? isSnapshotDirectoryVisible, SmbAccessBasedEnumeration? smbAccessBasedEnumeration, SmbNonBrowsable? smbNonBrowsable)
-        {
-            return new NetAppVolumePatch(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
-                serviceLevel is null && usageThreshold is null && exportRules is null && protocolTypes is null && throughputMibps is null && dataProtection is null && isDefaultQuotaEnabled is null && defaultUserQuotaInKiBs is null && defaultGroupQuotaInKiBs is null && unixPermissions is null && isCoolAccessEnabled is null && coolnessPeriod is null && coolAccessRetrievalPolicy is null && coolAccessTieringPolicy is null && isSnapshotDirectoryVisible is null && smbAccessBasedEnumeration is null && smbNonBrowsable is null ? default : new VolumePatchProperties(
-                    serviceLevel,
-                    usageThreshold,
-                    exportRules is null ? default : new VolumePatchPropertiesExportPolicy((exportRules ?? new ChangeTrackingList<NetAppVolumeExportPolicyRule>()).ToList(), default),
-                    (protocolTypes ?? new ChangeTrackingList<string>()).ToList(),
-                    throughputMibps,
-                    dataProtection,
-                    isDefaultQuotaEnabled,
-                    default,
-                    defaultUserQuotaInKiBs,
-                    defaultGroupQuotaInKiBs,
-                    unixPermissions,
-                    isCoolAccessEnabled,
-                    coolnessPeriod,
-                    coolAccessRetrievalPolicy,
-                    coolAccessTieringPolicy,
-                    isSnapshotDirectoryVisible,
-                    smbAccessBasedEnumeration,
-                    smbNonBrowsable,
-                    default,
-                    default,
-                    default),
-                default);
-        }
-
-        /// <summary> Volume patch resource. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="serviceLevel"> The service level of the file system. </param>
-        /// <param name="usageThreshold">
-        /// Maximum storage quota allowed for a file system in bytes. This is a soft quota used for alerting only. For regular volumes, valid values are in the range 50GiB to 100TiB.
-        /// For large volumes, valid values are in the range 100TiB to 500TiB, and on an exceptional basis, from to 2400GiB to 2400TiB.
-        /// For extra large volumes, valid values are in the range 2400GiB to 7200TiB. Values expressed in bytes as multiples of 1 GiB.
-        /// </param>
-        /// <param name="exportRules"> Export policy rule. </param>
-        /// <param name="protocolTypes">
-        /// Specify the protocol types for the volume. Supported values are NFSv3, NFSv4.1, and CIFS. For SMB volumes, specify CIFS.
-        /// The value SMB isn't supported in the protocolTypes property. Default: NFSv3
-        /// </param>
-        /// <param name="throughputMibps"> Maximum throughput in MiB/s that can be achieved by this volume and this will be accepted as input only for manual qosType volume. </param>
-        /// <param name="dataProtection"> DataProtection type volumes include an object containing details of the replication. </param>
-        /// <param name="isDefaultQuotaEnabled"> Specifies if default quota is enabled for the volume. </param>
-        /// <param name="defaultUserQuotaInKiBs"> Default user quota for volume in KiBs. If isDefaultQuotaEnabled is set, the minimum value of 4 KiBs applies . </param>
-        /// <param name="defaultGroupQuotaInKiBs"> Default group quota for volume in KiBs. If isDefaultQuotaEnabled is set, the minimum value of 4 KiBs applies. </param>
-        /// <param name="unixPermissions"> UNIX permissions for NFS volume accepted in octal 4 digit format. First digit selects the set user ID(4), set group ID (2) and sticky (1) attributes. Second digit selects permission for the owner of the file: read (4), write (2) and execute (1). Third selects permissions for other users in the same group. the fourth for other users not in the group. 0755 - gives read/write/execute permissions to owner and read/execute to group and other users. </param>
-        /// <param name="isCoolAccessEnabled"> Specifies whether Cool Access(tiering) is enabled for the volume. </param>
-        /// <param name="coolnessPeriod"> Specifies the number of days after which data that is not accessed by clients will be tiered. </param>
-        /// <param name="coolAccessRetrievalPolicy">
-        /// coolAccessRetrievalPolicy determines the data retrieval behavior from the cool tier to standard storage based on the read pattern for cool access enabled volumes. The possible values for this field are:
-        /// Default - Data will be pulled from cool tier to standard storage on random reads. This policy is the default.
-        /// OnRead - All client-driven data read is pulled from cool tier to standard storage on both sequential and random reads.
-        /// Never - No client-driven data is pulled from cool tier to standard storage.
-        /// </param>
-        /// <param name="isSnapshotDirectoryVisible"> If enabled (true) the volume will contain a read-only snapshot directory which provides access to each of the volume's snapshots. </param>
-        /// <param name="smbAccessBasedEnumeration"> Enables access-based enumeration share property for SMB Shares. Only applicable for SMB/DualProtocol volume. </param>
-        /// <param name="smbNonBrowsable"> Enables non-browsable property for SMB Shares. Only applicable for SMB/DualProtocol volume. </param>
-        /// <returns> A new <see cref="Models.NetAppVolumePatch"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static NetAppVolumePatch NetAppVolumePatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, NetAppFileServiceLevel? serviceLevel, long? usageThreshold, IEnumerable<NetAppVolumeExportPolicyRule> exportRules, IEnumerable<string> protocolTypes, float? throughputMibps, NetAppVolumePatchDataProtection dataProtection, bool? isDefaultQuotaEnabled, long? defaultUserQuotaInKiBs, long? defaultGroupQuotaInKiBs, string unixPermissions, bool? isCoolAccessEnabled, int? coolnessPeriod, CoolAccessRetrievalPolicy? coolAccessRetrievalPolicy, bool? isSnapshotDirectoryVisible, SmbAccessBasedEnumeration? smbAccessBasedEnumeration, SmbNonBrowsable? smbNonBrowsable)
-        {
-            return new NetAppVolumePatch(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
-                serviceLevel is null && usageThreshold is null && exportRules is null && protocolTypes is null && throughputMibps is null && dataProtection is null && isDefaultQuotaEnabled is null && defaultUserQuotaInKiBs is null && defaultGroupQuotaInKiBs is null && unixPermissions is null && isCoolAccessEnabled is null && coolnessPeriod is null && coolAccessRetrievalPolicy is null && isSnapshotDirectoryVisible is null && smbAccessBasedEnumeration is null && smbNonBrowsable is null ? default : new VolumePatchProperties(
-                    serviceLevel,
-                    usageThreshold,
-                    exportRules is null ? default : new VolumePatchPropertiesExportPolicy((exportRules ?? new ChangeTrackingList<NetAppVolumeExportPolicyRule>()).ToList(), default),
-                    (protocolTypes ?? new ChangeTrackingList<string>()).ToList(),
-                    throughputMibps,
-                    dataProtection,
-                    isDefaultQuotaEnabled,
-                    default,
-                    defaultUserQuotaInKiBs,
-                    defaultGroupQuotaInKiBs,
-                    unixPermissions,
-                    isCoolAccessEnabled,
-                    coolnessPeriod,
-                    coolAccessRetrievalPolicy,
-                    default,
-                    isSnapshotDirectoryVisible,
-                    smbAccessBasedEnumeration,
-                    smbNonBrowsable,
-                    default,
-                    default,
-                    default),
-                default);
-        }
-
         /// <summary> Volume resource. </summary>
         /// <param name="id"> Resource Id. </param>
         /// <param name="name"> Resource name. </param>
@@ -3190,6 +3047,149 @@ namespace Azure.ResourceManager.NetApp.Models
         public static NetAppSmbSettings NetAppSmbSettings(NetAppSmbEncryptionState? smbEncryption, SmbAccessBasedEnumeration? smbAccessBasedEnumeration, SmbNonBrowsable? smbNonBrowsable)
         {
             return new NetAppSmbSettings(smbEncryption, smbAccessBasedEnumeration, smbNonBrowsable, default, default);
+        }
+
+        /// <summary> Volume patch resource. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="serviceLevel"> The service level of the file system. </param>
+        /// <param name="usageThreshold">
+        /// Maximum storage quota allowed for a file system in bytes. This is a soft quota used for alerting only. For regular volumes, valid values are in the range 50GiB to 100TiB.
+        /// For large volumes, valid values are in the range 100TiB to 500TiB, and on an exceptional basis, from to 2400GiB to 2400TiB.
+        /// For extra large volumes, valid values are in the range 2400GiB to 7200TiB. Values expressed in bytes as multiples of 1 GiB.
+        /// </param>
+        /// <param name="exportRules"> Export policy rule. </param>
+        /// <param name="protocolTypes">
+        /// Specify the protocol types for the volume. Supported values are NFSv3, NFSv4.1, and CIFS. For SMB volumes, specify CIFS.
+        /// The value SMB isn't supported in the protocolTypes property. Default: NFSv3
+        /// </param>
+        /// <param name="throughputMibps"> Maximum throughput in MiB/s that can be achieved by this volume and this will be accepted as input only for manual qosType volume. </param>
+        /// <param name="dataProtection"> DataProtection type volumes include an object containing details of the replication. </param>
+        /// <param name="isDefaultQuotaEnabled"> Specifies if default quota is enabled for the volume. </param>
+        /// <param name="defaultUserQuotaInKiBs"> Default user quota for volume in KiBs. If isDefaultQuotaEnabled is set, the minimum value of 4 KiBs applies . </param>
+        /// <param name="defaultGroupQuotaInKiBs"> Default group quota for volume in KiBs. If isDefaultQuotaEnabled is set, the minimum value of 4 KiBs applies. </param>
+        /// <param name="unixPermissions"> UNIX permissions for NFS volume accepted in octal 4 digit format. First digit selects the set user ID(4), set group ID (2) and sticky (1) attributes. Second digit selects permission for the owner of the file: read (4), write (2) and execute (1). Third selects permissions for other users in the same group. the fourth for other users not in the group. 0755 - gives read/write/execute permissions to owner and read/execute to group and other users. </param>
+        /// <param name="isCoolAccessEnabled"> Specifies whether Cool Access(tiering) is enabled for the volume. </param>
+        /// <param name="coolnessPeriod"> Specifies the number of days after which data that is not accessed by clients will be tiered. </param>
+        /// <param name="coolAccessRetrievalPolicy">
+        /// coolAccessRetrievalPolicy determines the data retrieval behavior from the cool tier to standard storage based on the read pattern for cool access enabled volumes. The possible values for this field are:
+        /// Default - Data will be pulled from cool tier to standard storage on random reads. This policy is the default.
+        /// OnRead - All client-driven data read is pulled from cool tier to standard storage on both sequential and random reads.
+        /// Never - No client-driven data is pulled from cool tier to standard storage.
+        /// </param>
+        /// <param name="coolAccessTieringPolicy"> coolAccessTieringPolicy determines which cold data blocks are moved to cool tier. The possible values for this field are: Auto - Moves cold user data blocks in both the Snapshot copies and the active file system to the cool tier tier. This policy is the default. SnapshotOnly - Moves user data blocks of the Volume Snapshot copies that are not associated with the active file system to the cool tier. </param>
+        /// <param name="isSnapshotDirectoryVisible"> If enabled (true) the volume will contain a read-only snapshot directory which provides access to each of the volume's snapshots. </param>
+        /// <param name="smbAccessBasedEnumeration"> Enables access-based enumeration share property for SMB Shares. Only applicable for SMB/DualProtocol volume. </param>
+        /// <param name="smbNonBrowsable"> Enables non-browsable property for SMB Shares. Only applicable for SMB/DualProtocol volume. </param>
+        /// <returns> A new <see cref="Models.NetAppVolumePatch"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static NetAppVolumePatch NetAppVolumePatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, NetAppFileServiceLevel? serviceLevel, long? usageThreshold, IEnumerable<NetAppVolumeExportPolicyRule> exportRules, IEnumerable<string> protocolTypes, float? throughputMibps, NetAppVolumePatchDataProtection dataProtection, bool? isDefaultQuotaEnabled, long? defaultUserQuotaInKiBs, long? defaultGroupQuotaInKiBs, string unixPermissions, bool? isCoolAccessEnabled, int? coolnessPeriod, CoolAccessRetrievalPolicy? coolAccessRetrievalPolicy, CoolAccessTieringPolicy? coolAccessTieringPolicy, bool? isSnapshotDirectoryVisible, SmbAccessBasedEnumeration? smbAccessBasedEnumeration, SmbNonBrowsable? smbNonBrowsable)
+        {
+            return new NetAppVolumePatch(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                serviceLevel is null && usageThreshold is null && exportRules is null && protocolTypes is null && throughputMibps is null && dataProtection is null && isDefaultQuotaEnabled is null && defaultUserQuotaInKiBs is null && defaultGroupQuotaInKiBs is null && unixPermissions is null && isCoolAccessEnabled is null && coolnessPeriod is null && coolAccessRetrievalPolicy is null && coolAccessTieringPolicy is null && isSnapshotDirectoryVisible is null && smbAccessBasedEnumeration is null && smbNonBrowsable is null ? default : new VolumePatchProperties(
+                    serviceLevel,
+                    usageThreshold,
+                    exportRules is null ? default : new VolumePatchPropertiesExportPolicy((exportRules ?? new ChangeTrackingList<NetAppVolumeExportPolicyRule>()).ToList(), default),
+                    (protocolTypes ?? new ChangeTrackingList<string>()).ToList(),
+                    throughputMibps,
+                    dataProtection,
+                    isDefaultQuotaEnabled,
+                    default,
+                    defaultUserQuotaInKiBs,
+                    defaultGroupQuotaInKiBs,
+                    unixPermissions,
+                    isCoolAccessEnabled,
+                    coolnessPeriod,
+                    coolAccessRetrievalPolicy,
+                    coolAccessTieringPolicy,
+                    isSnapshotDirectoryVisible,
+                    smbAccessBasedEnumeration,
+                    smbNonBrowsable,
+                    default,
+                    default,
+                    default),
+                default);
+        }
+
+        /// <summary> Volume patch resource. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="serviceLevel"> The service level of the file system. </param>
+        /// <param name="usageThreshold">
+        /// Maximum storage quota allowed for a file system in bytes. This is a soft quota used for alerting only. For regular volumes, valid values are in the range 50GiB to 100TiB.
+        /// For large volumes, valid values are in the range 100TiB to 500TiB, and on an exceptional basis, from to 2400GiB to 2400TiB.
+        /// For extra large volumes, valid values are in the range 2400GiB to 7200TiB. Values expressed in bytes as multiples of 1 GiB.
+        /// </param>
+        /// <param name="exportRules"> Export policy rule. </param>
+        /// <param name="protocolTypes">
+        /// Specify the protocol types for the volume. Supported values are NFSv3, NFSv4.1, and CIFS. For SMB volumes, specify CIFS.
+        /// The value SMB isn't supported in the protocolTypes property. Default: NFSv3
+        /// </param>
+        /// <param name="throughputMibps"> Maximum throughput in MiB/s that can be achieved by this volume and this will be accepted as input only for manual qosType volume. </param>
+        /// <param name="dataProtection"> DataProtection type volumes include an object containing details of the replication. </param>
+        /// <param name="isDefaultQuotaEnabled"> Specifies if default quota is enabled for the volume. </param>
+        /// <param name="defaultUserQuotaInKiBs"> Default user quota for volume in KiBs. If isDefaultQuotaEnabled is set, the minimum value of 4 KiBs applies . </param>
+        /// <param name="defaultGroupQuotaInKiBs"> Default group quota for volume in KiBs. If isDefaultQuotaEnabled is set, the minimum value of 4 KiBs applies. </param>
+        /// <param name="unixPermissions"> UNIX permissions for NFS volume accepted in octal 4 digit format. First digit selects the set user ID(4), set group ID (2) and sticky (1) attributes. Second digit selects permission for the owner of the file: read (4), write (2) and execute (1). Third selects permissions for other users in the same group. the fourth for other users not in the group. 0755 - gives read/write/execute permissions to owner and read/execute to group and other users. </param>
+        /// <param name="isCoolAccessEnabled"> Specifies whether Cool Access(tiering) is enabled for the volume. </param>
+        /// <param name="coolnessPeriod"> Specifies the number of days after which data that is not accessed by clients will be tiered. </param>
+        /// <param name="coolAccessRetrievalPolicy">
+        /// coolAccessRetrievalPolicy determines the data retrieval behavior from the cool tier to standard storage based on the read pattern for cool access enabled volumes. The possible values for this field are:
+        /// Default - Data will be pulled from cool tier to standard storage on random reads. This policy is the default.
+        /// OnRead - All client-driven data read is pulled from cool tier to standard storage on both sequential and random reads.
+        /// Never - No client-driven data is pulled from cool tier to standard storage.
+        /// </param>
+        /// <param name="isSnapshotDirectoryVisible"> If enabled (true) the volume will contain a read-only snapshot directory which provides access to each of the volume's snapshots. </param>
+        /// <param name="smbAccessBasedEnumeration"> Enables access-based enumeration share property for SMB Shares. Only applicable for SMB/DualProtocol volume. </param>
+        /// <param name="smbNonBrowsable"> Enables non-browsable property for SMB Shares. Only applicable for SMB/DualProtocol volume. </param>
+        /// <returns> A new <see cref="Models.NetAppVolumePatch"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static NetAppVolumePatch NetAppVolumePatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, NetAppFileServiceLevel? serviceLevel, long? usageThreshold, IEnumerable<NetAppVolumeExportPolicyRule> exportRules, IEnumerable<string> protocolTypes, float? throughputMibps, NetAppVolumePatchDataProtection dataProtection, bool? isDefaultQuotaEnabled, long? defaultUserQuotaInKiBs, long? defaultGroupQuotaInKiBs, string unixPermissions, bool? isCoolAccessEnabled, int? coolnessPeriod, CoolAccessRetrievalPolicy? coolAccessRetrievalPolicy, bool? isSnapshotDirectoryVisible, SmbAccessBasedEnumeration? smbAccessBasedEnumeration, SmbNonBrowsable? smbNonBrowsable)
+        {
+            return new NetAppVolumePatch(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                serviceLevel is null && usageThreshold is null && exportRules is null && protocolTypes is null && throughputMibps is null && dataProtection is null && isDefaultQuotaEnabled is null && defaultUserQuotaInKiBs is null && defaultGroupQuotaInKiBs is null && unixPermissions is null && isCoolAccessEnabled is null && coolnessPeriod is null && coolAccessRetrievalPolicy is null && isSnapshotDirectoryVisible is null && smbAccessBasedEnumeration is null && smbNonBrowsable is null ? default : new VolumePatchProperties(
+                    serviceLevel,
+                    usageThreshold,
+                    exportRules is null ? default : new VolumePatchPropertiesExportPolicy((exportRules ?? new ChangeTrackingList<NetAppVolumeExportPolicyRule>()).ToList(), default),
+                    (protocolTypes ?? new ChangeTrackingList<string>()).ToList(),
+                    throughputMibps,
+                    dataProtection,
+                    isDefaultQuotaEnabled,
+                    default,
+                    defaultUserQuotaInKiBs,
+                    defaultGroupQuotaInKiBs,
+                    unixPermissions,
+                    isCoolAccessEnabled,
+                    coolnessPeriod,
+                    coolAccessRetrievalPolicy,
+                    default,
+                    isSnapshotDirectoryVisible,
+                    smbAccessBasedEnumeration,
+                    smbNonBrowsable,
+                    default,
+                    default,
+                    default),
+                default);
         }
 
         /// <summary> NetApp account resource. </summary>
