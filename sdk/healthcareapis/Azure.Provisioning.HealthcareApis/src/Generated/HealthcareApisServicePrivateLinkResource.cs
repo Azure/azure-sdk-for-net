@@ -123,7 +123,7 @@ namespace Azure.Provisioning.HealthcareApis
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _properties = DefineModelProperty<HealthcareApisPrivateLinkResourceProperties>(nameof(Properties), new string[] { "properties" });
-            _parent = DefineResource<HealthcareApisService>(nameof(Parent), new string[] { "parent" }, isRequired: true);
+            _parent = DefineResource<HealthcareApisService>(nameof(Parent), new string[] { "parent" });
             DefineAdditionalProperties();
         }
 
