@@ -16,6 +16,7 @@ overrides:
     words:
       - gbps
       - lacp
+      - PLIP
       - TLSDHEDSSWITH
       - TLSDHEDSSWITHAES
       - TLSDHERSAWITHAES

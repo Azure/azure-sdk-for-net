@@ -124,6 +124,16 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsCollectionDefined(Authorizations))
+            {
+                writer.WritePropertyName("authorizations"u8);
+                writer.WriteStartArray();
+                foreach (ExpressRouteLagAuthorizationData item in Authorizations)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
             if (options.Format != "W" && Optional.IsDefined(AllocationDate))
             {
                 writer.WritePropertyName("allocationDate"u8);
@@ -209,6 +219,7 @@ namespace Azure.ResourceManager.Network.Models
             string etherType = default;
             IList<ExpressRouteLagLink> links = default;
             IReadOnlyList<NetworkSubResource> circuits = default;
+            IList<ExpressRouteLagAuthorizationData> authorizations = default;
             string allocationDate = default;
             NetworkProvisioningState? provisioningState = default;
             string resourceGuid = default;
@@ -289,6 +300,20 @@ namespace Azure.ResourceManager.Network.Models
                     circuits = array;
                     continue;
                 }
+                if (prop.NameEquals("authorizations"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<ExpressRouteLagAuthorizationData> array = new List<ExpressRouteLagAuthorizationData>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        array.Add(ExpressRouteLagAuthorizationData.DeserializeExpressRouteLagAuthorizationData(item, options));
+                    }
+                    authorizations = array;
+                    continue;
+                }
                 if (prop.NameEquals("allocationDate"u8))
                 {
                     allocationDate = prop.Value.GetString();
@@ -358,6 +383,7 @@ namespace Azure.ResourceManager.Network.Models
                 etherType,
                 links ?? new ChangeTrackingList<ExpressRouteLagLink>(),
                 circuits ?? new ChangeTrackingList<NetworkSubResource>(),
+                authorizations ?? new ChangeTrackingList<ExpressRouteLagAuthorizationData>(),
                 allocationDate,
                 provisioningState,
                 resourceGuid,

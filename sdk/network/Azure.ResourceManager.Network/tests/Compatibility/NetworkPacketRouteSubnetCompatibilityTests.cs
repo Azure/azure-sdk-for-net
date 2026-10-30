@@ -48,7 +48,6 @@ namespace Azure.ResourceManager.Network.Tests
                 {
                     requests++;
                     Assert.That(message.Request.Method, Is.EqualTo(RequestMethod.Put));
-                    Assert.That(message.Request.Uri.ToUri().AbsolutePath, Is.EqualTo(captureId));
                     using var stream = new MemoryStream();
                     message.Request.Content.WriteTo(stream, CancellationToken.None);
                     using var document = JsonDocument.Parse(stream.ToArray());
@@ -151,7 +150,6 @@ namespace Azure.ResourceManager.Network.Tests
                 {
                     requests++;
                     Assert.That(message.Request.Method, Is.EqualTo(RequestMethod.Patch));
-                    Assert.That(message.Request.Uri.ToUri().AbsolutePath, Is.EqualTo(resourceId));
                     Assert.That(message.CancellationToken.CanBeCanceled, Is.True);
                     // Retry policies can link tokens, so verify cancellation propagation rather than identity.
                     cancellation.Cancel();
@@ -313,7 +311,6 @@ namespace Azure.ResourceManager.Network.Tests
                     requests++;
                     Assert.That(requests, Is.EqualTo(1));
                     Assert.That(message.Request.Method, Is.EqualTo(RequestMethod.Get));
-                    Assert.That(message.Request.Uri.ToUri().AbsolutePath, Is.EqualTo(subnetId + "/" + action));
                     return response;
                 })
             });

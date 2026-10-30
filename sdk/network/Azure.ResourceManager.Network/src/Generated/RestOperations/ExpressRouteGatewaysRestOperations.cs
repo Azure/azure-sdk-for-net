@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Network
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Network/expressRouteGateways/", false);
             uri.AppendPath(expressRouteGatewayName, true);
-            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Network/expressRouteGateways") ?? "2026-01-01", true);
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Network/expressRouteGateways") ?? "2026-03-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Network
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Network/expressRouteGateways/", false);
             uri.AppendPath(expressRouteGatewayName, true);
-            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Network/expressRouteGateways") ?? "2026-01-01", true);
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Network/expressRouteGateways") ?? "2026-03-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Network
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Network/expressRouteGateways/", false);
             uri.AppendPath(expressRouteGatewayName, true);
-            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Network/expressRouteGateways") ?? "2026-01-01", true);
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Network/expressRouteGateways") ?? "2026-03-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.Network
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Network/expressRouteGateways/", false);
             uri.AppendPath(expressRouteGatewayName, true);
-            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Network/expressRouteGateways") ?? "2026-01-01", true);
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Network/expressRouteGateways") ?? "2026-03-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Network
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Network/expressRouteGateways", false);
-            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Network/expressRouteGateways") ?? "2026-01-01", true);
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Network/expressRouteGateways") ?? "2026-03-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.Network
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/providers/Microsoft.Network/expressRouteGateways", false);
-            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Network/expressRouteGateways") ?? "2026-01-01", true);
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Network/expressRouteGateways") ?? "2026-03-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.Network
             uri.AppendPath("/providers/Microsoft.Network/expressRouteGateways/", false);
             uri.AppendPath(expressRouteGatewayName, true);
             uri.AppendPath("/getFailoverAllTestsDetails", false);
-            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Network/expressRouteGateways") ?? "2026-01-01", true);
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Network/expressRouteGateways") ?? "2026-03-01", true);
             if (@type != null)
             {
                 uri.AppendQuery("type", @type, true);
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.Network
             uri.AppendPath("/providers/Microsoft.Network/expressRouteGateways/", false);
             uri.AppendPath(expressRouteGatewayName, true);
             uri.AppendPath("/getFailoverSingleTestDetails", false);
-            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Network/expressRouteGateways") ?? "2026-01-01", true);
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Network/expressRouteGateways") ?? "2026-03-01", true);
             uri.AppendQuery("peeringLocation", peeringLocation, true);
             uri.AppendQuery("failoverTestId", failoverTestId, true);
             HttpMessage message = Pipeline.CreateMessage();
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.Network
             uri.AppendPath("/providers/Microsoft.Network/expressRouteGateways/", false);
             uri.AppendPath(expressRouteGatewayName, true);
             uri.AppendPath("/startSiteFailoverTest", false);
-            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Network/expressRouteGateways") ?? "2026-01-01", true);
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Network/expressRouteGateways") ?? "2026-03-01", true);
             uri.AppendQuery("peeringLocation", peeringLocation, true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.Network
             uri.AppendPath("/providers/Microsoft.Network/expressRouteGateways/", false);
             uri.AppendPath(expressRouteGatewayName, true);
             uri.AppendPath("/stopSiteFailoverTest", false);
-            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Network/expressRouteGateways") ?? "2026-01-01", true);
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Network/expressRouteGateways") ?? "2026-03-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -271,7 +271,7 @@ namespace Azure.ResourceManager.Network
             uri.AppendPath("/providers/Microsoft.Network/expressRouteGateways/", false);
             uri.AppendPath(expressRouteGatewayName, true);
             uri.AppendPath("/getRoutesInformation", false);
-            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Network/expressRouteGateways") ?? "2026-01-01", true);
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Network/expressRouteGateways") ?? "2026-03-01", true);
             if (attemptRefresh != null)
             {
                 uri.AppendQuery("attemptRefresh", TypeFormatters.ConvertToString(attemptRefresh), true);
@@ -296,7 +296,7 @@ namespace Azure.ResourceManager.Network
             uri.AppendPath("/providers/Microsoft.Network/expressRouteGateways/", false);
             uri.AppendPath(expressRouteGatewayName, true);
             uri.AppendPath("/getResiliencyInformation", false);
-            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Network/expressRouteGateways") ?? "2026-01-01", true);
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Network/expressRouteGateways") ?? "2026-03-01", true);
             if (attemptRefresh != null)
             {
                 uri.AppendQuery("attemptRefresh", TypeFormatters.ConvertToString(attemptRefresh), true);

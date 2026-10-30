@@ -61,10 +61,10 @@ namespace Azure.ResourceManager.Network
                 Pipeline,
                 Diagnostics.ApplicationId,
                 Endpoint,
-                loadBalancerApiVersion ?? "2026-01-01",
+                loadBalancerApiVersion ?? "2026-03-01",
                 resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             _loadBalancerNetworkInterfacesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, Diagnostics);
-            _loadBalancerNetworkInterfacesRestClient = new LoadBalancerNetworkInterfaces(_loadBalancerNetworkInterfacesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, loadBalancerApiVersion ?? "2026-01-01");
+            _loadBalancerNetworkInterfacesRestClient = new LoadBalancerNetworkInterfaces(_loadBalancerNetworkInterfacesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, loadBalancerApiVersion ?? "2026-03-01");
             ValidateResourceId(id);
         }
 
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -269,7 +269,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -370,7 +370,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -419,7 +419,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -457,7 +457,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -495,7 +495,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -544,7 +544,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>

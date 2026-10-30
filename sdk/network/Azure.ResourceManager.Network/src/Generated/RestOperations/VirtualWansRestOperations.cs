@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Network
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Network/virtualWans/", false);
             uri.AppendPath(virtualWanName, true);
-            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Network/virtualWans") ?? "2026-01-01", true);
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Network/virtualWans") ?? "2026-03-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Network
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Network/virtualWans/", false);
             uri.AppendPath(virtualWanName, true);
-            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Network/virtualWans") ?? "2026-01-01", true);
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Network/virtualWans") ?? "2026-03-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Network
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Network/virtualWans/", false);
             uri.AppendPath(virtualWANName, true);
-            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Network/virtualWans") ?? "2026-01-01", true);
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Network/virtualWans") ?? "2026-03-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.Network
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Network/virtualWans/", false);
             uri.AppendPath(virtualWANName, true);
-            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Network/virtualWans") ?? "2026-01-01", true);
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Network/virtualWans") ?? "2026-03-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Network
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Network/virtualWans", false);
-            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Network/virtualWans") ?? "2026-01-01", true);
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Network/virtualWans") ?? "2026-03-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.Network
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            uri.UpdateQuery("api-version", _getApiVersion?.Invoke("Microsoft.Network/virtualWans") ?? "2026-01-01");
+            uri.UpdateQuery("api-version", _getApiVersion?.Invoke("Microsoft.Network/virtualWans") ?? "2026-03-01");
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.Network
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/providers/Microsoft.Network/virtualWans", false);
-            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Network/virtualWans") ?? "2026-01-01", true);
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Network/virtualWans") ?? "2026-03-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.Network
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            uri.UpdateQuery("api-version", _getApiVersion?.Invoke("Microsoft.Network/virtualWans") ?? "2026-01-01");
+            uri.UpdateQuery("api-version", _getApiVersion?.Invoke("Microsoft.Network/virtualWans") ?? "2026-03-01");
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.Network
             uri.AppendPath("/providers/Microsoft.Network/virtualWans/", false);
             uri.AppendPath(virtualWANName, true);
             uri.AppendPath("/supportedSecurityProviders", false);
-            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Network/virtualWans") ?? "2026-01-01", true);
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Network/virtualWans") ?? "2026-03-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -237,7 +237,7 @@ namespace Azure.ResourceManager.Network
             uri.AppendPath("/providers/Microsoft.Network/virtualWans/", false);
             uri.AppendPath(virtualWANName, true);
             uri.AppendPath("/generateVpnProfile", false);
-            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Network/virtualWans") ?? "2026-01-01", true);
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Network/virtualWans") ?? "2026-03-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
