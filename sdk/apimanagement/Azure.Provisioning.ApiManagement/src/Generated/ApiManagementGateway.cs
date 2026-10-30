@@ -154,7 +154,7 @@ namespace Azure.Provisioning.ApiManagement
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _properties = DefineModelProperty<GatewayContractProperties>(nameof(Properties), new string[] { "properties" });
             _identity = DefineModelProperty<ManagedServiceIdentity>(nameof(Identity), new string[] { "identity" });
-            _parent = DefineResource<ApiManagementService>(nameof(Parent), new string[] { "parent" }, isRequired: true);
+            _parent = DefineResource<ApiManagementService>(nameof(Parent), new string[] { "parent" });
             DefineAdditionalProperties();
         }
 

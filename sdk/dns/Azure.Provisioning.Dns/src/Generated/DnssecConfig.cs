@@ -41,13 +41,18 @@ namespace Azure.Provisioning.Dns
             }
         }
 
-        /// <summary> Gets the Name. </summary>
+        /// <summary> Gets or sets the Name. </summary>
         public BicepValue<string> Name
         {
             get
             {
                 Initialize();
                 return _name;
+            }
+            set
+            {
+                Initialize();
+                _name.Assign(value);
             }
         }
 
@@ -128,7 +133,7 @@ namespace Azure.Provisioning.Dns
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _properties = DefineModelProperty<DnssecProperties>(nameof(Properties), new string[] { "properties" }, isOutput: true);
             _eTag = DefineProperty<ETag>(nameof(ETag), new string[] { "etag" });
-            _parent = DefineResource<DnsZone>(nameof(Parent), new string[] { "parent" }, isRequired: true);
+            _parent = DefineResource<DnsZone>(nameof(Parent), new string[] { "parent" });
             DefineAdditionalProperties();
         }
 

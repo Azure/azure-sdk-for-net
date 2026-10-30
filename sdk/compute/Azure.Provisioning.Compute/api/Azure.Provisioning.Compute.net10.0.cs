@@ -3297,7 +3297,7 @@ namespace Azure.Provisioning.Compute
         public Azure.Provisioning.Compute.ComputeApiError Error { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.AzureLocation> Location { get { throw null; } }
-        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.Compute.VirtualMachineScaleSet Parent { get { throw null; } set { } }
         public Azure.Provisioning.Compute.RollingUpgradePolicy Policy { get { throw null; } }
         public Azure.Provisioning.Compute.RollingUpgradeProgressInfo Progress { get { throw null; } }

@@ -147,7 +147,7 @@ namespace Azure.Provisioning.Network
             _tags = DefineDictionaryProperty<string>(nameof(Tags), new string[] { "tags" });
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _properties = DefineModelProperty<ConnectionAnalyzerProperties>(nameof(Properties), new string[] { "properties" }, isRequired: true);
-            _parent = DefineResource<NetworkWatcher>(nameof(Parent), new string[] { "parent" }, isRequired: true);
+            _parent = DefineResource<NetworkWatcher>(nameof(Parent), new string[] { "parent" });
             DefineAdditionalProperties();
         }
 
