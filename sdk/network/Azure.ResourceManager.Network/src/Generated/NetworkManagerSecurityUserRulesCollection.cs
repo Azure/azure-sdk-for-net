@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Network
     /// <summary>
     /// A class representing a collection of <see cref="NetworkManagerSecurityUserRulesResource"/> and their operations.
     /// Each <see cref="NetworkManagerSecurityUserRulesResource"/> in the collection will belong to the same instance of <see cref="NetworkManagerSecurityUserConfigurationResource"/>.
-    /// To get a <see cref="NetworkManagerSecurityUserRulesCollection"/> instance call the GetNetworkManagerSecurityUserRules method from an instance of <see cref="NetworkManagerSecurityUserConfigurationResource"/>.
+    /// To get a <see cref="NetworkManagerSecurityUserRulesCollection"/> instance call the GetAllNetworkManagerSecurityUserRules method from an instance of <see cref="NetworkManagerSecurityUserConfigurationResource"/>.
     /// </summary>
     public partial class NetworkManagerSecurityUserRulesCollection : ArmCollection, IEnumerable<NetworkManagerSecurityUserRulesResource>, IAsyncEnumerable<NetworkManagerSecurityUserRulesResource>
     {
