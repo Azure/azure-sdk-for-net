@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Redis
     /// <summary>
     /// A class representing a collection of <see cref="RedisResource"/> and their operations.
     /// Each <see cref="RedisResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
-    /// To get a <see cref="RedisCollection"/> instance call the GetRedis method from an instance of <see cref="ResourceGroupResource"/>.
+    /// To get a <see cref="RedisCollection"/> instance call the GetAllRedis method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
     public partial class RedisCollection : ArmCollection, IEnumerable<RedisResource>, IAsyncEnumerable<RedisResource>
     {
