@@ -2,12 +2,15 @@
 
 ## Status
 
-This document records the investigation and design decision for the generated .NET
-model factory API. The decision is to preserve the existing public, model-specific
-factory API and address its implementation complexity by moving property flattening
-to the upstream TypeSpec C# generator.
+We investigated the existing generated .NET model factory API and the viable
+alternatives described in this document. Each alternative has significant API,
+compatibility, usability, or runtime tradeoffs, and none is sufficiently better to
+replace the existing API at this time. We will therefore keep the existing public,
+model-specific factory API for now.
 
-The implementation is tracked by:
+This is not a conclusion that the current API or its implementation is ideal. Two
+known flattening issues should still be addressed to reduce generator complexity
+while leaving the customer-facing API unchanged. The work is tracked by:
 
 - [microsoft/typespec#12414](https://github.com/microsoft/typespec/issues/12414),
   which moves explicit and safe property flattening into the upstream TypeSpec C#
@@ -42,7 +45,7 @@ scenario and API comparison are captured in the
 
 ## Requirements
 
-The selected design must:
+Any replacement design must:
 
 - Let tests construct output and incomplete models without service validation.
 - Preserve strong typing, IntelliSense, and compile-time validation.
@@ -141,7 +144,8 @@ Costs:
 - The current downstream flattening architecture makes implementation and
   compatibility repair difficult.
 
-The final decision is to keep this public API and fix the flattening architecture.
+The current decision is to keep this public API for now and independently simplify
+the flattening architecture.
 
 ### Virtual Properties
 
@@ -170,8 +174,9 @@ Across two VM serialization runs, wire-format serialization was approximately
 microbenchmarks on one virtualized host, but they demonstrate that virtual dispatch
 is not free and can accumulate when serializers read many properties.
 
-This option was not selected because it changes all model consumers to optimize a
-narrower mocking scenario and does not replace the full model factory capability.
+This option was not adopted at this time because it changes all model consumers to
+optimize a narrower mocking scenario and does not replace the full model factory
+capability.
 
 ### Init-only Properties
 
@@ -264,10 +269,10 @@ with five properties. Creating a shallow copy from `current` with one flattened
 override measured 726 ns and 736 B. A normal VM constructor, which performs less
 work and is only a lower-bound reference, measured 50.85 ns and 240 B.
 
-This option was not selected because it trades the current API's strongest customer
-properties, compile-time validation and IntelliSense, for runtime machinery and a
-new copy contract. It remains useful evidence that changing the public API is not
-necessary to solve the generator problem.
+This option was not adopted at this time because it trades the current API's
+strongest customer properties, compile-time validation and IntelliSense, for runtime
+machinery and a new copy contract. It remains useful evidence that changing the
+public API is not necessary to solve the generator problem.
 
 ## Comparison
 
@@ -284,18 +289,21 @@ necessary to solve the generator problem.
 
 ## Decision
 
-Keep the existing public model-specific factory API unchanged.
+Keep the existing public model-specific factory API unchanged for now.
 
-The API's strong typing, discoverability, support for incomplete models, and shipped
-compatibility contract outweigh the benefit of replacing it. The investigation did
-not identify an alternative that preserved all of those properties while reducing
-risk for customers.
+The investigation did not identify a clearly better replacement. Virtual properties,
+init-only properties, and a generic factory each improve part of the experience, but
+each also introduces substantial capability, compatibility, usability, or runtime
+tradeoffs. The existing API has its own drawbacks, including large signatures and
+compatibility overhead, but replacing it now would exchange those known problems for
+a different set of unresolved problems.
 
-Instead, make flattening a first-class upstream model transformation. MTG must know
-the final flattened property and constructor shape before it generates current and
-historical model factory methods. Factory generation should then consume that final
-shape directly rather than relying on MPG to rewrite generated factories and repair
-their bodies afterward.
+Separately, address two known flattening issues that make the current generator more
+complex than necessary. Make flattening a first-class upstream model transformation
+so MTG knows the final flattened property and constructor shape before it generates
+current and historical model factory methods. Factory generation should then consume
+that final shape directly rather than relying on MPG to rewrite generated factories
+and repair their bodies afterward.
 
 This decision does not require any customer migration. Existing model-specific calls
 such as `ArmComputeModelFactory.VirtualMachineData(...)`, including retained
