@@ -23,6 +23,7 @@ namespace Azure.ResourceManager.Cdn.Models
         public FrontDoorCustomDomainHttpsContent(FrontDoorCertificateType certificateType)
         {
             CertificateType = certificateType;
+            ServerTlsGroups = new ChangeTrackingList<AfdServerTlsGroup>();
         }
 
         /// <summary> Initializes a new instance of <see cref="FrontDoorCustomDomainHttpsContent"/>. </summary>
@@ -30,14 +31,18 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="cipherSuiteSetType"> cipher suite set type that will be used for Https. </param>
         /// <param name="minimumTlsVersion"> TLS protocol version that will be used for Https when cipherSuiteSetType is Customized. </param>
         /// <param name="customizedCipherSuiteSet"> Customized cipher suites object that will be used for Https when cipherSuiteSetType is Customized. </param>
+        /// <param name="serverTlsGroupPolicy"> Server TLS group policy that will be used for Https. </param>
+        /// <param name="serverTlsGroups"> Server TLS groups that will be used for Https when serverTlsGroupPolicy is Custom. </param>
         /// <param name="secret"> Resource reference to the secret. ie. subs/rg/profile/secret. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal FrontDoorCustomDomainHttpsContent(FrontDoorCertificateType certificateType, AfdCipherSuiteSetType? cipherSuiteSetType, FrontDoorMinimumTlsVersion? minimumTlsVersion, FrontDoorCustomDomainHttpsCustomizedCipherSuiteSet customizedCipherSuiteSet, CdnResourceReference secret, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal FrontDoorCustomDomainHttpsContent(FrontDoorCertificateType certificateType, AfdCipherSuiteSetType? cipherSuiteSetType, FrontDoorMinimumTlsVersion? minimumTlsVersion, FrontDoorCustomDomainHttpsCustomizedCipherSuiteSet customizedCipherSuiteSet, AfdServerTlsGroupPolicy? serverTlsGroupPolicy, IList<AfdServerTlsGroup> serverTlsGroups, CdnResourceReference secret, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             CertificateType = certificateType;
             CipherSuiteSetType = cipherSuiteSetType;
             MinimumTlsVersion = minimumTlsVersion;
             CustomizedCipherSuiteSet = customizedCipherSuiteSet;
+            ServerTlsGroupPolicy = serverTlsGroupPolicy;
+            ServerTlsGroups = serverTlsGroups;
             Secret = secret;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -57,6 +62,14 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> Customized cipher suites object that will be used for Https when cipherSuiteSetType is Customized. </summary>
         [WirePath("customizedCipherSuiteSet")]
         public FrontDoorCustomDomainHttpsCustomizedCipherSuiteSet CustomizedCipherSuiteSet { get; set; }
+
+        /// <summary> Server TLS group policy that will be used for Https. </summary>
+        [WirePath("serverTlsGroupPolicy")]
+        public AfdServerTlsGroupPolicy? ServerTlsGroupPolicy { get; set; }
+
+        /// <summary> Server TLS groups that will be used for Https when serverTlsGroupPolicy is Custom. </summary>
+        [WirePath("serverTlsGroups")]
+        public IList<AfdServerTlsGroup> ServerTlsGroups { get; }
 
         /// <summary> Resource reference to the secret. ie. subs/rg/profile/secret. </summary>
         [WirePath("secret")]
