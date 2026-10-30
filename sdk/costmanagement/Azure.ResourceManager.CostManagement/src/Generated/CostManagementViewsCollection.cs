@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.CostManagement
     /// <summary>
     /// A class representing a collection of <see cref="CostManagementViewsResource"/> and their operations.
     /// Each <see cref="CostManagementViewsResource"/> in the collection will belong to the same instance of <see cref="ArmResource"/>.
-    /// To get a <see cref="CostManagementViewsCollection"/> instance call the GetCostManagementViews method from an instance of <see cref="ArmResource"/>.
+    /// To get a <see cref="CostManagementViewsCollection"/> instance call the GetAllCostManagementViews method from an instance of <see cref="ArmResource"/>.
     /// </summary>
     public partial class CostManagementViewsCollection : ArmCollection, IEnumerable<CostManagementViewsResource>, IAsyncEnumerable<CostManagementViewsResource>
     {

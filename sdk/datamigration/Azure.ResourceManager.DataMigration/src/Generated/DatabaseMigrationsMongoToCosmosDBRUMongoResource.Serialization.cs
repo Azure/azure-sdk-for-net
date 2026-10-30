@@ -12,7 +12,7 @@ using System.Text.Json;
 namespace Azure.ResourceManager.DataMigration
 {
     /// <summary></summary>
-    public partial class DatabaseMigrationsMongoToCosmosDbRUMongoResource : IJsonModel<DatabaseMigrationCosmosDBMongoData>
+    public partial class DatabaseMigrationsMongoToCosmosDBRUMongoResource : IJsonModel<DatabaseMigrationCosmosDBMongoData>
     {
         private static IJsonModel<DatabaseMigrationCosmosDBMongoData> s_dataDeserializationInstance;
 

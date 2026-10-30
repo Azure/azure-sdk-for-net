@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.BillingBenefits
     /// <summary>
     /// A class representing a collection of <see cref="FreeServicesResource"/> and their operations.
     /// Each <see cref="FreeServicesResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
-    /// To get a <see cref="FreeServicesCollection"/> instance call the GetFreeServices method from an instance of <see cref="ResourceGroupResource"/>.
+    /// To get a <see cref="FreeServicesCollection"/> instance call the GetAllFreeServices method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
     public partial class FreeServicesCollection : ArmCollection, IEnumerable<FreeServicesResource>, IAsyncEnumerable<FreeServicesResource>
     {

@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.ResilienceManagement
     /// <summary>
     /// A class representing a collection of <see cref="RecoveryMembersResource"/> and their operations.
     /// Each <see cref="RecoveryMembersResource"/> in the collection will belong to the same instance of <see cref="RecoveryPlanResource"/>.
-    /// To get a <see cref="RecoveryMembersCollection"/> instance call the GetRecoveryMembers method from an instance of <see cref="RecoveryPlanResource"/>.
+    /// To get a <see cref="RecoveryMembersCollection"/> instance call the GetAllRecoveryMembers method from an instance of <see cref="RecoveryPlanResource"/>.
     /// </summary>
     public partial class RecoveryMembersCollection : ArmCollection, IEnumerable<RecoveryMembersResource>, IAsyncEnumerable<RecoveryMembersResource>
     {

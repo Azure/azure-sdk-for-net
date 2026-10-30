@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.LoadTesting
     /// <summary>
     /// A class representing a collection of <see cref="LoadTestingQuotaResource"/> and their operations.
     /// Each <see cref="LoadTestingQuotaResource"/> in the collection will belong to the same instance of <see cref="SubscriptionResource"/>.
-    /// To get a <see cref="LoadTestingQuotaCollection"/> instance call the GetLoadTestingQuotas method from an instance of <see cref="SubscriptionResource"/>.
+    /// To get a <see cref="LoadTestingQuotaCollection"/> instance call the GetAllLoadTestingQuota method from an instance of <see cref="SubscriptionResource"/>.
     /// </summary>
     public partial class LoadTestingQuotaCollection : ArmCollection, IEnumerable<LoadTestingQuotaResource>, IAsyncEnumerable<LoadTestingQuotaResource>
     {

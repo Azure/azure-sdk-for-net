@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.SecurityCenter
     /// <summary>
     /// A class representing a collection of <see cref="SubscriptionAssessmentMetadataResource"/> and their operations.
     /// Each <see cref="SubscriptionAssessmentMetadataResource"/> in the collection will belong to the same instance of <see cref="SubscriptionResource"/>.
-    /// To get a <see cref="SubscriptionAssessmentMetadataCollection"/> instance call the GetSubscriptionAssessmentMetadatas method from an instance of <see cref="SubscriptionResource"/>.
+    /// To get a <see cref="SubscriptionAssessmentMetadataCollection"/> instance call the GetAllSubscriptionAssessmentMetadata method from an instance of <see cref="SubscriptionResource"/>.
     /// </summary>
     public partial class SubscriptionAssessmentMetadataCollection : ArmCollection, IEnumerable<SubscriptionAssessmentMetadataResource>, IAsyncEnumerable<SubscriptionAssessmentMetadataResource>
     {

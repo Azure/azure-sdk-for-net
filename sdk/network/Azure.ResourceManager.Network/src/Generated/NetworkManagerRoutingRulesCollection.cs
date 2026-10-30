@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Network
     /// <summary>
     /// A class representing a collection of <see cref="NetworkManagerRoutingRulesResource"/> and their operations.
     /// Each <see cref="NetworkManagerRoutingRulesResource"/> in the collection will belong to the same instance of <see cref="NetworkManagerRoutingConfigurationResource"/>.
-    /// To get a <see cref="NetworkManagerRoutingRulesCollection"/> instance call the GetNetworkManagerRoutingRules method from an instance of <see cref="NetworkManagerRoutingConfigurationResource"/>.
+    /// To get a <see cref="NetworkManagerRoutingRulesCollection"/> instance call the GetAllNetworkManagerRoutingRules method from an instance of <see cref="NetworkManagerRoutingConfigurationResource"/>.
     /// </summary>
     public partial class NetworkManagerRoutingRulesCollection : ArmCollection, IEnumerable<NetworkManagerRoutingRulesResource>, IAsyncEnumerable<NetworkManagerRoutingRulesResource>
     {
