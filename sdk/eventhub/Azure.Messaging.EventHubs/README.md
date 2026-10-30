@@ -361,6 +361,98 @@ public void ConfigureServices(IServiceCollection services)
 
 For more details, see [Dependency injection with the Azure SDK for .NET](https://learn.microsoft.com/dotnet/azure/sdk/dependency-injection).
 
+#### Types that are not registered with dependency injection
+
+The `EventProcessorClient`, other event processor types derived from `EventProcessor<TPartition>`, and the `EventHubBufferedProducerClient` are intentionally not available for registration with `AddAzureClients`.  These types run continuous background work once started, so the application must explicitly configure them, start them, and stop them when it is done.  Their lifetime is tied to that processing rather than to the dependency injection container, so a general registration pattern is not a good fit.
+
+The recommended approach for an ASP.NET Core or Worker Service application is to create and own the processor inside a hosted service, starting it when the host starts and stopping it when the host shuts down.  The dependencies the processor needs, such as the credential and the `BlobContainerClient` used for checkpoints, can still be provided through dependency injection.
+
+```csharp
+public class EventProcessorService : BackgroundService
+{
+    private readonly EventProcessorClient _processor;
+
+    public EventProcessorService(BlobContainerClient checkpointStore, TokenCredential credential)
+    {
+        var fullyQualifiedNamespace = "<< NAMESPACE (likely similar to {your-namespace}.servicebus.windows.net) >>";
+        var eventHubName = "<< NAME OF THE EVENT HUB >>";
+        var consumerGroup = "<< NAME OF THE EVENT HUB CONSUMER GROUP >>";
+
+        _processor = new EventProcessorClient(
+            checkpointStore,
+            consumerGroup,
+            fullyQualifiedNamespace,
+            eventHubName,
+            credential);
+
+        _processor.ProcessEventAsync += ProcessEventHandler;
+        _processor.ProcessErrorAsync += ProcessErrorHandler;
+    }
+
+    protected override async Task ExecuteAsync(CancellationToken stoppingToken)
+    {
+        await _processor.StartProcessingAsync(stoppingToken);
+
+        try
+        {
+            // The processor runs in the background; keep this service alive until the host shuts down.
+            await Task.Delay(Timeout.Infinite, stoppingToken);
+        }
+        catch (OperationCanceledException)
+        {
+            // Expected when the host is stopping.
+        }
+    }
+
+    public override async Task StopAsync(CancellationToken cancellationToken)
+    {
+        try
+        {
+            // The host's token may already be canceled if shutdown is running out of time; stopping
+            // without it allows the processor to complete cleanup and relinquish partition ownership.
+            await _processor.StopProcessingAsync();
+        }
+        finally
+        {
+            _processor.ProcessEventAsync -= ProcessEventHandler;
+            _processor.ProcessErrorAsync -= ProcessErrorHandler;
+        }
+
+        await base.StopAsync(cancellationToken);
+    }
+
+    private Task ProcessEventHandler(ProcessEventArgs args)
+    {
+        // Process the event and, when appropriate, call args.UpdateCheckpointAsync().
+        return Task.CompletedTask;
+    }
+
+    private Task ProcessErrorHandler(ProcessErrorEventArgs args)
+    {
+        // Log or otherwise handle the error.  The processor will attempt to recover.
+        return Task.CompletedTask;
+    }
+}
+```
+
+Register the supporting dependencies and the hosted service at startup:
+
+```csharp
+var storageAccountEndpoint = "<< Account Uri (likely similar to https://{your-account}.blob.core.windows.net) >>";
+var blobContainerName = "<< NAME OF THE BLOB CONTAINER >>";
+
+builder.Services.AddSingleton<TokenCredential>(new DefaultAzureCredential());
+
+builder.Services.AddSingleton(serviceProvider =>
+    new BlobContainerClient(
+        new Uri($"{ storageAccountEndpoint }/{ blobContainerName }"),
+        serviceProvider.GetRequiredService<TokenCredential>()));
+
+builder.Services.AddHostedService<EventProcessorService>();
+```
+
+The same pattern applies to the `EventHubBufferedProducerClient`: create it in a hosted service or another component that the application owns, and call `CloseAsync` or `DisposeAsync` when the application stops so that any buffered events are published before shutdown.
+
 ## Troubleshooting
 
 For detailed troubleshooting information, please refer to the [Event Hubs Troubleshooting Guide](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/eventhub/Azure.Messaging.EventHubs/TROUBLESHOOTING.md).
