@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using Azure;
 using Azure.Provisioning;
 
 namespace Azure.Provisioning.Network
@@ -14,7 +15,7 @@ namespace Azure.Provisioning.Network
     {
         private BicepValue<string> _name;
         private BicepValue<string> _id;
-        private BicepValue<string> _eTag;
+        private BicepValue<ETag> _eTag;
         private BicepValue<string> _type;
         private DdosMitigationRulePropertiesFormat _properties;
 
@@ -49,7 +50,7 @@ namespace Azure.Provisioning.Network
         }
 
         /// <summary> Gets the ETag. </summary>
-        public BicepValue<string> ETag
+        public BicepValue<ETag> ETag
         {
             get
             {
@@ -89,7 +90,7 @@ namespace Azure.Provisioning.Network
             base.DefineProvisionableProperties();
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _id = DefineProperty<string>(nameof(Id), new string[] { "id" }, isOutput: true);
-            _eTag = DefineProperty<string>(nameof(ETag), new string[] { "etag" }, isOutput: true);
+            _eTag = DefineProperty<ETag>(nameof(ETag), new string[] { "etag" }, isOutput: true);
             _type = DefineProperty<string>(nameof(Type), new string[] { "type" }, isOutput: true);
             _properties = DefineModelProperty<DdosMitigationRulePropertiesFormat>(nameof(Properties), new string[] { "properties" }, isRequired: true);
             DefineAdditionalProperties();

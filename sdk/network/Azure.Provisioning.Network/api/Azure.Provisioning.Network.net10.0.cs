@@ -2323,7 +2323,7 @@ namespace Azure.Provisioning.Network
     public partial class DdosMitigationRule : Azure.Provisioning.Network.NetworkSubResource
     {
         public DdosMitigationRule() { }
-        public Azure.Provisioning.BicepValue<string> ETag { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.ETag> ETag { get { throw null; } }
         public new Azure.Provisioning.BicepValue<string> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.Network.DdosMitigationRulePropertiesFormat Properties { get { throw null; } set { } }
@@ -2954,7 +2954,7 @@ namespace Azure.Provisioning.Network
     public partial class ExpressRouteLagAuthorization : Azure.Provisioning.Primitives.ProvisionableResource
     {
         public ExpressRouteLagAuthorization(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
-        public Azure.Provisioning.BicepValue<string> ETag { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.ETag> ETag { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.Network.ExpressRouteLag Parent { get { throw null; } set { } }
