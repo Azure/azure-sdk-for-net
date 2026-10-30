@@ -21,6 +21,10 @@ namespace Azure.Search.Documents.Indexes.Models
         private const string GroupIdsValue = "groupIds";
         /// <summary> Field represents an RBAC scope that should be used to filter document access on queries. </summary>
         private const string RbacScopeValue = "rbacScope";
+        /// <summary> Field represents the OneLake parent folder paths of the source item that should be used to filter document access on queries. The index must also specify 'oneLakeSecuritySource'. </summary>
+        private const string OneLakeParentFoldersValue = "oneLakeParentFolders";
+        /// <summary> Field represents a OneLake lakehouse ID that should be used to filter document access on queries. The index must also specify 'oneLakeSecuritySource'. </summary>
+        private const string OneLakeLakehouseIdValue = "oneLakeLakehouseId";
 
         /// <summary> Initializes a new instance of <see cref="PermissionFilter"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -40,6 +44,12 @@ namespace Azure.Search.Documents.Indexes.Models
 
         /// <summary> Field represents an RBAC scope that should be used to filter document access on queries. </summary>
         public static PermissionFilter RbacScope { get; } = new PermissionFilter(RbacScopeValue);
+
+        /// <summary> Field represents the OneLake parent folder paths of the source item that should be used to filter document access on queries. The index must also specify 'oneLakeSecuritySource'. </summary>
+        public static PermissionFilter OneLakeParentFolders { get; } = new PermissionFilter(OneLakeParentFoldersValue);
+
+        /// <summary> Field represents a OneLake lakehouse ID that should be used to filter document access on queries. The index must also specify 'oneLakeSecuritySource'. </summary>
+        public static PermissionFilter OneLakeLakehouseId { get; } = new PermissionFilter(OneLakeLakehouseIdValue);
 
         /// <summary> Determines if two <see cref="PermissionFilter"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

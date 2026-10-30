@@ -130,6 +130,11 @@ namespace Azure.Search.Documents.Models
                 writer.WritePropertyName("minimumCoverage"u8);
                 writer.WriteNumberValue(MinimumCoverage.Value);
             }
+            if (Optional.IsDefined(MoreLikeThis))
+            {
+                writer.WritePropertyName("moreLikeThis"u8);
+                writer.WriteStringValue(MoreLikeThis);
+            }
             if (Optional.IsCollectionDefined(OrderBy))
             {
                 writer.WritePropertyName("orderby"u8);
@@ -139,6 +144,11 @@ namespace Azure.Search.Documents.Models
             {
                 writer.WritePropertyName("queryType"u8);
                 writer.WriteStringValue(QueryType.Value.ToSerialString());
+            }
+            if (Optional.IsDefined(AgenticOptions))
+            {
+                writer.WritePropertyName("agenticOptions"u8);
+                writer.WriteObjectValue(AgenticOptions, options);
             }
             if (Optional.IsDefined(ScoringStatistics))
             {
@@ -324,8 +334,10 @@ namespace Azure.Search.Documents.Models
             string highlightPostTag = default;
             string highlightPreTag = default;
             double? minimumCoverage = default;
+            string moreLikeThis = default;
             IList<string> orderBy = default;
             SearchQueryType? queryType = default;
+            AgenticSearchOptions agenticOptions = default;
             ScoringStatistics? scoringStatistics = default;
             string sessionId = default;
             IList<string> scoringParameters = default;
@@ -417,6 +429,11 @@ namespace Azure.Search.Documents.Models
                     minimumCoverage = prop.Value.GetDouble();
                     continue;
                 }
+                if (prop.NameEquals("moreLikeThis"u8))
+                {
+                    moreLikeThis = prop.Value.GetString();
+                    continue;
+                }
                 if (prop.NameEquals("orderby"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -434,6 +451,15 @@ namespace Azure.Search.Documents.Models
                         continue;
                     }
                     queryType = prop.Value.GetString().ToSearchQueryType();
+                    continue;
+                }
+                if (prop.NameEquals("agenticOptions"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    agenticOptions = AgenticSearchOptions.DeserializeAgenticSearchOptions(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("scoringStatistics"u8))
@@ -665,8 +691,10 @@ namespace Azure.Search.Documents.Models
                 highlightPostTag,
                 highlightPreTag,
                 minimumCoverage,
+                moreLikeThis,
                 orderBy ?? new ChangeTrackingList<string>(),
                 queryType,
+                agenticOptions,
                 scoringStatistics,
                 sessionId,
                 scoringParameters ?? new ChangeTrackingList<string>(),

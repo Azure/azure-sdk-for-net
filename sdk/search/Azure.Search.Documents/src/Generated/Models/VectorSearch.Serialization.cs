@@ -114,6 +114,16 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsCollectionDefined(TopicGraphProfiles))
+            {
+                writer.WritePropertyName("topicGraphProfiles"u8);
+                writer.WriteStartArray();
+                foreach (VectorSearchTopicGraphProfile item in TopicGraphProfiles)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -160,6 +170,7 @@ namespace Azure.Search.Documents.Indexes.Models
             IList<VectorSearchAlgorithmConfiguration> algorithms = default;
             IList<VectorSearchVectorizer> vectorizers = default;
             IList<VectorSearchCompression> compressions = default;
+            IList<VectorSearchTopicGraphProfile> topicGraphProfiles = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -219,12 +230,32 @@ namespace Azure.Search.Documents.Indexes.Models
                     compressions = array;
                     continue;
                 }
+                if (prop.NameEquals("topicGraphProfiles"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<VectorSearchTopicGraphProfile> array = new List<VectorSearchTopicGraphProfile>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        array.Add(VectorSearchTopicGraphProfile.DeserializeVectorSearchTopicGraphProfile(item, options));
+                    }
+                    topicGraphProfiles = array;
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new VectorSearch(profiles ?? new ChangeTrackingList<VectorSearchProfile>(), algorithms ?? new ChangeTrackingList<VectorSearchAlgorithmConfiguration>(), vectorizers ?? new ChangeTrackingList<VectorSearchVectorizer>(), compressions ?? new ChangeTrackingList<VectorSearchCompression>(), additionalBinaryDataProperties);
+            return new VectorSearch(
+                profiles ?? new ChangeTrackingList<VectorSearchProfile>(),
+                algorithms ?? new ChangeTrackingList<VectorSearchAlgorithmConfiguration>(),
+                vectorizers ?? new ChangeTrackingList<VectorSearchVectorizer>(),
+                compressions ?? new ChangeTrackingList<VectorSearchCompression>(),
+                topicGraphProfiles ?? new ChangeTrackingList<VectorSearchTopicGraphProfile>(),
+                additionalBinaryDataProperties);
         }
     }
 }

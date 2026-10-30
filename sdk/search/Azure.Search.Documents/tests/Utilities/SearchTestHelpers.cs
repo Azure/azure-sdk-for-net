@@ -87,6 +87,7 @@ namespace Azure.Search.Documents.Tests
             typeof(VectorSearchCompression),
             typeof(VectorSearchVectorizer),
             typeof(VectorQuery),
+            typeof(VectorQueryTopicGraph),
         };
 
         /// <summary>

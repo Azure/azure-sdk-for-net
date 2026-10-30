@@ -33,15 +33,13 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
         /// <param name="count"> The count of documents retrieved that were sufficiently relevant to pass the reranker threshold. </param>
         /// <param name="imageServing"> Statistics about image serving for this retrieval activity. </param>
         /// <param name="indexedOneLakeArguments"> The indexed OneLake arguments for the retrieval activity. </param>
-        /// <param name="queryHintProcessing"> Details about the expressions generated from query hints for this activity. </param>
-        internal KnowledgeBaseIndexedOneLakeActivityRecord(int id, KnowledgeBaseActivityRecordType @type, DateTimeOffset? startedOn, DateTimeOffset? completedOn, int? elapsedMs, KnowledgeBaseErrorDetail error, string warning, IDictionary<string, BinaryData> additionalBinaryDataProperties, string knowledgeSourceName, DateTimeOffset? queryOn, int? count, ImageServingStatistics imageServing, KnowledgeBaseIndexedOneLakeActivityArguments indexedOneLakeArguments, KnowledgeBaseQueryHintProcessing queryHintProcessing) : base(id, @type, startedOn, completedOn, elapsedMs, error, warning, additionalBinaryDataProperties)
+        internal KnowledgeBaseIndexedOneLakeActivityRecord(int id, KnowledgeBaseActivityRecordType @type, DateTimeOffset? startedOn, DateTimeOffset? completedOn, int? elapsedMs, KnowledgeBaseErrorDetail error, string warning, IDictionary<string, BinaryData> additionalBinaryDataProperties, string knowledgeSourceName, DateTimeOffset? queryOn, int? count, ImageServingStatistics imageServing, KnowledgeBaseIndexedOneLakeActivityArguments indexedOneLakeArguments) : base(id, @type, startedOn, completedOn, elapsedMs, error, warning, additionalBinaryDataProperties)
         {
             KnowledgeSourceName = knowledgeSourceName;
             QueryOn = queryOn;
             Count = count;
             ImageServing = imageServing;
             IndexedOneLakeArguments = indexedOneLakeArguments;
-            QueryHintProcessing = queryHintProcessing;
         }
 
         /// <summary> The knowledge source for the retrieval activity. </summary>
@@ -58,8 +56,5 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
 
         /// <summary> The indexed OneLake arguments for the retrieval activity. </summary>
         public KnowledgeBaseIndexedOneLakeActivityArguments IndexedOneLakeArguments { get; }
-
-        /// <summary> Details about the expressions generated from query hints for this activity. </summary>
-        public KnowledgeBaseQueryHintProcessing QueryHintProcessing { get; }
     }
 }

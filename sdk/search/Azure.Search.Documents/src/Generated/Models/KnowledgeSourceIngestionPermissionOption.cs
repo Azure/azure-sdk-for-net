@@ -21,6 +21,10 @@ namespace Azure.Search.Documents.Indexes.Models
         private const string GroupIdsValue = "groupIds";
         /// <summary> Ingest RBAC scope information alongside document content. </summary>
         private const string RbacScopeValue = "rbacScope";
+        /// <summary> Ingest OneLake parent folder paths and enable OneLake permission filtering on the generated index. Only supported for indexed OneLake knowledge sources. </summary>
+        private const string OneLakeParentFoldersValue = "oneLakeParentFolders";
+        /// <summary> Ingest the source item's OneLake lakehouse ID and enable OneLake permission filtering on the generated index. Only supported for indexed OneLake knowledge sources. </summary>
+        private const string OneLakeLakehouseIdValue = "oneLakeLakehouseId";
         /// <summary> Ingest Microsoft Purview sensitivity labels alongside document content. </summary>
         private const string SensitivityLabelsValue = "sensitivityLabels";
 
@@ -42,6 +46,12 @@ namespace Azure.Search.Documents.Indexes.Models
 
         /// <summary> Ingest RBAC scope information alongside document content. </summary>
         public static KnowledgeSourceIngestionPermissionOption RbacScope { get; } = new KnowledgeSourceIngestionPermissionOption(RbacScopeValue);
+
+        /// <summary> Ingest OneLake parent folder paths and enable OneLake permission filtering on the generated index. Only supported for indexed OneLake knowledge sources. </summary>
+        public static KnowledgeSourceIngestionPermissionOption OneLakeParentFolders { get; } = new KnowledgeSourceIngestionPermissionOption(OneLakeParentFoldersValue);
+
+        /// <summary> Ingest the source item's OneLake lakehouse ID and enable OneLake permission filtering on the generated index. Only supported for indexed OneLake knowledge sources. </summary>
+        public static KnowledgeSourceIngestionPermissionOption OneLakeLakehouseId { get; } = new KnowledgeSourceIngestionPermissionOption(OneLakeLakehouseIdValue);
 
         /// <summary> Ingest Microsoft Purview sensitivity labels alongside document content. </summary>
         public static KnowledgeSourceIngestionPermissionOption SensitivityLabels { get; } = new KnowledgeSourceIngestionPermissionOption(SensitivityLabelsValue);

@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using Azure.Search.Documents;
 using Azure.Search.Documents.KnowledgeBases.Models;
+using Azure.Search.Documents.Models;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
@@ -41,17 +42,19 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="folderPath"> Optional folder path within the container. </param>
         /// <param name="isADLSGen2"> Set to true if connecting to an ADLS Gen2 storage account. Default is false. </param>
         /// <param name="ingestionParameters"> Consolidates all general ingestion settings. </param>
-        /// <param name="queryHints"> Default hints that guide query planning toward useful filters and boosts for this index-backed knowledge source. Request-time query hints replace these defaults as a complete object. </param>
+        /// <param name="graphExtraction"> Graph extraction configuration for Azure Blob knowledge sources. Configure native Blob soft delete on the source before the first indexing run. ADLS Gen2, ACL ingestion, and sensitivity-label ingestion are not supported for this workflow. </param>
+        /// <param name="topicGraph"> Default topic graph vector search options for this Azure Blob knowledge source. </param>
         /// <param name="createdResources"> Resources created by the knowledge source. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AzureBlobKnowledgeSourceParameters(string connectionString, string containerName, string folderPath, bool? isADLSGen2, KnowledgeSourceIngestionParameters ingestionParameters, SearchIndexKnowledgeSourceQueryHints queryHints, CreatedResources createdResources, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AzureBlobKnowledgeSourceParameters(string connectionString, string containerName, string folderPath, bool? isADLSGen2, KnowledgeSourceIngestionParameters ingestionParameters, KnowledgeSourceGraphExtractionParameters graphExtraction, VectorQueryTopicGraph topicGraph, CreatedResources createdResources, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ConnectionString = connectionString;
             ContainerName = containerName;
             _folderPath = folderPath;
             IsADLSGen2 = isADLSGen2;
             _ingestionParameters = ingestionParameters;
-            QueryHints = queryHints;
+            GraphExtraction = graphExtraction;
+            TopicGraph = topicGraph;
             CreatedResources = createdResources;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -93,8 +96,11 @@ namespace Azure.Search.Documents.Indexes.Models
             }
         }
 
-        /// <summary> Default hints that guide query planning toward useful filters and boosts for this index-backed knowledge source. Request-time query hints replace these defaults as a complete object. </summary>
-        public SearchIndexKnowledgeSourceQueryHints QueryHints { get; set; }
+        /// <summary> Graph extraction configuration for Azure Blob knowledge sources. Configure native Blob soft delete on the source before the first indexing run. ADLS Gen2, ACL ingestion, and sensitivity-label ingestion are not supported for this workflow. </summary>
+        public KnowledgeSourceGraphExtractionParameters GraphExtraction { get; set; }
+
+        /// <summary> Default topic graph vector search options for this Azure Blob knowledge source. </summary>
+        public VectorQueryTopicGraph TopicGraph { get; set; }
 
         /// <summary> Resources created by the knowledge source. </summary>
         public CreatedResources CreatedResources { get; }
