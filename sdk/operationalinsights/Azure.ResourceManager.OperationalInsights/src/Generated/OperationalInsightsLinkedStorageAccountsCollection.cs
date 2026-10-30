@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.OperationalInsights
     /// <summary>
     /// A class representing a collection of <see cref="OperationalInsightsLinkedStorageAccountsResource"/> and their operations.
     /// Each <see cref="OperationalInsightsLinkedStorageAccountsResource"/> in the collection will belong to the same instance of <see cref="OperationalInsightsWorkspaceResource"/>.
-    /// To get a <see cref="OperationalInsightsLinkedStorageAccountsCollection"/> instance call the GetOperationalInsightsLinkedStorageAccounts method from an instance of <see cref="OperationalInsightsWorkspaceResource"/>.
+    /// To get a <see cref="OperationalInsightsLinkedStorageAccountsCollection"/> instance call the GetAllOperationalInsightsLinkedStorageAccounts method from an instance of <see cref="OperationalInsightsWorkspaceResource"/>.
     /// </summary>
     public partial class OperationalInsightsLinkedStorageAccountsCollection : ArmCollection, IEnumerable<OperationalInsightsLinkedStorageAccountsResource>, IAsyncEnumerable<OperationalInsightsLinkedStorageAccountsResource>
     {
