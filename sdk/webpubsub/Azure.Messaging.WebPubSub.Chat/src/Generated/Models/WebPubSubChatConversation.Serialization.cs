@@ -92,7 +92,7 @@ namespace Azure.Messaging.WebPubSub.Chat
                 writer.WriteStringValue(Id);
             }
             writer.WritePropertyName("parentRoom"u8);
-            writer.WriteStringValue(ParentRoom);
+            writer.WriteStringValue(RoomId);
             if (options.Format != "W")
             {
                 writer.WritePropertyName("etag"u8);
@@ -141,7 +141,7 @@ namespace Azure.Messaging.WebPubSub.Chat
                 return null;
             }
             string id = default;
-            string parentRoom = default;
+            string roomId = default;
             ETag etag = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -153,7 +153,7 @@ namespace Azure.Messaging.WebPubSub.Chat
                 }
                 if (prop.NameEquals("parentRoom"u8))
                 {
-                    parentRoom = prop.Value.GetString();
+                    roomId = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("etag"u8))
@@ -166,7 +166,7 @@ namespace Azure.Messaging.WebPubSub.Chat
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new WebPubSubChatConversation(id, parentRoom, etag, additionalBinaryDataProperties);
+            return new WebPubSubChatConversation(id, roomId, etag, additionalBinaryDataProperties);
         }
     }
 }

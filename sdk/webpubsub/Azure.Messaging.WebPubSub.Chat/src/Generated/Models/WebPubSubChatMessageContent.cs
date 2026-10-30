@@ -17,11 +17,6 @@ namespace Azure.Messaging.WebPubSub.Chat
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="WebPubSubChatMessageContent"/>. </summary>
-        public WebPubSubChatMessageContent()
-        {
-        }
-
-        /// <summary> Initializes a new instance of <see cref="WebPubSubChatMessageContent"/>. </summary>
         /// <param name="text"> Text content. </param>
         /// <param name="binary"> Binary content (base64 encoded). </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
@@ -31,26 +26,5 @@ namespace Azure.Messaging.WebPubSub.Chat
             Binary = binary;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
-
-        /// <summary> Text content. </summary>
-        public string Text { get; set; }
-
-        /// <summary>
-        /// Binary content (base64 encoded).
-        /// <para>
-        /// To assign a byte[] to this property use <see cref="BinaryData.FromBytes(byte[])"/>.
-        /// The byte[] will be serialized to a Base64 encoded string.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term> BinaryData.FromBytes(new byte[] { 1, 2, 3 }). </term>
-        /// <description> Creates a payload of "AQID". </description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        public BinaryData Binary { get; set; }
     }
 }

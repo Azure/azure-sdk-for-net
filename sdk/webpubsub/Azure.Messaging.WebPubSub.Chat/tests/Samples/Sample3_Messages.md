@@ -17,7 +17,11 @@ foreach (WebPubSubChatMessage message in client.GetMessages(room.DefaultConversa
 
 ## Page through message history
 
-Messages are returned from latest to earliest. You can constrain a query with pagination parameters:
+Messages are returned from latest to earliest. Message IDs are pagination cursors:
+the pageable follows each response's `nextLink`, which contains the cursor for the
+next page. Save a page's `ContinuationToken` and pass it to
+`messages.AsPages(continuationToken)` to resume later. You can constrain a query
+with pagination parameters:
 
 ```C# Snippet:WebPubSubChatPageMessageHistory
 Pageable<WebPubSubChatMessage> messages = client.GetMessages(
@@ -35,23 +39,29 @@ foreach (WebPubSubChatMessage message in messages)
 ```C# Snippet:WebPubSubChatGetConversation
 WebPubSubChatConversation conversation = client.GetConversation(room.DefaultConversation).Value;
 
-Console.WriteLine($"Conversation {conversation.Id} belongs to room {conversation.ParentRoom}");
+Console.WriteLine($"Conversation {conversation.Id} belongs to room {conversation.RoomId}");
 ```
 
 ## Update a message
 
-Update the content of an existing message:
+Use `UpdateMessageOptions` to update only the supplied properties of an existing
+message. Leaving `CreatedBy` unset preserves the original creator:
 
 ```C# Snippet:WebPubSubChatUpdateMessage
-var updatedMessage = new WebPubSubChatMessage(
-    "user1",
-    new WebPubSubChatMessageContent { Text = "Updated message text" });
+var updatedMessage = new UpdateMessageOptions
+{
+    Content = WebPubSubChatMessageContent.FromText("Updated message text")
+};
 
 client.UpdateMessage(
     room.DefaultConversation,
     "<message-id>",
     updatedMessage);
 ```
+
+Leaving a property unset preserves its value, whereas explicitly assigning null
+clears it (`CreatedBy` becomes an empty string, and `Content` becomes empty text).
+Pass `MatchConditions` with the message's ETag to protect against concurrent changes.
 
 ## Delete a message
 
