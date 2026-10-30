@@ -26,7 +26,11 @@ namespace Azure.ResourceManager.FileShares
         /// passed a positional <see cref="CancellationToken"/> continue to compile.
         /// </remarks>
         public static Task<Response<FileShareLimitsResult>> GetLimitsAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken)
-            => GetLimitsAsync(subscriptionResource, location, default, cancellationToken);
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableFileSharesSubscriptionResource(subscriptionResource).GetLimitsAsync(location, cancellationToken);
+        }
 
         /// <summary>
         /// Get file shares limits.
@@ -41,6 +45,10 @@ namespace Azure.ResourceManager.FileShares
         /// passed a positional <see cref="CancellationToken"/> continue to compile.
         /// </remarks>
         public static Response<FileShareLimitsResult> GetLimits(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken)
-            => GetLimits(subscriptionResource, location, default, cancellationToken);
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableFileSharesSubscriptionResource(subscriptionResource).GetLimits(location, cancellationToken);
+        }
     }
 }
