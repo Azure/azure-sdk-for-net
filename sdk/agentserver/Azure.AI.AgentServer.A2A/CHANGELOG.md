@@ -21,8 +21,3 @@
   semantic tracing for A2A operations and hosted agent invocations.
 
 ### Bugs Fixed
-
-- Task snapshot keys and listing tags stay within hosted storage limits without
-  truncating task or context identifiers. Existing task keys remain readable.
-- Response transmission failures mark operation and invocation spans as failed
-  even when the native transport handles the exception internally.

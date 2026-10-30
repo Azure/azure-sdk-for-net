@@ -4,15 +4,16 @@
 using System.Collections.Concurrent;
 using System.Diagnostics;
 using System.Reflection;
-using global::A2A;
 using Azure.AI.AgentServer.Core;
 using Azure.AI.AgentServer.Core.Storage;
+using Azure.Core;
+using Azure.Identity;
+using global::A2A;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.DependencyInjection;
 using NUnit.Framework;
-using Azure.Core;
-using Azure.Identity;
 
 namespace Azure.AI.AgentServer.A2A.Tests;
 
@@ -158,8 +159,37 @@ public class HostedBehaviorTests
         Assert.That(backing.DescriptorReads, Is.EqualTo(1));
     }
 
-    [Test]
-    public async Task HostedInvocationAndNativeOperationHaveDistinctIdentitiesAndParentage()
+    [TestCase("x-agent-foundry-call-id")]
+    [TestCase("x-agent-user-id")]
+    public async Task HostedIdentityFlowsIntoNativeBackgroundTaskPersistence(string identityHeader)
+    {
+        using var listener = new ActivityListener
+        {
+            ShouldListenTo = source => source.Name == "Azure.AI.AgentServer.A2A",
+            Sample = (ref ActivityCreationOptions<ActivityContext> _) => ActivitySamplingResult.AllData,
+        };
+        ActivitySource.AddActivityListener(listener);
+        var backing = new NonIsolatedStore();
+        using var store = new FoundryTaskStore(backing);
+        var builder = AgentHost.CreateBuilder();
+        builder.WebApplicationBuilder.WebHost.UseTestServer();
+        builder.Services.AddSingleton<ITaskStore>(store);
+        builder.AddA2A<Snippets.ReadMeSnippets.TaskAgent>(HostingTests.CreateCard());
+        await using var app = builder.Build().App;
+        await app.StartAsync();
+        using var client = app.GetTestClient();
+        client.DefaultRequestHeaders.Add(identityHeader, "test-identity");
+        using var response = await client.PostAsync("/a2a", HostingTests.Rpc("SendMessage", HostingTests.MessageParams));
+        Assert.That(await response.Content.ReadAsStringAsync(), Does.Contain("\"error\""));
+        Assert.That(backing.DescriptorReads, Is.GreaterThan(0),
+            "The supplied identity must survive native background execution and reach the storage isolation check.");
+        Assert.That(FoundryAgentRequestContext.Current.CallId, Is.Null);
+        Assert.That(FoundryAgentRequestContext.Current.UserId, Is.Null);
+    }
+
+    [TestCase(false)]
+    [TestCase(true)]
+    public async Task HostedInvocationAndNativeOperationHaveDistinctIdentitiesAndParentage(bool withoutHttpActivity)
     {
         var stopped = new ConcurrentQueue<System.Diagnostics.Activity>();
         using var listener = new ActivityListener
@@ -174,13 +204,36 @@ public class HostedBehaviorTests
         builder.Services.AddSingleton<ITaskStore, InMemoryTaskStore>();
         builder.AddA2A<HostingTests.EchoHandler>(HostingTests.CreateCard());
         await using var app = builder.Build().App;
+        if (withoutHttpActivity)
+        {
+            app.Use(async (context, next) =>
+            {
+                var previous = System.Diagnostics.Activity.Current;
+                System.Diagnostics.Activity.Current = null;
+                try
+                { await next(context); }
+                finally { System.Diagnostics.Activity.Current = previous; }
+            });
+        }
         await app.StartAsync();
         using var client = app.GetTestClient();
+        client.DefaultRequestHeaders.Add("traceparent", "00-0123456789abcdef0123456789abcdef-0123456789abcdef-01");
+        client.DefaultRequestHeaders.Add("tracestate", "vendor=opaque");
+        client.DefaultRequestHeaders.Add("baggage", "review-key=review-value");
         using var response = await client.PostAsync("/a2a", HostingTests.Rpc("SendMessage", HostingTests.MessageParams));
         await response.Content.ReadAsStringAsync();
         var operation = stopped.Single(a => a.OperationName == "SendMessage");
         var invocation = stopped.Single(a => a.OperationName == "invoke_agent deployment");
         Assert.That(operation.ParentSpanId, Is.EqualTo(invocation.SpanId));
+        Assert.That(invocation.TraceId.ToString(), Is.EqualTo("0123456789abcdef0123456789abcdef"));
+        Assert.That(operation.TraceId, Is.EqualTo(invocation.TraceId));
+        Assert.That(invocation.TraceStateString, Is.EqualTo("vendor=opaque"));
+        Assert.That(invocation.GetBaggageItem("review-key"), Is.EqualTo("review-value"));
+        Assert.That(operation.GetBaggageItem("review-key"), Is.EqualTo("review-value"));
+        if (withoutHttpActivity)
+        {
+            Assert.That(invocation.ParentSpanId.ToString(), Is.EqualTo("0123456789abcdef"));
+        }
         Assert.That(operation.GetTagItem("gen_ai.agent.name"), Is.EqualTo("native-echo"));
         Assert.That(operation.GetTagItem("gen_ai.agent.version"), Is.EqualTo("1.0"));
         Assert.That(invocation.GetTagItem("gen_ai.agent.name"), Is.EqualTo("deployment"));

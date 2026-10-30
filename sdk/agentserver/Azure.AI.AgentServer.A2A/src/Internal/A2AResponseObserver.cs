@@ -27,7 +27,25 @@ internal sealed class A2AResponseObserver(
 
     public void Observe(ReadOnlySpan<byte> bytes)
     {
-        if (IsSse && _knownTask)
+        bool isSse = IsSse;
+        if (!isSse)
+        {
+            if (!_discarding)
+            {
+                if (bytes.Length <= MaxPayloadBytes - _buffer.Length)
+                {
+                    _buffer.Write(bytes);
+                }
+                else
+                {
+                    _discarding = true;
+                    _buffer.SetLength(0);
+                }
+            }
+            return;
+        }
+
+        if (_knownTask)
         {
             return;
         }
@@ -36,7 +54,7 @@ internal sealed class A2AResponseObserver(
         {
             if (!_discarding)
             {
-                if (_buffer.Length < MaxPayloadBytes + (IsSse ? 4 : 0))
+                if (_buffer.Length < MaxPayloadBytes + 4)
                 {
                     _buffer.WriteByte(value);
                 }
@@ -45,11 +63,6 @@ internal sealed class A2AResponseObserver(
                     _discarding = true;
                     _buffer.SetLength(0);
                 }
-            }
-
-            if (!IsSse)
-            {
-                continue;
             }
 
             if (value == '\n' && _previousNewline)
@@ -138,7 +151,7 @@ internal sealed class A2AResponseObserver(
                 _knownTask = true;
             }
         }
-        catch (JsonException exception)
+        catch (Exception exception) when (exception is JsonException or InvalidOperationException)
         {
             context.RequestServices.GetRequiredService<ILogger<A2AResponseObserver>>()
                 .LogDebug(exception, "A2A response payload could not be observed; response bytes are unchanged");

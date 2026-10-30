@@ -4,12 +4,14 @@
 using System.Diagnostics;
 using System.Security.Claims;
 using System.Text.Json;
+using Azure.AI.AgentServer.Core;
 using global::A2A;
 using global::A2A.AspNetCore;
-using Azure.AI.AgentServer.Core;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using OpenTelemetry;
+using OpenTelemetry.Context.Propagation;
 
 namespace Azure.AI.AgentServer.A2A.Internal;
 
@@ -25,25 +27,35 @@ internal sealed class A2ARpcResult(IA2ARequestHandler handler, AgentCard card) :
         await originalBody.CopyToAsync(body, httpContext.RequestAborted).ConfigureAwait(false);
         body.Position = 0;
         httpContext.Request.Body = body;
+        var previousBaggage = Baggage.Current;
         try
         {
-            await ExecuteRequestAsync(httpContext).ConfigureAwait(false);
+            var propagation = Propagators.DefaultTextMapPropagator.Extract(
+                new PropagationContext(default, previousBaggage),
+                httpContext.Request.Headers,
+                static (headers, key) => headers.TryGetValue(key, out var values)
+                    ? values
+                    : Array.Empty<string>());
+            Baggage.Current = propagation.Baggage;
+            await ExecuteRequestAsync(httpContext, propagation).ConfigureAwait(false);
         }
         finally
         {
+            Baggage.Current = previousBaggage;
             httpContext.Request.Body = originalBody;
         }
     }
 
-    private async Task ExecuteRequestAsync(HttpContext httpContext)
+    private async Task ExecuteRequestAsync(HttpContext httpContext, PropagationContext propagation)
     {
         var request = httpContext.Request;
         Dictionary<string, object?> tags = await ReadTagsAsync(request).ConfigureAwait(false);
         string? method = tags.GetValueOrDefault("a2a.method.name") as string;
         bool invocation = FoundryEnvironment.IsHosted && method is "SendMessage" or "SendStreamingMessage";
+        var parentContext = System.Diagnostics.Activity.Current?.Context ?? propagation.ActivityContext;
 
         using var invoke = invocation
-            ? Source.StartActivity($"invoke_agent {FoundryEnvironment.AgentName}", ActivityKind.Internal)
+            ? Source.StartActivity($"invoke_agent {FoundryEnvironment.AgentName}", ActivityKind.Internal, parentContext)
             : null;
         if (invoke is not null)
         {
@@ -65,7 +77,12 @@ internal sealed class A2ARpcResult(IA2ARequestHandler handler, AgentCard card) :
         tags["gen_ai.agent.description"] = card.Description;
         tags["gen_ai.agent.version"] = card.Version;
         using var operation = method is null ? null : Source.StartActivity(
-            method, ActivityKind.Server, System.Diagnostics.Activity.Current?.Context ?? default, tags: tags);
+            method, ActivityKind.Server, invoke?.Context ?? parentContext, tags: tags);
+        foreach (var entry in propagation.Baggage)
+        {
+            operation?.SetBaggage(entry.Key, entry.Value);
+            invoke?.SetBaggage(entry.Key, entry.Value);
+        }
         if (tags.GetValueOrDefault("gen_ai.conversation.id") is string contextId)
         {
             operation?.SetBaggage("azure.ai.agentserver.conversation_id", contextId);
@@ -73,10 +90,11 @@ internal sealed class A2ARpcResult(IA2ARequestHandler handler, AgentCard card) :
         }
 
         var originalBody = httpContext.Response.Body;
-        using var observer = new A2AResponseObserver(
-            httpContext, method, operation, invoke, tags.ContainsKey("a2a.task.id"));
-        using var observedBody = new ObservingWriteStream(originalBody, observer);
-        httpContext.Response.Body = observedBody;
+        using var observer = operation?.IsAllDataRequested == true || invoke?.IsAllDataRequested == true
+            ? new A2AResponseObserver(httpContext, method, operation, invoke, tags.ContainsKey("a2a.task.id"))
+            : null;
+        using var observedBody = observer is null ? null : new ObservingWriteStream(originalBody, observer);
+        httpContext.Response.Body = observedBody ?? originalBody;
         var previousScope = A2ATaskScope.Current;
         string? authenticatedUser = httpContext.User.Identity?.IsAuthenticated == true
             ? httpContext.User.FindFirst(ClaimTypes.NameIdentifier)?.Value
@@ -90,10 +108,10 @@ internal sealed class A2ARpcResult(IA2ARequestHandler handler, AgentCard card) :
             var result = await A2AJsonRpcProcessor.ProcessRequestAsync(
                 handler, request, httpContext.RequestAborted).ConfigureAwait(false);
             await result.ExecuteAsync(httpContext).ConfigureAwait(false);
-            observer.Complete();
+            observer?.Complete();
             if (httpContext.Response.StatusCode >= 400)
             {
-                observer.RecordError(httpContext.Response.StatusCode.ToString(System.Globalization.CultureInfo.InvariantCulture));
+                observer?.RecordError(httpContext.Response.StatusCode.ToString(System.Globalization.CultureInfo.InvariantCulture));
             }
         }
         catch (OperationCanceledException) when (httpContext.RequestAborted.IsCancellationRequested)
@@ -102,7 +120,7 @@ internal sealed class A2ARpcResult(IA2ARequestHandler handler, AgentCard card) :
         }
         catch (Exception exception)
         {
-            observer.RecordError(exception.GetType().FullName!);
+            observer?.RecordError(exception.GetType().FullName!);
             operation?.AddEvent(new ActivityEvent("exception", tags: new ActivityTagsCollection
             {
                 ["exception.type"] = exception.GetType().FullName,
@@ -131,8 +149,7 @@ internal sealed class A2ARpcResult(IA2ARequestHandler handler, AgentCard card) :
             }
 
             tags["a2a.method.name"] = method;
-            tags["a2a.protocol.version"] = request.Headers["A2A-Version"].FirstOrDefault()
-                ?? request.Query["a2a-version"].FirstOrDefault() ?? "1.0";
+            Add("a2a.protocol.version", ReadProtocolVersion(request));
             var parameters = Property(root, "params");
             var message = Property(parameters, "message");
             Add("a2a.message.id", String(message, "messageId"));
@@ -148,7 +165,7 @@ internal sealed class A2ARpcResult(IA2ARequestHandler handler, AgentCard card) :
                     .Select(value => value.GetString()!).ToArray();
             }
         }
-        catch (JsonException exception)
+        catch (Exception exception) when (exception is JsonException or InvalidOperationException)
         {
             request.HttpContext.RequestServices.GetRequiredService<ILogger<A2ARpcResult>>()
                 .LogDebug(exception, "A2A request could not be observed; the native transport will validate it");
@@ -167,6 +184,27 @@ internal sealed class A2ARpcResult(IA2ARequestHandler handler, AgentCard card) :
                 tags[name] = value;
             }
         }
+    }
+
+    private static string? ReadProtocolVersion(HttpRequest request)
+    {
+        // The native JSON-RPC processor validates headers only; query selectors do not select a dialect.
+        var versions = request.Headers["A2A-Version"];
+        if (versions.Count == 0 || (versions.Count == 1 && string.IsNullOrEmpty(versions[0])))
+        {
+            return "1.0";
+        }
+
+        string? selected = null;
+        foreach (string? version in versions)
+        {
+            if (version is not ("0.3" or "1.0") || (selected is not null && selected != version))
+            {
+                return null;
+            }
+            selected = version;
+        }
+        return selected;
     }
 
     internal static JsonElement Property(JsonElement value, string name) =>

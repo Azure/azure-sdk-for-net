@@ -1,16 +1,18 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.Diagnostics;
 using System.Collections.Concurrent;
-using System.Text;
+using System.Diagnostics;
 using System.Runtime.CompilerServices;
-using global::A2A;
+using System.Text;
+using System.Text.Json;
 using Azure.AI.AgentServer.A2A.Internal;
 using Azure.AI.AgentServer.A2A.Tests.Snippets;
+using global::A2A;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.Features;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -21,6 +23,52 @@ namespace Azure.AI.AgentServer.A2A.Tests;
 [TestFixture]
 public class TracingTests
 {
+    [Test]
+    public void UnaryObservationReadsContentTypeOncePerChunkNotPerByte()
+    {
+        using var span = new System.Diagnostics.Activity("operation").Start();
+        var feature = new CountingResponseFeature();
+        var context = new DefaultHttpContext();
+        context.Features.Set<IHttpResponseFeature>(feature);
+        context.Response.ContentType = "application/json";
+        using var observer = new A2AResponseObserver(context, "SendMessage", span, null, false);
+        feature.HeaderReads = 0;
+        observer.Observe(JsonSerializer.SerializeToUtf8Bytes(
+            new { result = new { message = new { parts = new[] { new { text = new string('x', 64 * 1024) } } } } }));
+        Assert.That(feature.HeaderReads, Is.LessThanOrEqualTo(2));
+    }
+
+    [TestCase("""{"result":{"task":{"id":"\uD800"}}}""")]
+    [TestCase("""{"result":{"message":{"taskId":"\uD800"}}}""")]
+    public void InvalidUnicodeInResponseDiagnosticsDoesNotChangeResponseBytes(string payload)
+    {
+        using var services = new ServiceCollection().AddLogging().BuildServiceProvider();
+        using var span = new System.Diagnostics.Activity("operation").Start();
+        var context = new DefaultHttpContext { RequestServices = services };
+        context.Response.ContentType = "application/json";
+        using var observer = new A2AResponseObserver(context, "SendMessage", span, null, false);
+        using var output = new MemoryStream();
+        using var stream = new ObservingWriteStream(output, observer);
+        var bytes = Encoding.UTF8.GetBytes(payload);
+        stream.Write(bytes, 0, bytes.Length);
+        observer.Complete();
+        Assert.That(output.ToArray(), Is.EqualTo(bytes));
+        Assert.That(span.GetTagItem("a2a.task.id"), Is.Null);
+    }
+
+    private sealed class CountingResponseFeature : IHttpResponseFeature
+    {
+        private IHeaderDictionary _headers = new HeaderDictionary();
+        public int HeaderReads { get; set; }
+        public int StatusCode { get; set; } = 200;
+        public string? ReasonPhrase { get; set; }
+        public IHeaderDictionary Headers { get { HeaderReads++; return _headers; } set => _headers = value; }
+        public Stream Body { get; set; } = Stream.Null;
+        public bool HasStarted => false;
+        public void OnStarting(Func<object, Task> callback, object state) { }
+        public void OnCompleted(Func<object, Task> callback, object state) { }
+    }
+
     [TestCase("\n\n")]
     [TestCase("\r\n\r\n")]
     public void SseObservationHandlesChunkBoundariesAndOversizedEvents(string boundary)
@@ -93,8 +141,10 @@ public class TracingTests
         using var requestCancellation = new CancellationTokenSource();
         using var writeCancellation = new CancellationTokenSource();
         bool expectedCancellation = outcome != "failure";
-        if (outcome == "request-cancelled") { requestCancellation.Cancel(); }
-        if (outcome == "write-cancelled") { writeCancellation.Cancel(); }
+        if (outcome == "request-cancelled")
+        { requestCancellation.Cancel(); }
+        if (outcome == "write-cancelled")
+        { writeCancellation.Cancel(); }
         var context = new DefaultHttpContext();
         context.Response.ContentType = "text/event-stream";
         context.RequestAborted = requestCancellation.Token;
@@ -106,10 +156,12 @@ public class TracingTests
         using var stream = new ObservingWriteStream(output, observer);
         Func<Task> action = path switch
         {
-            "write" => () => { stream.Write(new byte[1], 0, 1); return Task.CompletedTask; },
+            "write" => () => { stream.Write(new byte[1], 0, 1); return Task.CompletedTask; }
+            ,
             "write-array" => () => stream.WriteAsync(new byte[1], 0, 1, writeCancellation.Token),
             "write-memory" => () => stream.WriteAsync(new byte[1].AsMemory(), writeCancellation.Token).AsTask(),
-            "flush" => () => { stream.Flush(); return Task.CompletedTask; },
+            "flush" => () => { stream.Flush(); return Task.CompletedTask; }
+            ,
             "flush-async" => () => stream.FlushAsync(writeCancellation.Token),
             _ => throw new ArgumentOutOfRangeException(nameof(path)),
         };
@@ -153,7 +205,8 @@ public class TracingTests
             var original = context.Response.Body;
             using var broken = new FailingResponseStream(new IOException("Response failed"), failOnFlush);
             context.Response.Body = broken;
-            try { await next(context); }
+            try
+            { await next(context); }
             finally { context.Response.Body = original; }
         });
         app.MapFoundryA2A();
@@ -186,13 +239,15 @@ public class TracingTests
     {
         public override void Write(byte[] buffer, int offset, int count)
         {
-            if (!failOnFlush) { throw failure; }
+            if (!failOnFlush)
+            { throw failure; }
             base.Write(buffer, offset, count);
         }
 
         public override ValueTask WriteAsync(ReadOnlyMemory<byte> buffer, CancellationToken cancellationToken = default)
         {
-            if (!failOnFlush) { return ValueTask.FromException(failure); }
+            if (!failOnFlush)
+            { return ValueTask.FromException(failure); }
             return base.WriteAsync(buffer, cancellationToken);
         }
 
