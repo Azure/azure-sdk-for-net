@@ -16,6 +16,7 @@
 
 ### Bugs Fixed
 
+- Fixed the DDoS mitigation rule model factory discarding the supplied UDP packet rate and historical DDoS custom policy factories returning null collections.
 ### Other Changes
 
 ## 1.18.0-beta.2 (2026-10-28)

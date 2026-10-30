@@ -124,6 +124,95 @@ namespace Azure.ResourceManager.Network.Tests
             }
         }
 
+        [Test]
+        public void DdosMitigationFactoryRetainsUdpPacketRate(
+            [Values(null, 0, 1000)] int? packetsPerSecond,
+            [Values("J", "W")] string format)
+        {
+            var tcp = ArmNetworkModelFactory.DdosTcpDefaultMitigations(packetsPerSecond: 42);
+            var sourceOverride = ArmNetworkModelFactory.DdosSourcePolicyOverride(actionType: DdosSourcePolicyActionType.Deny);
+            var model = ArmNetworkModelFactory.DdosMitigationRulePropertiesFormat(
+                provisioningState: NetworkProvisioningState.Succeeded,
+                trafficScope: DdosMitigationTrafficScope.Udp,
+                tcpDefaultMitigations: tcp,
+                udpDefaultMitigationsPacketsPerSecond: packetsPerSecond,
+                sourcePolicyOverrides: new[] { sourceOverride });
+            Assert.That(model.UdpDefaultMitigationsPacketsPerSecond, Is.EqualTo(packetsPerSecond));
+            Assert.That(model.ProvisioningState, Is.EqualTo(NetworkProvisioningState.Succeeded));
+            Assert.That(model.TrafficScope, Is.EqualTo(DdosMitigationTrafficScope.Udp));
+            Assert.That(model.TcpDefaultMitigations, Is.SameAs(tcp));
+            Assert.That(model.SourcePolicyOverrides, Has.Count.EqualTo(1));
+            Assert.That(model.SourcePolicyOverrides[0], Is.SameAs(sourceOverride));
+            var options = new ModelReaderWriterOptions(format);
+            using JsonDocument document = JsonDocument.Parse(ModelReaderWriter.Write(model, options));
+            Assert.That(document.RootElement.TryGetProperty("udpDefaultMitigations", out JsonElement udp), Is.EqualTo(packetsPerSecond.HasValue));
+            if (packetsPerSecond.HasValue)
+            {
+                Assert.That(udp.GetProperty("perSourceRateLimiting").GetProperty("packetsPerSecond").GetInt32(), Is.EqualTo(packetsPerSecond.Value));
+            }
+            var restored = ModelReaderWriter.Read<DdosMitigationRulePropertiesFormat>(ModelReaderWriter.Write(model, options), options);
+            Assert.That(restored.UdpDefaultMitigationsPacketsPerSecond, Is.EqualTo(packetsPerSecond));
+        }
+
+        [Test]
+        public void PrimaryDdosPolicyFactoryRetainsOptionalParameters()
+        {
+            MethodInfo factory = typeof(ArmNetworkModelFactory).GetMethods()
+                .Single(method => method.Name == nameof(ArmNetworkModelFactory.DdosCustomPolicyData) && method.GetParameters().Length == 12);
+            Assert.That(factory.GetParameters().All(parameter => parameter.IsOptional), Is.True);
+            Assert.That(factory.GetCustomAttribute<EditorBrowsableAttribute>(), Is.Null);
+            Assert.That(ArmNetworkModelFactory.DdosCustomPolicyData().MitigationRules, Is.Empty);
+            Assert.That(ArmNetworkModelFactory.DdosCustomPolicyData(resourceGuid: Guid.Empty).MitigationRules, Is.Empty);
+        }
+
+        [Test]
+        public void ReleasedDdosPolicyFactoriesInitializeCollections(
+            [Values(false, true)] bool includeRuleArguments,
+            [Values("J", "W")] string format)
+        {
+            MethodInfo factory = typeof(ArmNetworkModelFactory).GetMethods()
+                .Single(method => method.Name == nameof(ArmNetworkModelFactory.DdosCustomPolicyData) && method.GetParameters().Length == (includeRuleArguments ? 10 : 8));
+            Assert.That(factory.GetParameters().All(parameter => !parameter.IsOptional), Is.True);
+            Assert.That(factory.GetCustomAttribute<EditorBrowsableAttribute>()?.State, Is.EqualTo(EditorBrowsableState.Never));
+            var id = new ResourceIdentifier(GroupPath + "/providers/Microsoft.Network/ddosCustomPolicies/policy");
+            var etag = new ETag("policy-etag");
+            var tags = new Dictionary<string, string> { ["owner"] = "sdk" };
+            var detectionRule = ArmNetworkModelFactory.DdosDetectionRule(name: "detection");
+            var frontend = new WritableSubResource { Id = new ResourceIdentifier(ReferencePath) };
+            var model = includeRuleArguments
+                ? ArmNetworkModelFactory.DdosCustomPolicyData(id, "policy", id.ResourceType, new AzureLocation("westus"), tags, etag, Guid.Empty, NetworkProvisioningState.Succeeded, new[] { detectionRule }, new[] { frontend })
+                : ArmNetworkModelFactory.DdosCustomPolicyData(id, "policy", id.ResourceType, new AzureLocation("westus"), tags, etag, Guid.Empty, NetworkProvisioningState.Succeeded);
+            Assert.That(model.Id, Is.EqualTo(id));
+            Assert.That(model.Name, Is.EqualTo("policy"));
+            Assert.That(model.ResourceType, Is.EqualTo(id.ResourceType));
+            Assert.That(model.Location, Is.EqualTo(new AzureLocation("westus")));
+            Assert.That(model.Tags["owner"], Is.EqualTo("sdk"));
+            Assert.That(model.ETag, Is.EqualTo(etag));
+            Assert.That(model.ResourceGuid, Is.EqualTo(Guid.Empty));
+            Assert.That(model.ProvisioningState, Is.EqualTo(NetworkProvisioningState.Succeeded));
+            Assert.That(model.DetectionRules, Has.Count.EqualTo(includeRuleArguments ? 1 : 0));
+            Assert.That(model.FrontEndIPConfiguration, Has.Count.EqualTo(includeRuleArguments ? 1 : 0));
+            Assert.That(model.PublicIPAddresses, Is.Empty);
+            Assert.That(model.MitigationRules, Is.Empty);
+            Assert.That(model.MitigationRules, Is.SameAs(model.MitigationRules));
+            if (includeRuleArguments)
+            {
+                Assert.That(model.DetectionRules[0], Is.SameAs(detectionRule));
+                Assert.That(model.FrontEndIPConfiguration[0], Is.SameAs(frontend));
+            }
+            model.DetectionRules.Add(detectionRule);
+            model.FrontEndIPConfiguration.Add(frontend);
+            model.MitigationRules.Add(new DdosMitigationRule("mitigation", new DdosMitigationRulePropertiesFormat(DdosMitigationTrafficScope.Udp)));
+            var options = new ModelReaderWriterOptions(format);
+            using JsonDocument document = JsonDocument.Parse(ModelReaderWriter.Write(model, options));
+            JsonElement properties = document.RootElement.GetProperty("properties");
+            Assert.That(properties.GetProperty("mitigationRules")[0].GetProperty("name").GetString(), Is.EqualTo("mitigation"));
+            Assert.That(properties.GetProperty("detectionRules").GetArrayLength(), Is.EqualTo(includeRuleArguments ? 2 : 1));
+            Assert.That(properties.GetProperty("frontEndIpConfiguration").GetArrayLength(), Is.EqualTo(includeRuleArguments ? 2 : 1));
+            var restored = ModelReaderWriter.Read<DdosCustomPolicyData>(ModelReaderWriter.Write(model, options), options);
+            Assert.That(restored.MitigationRules[0].Name, Is.EqualTo("mitigation"));
+        }
+
         [TestCase("J")]
         [TestCase("W")]
         public void DdosCustomPolicyCollectionsUseNativeWireStorage(string format)

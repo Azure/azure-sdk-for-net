@@ -3527,41 +3527,6 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <param name="id"> Resource ID. </param>
-        /// <param name="name"> Resource name. </param>
-        /// <param name="resourceType"> Resource type. </param>
-        /// <param name="location"> Resource location. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="resourceGuid"> The resource GUID property of the DDoS custom policy resource. It uniquely identifies the resource, even if the user changes its name or migrate the resource across subscriptions or resource groups. </param>
-        /// <param name="provisioningState"> The provisioning state of the DDoS custom policy resource. </param>
-        /// <param name="detectionRules"> The list of DDoS detection rules associated with the custom policy. </param>
-        /// <param name="mitigationRules"> The list of DDoS mitigation rules associated with the custom policy. </param>
-        /// <param name="frontEndIPConfiguration"> The list of frontend IP configurations associated with the custom policy. </param>
-        /// <param name="publicIPAddresses"> The list of public IP addresses associated with the custom policy. This list is read-only. </param>
-        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <returns> A new <see cref="Network.DdosCustomPolicyData"/> instance for mocking. </returns>
-        public static DdosCustomPolicyData DdosCustomPolicyData(ResourceIdentifier id = default, string name = default, ResourceType? resourceType = default, AzureLocation? location = default, IDictionary<string, string> tags = default, Guid? resourceGuid = default, NetworkProvisioningState? provisioningState = default, IEnumerable<DdosDetectionRule> detectionRules = default, IEnumerable<DdosMitigationRule> mitigationRules = default, IEnumerable<WritableSubResource> frontEndIPConfiguration = default, IEnumerable<WritableSubResource> publicIPAddresses = default, ETag? eTag = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new DdosCustomPolicyData(
-                id,
-                name,
-                resourceType,
-                location,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                default,
-                resourceGuid is null && provisioningState is null && detectionRules is null && mitigationRules is null && frontEndIPConfiguration is null && publicIPAddresses is null ? default : new DdosCustomPolicyPropertiesFormat(
-                    resourceGuid,
-                    provisioningState,
-                    (detectionRules ?? new ChangeTrackingList<DdosDetectionRule>()).ToList(),
-                    (mitigationRules ?? new ChangeTrackingList<DdosMitigationRule>()).ToList(),
-                    (frontEndIPConfiguration ?? new ChangeTrackingList<WritableSubResource>()).ToList(),
-                    (publicIPAddresses ?? new ChangeTrackingList<WritableSubResource>()).ToList(),
-                    default),
-                eTag);
-        }
-
-        /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Name of the resource. </param>
         /// <param name="resourceType"> Resource type. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
@@ -3605,25 +3570,6 @@ namespace Azure.ResourceManager.Network.Models
                 eTag,
                 @type,
                 properties);
-        }
-
-        /// <param name="provisioningState"> The provisioning state of the DDoS mitigation rule. </param>
-        /// <param name="trafficScope"> The traffic protocol to which the mitigation rule applies. </param>
-        /// <param name="tcpDefaultMitigations"> The default TCP mitigations. This property is valid only when trafficScope is Tcp. </param>
-        /// <param name="udpDefaultMitigationsPacketsPerSecond"> The maximum number of UDP packets allowed per second from a source IP. </param>
-        /// <param name="sourcePolicyOverrides"> Source-specific actions that override the default mitigations. A rule supports at most one Deny override and one Permit override. </param>
-        /// <returns> A new <see cref="Models.DdosMitigationRulePropertiesFormat"/> instance for mocking. </returns>
-        public static DdosMitigationRulePropertiesFormat DdosMitigationRulePropertiesFormat(NetworkProvisioningState? provisioningState = default, DdosMitigationTrafficScope trafficScope = default, DdosTcpDefaultMitigations tcpDefaultMitigations = default, int? udpDefaultMitigationsPacketsPerSecond = default, IEnumerable<DdosSourcePolicyOverride> sourcePolicyOverrides = default)
-        {
-            sourcePolicyOverrides ??= new ChangeTrackingList<DdosSourcePolicyOverride>();
-
-            return new DdosMitigationRulePropertiesFormat(
-                provisioningState,
-                trafficScope,
-                tcpDefaultMitigations,
-                default,
-                (sourcePolicyOverrides ?? new ChangeTrackingList<DdosSourcePolicyOverride>()).ToList(),
-                default);
         }
 
         /// <param name="packetsPerSecond"> The maximum number of TCP packets allowed per second from a source IP. </param>
@@ -16148,39 +16094,6 @@ namespace Azure.ResourceManager.Network.Models
                 (zones ?? new ChangeTrackingList<string>()).ToList());
         }
 
-        /// <summary> A DDoS custom policy in a resource group. </summary>
-        /// <param name="id"> Resource ID. </param>
-        /// <param name="name"> Resource name. </param>
-        /// <param name="resourceType"> Resource type. </param>
-        /// <param name="location"> Resource location. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <param name="resourceGuid"> The resource GUID property of the DDoS custom policy resource. It uniquely identifies the resource, even if the user changes its name or migrate the resource across subscriptions or resource groups. </param>
-        /// <param name="provisioningState"> The provisioning state of the DDoS custom policy resource. </param>
-        /// <param name="detectionRules"> The list of DDoS detection rules associated with the custom policy. </param>
-        /// <param name="frontEndIPConfiguration"> The list of frontend IP configurations associated with the custom policy. </param>
-        /// <returns> A new <see cref="Network.DdosCustomPolicyData"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static DdosCustomPolicyData DdosCustomPolicyData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, ETag? etag, Guid? resourceGuid, NetworkProvisioningState? provisioningState, IEnumerable<DdosDetectionRule> detectionRules, IEnumerable<WritableSubResource> frontEndIPConfiguration)
-        {
-            return new DdosCustomPolicyData(
-                id,
-                name,
-                resourceType,
-                location,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                default,
-                resourceGuid is null && provisioningState is null && detectionRules is null && frontEndIPConfiguration is null ? default : new DdosCustomPolicyPropertiesFormat(
-                    resourceGuid,
-                    provisioningState,
-                    (detectionRules ?? new ChangeTrackingList<DdosDetectionRule>()).ToList(),
-                    default,
-                    (frontEndIPConfiguration ?? new ChangeTrackingList<WritableSubResource>()).ToList(),
-                    default,
-                    default),
-                etag);
-        }
-
         /// <summary> A DDoS protection plan in a resource group. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
@@ -19400,37 +19313,6 @@ namespace Azure.ResourceManager.Network.Models
                     default,
                     default,
                     provisioningState,
-                    default),
-                etag);
-        }
-
-        /// <summary> A DDoS custom policy in a resource group. </summary>
-        /// <param name="id"> Resource ID. </param>
-        /// <param name="name"> Resource name. </param>
-        /// <param name="resourceType"> Resource type. </param>
-        /// <param name="location"> Resource location. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <param name="resourceGuid"> The resource GUID property of the DDoS custom policy resource. It uniquely identifies the resource, even if the user changes its name or migrate the resource across subscriptions or resource groups. </param>
-        /// <param name="provisioningState"> The provisioning state of the DDoS custom policy resource. </param>
-        /// <returns> A new <see cref="Network.DdosCustomPolicyData"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static DdosCustomPolicyData DdosCustomPolicyData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, ETag? etag, Guid? resourceGuid, NetworkProvisioningState? provisioningState)
-        {
-            return new DdosCustomPolicyData(
-                id,
-                name,
-                resourceType,
-                location,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                default,
-                resourceGuid is null && provisioningState is null ? default : new DdosCustomPolicyPropertiesFormat(
-                    resourceGuid,
-                    provisioningState,
-                    default,
-                    default,
-                    default,
-                    default,
                     default),
                 etag);
         }
