@@ -6191,6 +6191,8 @@ namespace Azure.Storage.Files.DataLake
         #endregion OpenWrite
 
         #region GetLayout
+        // TODO: Data Locality temporarily hidden; restore when feature stabilizes
+        /*
         /// <summary>
         /// The <see cref="GetLayout"/> operation returns all user-defined metadata,
         /// standard HTTP properties, and system properties for the file.
@@ -6252,6 +6254,7 @@ namespace Azure.Storage.Files.DataLake
                 _blockBlobClient,
                 options.ToBlobGetLayoutOptions())
             .ToAsyncCollection(cancellationToken);
+        */
 
         #endregion GetLayout
 

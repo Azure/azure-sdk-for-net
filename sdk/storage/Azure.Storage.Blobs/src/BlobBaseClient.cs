@@ -5454,7 +5454,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
         /// containing each failure instance.
         /// </remarks>
-        public virtual Pageable<BlobLayoutInfo> GetLayout(
+        internal virtual Pageable<BlobLayoutInfo> GetLayout(
             BlobGetLayoutOptions options = default,
             CancellationToken cancellationToken = default) =>
             new GetLayoutAsyncCollection(
@@ -5485,7 +5485,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
         /// containing each failure instance.
         /// </remarks>
-        public virtual AsyncPageable<BlobLayoutInfo> GetLayoutAsync(
+        internal virtual AsyncPageable<BlobLayoutInfo> GetLayoutAsync(
             BlobGetLayoutOptions options = default,
             CancellationToken cancellationToken = default) =>
             new GetLayoutAsyncCollection(

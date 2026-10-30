@@ -56,6 +56,6 @@ namespace Azure.Storage.Blobs.Models
         /// configured endpoint with no rewriting.
         /// </para>
         /// </summary>
-        public Uri LayoutEndpoint { get; set; }
+        internal Uri LayoutEndpoint { get; set; }
     }
 }

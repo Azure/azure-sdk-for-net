@@ -1,6 +1,8 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+// TODO: Data Locality temporarily hidden; restore when feature stabilizes
+/*
 namespace Azure.Storage.Files.DataLake.Models
 {
     /// <summary>
@@ -32,3 +34,4 @@ namespace Azure.Storage.Files.DataLake.Models
         internal DataLakeFileLayoutRange() { }
     }
 }
+*/

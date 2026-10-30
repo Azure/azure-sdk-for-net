@@ -4910,6 +4910,8 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         #region GetLayoutTests
+        // TODO: Data Locality temporarily hidden; restore when feature stabilizes
+        /*
         [RecordedTest]
         [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2026_02_06)]
         public async Task GetLayoutAsync()
@@ -5417,6 +5419,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                 Assert.AreNotEqual(default(ETag), layoutInfo.ETag);
             }
         }
+        */
         #endregion GetLayoutTests
 
         [RecordedTest]

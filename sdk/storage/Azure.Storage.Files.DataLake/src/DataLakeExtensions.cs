@@ -584,6 +584,8 @@ namespace Azure.Storage.Files.DataLake
             };
         }
 
+        // TODO: Data Locality temporarily hidden; restore when feature stabilizes
+        /*
         internal static BlobGetLayoutOptions ToBlobGetLayoutOptions(this DataLakeFileGetLayoutOptions options)
         {
             if (options == null)
@@ -597,6 +599,7 @@ namespace Azure.Storage.Files.DataLake
                 Conditions = options.Conditions.ToBlobRequestConditions(),
             };
         }
+        */
 
         internal static BlobDownloadOptions ToBlobBaseDownloadOptions(this DataLakeFileReadOptions options)
         {
@@ -610,7 +613,8 @@ namespace Azure.Storage.Files.DataLake
                 Range = options.Range,
                 Conditions = options.Conditions.ToBlobRequestConditions(),
                 TransferValidation = options.TransferValidation,
-                LayoutEndpoint = options.LayoutEndpoint
+                // TODO: Data Locality temporarily hidden; restore when feature stabilizes
+                // LayoutEndpoint = options.LayoutEndpoint
             };
         }
 
@@ -629,6 +633,8 @@ namespace Azure.Storage.Files.DataLake
             };
         }
 
+        // TODO: Data Locality temporarily hidden; restore when feature stabilizes
+        /*
         internal static DataLakeFileLayoutEndpoint ToDataLakeFileLayoutEndpoint(this BlobLayoutEndpoint item)
         {
             if (item == null)
@@ -709,6 +715,7 @@ namespace Azure.Storage.Files.DataLake
                 FileCreatedOn = blobLayoutInfo.BlobCreatedOn
             };
         }
+        */
 
         internal const string ContinuationHeader = "x-ms-continuation";
         private const string LastModifiedHeader = "Last-Modified";

@@ -8,7 +8,7 @@ namespace Azure.Storage.Blobs.Models
     /// <summary>
     /// An endpoint that serves one or more ranges of a blob.
     /// </summary>
-    public class BlobLayoutEndpoint
+    internal class BlobLayoutEndpoint
     {
         /// <summary>
         /// The index of the endpoint, referenced by <see cref="BlobLayoutRange.EndpointIndex"/>.
