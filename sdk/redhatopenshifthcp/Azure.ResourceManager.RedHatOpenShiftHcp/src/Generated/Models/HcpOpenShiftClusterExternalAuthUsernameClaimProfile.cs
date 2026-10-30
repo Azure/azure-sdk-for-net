@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
         /// <summary> Initializes a new instance of <see cref="HcpOpenShiftClusterExternalAuthUsernameClaimProfile"/>. </summary>
         /// <param name="claim"> Claim name of the external profile. </param>
         /// <param name="prefix">
-        /// Prefix for the claim external profile
+        /// Prefix for the claim external profile.
         /// Must be set when the prefixPolicy field is set to 'Prefix' and must be unset
         /// otherwise.
         /// </param>
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
         public string Claim { get; set; }
 
         /// <summary>
-        /// Prefix for the claim external profile
+        /// Prefix for the claim external profile.
         /// Must be set when the prefixPolicy field is set to 'Prefix' and must be unset
         /// otherwise.
         /// </summary>
