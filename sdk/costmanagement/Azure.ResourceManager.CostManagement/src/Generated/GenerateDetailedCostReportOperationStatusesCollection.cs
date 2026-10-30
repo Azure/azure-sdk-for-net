@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.CostManagement
     /// <summary>
     /// A class representing a collection of <see cref="GenerateDetailedCostReportOperationStatusesResource"/> and their operations.
     /// Each <see cref="GenerateDetailedCostReportOperationStatusesResource"/> in the collection will belong to the same instance of <see cref="ArmResource"/>.
-    /// To get a <see cref="GenerateDetailedCostReportOperationStatusesCollection"/> instance call the GetGenerateDetailedCostReportOperationStatuses method from an instance of <see cref="ArmResource"/>.
+    /// To get a <see cref="GenerateDetailedCostReportOperationStatusesCollection"/> instance call the GetAllGenerateDetailedCostReportOperationStatuses method from an instance of <see cref="ArmResource"/>.
     /// </summary>
     public partial class GenerateDetailedCostReportOperationStatusesCollection : ArmCollection
     {

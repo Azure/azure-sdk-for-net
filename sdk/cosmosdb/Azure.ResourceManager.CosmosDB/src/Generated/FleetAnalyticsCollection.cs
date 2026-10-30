@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.CosmosDB
     /// <summary>
     /// A class representing a collection of <see cref="FleetAnalyticsResource"/> and their operations.
     /// Each <see cref="FleetAnalyticsResource"/> in the collection will belong to the same instance of <see cref="CosmosDBFleetResource"/>.
-    /// To get a <see cref="FleetAnalyticsCollection"/> instance call the GetFleetAnalytics method from an instance of <see cref="CosmosDBFleetResource"/>.
+    /// To get a <see cref="FleetAnalyticsCollection"/> instance call the GetAllFleetAnalytics method from an instance of <see cref="CosmosDBFleetResource"/>.
     /// </summary>
     public partial class FleetAnalyticsCollection : ArmCollection, IEnumerable<FleetAnalyticsResource>, IAsyncEnumerable<FleetAnalyticsResource>
     {
