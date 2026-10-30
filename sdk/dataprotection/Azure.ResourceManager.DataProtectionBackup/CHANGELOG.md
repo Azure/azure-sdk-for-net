@@ -1,14 +1,12 @@
 # Release History
 
-## 1.10.0-beta.1 (Unreleased)
+## 1.10.0-beta.1 (2026-10-30)
 
 ### Features Added
 
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- Upgraded the API version to `2026-07-01`.
+- Added vault and recovery point immutability configuration support.
+- Added PostgreSQL Flexible Server backup solution settings.
 
 ## 1.9.0 (2026-09-10)
 
