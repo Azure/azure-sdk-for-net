@@ -1,10 +1,13 @@
 # Release History
 
-## 1.18.0-beta.3 (Unreleased)
+## 1.18.0-beta.3 (2026-10-30)
 
 ### Features Added
 
 - Upgraded API version from 2026-01-01 to 2026-03-01.
+- Added support for managing ExpressRoute LAG authorizations, including retrieving authorization keys.
+- Added support for listing and retrieving virtual network appliance capabilities.
+- Added DDoS custom policy mitigation rules with traffic scopes, TCP and UDP mitigation settings, and source-specific policy overrides.
 - Exposed strongly typed `ETag` properties on `NetworkChildResourceData` and `NetworkProxyResourceData`.
 
 ### Breaking Changes
@@ -16,8 +19,8 @@
 
 ### Bugs Fixed
 
-- Fixed the DDoS mitigation rule model factory discarding the supplied UDP packet rate and historical DDoS custom policy factories returning null collections.
-### Other Changes
+- Fixed `ArmNetworkModelFactory.DdosMitigationRulePropertiesFormat` to preserve the supplied UDP packet rate, including zero.
+- Fixed historical `ArmNetworkModelFactory.DdosCustomPolicyData` overloads to initialize collection properties as non-null, mutable collections.
 
 ## 1.18.0-beta.2 (2026-10-28)
 
