@@ -4,13 +4,13 @@
 import { spawnSync } from "node:child_process";
 import path from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
-import { getVallyShardVerdict } from "./lib/verdict.ts";
+import { assertSupportedEvalGate, getVallyShardVerdict, parseFailedTestsGate } from "./lib/verdict.ts";
 
 // Invoke the pinned CLI with Node directly so arguments never pass through a shell.
 const SCRIPT_DIR = path.dirname(fileURLToPath(import.meta.url));
 const VALLY_CLI = path.join(SCRIPT_DIR, "node_modules", "@microsoft", "vally-cli", "dist", "index.js");
 
-export function validateVallyArguments(value) {
+export function validateVallyArguments(value, { failOnFailedTests = false } = {}) {
   if (!Array.isArray(value) || value.some((arg) =>
     (typeof arg !== "string" && typeof arg !== "number") ||
     (typeof arg === "string" && arg.includes("\0")))) {
@@ -39,6 +39,9 @@ export function validateVallyArguments(value) {
     if (isCount &&
       (!/^[1-9]\d*$/.test(argument) || !Number.isSafeInteger(Number(argument)))) {
       throw new Error(`${option} must be a positive integer.`);
+    }
+    if (option === "--runs") {
+      assertSupportedEvalGate({ runs: Number(argument), failOnFailedTests });
     }
     args.push(option, argument);
   }
@@ -129,11 +132,15 @@ export function runShard({ evalArgs, shardName, outputDir, threshold = 0.8, vall
 export function parseArgs(argv, env = process.env) {
   const options = {
     threshold: 0.8,
-    vallyArguments: validateVallyArguments(JSON.parse(env.VALLY_ARGUMENTS_JSON ?? "[]")),
+    vallyArguments: validateVallyArguments(JSON.parse(env.VALLY_ARGUMENTS_JSON ?? "[]"),
+      { failOnFailedTests: parseFailedTestsGate(env.EVAL_FAIL_ON_FAILED_TESTS) }),
   };
   for (let i = 0; i < argv.length; i++) {
     const next = () => argv[++i];
     switch (argv[i]) {
+      case "--validate-only":
+        options.validateOnly = true;
+        break;
       case "--eval-args":
         options.evalArgs = next();
         break;
@@ -150,9 +157,11 @@ export function parseArgs(argv, env = process.env) {
         throw new Error(`Unknown argument: ${argv[i]}`);
     }
   }
-  for (const required of ["evalArgs", "shardName", "outputDir"]) {
-    if (!options[required]) {
-      throw new Error(`Missing required argument for ${required}.`);
+  if (!options.validateOnly) {
+    for (const required of ["evalArgs", "shardName", "outputDir"]) {
+      if (!options[required]) {
+        throw new Error(`Missing required argument for ${required}.`);
+      }
     }
   }
   return options;
@@ -160,7 +169,12 @@ export function parseArgs(argv, env = process.env) {
 
 if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
   try {
-    process.exit(runShard(parseArgs(process.argv.slice(2))));
+    const options = parseArgs(process.argv.slice(2));
+    if (options.validateOnly) {
+      console.log("Eval run configuration is supported.");
+    } else {
+      process.exit(runShard(options));
+    }
   } catch (error) {
     console.error(error.message);
     process.exit(1);
