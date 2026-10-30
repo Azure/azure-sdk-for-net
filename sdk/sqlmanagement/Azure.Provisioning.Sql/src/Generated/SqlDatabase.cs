@@ -964,7 +964,7 @@ namespace Azure.Provisioning.Sql
             _kind = DefineProperty<string>(nameof(Kind), new string[] { "kind" }, isOutput: true);
             _managedBy = DefineProperty<string>(nameof(ManagedBy), new string[] { "managedBy" }, isOutput: true);
             _identity = DefineModelProperty<DatabaseIdentity>(nameof(Identity), new string[] { "identity" });
-            _parent = DefineResource<SqlServer>(nameof(Parent), new string[] { "parent" }, isRequired: true);
+            _parent = DefineResource<SqlServer>(nameof(Parent), new string[] { "parent" });
             DefineAdditionalProperties();
         }
 

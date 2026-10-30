@@ -256,7 +256,7 @@ namespace Azure.Provisioning.AppService
             _tags = DefineDictionaryProperty<string>(nameof(Tags), new string[] { "tags" });
             _location = DefineProperty<AzureLocation>(nameof(Location), new string[] { "location" });
             _properties = DefineModelProperty<WorkflowRunActionRepetitionProperties>(nameof(Properties), new string[] { "properties" });
-            _parent = DefineResource<WorkflowRunAction>(nameof(Parent), new string[] { "parent" }, isRequired: true);
+            _parent = DefineResource<WorkflowRunAction>(nameof(Parent), new string[] { "parent" });
             DefineAdditionalProperties();
         }
 
