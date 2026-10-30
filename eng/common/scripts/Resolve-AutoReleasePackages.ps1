@@ -10,9 +10,11 @@ commit, this script:
      'auto-release' label.
   2. Builds a PR diff object (New-GitHubPullRequestDiffObject) from the PR's changed files and reuses
      the repo's existing package-detection logic (Get-PrPkgProperties) to identify the changed packages
-      (honoring triggering paths and deleted files while ignoring only files directly under
-      sdk/<service>/, not files in package subdirectories), excluding validation-only packages.
-      Get-PrPkgProperties delegates to each repo's own
+     (honoring triggering paths and deleted files while ignoring only files directly under
+     sdk/<service>/, not files in package subdirectories). Excludes validation-only packages and
+     requires an original PR changed or deleted file under each package's DirectoryPath; shared
+     triggering paths alone do not indicate release intent.
+     Get-PrPkgProperties delegates to each repo's own
      Get-AllPackageInfoFromRepo (language-settings.ps1), so this script works for any language repo.
   3. Intersects those packages with this pipeline's declared artifacts and emits Azure DevOps output
      variables consumed by the release stages. Both consumption styles are emitted:
@@ -109,6 +111,12 @@ foreach ($artifact in $declaredArtifacts) {
   }
 }
 
+function ConvertTo-AutoReleaseRelativePath([string] $Path) {
+  # Resolve lexically rather than using Resolve-Path so deleted and renamed files need not exist.
+  $fullPath = [System.IO.Path]::GetFullPath($Path.Replace('\', '/'), $RepoRoot)
+  return [System.IO.Path]::GetRelativePath($RepoRoot, $fullPath).Replace('\', '/')
+}
+
 function Invoke-AutoReleaseResolution {
   Write-Host "Resolving the auto-release pull request for commit '$CommitSha' in '$RepoId'..."
   $release = Get-GitHubAutoReleasePullRequestForCommit `
@@ -144,6 +152,14 @@ function Invoke-AutoReleaseResolution {
     -ExcludeServiceRootFiles
   Write-Host "PR $prLink changed $($diff.ChangedFiles.Count) file(s) and deleted $($diff.DeletedFiles.Count) file(s)."
 
+  # Keep the original PR paths separate from CI detection's exclusions and expanded triggering paths.
+  $releaseDiff = New-GitHubPullRequestDiffObject -PullRequestNumber $pr.number -PullRequestFiles $files
+  $releasePaths = @(
+    foreach ($path in (@($releaseDiff.ChangedFiles) + @($releaseDiff.DeletedFiles))) {
+      ConvertTo-AutoReleaseRelativePath $path
+    }
+  )
+
   $diffPath = Join-Path ([System.IO.Path]::GetTempPath()) ("autorelease-diff-" + [System.Guid]::NewGuid().ToString('N') + ".json")
   $diff | ConvertTo-Json -Depth 10 | Set-Content -Path $diffPath -Encoding utf8
 
@@ -157,11 +173,29 @@ function Invoke-AutoReleaseResolution {
   # Build the releasable key set. Add each changed package's name and, when the group is known, a
   # 'group/name' composite so that pipelines whose declared artifacts carry a groupId (e.g. Java) match
   # the correct group and are not confused by name collisions across groups. Packages pulled in solely
-  # for validation are not releasable.
+  # for validation or shared CI triggers alone are not releasable.
   $releasableKeys = New-Object 'System.Collections.Generic.HashSet[string]' ([System.StringComparer]::OrdinalIgnoreCase)
   $artifactNameToPackageName = [System.Collections.Generic.Dictionary[string, string]]::new([System.StringComparer]::OrdinalIgnoreCase)
   foreach ($package in $changedPackages) {
     if ($package.IncludedForValidation) { continue }
+
+    if ([string]::IsNullOrWhiteSpace($package.DirectoryPath)) {
+      LogWarning "Skipping auto-release for '$($package.Name)': package DirectoryPath is missing."
+      continue
+    }
+    $packageDirectory = ConvertTo-AutoReleaseRelativePath $package.DirectoryPath
+    $directoryPrefix = if ($packageDirectory -eq '.') { '' } else { $packageDirectory.TrimEnd('/') + '/' }
+    $hasDirectChange = $false
+    foreach ($path in $releasePaths) {
+      if ($path.StartsWith($directoryPrefix, [System.StringComparison]::Ordinal)) {
+        $hasDirectChange = $true
+        break
+      }
+    }
+    if (-not $hasDirectChange) {
+      Write-Host "  Skipping auto-release for '$($package.Name)': no changed or deleted files under '$packageDirectory'; shared CI triggers alone are not releasable."
+      continue
+    }
 
     $names = @()
     $packageName = $null
