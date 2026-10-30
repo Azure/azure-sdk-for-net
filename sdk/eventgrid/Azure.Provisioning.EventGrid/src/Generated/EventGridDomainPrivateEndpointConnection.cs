@@ -170,7 +170,7 @@ namespace Azure.Provisioning.EventGrid
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _properties = DefineModelProperty<PrivateEndpointConnectionProperties>(nameof(Properties), new string[] { "properties" });
-            _parent = DefineResource<EventGridDomain>(nameof(Parent), new string[] { "parent" }, isRequired: true);
+            _parent = DefineResource<EventGridDomain>(nameof(Parent), new string[] { "parent" });
             DefineAdditionalProperties();
         }
 
