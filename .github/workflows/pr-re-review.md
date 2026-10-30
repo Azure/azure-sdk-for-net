@@ -3,11 +3,18 @@ run-name: "Re-review PR #${{ github.event.pull_request.number }} at ${{ github.e
 on:
   pull_request:
     types: [synchronize]
+  # Fork PRs get a read-only token under pull_request, so `if:` routes them through
+  # pull_request_target instead; same-repo PRs stay on pull_request. Safe here because this
+  # agent never builds or runs PR code (unlike sdk-build-repair), and gh-aw restores .github/
+  # and AGENTS.md from the base branch after checking out the PR head.
+  pull_request_target:
+    types: [synchronize]
+    acknowledge-risk: true
   # GitHub Apps aren't repo collaborators, so they report permission "none" and fail the
   # default [admin, maintainer, write] role check even though they're trusted automation —
   # e.g. azure-sdk-automation[bot] pushing a synchronize commit to a PR branch.
   bots: ["azure-sdk", "azure-sdk-automation[bot]"]
-if: github.event.pull_request.draft == false
+if: github.event.pull_request.draft == false && (github.event_name == 'pull_request' || github.event.pull_request.head.repo.id != github.repository_id)
 description: "Verify prior review threads and catch missed issues after each new commit, using the shared code-review rules"
 imports:
   - shared/copilot-cli-version-probe-guard.md
@@ -260,7 +267,8 @@ tools:
   bash: true
 timeout-minutes: 25
 concurrency:
-  group: pr-re-review-${{ github.event.pull_request.number }}
+  # Every push fires both events; keying by event keeps the skipped twin from queuing behind the real run.
+  group: pr-re-review-${{ github.event_name }}-${{ github.event.pull_request.number }}
   queue: max
   job-discriminator: ${{ github.event.pull_request.number || github.run_id }}
 ---
