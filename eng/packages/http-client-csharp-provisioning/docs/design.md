@@ -227,12 +227,12 @@ The generator uses this hierarchy together with the ARM provider schema's `Paren
 
 #### Parent and Scope Resolution
 
-For a non-extension resource, the generator resolves `ParentResourceId` against resources generated in the same output library:
+The generator resolves `ParentResourceId` against resources generated in the same output library:
 
-- When the resolved resource is the immediate structural parent by resource type, the resource gets a strongly typed, required `Parent` property.
+- When the resolved resource is the immediate structural parent by resource type, the resource gets a strongly typed, optional `Parent` property. Without `Parent`, callers supply the full resource-name hierarchy.
 - When the resolved resource is a more distant ancestor, or when the parent is virtual, belongs to another package, or otherwise does not resolve locally, no `Parent` property is generated. The caller supplies the full resource-name hierarchy because no Bicep `parent` relationship is emitted.
 
-A writable extension resource uses Bicep's `scope` relationship instead of `parent`. It gets a `ProvisionableResource Scope` property so any generated provisioning resource can be assigned without introducing a package dependency. A read-only extension resource does not expose writable `Scope` metadata.
+A writable extension resource without a generated structural parent uses Bicep's `scope` relationship instead of `parent`. It gets an optional `ProvisionableResource Scope` property so any generated provisioning resource can be assigned without introducing a package dependency. Structural children inherit the external scope through their parent. A read-only extension resource does not expose writable `Scope` metadata.
 
 `Parent` and `Scope` are mutually exclusive:
 
@@ -242,20 +242,29 @@ The following snippets abbreviate the generated accessor bodies to emphasize the
 // Structural child resource
 public ConfigurationStore Parent { get; set; }
 
-_parent = DefineResource<ConfigurationStore>(
-    "Parent",
-    new[] { "parent" },
-    isRequired: true);
+_parent = new ProvisioningResourceReference<ConfigurationStore>(DefineProperty<string>(
+    nameof(Parent),
+    new[] { "parent" }));
 ```
 
 ```csharp
 // Writable extension resource
 public ProvisionableResource Scope { get; set; }
 
-_scope = DefineResource<ProvisionableResource>(
+_scope = new ProvisioningResourceReference<ProvisionableResource>(DefineProperty<string>(
     nameof(Scope),
-    new[] { "scope" });
+    new[] { "scope" }));
 ```
+
+Libraries with generated `Parent` or `Scope` properties emit one internal sealed
+`ProvisioningResourceReference<T>` helper in `Generated/Internal`, using the library's
+namespace. Each accessor calls `Initialize()` before reading or writing its private
+helper's `Value`. Assigning a resource caches it and sets the underlying Bicep value to
+its identifier expression. Assigning `null` clears both the cached resource and the
+underlying value, omitting the relationship instead of emitting an explicit null.
+Both relationships remain optional after clearing; callers omitting `Parent` supply a full resource name.
+Ordinary `BicepValue<T>` null semantics and the public `ResourceReference<T>` helper
+remain unchanged.
 
 #### Name Generation
 
@@ -275,7 +284,7 @@ For a singleton resource that has only one valid name for its resource type, tha
 1. When the immediate structural `Parent` resolves, the resource type is the parent's resource type plus exactly one trailing type segment.
 2. When there is no generated `Parent`, the resource type must contain exactly one resource type segment after the provider namespace.
 
-In those cases, `Name` is getter-only and receives the fixed singleton name as its default:
+In those cases, `Name` receives the singleton name as its default. Top-level singleton names are getter-only; child singleton names remain settable so callers can supply composite names when omitting `Parent`:
 
 ```csharp
 public BicepValue<string> Name { get; }
@@ -295,12 +304,12 @@ If either condition is not met, the generator treats the singleton name like a r
 |---|---|---|
 | Top-level regular resource | None | Required and settable |
 | Top-level singleton | None | Getter-only with the fixed singleton name |
-| Regular child with its direct parent generated locally | Strongly typed `Parent` | Required and settable; contains the child segment |
-| Singleton child with its direct parent generated locally | Strongly typed `Parent` | Getter-only with the fixed singleton name |
+| Regular child with its direct parent generated locally | Optional strongly typed `Parent` | Required and settable; contains the child segment with `Parent`, otherwise the full hierarchy |
+| Singleton child with its direct parent generated locally | Optional strongly typed `Parent` | Settable with the singleton default; supports composite names without `Parent` |
 | Child whose nearest generated ancestor is more than one resource type level above it | None | Required and settable; contains every resource name segment |
 | Child of a virtual or cross-package parent | None | Required and settable; contains every resource name segment |
-| Writable regular extension resource | `ProvisionableResource Scope` | Required and settable |
-| Writable singleton extension resource | `ProvisionableResource Scope` | Follows the parentless singleton rule: fixed only for a top-level resource type |
+| Writable regular extension resource without a generated structural parent | Optional `ProvisionableResource Scope` | Required and settable |
+| Writable singleton extension resource without a generated structural parent | Optional `ProvisionableResource Scope` | Follows the parentless singleton rule: fixed only for a top-level resource type |
 | Read-only extension resource | None | Follows the regular or singleton name rule, but exposes no writable `Scope` |
 
 For example, if the nearest generated ancestor has resource type `Contoso/parents` and its singleton descendant has resource type `Contoso/parents/intermediates/settings`, that ancestor is not the immediate structural parent (`Contoso/parents/intermediates`). The descendant therefore has no generated `Parent` and requires the full name hierarchy:

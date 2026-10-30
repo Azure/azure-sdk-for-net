@@ -20,7 +20,7 @@ namespace Azure.Provisioning.ProvisioningTypeSpec
         private BicepValue<string> _name;
         private SystemData _systemData;
         private ExtensionAssignmentProperties _properties;
-        private ResourceReference<ExtensionAssignment> _parent;
+        private ProvisioningResourceReference<ExtensionAssignment> _parent;
 
         /// <summary> Creates a new ExtensionChild. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -119,7 +119,7 @@ namespace Azure.Provisioning.ProvisioningTypeSpec
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _properties = DefineModelProperty<ExtensionAssignmentProperties>(nameof(Properties), new string[] { "properties" });
-            _parent = DefineResource<ExtensionAssignment>(nameof(Parent), new string[] { "parent" });
+            _parent = new ProvisioningResourceReference<ExtensionAssignment>(DefineProperty<string>(nameof(Parent), new string[] { "parent" }));
             DefineAdditionalProperties();
         }
 
