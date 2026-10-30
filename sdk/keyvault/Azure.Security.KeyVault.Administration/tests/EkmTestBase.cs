@@ -5,7 +5,7 @@ using Azure.Core.TestFramework;
 
 namespace Azure.Security.KeyVault.Administration.Tests
 {
-    [ClientTestFixture(KeyVaultAdministrationClientOptions.ServiceVersion.V2026_01_01_Preview)]
+    [ClientTestFixture(KeyVaultAdministrationClientOptions.ServiceVersion.V2026_04_01)]
     public abstract class EkmTestBase : AdministrationTestBase
     {
         public EkmTestBase(bool isAsync, KeyVaultAdministrationClientOptions.ServiceVersion serviceVersion, RecordedTestMode? mode)

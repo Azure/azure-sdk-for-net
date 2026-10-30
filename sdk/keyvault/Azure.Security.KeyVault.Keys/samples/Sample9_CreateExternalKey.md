@@ -2,7 +2,7 @@
 
 This sample demonstrates how to register a Managed HSM key whose material is held in a connected external HSM (External Key Management, or EKM), and then get, delete, and purge that key.
 
-External keys are only supported on Managed HSM with service version `2026-01-01-preview` or newer, and the Managed HSM must be configured for EKM with an existing external key reachable by the identifier you pass to `ExternalKey`.
+External keys are only supported on Managed HSM with service version `2026-04-01` or newer, and the Managed HSM must be configured for EKM with an existing external key reachable by the identifier you pass to `ExternalKey`.
 
 To get started, you'll need a URI to an EKM-connected Azure Managed HSM. See the [README][] for links and instructions.
 

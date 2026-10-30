@@ -12,7 +12,7 @@ using NUnit.Framework;
 namespace Azure.Security.KeyVault.Keys.Tests
 {
     [ClientTestFixture(
-        KeyClientOptions.ServiceVersion.V2026_01_01_Preview,
+        KeyClientOptions.ServiceVersion.V2026_04_01,
         KeyClientOptions.ServiceVersion.V2025_07_01,
         KeyClientOptions.ServiceVersion.V7_6,
         KeyClientOptions.ServiceVersion.V7_5,
@@ -231,7 +231,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
         }
 
         [RecordedTest]
-        [ServiceVersion(Min = KeyClientOptions.ServiceVersion.V2026_01_01_Preview)]
+        [ServiceVersion(Min = KeyClientOptions.ServiceVersion.V2026_04_01)]
         [IgnoreServiceError(403, "Forbidden", Message = "Target environment attestation statement cannot be verified.")] // Service may transiently fail to verify a test attestation token in live runs.
         public async Task SecureWrapUnwrapRoundTrip()
         {
