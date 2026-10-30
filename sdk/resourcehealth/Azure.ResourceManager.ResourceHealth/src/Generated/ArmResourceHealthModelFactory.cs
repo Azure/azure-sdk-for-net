@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -215,6 +216,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="eventType"> Type of event. </param>
         /// <param name="eventSubType"> Sub-type of event. </param>
+        /// <param name="advisorRecommendations"> Operation for listing Advisor recommendations associated with this event's tracking ID in the response subscription. </param>
         /// <param name="eventSource"> Source of event. </param>
         /// <param name="status"> Current status of event. </param>
         /// <param name="title"> Title text of event. </param>
@@ -253,16 +255,17 @@ namespace Azure.ResourceManager.ResourceHealth.Models
         /// <param name="billingId"> Billing identifier information. </param>
         /// <param name="additionalInformationMessage"> Additional information Message. </param>
         /// <returns> A new <see cref="ResourceHealth.ResourceHealthEventData"/> instance for mocking. </returns>
-        public static ResourceHealthEventData ResourceHealthEventData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ResourceHealthEventTypeValue? eventType = default, EventSubTypeValue? eventSubType = default, ResourceHealthEventSourceValue? eventSource = default, ResourceHealthEventStatusValue? status = default, string title = default, string summary = default, string header = default, ResourceHealthEventInsightLevelValue? level = default, ResourceHealthEventLevelValue? eventLevel = default, bool? isEventSensitive = default, string externalIncidentId = default, string reason = default, ResourceHealthEventArticle article = default, IEnumerable<ResourceHealthEventLink> links = default, DateTimeOffset? impactStartOn = default, DateTimeOffset? impactMitigationOn = default, IEnumerable<ResourceHealthEventImpact> impact = default, ResourceHealthEventRecommendedActions recommendedActions = default, IEnumerable<ResourceHealthEventFaq> faqs = default, bool? isHirEvent = default, bool? isMicrosoftSupportEnabled = default, string description = default, bool? isPlatformInitiated = default, bool? isChatWithUsEnabled = default, int? priority = default, DateTimeOffset? lastUpdateOn = default, string hirStage = default, int? duration = default, string impactType = default, IEnumerable<string> eventTags = default, double? newRate = default, double? oldRate = default, string currencyType = default, string billingId = default, string additionalInformationMessage = default)
+        public static ResourceHealthEventData ResourceHealthEventData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ResourceHealthEventTypeValue? eventType = default, EventSubTypeValue? eventSubType = default, ApiOperationLink advisorRecommendations = default, ResourceHealthEventSourceValue? eventSource = default, ResourceHealthEventStatusValue? status = default, string title = default, string summary = default, string header = default, ResourceHealthEventInsightLevelValue? level = default, ResourceHealthEventLevelValue? eventLevel = default, bool? isEventSensitive = default, string externalIncidentId = default, string reason = default, ResourceHealthEventArticle article = default, IEnumerable<ResourceHealthEventLink> links = default, DateTimeOffset? impactStartOn = default, DateTimeOffset? impactMitigationOn = default, IEnumerable<ResourceHealthEventImpact> impact = default, ResourceHealthEventRecommendedActions recommendedActions = default, IEnumerable<ResourceHealthEventFaq> faqs = default, bool? isHirEvent = default, bool? isMicrosoftSupportEnabled = default, string description = default, bool? isPlatformInitiated = default, bool? isChatWithUsEnabled = default, int? priority = default, DateTimeOffset? lastUpdateOn = default, string hirStage = default, int? duration = default, string impactType = default, IEnumerable<string> eventTags = default, double? newRate = default, double? oldRate = default, string currencyType = default, string billingId = default, string additionalInformationMessage = default)
         {
             return new ResourceHealthEventData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                eventType is null && eventSubType is null && eventSource is null && status is null && title is null && summary is null && header is null && level is null && eventLevel is null && isEventSensitive is null && externalIncidentId is null && reason is null && article is null && links is null && impactStartOn is null && impactMitigationOn is null && impact is null && recommendedActions is null && faqs is null && isHirEvent is null && isMicrosoftSupportEnabled is null && description is null && isPlatformInitiated is null && isChatWithUsEnabled is null && priority is null && lastUpdateOn is null && hirStage is null && additionalInformationMessage is null && duration is null && impactType is null && eventTags is null && newRate is null && oldRate is null && currencyType is null && billingId is null ? default : new EventProperties(
+                eventType is null && eventSubType is null && advisorRecommendations is null && eventSource is null && status is null && title is null && summary is null && header is null && level is null && eventLevel is null && isEventSensitive is null && externalIncidentId is null && reason is null && article is null && links is null && impactStartOn is null && impactMitigationOn is null && impact is null && recommendedActions is null && faqs is null && isHirEvent is null && isMicrosoftSupportEnabled is null && description is null && isPlatformInitiated is null && isChatWithUsEnabled is null && priority is null && lastUpdateOn is null && hirStage is null && additionalInformationMessage is null && duration is null && impactType is null && eventTags is null && newRate is null && oldRate is null && currencyType is null && billingId is null ? default : new EventProperties(
                     eventType,
                     eventSubType,
+                    advisorRecommendations,
                     eventSource,
                     status,
                     title,
@@ -298,6 +301,16 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                     billingId,
                     default),
                 default);
+        }
+
+        /// <summary> An API operation associated with an event. </summary>
+        /// <param name="httpMethod"> HTTP method to use. Resource Health returns GET for Advisor recommendations. </param>
+        /// <param name="uri"> Opaque absolute ARM URL for the associated API operation. </param>
+        /// <param name="description"> Human-readable description of the operation. Clients must not parse this value. </param>
+        /// <returns> A new <see cref="Models.ApiOperationLink"/> instance for mocking. </returns>
+        public static ApiOperationLink ApiOperationLink(string httpMethod = default, Uri uri = default, string description = default)
+        {
+            return new ApiOperationLink(httpMethod, uri, description, default);
         }
 
         /// <summary> Article of event. </summary>
@@ -499,6 +512,100 @@ namespace Azure.ResourceManager.ResourceHealth.Models
         public static EmergingIssueImpactedRegion EmergingIssueImpactedRegion(string id = default, string name = default)
         {
             return new EmergingIssueImpactedRegion(id, name, default);
+        }
+
+        /// <summary> Service health event. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="eventType"> Type of event. </param>
+        /// <param name="eventSubType"> Sub-type of event. </param>
+        /// <param name="eventSource"> Source of event. </param>
+        /// <param name="status"> Current status of event. </param>
+        /// <param name="title"> Title text of event. </param>
+        /// <param name="summary"> Summary text of event. Use fetchEventDetails endpoint to get summary of sensitive events. </param>
+        /// <param name="header"> Header text of event. </param>
+        /// <param name="level"> Level of insight. </param>
+        /// <param name="eventLevel"> Level of event. </param>
+        /// <param name="isEventSensitive"> If true the event may contains sensitive data. Use the post events/{trackingId}/fetchEventDetails endpoint to fetch sensitive data see https://learn.microsoft.com/en-us/azure/service-health/security-advisories-elevated-access. </param>
+        /// <param name="externalIncidentId"> The id of the Incident. </param>
+        /// <param name="reason"> The reason for the Incident. </param>
+        /// <param name="article"> Article of event. </param>
+        /// <param name="links"> Useful links of event. </param>
+        /// <param name="impactStartOn"></param>
+        /// <param name="impactMitigationOn"> It provides the Timestamp for when the health impacting event resolved. </param>
+        /// <param name="impact"> List services impacted by the service health event. </param>
+        /// <param name="recommendedActions"> Recommended actions of event. </param>
+        /// <param name="faqs"> Frequently asked questions for the service health event. </param>
+        /// <param name="isHirEvent"> It provides information if the event is High incident rate event or not. </param>
+        /// <param name="isMicrosoftSupportEnabled"> Tells if we want to enable or disable Microsoft Support for this event. </param>
+        /// <param name="description"> Human-readable description of the operation. Clients must not parse this value. </param>
+        /// <param name="isPlatformInitiated"> Is true if the event is platform initiated. </param>
+        /// <param name="isChatWithUsEnabled"> Tells if we want to enable or disable Microsoft Support for this event. </param>
+        /// <param name="priority"> Priority level of the event. Has value from 0 to 23. 0 is the highest priority. Service issue events have higher priority followed by planned maintenance and health advisory. Critical events have higher priority followed by error, warning and informational. Furthermore, active events have higher priority than resolved. </param>
+        /// <param name="lastUpdateOn"> It provides the Timestamp for when the health impacting event was last updated. </param>
+        /// <param name="hirStage"> Stage for HIR Document. </param>
+        /// <param name="duration"> duration in seconds. </param>
+        /// <param name="impactType"> The type of the impact. </param>
+        /// <param name="eventTags">
+        /// A list of metadata tags associated with the event. Possible values include:
+        /// -Action Recommended: Action may be required by you to avoid possible disruptions or mitigate risks for your services. It is recommended to evaluate these actions and the potential impact on your services.
+        /// <list type="bullet"><item><description>False Positive: After investigation, we've determined your service is healthy and service issues did not impact your services as originally communicated.</description></item><item><description>Preliminary PIR: For our largest, most impactful service issues a Preliminary Post Incident Review (PIR) is published generally within 72 hours of mitigation, to summarize what we have learned so far from the still-in-progress investigation.</description></item><item><description>Final PIR: For service issues, a Final Post Incident Review (PIR) may be published to provide additional details or learnings. Sometimes this requires us to complete an internal retrospective, generally within 14 days of mitigation.</description></item></list>
+        /// </param>
+        /// <param name="newRate"> Billing rate change information - new rate. </param>
+        /// <param name="oldRate"> Billing rate change information - old rate. </param>
+        /// <param name="currencyType"> Billing currency type information. Example: USD, CAD. </param>
+        /// <param name="billingId"> Billing identifier information. </param>
+        /// <param name="additionalInformationMessage"> Additional information Message. </param>
+        /// <returns> A new <see cref="ResourceHealth.ResourceHealthEventData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static ResourceHealthEventData ResourceHealthEventData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ResourceHealthEventTypeValue? eventType, EventSubTypeValue? eventSubType, ResourceHealthEventSourceValue? eventSource, ResourceHealthEventStatusValue? status, string title, string summary, string header, ResourceHealthEventInsightLevelValue? level, ResourceHealthEventLevelValue? eventLevel, bool? isEventSensitive, string externalIncidentId, string reason, ResourceHealthEventArticle article, IEnumerable<ResourceHealthEventLink> links, DateTimeOffset? impactStartOn, DateTimeOffset? impactMitigationOn, IEnumerable<ResourceHealthEventImpact> impact, ResourceHealthEventRecommendedActions recommendedActions, IEnumerable<ResourceHealthEventFaq> faqs, bool? isHirEvent, bool? isMicrosoftSupportEnabled, string description, bool? isPlatformInitiated, bool? isChatWithUsEnabled, int? priority, DateTimeOffset? lastUpdateOn, string hirStage, int? duration, string impactType, IEnumerable<string> eventTags, double? newRate, double? oldRate, string currencyType, string billingId, string additionalInformationMessage)
+        {
+            return new ResourceHealthEventData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                eventType is null && eventSubType is null && description is null && eventSource is null && status is null && title is null && summary is null && header is null && level is null && eventLevel is null && isEventSensitive is null && externalIncidentId is null && reason is null && article is null && links is null && impactMitigationOn is null && impact is null && recommendedActions is null && faqs is null && isHirEvent is null && isMicrosoftSupportEnabled is null && description is null && isPlatformInitiated is null && isChatWithUsEnabled is null && priority is null && lastUpdateOn is null && hirStage is null && additionalInformationMessage is null && duration is null && impactType is null && eventTags is null && newRate is null && oldRate is null && currencyType is null && billingId is null ? default : new EventProperties(
+                    eventType,
+                    eventSubType,
+                    description is null ? default : new ApiOperationLink(default, default, description, default),
+                    eventSource,
+                    status,
+                    title,
+                    summary,
+                    header,
+                    level,
+                    eventLevel,
+                    isEventSensitive,
+                    externalIncidentId,
+                    reason,
+                    article,
+                    (links ?? new ChangeTrackingList<ResourceHealthEventLink>()).ToList(),
+                    default,
+                    impactMitigationOn,
+                    (impact ?? new ChangeTrackingList<ResourceHealthEventImpact>()).ToList(),
+                    recommendedActions,
+                    (faqs ?? new ChangeTrackingList<ResourceHealthEventFaq>()).ToList(),
+                    isHirEvent,
+                    isMicrosoftSupportEnabled,
+                    description,
+                    isPlatformInitiated,
+                    isChatWithUsEnabled,
+                    priority,
+                    lastUpdateOn,
+                    hirStage,
+                    additionalInformationMessage is null ? default : new ResourceHealthEventAdditionalInformation(additionalInformationMessage, default),
+                    duration,
+                    impactType,
+                    (eventTags ?? new ChangeTrackingList<string>()).ToList(),
+                    newRate,
+                    oldRate,
+                    currencyType,
+                    billingId,
+                    default),
+                default);
         }
     }
 }

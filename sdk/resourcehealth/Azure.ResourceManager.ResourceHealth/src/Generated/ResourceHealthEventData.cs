@@ -58,6 +58,15 @@ namespace Azure.ResourceManager.ResourceHealth
             }
         }
 
+        /// <summary> Operation for listing Advisor recommendations associated with this event's tracking ID in the response subscription. </summary>
+        public ApiOperationLink AdvisorRecommendations
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AdvisorRecommendations;
+            }
+        }
+
         /// <summary> Source of event. </summary>
         public ResourceHealthEventSourceValue? EventSource
         {
