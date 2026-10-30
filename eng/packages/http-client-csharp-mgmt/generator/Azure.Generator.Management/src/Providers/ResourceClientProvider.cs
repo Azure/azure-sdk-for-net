@@ -115,8 +115,7 @@ namespace Azure.Generator.Management.Providers
             }
 
             var derivedGetter = ResourceName.GetCollectionMethodName(preserveCasing: true);
-            var legacyGetter = ResourceName.GetCollectionMethodName();
-            if (derivedGetter == legacyGetter)
+            if (derivedGetter == ResourceName.GetCollectionMethodName())
             {
                 return UsesDerivedResourceName;
             }
@@ -130,32 +129,38 @@ namespace Azure.Generator.Management.Providers
             IReadOnlyList<ParameterProvider> factoryParameters = IsExtensionResource && ParentResourceIdPattern is null
                 ? [new ParameterProvider("scope", $"The resource scope.", typeof(ResourceIdentifier)), .. ResourceCollection.PathParameters]
                 : ResourceCollection.PathParameters;
-            // A resource type alone cannot tell us which accessor casing was published.
-            var publishedGetters = parent?.LastContractView?.Methods.Where(MatchesFactory).ToArray() ?? [];
+            var publishedGetter = parent is null ? null
+                : GetPublishedCollectionAccessor(parent, factoryParameters.Select(p => p.Type).ToArray());
+            return publishedGetter is not null &&
+                publishedGetter.Signature.Parameters.Zip(factoryParameters).All(pair => pair.First.Name == pair.Second.Name)
+                ? publishedGetter.Signature.Name == derivedGetter
+                : UsesDerivedResourceName;
+        }
+
+        internal MethodProvider? GetPublishedCollectionAccessor(TypeProvider parent, IReadOnlyList<CSharpType> parameterTypes)
+        {
+            var derivedGetter = ResourceName.GetCollectionMethodName(preserveCasing: true);
+            var legacyGetter = ResourceName.GetCollectionMethodName();
+            // Resolve the published accessor before its parameter names are known.
+            var publishedGetters = parent.LastContractView?.Methods.Where(MatchesFactory).ToArray() ?? [];
             if (publishedGetters.Length > 1)
             {
                 // Retained aliases must keep forwarding to the generated accessor, regardless of declaration order.
-                var customGetters = parent?.CustomCodeView?.Methods.Where(MatchesFactory).Select(m => m.Signature.Name).ToHashSet() ?? [];
+                var customGetters = parent.CustomCodeView?.Methods.Where(MatchesFactory).Select(m => m.Signature.Name).ToHashSet() ?? [];
                 publishedGetters = publishedGetters.Where(m => !customGetters.Contains(m.Signature.Name)).ToArray();
             }
-            return publishedGetters.Length == 1
-                ? publishedGetters[0].Signature.Name == derivedGetter
-                : UsesDerivedResourceName;
+            return publishedGetters.Length == 1 ? publishedGetters[0] : null;
 
             bool MatchesFactory(MethodProvider m) =>
                 m.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Public) &&
                 !m.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Static) &&
                 m.Signature.GenericArguments is not { Count: > 0 } &&
-                m.Signature.ReturnType?.Equals(ResourceCollection.Type) == true &&
+                m.Signature.ReturnType?.Equals(ResourceCollection!.Type) == true &&
                 (m.Signature.Name == derivedGetter || m.Signature.Name == legacyGetter) &&
-                m.Signature.Parameters.Count == factoryParameters.Count &&
-                m.Signature.Parameters.Zip(factoryParameters).All(pair =>
-                    pair.First.Name == pair.Second.Name &&
-                    pair.First.Type.Equals(pair.Second.Type) &&
-                    pair.First.IsRef == pair.Second.IsRef &&
-                    pair.First.IsOut == pair.Second.IsOut &&
-                    pair.First.IsIn == pair.Second.IsIn &&
-                    pair.First.IsParams == pair.Second.IsParams);
+                m.Signature.Parameters.Count == parameterTypes.Count &&
+                m.Signature.Parameters.Zip(parameterTypes).All(pair =>
+                    pair.First.Type.Equals(pair.Second) &&
+                    !pair.First.IsRef && !pair.First.IsOut && !pair.First.IsIn && !pair.First.IsParams);
         }
 
         private string ResolveResourceName(string resourceName, ArmResourceMetadata metadata)

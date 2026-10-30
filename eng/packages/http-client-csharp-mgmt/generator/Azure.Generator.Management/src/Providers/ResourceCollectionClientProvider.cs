@@ -152,7 +152,9 @@ namespace Azure.Generator.Management.Providers
             var methodName = ResourceName.GetCollectionMethodName();
             if (_resourceMetadata.ParentResourceId is { } parentId)
             {
-                return SynthesizedParameterNameHelper.GetExistingParameterName(library.GetResourceById(parentId), methodName, parameterTypes, index);
+                var parent = library.GetResourceById(parentId);
+                methodName = _resource.GetPublishedCollectionAccessor(parent, parameterTypes)?.Signature.Name ?? methodName;
+                return SynthesizedParameterNameHelper.GetExistingParameterName(parent, methodName, parameterTypes, index);
             }
 
             var mockable = _resourceMetadata.Scope.Kind == ResourceScope.Extension
@@ -160,6 +162,7 @@ namespace Azure.Generator.Management.Providers
                 : library.GetMockableResourceByScope(_resourceMetadata.Scope.Kind);
             var offset = _resourceMetadata.Scope.Kind == ResourceScope.Extension ? 1 : 0;
             CSharpType[] prefixTypes = offset > 0 ? [typeof(ResourceIdentifier)] : [];
+            methodName = _resource.GetPublishedCollectionAccessor(mockable, [.. prefixTypes, .. parameterTypes])?.Signature.Name ?? methodName;
             return SynthesizedParameterNameHelper.GetExistingParameterName(mockable, methodName, parameterTypes, index, offset, prefixTypes)
                 ?? SynthesizedParameterNameHelper.GetExistingParameterName(library.ExtensionProvider, methodName, parameterTypes, index, offset + 1, [mockable.ArmCoreType, .. prefixTypes]);
         }

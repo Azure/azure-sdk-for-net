@@ -115,6 +115,50 @@ internal class ResourceNameTests
     }
 
     [Test]
+    public void PublishedAcronymAccessorPreservesHistoricalParameterNames(
+        [Values(false, true)] bool child,
+        [Values(false, true)] bool legacy,
+        [Values(false, true)] bool retainedAlias)
+    {
+        var (parentClient, childClient, models) = InputResourceData.ClientWithNestedChildResource(
+            "IPv4Name", childHasParent: child, childResourceName: "OS", resourceNameIsExplicit: false);
+        ManagementMockHelpers.LoadMockPlugin(inputModels: () => models, clients: () => [parentClient, childClient]);
+        var getter = legacy ? "GetOs" : "GetAllOS";
+        var aliasName = legacy ? "GetAllOS" : "GetOs";
+        var parentNamespace = child ? "Samples" : "Samples.Mocking";
+        var parentName = child ? "ParentTypeResource" : "MockableSamplesResourceGroupResource";
+        var parameters = child ? "string iPv4Name" : "string parentName, string iPv4Name";
+        var aliasParameters = child ? "string ipv4Name" : "string parentName, string ipv4Name";
+        var arguments = child ? "ipv4Name" : "parentName, ipv4Name";
+        var factory = $"public virtual global::Samples.OSCollection {getter}({parameters}) => throw null;";
+        var alias = $"public virtual global::Samples.OSCollection {aliasName}({aliasParameters}) => {getter}({arguments});";
+        var contract = Helpers.BuildCompilation([
+            ("Resources.cs", "namespace Samples { public class OSResource { } public class OSCollection { } }"),
+            ("Parent.cs", $"namespace {parentNamespace} {{ public partial class {parentName} {{ {factory} {(retainedAlias ? alias : "")} }} }}")
+        ]);
+        var customization = retainedAlias ? Helpers.BuildCompilation([
+            ("Resources.cs", "namespace Samples { public class OSCollection { } }"),
+            ("Parent.cs", $"namespace {parentNamespace} {{ public partial class {parentName} {{ {alias} }} }}")
+        ]) : null;
+        var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => models,
+            clients: () => [parentClient, childClient], lastContractCompilation: () => contract,
+            customizationCompilation: customization is null ? null : () => customization);
+        var library = plugin.Object.OutputLibrary;
+        var resource = library.TypeProviders.OfType<ResourceClientProvider>().Single(r => r.ResourceName == "OS");
+        var collection = resource.ResourceCollection!;
+        Assert.That(collection.PathParameters.Single(p => p.WireInfo.SerializedName == "IPv4Name").Name, Is.EqualTo("iPv4Name"));
+        Assert.That(resource.FactoryMethodSignature.Name, Is.EqualTo(getter));
+        var parent = child
+            ? (TypeProvider)library.TypeProviders.OfType<ResourceClientProvider>().Single(r => r.ResourceName == "ParentType")
+            : library.MockableResourceProviders.Single(p => p.ArmCoreType.Equals(typeof(Azure.ResourceManager.Resources.ResourceGroupResource)));
+        var method = parent.Methods.Single(m => m.Signature.Name == getter && m.Signature.ReturnType?.Equals(collection.Type) == true);
+        Assert.That(method.Signature.Parameters.Last().Name, Is.EqualTo("iPv4Name"));
+        var rendered = new TypeProviderWriter(parent).Write().Content;
+        Assert.That(rendered, Does.Contain($"{getter}({parameters})"));
+        Assert.That(collection.PathParameters.Single(p => p.Name == "iPv4Name").Field!.Name, Is.EqualTo("_iPv4Name"));
+    }
+
+    [Test]
     public void PublishedCollectionAccessorIgnoresUnrelatedOverloads(
         [Values(false, true)] bool child,
         [Values(false, true)] bool unrelatedFirst,
