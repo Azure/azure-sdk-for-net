@@ -3,7 +3,8 @@
 ## 12.29.0-beta.1 (Unreleased)
 
 ### Features Added
-
+- Added support for Session Authentication for `TokenCredential`-authenticated clients using GET Blob operations. This is currently disabled by default and can be enabled via `DataLakeClientOptions.SessionOptions.SessionMode`.
+- Added support for locality-aware downloads for `DataLakeFileClient.ReadTo`, `DataLakeFileClient.ReadToAsync`, `DataLakeFileClient.OpenRead`, and `DataLakeFileClient.OpenReadAsync` operations. This is currently disabled by default and can be enabled via `DataLakeFileReadToOptions.LayoutAwareRouting` and `DataLakeOpenReadOptions.LayoutAwareRouting`.
 - Added support for scheduling file deletion with `DataLakeFileClient.Upload` and `UploadAsync`.
 
 ### Breaking Changes

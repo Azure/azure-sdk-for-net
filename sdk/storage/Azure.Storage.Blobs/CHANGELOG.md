@@ -3,6 +3,9 @@
 ## 12.31.0-beta.1 (Unreleased)
 
 ### Features Added
+- Added support for Session Authentication for `TokenCredential`-authenticated clients using GET Blob operations. This is currently disabled by default and can be enabled via `BlobClientOptions.SessionOptions.SessionMode`.
+- Changed the default value of `GetBlobsOptions.ResponseFormat` and `GetBlobsByHierarchyOptions.ResponseFormat` to `StorageResponseFormat.Arrow`. The default value was previously `StorageResponseFormat.Xml`. This change will improve performance and modify the response format of the `GetBlobs` and `GetBlobsByHierarchy` APIs when the caller does not explicitly set the response format. Callers that require XML responses should explicitly set the response format to `StorageResponseFormat.Xml`.
+- Added support for locality-aware downloads for `BlobBaseClient.DownloadTo`, `BlobBaseClient.DownloadToAsync`, `BlobBaseClient.OpenRead`, and `BlobBaseClient.OpenReadAsync` operations. This is currently disabled by default and can be enabled via `BlobDownloadToOptions.LayoutAwareRouting` and `BlobOpenReadOptions.LayoutAwareRouting`.
 
 ### Breaking Changes
 - Changed the default value of `StorageTransferOptions.InitialTransferSize` used by partitioned uploads and downloads when it is not set by the caller. It now matches the default size of subsequent chunks instead of 256 MB:
