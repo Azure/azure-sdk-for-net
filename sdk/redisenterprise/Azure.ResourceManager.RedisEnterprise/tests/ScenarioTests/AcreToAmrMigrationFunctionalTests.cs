@@ -26,12 +26,13 @@ namespace Azure.ResourceManager.RedisEnterprise.Tests
 
             try
             {
-                Assert.IsNotEmpty(target.Data.MigratedEndpoint);
+                string migratedHostName = target.Data.HostName;
 
                 await target.UnlinkMigratedEndpointAsync(WaitUntil.Completed);
 
                 target = (await target.GetAsync()).Value;
                 Assert.IsTrue(string.IsNullOrEmpty(target.Data.MigratedEndpoint));
+                Assert.AreEqual(migratedHostName, target.Data.HostName);
             }
             finally
             {
@@ -61,6 +62,10 @@ namespace Azure.ResourceManager.RedisEnterprise.Tests
                     WaitUntil.Completed,
                     targetName,
                     acreData)).Value;
+                string originalHostName = target.Data.HostName;
+                Assert.AreEqual(
+                    $"{targetName}.{DefaultLocation}.redisenterprise.cache.azure.net",
+                    originalHostName);
 
                 RedisEnterpriseDatabaseData databaseData = new()
                 {
@@ -83,7 +88,10 @@ namespace Azure.ResourceManager.RedisEnterprise.Tests
                 target = (await target.GetAsync()).Value;
 
                 Assert.AreEqual(RedisEnterpriseSkuName.BalancedB20, target.Data.Sku.Name);
-                Assert.IsNotEmpty(target.Data.MigratedEndpoint);
+                Assert.AreEqual(
+                    $"{targetName}.{DefaultLocation}.redis.azure.net",
+                    target.Data.HostName);
+                Assert.AreEqual($"{originalHostName}:10000", target.Data.MigratedEndpoint);
                 return (resourceGroup, target);
             }
             catch
