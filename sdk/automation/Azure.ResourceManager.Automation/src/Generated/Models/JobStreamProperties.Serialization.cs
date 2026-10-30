@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Automation.Models
                 writer.WritePropertyName("streamText"u8);
                 writer.WriteStringValue(StreamText);
             }
-            if (_summaryIsDefined || Optional.IsDefined(Summary))
+            if (Optional.IsDefined(Summary, _summaryIsDefined))
             {
                 if (Summary != null)
                 {

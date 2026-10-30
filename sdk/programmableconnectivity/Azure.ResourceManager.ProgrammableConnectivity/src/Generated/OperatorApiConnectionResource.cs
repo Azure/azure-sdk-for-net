@@ -52,9 +52,8 @@ namespace Azure.ResourceManager.ProgrammableConnectivity
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal OperatorApiConnectionResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string operatorApiConnectionApiVersion);
             _operatorApiConnectionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ProgrammableConnectivity", ResourceType.Namespace, Diagnostics);
-            _operatorApiConnectionsRestClient = new OperatorApiConnections(_operatorApiConnectionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, operatorApiConnectionApiVersion ?? "2025-03-30-preview");
+            _operatorApiConnectionsRestClient = new OperatorApiConnections(_operatorApiConnectionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.ProgrammableConnectivity/operatorApiConnections", out string operatorApiConnectionsApiVersionOverride) ? operatorApiConnectionsApiVersionOverride : "2025-03-30-preview");
             ValidateResourceId(id);
         }
 

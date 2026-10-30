@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 writer.WriteEndObject();
             }
-            if (_dockerIsDefined || Optional.IsDefined(Docker))
+            if (Optional.IsDefined(Docker, _dockerIsDefined))
             {
                 if (Docker != null)
                 {

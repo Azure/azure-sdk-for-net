@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Relationships.Models
             {
                 throw new FormatException($"The model {nameof(DependencyOfRelationshipProperties)} does not support writing '{format}' format.");
             }
-            if (options.Format != "W")
+            if (options.Format != "W" && Optional.IsDefined(SourceId))
             {
                 writer.WritePropertyName("sourceId"u8);
                 writer.WriteStringValue(SourceId);
@@ -92,12 +92,12 @@ namespace Azure.ResourceManager.Relationships.Models
                 writer.WritePropertyName("targetTenant"u8);
                 writer.WriteStringValue(TargetTenant);
             }
-            if (options.Format != "W")
+            if (options.Format != "W" && Optional.IsDefined(OriginInformation))
             {
                 writer.WritePropertyName("originInformation"u8);
                 writer.WriteObjectValue(OriginInformation, options);
             }
-            if (options.Format != "W")
+            if (options.Format != "W" && Optional.IsDefined(Metadata))
             {
                 writer.WritePropertyName("metadata"u8);
                 writer.WriteObjectValue(Metadata, options);
@@ -160,6 +160,10 @@ namespace Azure.ResourceManager.Relationships.Models
             {
                 if (prop.NameEquals("sourceId"u8))
                 {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     sourceId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
@@ -175,11 +179,19 @@ namespace Azure.ResourceManager.Relationships.Models
                 }
                 if (prop.NameEquals("originInformation"u8))
                 {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     originInformation = RelationshipOriginInformation.DeserializeRelationshipOriginInformation(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("metadata"u8))
                 {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     metadata = RelationshipMetadata.DeserializeRelationshipMetadata(prop.Value, options);
                     continue;
                 }

@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
     public partial class KeyVaultSecretReferenceSecretInfo : SecretBaseInfo
     {
         private string _version;
-        internal bool _versionIsDefined;
+        private bool _versionIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="KeyVaultSecretReferenceSecretInfo"/>. </summary>
         public KeyVaultSecretReferenceSecretInfo() : base(LinkerSecretType.KeyVaultSecretReference)

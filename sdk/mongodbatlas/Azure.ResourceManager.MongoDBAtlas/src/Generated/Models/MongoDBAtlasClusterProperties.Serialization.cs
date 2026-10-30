@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.MongoDBAtlas.Models
                 writer.WritePropertyName("mongoDbVersion"u8);
                 writer.WriteStringValue(MongoDBVersion);
             }
-            if (options.Format != "W" && (_isBackupsEnabledIsDefined || Optional.IsDefined(IsBackupsEnabled)))
+            if (options.Format != "W" && Optional.IsDefined(IsBackupsEnabled, _isBackupsEnabledIsDefined))
             {
                 if (IsBackupsEnabled != null)
                 {
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.MongoDBAtlas.Models
                     writer.WriteNull("backups"u8);
                 }
             }
-            if (options.Format != "W" && (_stateIsDefined || Optional.IsDefined(State)))
+            if (options.Format != "W" && Optional.IsDefined(State, _stateIsDefined))
             {
                 if (State != null)
                 {

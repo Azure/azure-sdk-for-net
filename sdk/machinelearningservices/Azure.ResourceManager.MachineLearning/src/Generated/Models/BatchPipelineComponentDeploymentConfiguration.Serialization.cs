@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WritePropertyName("componentId"u8);
                 writer.WriteObjectValue(ComponentId, options);
             }
-            if (_descriptionIsDefined || Optional.IsDefined(Description))
+            if (Optional.IsDefined(Description, _descriptionIsDefined))
             {
                 if (Description != null)
                 {

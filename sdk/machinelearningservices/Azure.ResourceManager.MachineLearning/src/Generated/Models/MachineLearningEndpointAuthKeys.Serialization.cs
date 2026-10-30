@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 throw new FormatException($"The model {nameof(MachineLearningEndpointAuthKeys)} does not support writing '{format}' format.");
             }
-            if (_primaryKeyIsDefined || Optional.IsDefined(PrimaryKey))
+            if (Optional.IsDefined(PrimaryKey, _primaryKeyIsDefined))
             {
                 if (PrimaryKey != null)
                 {
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("primaryKey"u8);
                 }
             }
-            if (_secondaryKeyIsDefined || Optional.IsDefined(SecondaryKey))
+            if (Optional.IsDefined(SecondaryKey, _secondaryKeyIsDefined))
             {
                 if (SecondaryKey != null)
                 {

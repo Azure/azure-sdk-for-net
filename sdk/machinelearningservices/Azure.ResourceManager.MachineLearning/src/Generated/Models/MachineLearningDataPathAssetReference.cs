@@ -15,9 +15,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
     public partial class MachineLearningDataPathAssetReference : MachineLearningAssetReferenceBase
     {
         private string _datastoreId;
-        internal bool _datastoreIdIsDefined;
+        private bool _datastoreIdIsDefined;
         private string _path;
-        internal bool _pathIsDefined;
+        private bool _pathIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="MachineLearningDataPathAssetReference"/>. </summary>
         public MachineLearningDataPathAssetReference() : base(ReferenceType.DataPath)

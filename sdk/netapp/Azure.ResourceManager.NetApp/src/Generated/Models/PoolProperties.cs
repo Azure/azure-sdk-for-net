@@ -16,12 +16,12 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
         private int? _customThroughputMibpsInt;
-        internal bool _customThroughputMibpsIntIsDefined;
+        private bool _customThroughputMibpsIntIsDefined;
         private CapacityPoolEncryptionType? _encryptionType;
-        internal bool _encryptionTypeIsDefined;
+        private bool _encryptionTypeIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="PoolProperties"/>. </summary>
-        /// <param name="size"> Provisioned size of the pool (in bytes). Allowed values are 512GiB (549755813888 bytes) or in 1TiB chunks (value must be multiple of 1099511627776). </param>
+        /// <param name="size"> Provisioned size of the pool (in bytes). Allowed values are in 1TiB chunks (value must be multiple of 1099511627776). </param>
         /// <param name="serviceLevel"> The service level of the file system. </param>
         public PoolProperties(long size, NetAppFileServiceLevel serviceLevel)
         {
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.NetApp.Models
 
         /// <summary> Initializes a new instance of <see cref="PoolProperties"/>. </summary>
         /// <param name="poolId"> UUID v4 used to identify the Pool. </param>
-        /// <param name="size"> Provisioned size of the pool (in bytes). Allowed values are 512GiB (549755813888 bytes) or in 1TiB chunks (value must be multiple of 1099511627776). </param>
+        /// <param name="size"> Provisioned size of the pool (in bytes). Allowed values are in 1TiB chunks (value must be multiple of 1099511627776). </param>
         /// <param name="serviceLevel"> The service level of the file system. </param>
         /// <param name="provisioningState"> Azure lifecycle management. </param>
         /// <param name="totalThroughputMibps"> Total throughput of pool in MiB/s. </param>
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <summary> UUID v4 used to identify the Pool. </summary>
         public Guid? PoolId { get; }
 
-        /// <summary> Provisioned size of the pool (in bytes). Allowed values are 512GiB (549755813888 bytes) or in 1TiB chunks (value must be multiple of 1099511627776). </summary>
+        /// <summary> Provisioned size of the pool (in bytes). Allowed values are in 1TiB chunks (value must be multiple of 1099511627776). </summary>
         public long Size { get; set; }
 
         /// <summary> The service level of the file system. </summary>

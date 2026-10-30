@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     public partial class MachineLearningComponentVersionProperties : MachineLearningAssetBase
     {
         private BinaryData _componentSpec;
-        internal bool _componentSpecIsDefined;
+        private bool _componentSpecIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="MachineLearningComponentVersionProperties"/>. </summary>
         public MachineLearningComponentVersionProperties()

@@ -11,7 +11,7 @@ using System.Linq;
 
 namespace Azure.ResourceManager.Compute.BulkActions.Models
 {
-    /// <summary> Summary of results for a scheduled action occurrence. </summary>
+    /// <summary> Summary of results for a recurring bulk action occurrence. </summary>
     public partial class OccurrenceResultSummary
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

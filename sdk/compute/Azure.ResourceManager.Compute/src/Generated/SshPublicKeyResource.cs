@@ -52,9 +52,8 @@ namespace Azure.ResourceManager.Compute
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal SshPublicKeyResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string sshPublicKeyApiVersion);
             _sshPublicKeyResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", ResourceType.Namespace, Diagnostics);
-            _sshPublicKeyResourcesRestClient = new SshPublicKeyResources(_sshPublicKeyResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, sshPublicKeyApiVersion ?? "2026-04-01");
+            _sshPublicKeyResourcesRestClient = new SshPublicKeyResources(_sshPublicKeyResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 

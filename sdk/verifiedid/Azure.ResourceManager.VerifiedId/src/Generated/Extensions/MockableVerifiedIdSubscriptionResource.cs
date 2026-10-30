@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.VerifiedId.Mocking
 
         private ClientDiagnostics AuthoritiesClientDiagnostics => _authoritiesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.VerifiedId.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Authorities AuthoritiesRestClient => _authoritiesRestClient ??= new Authorities(AuthoritiesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2024-01-26-preview");
+        private Authorities AuthoritiesRestClient => _authoritiesRestClient ??= new Authorities(AuthoritiesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.VerifiedId/authorities", out string apiVersion) ? apiVersion : "2024-01-26-preview");
 
         /// <summary>
         /// List Authority resources by subscription ID

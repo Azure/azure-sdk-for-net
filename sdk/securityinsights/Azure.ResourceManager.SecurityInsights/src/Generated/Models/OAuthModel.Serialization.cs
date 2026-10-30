@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             writer.WriteStringValue(ClientSecret);
             writer.WritePropertyName("clientId"u8);
             writer.WriteStringValue(ClientId);
-            if (_isCredentialsInHeadersIsDefined || Optional.IsDefined(IsCredentialsInHeaders))
+            if (Optional.IsDefined(IsCredentialsInHeaders, _isCredentialsInHeadersIsDefined))
             {
                 if (IsCredentialsInHeaders != null)
                 {

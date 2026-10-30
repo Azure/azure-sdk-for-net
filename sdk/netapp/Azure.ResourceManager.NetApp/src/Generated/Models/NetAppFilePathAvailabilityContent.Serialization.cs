@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.NetApp.Models
             writer.WriteStringValue(Name);
             writer.WritePropertyName("subnetId"u8);
             writer.WriteStringValue(SubnetId);
-            if (_availabilityZoneIsDefined || Optional.IsDefined(AvailabilityZone))
+            if (Optional.IsDefined(AvailabilityZone, _availabilityZoneIsDefined))
             {
                 if (AvailabilityZone != null)
                 {

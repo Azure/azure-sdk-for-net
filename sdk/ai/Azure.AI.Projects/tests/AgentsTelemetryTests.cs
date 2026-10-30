@@ -716,7 +716,9 @@ trigger:
       value: ""test""
 ";
 
+#pragma warning disable CS0618 // Preserve telemetry test coverage for legacy workflow agents.
         ProjectsAgentDefinition workflowDefinition = WorkflowAgentDefinition.FromYaml(workflowYaml);
+#pragma warning restore CS0618
 
         ProjectsAgentVersion ProjectsAgentVersion = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
             agentName: agentName,
@@ -800,7 +802,9 @@ trigger:
       value: ""test""
 ";
 
+#pragma warning disable CS0618 // Preserve telemetry test coverage for legacy workflow agents.
         ProjectsAgentDefinition workflowDefinition = WorkflowAgentDefinition.FromYaml(workflowYaml);
+#pragma warning restore CS0618
 
         ProjectsAgentVersion ProjectsAgentVersion = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
             agentName: agentName,

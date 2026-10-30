@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 throw new FormatException($"The model {nameof(MachineLearningStackEnsembleSettings)} does not support writing '{format}' format.");
             }
-            if (_stackMetaLearnerKWargsIsDefined || Optional.IsDefined(StackMetaLearnerKWargs))
+            if (Optional.IsDefined(StackMetaLearnerKWargs, _stackMetaLearnerKWargsIsDefined))
             {
                 if (StackMetaLearnerKWargs != null)
                 {

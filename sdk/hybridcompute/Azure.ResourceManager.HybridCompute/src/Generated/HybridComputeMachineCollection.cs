@@ -39,9 +39,8 @@ namespace Azure.ResourceManager.HybridCompute
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal HybridComputeMachineCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(HybridComputeMachineResource.ResourceType, out string hybridComputeMachineApiVersion);
             _machinesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HybridCompute", HybridComputeMachineResource.ResourceType.Namespace, Diagnostics);
-            _machinesRestClient = new Machines(_machinesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, hybridComputeMachineApiVersion ?? "2026-07-15");
+            _machinesRestClient = new Machines(_machinesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.HybridCompute/machines", out string machinesApiVersionOverride) ? machinesApiVersionOverride : "2026-07-15");
             ValidateResourceId(id);
         }
 

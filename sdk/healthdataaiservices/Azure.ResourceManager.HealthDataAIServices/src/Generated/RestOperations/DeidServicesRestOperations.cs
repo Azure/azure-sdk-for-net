@@ -54,10 +54,7 @@ namespace Azure.ResourceManager.HealthDataAIServices
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.HealthDataAIServices/deidServices/", false);
             uri.AppendPath(deidServiceName, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion ?? "2024-09-20", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -76,10 +73,7 @@ namespace Azure.ResourceManager.HealthDataAIServices
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.HealthDataAIServices/deidServices", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion ?? "2024-09-20", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -100,10 +94,7 @@ namespace Azure.ResourceManager.HealthDataAIServices
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            if (_apiVersion != null)
-            {
-                uri.UpdateQuery("api-version", _apiVersion);
-            }
+            uri.UpdateQuery("api-version", _apiVersion ?? "2024-09-20");
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -120,10 +111,7 @@ namespace Azure.ResourceManager.HealthDataAIServices
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/providers/Microsoft.HealthDataAIServices/deidServices", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion ?? "2024-09-20", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -144,10 +132,7 @@ namespace Azure.ResourceManager.HealthDataAIServices
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            if (_apiVersion != null)
-            {
-                uri.UpdateQuery("api-version", _apiVersion);
-            }
+            uri.UpdateQuery("api-version", _apiVersion ?? "2024-09-20");
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -167,10 +152,7 @@ namespace Azure.ResourceManager.HealthDataAIServices
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.HealthDataAIServices/deidServices/", false);
             uri.AppendPath(deidServiceName, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion ?? "2024-09-20", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -192,10 +174,7 @@ namespace Azure.ResourceManager.HealthDataAIServices
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.HealthDataAIServices/deidServices/", false);
             uri.AppendPath(deidServiceName, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion ?? "2024-09-20", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -217,10 +196,7 @@ namespace Azure.ResourceManager.HealthDataAIServices
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.HealthDataAIServices/deidServices/", false);
             uri.AppendPath(deidServiceName, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion ?? "2024-09-20", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;

@@ -785,7 +785,7 @@ namespace Azure.ResourceManager.StorageMover.Models
         /// <param name="blobContainerName"> The name of the Storage blob container that is the target destination. </param>
         /// <returns> A new <see cref="Models.AzureStorageBlobContainerEndpointProperties"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static AzureStorageBlobContainerEndpointProperties AzureStorageBlobContainerEndpointProperties(string description = default, StorageMoverEndpointKind? endpointKind = default, StorageMoverProvisioningState? provisioningState = default, string storageAccountResourceId = default, string blobContainerName = default)
+        public static AzureStorageBlobContainerEndpointProperties AzureStorageBlobContainerEndpointProperties(string description, StorageMoverEndpointKind? endpointKind, StorageMoverProvisioningState? provisioningState, string storageAccountResourceId, string blobContainerName)
         {
             return new AzureStorageBlobContainerEndpointProperties(
                 EndpointType.AzureStorageBlobContainer,
@@ -808,7 +808,7 @@ namespace Azure.ResourceManager.StorageMover.Models
         /// <param name="export"> The directory being exported from the server. </param>
         /// <returns> A new <see cref="Models.NfsMountEndpointProperties"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static NfsMountEndpointProperties NfsMountEndpointProperties(string description = default, StorageMoverEndpointKind? endpointKind = default, StorageMoverProvisioningState? provisioningState = default, string host = default, NfsVersion? nfsVersion = default, string export = default)
+        public static NfsMountEndpointProperties NfsMountEndpointProperties(string description, StorageMoverEndpointKind? endpointKind, StorageMoverProvisioningState? provisioningState, string host, NfsVersion? nfsVersion, string export)
         {
             return new NfsMountEndpointProperties(
                 EndpointType.NfsMount,
@@ -830,7 +830,7 @@ namespace Azure.ResourceManager.StorageMover.Models
         /// <param name="fileShareName"> The name of the Azure Storage file share. </param>
         /// <returns> A new <see cref="Models.AzureStorageSmbFileShareEndpointProperties"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static AzureStorageSmbFileShareEndpointProperties AzureStorageSmbFileShareEndpointProperties(string description = default, StorageMoverEndpointKind? endpointKind = default, StorageMoverProvisioningState? provisioningState = default, ResourceIdentifier storageAccountResourceId = default, string fileShareName = default)
+        public static AzureStorageSmbFileShareEndpointProperties AzureStorageSmbFileShareEndpointProperties(string description, StorageMoverEndpointKind? endpointKind, StorageMoverProvisioningState? provisioningState, ResourceIdentifier storageAccountResourceId, string fileShareName)
         {
             return new AzureStorageSmbFileShareEndpointProperties(
                 EndpointType.AzureStorageSmbFileShare,
@@ -853,7 +853,7 @@ namespace Azure.ResourceManager.StorageMover.Models
         /// <param name="credentials"> The Azure Key Vault secret URIs which store the required credentials to access the SMB share. </param>
         /// <returns> A new <see cref="Models.SmbMountEndpointProperties"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static SmbMountEndpointProperties SmbMountEndpointProperties(string description = default, StorageMoverEndpointKind? endpointKind = default, StorageMoverProvisioningState? provisioningState = default, string host = default, string shareName = default, AzureKeyVaultSmbCredentials credentials = default)
+        public static SmbMountEndpointProperties SmbMountEndpointProperties(string description, StorageMoverEndpointKind? endpointKind, StorageMoverProvisioningState? provisioningState, string host, string shareName, AzureKeyVaultSmbCredentials credentials)
         {
             return new SmbMountEndpointProperties(
                 EndpointType.SmbMount,
@@ -871,7 +871,7 @@ namespace Azure.ResourceManager.StorageMover.Models
         /// <param name="description"> A description for the Endpoint. </param>
         /// <returns> A new <see cref="Models.AzureStorageBlobContainerEndpointUpdateProperties"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static AzureStorageBlobContainerEndpointUpdateProperties AzureStorageBlobContainerEndpointUpdateProperties(string description = default)
+        public static AzureStorageBlobContainerEndpointUpdateProperties AzureStorageBlobContainerEndpointUpdateProperties(string description)
         {
             return new AzureStorageBlobContainerEndpointUpdateProperties(EndpointType.AzureStorageBlobContainer, description, default, default, default);
         }
@@ -880,7 +880,7 @@ namespace Azure.ResourceManager.StorageMover.Models
         /// <param name="description"> A description for the Endpoint. </param>
         /// <returns> A new <see cref="Models.AzureStorageSmbFileShareEndpointUpdateProperties"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static AzureStorageSmbFileShareEndpointUpdateProperties AzureStorageSmbFileShareEndpointUpdateProperties(string description = default)
+        public static AzureStorageSmbFileShareEndpointUpdateProperties AzureStorageSmbFileShareEndpointUpdateProperties(string description)
         {
             return new AzureStorageSmbFileShareEndpointUpdateProperties(EndpointType.AzureStorageSmbFileShare, description, default, default, default);
         }
@@ -896,7 +896,7 @@ namespace Azure.ResourceManager.StorageMover.Models
         /// <param name="endOn"> End time of the schedule (in UTC). </param>
         /// <returns> A new <see cref="Models.StorageMoverScheduleInfo"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static StorageMoverScheduleInfo StorageMoverScheduleInfo(StorageMoverScheduleFrequency? frequency = default, bool? isActive = default, StorageMoverSchedulerTime executionTime = default, DateTimeOffset? startOn = default, IEnumerable<string> daysOfWeek = default, IEnumerable<int> daysOfMonth = default, string cronExpression = default, DateTimeOffset? endOn = default)
+        public static StorageMoverScheduleInfo StorageMoverScheduleInfo(StorageMoverScheduleFrequency? frequency, bool? isActive, StorageMoverSchedulerTime executionTime, DateTimeOffset? startOn, IEnumerable<string> daysOfWeek, IEnumerable<int> daysOfMonth, string cronExpression, DateTimeOffset? endOn)
         {
             return new StorageMoverScheduleInfo(
                 frequency,
@@ -920,7 +920,7 @@ namespace Azure.ResourceManager.StorageMover.Models
         /// <param name="schedule"> Schedule information for the Job Definition. </param>
         /// <returns> A new <see cref="Models.JobDefinitionPatch"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static JobDefinitionPatch JobDefinitionPatch(string description = default, StorageMoverCopyMode? copyMode = default, string agentName = default, IEnumerable<ResourceIdentifier> connections = default, StorageMoverDataIntegrityValidation? dataIntegrityValidation = default, StorageMoverScheduleInfo schedule = default)
+        public static JobDefinitionPatch JobDefinitionPatch(string description, StorageMoverCopyMode? copyMode, string agentName, IEnumerable<ResourceIdentifier> connections, StorageMoverDataIntegrityValidation? dataIntegrityValidation, StorageMoverScheduleInfo schedule)
         {
             return new JobDefinitionPatch(description is null && copyMode is null && agentName is null && connections is null && dataIntegrityValidation is null && schedule is null ? default : new JobDefinitionUpdateProperties(
                 description,
@@ -972,7 +972,7 @@ namespace Azure.ResourceManager.StorageMover.Models
         /// <param name="provisioningState"> The provisioning state of this resource. </param>
         /// <returns> A new <see cref="StorageMover.JobRunData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static JobRunData JobRunData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, JobRunStatus? status = default, JobRunScanStatus? scanStatus = default, string agentName = default, ResourceIdentifier agentResourceId = default, DateTimeOffset? executionStartOn = default, DateTimeOffset? executionEndOn = default, StorageMoverJobTriggerType? triggerType = default, DateTimeOffset? scheduledExecutionOn = default, DateTimeOffset? lastStatusUpdate = default, long? itemsScanned = default, long? itemsExcluded = default, long? itemsUnsupported = default, long? itemsNoTransferNeeded = default, long? itemsFailed = default, long? itemsTransferred = default, long? bytesScanned = default, long? bytesExcluded = default, long? bytesUnsupported = default, long? bytesNoTransferNeeded = default, long? bytesFailed = default, long? bytesTransferred = default, string sourceName = default, ResourceIdentifier sourceResourceId = default, BinaryData sourceProperties = default, string targetName = default, ResourceIdentifier targetResourceId = default, BinaryData targetProperties = default, BinaryData jobDefinitionProperties = default, JobRunError error = default, IEnumerable<JobRunWarning> warnings = default, StorageMoverProvisioningState? provisioningState = default)
+        public static JobRunData JobRunData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, JobRunStatus? status, JobRunScanStatus? scanStatus, string agentName, ResourceIdentifier agentResourceId, DateTimeOffset? executionStartOn, DateTimeOffset? executionEndOn, StorageMoverJobTriggerType? triggerType, DateTimeOffset? scheduledExecutionOn, DateTimeOffset? lastStatusUpdate, long? itemsScanned, long? itemsExcluded, long? itemsUnsupported, long? itemsNoTransferNeeded, long? itemsFailed, long? itemsTransferred, long? bytesScanned, long? bytesExcluded, long? bytesUnsupported, long? bytesNoTransferNeeded, long? bytesFailed, long? bytesTransferred, string sourceName, ResourceIdentifier sourceResourceId, BinaryData sourceProperties, string targetName, ResourceIdentifier targetResourceId, BinaryData targetProperties, BinaryData jobDefinitionProperties, JobRunError error, IEnumerable<JobRunWarning> warnings, StorageMoverProvisioningState? provisioningState)
         {
             return new JobRunData(
                 id,

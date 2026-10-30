@@ -51,6 +51,29 @@ We guarantee that all client instance methods are thread-safe and independent of
 
 **NOTE:** Samples in this file apply only to packages that follow [Azure SDK Design Guidelines](https://azure.github.io/azure-sdk/dotnet_introduction.html). Names of such packages usually start with `Azure`.
 
+### Authenticating with AKS identity bindings
+
+AKS identity binding support in `WorkloadIdentityCredential` is generally available
+in Azure.Core 1.64.0 and later. The credential is provided by Azure.Core and retains
+the `Azure.Identity` namespace; a separate Azure.Identity package is not required.
+Identity binding is opt-in and does not require an experimental diagnostic suppression:
+
+```C# Snippet:WorkloadIdentityCredentialWithIdentityBinding
+var credential = new WorkloadIdentityCredential(new WorkloadIdentityCredentialOptions
+{
+    IsAzureProxyEnabled = true  // Enable identity binding mode
+});
+```
+
+`IsAzureProxyEnabled` defaults to `false`. Follow the
+[AKS identity binding setup instructions](https://learn.microsoft.com/azure/aks/identity-bindings)
+to configure the binding, service-account permissions, and workload identity
+webhook settings. Enabling the SDK option does not create resources or grant
+permission to use the managed identity. Use `WorkloadIdentityCredential` directly;
+this mode is not supported by `DefaultAzureCredential` or `ManagedIdentityCredential`.
+The [Azure.Core live tests](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/tests/IdentityBinding/WorkloadIdentityBindingTests.md) describe validation
+against real AKS resources.
+
 ### Configuring Service Clients Using `ClientOptions`
 
 Azure SDK client libraries typically expose one or more _service client_ types that

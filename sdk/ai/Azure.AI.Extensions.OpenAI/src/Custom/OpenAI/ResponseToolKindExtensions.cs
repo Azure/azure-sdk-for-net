@@ -1,10 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
-using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using System.Text;
 using OpenAI.Responses;
 
 namespace Azure.AI.Extensions.OpenAI
@@ -91,6 +88,8 @@ namespace Azure.AI.Extensions.OpenAI
             public static ResponseToolKind BrowserAutomation => new ResponseToolKind("browser_automation");
             /// <summary></summary>
             public static ResponseToolKind GitHubCopilotToolsetPreviewValue => new ResponseToolKind("github_copilot_toolset_preview");
+            /// <summary></summary>
+            public static ResponseToolKind MicrosoftCopilotToolsetPreview => new ResponseToolKind("microsoft_copilot_toolset_preview");
         }
     }
 }
