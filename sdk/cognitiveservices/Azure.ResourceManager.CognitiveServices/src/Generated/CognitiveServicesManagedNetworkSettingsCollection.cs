@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.CognitiveServices
     /// <summary>
     /// A class representing a collection of <see cref="CognitiveServicesManagedNetworkSettingsResource"/> and their operations.
     /// Each <see cref="CognitiveServicesManagedNetworkSettingsResource"/> in the collection will belong to the same instance of <see cref="CognitiveServicesAccountResource"/>.
-    /// To get a <see cref="CognitiveServicesManagedNetworkSettingsCollection"/> instance call the GetCognitiveServicesManagedNetworkSettings method from an instance of <see cref="CognitiveServicesAccountResource"/>.
+    /// To get a <see cref="CognitiveServicesManagedNetworkSettingsCollection"/> instance call the GetAllCognitiveServicesManagedNetworkSettings method from an instance of <see cref="CognitiveServicesAccountResource"/>.
     /// </summary>
     public partial class CognitiveServicesManagedNetworkSettingsCollection : ArmCollection, IEnumerable<CognitiveServicesManagedNetworkSettingsResource>, IAsyncEnumerable<CognitiveServicesManagedNetworkSettingsResource>
     {
