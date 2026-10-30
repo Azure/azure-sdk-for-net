@@ -82,11 +82,16 @@ Key facts from the official docs:
   change for anyone who has suppressed the old one. The only exception is
   aggregation (below).
 - ✅ **DO** aggregate IDs when a member accrues a second, independent experimental
-  surface. Example: a member is experimental under code `A`; you then add a
-  parameter whose type is experimental under code `B`. That member now surfaces
-  both. Introduce a new aggregate code `C` representing `A + B` and change the
-  member from `A` to `C`. Only remove `C` once **both** `A` and `B` have GA'd —
-  never switch back to just `A` even if `B` GAs first (and vice versa).
+  surface. A member can carry only one `[Experimental]` attribute, so this is
+  required whenever two IDs would otherwise need to apply at the same location
+  — including when one of the two is a dependency's forwarded ID (see
+  *Forwarding from dependencies*). Example: a member is experimental under code
+  `A`; you then add a parameter whose type is experimental under code `B`. That
+  member now surfaces both. Introduce a new aggregate code `C` representing
+  `A + B` and change the member from `A` to `C`. Only remove `C` once **both**
+  `A` and `B` have GA'd — never switch back to just `A` even if `B` GAs first
+  (and vice versa), regardless of which party (you or a dependency) controls
+  the GA timing of either individual ID.
 - ✅ **DO** document every ID in an `experimentalfeatures.md` file in your library
   folder, describing the feature each ID covers and its current status, so
   consumers know what they are opting into.
@@ -105,14 +110,24 @@ Key facts from the official docs:
 
 ## Forwarding from dependencies
 
-- ✅ **DO** forward the **dependency's own diagnostic ID** on any public API of
-  yours that exposes, wraps, or requires an experimental API from a dependency.
-  The dependency controls when that feature GAs, so surface their ID directly —
-  do not invent your own — so your consumers track the upstream stability.
+- ✅ **DO** forward the **dependency's own diagnostic ID**, unchanged, on any
+  public API of yours that exposes, wraps, or requires an experimental API from
+  a dependency — as long as that dependency is the **only** reason the
+  member/type is experimental. The dependency controls when that feature GAs,
+  so surface their ID directly rather than inventing your own, so your
+  consumers track the upstream stability.
+- ✅ **DO** aggregate instead of forwarding unchanged when the member **already**
+  carries your own library-owned experimental ID. You cannot apply a second
+  `[Experimental]` attribute to the same member, so follow the aggregation rule
+  above: introduce a combined code (e.g. `C` for your ID `A` plus the
+  dependency's forwarded ID `B`) and apply it in place of `A`. The dependency
+  still only owns the GA timing of its own ID (`B`) — you **MUST NOT** retire
+  the aggregate until `A` **and** `B` have both GA'd, even though `A` is
+  entirely within your own control.
 - ❌ **DO NOT** silently suppress a dependency's experimental diagnostic on a
-  **public** API you ship as stable. Either forward it (with the dependency's ID)
-  as experimental, or wait for the dependency's API to stabilize before building
-  stable surface on it.
+  **public** API you ship as stable. Either forward it (with the dependency's ID,
+  aggregating if needed) as experimental, or wait for the dependency's API to
+  stabilize before building stable surface on it.
 - ✅ **YOU MAY** suppress a dependency's experimental diagnostic **inline** (never
   via `<NoWarn>`) when the code that touches the experimental API is only
   reachable after the consumer has already interacted with a public surface that
