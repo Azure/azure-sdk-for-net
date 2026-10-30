@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Sovereign.Models
         /// <param name="configuration"> The residency remediation configuration. </param>
         /// <param name="resources"> The resources to remediate. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="configuration"/> or <paramref name="resources"/> is null. </exception>
-        public SovereignViewResidencyRemediationContent(SovereignViewResidencyRemediationConfiguration configuration, IEnumerable<SovereignViewResidencyRemediationResource> resources)
+        public SovereignViewResidencyRemediationContent(SovereignViewResidencyRemediationConfiguration configuration, IEnumerable<SovereignViewResidencyRemediationResourceInfo> resources)
         {
             Argument.AssertNotNull(configuration, nameof(configuration));
             Argument.AssertNotNull(resources, nameof(resources));
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Sovereign.Models
         /// <param name="configuration"> The residency remediation configuration. </param>
         /// <param name="resources"> The resources to remediate. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SovereignViewResidencyRemediationContent(SovereignViewResidencyRemediationConfiguration configuration, IList<SovereignViewResidencyRemediationResource> resources, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SovereignViewResidencyRemediationContent(SovereignViewResidencyRemediationConfiguration configuration, IList<SovereignViewResidencyRemediationResourceInfo> resources, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Configuration = configuration;
             Resources = resources;
@@ -46,6 +46,6 @@ namespace Azure.ResourceManager.Sovereign.Models
         public SovereignViewResidencyRemediationConfiguration Configuration { get; }
 
         /// <summary> The resources to remediate. </summary>
-        public IList<SovereignViewResidencyRemediationResource> Resources { get; }
+        public IList<SovereignViewResidencyRemediationResourceInfo> Resources { get; }
     }
 }

@@ -151,14 +151,14 @@ namespace Azure.ResourceManager.Sovereign
         /// Implements global CheckNameAvailability operations
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableSovereignSubscriptionResource.CheckNameAvailabilityAsync(CheckNameAvailabilityRequest, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableSovereignSubscriptionResource.CheckNameAvailabilityAsync(SovereignCheckNameAvailabilityRequestContent, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="content"> The CheckAvailability request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static async Task<Response<CheckNameAvailabilityResult>> CheckNameAvailabilityAsync(this SubscriptionResource subscriptionResource, CheckNameAvailabilityRequest content, CancellationToken cancellationToken = default)
+        public static async Task<Response<CheckNameAvailabilityResult>> CheckNameAvailabilityAsync(this SubscriptionResource subscriptionResource, SovereignCheckNameAvailabilityRequestContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
@@ -169,14 +169,14 @@ namespace Azure.ResourceManager.Sovereign
         /// Implements global CheckNameAvailability operations
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableSovereignSubscriptionResource.CheckNameAvailability(CheckNameAvailabilityRequest, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableSovereignSubscriptionResource.CheckNameAvailability(SovereignCheckNameAvailabilityRequestContent, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="content"> The CheckAvailability request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static Response<CheckNameAvailabilityResult> CheckNameAvailability(this SubscriptionResource subscriptionResource, CheckNameAvailabilityRequest content, CancellationToken cancellationToken = default)
+        public static Response<CheckNameAvailabilityResult> CheckNameAvailability(this SubscriptionResource subscriptionResource, SovereignCheckNameAvailabilityRequestContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.Sovereign
         /// Implements local CheckNameAvailability operations
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableSovereignSubscriptionResource.CheckNameAvailabilityLocalAsync(AzureLocation, CheckNameAvailabilityRequest, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableSovereignSubscriptionResource.CheckNameAvailabilityLocalAsync(AzureLocation, SovereignCheckNameAvailabilityRequestContent, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.Sovereign
         /// <param name="content"> The CheckAvailability request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static async Task<Response<CheckNameAvailabilityResult>> CheckNameAvailabilityLocalAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CheckNameAvailabilityRequest content, CancellationToken cancellationToken = default)
+        public static async Task<Response<CheckNameAvailabilityResult>> CheckNameAvailabilityLocalAsync(this SubscriptionResource subscriptionResource, AzureLocation location, SovereignCheckNameAvailabilityRequestContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.Sovereign
         /// Implements local CheckNameAvailability operations
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableSovereignSubscriptionResource.CheckNameAvailabilityLocal(AzureLocation, CheckNameAvailabilityRequest, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableSovereignSubscriptionResource.CheckNameAvailabilityLocal(AzureLocation, SovereignCheckNameAvailabilityRequestContent, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.Sovereign
         /// <param name="content"> The CheckAvailability request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static Response<CheckNameAvailabilityResult> CheckNameAvailabilityLocal(this SubscriptionResource subscriptionResource, AzureLocation location, CheckNameAvailabilityRequest content, CancellationToken cancellationToken = default)
+        public static Response<CheckNameAvailabilityResult> CheckNameAvailabilityLocal(this SubscriptionResource subscriptionResource, AzureLocation location, SovereignCheckNameAvailabilityRequestContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 

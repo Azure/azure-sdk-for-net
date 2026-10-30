@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Sovereign.Models
         {
             ReportStatus = reportStatus;
             LastEvaluated = lastEvaluated;
-            Resources = new ChangeTrackingList<SovereignViewComplianceDetailResource>();
+            Resources = new ChangeTrackingList<SovereignViewComplianceDetailResourceInfo>();
         }
 
         /// <summary> Initializes a new instance of <see cref="SovereignViewComplianceDetailsResult"/>. </summary>
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Sovereign.Models
         /// <param name="totalResources"> Total number of resources for the sovereign view. </param>
         /// <param name="resources"> The list of compliance detail resources. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SovereignViewComplianceDetailsResult(ReportStatus reportStatus, ResponseError error, DateTimeOffset lastEvaluated, int? totalResources, IList<SovereignViewComplianceDetailResource> resources, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SovereignViewComplianceDetailsResult(ReportStatus reportStatus, ResponseError error, DateTimeOffset lastEvaluated, int? totalResources, IList<SovereignViewComplianceDetailResourceInfo> resources, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ReportStatus = reportStatus;
             Error = error;
@@ -58,6 +58,6 @@ namespace Azure.ResourceManager.Sovereign.Models
         public int? TotalResources { get; }
 
         /// <summary> The list of compliance detail resources. </summary>
-        public IList<SovereignViewComplianceDetailResource> Resources { get; }
+        public IList<SovereignViewComplianceDetailResourceInfo> Resources { get; }
     }
 }

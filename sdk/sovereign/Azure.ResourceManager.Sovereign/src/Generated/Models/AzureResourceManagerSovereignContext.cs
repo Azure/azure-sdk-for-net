@@ -16,14 +16,14 @@ namespace Azure.ResourceManager.Sovereign
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
     /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
-    [ModelReaderWriterBuildable(typeof(CheckNameAvailabilityRequest))]
     [ModelReaderWriterBuildable(typeof(CheckNameAvailabilityResult))]
     [ModelReaderWriterBuildable(typeof(ReportStatus))]
     [ModelReaderWriterBuildable(typeof(ResponseError))]
+    [ModelReaderWriterBuildable(typeof(SovereignCheckNameAvailabilityRequestContent))]
     [ModelReaderWriterBuildable(typeof(SovereignViewAffectedScopes))]
     [ModelReaderWriterBuildable(typeof(SovereignViewArmTemplateBundle))]
     [ModelReaderWriterBuildable(typeof(SovereignViewComplianceDetail))]
-    [ModelReaderWriterBuildable(typeof(SovereignViewComplianceDetailResource))]
+    [ModelReaderWriterBuildable(typeof(SovereignViewComplianceDetailResourceInfo))]
     [ModelReaderWriterBuildable(typeof(SovereignViewComplianceDetailsContent))]
     [ModelReaderWriterBuildable(typeof(SovereignViewComplianceDetailsDimensionFilter))]
     [ModelReaderWriterBuildable(typeof(SovereignViewComplianceDetailsFilters))]
@@ -54,8 +54,8 @@ namespace Azure.ResourceManager.Sovereign
     [ModelReaderWriterBuildable(typeof(SovereignViewRemediationResultItem))]
     [ModelReaderWriterBuildable(typeof(SovereignViewResidencyRemediationConfiguration))]
     [ModelReaderWriterBuildable(typeof(SovereignViewResidencyRemediationContent))]
-    [ModelReaderWriterBuildable(typeof(SovereignViewResidencyRemediationResource))]
     [ModelReaderWriterBuildable(typeof(SovereignViewResidencyRemediationResourceConfiguration))]
+    [ModelReaderWriterBuildable(typeof(SovereignViewResidencyRemediationResourceInfo))]
     [ModelReaderWriterBuildable(typeof(SovereignViewResource))]
     [ModelReaderWriterBuildable(typeof(SovereignViewResourceData))]
     [ModelReaderWriterBuildable(typeof(SovereignViewResourcePatch))]

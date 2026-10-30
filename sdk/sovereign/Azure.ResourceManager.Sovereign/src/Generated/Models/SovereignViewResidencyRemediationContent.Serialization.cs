@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Sovereign.Models
             writer.WriteObjectValue(Configuration, options);
             writer.WritePropertyName("resources"u8);
             writer.WriteStartArray();
-            foreach (SovereignViewResidencyRemediationResource item in Resources)
+            foreach (SovereignViewResidencyRemediationResourceInfo item in Resources)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Sovereign.Models
                 return null;
             }
             SovereignViewResidencyRemediationConfiguration configuration = default;
-            IList<SovereignViewResidencyRemediationResource> resources = default;
+            IList<SovereignViewResidencyRemediationResourceInfo> resources = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -142,10 +142,10 @@ namespace Azure.ResourceManager.Sovereign.Models
                 }
                 if (prop.NameEquals("resources"u8))
                 {
-                    List<SovereignViewResidencyRemediationResource> array = new List<SovereignViewResidencyRemediationResource>();
+                    List<SovereignViewResidencyRemediationResourceInfo> array = new List<SovereignViewResidencyRemediationResourceInfo>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(SovereignViewResidencyRemediationResource.DeserializeSovereignViewResidencyRemediationResource(item, options));
+                        array.Add(SovereignViewResidencyRemediationResourceInfo.DeserializeSovereignViewResidencyRemediationResourceInfo(item, options));
                     }
                     resources = array;
                     continue;
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.Sovereign.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new SovereignViewResidencyRemediationContent(configuration, resources ?? new ChangeTrackingList<SovereignViewResidencyRemediationResource>(), additionalBinaryDataProperties);
+            return new SovereignViewResidencyRemediationContent(configuration, resources ?? new ChangeTrackingList<SovereignViewResidencyRemediationResourceInfo>(), additionalBinaryDataProperties);
         }
     }
 }

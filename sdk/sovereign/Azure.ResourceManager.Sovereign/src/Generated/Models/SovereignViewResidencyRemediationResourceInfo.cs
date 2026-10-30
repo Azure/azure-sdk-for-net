@@ -13,16 +13,16 @@ using Azure.ResourceManager.Sovereign;
 namespace Azure.ResourceManager.Sovereign.Models
 {
     /// <summary> A single resource targeted by a residency remediation request. </summary>
-    public partial class SovereignViewResidencyRemediationResource
+    public partial class SovereignViewResidencyRemediationResourceInfo
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="SovereignViewResidencyRemediationResource"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SovereignViewResidencyRemediationResourceInfo"/>. </summary>
         /// <param name="id"> The Azure Resource Manager resource ID of the resource to remediate. </param>
         /// <param name="configuration"> The residency remediation configuration for this resource. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="configuration"/> is null. </exception>
-        public SovereignViewResidencyRemediationResource(ResourceIdentifier id, SovereignViewResidencyRemediationResourceConfiguration configuration)
+        public SovereignViewResidencyRemediationResourceInfo(ResourceIdentifier id, SovereignViewResidencyRemediationResourceConfiguration configuration)
         {
             Argument.AssertNotNull(id, nameof(id));
             Argument.AssertNotNull(configuration, nameof(configuration));
@@ -31,11 +31,11 @@ namespace Azure.ResourceManager.Sovereign.Models
             Configuration = configuration;
         }
 
-        /// <summary> Initializes a new instance of <see cref="SovereignViewResidencyRemediationResource"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SovereignViewResidencyRemediationResourceInfo"/>. </summary>
         /// <param name="id"> The Azure Resource Manager resource ID of the resource to remediate. </param>
         /// <param name="configuration"> The residency remediation configuration for this resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SovereignViewResidencyRemediationResource(ResourceIdentifier id, SovereignViewResidencyRemediationResourceConfiguration configuration, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SovereignViewResidencyRemediationResourceInfo(ResourceIdentifier id, SovereignViewResidencyRemediationResourceConfiguration configuration, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Configuration = configuration;

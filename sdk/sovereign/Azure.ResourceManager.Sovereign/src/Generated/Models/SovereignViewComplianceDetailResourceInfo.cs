@@ -13,29 +13,29 @@ using Azure.Core;
 namespace Azure.ResourceManager.Sovereign.Models
 {
     /// <summary> A compliance detail item for a resource. </summary>
-    public partial class SovereignViewComplianceDetailResource
+    public partial class SovereignViewComplianceDetailResourceInfo
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="SovereignViewComplianceDetailResource"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SovereignViewComplianceDetailResourceInfo"/>. </summary>
         /// <param name="resourceId"> The resource identifier. </param>
         /// <param name="location"> The location of the resource. </param>
         /// <param name="dimensionDetails"> The compliance details for the resource across the dimensions. </param>
-        internal SovereignViewComplianceDetailResource(ResourceIdentifier resourceId, string location, IEnumerable<SovereignViewDimensionDetail> dimensionDetails)
+        internal SovereignViewComplianceDetailResourceInfo(ResourceIdentifier resourceId, string location, IEnumerable<SovereignViewDimensionDetail> dimensionDetails)
         {
             ResourceId = resourceId;
             Location = location;
             DimensionDetails = dimensionDetails.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="SovereignViewComplianceDetailResource"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SovereignViewComplianceDetailResourceInfo"/>. </summary>
         /// <param name="resourceId"> The resource identifier. </param>
         /// <param name="parentResourceId"> The fully qualified Azure Resource Manager ID of the parent resource. When a resource is created as part of another Azure resource's creation and its lifecycle is managed by the platform, this is the ID of that parent resource. For a resource that was created standalone and has no parent resource, this will be empty. </param>
         /// <param name="location"> The location of the resource. </param>
         /// <param name="dimensionDetails"> The compliance details for the resource across the dimensions. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SovereignViewComplianceDetailResource(ResourceIdentifier resourceId, ResourceIdentifier parentResourceId, string location, IList<SovereignViewDimensionDetail> dimensionDetails, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SovereignViewComplianceDetailResourceInfo(ResourceIdentifier resourceId, ResourceIdentifier parentResourceId, string location, IList<SovereignViewDimensionDetail> dimensionDetails, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ResourceId = resourceId;
             ParentResourceId = parentResourceId;

@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Sovereign.Models
             {
                 writer.WritePropertyName("resources"u8);
                 writer.WriteStartArray();
-                foreach (SovereignViewComplianceDetailResource item in Resources)
+                foreach (SovereignViewComplianceDetailResourceInfo item in Resources)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.Sovereign.Models
             ResponseError error = default;
             DateTimeOffset lastEvaluated = default;
             int? totalResources = default;
-            IList<SovereignViewComplianceDetailResource> resources = default;
+            IList<SovereignViewComplianceDetailResourceInfo> resources = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -196,10 +196,10 @@ namespace Azure.ResourceManager.Sovereign.Models
                     {
                         continue;
                     }
-                    List<SovereignViewComplianceDetailResource> array = new List<SovereignViewComplianceDetailResource>();
+                    List<SovereignViewComplianceDetailResourceInfo> array = new List<SovereignViewComplianceDetailResourceInfo>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(SovereignViewComplianceDetailResource.DeserializeSovereignViewComplianceDetailResource(item, options));
+                        array.Add(SovereignViewComplianceDetailResourceInfo.DeserializeSovereignViewComplianceDetailResourceInfo(item, options));
                     }
                     resources = array;
                     continue;
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.Sovereign.Models
                 error,
                 lastEvaluated,
                 totalResources,
-                resources ?? new ChangeTrackingList<SovereignViewComplianceDetailResource>(),
+                resources ?? new ChangeTrackingList<SovereignViewComplianceDetailResourceInfo>(),
                 additionalBinaryDataProperties);
         }
     }

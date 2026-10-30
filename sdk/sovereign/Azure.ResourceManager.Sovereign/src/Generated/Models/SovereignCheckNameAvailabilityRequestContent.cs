@@ -11,21 +11,21 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Sovereign.Models
 {
     /// <summary> The check availability request body. </summary>
-    public partial class CheckNameAvailabilityRequest
+    public partial class SovereignCheckNameAvailabilityRequestContent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="CheckNameAvailabilityRequest"/>. </summary>
-        public CheckNameAvailabilityRequest()
+        /// <summary> Initializes a new instance of <see cref="SovereignCheckNameAvailabilityRequestContent"/>. </summary>
+        public SovereignCheckNameAvailabilityRequestContent()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="CheckNameAvailabilityRequest"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SovereignCheckNameAvailabilityRequestContent"/>. </summary>
         /// <param name="name"> The name of the resource for which availability needs to be checked. </param>
         /// <param name="type"> The resource type. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CheckNameAvailabilityRequest(string name, string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SovereignCheckNameAvailabilityRequestContent(string name, string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Type = @type;

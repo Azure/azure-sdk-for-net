@@ -1,5 +1,5 @@
 directory: specification/sovereign/resource-manager/Microsoft.Sovereign/Sovereign
-commit: afa6145e6ce37f162660f56802fd3dd8045a3d16
+commit: cbcb81bb44e930e539ea470aace2d5dca9ee899d
 repo: Azure/azure-rest-api-specs
 additionalDirectories: 
 

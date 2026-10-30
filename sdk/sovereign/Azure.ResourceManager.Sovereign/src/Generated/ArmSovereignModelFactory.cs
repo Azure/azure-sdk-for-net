@@ -22,10 +22,10 @@ namespace Azure.ResourceManager.Sovereign.Models
         /// <summary> The check availability request body. </summary>
         /// <param name="name"> The name of the resource for which availability needs to be checked. </param>
         /// <param name="type"> The resource type. </param>
-        /// <returns> A new <see cref="Models.CheckNameAvailabilityRequest"/> instance for mocking. </returns>
-        public static CheckNameAvailabilityRequest CheckNameAvailabilityRequest(string name = default, string @type = default)
+        /// <returns> A new <see cref="Models.SovereignCheckNameAvailabilityRequestContent"/> instance for mocking. </returns>
+        public static SovereignCheckNameAvailabilityRequestContent SovereignCheckNameAvailabilityRequestContent(string name = default, string @type = default)
         {
-            return new CheckNameAvailabilityRequest(name, @type, default);
+            return new SovereignCheckNameAvailabilityRequestContent(name, @type, default);
         }
 
         /// <summary> The check availability result. </summary>
@@ -319,16 +319,16 @@ namespace Azure.ResourceManager.Sovereign.Models
         /// <param name="totalResources"> Total number of resources for the sovereign view. </param>
         /// <param name="resources"> The list of compliance detail resources. </param>
         /// <returns> A new <see cref="Models.SovereignViewComplianceDetailsResult"/> instance for mocking. </returns>
-        public static SovereignViewComplianceDetailsResult SovereignViewComplianceDetailsResult(ReportStatus reportStatus = default, ResponseError error = default, DateTimeOffset lastEvaluated = default, int? totalResources = default, IEnumerable<SovereignViewComplianceDetailResource> resources = default)
+        public static SovereignViewComplianceDetailsResult SovereignViewComplianceDetailsResult(ReportStatus reportStatus = default, ResponseError error = default, DateTimeOffset lastEvaluated = default, int? totalResources = default, IEnumerable<SovereignViewComplianceDetailResourceInfo> resources = default)
         {
-            resources ??= new ChangeTrackingList<SovereignViewComplianceDetailResource>();
+            resources ??= new ChangeTrackingList<SovereignViewComplianceDetailResourceInfo>();
 
             return new SovereignViewComplianceDetailsResult(
                 reportStatus,
                 error,
                 lastEvaluated,
                 totalResources,
-                (resources ?? new ChangeTrackingList<SovereignViewComplianceDetailResource>()).ToList(),
+                (resources ?? new ChangeTrackingList<SovereignViewComplianceDetailResourceInfo>()).ToList(),
                 default);
         }
 
@@ -337,12 +337,12 @@ namespace Azure.ResourceManager.Sovereign.Models
         /// <param name="parentResourceId"> The fully qualified Azure Resource Manager ID of the parent resource. When a resource is created as part of another Azure resource's creation and its lifecycle is managed by the platform, this is the ID of that parent resource. For a resource that was created standalone and has no parent resource, this will be empty. </param>
         /// <param name="location"> The location of the resource. </param>
         /// <param name="dimensionDetails"> The compliance details for the resource across the dimensions. </param>
-        /// <returns> A new <see cref="Models.SovereignViewComplianceDetailResource"/> instance for mocking. </returns>
-        public static SovereignViewComplianceDetailResource SovereignViewComplianceDetailResource(ResourceIdentifier resourceId = default, ResourceIdentifier parentResourceId = default, string location = default, IEnumerable<SovereignViewDimensionDetail> dimensionDetails = default)
+        /// <returns> A new <see cref="Models.SovereignViewComplianceDetailResourceInfo"/> instance for mocking. </returns>
+        public static SovereignViewComplianceDetailResourceInfo SovereignViewComplianceDetailResourceInfo(ResourceIdentifier resourceId = default, ResourceIdentifier parentResourceId = default, string location = default, IEnumerable<SovereignViewDimensionDetail> dimensionDetails = default)
         {
             dimensionDetails ??= new ChangeTrackingList<SovereignViewDimensionDetail>();
 
-            return new SovereignViewComplianceDetailResource(resourceId, parentResourceId, location, (dimensionDetails ?? new ChangeTrackingList<SovereignViewDimensionDetail>()).ToList(), default);
+            return new SovereignViewComplianceDetailResourceInfo(resourceId, parentResourceId, location, (dimensionDetails ?? new ChangeTrackingList<SovereignViewDimensionDetail>()).ToList(), default);
         }
 
         /// <summary> A compliance detail item for a resource in the sovereign view compliance details action. </summary>
@@ -550,11 +550,11 @@ namespace Azure.ResourceManager.Sovereign.Models
         /// <param name="configuration"> The residency remediation configuration. </param>
         /// <param name="resources"> The resources to remediate. </param>
         /// <returns> A new <see cref="Models.SovereignViewResidencyRemediationContent"/> instance for mocking. </returns>
-        public static SovereignViewResidencyRemediationContent SovereignViewResidencyRemediationContent(SovereignViewResidencyRemediationConfiguration configuration = default, IEnumerable<SovereignViewResidencyRemediationResource> resources = default)
+        public static SovereignViewResidencyRemediationContent SovereignViewResidencyRemediationContent(SovereignViewResidencyRemediationConfiguration configuration = default, IEnumerable<SovereignViewResidencyRemediationResourceInfo> resources = default)
         {
-            resources ??= new ChangeTrackingList<SovereignViewResidencyRemediationResource>();
+            resources ??= new ChangeTrackingList<SovereignViewResidencyRemediationResourceInfo>();
 
-            return new SovereignViewResidencyRemediationContent(configuration, (resources ?? new ChangeTrackingList<SovereignViewResidencyRemediationResource>()).ToList(), default);
+            return new SovereignViewResidencyRemediationContent(configuration, (resources ?? new ChangeTrackingList<SovereignViewResidencyRemediationResourceInfo>()).ToList(), default);
         }
 
         /// <summary> The configuration for a residency remediation request. </summary>
@@ -569,10 +569,10 @@ namespace Azure.ResourceManager.Sovereign.Models
         /// <summary> A single resource targeted by a residency remediation request. </summary>
         /// <param name="id"> The Azure Resource Manager resource ID of the resource to remediate. </param>
         /// <param name="configuration"> The residency remediation configuration for this resource. </param>
-        /// <returns> A new <see cref="Models.SovereignViewResidencyRemediationResource"/> instance for mocking. </returns>
-        public static SovereignViewResidencyRemediationResource SovereignViewResidencyRemediationResource(ResourceIdentifier id = default, SovereignViewResidencyRemediationResourceConfiguration configuration = default)
+        /// <returns> A new <see cref="Models.SovereignViewResidencyRemediationResourceInfo"/> instance for mocking. </returns>
+        public static SovereignViewResidencyRemediationResourceInfo SovereignViewResidencyRemediationResourceInfo(ResourceIdentifier id = default, SovereignViewResidencyRemediationResourceConfiguration configuration = default)
         {
-            return new SovereignViewResidencyRemediationResource(id, configuration, default);
+            return new SovereignViewResidencyRemediationResourceInfo(id, configuration, default);
         }
 
         /// <summary> The per-resource configuration for a residency remediation request. </summary>
