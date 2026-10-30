@@ -5,65 +5,144 @@ import assert from "node:assert/strict";
 import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
+import { fileURLToPath } from "node:url";
 import { after, before, describe, it } from "node:test";
 
-import { getVallyShardVerdict } from "../lib/verdict.ts";
+import { getVallyShardVerdict, parseFailedTestsGate } from "../lib/verdict.ts";
 import { parseArgs, runShard, validateVallyArguments } from "../invoke-eval-shard.ts";
 import { spawnSync } from "node:child_process";
-import { parse as parseYaml } from "yaml";
 
-describe("eval template authentication contract", () => {
-  const load = (relative: string) => parseYaml(fs.readFileSync(new URL(relative, import.meta.url), "utf8"));
+describe("eval template authentication source contract", () => {
+  const load = (relative: string) => fs.readFileSync(new URL(relative, import.meta.url), "utf8");
   const invoke = load("../../../pipelines/templates/steps/eval-invoke.yml");
+  const branches = invoke.split(/(?=^  - \$\{\{ )/m).slice(1);
 
   it("keeps the service connection optional and empty in every common template layer", () => {
     for (const template of [invoke,
       load("../../../pipelines/templates/jobs/eval-shard.yml"),
       load("../../../pipelines/templates/stages/archetype-eval.yml")]) {
-      assert.equal(template.parameters.find((parameter: { name: string }) => parameter.name === "azureSubscription").default, "");
-      assert.equal(template.parameters.find((parameter: { name: string }) => parameter.name === "UseAzSdkAuthentication").default, false);
+      assert.match(template, /^  - name: azureSubscription\r?\n(?:    #[^\r\n]*\r?\n)*    type: string\r?\n    default: ''\r?$/m);
+      assert.match(template, /^  - name: UseAzSdkAuthentication\r?\n(?:    #[^\r\n]*\r?\n)*    type: boolean\r?\n    default: false\r?$/m);
     }
   });
 
-  it("rejects empty authenticated configuration without emitting an AzureCLI task", () => {
-    const steps = invoke.steps[0]["${{ if and(parameters.UseAzSdkAuthentication, eq(trim(parameters.azureSubscription), '')) }}"];
-    assert.equal(steps.length, 1);
-    assert.equal(steps[0].task, undefined);
-    assert.match(steps[0].script, /##vso\[task\.logissue type=error\].*azureSubscription.*UseAzSdkAuthentication/);
-    assert.match(steps[0].script, /exit 1/);
+  it("keeps the missing-connection error in the first branch without an AzureCLI task", () => {
+    assert.equal(branches.length, 3);
+    const configuration = branches[0];
+    assert.equal(configuration.split(/\r?\n/, 1)[0],
+      "  - ${{ if and(parameters.UseAzSdkAuthentication, eq(trim(parameters.azureSubscription), '')) }}:");
+    assert.equal(configuration.match(/^    - /gm)?.length, 1);
+    assert.match(configuration, /^    - script: \|\r?$/m);
+    assert.doesNotMatch(configuration, /^\s*- task:/m);
+    assert.match(configuration, /##vso\[task\.logissue type=error\].*azureSubscription.*UseAzSdkAuthentication/);
+    assert.match(configuration, /^        exit 1\r?$/m);
   });
 
-  it("uses only the caller's connection for authentication and none for unauthenticated runs", () => {
-    const authenticated = invoke.steps[1]["${{ elseif parameters.UseAzSdkAuthentication }}"];
-    assert.equal(authenticated.length, 1);
-    assert.equal(authenticated[0].task, "AzureCLI@2");
-    assert.equal(authenticated[0].inputs.azureSubscription, "${{ parameters.azureSubscription }}");
-    const unauthenticated = invoke.steps[2]["${{ else }}"];
-    assert.equal(unauthenticated.length, 1);
-    assert.equal(unauthenticated[0].task, undefined);
-    assert.match(unauthenticated[0].script, /invoke-eval-shard\.ts/);
-    assert.equal(unauthenticated[0].inputs?.azureSubscription, undefined);
-    for (const step of [authenticated[0], unauthenticated[0]]) {
-      assert.equal(step.env.VALLY_ARGUMENTS_JSON, "${{ convertToJson(parameters.vallyArguments) }}");
-      assert.equal(step.env.COPILOT_GITHUB_TOKEN, "$(COPILOT_GITHUB_TOKEN)");
+  it("references the caller's connection only in the authenticated branch", () => {
+    const authenticated = branches[1];
+    assert.equal(authenticated.split(/\r?\n/, 1)[0], "  - ${{ elseif parameters.UseAzSdkAuthentication }}:");
+    assert.equal(authenticated.match(/^    - /gm)?.length, 1);
+    assert.match(authenticated, /^    - task: AzureCLI@2\r?$/m);
+    assert.match(authenticated, /^        azureSubscription: \$\{\{ parameters\.azureSubscription \}\}\r?$/m);
+    const unauthenticated = branches[2];
+    assert.equal(unauthenticated.split(/\r?\n/, 1)[0], "  - ${{ else }}:");
+    assert.equal(unauthenticated.match(/^    - /gm)?.length, 1);
+    assert.match(unauthenticated, /^    - script: \|\r?$/m);
+    assert.match(unauthenticated, /invoke-eval-shard\.ts/);
+    assert.doesNotMatch(unauthenticated, /^\s*(?:- task|azureSubscription):/m);
+    for (const branch of [authenticated, unauthenticated]) {
+      assert.equal(branch.match(/^        VALLY_ARGUMENTS_JSON: (.+)\r?$/m)?.[1].trim(),
+        "${{ replace(convertToJson(parameters.vallyArguments), '$', '\\u0024') }}");
+      assert.match(branch, /^        COPILOT_GITHUB_TOKEN: \$\(COPILOT_GITHUB_TOKEN\)\r?$/m);
     }
   });
 
   it("keeps the existing live entrypoint's connection explicit and forwards caller configuration", () => {
-    const live = load("../../../pipelines/live-eval.yml").extends.parameters;
-    assert.equal(live.UseAzSdkAuthentication, true);
-    assert.equal(live.azureSubscription, "opensource-api-connection");
+    const live = load("../../../pipelines/live-eval.yml");
+    assert.match(live, /^    UseAzSdkAuthentication: true\r?$/m);
+    assert.match(live, /^    azureSubscription: opensource-api-connection\r?$/m);
     const stage = load("../../../pipelines/templates/stages/archetype-eval.yml");
-    const job = stage.extends.parameters.stages.find((entry: { stage: string }) => entry.stage === "Eval").jobs[0];
-    assert.equal(job.parameters.azureSubscription, "${{ parameters.azureSubscription }}");
+    const evalStage = stage.split(/^      - stage: /m).find(section => section.split(/\r?\n/, 1)[0] === "Eval");
+    assert.ok(evalStage);
+    assert.match(evalStage, /^          - template: \/eng\/common\/pipelines\/templates\/jobs\/eval-shard\.yml\r?$/m);
+    assert.match(evalStage, /^              azureSubscription: \$\{\{ parameters\.azureSubscription \}\}\r?$/m);
     const shard = load("../../../pipelines/templates/jobs/eval-shard.yml");
-    const invokeStep = shard.jobs[0].steps.find((step: { template?: string }) => step.template === "${{ parameters.evalInvokeTemplate }}");
-    const commonParameters = invokeStep.parameters["${{ if eq(parameters.evalInvokeTemplate, '/eng/common/pipelines/templates/steps/eval-invoke.yml') }}"];
-    assert.equal(commonParameters.azureSubscription, "${{ parameters.azureSubscription }}");
+    const invokeStep = shard.split(/^      - template: /m).find(section =>
+      section.split(/\r?\n/, 1)[0] === "${{ parameters.evalInvokeTemplate }}");
+    assert.ok(invokeStep);
+    assert.match(invokeStep, /^          \$\{\{ if eq\(parameters\.evalInvokeTemplate, '\/eng\/common\/pipelines\/templates\/steps\/eval-invoke\.yml'\) \}\}:\r?\n            azureSubscription: \$\{\{ parameters\.azureSubscription \}\}\r?$/m);
+  });
+
+  it("preflights common shard arguments before setup and forwards the gate to both jobs", () => {
+    const shard = load("../../../pipelines/templates/jobs/eval-shard.yml");
+    const preflight = shard.indexOf("displayName: 'Validate eval run configuration'");
+    assert.ok(preflight >= 0 && preflight < shard.indexOf("displayName: 'Install Vally CLI"));
+    assert.match(shard, /^      - \$\{\{ if eq\(parameters\.evalInvokeTemplate, '\/eng\/common\/pipelines\/templates\/steps\/eval-invoke\.yml'\) \}\}:\r?\n        - script: \|/m);
+    assert.match(shard, /invoke-eval-shard\.ts" --validate-only/);
+    assert.match(shard, /^            EVAL_FAIL_ON_FAILED_TESTS: \$\{\{ parameters\.failOnFailedTests \}\}\r?$/m);
+    assert.equal(shard.match(/^            VALLY_ARGUMENTS_JSON: (.+)\r?$/m)?.[1].trim(),
+      "${{ replace(convertToJson(parameters.vallyArguments), '$', '\\u0024') }}");
+    const stage = load("../../../pipelines/templates/stages/archetype-eval.yml");
+    for (const name of ["Eval", "Summary"]) {
+      const section = stage.split(/^      - stage: /m).find(value => value.split(/\r?\n/, 1)[0] === name);
+      assert.ok(section);
+      assert.match(section, /^              failOnFailedTests: \$\{\{ parameters\.failOnFailedTests \}\}\r?$/m);
+    }
+    const summary = load("../../../pipelines/templates/jobs/eval-summarize.yml");
+    assert.doesNotMatch(summary, /EVAL_FAIL_ON_FAILED_TESTS/);
+    assert.match(summary, /^          failTaskOnFailedTests: \$\{\{ parameters\.failOnFailedTests \}\}\r?$/m);
   });
 });
 
 describe("supplementary Vally arguments", () => {
+  it("rejects only multi-run gating, preserving single-run gates and multi-run observations", () => {
+    for (const runs of [1, "1"]) {
+      assert.deepEqual(validateVallyArguments(["--runs", runs], { failOnFailedTests: true }), ["--runs", "1"]);
+    }
+    for (const runs of [2, "2", 5, "5"]) {
+      assert.throws(() => validateVallyArguments(["--runs", runs], { failOnFailedTests: true }),
+        /not currently supported.*failOnFailedTests=true/);
+      assert.deepEqual(validateVallyArguments(["--runs", runs], { failOnFailedTests: false }), ["--runs", String(runs)]);
+    }
+    assert.deepEqual(validateVallyArguments([], { failOnFailedTests: true }), []);
+    assert.deepEqual(validateVallyArguments(["--workers", 5], { failOnFailedTests: true }), ["--workers", "5"]);
+    for (const value of ["true", "True", "TRUE"]) assert.equal(parseFailedTestsGate(value), true);
+    for (const value of [undefined, "false", "False"]) assert.equal(parseFailedTestsGate(value), false);
+    for (const value of ["", "yes", "1", null, true]) assert.throws(() => parseFailedTestsGate(value), /must be true or false/);
+  });
+
+  it("validates the configuration through the CLI without starting an evaluation", () => {
+    for (const [runs, gate, expected] of [[5, "true", 1], ["5", "True", 1], [1, "true", 0], ["1", "True", 0], [5, "false", 0]] as const) {
+      const env = { ...process.env, EVAL_FAIL_ON_FAILED_TESTS: gate, VALLY_ARGUMENTS_JSON: JSON.stringify(["--runs", runs]) };
+      delete env.NODE_TEST_CONTEXT;
+      const child = spawnSync(process.execPath, ["--experimental-strip-types",
+        fileURLToPath(new URL("../invoke-eval-shard.ts", import.meta.url)), "--validate-only"], {
+        encoding: "utf8", timeout: 30_000, env,
+      });
+      assert.ifError(child.error);
+      assert.equal(child.status, expected, child.stderr);
+      assert.doesNotMatch(child.stdout, /Running: vally eval/);
+      if (expected) assert.match(child.stderr, /not currently supported.*failOnFailedTests=true/);
+      else assert.match(child.stdout, /configuration is supported/);
+    }
+  });
+
+  it("preserves defined pipeline macros through simulated agent expansion and JSON decoding", () => {
+    const variables: Record<string, string> = { "Build.BuildId": "12345", DefinedValue: 'quoted "value"\nand newline' };
+    const expand = (value: string) => value.replace(/\$\(([^)]+)\)/g, (macro, name) => variables[name] ?? macro);
+    const args = ["--tag", "build=$(Build.BuildId)", "--tag", "label=$(DefinedValue)",
+      "--tag", String.raw`literal=\u0024; $5; $(undefined-variable)`];
+    assert.equal(expand(args[1]), "build=12345");
+    const json = JSON.stringify(args);
+    assert.throws(() => JSON.parse(expand(json)), SyntaxError);
+    const escaped = json.replaceAll("$", "\\u0024");
+    assert.doesNotMatch(escaped, /\$\(/);
+    assert.equal(expand(escaped), escaped);
+    const options = parseArgs(["--eval-args", "-e example.eval.yaml", "--shard-name", "example", "--output-dir", "out"],
+      { VALLY_ARGUMENTS_JSON: expand(escaped) });
+    assert.deepEqual(options.vallyArguments, args);
+  });
+
   it("accepts only supported option/value pairs without splitting values", () => {
     const args = ["--tag", "label=two words; $(not-a-command) & \"quoted\"", "--runs", "3", "--workers", "1", "--timeout", "5m"];
     assert.deepEqual(validateVallyArguments(args), args);
@@ -121,8 +200,10 @@ describe("supplementary Vally arguments", () => {
         type: "run-summary", evals: [{ name: "test", passed: true, stimuliRun: 1 }]
       }));
     `);
-    const args = ["--tag", "label=a b; $(echo bad) & \"quotes\" %PATH%", "--runs", 3];
-    const exit = runShard({ evalArgs: "-e test.eval.yaml", shardName: "test", outputDir, vallyArguments: args }, {
+    const args = ["--tag", "label=a b; $(echo bad) & \"quotes\" %PATH%", "--tag", "build=$(Build.BuildId)", "--runs", 3];
+    const options = parseArgs(["--eval-args", "-e test.eval.yaml", "--shard-name", "test", "--output-dir", outputDir],
+      { VALLY_ARGUMENTS_JSON: JSON.stringify(args).replaceAll("$", "\\u0024") });
+    const exit = runShard(options, {
       spawn(command, commandArgs, options) {
         assert.equal(command, process.execPath);
         assert.equal(options.shell, false);
