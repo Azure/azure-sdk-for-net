@@ -47,13 +47,18 @@ namespace Azure.Provisioning.AppContainers
             }
         }
 
-        /// <summary> Gets the Name. </summary>
+        /// <summary> Gets or sets the Name. </summary>
         public BicepValue<string> Name
         {
             get
             {
                 Initialize();
                 return _name;
+            }
+            set
+            {
+                Initialize();
+                _name.Assign(value);
             }
         }
 
@@ -407,7 +412,7 @@ namespace Azure.Provisioning.AppContainers
             _identity = DefineModelProperty<ManagedServiceIdentity>(nameof(Identity), new string[] { "identity" });
             _managedBy = DefineProperty<string>(nameof(ManagedBy), new string[] { "managedBy" });
             _kind = DefineProperty<ContainerAppKind>(nameof(Kind), new string[] { "kind" });
-            _parent = DefineResource<ContainerApp>(nameof(Parent), new string[] { "parent" }, isRequired: true);
+            _parent = DefineResource<ContainerApp>(nameof(Parent), new string[] { "parent" });
             DefineAdditionalProperties();
         }
 
