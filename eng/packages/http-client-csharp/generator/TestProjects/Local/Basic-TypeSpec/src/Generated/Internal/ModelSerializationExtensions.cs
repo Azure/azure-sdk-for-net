@@ -422,7 +422,13 @@ namespace BasicTypeSpec
                 return false;
             }
 
-            return Utf8Parser.TryParse(indexSlice.Slice(0, indexEnd + 1), out index, out bytesConsumed);
+            if (!Utf8Parser.TryParse(indexSlice.Slice(0, indexEnd + 1), out index, out bytesConsumed))
+            {
+                return false;
+            }
+
+            bytesConsumed += 2;
+            return true;
         }
 
         public static ReadOnlySpan<byte> GetRemainder(this ReadOnlySpan<byte> jsonPath, int index)
