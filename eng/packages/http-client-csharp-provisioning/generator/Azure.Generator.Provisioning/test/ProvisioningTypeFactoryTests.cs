@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using Azure.Generator.Provisioning.Tests.TestHelpers;
+using Azure.Generator.Provisioning.Providers;
 using Azure.Generator.Management.Models;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
@@ -86,6 +87,29 @@ namespace Azure.Generator.Provisioning.Tests
             Assert.That(type.IsNullable, Is.True);
             Assert.That(type!.Arguments[0].Name, Is.EqualTo("TestEnum"));
             Assert.That(type.Arguments[0].Namespace, Is.EqualTo("Azure.Provisioning.Tests"));
+        }
+
+        [TestCase(new string[] { }, false)]
+        [TestCase(new[] { "2024-01-01" }, false)]
+        [TestCase(new[] { "2024-03-01-preview" }, true)]
+        [TestCase(new[] { "2024-03-01-preview", "2024-04-01-preview" }, true)]
+        [TestCase(new[] { "2024-03-01-PREVIEW" }, true)]
+        [TestCase(new[] { "2024-01-01", "2024-03-01-preview" }, false)]
+        [TestCase(new[] { "2024-03-01-preview", "2024-05-01" }, false)]
+        public void EnumExperimentalAttributeReflectsApiVersions(string[] apiVersions, bool experimental)
+        {
+            var input = CreateStringEnum(apiVersions: apiVersions);
+            var provider = new ProvisioningEnumProvider(input);
+            var attributes = provider.Attributes
+                .Select(attribute => attribute.ToDisplayString())
+                .Where(attribute => attribute.Contains("Experimental"))
+                .ToArray();
+
+            Assert.That(attributes, Has.Length.EqualTo(experimental ? 1 : 0));
+            if (experimental)
+            {
+                Assert.That(attributes[0], Does.Contain("AZPROVISION001"));
+            }
         }
 
         [Test]
@@ -905,7 +929,30 @@ namespace Azure.Generator.Provisioning.Tests
                 .SetName("PrimitiveTypeIsWrappedInBicepValue_Url");
         }
 
-        private static InputEnumType CreateStringEnum(string name = "TestEnum", string? access = "public")
+        [Test]
+        public void CustomEnumExperimentalAttributeIsNotDuplicated()
+        {
+            var input = CreateStringEnum(apiVersions: ["2024-03-01-preview"]);
+            ProvisioningMockHelpers.LoadMockPlugin(
+                inputEnums: () => [input],
+                customizationSources:
+                [
+                    """
+                    using System.Diagnostics.CodeAnalysis;
+                    namespace Azure.Provisioning.Tests;
+                    [Experimental("CUSTOM001")]
+                    public enum TestEnum { One, Derived }
+                    """
+                ]);
+
+            var provider = new ProvisioningEnumProvider(input);
+
+            Assert.That(provider.CustomCodeView, Is.Not.Null);
+            Assert.That(provider.CustomCodeView!.Attributes.Single().Type.Name, Is.EqualTo("ExperimentalAttribute"));
+            Assert.That(provider.Attributes.Any(attribute => attribute.Type.Name == "ExperimentalAttribute"), Is.False);
+        }
+
+        private static InputEnumType CreateStringEnum(string name = "TestEnum", string? access = "public", IReadOnlyList<string>? apiVersions = null)
         {
             var values = new List<InputEnumTypeValue>();
             var enumType = new InputEnumType(
@@ -919,7 +966,8 @@ namespace Azure.Generator.Provisioning.Tests
                 InputModelTypeUsage.Input | InputModelTypeUsage.Output,
                 InputPrimitiveType.String,
                 values,
-                true);
+                true,
+                apiVersions: apiVersions);
             values.Add(new InputEnumTypeValue("One", "One", InputPrimitiveType.String, string.Empty, "One.", enumType));
             values.Add(new InputEnumTypeValue("Derived", "derived", InputPrimitiveType.String, string.Empty, "Derived.", enumType));
             return enumType;

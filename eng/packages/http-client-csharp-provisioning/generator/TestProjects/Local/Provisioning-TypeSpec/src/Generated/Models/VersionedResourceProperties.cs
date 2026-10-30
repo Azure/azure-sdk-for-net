@@ -11,11 +11,19 @@ using Azure.Provisioning.Primitives;
 namespace Azure.Provisioning.ProvisioningTypeSpec
 {
     /// <summary> Properties with different API-version lifetimes. </summary>
-    public partial class VersionedResourceProperties : ProvisionableConstruct
+    internal partial class VersionedResourceProperties : ProvisionableConstruct
     {
         private BicepValue<string> _initialStableProperty;
         private BicepValue<string> _previewRetainedProperty;
         private BicepValue<string> _latestStableProperty;
+        private BicepValue<InitialStableEnum> _initialStableEnum;
+        private BicepValue<PreviewRetainedEnum> _previewRetainedEnum;
+        private BicepValue<LatestStableEnum> _latestStableEnum;
+        private PreviewFlattenedWrapper _previewWrapper;
+        private SharedFlattenedLeaf _previewSharedWrapper;
+        private SharedFlattenedLeaf _previewSafeWrapper;
+        private NestedFlattenedWrapper _nestedWrapper;
+        private SharedFlattenedLeaf _stableSharedWrapper;
 
         /// <summary> Creates a new VersionedResourceProperties. </summary>
         public VersionedResourceProperties()
@@ -67,6 +75,211 @@ namespace Azure.Provisioning.ProvisioningTypeSpec
             }
         }
 
+        /// <summary> Gets or sets the InitialStableEnum. </summary>
+        public BicepValue<InitialStableEnum> InitialStableEnum
+        {
+            get
+            {
+                Initialize();
+                return _initialStableEnum;
+            }
+            set
+            {
+                Initialize();
+                _initialStableEnum.Assign(value);
+            }
+        }
+
+        /// <summary> Gets or sets the PreviewRetainedEnum. </summary>
+        public BicepValue<PreviewRetainedEnum> PreviewRetainedEnum
+        {
+            get
+            {
+                Initialize();
+                return _previewRetainedEnum;
+            }
+            set
+            {
+                Initialize();
+                _previewRetainedEnum.Assign(value);
+            }
+        }
+
+        /// <summary> Gets or sets the LatestStableEnum. </summary>
+        public BicepValue<LatestStableEnum> LatestStableEnum
+        {
+            get
+            {
+                Initialize();
+                return _latestStableEnum;
+            }
+            set
+            {
+                Initialize();
+                _latestStableEnum.Assign(value);
+            }
+        }
+
+        /// <summary> Gets or sets the PreviewWrapper. </summary>
+        internal PreviewFlattenedWrapper PreviewWrapper
+        {
+            get
+            {
+                Initialize();
+                return _previewWrapper;
+            }
+            set
+            {
+                Initialize();
+                AssignOrReplace(ref _previewWrapper, value);
+            }
+        }
+
+        /// <summary> Gets or sets the PreviewSharedWrapper. </summary>
+        internal SharedFlattenedLeaf PreviewSharedWrapper
+        {
+            get
+            {
+                Initialize();
+                return _previewSharedWrapper;
+            }
+            set
+            {
+                Initialize();
+                AssignOrReplace(ref _previewSharedWrapper, value);
+            }
+        }
+
+        /// <summary> Gets or sets the PreviewSafeWrapper. </summary>
+        internal SharedFlattenedLeaf PreviewSafeWrapper
+        {
+            get
+            {
+                Initialize();
+                return _previewSafeWrapper;
+            }
+            set
+            {
+                Initialize();
+                AssignOrReplace(ref _previewSafeWrapper, value);
+            }
+        }
+
+        /// <summary> Gets or sets the NestedWrapper. </summary>
+        internal NestedFlattenedWrapper NestedWrapper
+        {
+            get
+            {
+                Initialize();
+                return _nestedWrapper;
+            }
+            set
+            {
+                Initialize();
+                AssignOrReplace(ref _nestedWrapper, value);
+            }
+        }
+
+        /// <summary> Gets or sets the StableSharedWrapper. </summary>
+        internal SharedFlattenedLeaf StableSharedWrapper
+        {
+            get
+            {
+                Initialize();
+                return _stableSharedWrapper;
+            }
+            set
+            {
+                Initialize();
+                AssignOrReplace(ref _stableSharedWrapper, value);
+            }
+        }
+
+        /// <summary> Gets or sets the FlattenedPreviewValue. </summary>
+        public BicepValue<string> FlattenedPreviewValue
+        {
+            get
+            {
+                return PreviewWrapper is null ? default : PreviewWrapper.FlattenedPreviewValue;
+            }
+            set
+            {
+                if (PreviewWrapper is null)
+                {
+                    PreviewWrapper = new PreviewFlattenedWrapper();
+                }
+                PreviewWrapper.FlattenedPreviewValue = value;
+            }
+        }
+
+        /// <summary> Gets or sets the SharedValue. </summary>
+        public BicepValue<string> SharedValue
+        {
+            get
+            {
+                return PreviewSharedWrapper is null ? default : PreviewSharedWrapper.SharedValue;
+            }
+            set
+            {
+                if (PreviewSharedWrapper is null)
+                {
+                    PreviewSharedWrapper = new SharedFlattenedLeaf();
+                }
+                PreviewSharedWrapper.SharedValue = value;
+            }
+        }
+
+        /// <summary> Gets or sets the SharedValue. </summary>
+        public BicepValue<string> PreviewSafeWrapperSharedValue
+        {
+            get
+            {
+                return PreviewSafeWrapper is null ? default : PreviewSafeWrapper.SharedValue;
+            }
+            set
+            {
+                if (PreviewSafeWrapper is null)
+                {
+                    PreviewSafeWrapper = new SharedFlattenedLeaf();
+                }
+                PreviewSafeWrapper.SharedValue = value;
+            }
+        }
+
+        /// <summary> Gets or sets the NestedPreviewValue. </summary>
+        public BicepValue<string> NestedPreviewValue
+        {
+            get
+            {
+                return NestedWrapper is null ? default : NestedWrapper.NestedPreviewValue;
+            }
+            set
+            {
+                if (NestedWrapper is null)
+                {
+                    NestedWrapper = new NestedFlattenedWrapper();
+                }
+                NestedWrapper.NestedPreviewValue = value;
+            }
+        }
+
+        /// <summary> Gets or sets the SharedValue. </summary>
+        public BicepValue<string> StableSharedValue
+        {
+            get
+            {
+                return StableSharedWrapper is null ? default : StableSharedWrapper.SharedValue;
+            }
+            set
+            {
+                if (StableSharedWrapper is null)
+                {
+                    StableSharedWrapper = new SharedFlattenedLeaf();
+                }
+                StableSharedWrapper.SharedValue = value;
+            }
+        }
+
         /// <summary> Define all the provisionable properties for VersionedResourceProperties. </summary>
         protected override void DefineProvisionableProperties()
         {
@@ -74,6 +287,14 @@ namespace Azure.Provisioning.ProvisioningTypeSpec
             _initialStableProperty = DefineProperty<string>(nameof(InitialStableProperty), new string[] { "initialStableProperty" });
             _previewRetainedProperty = DefineProperty<string>(nameof(PreviewRetainedProperty), new string[] { "previewRetainedProperty" });
             _latestStableProperty = DefineProperty<string>(nameof(LatestStableProperty), new string[] { "latestStableProperty" });
+            _initialStableEnum = DefineProperty<InitialStableEnum>(nameof(InitialStableEnum), new string[] { "initialStableEnum" });
+            _previewRetainedEnum = DefineProperty<PreviewRetainedEnum>(nameof(PreviewRetainedEnum), new string[] { "previewRetainedEnum" });
+            _latestStableEnum = DefineProperty<LatestStableEnum>(nameof(LatestStableEnum), new string[] { "latestStableEnum" });
+            _previewWrapper = DefineModelProperty<PreviewFlattenedWrapper>(nameof(PreviewWrapper), new string[] { "previewWrapper" });
+            _previewSharedWrapper = DefineModelProperty<SharedFlattenedLeaf>(nameof(PreviewSharedWrapper), new string[] { "previewSharedWrapper" });
+            _previewSafeWrapper = DefineModelProperty<SharedFlattenedLeaf>(nameof(PreviewSafeWrapper), new string[] { "previewSafeWrapper" });
+            _nestedWrapper = DefineModelProperty<NestedFlattenedWrapper>(nameof(NestedWrapper), new string[] { "nestedWrapper" });
+            _stableSharedWrapper = DefineModelProperty<SharedFlattenedLeaf>(nameof(StableSharedWrapper), new string[] { "stableSharedWrapper" });
             DefineAdditionalProperties();
         }
 
