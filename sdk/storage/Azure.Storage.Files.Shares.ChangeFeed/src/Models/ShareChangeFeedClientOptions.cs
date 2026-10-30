@@ -12,7 +12,7 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
         /// The maximum size, in bytes, for a single blob download transfer when reading change feed segments.
         /// If not set, the default transfer size is used.
         /// </summary>
-        public long? MaximumTransferSize { get; set; }
+        public long? MaximumTransferSizeInBytes { get; set; }
 
         /// <summary>
         /// When set to <c>true</c>, the change feed reader will return events whose timestamps

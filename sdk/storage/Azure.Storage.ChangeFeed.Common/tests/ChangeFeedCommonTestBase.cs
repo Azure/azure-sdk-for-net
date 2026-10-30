@@ -42,7 +42,7 @@ namespace Azure.Storage.ChangeFeed.Common.Tests
             public string Reason { get; set; }
             public string Id { get; set; }
             public long Cvnt { get; set; }
-            public DateTimeOffset EventTime { get; set; }
+            public DateTimeOffset EventOccurredOn { get; set; }
 
             public TestEvent(Dictionary<string, object> record)
             {

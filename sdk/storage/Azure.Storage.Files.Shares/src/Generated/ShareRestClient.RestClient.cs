@@ -23,7 +23,7 @@ namespace Azure.Storage.Files.Shares
 
         private static ResponseClassifier PipelineMessageClassifier202 => _pipelineMessageClassifier202 ??= new StatusCodeClassifier(stackalloc ushort[] { 202 });
 
-        internal HttpMessage CreateCreateRequest(int? timeout, IDictionary<string, string> metadata, int? quota, string accessTier, string enabledProtocols, string rootSquash, bool? enableSnapshotVirtualDirectoryAccess, bool? paidBurstingEnabled, long? paidBurstingMaxIops, long? paidBurstingMaxBandwidthMibps, long? shareProvisionedIops, long? shareProvisionedBandwidthMibps, bool? enableSmbDirectoryLease, RequestContext context)
+        internal HttpMessage CreateCreateRequest(int? timeout, IDictionary<string, string> metadata, int? quota, string accessTier, string enabledProtocols, string rootSquash, bool? enableSnapshotVirtualDirectoryAccess, bool? paidBurstingEnabled, long? paidBurstingMaxIops, long? paidBurstingMaxBandwidthMibps, long? shareProvisionedIops, long? shareProvisionedBandwidthMibps, bool? enableSmbDirectoryLease, bool? enableChangeFeed, int? changeFeedRetentionInDays, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -91,6 +91,14 @@ namespace Azure.Storage.Files.Shares
             if (enableSmbDirectoryLease != null)
             {
                 request.Headers.SetValue("x-ms-enable-smb-directory-lease", TypeFormatters.ConvertToString(enableSmbDirectoryLease));
+            }
+            if (enableChangeFeed != null)
+            {
+                request.Headers.SetValue("x-ms-file-enable-change-feed", TypeFormatters.ConvertToString(enableChangeFeed));
+            }
+            if (changeFeedRetentionInDays != null)
+            {
+                request.Headers.SetValue("x-ms-file-change-feed-retention-in-days", TypeFormatters.ConvertToString(changeFeedRetentionInDays));
             }
             return message;
         }
@@ -423,7 +431,7 @@ namespace Azure.Storage.Files.Shares
             return message;
         }
 
-        internal HttpMessage CreateSetPropertiesRequest(int? timeout, int? quota, string accessTier, string leaseId, string rootSquash, bool? enableSnapshotVirtualDirectoryAccess, bool? paidBurstingEnabled, long? paidBurstingMaxIops, long? paidBurstingMaxBandwidthMibps, long? shareProvisionedIops, long? shareProvisionedBandwidthMibps, bool? enableSmbDirectoryLease, RequestContext context)
+        internal HttpMessage CreateSetPropertiesRequest(int? timeout, int? quota, string accessTier, string leaseId, string rootSquash, bool? enableSnapshotVirtualDirectoryAccess, bool? paidBurstingEnabled, long? paidBurstingMaxIops, long? paidBurstingMaxBandwidthMibps, long? shareProvisionedIops, long? shareProvisionedBandwidthMibps, bool? enableSmbDirectoryLease, bool? enableChangeFeed, int? changeFeedRetentionInDays, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -488,6 +496,14 @@ namespace Azure.Storage.Files.Shares
             if (enableSmbDirectoryLease != null)
             {
                 request.Headers.SetValue("x-ms-enable-smb-directory-lease", TypeFormatters.ConvertToString(enableSmbDirectoryLease));
+            }
+            if (enableChangeFeed != null)
+            {
+                request.Headers.SetValue("x-ms-file-enable-change-feed", TypeFormatters.ConvertToString(enableChangeFeed));
+            }
+            if (changeFeedRetentionInDays != null)
+            {
+                request.Headers.SetValue("x-ms-file-change-feed-retention-in-days", TypeFormatters.ConvertToString(changeFeedRetentionInDays));
             }
             return message;
         }

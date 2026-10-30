@@ -13,7 +13,7 @@ namespace Azure.Storage.Files.Shares.ChangeFeed.Tests
 {
     /// <summary>
     /// Tests for <see cref="ContainerDiscovery"/> covering container name discovery
-    /// via the <c>x-ms-file-blob-container-for-xfiles-change-feed</c> response header.
+    /// via <see cref="ShareProperties"/>.
     /// </summary>
     public class ContainerDiscoveryTests : ShareChangeFeedTestBase
     {
@@ -24,22 +24,19 @@ namespace Azure.Storage.Files.Shares.ChangeFeed.Tests
 
         /// <summary>
         /// Verifies that DiscoverContainerNameAsync returns the container name when the
-        /// change feed container header is present in the raw response.
+        /// change feed properties indicate that change feed is enabled.
         /// </summary>
         [Test]
-        public async Task DiscoverContainerNameAsync_HeaderPresent_ReturnsContainerName()
+        public async Task DiscoverContainerNameAsync_ChangeFeedEnabled_ReturnsContainerName()
         {
             // Arrange
             Mock<ShareClient> shareClient = new Mock<ShareClient>();
             shareClient.Setup(c => c.Name).Returns("myshare");
 
             MockResponse rawResponse = new MockResponse(200);
-            rawResponse.AddHeader(
-                "x-ms-file-blob-container-for-xfiles-change-feed",
-                "$fileschangefeed-abc123");
-
             ShareProperties properties = ShareModelFactory.ShareProperties(
-                enableSnapshotVirtualDirectoryAccess: default);
+                enableChangeFeed: true,
+                changeFeedBlobContainerName: "$fileschangefeed-abc123");
             Response<ShareProperties> response = Response.FromValue(properties, rawResponse);
 
             if (IsAsync)
@@ -67,20 +64,19 @@ namespace Azure.Storage.Files.Shares.ChangeFeed.Tests
 
         /// <summary>
         /// Verifies that DiscoverContainerNameAsync throws <see cref="System.InvalidOperationException"/>
-        /// when the change feed container header is missing from the response.
+        /// when change feed is disabled.
         /// </summary>
         [Test]
-        public void DiscoverContainerNameAsync_HeaderMissing_ThrowsInvalidOperationException()
+        public void DiscoverContainerNameAsync_ChangeFeedDisabled_ThrowsInvalidOperationException()
         {
             // Arrange
             Mock<ShareClient> shareClient = new Mock<ShareClient>();
             shareClient.Setup(c => c.Name).Returns("myshare");
 
             MockResponse rawResponse = new MockResponse(200);
-            // No change feed header added
-
             ShareProperties properties = ShareModelFactory.ShareProperties(
-                enableSnapshotVirtualDirectoryAccess: default);
+                enableChangeFeed: false,
+                changeFeedBlobContainerName: "$fileschangefeed-abc123");
             Response<ShareProperties> response = Response.FromValue(properties, rawResponse);
 
             if (IsAsync)
@@ -107,15 +103,13 @@ namespace Azure.Storage.Files.Shares.ChangeFeed.Tests
             StringAssert.Contains("Change Feed is not enabled", ex.Message);
         }
 
-        // Helper to set up a mocked ShareClient that returns the given header value.
-        private void SetupMockShareWithHeader(Mock<ShareClient> shareClient, string headerValue)
+        private void SetupMockShareWithProperties(Mock<ShareClient> shareClient, string containerName)
         {
             shareClient.Setup(c => c.Name).Returns("myshare");
             MockResponse rawResponse = new MockResponse(200);
-            if (headerValue != null)
-                rawResponse.AddHeader("x-ms-file-blob-container-for-xfiles-change-feed", headerValue);
-
-            ShareProperties properties = ShareModelFactory.ShareProperties(enableSnapshotVirtualDirectoryAccess: default);
+            ShareProperties properties = ShareModelFactory.ShareProperties(
+                enableChangeFeed: true,
+                changeFeedBlobContainerName: containerName);
             Response<ShareProperties> response = Response.FromValue(properties, rawResponse);
 
             shareClient.Setup(c => c.GetPropertiesAsync(It.IsAny<CancellationToken>())).ReturnsAsync(response);
@@ -126,7 +120,7 @@ namespace Azure.Storage.Files.Shares.ChangeFeed.Tests
         public void DiscoverContainerNameAsync_HeaderEmpty_Throws()
         {
             Mock<ShareClient> shareClient = new Mock<ShareClient>();
-            SetupMockShareWithHeader(shareClient, "");
+            SetupMockShareWithProperties(shareClient, "");
 
             RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(
                 async () => await ContainerDiscovery.DiscoverContainerNameAsync(shareClient.Object, IsAsync, CancellationToken.None));
@@ -137,7 +131,7 @@ namespace Azure.Storage.Files.Shares.ChangeFeed.Tests
         public void DiscoverContainerNameAsync_HeaderMissingDollarPrefix_Throws()
         {
             Mock<ShareClient> shareClient = new Mock<ShareClient>();
-            SetupMockShareWithHeader(shareClient, "fileschangefeed-no-prefix");
+            SetupMockShareWithProperties(shareClient, "fileschangefeed-no-prefix");
 
             RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(
                 async () => await ContainerDiscovery.DiscoverContainerNameAsync(shareClient.Object, IsAsync, CancellationToken.None));

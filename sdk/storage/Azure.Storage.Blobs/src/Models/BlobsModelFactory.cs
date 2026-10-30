@@ -7,8 +7,8 @@ using System.ComponentModel;
 using System.IO;
 using System.Text;
 using Azure.Core;
-using Tags = System.Collections.Generic.IDictionary<string, string>;
 using Microsoft.TypeSpec.Generator.Customizations;
+using Tags = System.Collections.Generic.IDictionary<string, string>;
 
 namespace Azure.Storage.Blobs.Models
 {
@@ -1775,7 +1775,96 @@ namespace Azure.Storage.Blobs.Models
             bool accessTierInferred = default,
             DateTimeOffset accessTierChangedOn = default,
             string smartAccessTier = default,
-            ETag eTag = default)
+            ETag eTag = default,
+            DownloadHint? downloadHint = default)
+            => new BlobDownloadDetails
+            {
+                BlobType = blobType,
+                ContentLength = contentLength,
+                ContentType = contentType,
+                ContentHash = contentHash,
+                LastModified = lastModified,
+                Metadata = metadata,
+                ContentRange = contentRange,
+                ContentEncoding = contentEncoding,
+                CacheControl = cacheControl,
+                ContentDisposition = contentDisposition,
+                ContentLanguage = contentLanguage,
+                BlobSequenceNumber = blobSequenceNumber,
+                CopyCompletedOn = copyCompletedOn,
+                CopyStatusDescription = copyStatusDescription,
+                CopyId = copyId,
+                CopyProgress = copyProgress,
+                CopySource = copySource,
+                CopyStatus = copyStatus,
+                LeaseDuration = leaseDuration,
+                LeaseState = leaseState,
+                LeaseStatus = leaseStatus,
+                AcceptRanges = acceptRanges,
+                BlobCommittedBlockCount = blobCommittedBlockCount,
+                IsServerEncrypted = isServerEncrypted,
+                EncryptionKeySha256 = encryptionKeySha256,
+                EncryptionScope = encryptionScope,
+                BlobContentHash = blobContentHash,
+                TagCount = tagCount,
+                VersionId = versionId,
+                IsSealed = isSealed,
+                ObjectReplicationSourceProperties = objectReplicationSourceProperties,
+                ObjectReplicationDestinationPolicyId = objectReplicationDestinationPolicy,
+                HasLegalHold = hasLegalHold,
+                CreatedOn = createdOn,
+                AccessTier = accessTier,
+                AccessTierInferred = accessTierInferred,
+                AccessTierChangedOn = accessTierChangedOn,
+                SmartAccessTier = smartAccessTier,
+                ETag = eTag,
+                DownloadHint = downloadHint
+            };
+
+        /// <summary>
+        /// Creates a new BlobDownloadDetails instance for mocking.
+        /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static BlobDownloadDetails BlobDownloadDetails(
+            BlobType blobType,
+            long contentLength,
+            string contentType,
+            byte[] contentHash,
+            DateTimeOffset lastModified,
+            IDictionary<string, string> metadata,
+            string contentRange,
+            string contentEncoding,
+            string cacheControl,
+            string contentDisposition,
+            string contentLanguage,
+            long blobSequenceNumber,
+            DateTimeOffset copyCompletedOn,
+            string copyStatusDescription,
+            string copyId,
+            string copyProgress,
+            Uri copySource,
+            CopyStatus copyStatus,
+            LeaseDurationType leaseDuration,
+            LeaseState leaseState,
+            LeaseStatus leaseStatus,
+            string acceptRanges,
+            int blobCommittedBlockCount,
+            bool isServerEncrypted,
+            string encryptionKeySha256,
+            string encryptionScope,
+            byte[] blobContentHash,
+            long tagCount,
+            string versionId,
+            bool isSealed,
+            IList<ObjectReplicationPolicy> objectReplicationSourceProperties,
+            string objectReplicationDestinationPolicy,
+            bool hasLegalHold,
+            DateTimeOffset createdOn,
+            string accessTier,
+            bool accessTierInferred,
+            DateTimeOffset accessTierChangedOn,
+            string smartAccessTier,
+            ETag eTag)
             => new BlobDownloadDetails
             {
                 BlobType = blobType,
@@ -2808,6 +2897,152 @@ namespace Azure.Storage.Blobs.Models
                 Range = range,
                 IsClear = isClear
             };
+        #endregion
+
+        #region BlobLayoutRange
+        /// <summary>
+        /// Creates a new <see cref="Models.BlobLayoutRange"/> instance for mocking.
+        /// </summary>
+        internal static BlobLayoutRange BlobLayoutRange(
+            long start = default,
+            long end = default,
+            int endpointIndex = default)
+            => new BlobLayoutRange
+            {
+                Start = start,
+                End = end,
+                EndpointIndex = endpointIndex,
+            };
+        #endregion
+
+        #region BlobLayoutEndpoint
+        /// <summary>
+        /// Creates a new <see cref="Models.BlobLayoutEndpoint"/> instance for mocking.
+        /// </summary>
+        internal static BlobLayoutEndpoint BlobLayoutEndpoint(
+            int index = default,
+            Uri value = default)
+            => new BlobLayoutEndpoint
+            {
+                Index = index,
+                Value = value,
+            };
+        #endregion
+
+        #region BlobLayoutInfo
+        /// <summary>
+        /// Creates a new BlobLayoutInfo instance for mocking.
+        /// </summary>
+        internal static BlobLayoutInfo BlobLayoutInfo(
+            IEnumerable<BlobLayoutRange> ranges = default,
+            IEnumerable<BlobLayoutEndpoint> endpoints = default,
+            DateTimeOffset lastModifiedOn = default,
+            DateTimeOffset createdOn = default,
+            IDictionary<string, string> metadata = default,
+            string objectReplicationDestinationPolicyId = default,
+            IList<ObjectReplicationPolicy> objectReplicationSourceProperties = default,
+            BlobType blobType = default,
+            DateTimeOffset copyCompletedOn = default,
+            string copyStatusDescription = default,
+            string copyId = default,
+            string copyProgress = default,
+            Uri copySource = default,
+            CopyStatus? blobCopyStatus = default,
+            bool isIncrementalCopy = default,
+            string destinationSnapshot = default,
+            LeaseDurationType leaseDuration = default,
+            LeaseState leaseState = default,
+            LeaseStatus leaseStatus = default,
+            long contentLength = default,
+            string contentType = default,
+            ETag eTag = default,
+            byte[] contentHash = default,
+            string contentEncoding = default,
+            string contentDisposition = default,
+            string contentLanguage = default,
+            string cacheControl = default,
+            long blobSequenceNumber = default,
+            string acceptRanges = default,
+            int blobCommittedBlockCount = default,
+            bool isServerEncrypted = default,
+            string encryptionKeySha256 = default,
+            string encryptionScope = default,
+            string accessTier = default,
+            bool accessTierInferred = default,
+            string smartAccessTier = default,
+            string archiveStatus = default,
+            DateTimeOffset accessTierChangedOn = default,
+            string versionId = default,
+            bool isLatestVersion = default,
+            long tagCount = default,
+            DateTimeOffset expiresOn = default,
+            bool isSealed = default,
+            string rehydratePriority = default,
+            DateTimeOffset lastAccessedOn = default,
+            BlobImmutabilityPolicy immutabilityPolicy = default,
+            bool hasLegalHold = default,
+            long blobContentLength = default,
+            string blobContentType = default,
+            string blobContentEncoding = default,
+            byte[] blobContentMD5 = default,
+            DateTimeOffset blobCreatedOn = default)
+        {
+            return new BlobLayoutInfo
+            {
+                Ranges = ranges == null ? null : new List<BlobLayoutRange>(ranges),
+                Endpoints = endpoints == null ? null : new List<BlobLayoutEndpoint>(endpoints),
+                LastModifiedOn = lastModifiedOn,
+                CreatedOn = createdOn,
+                Metadata = metadata,
+                ObjectReplicationDestinationPolicyId = objectReplicationDestinationPolicyId,
+                ObjectReplicationSourceProperties = objectReplicationSourceProperties,
+                BlobType = blobType,
+                CopyCompletedOn = copyCompletedOn,
+                CopyStatusDescription = copyStatusDescription,
+                CopyId = copyId,
+                CopyProgress = copyProgress,
+                CopySource = copySource,
+                BlobCopyStatus = blobCopyStatus,
+                IsIncrementalCopy = isIncrementalCopy,
+                DestinationSnapshot = destinationSnapshot,
+                LeaseDuration = leaseDuration,
+                LeaseState = leaseState,
+                LeaseStatus = leaseStatus,
+                ContentLength = contentLength,
+                ContentType = contentType,
+                ETag = eTag,
+                ContentHash = contentHash,
+                ContentEncoding = contentEncoding,
+                ContentDisposition = contentDisposition,
+                ContentLanguage = contentLanguage,
+                CacheControl = cacheControl,
+                BlobSequenceNumber = blobSequenceNumber,
+                AcceptRanges = acceptRanges,
+                BlobCommittedBlockCount = blobCommittedBlockCount,
+                IsServerEncrypted = isServerEncrypted,
+                EncryptionKeySha256 = encryptionKeySha256,
+                EncryptionScope = encryptionScope,
+                AccessTier = accessTier,
+                AccessTierInferred = accessTierInferred,
+                SmartAccessTier = smartAccessTier,
+                ArchiveStatus = archiveStatus,
+                AccessTierChangedOn = accessTierChangedOn,
+                VersionId = versionId,
+                IsLatestVersion = isLatestVersion,
+                TagCount = tagCount,
+                ExpiresOn = expiresOn,
+                IsSealed = isSealed,
+                RehydratePriority = rehydratePriority,
+                LastAccessedOn = lastAccessedOn,
+                ImmutabilityPolicy = immutabilityPolicy,
+                HasLegalHold = hasLegalHold,
+                BlobContentLength = blobContentLength,
+                BlobContentType = blobContentType,
+                BlobContentEncoding = blobContentEncoding,
+                BlobContentMD5 = blobContentMD5,
+                BlobCreatedOn = blobCreatedOn,
+            };
+        }
         #endregion
     }
 }

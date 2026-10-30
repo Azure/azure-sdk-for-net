@@ -121,7 +121,7 @@ namespace Azure.Storage.Files.Shares.ChangeFeed.Tests
             CollectionAssert.IsNotEmpty(events);
             foreach (ShareChangeFeedEvent e in events)
             {
-                Assert.AreNotEqual(default(DateTimeOffset), e.EventTime);
+                Assert.AreNotEqual(default(DateTimeOffset), e.EventOccurredOn);
                 Assert.AreNotEqual(default(Guid), e.Id);
                 Assert.IsNotNull(e.EventData);
             }
@@ -161,8 +161,8 @@ namespace Azure.Storage.Files.Shares.ChangeFeed.Tests
             // Assert - all events should be within the requested range
             foreach (ShareChangeFeedEvent e in events)
             {
-                Assert.GreaterOrEqual(e.EventTime, start, "Event time should be >= start (inclusive)");
-                Assert.Less(e.EventTime, end, "Event time should be < end (exclusive)");
+                Assert.GreaterOrEqual(e.EventOccurredOn, start, "Event time should be >= start (inclusive)");
+                Assert.Less(e.EventOccurredOn, end, "Event time should be < end (exclusive)");
             }
         }
 
@@ -189,7 +189,7 @@ namespace Azure.Storage.Files.Shares.ChangeFeed.Tests
                 {
                     foreach (ShareChangeFeedEvent e in page.Values)
                     {
-                        firstPageEventTimes.Add(e.EventTime);
+                        firstPageEventTimes.Add(e.EventOccurredOn);
                     }
                     continuationToken = page.ContinuationToken;
                     if (firstPageEventTimes.Count >= 10)
@@ -202,7 +202,7 @@ namespace Azure.Storage.Files.Shares.ChangeFeed.Tests
                 {
                     foreach (ShareChangeFeedEvent e in page.Values)
                     {
-                        firstPageEventTimes.Add(e.EventTime);
+                        firstPageEventTimes.Add(e.EventOccurredOn);
                     }
                     continuationToken = page.ContinuationToken;
                     if (firstPageEventTimes.Count >= 10)
@@ -222,7 +222,7 @@ namespace Azure.Storage.Files.Shares.ChangeFeed.Tests
                     {
                         foreach (ShareChangeFeedEvent e in page.Values)
                         {
-                            secondPageEventTimes.Add(e.EventTime);
+                            secondPageEventTimes.Add(e.EventOccurredOn);
                         }
                         if (secondPageEventTimes.Count >= 10)
                             break;
@@ -234,7 +234,7 @@ namespace Azure.Storage.Files.Shares.ChangeFeed.Tests
                     {
                         foreach (ShareChangeFeedEvent e in page.Values)
                         {
-                            secondPageEventTimes.Add(e.EventTime);
+                            secondPageEventTimes.Add(e.EventOccurredOn);
                         }
                         if (secondPageEventTimes.Count >= 10)
                             break;
@@ -300,13 +300,13 @@ namespace Azure.Storage.Files.Shares.ChangeFeed.Tests
 
             // Assert
             Assert.IsNotNull(firstEvent, "Expected at least one event");
-            Assert.AreNotEqual(default(ShareChangeFeedReasonType), firstEvent.Reason);
+            Assert.AreNotEqual(default(ShareChangeFeedReasonKind), firstEvent.Reason);
             Assert.AreNotEqual(default(ShareChangeFeedProtocol), firstEvent.Protocol);
 
             Assert.IsNotNull(firstEvent.EventData);
             Assert.IsNotNull(firstEvent.EventData.FileId, "FileId should be populated");
             // FileName or FullFilePath should be present for non-control events
-            if (firstEvent.Reason != ShareChangeFeedReasonType.ControlEvent)
+            if (firstEvent.Reason != ShareChangeFeedReasonKind.ControlEvent)
             {
                 Assert.IsTrue(
                     !string.IsNullOrEmpty(firstEvent.EventData.FileName) ||
