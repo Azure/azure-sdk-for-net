@@ -17,13 +17,13 @@ dotnet add package Azure.AI.AgentServer.Responses --prerelease
 
 ## Implement the handler
 
-Use the `OutputItemMessage(text, annotations)` convenience method to emit a message with annotations in one call. Each `FilePath` annotation takes a `fileId` (a file path or any identifier your file store uses) and an `index`:
+Use the `OutputItemMessage(text, annotations)` convenience method to emit a message with annotations in one call. Each `FilePathMessageAnnotation` takes a `fileId` (a file path or any identifier your file store uses) and an `index`:
 
 ```C# Snippet:Responses_Sample15_FileAnnotationsHandler
 public class FileAnnotationsHandler : ResponseHandler
 {
-    public override async IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
-        CreateResponse request,
+    public override async IAsyncEnumerable<StreamingResponseUpdate> CreateAsync(
+        CreateResponseOptions request,
         ResponseContext context,
         [EnumeratorCancellation] CancellationToken cancellationToken)
     {
@@ -36,13 +36,13 @@ public class FileAnnotationsHandler : ResponseHandler
         // file_path — references a file by ID in your own store.
         // file_citation — cites a file stored in your own file store.
         // url_citation — cites a web URL referenced in the text.
-        var annotations = new Annotation[]
+        var annotations = new ResponseMessageAnnotation[]
         {
-            new FilePath(fileId: "/reports/monthly-summary.pdf", index: 0),
-            new FilePath(fileId: "/exports/data.csv", index: 1),
-            new FilePath(fileId: "/images/chart.png", index: 2),
-            new FileCitationBody(fileId: "/sources/research-paper.pdf", index: 3, filename: "research-paper.pdf"),
-            new UrlCitationBody(url: new Uri("https://example.com/docs/guide"), startIndex: 0, endIndex: 29, title: "Developer Guide"),
+            new FilePathMessageAnnotation("/reports/monthly-summary.pdf", 0),
+            new FilePathMessageAnnotation("/exports/data.csv", 1),
+            new FilePathMessageAnnotation("/images/chart.png", 2),
+            new FileCitationMessageAnnotation("/sources/research-paper.pdf", 3, "research-paper.pdf"),
+            new UriCitationMessageAnnotation(new Uri("https://example.com/docs/guide"), 0, 29, "Developer Guide"),
         };
 
         // Emit a message with the annotations attached to the text content.

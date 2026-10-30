@@ -13,7 +13,7 @@ namespace Azure.AI.AgentServer.Responses.Models
 {
     /// <summary>
     /// An item representing a message, tool call, tool output, reasoning, or other response element.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ItemFieldMessage"/>, <see cref="ItemFieldFunctionToolCall"/>, <see cref="ItemFieldToolSearchCall"/>, <see cref="ItemFieldToolSearchOutput"/>, <see cref="ItemFieldFunctionToolCallOutput"/>, <see cref="ItemFieldFileSearchToolCall"/>, <see cref="ItemFieldWebSearchToolCall"/>, <see cref="ItemFieldImageGenToolCall"/>, <see cref="ItemFieldComputerToolCall"/>, <see cref="ItemFieldComputerToolCallOutput"/>, <see cref="ItemFieldReasoningItem"/>, <see cref="ItemFieldCompactionBody"/>, <see cref="ItemFieldCodeInterpreterToolCall"/>, <see cref="ItemFieldLocalShellToolCall"/>, <see cref="ItemFieldLocalShellToolCallOutput"/>, <see cref="ItemFieldFunctionShellCall"/>, <see cref="ItemFieldFunctionShellCallOutput"/>, <see cref="ItemFieldApplyPatchToolCall"/>, <see cref="ItemFieldApplyPatchToolCallOutput"/>, <see cref="ItemFieldMcpListTools"/>, <see cref="ItemFieldMcpApprovalRequest"/>, <see cref="ItemFieldMcpApprovalResponseResource"/>, <see cref="ItemFieldMcpToolCall"/>, <see cref="ItemFieldCustomToolCall"/>, and <see cref="ItemFieldCustomToolCallOutput"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ItemFieldAdditionalTools"/>, <see cref="ItemFieldApplyPatchToolCall"/>, <see cref="ItemFieldApplyPatchToolCallOutput"/>, <see cref="ItemFieldCodeInterpreterToolCall"/>, <see cref="ItemFieldCompactionBody"/>, <see cref="ItemFieldComputerToolCall"/>, <see cref="ItemFieldComputerToolCallOutput"/>, <see cref="ItemFieldCustomToolCall"/>, <see cref="ItemFieldCustomToolCallOutput"/>, <see cref="ItemFieldFileSearchToolCall"/>, <see cref="ItemFieldFunctionShellCall"/>, <see cref="ItemFieldFunctionShellCallOutput"/>, <see cref="ItemFieldFunctionToolCall"/>, <see cref="ItemFieldFunctionToolCallOutput"/>, <see cref="ItemFieldImageGenToolCall"/>, <see cref="ItemFieldLocalShellToolCall"/>, <see cref="ItemFieldLocalShellToolCallOutput"/>, <see cref="ItemFieldMcpApprovalRequest"/>, <see cref="ItemFieldMcpApprovalResponseResource"/>, <see cref="ItemFieldMcpListTools"/>, <see cref="ItemFieldMcpToolCall"/>, <see cref="ItemFieldMessage"/>, <see cref="ItemFieldProgram"/>, <see cref="ItemFieldProgramOutput"/>, <see cref="ItemFieldReasoningItem"/>, <see cref="ItemFieldToolSearchCall"/>, <see cref="ItemFieldToolSearchOutput"/>, and <see cref="ItemFieldWebSearchToolCall"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownItemField))]
     public abstract partial class ItemField : IJsonModel<ItemField>
@@ -129,56 +129,62 @@ namespace Azure.AI.AgentServer.Responses.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "message":
-                        return ItemFieldMessage.DeserializeItemFieldMessage(element, options);
-                    case "function_call":
-                        return ItemFieldFunctionToolCall.DeserializeItemFieldFunctionToolCall(element, options);
-                    case "tool_search_call":
-                        return ItemFieldToolSearchCall.DeserializeItemFieldToolSearchCall(element, options);
-                    case "tool_search_output":
-                        return ItemFieldToolSearchOutput.DeserializeItemFieldToolSearchOutput(element, options);
-                    case "function_call_output":
-                        return ItemFieldFunctionToolCallOutput.DeserializeItemFieldFunctionToolCallOutput(element, options);
-                    case "file_search_call":
-                        return ItemFieldFileSearchToolCall.DeserializeItemFieldFileSearchToolCall(element, options);
-                    case "web_search_call":
-                        return ItemFieldWebSearchToolCall.DeserializeItemFieldWebSearchToolCall(element, options);
-                    case "image_generation_call":
-                        return ItemFieldImageGenToolCall.DeserializeItemFieldImageGenToolCall(element, options);
-                    case "computer_call":
-                        return ItemFieldComputerToolCall.DeserializeItemFieldComputerToolCall(element, options);
-                    case "computer_call_output":
-                        return ItemFieldComputerToolCallOutput.DeserializeItemFieldComputerToolCallOutput(element, options);
-                    case "reasoning":
-                        return ItemFieldReasoningItem.DeserializeItemFieldReasoningItem(element, options);
-                    case "compaction":
-                        return ItemFieldCompactionBody.DeserializeItemFieldCompactionBody(element, options);
-                    case "code_interpreter_call":
-                        return ItemFieldCodeInterpreterToolCall.DeserializeItemFieldCodeInterpreterToolCall(element, options);
-                    case "local_shell_call":
-                        return ItemFieldLocalShellToolCall.DeserializeItemFieldLocalShellToolCall(element, options);
-                    case "local_shell_call_output":
-                        return ItemFieldLocalShellToolCallOutput.DeserializeItemFieldLocalShellToolCallOutput(element, options);
-                    case "shell_call":
-                        return ItemFieldFunctionShellCall.DeserializeItemFieldFunctionShellCall(element, options);
-                    case "shell_call_output":
-                        return ItemFieldFunctionShellCallOutput.DeserializeItemFieldFunctionShellCallOutput(element, options);
+                    case "additional_tools":
+                        return ItemFieldAdditionalTools.DeserializeItemFieldAdditionalTools(element, options);
                     case "apply_patch_call":
                         return ItemFieldApplyPatchToolCall.DeserializeItemFieldApplyPatchToolCall(element, options);
                     case "apply_patch_call_output":
                         return ItemFieldApplyPatchToolCallOutput.DeserializeItemFieldApplyPatchToolCallOutput(element, options);
-                    case "mcp_list_tools":
-                        return ItemFieldMcpListTools.DeserializeItemFieldMcpListTools(element, options);
-                    case "mcp_approval_request":
-                        return ItemFieldMcpApprovalRequest.DeserializeItemFieldMcpApprovalRequest(element, options);
-                    case "mcp_approval_response":
-                        return ItemFieldMcpApprovalResponseResource.DeserializeItemFieldMcpApprovalResponseResource(element, options);
-                    case "mcp_call":
-                        return ItemFieldMcpToolCall.DeserializeItemFieldMcpToolCall(element, options);
+                    case "code_interpreter_call":
+                        return ItemFieldCodeInterpreterToolCall.DeserializeItemFieldCodeInterpreterToolCall(element, options);
+                    case "compaction":
+                        return ItemFieldCompactionBody.DeserializeItemFieldCompactionBody(element, options);
+                    case "computer_call":
+                        return ItemFieldComputerToolCall.DeserializeItemFieldComputerToolCall(element, options);
+                    case "computer_call_output":
+                        return ItemFieldComputerToolCallOutput.DeserializeItemFieldComputerToolCallOutput(element, options);
                     case "custom_tool_call":
                         return ItemFieldCustomToolCall.DeserializeItemFieldCustomToolCall(element, options);
                     case "custom_tool_call_output":
                         return ItemFieldCustomToolCallOutput.DeserializeItemFieldCustomToolCallOutput(element, options);
+                    case "file_search_call":
+                        return ItemFieldFileSearchToolCall.DeserializeItemFieldFileSearchToolCall(element, options);
+                    case "shell_call":
+                        return ItemFieldFunctionShellCall.DeserializeItemFieldFunctionShellCall(element, options);
+                    case "shell_call_output":
+                        return ItemFieldFunctionShellCallOutput.DeserializeItemFieldFunctionShellCallOutput(element, options);
+                    case "function_call":
+                        return ItemFieldFunctionToolCall.DeserializeItemFieldFunctionToolCall(element, options);
+                    case "function_call_output":
+                        return ItemFieldFunctionToolCallOutput.DeserializeItemFieldFunctionToolCallOutput(element, options);
+                    case "image_generation_call":
+                        return ItemFieldImageGenToolCall.DeserializeItemFieldImageGenToolCall(element, options);
+                    case "local_shell_call":
+                        return ItemFieldLocalShellToolCall.DeserializeItemFieldLocalShellToolCall(element, options);
+                    case "local_shell_call_output":
+                        return ItemFieldLocalShellToolCallOutput.DeserializeItemFieldLocalShellToolCallOutput(element, options);
+                    case "mcp_approval_request":
+                        return ItemFieldMcpApprovalRequest.DeserializeItemFieldMcpApprovalRequest(element, options);
+                    case "mcp_approval_response":
+                        return ItemFieldMcpApprovalResponseResource.DeserializeItemFieldMcpApprovalResponseResource(element, options);
+                    case "mcp_list_tools":
+                        return ItemFieldMcpListTools.DeserializeItemFieldMcpListTools(element, options);
+                    case "mcp_call":
+                        return ItemFieldMcpToolCall.DeserializeItemFieldMcpToolCall(element, options);
+                    case "message":
+                        return ItemFieldMessage.DeserializeItemFieldMessage(element, options);
+                    case "program":
+                        return ItemFieldProgram.DeserializeItemFieldProgram(element, options);
+                    case "program_output":
+                        return ItemFieldProgramOutput.DeserializeItemFieldProgramOutput(element, options);
+                    case "reasoning":
+                        return ItemFieldReasoningItem.DeserializeItemFieldReasoningItem(element, options);
+                    case "tool_search_call":
+                        return ItemFieldToolSearchCall.DeserializeItemFieldToolSearchCall(element, options);
+                    case "tool_search_output":
+                        return ItemFieldToolSearchOutput.DeserializeItemFieldToolSearchOutput(element, options);
+                    case "web_search_call":
+                        return ItemFieldWebSearchToolCall.DeserializeItemFieldWebSearchToolCall(element, options);
                 }
             }
             return UnknownItemField.DeserializeUnknownItemField(element, options);

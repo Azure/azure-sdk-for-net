@@ -13,10 +13,10 @@ namespace Azure.AI.AgentServer.Responses.Models
 {
     /// <summary>
     /// The FunctionAndCustomToolCallOutput.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="FunctionAndCustomToolCallOutputInputTextContent"/>, <see cref="FunctionAndCustomToolCallOutputInputImageContent"/>, and <see cref="FunctionAndCustomToolCallOutputInputFileContent"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="FunctionAndCustomToolCallOutputInputFileContent"/>, <see cref="FunctionAndCustomToolCallOutputInputImageContent"/>, and <see cref="FunctionAndCustomToolCallOutputInputTextContent"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownFunctionAndCustomToolCallOutput))]
-    public abstract partial class FunctionAndCustomToolCallOutput : IJsonModel<FunctionAndCustomToolCallOutput>
+    internal abstract partial class FunctionAndCustomToolCallOutput : IJsonModel<FunctionAndCustomToolCallOutput>
     {
         /// <summary> Initializes a new instance of <see cref="FunctionAndCustomToolCallOutput"/> for deserialization. </summary>
         internal FunctionAndCustomToolCallOutput()
@@ -129,12 +129,12 @@ namespace Azure.AI.AgentServer.Responses.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "input_text":
-                        return FunctionAndCustomToolCallOutputInputTextContent.DeserializeFunctionAndCustomToolCallOutputInputTextContent(element, options);
-                    case "input_image":
-                        return FunctionAndCustomToolCallOutputInputImageContent.DeserializeFunctionAndCustomToolCallOutputInputImageContent(element, options);
                     case "input_file":
                         return FunctionAndCustomToolCallOutputInputFileContent.DeserializeFunctionAndCustomToolCallOutputInputFileContent(element, options);
+                    case "input_image":
+                        return FunctionAndCustomToolCallOutputInputImageContent.DeserializeFunctionAndCustomToolCallOutputInputImageContent(element, options);
+                    case "input_text":
+                        return FunctionAndCustomToolCallOutputInputTextContent.DeserializeFunctionAndCustomToolCallOutputInputTextContent(element, options);
                 }
             }
             return UnknownFunctionAndCustomToolCallOutput.DeserializeUnknownFunctionAndCustomToolCallOutput(element, options);

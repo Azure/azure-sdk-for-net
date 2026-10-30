@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System.ClientModel.Primitives;
-using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using Azure.AI.AgentServer.Responses.Models;
 
@@ -16,17 +15,17 @@ internal static class StorageEnvelopeSerializer
     private static readonly ModelReaderWriterOptions JsonOptions = ModelReaderWriterOptions.Json;
 
     /// <summary>
-    /// Serializes a <see cref="CreateResponseRequest"/> to a JSON byte array.
+    /// Serializes a <see cref="CreateResponsePersistRequest"/> to a JSON byte array.
     /// Input items and history item IDs are always serialized as arrays, never null.
     /// </summary>
-    public static ReadOnlyMemory<byte> SerializeCreateRequest(CreateResponseRequest request)
+    public static ReadOnlyMemory<byte> SerializeCreateRequest(CreateResponsePersistRequest request)
     {
         using var ms = new System.IO.MemoryStream();
         using var writer = new Utf8JsonWriter(ms);
 
         writer.WriteStartObject();
         writer.WritePropertyName("response");
-        ((IJsonModel<Models.ResponseObject>)request.Response).Write(writer, JsonOptions);
+        ((IJsonModel<ResponseObject>)request.Response).Write(writer, JsonOptions);
 
         writer.WritePropertyName("input_items");
         writer.WriteStartArray();
@@ -51,13 +50,13 @@ internal static class StorageEnvelopeSerializer
     }
 
     /// <summary>
-    /// Serializes a <see cref="Models.ResponseObject"/> to a JSON byte array.
+    /// Serializes a <see cref="ResponseObject"/> to a JSON byte array.
     /// </summary>
-    public static ReadOnlyMemory<byte> SerializeResponse(Models.ResponseObject response)
+    public static ReadOnlyMemory<byte> SerializeResponse(ResponseObject response)
     {
         using var ms = new System.IO.MemoryStream();
         using var writer = new Utf8JsonWriter(ms);
-        ((IJsonModel<Models.ResponseObject>)response).Write(writer, JsonOptions);
+        ((IJsonModel<ResponseObject>)response).Write(writer, JsonOptions);
         writer.Flush();
         return ms.ToArray();
     }
@@ -85,29 +84,26 @@ internal static class StorageEnvelopeSerializer
     /// <summary>
     /// Deserializes a JSON string into a <see cref="Response"/>.
     /// </summary>
-    [SuppressMessage("Usage", "AZC0150:Use ModelReaderWriterContext overload", Justification = "Generated contracts do not yet expose ModelReaderWriterContext.")]
-    public static Models.ResponseObject DeserializeResponse(string json)
+    public static ResponseObject DeserializeResponse(string json)
     {
         var data = BinaryData.FromString(json);
-        return ModelReaderWriter.Read<Models.ResponseObject>(data, JsonOptions)
+        return ModelJson.Read<ResponseObject>(data, JsonOptions)
             ?? throw new InvalidOperationException("Failed to deserialize Response from storage.");
     }
 
     /// <summary>
     /// Deserializes a JSON string into an <see cref="AgentsPagedResultOutputItem"/>.
     /// </summary>
-    [SuppressMessage("Usage", "AZC0150:Use ModelReaderWriterContext overload", Justification = "Generated contracts do not yet expose ModelReaderWriterContext.")]
     public static AgentsPagedResultOutputItem DeserializePagedItems(string json)
     {
         var data = BinaryData.FromString(json);
-        return ModelReaderWriter.Read<AgentsPagedResultOutputItem>(data, JsonOptions)
+        return ModelJson.Read<AgentsPagedResultOutputItem>(data, JsonOptions)
             ?? throw new InvalidOperationException("Failed to deserialize AgentsPagedResultOutputItem from storage.");
     }
 
     /// <summary>
     /// Deserializes a JSON array of nullable <see cref="OutputItem"/> objects.
     /// </summary>
-    [SuppressMessage("Usage", "AZC0150:Use ModelReaderWriterContext overload", Justification = "Generated contracts do not yet expose ModelReaderWriterContext.")]
     public static IEnumerable<OutputItem?> DeserializeItemsArray(string json)
     {
         using var doc = JsonDocument.Parse(json);
@@ -120,7 +116,7 @@ internal static class StorageEnvelopeSerializer
                 continue;
             }
             var itemData = BinaryData.FromString(element.GetRawText());
-            result.Add(ModelReaderWriter.Read<OutputItem>(itemData, JsonOptions));
+            result.Add(ModelJson.Read<OutputItem>(itemData, JsonOptions));
         }
         return result;
     }

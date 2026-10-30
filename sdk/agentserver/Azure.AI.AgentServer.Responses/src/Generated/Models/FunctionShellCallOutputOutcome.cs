@@ -11,7 +11,7 @@ namespace Azure.AI.AgentServer.Responses.Models
 {
     /// <summary>
     /// Shell call outcome
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="FunctionShellCallOutputTimeoutOutcome"/> and <see cref="FunctionShellCallOutputExitOutcome"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="FunctionShellCallOutputExitOutcome"/> and <see cref="FunctionShellCallOutputTimeoutOutcome"/>.
     /// </summary>
     public abstract partial class FunctionShellCallOutputOutcome
     {

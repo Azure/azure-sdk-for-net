@@ -31,6 +31,13 @@ internal static partial class ApplyPatchToolParamValidator
             return ValidationResult.Failure(errors);
         }
 
+        // Optional: allowed_callers
+        if (element.TryGetProperty("allowed_callers", out var allowedCallersProp) && allowedCallersProp.ValueKind != JsonValueKind.Null)
+        {
+            if (allowedCallersProp.ValueKind != JsonValueKind.Array)
+                errors.Add(new ValidationError("$.allowed_callers", $"Expected array, got {allowedCallersProp.ValueKind}"));
+        }
+
         // Required: type
         if (!element.TryGetProperty("type", out var typeValProp))
             errors.Add(new ValidationError("$.type", "Required property 'type' is missing"));

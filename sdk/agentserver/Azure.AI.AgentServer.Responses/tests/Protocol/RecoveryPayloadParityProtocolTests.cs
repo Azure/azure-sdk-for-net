@@ -18,9 +18,9 @@ public class RecoveryPayloadParityProtocolTests
     private static CreateResponse SampleRequest() => new()
     {
         Model = "gpt-4o",
-        Background = true,
-        Store = true,
-        Stream = true,
+        BackgroundModeEnabled = true,
+        StoredOutputEnabled = true,
+        StreamingEnabled = true,
         PreviousResponseId = "caresp_prev123",
     };
 
@@ -31,7 +31,7 @@ public class RecoveryPayloadParityProtocolTests
             responseId: "caresp_abc",
             disposition: ResponseRecoveryPayload.DispositionReinvoke,
             request: SampleRequest(),
-            agentReference: new AgentReference("my-agent") { Version = "1.0" },
+            agentReference: new AgentReference("my-agent", "1.0"),
             agentSessionId: "sess_123",
             userIdKey: "user_key_1",
             callId: "call_1",
@@ -109,7 +109,7 @@ public class RecoveryPayloadParityProtocolTests
             "caresp_rt",
             ResponseRecoveryPayload.DispositionReinvoke,
             SampleRequest(),
-            agentReference: new AgentReference("agent-x") { Version = "2.1" },
+            agentReference: new AgentReference("agent-x", "2.1"),
             agentSessionId: "sess_rt",
             userIdKey: "u_rt",
             callId: "c_rt",

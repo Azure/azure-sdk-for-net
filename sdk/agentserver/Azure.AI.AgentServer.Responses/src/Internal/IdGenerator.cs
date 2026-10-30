@@ -2,6 +2,8 @@
 // Licensed under the MIT License.
 
 using System.Security.Cryptography;
+using System.Text.Json;
+using Azure.AI.AgentServer.Responses.Internal;
 
 namespace Azure.AI.AgentServer.Responses;
 
@@ -235,43 +237,81 @@ internal static class IdGenerator
     // ─── Item dispatch ──────────────────────────────────────────────
 
     /// <summary>
-    /// Generates a correctly prefixed ID for the given <see cref="Models.Item"/> subtype.
+    /// Generates a correctly prefixed ID for the given <see cref="Item"/> subtype.
     /// Each item type receives a distinct prefix so IDs are self-describing.
     /// </summary>
     /// <param name="item">The input item whose type determines the ID prefix.</param>
     /// <param name="partitionKeyHint">Optional existing ID for partition key propagation.</param>
     /// <returns>A new ID with the appropriate type-specific prefix, or <c>null</c> for non-convertible items.</returns>
-    public static string? NewItemId(Models.Item item, string? partitionKeyHint = "")
+    public static string? NewItemId(Item item, string? partitionKeyHint = "")
     {
         return item switch
         {
-            Models.ItemMessage => NewMessageItemId(partitionKeyHint),
-            Models.ItemOutputMessage => NewOutputMessageItemId(partitionKeyHint),
-            Models.ItemFunctionToolCall => NewFunctionCallItemId(partitionKeyHint),
-            Models.FunctionCallOutputItemParam => NewFunctionCallOutputItemId(partitionKeyHint),
-            Models.ItemCustomToolCall => NewCustomToolCallItemId(partitionKeyHint),
-            Models.ItemCustomToolCallOutput => NewCustomToolCallOutputItemId(partitionKeyHint),
-            Models.ItemComputerToolCall => NewComputerCallItemId(partitionKeyHint),
-            Models.ComputerCallOutputItemParam => NewComputerCallOutputItemId(partitionKeyHint),
-            Models.ItemFileSearchToolCall => NewFileSearchCallItemId(partitionKeyHint),
-            Models.ItemWebSearchToolCall => NewWebSearchCallItemId(partitionKeyHint),
-            Models.ItemImageGenToolCall => NewImageGenCallItemId(partitionKeyHint),
-            Models.ItemCodeInterpreterToolCall => NewCodeInterpreterCallItemId(partitionKeyHint),
-            Models.ItemLocalShellToolCall => NewLocalShellCallItemId(partitionKeyHint),
-            Models.ItemLocalShellToolCallOutput => NewLocalShellCallOutputItemId(partitionKeyHint),
-            Models.FunctionShellCallItemParam => NewFunctionShellCallItemId(partitionKeyHint),
-            Models.FunctionShellCallOutputItemParam => NewFunctionShellCallOutputItemId(partitionKeyHint),
-            Models.ApplyPatchToolCallItemParam => NewApplyPatchCallItemId(partitionKeyHint),
-            Models.ApplyPatchToolCallOutputItemParam => NewApplyPatchCallOutputItemId(partitionKeyHint),
-            Models.ItemMcpListTools => NewMcpListToolsItemId(partitionKeyHint),
-            Models.ItemMcpToolCall => NewMcpCallItemId(partitionKeyHint),
-            Models.ItemMcpApprovalRequest => NewMcpApprovalRequestItemId(partitionKeyHint),
-            Models.MCPApprovalResponse => NewMcpApprovalResponseItemId(partitionKeyHint),
-            Models.ItemReasoningItem => NewReasoningItemId(partitionKeyHint),
-            Models.CompactionSummaryItemParam => NewCompactionItemId(partitionKeyHint),
-            Models.ItemReferenceParam => null, // resolved externally
+            MessageResponseItem message => message.Role == MessageRole.Assistant
+                ? NewOutputMessageItemId(partitionKeyHint)
+                : NewMessageItemId(partitionKeyHint),
+            ItemFunctionToolCall => NewFunctionCallItemId(partitionKeyHint),
+            FunctionCallOutputItemParam => NewFunctionCallOutputItemId(partitionKeyHint),
+            Models.OutputItemCustomToolCall => NewCustomToolCallItemId(partitionKeyHint),
+            Models.OutputItemCustomToolCallOutput => NewCustomToolCallOutputItemId(partitionKeyHint),
+            // Request items read as OpenAI's own custom tool types, not the response-side models above.
+            OpenAI.Responses.CustomToolCallItem => NewCustomToolCallItemId(partitionKeyHint),
+            OpenAI.Responses.CustomToolCallOutputItem => NewCustomToolCallOutputItemId(partitionKeyHint),
+            ItemComputerToolCall => NewComputerCallItemId(partitionKeyHint),
+            ComputerCallOutputItemParam => NewComputerCallOutputItemId(partitionKeyHint),
+            ItemFileSearchToolCall => NewFileSearchCallItemId(partitionKeyHint),
+            ItemWebSearchToolCall => NewWebSearchCallItemId(partitionKeyHint),
+            ItemImageGenToolCall => NewImageGenCallItemId(partitionKeyHint),
+            ItemCodeInterpreterToolCall => NewCodeInterpreterCallItemId(partitionKeyHint),
+            ApplyPatchToolCallItemParam => NewApplyPatchCallItemId(partitionKeyHint),
+            ApplyPatchToolCallOutputItemParam => NewApplyPatchCallOutputItemId(partitionKeyHint),
+            ItemMcpListTools => NewMcpListToolsItemId(partitionKeyHint),
+            ItemMcpToolCall => NewMcpCallItemId(partitionKeyHint),
+            ItemMcpApprovalRequest => NewMcpApprovalRequestItemId(partitionKeyHint),
+            MCPApprovalResponse => NewMcpApprovalResponseItemId(partitionKeyHint),
+            ItemReasoningItem => NewReasoningItemId(partitionKeyHint),
+            ItemReferenceParam => null, // resolved externally
+            _ => NewUntypedItemId(item, partitionKeyHint),
+        };
+    }
+
+    // OpenAI.Responses.ResponseItem has no typed models for the shell, compaction and output
+    // message items; they deserialize to internal catch-all item types that the switch above
+    // cannot match. Recognize them by their wire type so they keep their type-prefixed IDs and
+    // stay persisted with the other input items. Any other unrecognized item is not convertible.
+    private static string? NewUntypedItemId(Item item, string? partitionKeyHint)
+        => ReadWireType(item) switch
+        {
+            "output_message" => NewOutputMessageItemId(partitionKeyHint),
+            "shell_call" => NewFunctionShellCallItemId(partitionKeyHint),
+            "shell_call_output" => NewFunctionShellCallOutputItemId(partitionKeyHint),
+            "local_shell_call" => NewLocalShellCallItemId(partitionKeyHint),
+            "local_shell_call_output" => NewLocalShellCallOutputItemId(partitionKeyHint),
+            "compaction" => NewCompactionItemId(partitionKeyHint),
             _ => null,
         };
+
+    private static string? ReadWireType(Item item)
+    {
+        try
+        {
+            using var document = JsonDocument.Parse(ModelJson.Write(item).ToMemory());
+            return document.RootElement.TryGetProperty("type", out var type) && type.ValueKind == JsonValueKind.String
+                ? type.GetString()
+                : null;
+        }
+        catch (JsonException)
+        {
+            return null;
+        }
+        catch (InvalidOperationException)
+        {
+            return null;
+        }
+        catch (NotSupportedException)
+        {
+            return null;
+        }
     }
 
     // ─── Utility methods ────────────────────────────────────────────

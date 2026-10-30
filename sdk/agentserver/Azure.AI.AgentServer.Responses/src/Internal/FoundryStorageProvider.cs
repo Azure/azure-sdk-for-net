@@ -110,7 +110,7 @@ internal sealed class FoundryStorageProvider : ResponsesProvider
 
     /// <inheritdoc/>
     public override async Task CreateResponseAsync(
-        CreateResponseRequest request,
+        CreateResponsePersistRequest request,
         PlatformContext context,
         CancellationToken cancellationToken = default)
     {
@@ -124,7 +124,7 @@ internal sealed class FoundryStorageProvider : ResponsesProvider
     }
 
     /// <inheritdoc/>
-    public override async Task<Models.ResponseObject> GetResponseAsync(
+    public override async Task<ResponseObject> GetResponseAsync(
         string responseId,
         PlatformContext context,
         CancellationToken cancellationToken = default)
@@ -141,7 +141,7 @@ internal sealed class FoundryStorageProvider : ResponsesProvider
 
     /// <inheritdoc/>
     public override async Task UpdateResponseAsync(
-        Models.ResponseObject response,
+        ResponseObject response,
         PlatformContext context,
         CancellationToken cancellationToken = default)
     {

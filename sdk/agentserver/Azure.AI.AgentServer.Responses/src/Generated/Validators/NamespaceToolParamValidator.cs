@@ -38,12 +38,6 @@ internal static partial class NamespaceToolParamValidator
         {
             if (descriptionProp.ValueKind != JsonValueKind.String)
                 errors.Add(new ValidationError("$.description", $"Expected string, got {descriptionProp.ValueKind}"));
-            else
-            {
-                var strVal = descriptionProp.GetString()!;
-                if (strVal.Length < 1)
-                    errors.Add(new ValidationError("$.description", $"String length {strVal.Length} is below minimum 1"));
-            }
         }
 
         // Required: name

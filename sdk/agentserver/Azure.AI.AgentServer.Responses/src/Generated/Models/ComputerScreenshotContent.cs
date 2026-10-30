@@ -29,11 +29,13 @@ namespace Azure.AI.AgentServer.Responses.Models
         /// <param name="imageUrl"></param>
         /// <param name="fileId"></param>
         /// <param name="detail"> The detail level of the screenshot image to be sent to the model. One of `high`, `low`, `auto`, or `original`. Defaults to `auto`. </param>
-        internal ComputerScreenshotContent(MessageContentType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, Uri imageUrl, string fileId, ImageDetail detail) : base(@type, additionalBinaryDataProperties)
+        /// <param name="promptCacheBreakpoint"></param>
+        internal ComputerScreenshotContent(MessageContentType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, Uri imageUrl, string fileId, ImageDetail detail, PromptCacheBreakpointConfig promptCacheBreakpoint) : base(@type, additionalBinaryDataProperties)
         {
             ImageUrl = imageUrl;
             FileId = fileId;
             Detail = detail;
+            PromptCacheBreakpoint = promptCacheBreakpoint;
         }
 
         /// <summary> Gets or sets the ImageUrl. </summary>
@@ -44,5 +46,8 @@ namespace Azure.AI.AgentServer.Responses.Models
 
         /// <summary> The detail level of the screenshot image to be sent to the model. One of `high`, `low`, `auto`, or `original`. Defaults to `auto`. </summary>
         public ImageDetail Detail { get; set; }
+
+        /// <summary> Gets or sets the PromptCacheBreakpoint. </summary>
+        public PromptCacheBreakpointConfig PromptCacheBreakpoint { get; set; }
     }
 }

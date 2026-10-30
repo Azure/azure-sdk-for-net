@@ -21,8 +21,8 @@ Clients send image URLs via the `input_image` content type. The handler receives
 ```C# Snippet:Responses_Sample13_ImageUrlHandler
 public class ImageUrlHandler : ResponseHandler
 {
-    public override async IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
-        CreateResponse request,
+    public override async IAsyncEnumerable<StreamingResponseUpdate> CreateAsync(
+        CreateResponseOptions request,
         ResponseContext context,
         [EnumeratorCancellation] CancellationToken cancellationToken)
     {
@@ -34,7 +34,7 @@ public class ImageUrlHandler : ResponseHandler
         // Retrieve the resolved input items and expand message content.
         var items = await context.GetInputItemsAsync(cancellationToken: cancellationToken);
         var imageUrls = items
-            .OfType<ItemMessage>()
+            .OfType<MessageResponseItem>()
             .SelectMany(msg => msg.GetContentExpanded())
             .OfType<MessageContentInputImageContent>()
             .Where(img => img.ImageUrl != null)
@@ -61,8 +61,8 @@ For inline images, clients send a data URL in the `image_url` field with the for
 ```C# Snippet:Responses_Sample13_ImageBase64Handler
 public class ImageBase64Handler : ResponseHandler
 {
-    public override async IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
-        CreateResponse request,
+    public override async IAsyncEnumerable<StreamingResponseUpdate> CreateAsync(
+        CreateResponseOptions request,
         ResponseContext context,
         [EnumeratorCancellation] CancellationToken cancellationToken)
     {
@@ -75,7 +75,7 @@ public class ImageBase64Handler : ResponseHandler
 
         // Find all image content parts.
         var images = items
-            .OfType<ItemMessage>()
+            .OfType<MessageResponseItem>()
             .SelectMany(msg => msg.GetContentExpanded())
             .OfType<MessageContentInputImageContent>()
             .Where(img => img.ImageUrl != null)
@@ -107,8 +107,8 @@ When clients upload images separately (to a blob store, file system, or any stor
 ```C# Snippet:Responses_Sample13_ImageFileIdHandler
 public class ImageFileIdHandler : ResponseHandler
 {
-    public override async IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
-        CreateResponse request,
+    public override async IAsyncEnumerable<StreamingResponseUpdate> CreateAsync(
+        CreateResponseOptions request,
         ResponseContext context,
         [EnumeratorCancellation] CancellationToken cancellationToken)
     {
@@ -121,7 +121,7 @@ public class ImageFileIdHandler : ResponseHandler
 
         // Find image content parts that use file_id (a path in your file store).
         var images = items
-            .OfType<ItemMessage>()
+            .OfType<MessageResponseItem>()
             .SelectMany(msg => msg.GetContentExpanded())
             .OfType<MessageContentInputImageContent>()
             .Where(img => img.FileId != null)

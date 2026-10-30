@@ -23,8 +23,8 @@ Use the `OutputItemStructuredOutputs()` convenience method to emit a complete st
 ```C# Snippet:Responses_Sample16_StructuredOutputHandler
 public class StructuredOutputHandler : ResponseHandler
 {
-    public override async IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
-        CreateResponse request,
+    public override async IAsyncEnumerable<StreamingResponseUpdate> CreateAsync(
+        CreateResponseOptions request,
         ResponseContext context,
         [EnumeratorCancellation] CancellationToken cancellationToken)
     {
@@ -68,8 +68,8 @@ For more control, use `AddOutputItemStructuredOutputs()` to get a builder, then 
 ```C# Snippet:Responses_Sample16_StructuredOutputFullControl
 public class StructuredOutputFullControlHandler : ResponseHandler
 {
-    public override async IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
-        CreateResponse request,
+    public override async IAsyncEnumerable<StreamingResponseUpdate> CreateAsync(
+        CreateResponseOptions request,
         ResponseContext context,
         [EnumeratorCancellation] CancellationToken cancellationToken)
     {
@@ -91,7 +91,7 @@ public class StructuredOutputFullControlHandler : ResponseHandler
             },
         });
 
-        var item = new StructuredOutputsOutputItem(payload, builder.ItemId);
+        var item = new AgentStructuredOutputsResponseItem(payload) { Id = builder.ItemId };
         yield return builder.EmitAdded(item);
         yield return builder.EmitDone(item);
 

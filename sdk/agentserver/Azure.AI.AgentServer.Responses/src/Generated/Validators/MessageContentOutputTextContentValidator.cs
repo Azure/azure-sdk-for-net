@@ -31,10 +31,8 @@ internal static partial class MessageContentOutputTextContentValidator
             return ValidationResult.Failure(errors);
         }
 
-        // Required: annotations
-        if (!element.TryGetProperty("annotations", out var annotationsProp))
-            errors.Add(new ValidationError("$.annotations", "Required property 'annotations' is missing"));
-        else
+        // Optional: annotations
+        if (element.TryGetProperty("annotations", out var annotationsProp))
         {
             if (annotationsProp.ValueKind != JsonValueKind.Array)
                 errors.Add(new ValidationError("$.annotations", $"Expected array, got {annotationsProp.ValueKind}"));
@@ -54,10 +52,8 @@ internal static partial class MessageContentOutputTextContentValidator
             }
         }
 
-        // Required: logprobs
-        if (!element.TryGetProperty("logprobs", out var logprobsProp))
-            errors.Add(new ValidationError("$.logprobs", "Required property 'logprobs' is missing"));
-        else
+        // Optional: logprobs
+        if (element.TryGetProperty("logprobs", out var logprobsProp))
         {
             if (logprobsProp.ValueKind != JsonValueKind.Array)
                 errors.Add(new ValidationError("$.logprobs", $"Expected array, got {logprobsProp.ValueKind}"));

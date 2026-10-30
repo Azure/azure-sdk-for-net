@@ -20,8 +20,8 @@ Use the `OutputItemImageGenCall()` convenience generator to emit the entire imag
 ```C# Snippet:Responses_Sample12_ImageHandlerConvenience
 public class ImageHandler : ResponseHandler
 {
-    public override async IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
-        CreateResponse request,
+    public override async IAsyncEnumerable<StreamingResponseUpdate> CreateAsync(
+        CreateResponseOptions request,
         ResponseContext context,
         [EnumeratorCancellation] CancellationToken cancellationToken)
     {
@@ -64,8 +64,8 @@ When generating high-resolution images, you can stream partial (progressive) ren
 ```C# Snippet:Responses_Sample12_ImageHandlerStreaming
 public class StreamingImageHandler : ResponseHandler
 {
-    public override async IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
-        CreateResponse request,
+    public override async IAsyncEnumerable<StreamingResponseUpdate> CreateAsync(
+        CreateResponseOptions request,
         ResponseContext context,
         [EnumeratorCancellation] CancellationToken cancellationToken)
     {
@@ -127,8 +127,8 @@ When you need fine-grained control — for example, to set custom properties, in
 ```C# Snippet:Responses_Sample12_ImageHandlerFullControl
 public class ImageHandlerFullControl : ResponseHandler
 {
-    public override async IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
-        CreateResponse request,
+    public override async IAsyncEnumerable<StreamingResponseUpdate> CreateAsync(
+        CreateResponseOptions request,
         ResponseContext context,
         [EnumeratorCancellation] CancellationToken cancellationToken)
     {

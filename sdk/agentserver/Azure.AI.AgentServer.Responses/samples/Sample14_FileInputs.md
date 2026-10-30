@@ -21,8 +21,8 @@ Clients can send file content inline using a base64 data URL in the `file_data` 
 ```C# Snippet:Responses_Sample14_FileBase64Handler
 public class FileBase64Handler : ResponseHandler
 {
-    public override async IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
-        CreateResponse request,
+    public override async IAsyncEnumerable<StreamingResponseUpdate> CreateAsync(
+        CreateResponseOptions request,
         ResponseContext context,
         [EnumeratorCancellation] CancellationToken cancellationToken)
     {
@@ -35,7 +35,7 @@ public class FileBase64Handler : ResponseHandler
 
         // Find file content parts from user messages.
         var files = items
-            .OfType<ItemMessage>()
+            .OfType<MessageResponseItem>()
             .SelectMany(msg => msg.GetContentExpanded())
             .OfType<MessageContentInputFileContent>()
             .ToList();
@@ -66,8 +66,8 @@ Clients can also send a URL pointing to the file. The handler can fetch the file
 ```C# Snippet:Responses_Sample14_FileUrlHandler
 public class FileUrlHandler : ResponseHandler
 {
-    public override async IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
-        CreateResponse request,
+    public override async IAsyncEnumerable<StreamingResponseUpdate> CreateAsync(
+        CreateResponseOptions request,
         ResponseContext context,
         [EnumeratorCancellation] CancellationToken cancellationToken)
     {
@@ -79,7 +79,7 @@ public class FileUrlHandler : ResponseHandler
         var items = await context.GetInputItemsAsync(cancellationToken: cancellationToken);
 
         var files = items
-            .OfType<ItemMessage>()
+            .OfType<MessageResponseItem>()
             .SelectMany(msg => msg.GetContentExpanded())
             .OfType<MessageContentInputFileContent>()
             .ToList();
@@ -110,8 +110,8 @@ Clients can reference a file already stored in a file store by passing a `file_i
 ```C# Snippet:Responses_Sample14_FileIdHandler
 public class FileIdHandler : ResponseHandler
 {
-    public override async IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
-        CreateResponse request,
+    public override async IAsyncEnumerable<StreamingResponseUpdate> CreateAsync(
+        CreateResponseOptions request,
         ResponseContext context,
         [EnumeratorCancellation] CancellationToken cancellationToken)
     {
@@ -123,7 +123,7 @@ public class FileIdHandler : ResponseHandler
         var items = await context.GetInputItemsAsync(cancellationToken: cancellationToken);
 
         var files = items
-            .OfType<ItemMessage>()
+            .OfType<MessageResponseItem>()
             .SelectMany(msg => msg.GetContentExpanded())
             .OfType<MessageContentInputFileContent>()
             .ToList();

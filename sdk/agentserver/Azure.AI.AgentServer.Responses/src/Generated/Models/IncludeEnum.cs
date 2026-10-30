@@ -12,7 +12,7 @@ namespace Azure.AI.AgentServer.Responses.Models
 {
     /// <summary>
     /// Specify additional output data to include in the model response. Currently supported values are:
-    /// <list type="bullet"><item><description>`web_search_call.action.sources`: Include the sources of the web search tool call.</description></item><item><description>`code_interpreter_call.outputs`: Includes the outputs of python code execution in code interpreter tool call items.</description></item><item><description>`computer_call_output.output.image_url`: Include image urls from the computer call output.</description></item><item><description>`file_search_call.results`: Include the search results of the file search tool call.</description></item><item><description>`message.input_image.image_url`: Include image urls from the input message.</description></item><item><description>`message.output_text.logprobs`: Include logprobs with assistant messages.</description></item><item><description>`reasoning.encrypted_content`: Includes an encrypted version of reasoning tokens in reasoning item outputs. This enables reasoning items to be used in multi-turn conversations when using the Responses API statelessly (like when the `store` parameter is set to `false`, or when an organization is enrolled in the zero data retention program).</description></item></list>
+    /// <list type="bullet"><item><description>`web_search_call.results`: Include the search results of the web search tool call.</description></item><item><description>`web_search_call.action.sources`: Include the sources of the web search tool call.</description></item><item><description>`code_interpreter_call.outputs`: Includes the outputs of python code execution in code interpreter tool call items.</description></item><item><description>`computer_call_output.output.image_url`: Include image urls from the computer call output.</description></item><item><description>`file_search_call.results`: Include the search results of the file search tool call.</description></item><item><description>`message.input_image.image_url`: Include image urls from the input message.</description></item><item><description>`message.output_text.logprobs`: Include logprobs with assistant messages.</description></item><item><description>`reasoning.encrypted_content`: Includes an encrypted version of reasoning tokens in reasoning item outputs. This enables reasoning items to be used in multi-turn conversations when using the Responses API statelessly (like when the `store` parameter is set to `false`, or when an organization is enrolled in the zero data retention program).</description></item></list>
     /// </summary>
     public readonly partial struct IncludeEnum : IEquatable<IncludeEnum>
     {
@@ -20,8 +20,8 @@ namespace Azure.AI.AgentServer.Responses.Models
         private const string FileSearchCallResultsValue = "file_search_call.results";
         private const string WebSearchCallResultsValue = "web_search_call.results";
         private const string WebSearchCallActionSourcesValue = "web_search_call.action.sources";
-        private const string MessageInputImageImageUrlValue = "message.input_image.image_url";
-        private const string ComputerCallOutputOutputImageUrlValue = "computer_call_output.output.image_url";
+        private const string MessageInputImageImageUriValue = "message.input_image.image_url";
+        private const string ComputerCallOutputOutputImageUriValue = "computer_call_output.output.image_url";
         private const string CodeInterpreterCallOutputsValue = "code_interpreter_call.outputs";
         private const string ReasoningEncryptedContentValue = "reasoning.encrypted_content";
         private const string MessageOutputTextLogprobsValue = "message.output_text.logprobs";
@@ -46,11 +46,11 @@ namespace Azure.AI.AgentServer.Responses.Models
         /// <summary> Gets the WebSearchCallActionSources. </summary>
         public static IncludeEnum WebSearchCallActionSources { get; } = new IncludeEnum(WebSearchCallActionSourcesValue);
 
-        /// <summary> Gets the MessageInputImageImageUrl. </summary>
-        public static IncludeEnum MessageInputImageImageUrl { get; } = new IncludeEnum(MessageInputImageImageUrlValue);
+        /// <summary> Gets the MessageInputImageImageUri. </summary>
+        public static IncludeEnum MessageInputImageImageUri { get; } = new IncludeEnum(MessageInputImageImageUriValue);
 
-        /// <summary> Gets the ComputerCallOutputOutputImageUrl. </summary>
-        public static IncludeEnum ComputerCallOutputOutputImageUrl { get; } = new IncludeEnum(ComputerCallOutputOutputImageUrlValue);
+        /// <summary> Gets the ComputerCallOutputOutputImageUri. </summary>
+        public static IncludeEnum ComputerCallOutputOutputImageUri { get; } = new IncludeEnum(ComputerCallOutputOutputImageUriValue);
 
         /// <summary> Gets the CodeInterpreterCallOutputs. </summary>
         public static IncludeEnum CodeInterpreterCallOutputs { get; } = new IncludeEnum(CodeInterpreterCallOutputsValue);

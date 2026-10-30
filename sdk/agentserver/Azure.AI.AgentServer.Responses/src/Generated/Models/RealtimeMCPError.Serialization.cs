@@ -13,7 +13,7 @@ namespace Azure.AI.AgentServer.Responses.Models
 {
     /// <summary>
     /// The RealtimeMCPError.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="RealtimeMCPProtocolError"/>, <see cref="RealtimeMCPToolExecutionError"/>, and <see cref="RealtimeMCPHTTPError"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="RealtimeMCPHTTPError"/>, <see cref="RealtimeMCPProtocolError"/>, and <see cref="RealtimeMCPToolExecutionError"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownRealtimeMCPError))]
     public abstract partial class RealtimeMCPError : IJsonModel<RealtimeMCPError>
@@ -129,12 +129,12 @@ namespace Azure.AI.AgentServer.Responses.Models
             {
                 switch (discriminator.GetString())
                 {
+                    case "http_error":
+                        return RealtimeMCPHTTPError.DeserializeRealtimeMCPHTTPError(element, options);
                     case "protocol_error":
                         return RealtimeMCPProtocolError.DeserializeRealtimeMCPProtocolError(element, options);
                     case "tool_execution_error":
                         return RealtimeMCPToolExecutionError.DeserializeRealtimeMCPToolExecutionError(element, options);
-                    case "http_error":
-                        return RealtimeMCPHTTPError.DeserializeRealtimeMCPHTTPError(element, options);
                 }
             }
             return UnknownRealtimeMCPError.DeserializeUnknownRealtimeMCPError(element, options);

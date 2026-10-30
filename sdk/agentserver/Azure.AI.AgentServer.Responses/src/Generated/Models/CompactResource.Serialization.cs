@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.AI.AgentServer.Responses;
+using OpenAI.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
@@ -99,7 +100,7 @@ namespace Azure.AI.AgentServer.Responses.Models
             }
             writer.WriteEndArray();
             writer.WritePropertyName("created_at"u8);
-            writer.WriteNumberValue(CreatedAt, "U");
+            writer.WriteNumberValue(CreatedOn, "U");
             writer.WritePropertyName("usage"u8);
             writer.WriteObjectValue(Usage, options);
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
@@ -147,7 +148,7 @@ namespace Azure.AI.AgentServer.Responses.Models
             string id = default;
             string @object = default;
             IList<ItemField> output = default;
-            DateTimeOffset createdAt = default;
+            DateTimeOffset createdOn = default;
             ResponseUsage usage = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -174,24 +175,24 @@ namespace Azure.AI.AgentServer.Responses.Models
                 }
                 if (prop.NameEquals("created_at"u8))
                 {
-                    createdAt = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
+                    createdOn = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
                     continue;
                 }
                 if (prop.NameEquals("usage"u8))
                 {
-                    usage = ResponseUsage.DeserializeResponseUsage(prop.Value, options);
+                    usage = ModelReaderWriter.Read<ResponseUsage>(prop.Value.GetUtf8Bytes(), options, AzureAIAgentServerResponsesContext.Default);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new CompactResource(
                 id,
                 @object,
-                output,
-                createdAt,
+                output ?? new ChangeTrackingList<ItemField>(),
+                createdOn,
                 usage,
                 additionalBinaryDataProperties);
         }

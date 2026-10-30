@@ -129,7 +129,7 @@ internal sealed class EventStreamObserver : IAsyncObserver<ResponseStreamEvent>
             _hasCreated = true;
         }
 
-        value.SequenceNumber = _nextSequenceNumber++;
+        value.SequenceNumber = (int)_nextSequenceNumber++;
         return _emit(
             ResponseWireStreamCodec.ToWireItem(value, SharedJsonOptions.Instance),
             CancellationToken.None);

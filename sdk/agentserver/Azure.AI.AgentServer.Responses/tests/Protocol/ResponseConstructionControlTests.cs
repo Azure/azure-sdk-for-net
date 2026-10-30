@@ -10,9 +10,9 @@ using Azure.AI.AgentServer.Responses.Tests.Helpers;
 namespace Azure.AI.AgentServer.Responses.Tests.Protocol;
 
 /// <summary>
-/// E2E protocol tests for developer Models.ResponseObject construction control.
+/// E2E protocol tests for developer ResponseObject construction control.
 /// Validates B37 (full replacement), response property exposure.
-/// These tests verify that handler-set Models.ResponseObject properties survive through the
+/// These tests verify that handler-set ResponseObject properties survive through the
 /// orchestration pipeline and appear in the final HTTP response.
 /// </summary>
 public class ResponseConstructionControlTests : ProtocolTestBase
@@ -75,8 +75,10 @@ public class ResponseConstructionControlTests : ProtocolTestBase
         using var doc = JsonDocument.Parse(createdEvent.Data);
         var responseObj = doc.RootElement.GetProperty("response");
 
-        var instructions = responseObj.GetProperty("instructions").GetString();
-        Assert.That(instructions, Is.EqualTo("Custom handler instructions"));
+        // ResponseObject.Instructions is an item list, so it serializes as an array.
+        var instructions = responseObj.GetProperty("instructions");
+        Assert.That(instructions.ValueKind, Is.EqualTo(JsonValueKind.Array));
+        Assert.That(instructions.GetRawText(), Does.Contain("Custom handler instructions"));
     }
 
     [Test]
@@ -90,8 +92,9 @@ public class ResponseConstructionControlTests : ProtocolTestBase
         Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
         using var doc = await ParseJsonAsync(response);
 
-        var instructions = doc.RootElement.GetProperty("instructions").GetString();
-        Assert.That(instructions, Is.EqualTo("Custom handler instructions"));
+        var instructions = doc.RootElement.GetProperty("instructions");
+        Assert.That(instructions.ValueKind, Is.EqualTo(JsonValueKind.Array));
+        Assert.That(instructions.GetRawText(), Does.Contain("Custom handler instructions"));
     }
 
     // ── T024: Raw ResponseCreatedEvent with custom fields ─────
@@ -100,7 +103,7 @@ public class ResponseConstructionControlTests : ProtocolTestBase
     public async Task POST_Responses_RawResponseCreatedEvent_CustomMetadataPreservedInFinalResponse()
     {
         // Handler emits raw ResponseCreatedEvent with custom fields (no ResponseEventStream)
-        // → persisted Models.ResponseObject preserves those fields (B37 full replacement)
+        // → persisted ResponseObject preserves those fields (B37 full replacement)
         Handler.EventFactory = (req, ctx, ct) => RawEventStream(ctx);
 
         var response = await PostResponsesAsync(new { model = "test" });
@@ -108,7 +111,7 @@ public class ResponseConstructionControlTests : ProtocolTestBase
         Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
         using var doc = await ParseJsonAsync(response);
 
-        // Handler set raw_key in the raw event's Models.ResponseObject — should appear in response
+        // Handler set raw_key in the raw event's ResponseObject — should appear in response
         Assert.That(doc.RootElement.TryGetProperty("metadata", out var metadata), Is.True);
         Assert.That(metadata.GetProperty("raw_key").GetString(), Is.EqualTo("raw_value"));
     }
@@ -141,9 +144,8 @@ public class ResponseConstructionControlTests : ProtocolTestBase
     {
         await Task.CompletedTask;
         var stream = new ResponseEventStream(ctx, request);
-        // Handler initializes Metadata and sets custom value via Models.ResponseObject property (B37)
-        stream.Response.Metadata = new Metadata();
-        stream.Response.Metadata.AdditionalProperties["handler_key"] = "from_handler";
+        // Handler initializes Metadata and sets custom value via ResponseObject property (B37)
+        stream.Response.Metadata["handler_key"] = "from_handler";
         yield return stream.EmitCreated();
         yield return stream.EmitCompleted();
     }
@@ -155,8 +157,8 @@ public class ResponseConstructionControlTests : ProtocolTestBase
     {
         await Task.CompletedTask;
         var stream = new ResponseEventStream(ctx, request);
-        // Handler sets custom instructions via Models.ResponseObject property (B37)
-        stream.Response.Instructions = BinaryData.FromObjectAsJson("Custom handler instructions");
+        // Handler sets custom instructions via ResponseObject property (B37)
+        stream.Response.Instructions.Add(ResponseItem.CreateDeveloperMessageItem("Custom handler instructions"));
         yield return stream.EmitCreated();
         yield return stream.EmitCompleted();
     }
@@ -167,15 +169,11 @@ public class ResponseConstructionControlTests : ProtocolTestBase
     {
         await Task.CompletedTask;
         // Handler constructs raw events without using ResponseEventStream (B37)
-        var response = new Models.ResponseObject(ctx.ResponseId, "test")
-        {
-            Metadata = new Metadata(),
-            Status = ResponseStatus.InProgress,
-        };
-        response.Metadata.AdditionalProperties["raw_key"] = "raw_value";
-        yield return new ResponseCreatedEvent(0, response);
+        var response = new ResponseObject { Id = ctx.ResponseId, Model = "test", Status = ResponseStatus.InProgress };
+        response.Metadata["raw_key"] = "raw_value";
+        yield return new ResponseCreatedEvent { SequenceNumber = (int)(0), Response = response };
 
         response.SetCompleted();
-        yield return new ResponseCompletedEvent(1, response);
+        yield return new ResponseCompletedEvent { SequenceNumber = (int)(1), Response = response };
     }
 }

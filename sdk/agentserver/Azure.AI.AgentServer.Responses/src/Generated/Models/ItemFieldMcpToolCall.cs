@@ -14,6 +14,11 @@ namespace Azure.AI.AgentServer.Responses.Models
     /// <summary> MCP tool call. </summary>
     public partial class ItemFieldMcpToolCall : ItemField
     {
+        private string _output;
+        private bool _outputIsDefined;
+        private string _approvalRequestId;
+        private bool _approvalRequestIdIsDefined;
+
         /// <summary> Initializes a new instance of <see cref="ItemFieldMcpToolCall"/>. </summary>
         /// <param name="id"> The unique ID of the tool call. </param>
         /// <param name="serverLabel"> The label of the MCP server running the tool. </param>
@@ -36,7 +41,7 @@ namespace Azure.AI.AgentServer.Responses.Models
         /// <param name="name"> The name of the tool that was run. </param>
         /// <param name="arguments"> A JSON string of the arguments passed to the tool. </param>
         /// <param name="output"></param>
-        /// <param name="error"></param>
+        /// <param name="error"> The error from the tool call, if any. </param>
         /// <param name="status"> The status of the tool call. One of `in_progress`, `completed`, `incomplete`, `calling`, or `failed`. </param>
         /// <param name="approvalRequestId"></param>
         internal ItemFieldMcpToolCall(ItemFieldType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string id, string serverLabel, string name, string arguments, string output, IDictionary<string, BinaryData> error, MCPToolCallStatus? status, string approvalRequestId) : base(@type, additionalBinaryDataProperties)
@@ -45,10 +50,10 @@ namespace Azure.AI.AgentServer.Responses.Models
             ServerLabel = serverLabel;
             Name = name;
             Arguments = arguments;
-            Output = output;
+            _output = output;
             Error = error;
             Status = status;
-            ApprovalRequestId = approvalRequestId;
+            _approvalRequestId = approvalRequestId;
         }
 
         /// <summary> The unique ID of the tool call. </summary>
@@ -64,10 +69,16 @@ namespace Azure.AI.AgentServer.Responses.Models
         public string Arguments { get; }
 
         /// <summary> Gets the Output. </summary>
-        public string Output { get; }
+        public string Output
+        {
+            get
+            {
+                return _output;
+            }
+        }
 
         /// <summary>
-        /// Gets the Error.
+        /// The error from the tool call, if any.
         /// <para> To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
         /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
         /// <para>
@@ -98,6 +109,12 @@ namespace Azure.AI.AgentServer.Responses.Models
         public MCPToolCallStatus? Status { get; }
 
         /// <summary> Gets the ApprovalRequestId. </summary>
-        public string ApprovalRequestId { get; }
+        public string ApprovalRequestId
+        {
+            get
+            {
+                return _approvalRequestId;
+            }
+        }
     }
 }

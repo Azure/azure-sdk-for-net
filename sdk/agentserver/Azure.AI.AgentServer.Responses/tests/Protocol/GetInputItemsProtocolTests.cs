@@ -257,11 +257,84 @@ public class GetInputItemsProtocolTests : IDisposable
     }
 
     // ═══════════════════════════════════════════════════════════════════════
+    // Shell, compaction and custom tool items
+    // ═══════════════════════════════════════════════════════════════════════
+
+    /// <summary>
+    /// The shell and compaction input items have no typed OpenAI model, so the SDK sees them as
+    /// opaque items, and the custom tool items are typed OpenAI items. All of them must still be
+    /// persisted with the other input items, each under a type-prefixed ID and with its payload
+    /// intact, including the structured and content-part <c>output</c> arrays.
+    /// </summary>
+    [Test]
+    public async Task Post_WithShellCompactionAndCustomToolInputItems_GetInputItems_Returns_Them()
+    {
+        var json = """
+        {
+            "model": "test",
+            "input": [
+                {"type": "shell_call", "call_id": "call_sh", "action": {"commands": ["ls"]}},
+                {"type": "shell_call_output", "call_id": "call_sh", "output": [{"stdout": "a\n", "stderr": "", "outcome": {"type": "exit", "exit_code": 0}}]},
+                {"type": "local_shell_call", "call_id": "call_lsh", "status": "completed", "action": {"type": "exec", "command": ["ls"], "env": {}}},
+                {"type": "local_shell_call_output", "output": "done"},
+                {"type": "compaction", "encrypted_content": "opaque"},
+                {"type": "custom_tool_call", "call_id": "call_ct", "name": "lookup", "input": "query"},
+                {"type": "custom_tool_call_output", "call_id": "call_ct", "output": [{"type": "input_text", "text": "result"}, {"type": "input_image", "image_url": "https://example.com/a.png", "detail": "auto"}]}
+            ]
+        }
+        """;
+
+        var postResponse = await _client.PostAsync("/responses",
+            new StringContent(json, Encoding.UTF8, "application/json"));
+        var postBody = await postResponse.Content.ReadAsStringAsync();
+        Assert.That(postResponse.StatusCode, Is.EqualTo(HttpStatusCode.OK), postBody);
+
+        using var postDoc = JsonDocument.Parse(postBody);
+        var responseId = postDoc.RootElement.GetProperty("id").GetString()!;
+
+        var getResponse = await _client.GetAsync($"/responses/{responseId}/input_items?order=asc");
+        Assert.That(getResponse.StatusCode, Is.EqualTo(HttpStatusCode.OK));
+
+        using var getDoc = JsonDocument.Parse(await getResponse.Content.ReadAsStringAsync());
+        var data = getDoc.RootElement.GetProperty("data");
+
+        var expected = new[]
+        {
+            (Type: "shell_call", IdPrefix: "lsh_"),
+            (Type: "shell_call_output", IdPrefix: "lsho_"),
+            (Type: "local_shell_call", IdPrefix: "lsh_"),
+            (Type: "local_shell_call_output", IdPrefix: "lsho_"),
+            (Type: "compaction", IdPrefix: "cmp_"),
+            (Type: "custom_tool_call", IdPrefix: "ctc_"),
+            (Type: "custom_tool_call_output", IdPrefix: "ctco_"),
+        };
+        Assert.That(data.GetArrayLength(), Is.EqualTo(expected.Length));
+        for (var i = 0; i < expected.Length; i++)
+        {
+            Assert.That(data[i].GetProperty("type").GetString(), Is.EqualTo(expected[i].Type));
+            Assert.That(data[i].GetProperty("id").GetString(), Does.StartWith(expected[i].IdPrefix));
+        }
+
+        Assert.That(data[0].GetProperty("call_id").GetString(), Is.EqualTo("call_sh"));
+        Assert.That(data[1].GetProperty("output")[0].GetProperty("stdout").GetString(), Is.EqualTo("a\n"));
+        Assert.That(data[2].GetProperty("call_id").GetString(), Is.EqualTo("call_lsh"));
+        Assert.That(data[3].GetProperty("output").GetString(), Is.EqualTo("done"));
+        Assert.That(data[4].GetProperty("encrypted_content").GetString(), Is.EqualTo("opaque"));
+        Assert.That(data[5].GetProperty("call_id").GetString(), Is.EqualTo("call_ct"));
+        Assert.That(data[5].GetProperty("input").GetString(), Is.EqualTo("query"));
+
+        var customToolOutput = data[6].GetProperty("output");
+        Assert.That(customToolOutput.GetArrayLength(), Is.EqualTo(2));
+        Assert.That(customToolOutput[0].GetProperty("text").GetString(), Is.EqualTo("result"));
+        Assert.That(customToolOutput[1].GetProperty("type").GetString(), Is.EqualTo("input_image"));
+    }
+
+    // ═══════════════════════════════════════════════════════════════════════
     // T064: POST with previous_response_id → combined history + current input
     // ═══════════════════════════════════════════════════════════════════════
 
     /// <summary>
-    /// T064: POST with previous_response_id chains history. Models.ResponseObject B's
+    /// T064: POST with previous_response_id chains history. ResponseObject B's
     /// input_items contain both response A's input (as history) and response B's own input.
     /// </summary>
     [Test]
@@ -304,7 +377,7 @@ public class GetInputItemsProtocolTests : IDisposable
         using var getDoc = JsonDocument.Parse(getBody);
         var data = getDoc.RootElement.GetProperty("data");
 
-        // Models.ResponseObject A had 1 input item, response B also has 1 → total 2
+        // ResponseObject A had 1 input item, response B also has 1 → total 2
         Assert.That(data.GetArrayLength(), Is.EqualTo(2));
     }
 
@@ -380,7 +453,7 @@ public class GetInputItemsProtocolTests : IDisposable
 
     /// <summary>
     /// Verifies that a three-response chain (A → B → C) correctly resolves history
-    /// from the entire chain. Models.ResponseObject C's input_items should include history from
+    /// from the entire chain. ResponseObject C's input_items should include history from
     /// both A and B, plus C's own inline input.
     /// </summary>
     [Test]
