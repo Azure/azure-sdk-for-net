@@ -21,7 +21,7 @@ namespace Azure.Provisioning.ApiManagement
         private BicepValue<string> _name;
         private SystemData _systemData;
         private OperationContractProperties _properties;
-        private ResourceReference<ApiManagementApi> _parent;
+        private ProvisioningResourceReference<ApiManagementApi> _parent;
 
         /// <summary> Creates a new ApiOperation. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -239,7 +239,7 @@ namespace Azure.Provisioning.ApiManagement
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _properties = DefineModelProperty<OperationContractProperties>(nameof(Properties), new string[] { "properties" });
-            _parent = DefineResource<ApiManagementApi>(nameof(Parent), new string[] { "parent" });
+            _parent = new ProvisioningResourceReference<ApiManagementApi>(DefineProperty<string>(nameof(Parent), new string[] { "parent" }));
             DefineAdditionalProperties();
         }
 

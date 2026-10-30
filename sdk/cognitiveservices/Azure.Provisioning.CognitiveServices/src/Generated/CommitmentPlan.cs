@@ -25,7 +25,7 @@ namespace Azure.Provisioning.CognitiveServices
         private BicepValue<ETag> _eTag;
         private BicepValue<string> _kind;
         private CognitiveServicesSku _sku;
-        private ResourceReference<CognitiveServicesAccount> _parent;
+        private ProvisioningResourceReference<CognitiveServicesAccount> _parent;
 
         /// <summary> Creates a new CommitmentPlan. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -182,7 +182,7 @@ namespace Azure.Provisioning.CognitiveServices
             _eTag = DefineProperty<ETag>(nameof(ETag), new string[] { "etag" }, isOutput: true);
             _kind = DefineProperty<string>(nameof(Kind), new string[] { "kind" });
             _sku = DefineModelProperty<CognitiveServicesSku>(nameof(Sku), new string[] { "sku" });
-            _parent = DefineResource<CognitiveServicesAccount>(nameof(Parent), new string[] { "parent" });
+            _parent = new ProvisioningResourceReference<CognitiveServicesAccount>(DefineProperty<string>(nameof(Parent), new string[] { "parent" }));
             DefineAdditionalProperties();
         }
 

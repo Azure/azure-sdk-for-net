@@ -21,7 +21,7 @@ namespace Azure.Provisioning.AppContainers
         private BicepDictionary<string> _tags;
         private BicepValue<AzureLocation> _location;
         private ManagedCertificateProperties _properties;
-        private ResourceReference<ContainerAppManagedEnvironment> _parent;
+        private ProvisioningResourceReference<ContainerAppManagedEnvironment> _parent;
 
         /// <summary> Creates a new ContainerAppManagedCertificate. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -135,7 +135,7 @@ namespace Azure.Provisioning.AppContainers
             _tags = DefineDictionaryProperty<string>(nameof(Tags), new string[] { "tags" });
             _location = DefineProperty<AzureLocation>(nameof(Location), new string[] { "location" }, isRequired: true);
             _properties = DefineModelProperty<ManagedCertificateProperties>(nameof(Properties), new string[] { "properties" });
-            _parent = DefineResource<ContainerAppManagedEnvironment>(nameof(Parent), new string[] { "parent" });
+            _parent = new ProvisioningResourceReference<ContainerAppManagedEnvironment>(DefineProperty<string>(nameof(Parent), new string[] { "parent" }));
             DefineAdditionalProperties();
         }
 

@@ -25,7 +25,7 @@ namespace Azure.Provisioning.CognitiveServices
         private CognitiveServicesProjectProperties _properties;
         private BicepValue<ETag> _eTag;
         private ManagedServiceIdentity _identity;
-        private ResourceReference<CognitiveServicesAccount> _parent;
+        private ProvisioningResourceReference<CognitiveServicesAccount> _parent;
 
         /// <summary> Creates a new CognitiveServicesProject. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -166,7 +166,7 @@ namespace Azure.Provisioning.CognitiveServices
             _properties = DefineModelProperty<CognitiveServicesProjectProperties>(nameof(Properties), new string[] { "properties" });
             _eTag = DefineProperty<ETag>(nameof(ETag), new string[] { "etag" }, isOutput: true);
             _identity = DefineModelProperty<ManagedServiceIdentity>(nameof(Identity), new string[] { "identity" });
-            _parent = DefineResource<CognitiveServicesAccount>(nameof(Parent), new string[] { "parent" });
+            _parent = new ProvisioningResourceReference<CognitiveServicesAccount>(DefineProperty<string>(nameof(Parent), new string[] { "parent" }));
             DefineAdditionalProperties();
         }
 

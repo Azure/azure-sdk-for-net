@@ -26,7 +26,7 @@ namespace Azure.Provisioning.ApplicationInsights
         private ManagedServiceIdentity _identity;
         private BicepValue<WorkbookSharedTypeKind> _kind;
         private BicepValue<ETag> _eTag;
-        private ResourceReference<ApplicationInsightsWorkbook> _parent;
+        private ProvisioningResourceReference<ApplicationInsightsWorkbook> _parent;
 
         /// <summary> Creates a new ApplicationInsightsWorkbookRevision. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -363,7 +363,7 @@ namespace Azure.Provisioning.ApplicationInsights
             _identity = DefineModelProperty<ManagedServiceIdentity>(nameof(Identity), new string[] { "identity" });
             _kind = DefineProperty<WorkbookSharedTypeKind>(nameof(Kind), new string[] { "kind" });
             _eTag = DefineProperty<ETag>(nameof(ETag), new string[] { "etag" });
-            _parent = DefineResource<ApplicationInsightsWorkbook>(nameof(Parent), new string[] { "parent" });
+            _parent = new ProvisioningResourceReference<ApplicationInsightsWorkbook>(DefineProperty<string>(nameof(Parent), new string[] { "parent" }));
             DefineAdditionalProperties();
         }
 

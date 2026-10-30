@@ -22,7 +22,7 @@ namespace Azure.Provisioning.Compute
         private BicepDictionary<string> _tags;
         private BicepValue<AzureLocation> _location;
         private VirtualMachineRunCommandProperties _properties;
-        private ResourceReference<VirtualMachineScaleSetVm> _parent;
+        private ProvisioningResourceReference<VirtualMachineScaleSetVm> _parent;
 
         /// <summary> Creates a new VirtualMachineScaleSetVmRunCommand. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -362,7 +362,7 @@ namespace Azure.Provisioning.Compute
             _tags = DefineDictionaryProperty<string>(nameof(Tags), new string[] { "tags" });
             _location = DefineProperty<AzureLocation>(nameof(Location), new string[] { "location" }, isRequired: true);
             _properties = DefineModelProperty<VirtualMachineRunCommandProperties>(nameof(Properties), new string[] { "properties" });
-            _parent = DefineResource<VirtualMachineScaleSetVm>(nameof(Parent), new string[] { "parent" });
+            _parent = new ProvisioningResourceReference<VirtualMachineScaleSetVm>(DefineProperty<string>(nameof(Parent), new string[] { "parent" }));
             DefineAdditionalProperties();
         }
 

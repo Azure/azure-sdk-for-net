@@ -22,7 +22,7 @@ namespace Azure.Provisioning.Compute
         private BicepDictionary<string> _tags;
         private BicepValue<AzureLocation> _location;
         private GalleryInVmAccessControlProfileVersionProperties _properties;
-        private ResourceReference<GalleryInVmAccessControlProfile> _parent;
+        private ProvisioningResourceReference<GalleryInVmAccessControlProfile> _parent;
 
         /// <summary> Creates a new GalleryInVmAccessControlProfileVersion. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -256,7 +256,7 @@ namespace Azure.Provisioning.Compute
             _tags = DefineDictionaryProperty<string>(nameof(Tags), new string[] { "tags" });
             _location = DefineProperty<AzureLocation>(nameof(Location), new string[] { "location" }, isRequired: true);
             _properties = DefineModelProperty<GalleryInVmAccessControlProfileVersionProperties>(nameof(Properties), new string[] { "properties" });
-            _parent = DefineResource<GalleryInVmAccessControlProfile>(nameof(Parent), new string[] { "parent" });
+            _parent = new ProvisioningResourceReference<GalleryInVmAccessControlProfile>(DefineProperty<string>(nameof(Parent), new string[] { "parent" }));
             DefineAdditionalProperties();
         }
 

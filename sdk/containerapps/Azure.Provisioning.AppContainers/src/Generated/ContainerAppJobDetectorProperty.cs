@@ -23,7 +23,7 @@ namespace Azure.Provisioning.AppContainers
         private BicepValue<AzureLocation> _location;
         private JobProperties _properties;
         private ManagedServiceIdentity _identity;
-        private ResourceReference<ContainerAppJob> _parent;
+        private ProvisioningResourceReference<ContainerAppJob> _parent;
 
         /// <summary> Creates a new ContainerAppJobDetectorProperty. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -273,7 +273,7 @@ namespace Azure.Provisioning.AppContainers
             _location = DefineProperty<AzureLocation>(nameof(Location), new string[] { "location" }, isRequired: true);
             _properties = DefineModelProperty<JobProperties>(nameof(Properties), new string[] { "properties" });
             _identity = DefineModelProperty<ManagedServiceIdentity>(nameof(Identity), new string[] { "identity" });
-            _parent = DefineResource<ContainerAppJob>(nameof(Parent), new string[] { "parent" });
+            _parent = new ProvisioningResourceReference<ContainerAppJob>(DefineProperty<string>(nameof(Parent), new string[] { "parent" }));
             DefineAdditionalProperties();
         }
 
