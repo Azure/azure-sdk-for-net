@@ -921,10 +921,10 @@
 /eng/centralpackagemanagement/Directory.Generation.Packages.props  @Azure/azure-sdk-write-net-core @JonathanGiles @ArthurMa1978 @jorgerangel-msft
 
 # Add owners for emitter version changes
-/eng/azure-typespec-http-client-csharp-emitter-package.json             @JoshLove-msft @m-nash @jorgerangel-msft @live1206 @ArcturusZhang
-/eng/azure-typespec-http-client-csharp-emitter-package-lock.json        @JoshLove-msft @m-nash @jorgerangel-msft @live1206 @ArcturusZhang
-/eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json        @JoshLove-msft @m-nash @jorgerangel-msft @live1206 @ArcturusZhang
-/eng/azure-typespec-http-client-csharp-mgmt-emitter-package-lock.json   @JoshLove-msft @m-nash @jorgerangel-msft @live1206 @ArcturusZhang
+/eng/azure-typespec-http-client-csharp-emitter-package.json             @JoshLove-msft @m-nash @jorgerangel-msft @live1206 @ArcturusZhang @alzimmermsft
+/eng/azure-typespec-http-client-csharp-emitter-package-lock.json        @JoshLove-msft @m-nash @jorgerangel-msft @live1206 @ArcturusZhang @alzimmermsft
+/eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json        @JoshLove-msft @m-nash @jorgerangel-msft @live1206 @ArcturusZhang @alzimmermsft
+/eng/azure-typespec-http-client-csharp-mgmt-emitter-package-lock.json   @JoshLove-msft @m-nash @jorgerangel-msft @live1206 @ArcturusZhang @alzimmermsft
 /eng/http-client-csharp-emitter-package.json                            @JoshLove-msft @m-nash @jorgerangel-msft @live1206 @ArcturusZhang
 /eng/http-client-csharp-emitter-package-lock.json                       @JoshLove-msft @m-nash @jorgerangel-msft @live1206 @ArcturusZhang
 
