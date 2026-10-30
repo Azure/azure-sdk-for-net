@@ -216,24 +216,6 @@ namespace Azure.ResourceManager.Cdn
             }
         }
 
-        /// <summary> Whether or not gRPC is enabled on this route. Permitted values are 'Enabled' or 'Disabled'. </summary>
-        [WirePath("properties.grpcState")]
-        public FrontDoorRouteGrpcState? GrpcState
-        {
-            get
-            {
-                return Properties is null ? default : Properties.GrpcState;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new CdnRouteProperties();
-                }
-                Properties.GrpcState = value;
-            }
-        }
-
         /// <summary> Provisioning status. </summary>
         [WirePath("properties.provisioningState")]
         public FrontDoorProvisioningState? ProvisioningState

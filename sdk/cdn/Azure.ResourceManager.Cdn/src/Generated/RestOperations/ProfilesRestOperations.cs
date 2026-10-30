@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Cdn
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Cdn/profiles/", false);
             uri.AppendPath(profileName, true);
-            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Cdn/profiles") ?? "2025-09-01-preview", true);
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Cdn/profiles") ?? "2026-10-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Cdn
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Cdn/profiles/", false);
             uri.AppendPath(profileName, true);
-            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Cdn/profiles") ?? "2025-09-01-preview", true);
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Cdn/profiles") ?? "2026-10-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Cdn
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Cdn/profiles/", false);
             uri.AppendPath(profileName, true);
-            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Cdn/profiles") ?? "2025-09-01-preview", true);
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Cdn/profiles") ?? "2026-10-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Cdn
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Cdn/profiles/", false);
             uri.AppendPath(profileName, true);
-            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Cdn/profiles") ?? "2025-09-01-preview", true);
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Cdn/profiles") ?? "2026-10-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Cdn
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Cdn/profiles", false);
-            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Cdn/profiles") ?? "2025-09-01-preview", true);
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Cdn/profiles") ?? "2026-10-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.Cdn
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            uri.UpdateQuery("api-version", _getApiVersion?.Invoke("Microsoft.Cdn/profiles") ?? "2025-09-01-preview");
+            uri.UpdateQuery("api-version", _getApiVersion?.Invoke("Microsoft.Cdn/profiles") ?? "2026-10-01");
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.Cdn
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/providers/Microsoft.Cdn/profiles", false);
-            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Cdn/profiles") ?? "2025-09-01-preview", true);
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Cdn/profiles") ?? "2026-10-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.Cdn
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            uri.UpdateQuery("api-version", _getApiVersion?.Invoke("Microsoft.Cdn/profiles") ?? "2025-09-01-preview");
+            uri.UpdateQuery("api-version", _getApiVersion?.Invoke("Microsoft.Cdn/profiles") ?? "2026-10-01");
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.Cdn
             uri.AppendPath("/providers/Microsoft.Cdn/profiles/", false);
             uri.AppendPath(profileName, true);
             uri.AppendPath("/migrationCommit", false);
-            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Cdn/profiles") ?? "2025-09-01-preview", true);
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Cdn/profiles") ?? "2026-10-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.Cdn
             uri.AppendPath("/providers/Microsoft.Cdn/profiles/", false);
             uri.AppendPath(profileName, true);
             uri.AppendPath("/generateSsoUri", false);
-            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Cdn/profiles") ?? "2025-09-01-preview", true);
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Cdn/profiles") ?? "2026-10-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -260,7 +260,7 @@ namespace Azure.ResourceManager.Cdn
             uri.AppendPath("/providers/Microsoft.Cdn/profiles/", false);
             uri.AppendPath(profileName, true);
             uri.AppendPath("/getSupportedOptimizationTypes", false);
-            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Cdn/profiles") ?? "2025-09-01-preview", true);
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Cdn/profiles") ?? "2026-10-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -281,7 +281,7 @@ namespace Azure.ResourceManager.Cdn
             uri.AppendPath("/providers/Microsoft.Cdn/profiles/", false);
             uri.AppendPath(profileName, true);
             uri.AppendPath("/checkResourceUsage", false);
-            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Cdn/profiles") ?? "2025-09-01-preview", true);
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Cdn/profiles") ?? "2026-10-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -302,7 +302,7 @@ namespace Azure.ResourceManager.Cdn
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            uri.UpdateQuery("api-version", _getApiVersion?.Invoke("Microsoft.Cdn/profiles") ?? "2025-09-01-preview");
+            uri.UpdateQuery("api-version", _getApiVersion?.Invoke("Microsoft.Cdn/profiles") ?? "2026-10-01");
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -323,7 +323,7 @@ namespace Azure.ResourceManager.Cdn
             uri.AppendPath("/providers/Microsoft.Cdn/profiles/", false);
             uri.AppendPath(profileName, true);
             uri.AppendPath("/cdnCanMigrateToAfd", false);
-            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Cdn/profiles") ?? "2025-09-01-preview", true);
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Cdn/profiles") ?? "2026-10-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -344,7 +344,7 @@ namespace Azure.ResourceManager.Cdn
             uri.AppendPath("/providers/Microsoft.Cdn/profiles/", false);
             uri.AppendPath(profileName, true);
             uri.AppendPath("/cdnMigrateToAfd", false);
-            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Cdn/profiles") ?? "2025-09-01-preview", true);
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Cdn/profiles") ?? "2026-10-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -367,7 +367,7 @@ namespace Azure.ResourceManager.Cdn
             uri.AppendPath("/providers/Microsoft.Cdn/profiles/", false);
             uri.AppendPath(profileName, true);
             uri.AppendPath("/migrationAbort", false);
-            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Cdn/profiles") ?? "2025-09-01-preview", true);
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Cdn/profiles") ?? "2026-10-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;

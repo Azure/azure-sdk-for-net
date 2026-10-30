@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
         /// especially relevant to cluster upgrades.
         /// Valid values are in minutes and from 0 to 10080 minutes (1 week).
         /// 0 means that the MachinePool can be drained without any time limitation.
-        /// This is the value is used a default for all NodePools. It can be overridden
+        /// This value is used as a default for all NodePools. It can be overridden
         /// by specifying nodeDrainTimeoutMinutes for a given NodePool
         /// </param>
         /// <param name="clusterImageRegistryState">
@@ -79,10 +79,10 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
         /// the cluster. Disabled means the ImageStream-backed image registry will not be present in
         /// the cluster. The default is Enabled.
         /// </param>
-        /// <param name="statusConditions"> The conditions on the resource. </param>
+        /// <param name="status"> Status of the cluster resource. </param>
         /// <param name="cryptoRestrictions"> Cryptographic restrictions for kernel and userspace libraries. </param>
         /// <returns> A new <see cref="Models.HcpOpenShiftClusterProperties"/> instance for mocking. </returns>
-        public static HcpOpenShiftClusterProperties HcpOpenShiftClusterProperties(ProvisioningState? provisioningState = default, HcpOpenShiftClusterVersionProfile version = default, HcpOpenShiftClusterDnsProfile dns = default, HcpOpenShiftClusterNetworkProfile network = default, Uri consoleUri = default, HcpOpenShiftClusterApiProfile api = default, HcpOpenShiftClusterIngressType? ingressType = default, HcpOpenShiftClusterPlatformProfile platform = default, HcpOpenShiftClusterAutoscalingProfile autoscaling = default, HcpOpenShiftClusterEtcdDataEncryptionProfile etcdDataEncryption = default, IEnumerable<HcpOpenShiftClusterImageDigestMirror> imageDigestMirrors = default, int? nodeDrainTimeoutMinutes = default, HcpOpenShiftClusterImageRegistryState? clusterImageRegistryState = default, IEnumerable<HcpOpenShiftClusterCondition> statusConditions = default, CryptoRestrictions? cryptoRestrictions = default)
+        public static HcpOpenShiftClusterProperties HcpOpenShiftClusterProperties(ProvisioningState? provisioningState = default, HcpOpenShiftClusterVersionProfile version = default, HcpOpenShiftClusterDnsProfile dns = default, HcpOpenShiftClusterNetworkProfile network = default, Uri consoleUri = default, HcpOpenShiftClusterApiProfile api = default, HcpOpenShiftClusterIngressType? ingressType = default, HcpOpenShiftClusterPlatformProfile platform = default, HcpOpenShiftClusterAutoscalingProfile autoscaling = default, HcpOpenShiftClusterEtcdDataEncryptionProfile etcdDataEncryption = default, IEnumerable<HcpOpenShiftClusterImageDigestMirror> imageDigestMirrors = default, int? nodeDrainTimeoutMinutes = default, HcpOpenShiftClusterImageRegistryState? clusterImageRegistryState = default, HcpOpenShiftClusterResourceStatus status = default, CryptoRestrictions? cryptoRestrictions = default)
         {
             imageDigestMirrors ??= new ChangeTrackingList<HcpOpenShiftClusterImageDigestMirror>();
 
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
                 (imageDigestMirrors ?? new ChangeTrackingList<HcpOpenShiftClusterImageDigestMirror>()).ToList(),
                 nodeDrainTimeoutMinutes,
                 clusterImageRegistryState is null ? default : new HcpOpenShiftClusterImageRegistryProfile(clusterImageRegistryState, default),
-                statusConditions is null ? default : new HcpOpenShiftClusterResourceStatus((statusConditions ?? new ChangeTrackingList<HcpOpenShiftClusterCondition>()).ToList(), default),
+                status,
                 cryptoRestrictions,
                 default);
         }
@@ -111,6 +111,8 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
         /// ChannelGroup is the name of the set to which this version belongs.
         /// Each version belongs to only a single set.
         /// If not specified, the default value is 'stable'.
+        /// This property is intended to be updateable, but that support is not yet
+        /// complete. Until then, changing this value after cluster creation is rejected.
         /// </param>
         /// <returns> A new <see cref="Models.HcpOpenShiftClusterVersionProfile"/> instance for mocking. </returns>
         public static HcpOpenShiftClusterVersionProfile HcpOpenShiftClusterVersionProfile(string id = default, string channelGroup = default)
@@ -121,8 +123,8 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
         /// <summary> DNS contains the DNS settings of the cluster. </summary>
         /// <param name="baseDomain"> BaseDomain is the base DNS domain of the cluster. </param>
         /// <param name="baseDomainPrefix">
-        /// BaseDomainPrefix is the unique name of the cluster representing the OpenShift's cluster name.
-        /// BaseDomainPrefix is the name that will appear in the cluster's DNS, provisioned cloud providers resources
+        /// BaseDomainPrefix is the base domain prefix for the cluster ingress. It will be used to
+        /// configure ingress in the cluster through the subdomain "BaseDomainPrefix.BaseDomain".
         /// </param>
         /// <returns> A new <see cref="Models.HcpOpenShiftClusterDnsProfile"/> instance for mocking. </returns>
         public static HcpOpenShiftClusterDnsProfile HcpOpenShiftClusterDnsProfile(string baseDomain = default, string baseDomainPrefix = default)
@@ -161,7 +163,7 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
         }
 
         /// <param name="managedResourceGroup">
-        /// Resource group name to put cluster resources
+        /// The name of the resource group to put cluster resources in.
         /// If not specified then a unique name is generated from the
         /// following pattern
         /// "aro-hcp-" + clusterName + "-" + UUID
@@ -170,7 +172,7 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
         /// identifier per RFC 4122.
         /// </param>
         /// <param name="subnetId">
-        /// The Azure resource ID of the worker subnet
+        /// The Azure resource ID of the worker subnet.
         /// Note that a subnet cannot be reused between ARO-HCP Clusters.
         /// </param>
         /// <param name="vnetIntegrationSubnetId">
@@ -188,12 +190,13 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
         /// Represents the information related to Azure User-Assigned managed identities needed
         /// to perform Operators authentication based on Azure User-Assigned Managed Identities
         /// </param>
+        /// <param name="containerRegistryManagedIdentity"> The user-assigned managed identity used for container registry image pulls. </param>
         /// <param name="issuerUri">
         /// URL for the OIDC provider to be used for authentication
         /// to authenticate against user Azure cloud account
         /// </param>
         /// <returns> A new <see cref="Models.HcpOpenShiftClusterPlatformProfile"/> instance for mocking. </returns>
-        public static HcpOpenShiftClusterPlatformProfile HcpOpenShiftClusterPlatformProfile(string managedResourceGroup = default, ResourceIdentifier subnetId = default, ResourceIdentifier vnetIntegrationSubnetId = default, HcpOpenShiftClusterOutboundType? outboundType = default, ResourceIdentifier networkSecurityGroupId = default, HcpOpenShiftClusterUserAssignedIdentitiesProfile operatorsAuthenticationUserAssignedIdentities = default, Uri issuerUri = default)
+        public static HcpOpenShiftClusterPlatformProfile HcpOpenShiftClusterPlatformProfile(string managedResourceGroup = default, ResourceIdentifier subnetId = default, ResourceIdentifier vnetIntegrationSubnetId = default, HcpOpenShiftClusterOutboundType? outboundType = default, ResourceIdentifier networkSecurityGroupId = default, HcpOpenShiftClusterUserAssignedIdentitiesProfile operatorsAuthenticationUserAssignedIdentities = default, ResourceIdentifier containerRegistryManagedIdentity = default, Uri issuerUri = default)
         {
             return new HcpOpenShiftClusterPlatformProfile(
                 managedResourceGroup,
@@ -202,6 +205,7 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
                 outboundType,
                 networkSecurityGroupId,
                 operatorsAuthenticationUserAssignedIdentities is null ? default : new HcpOpenShiftClusterOperatorsAuthenticationProfile(operatorsAuthenticationUserAssignedIdentities, default),
+                containerRegistryManagedIdentity is null ? default : new ContainerRegistryProfile(containerRegistryManagedIdentity, default),
                 issuerUri,
                 default);
         }
@@ -238,11 +242,11 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
         /// applies to all NodePools associated with a control plane.
         /// </summary>
         /// <param name="maxNodesTotal">
-        /// maxNodesTotal is the maximum allowable number of nodes for the Autoscaler scale out to be operational.
-        /// The autoscaler will not grow the cluster beyond this number. If omitted, the autoscaler will not have a maximum limit.
+        /// maxNodesTotal is the maximum allowable number of nodes. The autoscaler will not grow the cluster beyond this number.
+        /// If omitted, the autoscaler will not have a maximum limit.
         /// </param>
         /// <param name="maxPodGracePeriodSeconds">
-        /// maxPodGracePeriod is the maximum seconds to wait for graceful pod termination before scaling down a NodePool.
+        /// maxPodGracePeriodSeconds is the maximum amount of time in seconds to wait for graceful pod termination before scaling down a NodePool.
         /// The default is 600 seconds.
         /// </param>
         /// <param name="maxNodeProvisionTimeSeconds">
@@ -296,10 +300,11 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
         /// <param name="vaultName"> vaultName is the name of the keyvault that contains the secret. </param>
         /// <param name="visibility"> visibility of the keyvault that contains the secret. </param>
         /// <param name="activeKey"> The details of the active key. </param>
+        /// <param name="keyVaultType"> The type of keyvault used for KMS encryption. Defaults to KeyVault when absent. </param>
         /// <returns> A new <see cref="Models.HcpOpenShiftClusterKmsEncryptionProfile"/> instance for mocking. </returns>
-        public static HcpOpenShiftClusterKmsEncryptionProfile HcpOpenShiftClusterKmsEncryptionProfile(string vaultName = default, HcpOpenShiftClusterKeyVaultVisibility visibility = default, HcpOpenShiftClusterKmsKey activeKey = default)
+        public static HcpOpenShiftClusterKmsEncryptionProfile HcpOpenShiftClusterKmsEncryptionProfile(string vaultName = default, HcpOpenShiftClusterKeyVaultVisibility visibility = default, HcpOpenShiftClusterKmsKey activeKey = default, HcpOpenShiftClusterKmsKeyVaultType? keyVaultType = default)
         {
-            return new HcpOpenShiftClusterKmsEncryptionProfile(vaultName, visibility, activeKey, default);
+            return new HcpOpenShiftClusterKmsEncryptionProfile(vaultName, visibility, activeKey, keyVaultType, default);
         }
 
         /// <summary> A representation of a KeyVault Secret. </summary>
@@ -357,6 +362,24 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
             return new HcpOpenShiftClusterImageDigestMirror(source, (mirrors ?? new ChangeTrackingList<string>()).ToList(), default);
         }
 
+        /// <summary> ClusterResourceStatus represents the observed status of the cluster resource. </summary>
+        /// <param name="conditions"> The conditions on the resource. </param>
+        /// <param name="activeVersions">
+        /// The observed active versions of the cluster.
+        /// During upgrades, both the previous and target versions may be
+        /// active simultaneously until the rollout completes, so this
+        /// array can contain more than one entry. The ordering of entries
+        /// has no meaning.
+        /// </param>
+        /// <returns> A new <see cref="Models.HcpOpenShiftClusterResourceStatus"/> instance for mocking. </returns>
+        public static HcpOpenShiftClusterResourceStatus HcpOpenShiftClusterResourceStatus(IEnumerable<HcpOpenShiftClusterCondition> conditions = default, IEnumerable<HcpOpenShiftClusterActiveVersion> activeVersions = default)
+        {
+            conditions ??= new ChangeTrackingList<HcpOpenShiftClusterCondition>();
+            activeVersions ??= new ChangeTrackingList<HcpOpenShiftClusterActiveVersion>();
+
+            return new HcpOpenShiftClusterResourceStatus((conditions ?? new ChangeTrackingList<HcpOpenShiftClusterCondition>()).ToList(), (activeVersions ?? new ChangeTrackingList<HcpOpenShiftClusterActiveVersion>()).ToList(), default);
+        }
+
         /// <summary> Condition represents an observation of a resource's state. </summary>
         /// <param name="type">
         /// Type of the condition.
@@ -382,6 +405,14 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
                 reason,
                 message,
                 default);
+        }
+
+        /// <summary> ClusterActiveVersion represents a version of a resource. </summary>
+        /// <param name="version"> The version of the resource. Specified in major.minor, same as the input. </param>
+        /// <returns> A new <see cref="Models.HcpOpenShiftClusterActiveVersion"/> instance for mocking. </returns>
+        public static HcpOpenShiftClusterActiveVersion HcpOpenShiftClusterActiveVersion(string version = default)
+        {
+            return new HcpOpenShiftClusterActiveVersion(version, default);
         }
 
         /// <summary> HCP cluster admin credential request body. </summary>
@@ -427,6 +458,7 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
                 default);
         }
 
+        /// <summary> Represents the node pool properties. </summary>
         /// <param name="provisioningState"> Provisioning state. </param>
         /// <param name="version"> OpenShift version for the nodepool. </param>
         /// <param name="platform"> Azure node pool platform configuration. </param>
@@ -435,12 +467,20 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
         /// Validation:
         /// <list type="bullet"><item><description>Minimum: 0</description></item><item><description>Maximum: 200 (only when availabilityZone is not specified)</description></item><item><description>No maximum when availabilityZone is specified</description></item></list>
         /// </param>
-        /// <param name="canAutoRepair"> Auto-repair. </param>
+        /// <param name="canAutoRepair">
+        /// autoRepair specifies whether health checks should be enabled for machines
+        /// in the NodePool. Enabling this feature will cause the controller to
+        /// automatically delete unhealthy machines. The unhealthy criteria are
+        /// determined by checking the Node Ready condition and a timeout that might
+        /// vary depending on the platform provider. autoRepair will not take action
+        /// when more than 2 Nodes are unhealthy at the same time, giving time for
+        /// the cluster to stabilize or for the user to manually intervene.
+        /// </param>
         /// <param name="autoScaling"> Representation of a autoscaling in a node pool. </param>
         /// <param name="labels">
-        /// Kubernetes labels to propagate to the NodePool Nodes
+        /// Kubernetes labels to propagate to the NodePool Nodes.
         /// Note that when the labels are updated this is only applied to newly
-        /// create nodes in the Nodepool, existing node labels remain unchanged.
+        /// created nodes in the NodePool, existing node labels remain unchanged.
         /// </param>
         /// <param name="taints"> Taints for the nodes. </param>
         /// <param name="nodeDrainTimeoutMinutes">
@@ -452,9 +492,9 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
         /// 0 means that the NodePool can be drained without any time limitation.
         /// If unset the cluster nodeDrainTimeoutMinutes value is used as a default.
         /// </param>
-        /// <param name="statusConditions"> The conditions on the resource. </param>
+        /// <param name="status"> Status of the node pool resource. </param>
         /// <returns> A new <see cref="Models.HcpOpenShiftClusterNodePoolProperties"/> instance for mocking. </returns>
-        public static HcpOpenShiftClusterNodePoolProperties HcpOpenShiftClusterNodePoolProperties(ProvisioningState? provisioningState = default, HcpOpenShiftClusterNodePoolVersionProfile version = default, HcpOpenShiftClusterNodePoolPlatformProfile platform = default, int? replicas = default, bool? canAutoRepair = default, HcpOpenShiftClusterNodePoolAutoScaling autoScaling = default, IEnumerable<HcpOpenShiftClusterNodePoolLabel> labels = default, IEnumerable<HcpOpenShiftClusterNodePoolTaint> taints = default, int? nodeDrainTimeoutMinutes = default, IEnumerable<HcpOpenShiftClusterCondition> statusConditions = default)
+        public static HcpOpenShiftClusterNodePoolProperties HcpOpenShiftClusterNodePoolProperties(ProvisioningState? provisioningState = default, HcpOpenShiftClusterNodePoolVersionProfile version = default, HcpOpenShiftClusterNodePoolPlatformProfile platform = default, int? replicas = default, bool? canAutoRepair = default, HcpOpenShiftClusterNodePoolAutoScaling autoScaling = default, IEnumerable<HcpOpenShiftClusterNodePoolLabel> labels = default, IEnumerable<HcpOpenShiftClusterNodePoolTaint> taints = default, int? nodeDrainTimeoutMinutes = default, HcpOpenShiftClusterNodePoolResourceStatus status = default)
         {
             labels ??= new ChangeTrackingList<HcpOpenShiftClusterNodePoolLabel>();
             taints ??= new ChangeTrackingList<HcpOpenShiftClusterNodePoolTaint>();
@@ -469,7 +509,7 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
                 (labels ?? new ChangeTrackingList<HcpOpenShiftClusterNodePoolLabel>()).ToList(),
                 (taints ?? new ChangeTrackingList<HcpOpenShiftClusterNodePoolTaint>()).ToList(),
                 nodeDrainTimeoutMinutes,
-                statusConditions is null ? default : new HcpOpenShiftClusterResourceStatus((statusConditions ?? new ChangeTrackingList<HcpOpenShiftClusterCondition>()).ToList(), default),
+                status,
                 default);
         }
 
@@ -479,6 +519,8 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
         /// ChannelGroup is the name of the set to which this version belongs.
         /// Each version belongs to only a single set.
         /// If not specified, the default value is 'stable'.
+        /// This property is intended to be updateable, but that support is not yet
+        /// complete. Until then, changing this value after node pool creation is rejected.
         /// </param>
         /// <returns> A new <see cref="Models.HcpOpenShiftClusterNodePoolVersionProfile"/> instance for mocking. </returns>
         public static HcpOpenShiftClusterNodePoolVersionProfile HcpOpenShiftClusterNodePoolVersionProfile(string id = default, string channelGroup = default)
@@ -488,7 +530,7 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
 
         /// <summary> Azure node pool platform configuration. </summary>
         /// <param name="subnetId">
-        /// The Azure resource ID of the worker subnet
+        /// The Azure resource ID of the worker subnet.
         /// Note that a subnet cannot be reused between ARO-HCP Clusters, however the
         /// same subnet can be used for NodePools of the same cluster.
         /// </param>
@@ -582,6 +624,30 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
             return new HcpOpenShiftClusterNodePoolTaint(key, value, effect, default);
         }
 
+        /// <summary> NodePoolResourceStatus represents the observed status of the nodepool resource. </summary>
+        /// <param name="conditions"> The conditions on the resource. </param>
+        /// <param name="activeVersions">
+        /// The observed active versions of the node pool.
+        /// During upgrades, it is common for multiple versions to be active at the same time
+        /// while old nodes are drained and replaced. The ordering of entries has no meaning.
+        /// </param>
+        /// <returns> A new <see cref="Models.HcpOpenShiftClusterNodePoolResourceStatus"/> instance for mocking. </returns>
+        public static HcpOpenShiftClusterNodePoolResourceStatus HcpOpenShiftClusterNodePoolResourceStatus(IEnumerable<HcpOpenShiftClusterCondition> conditions = default, IEnumerable<HcpOpenShiftClusterNodePoolActiveVersion> activeVersions = default)
+        {
+            conditions ??= new ChangeTrackingList<HcpOpenShiftClusterCondition>();
+            activeVersions ??= new ChangeTrackingList<HcpOpenShiftClusterNodePoolActiveVersion>();
+
+            return new HcpOpenShiftClusterNodePoolResourceStatus((conditions ?? new ChangeTrackingList<HcpOpenShiftClusterCondition>()).ToList(), (activeVersions ?? new ChangeTrackingList<HcpOpenShiftClusterNodePoolActiveVersion>()).ToList(), default);
+        }
+
+        /// <summary> NodePoolActiveVersion represents a version of a resource. </summary>
+        /// <param name="version"> The version of the resource. Specified in major.minor.patch, same as the input. </param>
+        /// <returns> A new <see cref="Models.HcpOpenShiftClusterNodePoolActiveVersion"/> instance for mocking. </returns>
+        public static HcpOpenShiftClusterNodePoolActiveVersion HcpOpenShiftClusterNodePoolActiveVersion(string version = default)
+        {
+            return new HcpOpenShiftClusterNodePoolActiveVersion(version, default);
+        }
+
         /// <summary> ExternalAuth resource. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
@@ -618,7 +684,7 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
 
             return new HcpOpenShiftClusterExternalAuthProperties(
                 provisioningState,
-                statusConditions is null ? default : new HcpOpenShiftClusterResourceStatus((statusConditions ?? new ChangeTrackingList<HcpOpenShiftClusterCondition>()).ToList(), default),
+                statusConditions is null ? default : new ExternalAuthResourceStatus((statusConditions ?? new ChangeTrackingList<HcpOpenShiftClusterCondition>()).ToList(), default),
                 issuer,
                 (clients ?? new ChangeTrackingList<HcpOpenShiftClusterExternalAuthClientProfile>()).ToList(),
                 claim,
@@ -637,13 +703,12 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
         /// issuerURL must use the 'https' scheme.
         /// </param>
         /// <param name="audiences">
-        /// This configures the acceptable audiences the JWT token, issued by the identity
-        /// provider, must be issued to. At least one of the entries must match the
-        /// 'aud' claim in the JWT token.
-        /// audiences must contain at least one entry and must not exceed ten entries.
+        /// This configures the acceptable audiences for JWT tokens issued by the identity provider.
+        /// At least one of the entries must match the 'aud' claim in the JWT token.
+        /// Audiences must contain at least one entry and must not exceed ten entries.
         /// </param>
         /// <param name="ca">
-        /// The issuer of the token
+        /// The issuer of the token.
         /// Certificate bundle to use to validate server certificates for the configured URL.
         /// It must be PEM encoded and when not specified, the system trust is used.
         /// </param>
@@ -731,7 +796,7 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
         /// </summary>
         /// <param name="claim"> Claim name of the external profile. </param>
         /// <param name="prefix">
-        /// Prefix for the claim external profile
+        /// Prefix for the claim external profile.
         /// Must be set when the prefixPolicy field is set to 'Prefix' and must be unset
         /// otherwise.
         /// </param>
@@ -769,8 +834,8 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
         /// </summary>
         /// <param name="claim"> Claim name of the external profile. </param>
         /// <param name="prefix">
-        /// Prefix for the claim external profile
-        /// If this is specified prefixPolicy will be set to "Prefix" by default
+        /// Prefix for the claim external profile.
+        /// If this is specified, prefixPolicy will be set to "Prefix" by default.
         /// </param>
         /// <returns> A new <see cref="Models.HcpOpenShiftClusterExternalAuthGroupClaimProfile"/> instance for mocking. </returns>
         public static HcpOpenShiftClusterExternalAuthGroupClaimProfile HcpOpenShiftClusterExternalAuthGroupClaimProfile(string claim = default, string prefix = default)

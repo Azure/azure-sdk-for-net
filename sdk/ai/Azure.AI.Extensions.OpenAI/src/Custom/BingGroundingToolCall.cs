@@ -4,14 +4,12 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
-using System.ComponentModel;
-using System.Diagnostics.CodeAnalysis;
-using System.Text.Json.Serialization;
 using OpenAI.Responses;
 
 namespace Azure.AI.Extensions.OpenAI;
 
 [CodeGenSuppress("Patch")]
+[CodeGenSuppress("_patch")]
 public partial class BingGroundingToolCall
 {
     /// <summary> Initializes a new instance of <see cref="BingGroundingToolCall"/>. </summary>
@@ -44,7 +42,7 @@ public partial class BingGroundingToolCall
     /// <param name="patch"></param>
     internal BingGroundingToolCall(ResponseItemKind @type, string id, AgentReference agentReference, string responseId, string callId, string arguments, ToolCallStatus status, in JsonPatch patch) : base(@type)
     {
-        _patch = patch;
+        Patch = patch;
         this.ApplyAgentAttribution(agentReference, responseId, null);
         Id = id;
         CallId = callId;

@@ -172,7 +172,7 @@ namespace Azure.Generator.Provisioning.Tests
         }
 
         [Test]
-        public void ReadOnlyExtensionResourceDoesNotExposeScopeMetadata()
+        public void ReadOnlyExtensionResourceExposesScopeMetadata()
         {
             var model = CreateModel("ReadOnlyExtension");
             var resource = CreateMetadata(
@@ -186,8 +186,8 @@ namespace Azure.Generator.Provisioning.Tests
             var provider = CreateResourceProvider(resource);
 
             Assert.That(provider.ResourceProjection!.WritableScopes, Is.Empty);
-            Assert.That(provider.ResourceProjection.IsExtensionResource, Is.False);
-            Assert.That(provider.Properties.Any(property => property.Name == "Scope"), Is.False);
+            Assert.That(provider.ResourceProjection.IsExtensionResource, Is.True);
+            Assert.That(provider.Properties.Any(property => property.Name == "Scope"), Is.True);
         }
 
         [Test]
@@ -707,7 +707,7 @@ namespace Azure.Generator.Provisioning.Tests
         }
 
         [Test]
-        public void SingletonResourceWithImmediateGeneratedParentHasTypedParentAndFixedName()
+        public void SingletonResourceWithImmediateGeneratedParentHasTypedParentAndSettableDefaultName()
         {
             var parentModel = CreateModel("Parent");
             var nameProperty = CreateProperty("Name", isRequired: true);
@@ -738,11 +738,11 @@ namespace Azure.Generator.Provisioning.Tests
                 Is.EqualTo("ProvisioningResourceReference"));
             string generated = new TypeProviderWriter(providers[1]).Write().Content;
             Assert.That(generated, Does.Contain("DefineProperty<string>(nameof(Parent)"));
-            Assert.That(generated, Does.Contain("isRequired: true"));
+            Assert.That(generated, Does.Contain("new string[] { \"parent\" })"));
             Assert.That(generated, Does.Not.Contain("DefineResource<"));
             Assert.That(propertyInfo, Is.Not.Null);
             Assert.That(propertyInfo!.IsOutput, Is.False);
-            Assert.That(propertyInfo.IsSettable, Is.False);
+            Assert.That(propertyInfo.IsSettable, Is.True);
             Assert.That(propertyInfo.DefaultValue, Is.EqualTo("default"));
         }
 
@@ -1408,7 +1408,7 @@ namespace Azure.Generator.Provisioning.Tests
                 metadata.RbacRoles,
                 readableScopes,
                 writableScopes,
-                writableScopes.Contains(ResourceScope.Extension));
+                readableScopes.Contains(ResourceScope.Extension) || writableScopes.Contains(ResourceScope.Extension));
         }
 
         private static InputModelProperty CreateProperty(string name, bool isRequired = false, bool isReadOnly = false, bool isDiscriminator = false, InputType? type = null, string? serializedName = null)

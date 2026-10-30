@@ -24,8 +24,8 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
         /// <summary> Initializes a new instance of <see cref="HcpOpenShiftClusterDnsProfile"/>. </summary>
         /// <param name="baseDomain"> BaseDomain is the base DNS domain of the cluster. </param>
         /// <param name="baseDomainPrefix">
-        /// BaseDomainPrefix is the unique name of the cluster representing the OpenShift's cluster name.
-        /// BaseDomainPrefix is the name that will appear in the cluster's DNS, provisioned cloud providers resources
+        /// BaseDomainPrefix is the base domain prefix for the cluster ingress. It will be used to
+        /// configure ingress in the cluster through the subdomain "BaseDomainPrefix.BaseDomain".
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal HcpOpenShiftClusterDnsProfile(string baseDomain, string baseDomainPrefix, IDictionary<string, BinaryData> additionalBinaryDataProperties)
@@ -39,8 +39,8 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
         public string BaseDomain { get; }
 
         /// <summary>
-        /// BaseDomainPrefix is the unique name of the cluster representing the OpenShift's cluster name.
-        /// BaseDomainPrefix is the name that will appear in the cluster's DNS, provisioned cloud providers resources
+        /// BaseDomainPrefix is the base domain prefix for the cluster ingress. It will be used to
+        /// configure ingress in the cluster through the subdomain "BaseDomainPrefix.BaseDomain".
         /// </summary>
         public string BaseDomainPrefix { get; set; }
     }

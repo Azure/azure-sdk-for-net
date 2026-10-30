@@ -107,7 +107,7 @@ namespace Azure.Provisioning.ProvisioningTypeSpec.Preview
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _properties = DefineModelProperty<ResourceProfileRevisionProperties>(nameof(Properties), new string[] { "properties" });
-            _parent = new ProvisioningResourceReference<ResourceProfile>(DefineProperty<string>(nameof(Parent), new string[] { "parent" }, isRequired: true));
+            _parent = new ProvisioningResourceReference<ResourceProfile>(DefineProperty<string>(nameof(Parent), new string[] { "parent" }));
             DefineAdditionalProperties();
         }
 

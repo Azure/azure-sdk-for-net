@@ -87,7 +87,7 @@ namespace Azure.Generator.Provisioning.Providers
 
         private ProvisioningResourceProvider? ResolveImmediateParentResource()
         {
-            if (_resourceProjection is not { IsExtensionResource: false, ParentResourceId: { } parentId } resourceProjection)
+            if (_resourceProjection is not { ParentResourceId: { } parentId } resourceProjection)
                 return null;
 
             var parent = ProvisioningGenerator.Instance.OutputLibrary.GetResourceByIdPattern(parentId);
@@ -229,7 +229,8 @@ namespace Azure.Generator.Provisioning.Providers
                 properties.Add(_parentProperty);
             }
 
-            if (_resourceProjection?.IsExtensionResource == true)
+            // Structural children inherit the external scope through their parent.
+            if (_parentType is null && _resourceProjection?.IsExtensionResource == true)
             {
                 _scopeField = new FieldProvider(
                     FieldModifiers.Private,
@@ -529,15 +530,15 @@ namespace Azure.Generator.Provisioning.Providers
                 var isRequired = isResourceName || (prop.IsRequired && _isSettableResource);
 
                 var propertyName = prop.Name.ToIdentifierName();
-                // Keep the singleton name fixed only when it is one resource-type level below
-                // its generated parent, or when it is a top-level resource without a parent.
+                // Child singletons retain their relative default but allow composite names
+                // when callers omit Parent. Top-level singleton names remain fixed.
                 string? defaultValue = null;
                 if (isResourceName
                     && _resourceProjection?.SingletonResourceName is string singletonResourceName
                     && CanUseSingletonDefaultName())
                 {
                     defaultValue = singletonResourceName;
-                    isSettable = false;
+                    isSettable = ImmediateParentResource is not null;
                 }
                 // Ensure "location" at the resource level always uses AzureLocation,
                 // even when the TypeSpec defines it as plain string.
@@ -614,8 +615,7 @@ namespace Azure.Generator.Provisioning.Providers
                         "DefineProperty",
                         [
                             Nameof(Identifier("Parent")),
-                            New.Array(typeof(string), [Literal("parent")]),
-                            new PositionalParameterReferenceExpression("isRequired", Literal(true))
+                            New.Array(typeof(string), [Literal("parent")])
                         ],
                         [typeof(string)],
                         false)])

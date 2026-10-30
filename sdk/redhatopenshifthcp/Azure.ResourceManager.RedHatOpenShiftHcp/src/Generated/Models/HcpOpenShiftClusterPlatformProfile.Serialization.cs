@@ -98,6 +98,11 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
             writer.WriteStringValue(NetworkSecurityGroupId);
             writer.WritePropertyName("operatorsAuthentication"u8);
             writer.WriteObjectValue(OperatorsAuthentication, options);
+            if (Optional.IsDefined(ContainerRegistry))
+            {
+                writer.WritePropertyName("containerRegistry"u8);
+                writer.WriteObjectValue(ContainerRegistry, options);
+            }
             if (options.Format != "W")
             {
                 writer.WritePropertyName("issuerUrl"u8);
@@ -151,6 +156,7 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
             HcpOpenShiftClusterOutboundType? outboundType = default;
             ResourceIdentifier networkSecurityGroupId = default;
             HcpOpenShiftClusterOperatorsAuthenticationProfile operatorsAuthentication = default;
+            ContainerRegistryProfile containerRegistry = default;
             Uri issuerUri = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -189,6 +195,15 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
                     operatorsAuthentication = HcpOpenShiftClusterOperatorsAuthenticationProfile.DeserializeHcpOpenShiftClusterOperatorsAuthenticationProfile(prop.Value, options);
                     continue;
                 }
+                if (prop.NameEquals("containerRegistry"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    containerRegistry = ContainerRegistryProfile.DeserializeContainerRegistryProfile(prop.Value, options);
+                    continue;
+                }
                 if (prop.NameEquals("issuerUrl"u8))
                 {
                     issuerUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
@@ -206,6 +221,7 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
                 outboundType,
                 networkSecurityGroupId,
                 operatorsAuthentication,
+                containerRegistry,
                 issuerUri,
                 additionalBinaryDataProperties);
         }

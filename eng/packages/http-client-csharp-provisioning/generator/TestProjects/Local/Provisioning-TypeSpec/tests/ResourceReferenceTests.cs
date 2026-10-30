@@ -1,7 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
 using Azure.Provisioning.Primitives;
 using NUnit.Framework;
 
@@ -47,13 +46,13 @@ public class ResourceReferenceTests
 
     [TestCase(false)]
     [TestCase(true)]
-    public void ClearingParentPreservesRequiredValidation(bool assignFirst)
+    public void ClearingParentOmitsOptionalReference(bool assignFirst)
     {
         ConfigurationStore store = new("store");
-        KeyValue keyValue = new("keyValue") { Name = "key" };
+        KeyValue keyValue = new("keyValue") { Name = "store/key" };
         Assert.That(keyValue.Parent, Is.Null);
         IBicepValue reference = keyValue.ProvisionableProperties[nameof(KeyValue.Parent)];
-        Assert.That(reference.IsRequired, Is.True);
+        Assert.That(reference.IsRequired, Is.False);
         Assert.That(reference.IsOutput, Is.False);
         if (assignFirst)
         {
@@ -70,11 +69,13 @@ public class ResourceReferenceTests
         Assert.That(((IBicepValue)keyValue).Compile().ToString(), Does.Not.Contain("parent:"));
         Infrastructure infrastructure = new();
         infrastructure.Add(keyValue);
-        Assert.That(() => infrastructure.Build(),
-            Throws.TypeOf<InvalidOperationException>().With.Message.Contains("missing required property Parent"));
+        string withoutParent = infrastructure.Build().Compile()["main.bicep"];
+        Assert.That(withoutParent, Does.Not.Contain("parent:"));
+        Assert.That(withoutParent, Does.Contain("name: 'store/key'"));
 
         ConfigurationStore replacement = new("replacement");
         keyValue.Parent = replacement;
+        keyValue.Name = "key";
         infrastructure.Add(replacement);
         Assert.That(keyValue.Parent, Is.SameAs(replacement));
         Assert.That(reference.Kind, Is.EqualTo(BicepValueKind.Expression));
