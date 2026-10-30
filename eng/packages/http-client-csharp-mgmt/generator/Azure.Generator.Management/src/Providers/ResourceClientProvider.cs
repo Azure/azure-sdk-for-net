@@ -131,8 +131,7 @@ namespace Azure.Generator.Management.Providers
                 : ResourceCollection.PathParameters;
             var publishedGetter = parent is null ? null
                 : GetPublishedCollectionAccessor(parent, factoryParameters.Select(p => p.Type).ToArray());
-            return publishedGetter is not null &&
-                publishedGetter.Signature.Parameters.Zip(factoryParameters).All(pair => pair.First.Name == pair.Second.Name)
+            return publishedGetter is not null
                 ? publishedGetter.Signature.Name == derivedGetter
                 : UsesDerivedResourceName;
         }
