@@ -45,12 +45,81 @@ API design costs:
   handling in the generated factory API.
 
 These API costs motivated the investigation of alternative construction and mocking
-experiences. The full customer scenarios and initial API comparison are captured in
-the [Model Factory API Review](https://gist.github.com/pshao25/59c20f79f930a72ffbb7ed3edc415246).
+experiences.
 
 Property flattening is a separate implementation concern. It amplifies the generator
 complexity required to produce and preserve the current factory API, but it is not
 the underlying API design drawback that prompted this investigation.
+
+## Investigation History
+
+### Initial Builder-based Prototypes
+
+The investigation started with the alternatives documented in
+[New Model Factory](https://gist.github.com/pshao25/c4fbd02968c525f71ae591cdae1703f2)
+and prototyped in
+[Azure/azure-sdk-for-net#61448](https://github.com/Azure/azure-sdk-for-net/pull/61448):
+
+- Reading prebuilt wire JSON with `ModelReaderWriter`.
+- Building wire JSON incrementally with a `ModelJsonBuilder`.
+- Setting CLR properties through a generic typed `ArmModelBuilder<T>`.
+- Starting from a normally constructed model and applying read-only property
+  overrides through a seeded `ArmModelBuilder<T>`.
+
+Wire JSON was the simplest and fastest path, and `ModelJsonBuilder` made JSON easier
+to author. Neither provided an appropriate replacement API, however, because callers
+still had to know serialized property names, wrapper nesting, and flattened wire
+paths. Those paths were strings, were not discoverable from the CLR model through
+IntelliSense, and were validated only at runtime.
+
+The typed builders restored CLR property IntelliSense and compile-time value types,
+but required generated per-model metadata such as `AvailabilitySetDataDefinition` to
+map each CLR property to its wire path and serialization behavior. Shipping that
+metadata would introduce another broad set of generated APIs with its own ownership,
+generation, compatibility, trimming, and AOT questions. The seeded builder also
+required a serialize-modify-deserialize round trip and corresponding state-preservation
+semantics.
+
+In practice, making the typed builder discoverable would require exposing a
+definition for every supported model. That would replace the current per-model
+factory methods with a similarly broad per-model metadata API surface rather than
+eliminating generated public API growth.
+
+The prototype quantified the tradeoff:
+
+| Prototype | Mean | Allocated | Relative to wire JSON |
+| --- | ---: | ---: | ---: |
+| Prebuilt wire JSON | 0.965 us | 1.30 KB | 1.00x |
+| `ModelJsonBuilder` | 2.759 us | 4.14 KB | 2.86x |
+| Generic typed builder | 5.810 us | 7.53 KB | 6.03x |
+| Seeded typed builder | 5.968 us | 7.70 KB | 6.19x |
+
+We did not pursue these builders further as the replacement public API. The wire
+approaches did not provide the required discoverability, while the typed approaches
+moved the API-growth problem into generated model-definition metadata and introduced
+additional runtime and platform concerns. Wire JSON remains useful for recorded
+responses and existing fixtures, but it serves a different scenario from a
+discoverable model factory.
+
+### API-focused Investigation
+
+After the initial prototypes, we continued the investigation at the customer API
+level rather than starting from wire serialization. The resulting shortlist and
+representative customer scenarios are documented in the
+[Model Factory API Review](https://gist.github.com/pshao25/59c20f79f930a72ffbb7ed3edc415246).
+
+The APIs on the table were:
+
+- Keep the existing strongly typed, model-specific factory API.
+- Make output properties init-only and construct models through object initializers.
+- Introduce one generic model factory using dictionary or anonymous-object property
+  bags, optionally with a current model as a template.
+
+We compared these APIs across single-property construction, nested models,
+collections, large models, shared test baselines, and invalid property names or
+types. We also prototyped virtual properties as a related proxy-based mocking option.
+The following sections record the detailed findings and measurements from that
+longer investigation.
 
 ## Requirements
 
@@ -407,6 +476,8 @@ runtime checks.
 
 ## References
 
+- [Initial builder investigation](https://gist.github.com/pshao25/c4fbd02968c525f71ae591cdae1703f2)
+- [Initial builder prototype](https://github.com/Azure/azure-sdk-for-net/pull/61448)
 - [Model Factory API Review](https://gist.github.com/pshao25/59c20f79f930a72ffbb7ed3edc415246)
 - [Virtual property prototype](https://github.com/pshao25/azure-sdk-for-net/pull/3)
 - [Init-only property prototype](https://github.com/pshao25/azure-sdk-for-net/pull/4)
