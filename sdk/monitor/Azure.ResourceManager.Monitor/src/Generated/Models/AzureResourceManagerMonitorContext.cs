@@ -15,6 +15,7 @@ namespace Azure.ResourceManager.Monitor
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
     /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
+    [ModelReaderWriterBuildable(typeof(ActionDetail))]
     [ModelReaderWriterBuildable(typeof(ActionGroupData))]
     [ModelReaderWriterBuildable(typeof(ActionGroupEnableContent))]
     [ModelReaderWriterBuildable(typeof(ActionGroupPatch))]
@@ -66,11 +67,22 @@ namespace Azure.ResourceManager.Monitor
     [ModelReaderWriterBuildable(typeof(DataCollectionRuleStorageBlobDestination))]
     [ModelReaderWriterBuildable(typeof(DataCollectionRuleStorageTableDestination))]
     [ModelReaderWriterBuildable(typeof(DataColumnDefinition))]
+#pragma warning disable CS0618 // global::Azure.ResourceManager.Monitor.Models.DataContainer is obsolete and may be removed in future versions.
+    [ModelReaderWriterBuildable(typeof(DataContainer))]
+#pragma warning restore CS0618 // global::Azure.ResourceManager.Monitor.Models.DataContainer is obsolete and may be removed in future versions.
     [ModelReaderWriterBuildable(typeof(DataFlow))]
     [ModelReaderWriterBuildable(typeof(DataImportSourcesEventHub))]
     [ModelReaderWriterBuildable(typeof(DataSourcesSpec))]
     [ModelReaderWriterBuildable(typeof(DataStreamDeclaration))]
     [ModelReaderWriterBuildable(typeof(DestinationsSpec))]
+#pragma warning disable CS0618 // global::Azure.ResourceManager.Monitor.DiagnosticSettingsCategoryResource is obsolete and may be removed in future versions.
+    [ModelReaderWriterBuildable(typeof(DiagnosticSettingsCategoryResource))]
+#pragma warning restore CS0618 // global::Azure.ResourceManager.Monitor.DiagnosticSettingsCategoryResource is obsolete and may be removed in future versions.
+    [ModelReaderWriterBuildable(typeof(DiagnosticSettingsCategoryResourceData))]
+    [ModelReaderWriterBuildable(typeof(DiagnosticSettingsResource))]
+    [ModelReaderWriterBuildable(typeof(DiagnosticSettingsResourceData))]
+    [ModelReaderWriterBuildable(typeof(DiagnosticsLogSettings))]
+    [ModelReaderWriterBuildable(typeof(DiagnosticsMetricSettings))]
     [ModelReaderWriterBuildable(typeof(DynamicMetricCriteria))]
     [ModelReaderWriterBuildable(typeof(DynamicPromQLCriteria))]
     [ModelReaderWriterBuildable(typeof(DynamicThresholdFailingPeriods))]
@@ -204,8 +216,16 @@ namespace Azure.ResourceManager.Monitor
     [ModelReaderWriterBuildable(typeof(SubscriptionScopeMetricsContent))]
     [ModelReaderWriterBuildable(typeof(SyslogDataSource))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
+    [ModelReaderWriterBuildable(typeof(TenantActionGroupResource))]
+    [ModelReaderWriterBuildable(typeof(TenantActionGroupResourceData))]
+    [ModelReaderWriterBuildable(typeof(TenantActionGroupResourcePatch))]
+    [ModelReaderWriterBuildable(typeof(TenantNotificationRequestBody))]
+    [ModelReaderWriterBuildable(typeof(TestNotificationDetailsResult))]
     [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
+    [ModelReaderWriterBuildable(typeof(VMInsightsOnboardingStatusData))]
+    [ModelReaderWriterBuildable(typeof(VMInsightsOnboardingStatusResource))]
     [ModelReaderWriterBuildable(typeof(WebhookNotification))]
+    [ModelReaderWriterBuildable(typeof(WebhookReceiver))]
     [ModelReaderWriterBuildable(typeof(WebtestLocationAvailabilityCriteria))]
     [ModelReaderWriterBuildable(typeof(WindowsEventLogDataSource))]
     [ModelReaderWriterBuildable(typeof(WindowsFirewallLogsDataSource))]

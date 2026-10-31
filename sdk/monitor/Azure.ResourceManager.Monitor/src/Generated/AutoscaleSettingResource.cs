@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Monitor
             _autoscaleSettingsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Monitor", ResourceType.Namespace, Diagnostics);
             _autoscaleSettingsRestClient = new AutoscaleSettings(_autoscaleSettingsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             _predictiveMetricClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Monitor", ResourceType.Namespace, Diagnostics);
-            _predictiveMetricRestClient = new PredictiveMetric(_predictiveMetricClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, autoscaleSettingApiVersion ?? "2022-10-01");
+            _predictiveMetricRestClient = new PredictiveMetric(_predictiveMetricClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, autoscaleSettingApiVersion ?? "2025-09-01-preview");
             ValidateResourceId(id);
         }
 
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Monitor
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2022-10-01. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.Monitor
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2022-10-01. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.Monitor
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2022-10-01. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -259,7 +259,7 @@ namespace Azure.ResourceManager.Monitor
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2022-10-01. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -311,7 +311,7 @@ namespace Azure.ResourceManager.Monitor
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2022-10-01. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -362,7 +362,7 @@ namespace Azure.ResourceManager.Monitor
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2022-10-01. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -413,7 +413,7 @@ namespace Azure.ResourceManager.Monitor
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2022-10-01. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -473,7 +473,7 @@ namespace Azure.ResourceManager.Monitor
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2022-10-01. </description>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
