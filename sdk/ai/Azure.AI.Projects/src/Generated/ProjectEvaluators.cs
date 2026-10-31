@@ -491,7 +491,9 @@ namespace Azure.AI.Projects.Evaluation
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNull(evaluatorVersion, nameof(evaluatorVersion));
 
-            ClientResult result = CreateVersion(name, evaluatorVersion, cancellationToken.ToRequestOptions());
+            using Utf8JsonBinaryContent content = new Utf8JsonBinaryContent();
+            content.JsonWriter.WriteObjectValue(evaluatorVersion, new LifecycleModelReaderWriterOptions(LifecycleVisibility.Create, "W"));
+            ClientResult result = CreateVersion(name, content, cancellationToken.ToRequestOptions());
             return ClientResult.FromValue((EvaluatorVersion)result, result.GetRawResponse());
         }
 
@@ -507,7 +509,9 @@ namespace Azure.AI.Projects.Evaluation
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNull(evaluatorVersion, nameof(evaluatorVersion));
 
-            ClientResult result = await CreateVersionAsync(name, evaluatorVersion, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
+            using Utf8JsonBinaryContent content = new Utf8JsonBinaryContent();
+            content.JsonWriter.WriteObjectValue(evaluatorVersion, new LifecycleModelReaderWriterOptions(LifecycleVisibility.Create, "W"));
+            ClientResult result = await CreateVersionAsync(name, content, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
             return ClientResult.FromValue((EvaluatorVersion)result, result.GetRawResponse());
         }
 

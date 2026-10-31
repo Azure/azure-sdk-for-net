@@ -552,7 +552,9 @@ namespace Azure.AI.Projects
             Argument.AssertNotNullOrEmpty(version, nameof(version));
             Argument.AssertNotNull(modelVersion, nameof(modelVersion));
 
-            ClientResult result = CreateModelVersionRequest(name, version, modelVersion, cancellationToken.ToRequestOptions());
+            using Utf8JsonBinaryContent content = new Utf8JsonBinaryContent();
+            content.JsonWriter.WriteObjectValue(modelVersion, new LifecycleModelReaderWriterOptions(LifecycleVisibility.Create, "W"));
+            ClientResult result = CreateModelVersionRequest(name, version, content, cancellationToken.ToRequestOptions());
             return ClientResult.FromValue((CreateAsyncResult)result, result.GetRawResponse());
         }
 
@@ -570,7 +572,9 @@ namespace Azure.AI.Projects
             Argument.AssertNotNullOrEmpty(version, nameof(version));
             Argument.AssertNotNull(modelVersion, nameof(modelVersion));
 
-            ClientResult result = await CreateModelVersionRequestAsync(name, version, modelVersion, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
+            using Utf8JsonBinaryContent content = new Utf8JsonBinaryContent();
+            content.JsonWriter.WriteObjectValue(modelVersion, new LifecycleModelReaderWriterOptions(LifecycleVisibility.Create, "W"));
+            ClientResult result = await CreateModelVersionRequestAsync(name, version, content, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
             return ClientResult.FromValue((CreateAsyncResult)result, result.GetRawResponse());
         }
 

@@ -3,6 +3,7 @@
 #nullable disable
 
 using System.ClientModel;
+using System.ClientModel.Primitives;
 
 #pragma warning disable SCME0004 // Type is for evaluation purposes only and is subject to change or removal in future updates.
 namespace Azure.AI.Projects.Agents
@@ -16,11 +17,13 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <summary></summary>
-        internal MultiPartFormContent ToMultipartFormContent()
+        /// <param name="options"></param>
+        internal MultiPartFormContent ToMultipartFormContent(ModelReaderWriterOptions options = null)
         {
+            options = options ?? ModelSerializationExtensions.WireOptions;
             MultiPartFormContent content = new MultiPartFormContent();
 
-            content.Add<AgentVersionFromCodeMetadata>("metadata", Metadata, AzureAIProjectsAgentsContext.Default, ModelSerializationExtensions.WireOptions, "application/json");
+            content.Add<AgentVersionFromCodeMetadata>("metadata", Metadata, AzureAIProjectsAgentsContext.Default, options, "application/json");
             content.Add("code", new FileBinaryContent(Code));
 
             return content;

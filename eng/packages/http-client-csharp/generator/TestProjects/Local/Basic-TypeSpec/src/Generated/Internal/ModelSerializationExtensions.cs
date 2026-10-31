@@ -483,22 +483,19 @@ namespace BasicTypeSpec
                             if (nameHint != null)
                             {
                                 writer.WriteStartElement(nameHint);
-                                writer.WriteAttributes(reader, true);
-                                reader.ReadStartElement();
-                                while (reader.NodeType != XmlNodeType.EndElement)
-                                {
-                                    writer.WriteNode(reader, true);
-                                }
-                                writer.WriteEndElement();
                             }
-                            else
+                            writer.WriteAttributes(reader, true);
+                            if (!reader.IsEmptyElement)
                             {
-                                writer.WriteAttributes(reader, true);
                                 reader.ReadStartElement();
-                                while (reader.NodeType != XmlNodeType.EndElement)
+                                while (!reader.EOF && reader.NodeType != XmlNodeType.EndElement)
                                 {
                                     writer.WriteNode(reader, true);
                                 }
+                            }
+                            if (nameHint != null)
+                            {
+                                writer.WriteEndElement();
                             }
                         }
                     }

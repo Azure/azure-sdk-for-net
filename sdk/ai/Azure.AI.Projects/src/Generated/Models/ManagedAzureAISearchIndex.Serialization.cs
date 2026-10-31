@@ -12,11 +12,6 @@ namespace Azure.AI.Projects
     /// <summary> Managed Azure AI Search Index Definition. </summary>
     public partial class ManagedAzureAISearchIndex : AIProjectIndex, IJsonModel<ManagedAzureAISearchIndex>
     {
-        /// <summary> Initializes a new instance of <see cref="ManagedAzureAISearchIndex"/> for deserialization. </summary>
-        internal ManagedAzureAISearchIndex()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override AIProjectIndex PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
@@ -76,8 +71,14 @@ namespace Azure.AI.Projects
                 throw new FormatException($"The model {nameof(ManagedAzureAISearchIndex)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            writer.WritePropertyName("vectorStoreId"u8);
-            writer.WriteStringValue(VectorStoreId);
+            if (LifecycleModelReaderWriterOptions.IsVisible(options, LifecycleVisibility.Create))
+            {
+                if (Optional.IsDefined(VectorStoreId))
+                {
+                    writer.WritePropertyName("vectorStoreId"u8);
+                    writer.WriteStringValue(VectorStoreId);
+                }
+            }
         }
 
         /// <param name="reader"> The JSON reader. </param>

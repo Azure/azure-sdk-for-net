@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.IO;
 using System.Text.Json;
@@ -22,11 +23,14 @@ namespace BasicTypeSpec
         {
             10
         };
+        private readonly ModelReaderWriterOptions _options;
 
         /// <param name="values"></param>
-        public JsonLinesBinaryContent(IAsyncEnumerable<T> values)
+        /// <param name="options"></param>
+        public JsonLinesBinaryContent(IAsyncEnumerable<T> values, ModelReaderWriterOptions options = null)
         {
             _values = values;
+            _options = options ?? ModelSerializationExtensions.WireOptions;
         }
 
         /// <param name="stream"></param>
@@ -42,7 +46,7 @@ namespace BasicTypeSpec
                 }
                 using (Utf8JsonWriter writer = new Utf8JsonWriter(stream))
                 {
-                    writer.WriteObjectValue(value, ModelSerializationExtensions.WireOptions);
+                    writer.WriteObjectValue(value, _options);
                     await writer.FlushAsync(cancellationToken).ConfigureAwait(false);
                 }
                 first = false;

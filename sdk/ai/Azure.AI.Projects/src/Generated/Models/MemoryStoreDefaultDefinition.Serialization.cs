@@ -77,14 +77,23 @@ namespace Azure.AI.Projects.Memory
                 throw new FormatException($"The model {nameof(MemoryStoreDefaultDefinition)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            writer.WritePropertyName("chat_model"u8);
-            writer.WriteStringValue(ChatModel);
-            writer.WritePropertyName("embedding_model"u8);
-            writer.WriteStringValue(EmbeddingModel);
-            if (Optional.IsDefined(Options))
+            if (LifecycleModelReaderWriterOptions.IsVisible(options, LifecycleVisibility.Read | LifecycleVisibility.Create))
             {
-                writer.WritePropertyName("options"u8);
-                writer.WriteObjectValue(Options, options);
+                writer.WritePropertyName("chat_model"u8);
+                writer.WriteStringValue(ChatModel);
+            }
+            if (LifecycleModelReaderWriterOptions.IsVisible(options, LifecycleVisibility.Read | LifecycleVisibility.Create))
+            {
+                writer.WritePropertyName("embedding_model"u8);
+                writer.WriteStringValue(EmbeddingModel);
+            }
+            if (LifecycleModelReaderWriterOptions.IsVisible(options, LifecycleVisibility.Read | LifecycleVisibility.Create))
+            {
+                if (Optional.IsDefined(Options))
+                {
+                    writer.WritePropertyName("options"u8);
+                    writer.WriteObjectValue(Options, options);
+                }
             }
         }
 

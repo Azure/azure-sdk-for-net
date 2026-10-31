@@ -11,12 +11,8 @@ namespace Azure.AI.Projects
     public partial class FolderDataset : AIProjectDataset
     {
         /// <summary> Initializes a new instance of <see cref="FolderDataset"/>. </summary>
-        /// <param name="dataUri"> URI of the data ([example](https://go.microsoft.com/fwlink/?linkid=2202330)). </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="dataUri"/> is null. </exception>
-        public FolderDataset(Uri dataUri) : base(dataUri, DatasetType.UriFolder)
+        public FolderDataset() : base(DatasetType.UriFolder)
         {
-            Argument.AssertNotNull(dataUri, nameof(dataUri));
-
         }
 
         /// <summary> Initializes a new instance of <see cref="FolderDataset"/>. </summary>

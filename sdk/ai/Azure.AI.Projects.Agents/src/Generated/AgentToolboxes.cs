@@ -133,7 +133,9 @@ namespace Azure.AI.Projects.Agents
                 skills?.ToList() as IList<ToolboxSkill> ?? new ChangeTrackingList<ToolboxSkill>(),
                 policies,
                 default);
-            ClientResult result = CreateVersion(name, spreadModel, cancellationToken.ToRequestOptions());
+            using Utf8JsonBinaryContent content = new Utf8JsonBinaryContent();
+            content.JsonWriter.WriteObjectValue(spreadModel, new LifecycleModelReaderWriterOptions(LifecycleVisibility.Create, "W"));
+            ClientResult result = CreateVersion(name, content, cancellationToken.ToRequestOptions());
             return ClientResult.FromValue((ToolboxVersion)result, result.GetRawResponse());
         }
 
@@ -160,7 +162,9 @@ namespace Azure.AI.Projects.Agents
                 skills?.ToList() as IList<ToolboxSkill> ?? new ChangeTrackingList<ToolboxSkill>(),
                 policies,
                 default);
-            ClientResult result = await CreateVersionAsync(name, spreadModel, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
+            using Utf8JsonBinaryContent content = new Utf8JsonBinaryContent();
+            content.JsonWriter.WriteObjectValue(spreadModel, new LifecycleModelReaderWriterOptions(LifecycleVisibility.Create, "W"));
+            ClientResult result = await CreateVersionAsync(name, content, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
             return ClientResult.FromValue((ToolboxVersion)result, result.GetRawResponse());
         }
 

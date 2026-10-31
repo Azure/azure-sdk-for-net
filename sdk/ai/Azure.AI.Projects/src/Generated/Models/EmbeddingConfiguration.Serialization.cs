@@ -75,10 +75,16 @@ namespace Azure.AI.Projects
             {
                 throw new FormatException($"The model {nameof(EmbeddingConfiguration)} does not support writing '{format}' format.");
             }
-            writer.WritePropertyName("modelDeploymentName"u8);
-            writer.WriteStringValue(ModelDeploymentName);
-            writer.WritePropertyName("embeddingField"u8);
-            writer.WriteStringValue(EmbeddingField);
+            if (LifecycleModelReaderWriterOptions.IsVisible(options, LifecycleVisibility.Create))
+            {
+                writer.WritePropertyName("modelDeploymentName"u8);
+                writer.WriteStringValue(ModelDeploymentName);
+            }
+            if (LifecycleModelReaderWriterOptions.IsVisible(options, LifecycleVisibility.Create))
+            {
+                writer.WritePropertyName("embeddingField"u8);
+                writer.WriteStringValue(EmbeddingField);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
