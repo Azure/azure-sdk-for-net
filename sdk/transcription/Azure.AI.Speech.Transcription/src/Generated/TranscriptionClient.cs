@@ -169,7 +169,7 @@ namespace Azure.AI.Speech.Transcription
         [Experimental("SCME0004")]
         internal virtual ClientResult<TranscriptionResult> Transcribe(TranscriptionContent body, CancellationToken cancellationToken = default)
         {
-            using MultiPartFormContent content = body.ToMultipartFormContent();
+            using MultiPartFormContent content = body.ToMultipartFormContent(new LifecycleModelReaderWriterOptions(LifecycleVisibility.Create, "W"));
             ClientResult result = Transcribe(content, content.MediaType, cancellationToken.ToRequestOptions());
             return ClientResult.FromValue((TranscriptionResult)result, result.GetRawResponse());
         }
@@ -181,7 +181,7 @@ namespace Azure.AI.Speech.Transcription
         [Experimental("SCME0004")]
         internal virtual async Task<ClientResult<TranscriptionResult>> TranscribeAsync(TranscriptionContent body, CancellationToken cancellationToken = default)
         {
-            using MultiPartFormContent content = body.ToMultipartFormContent();
+            using MultiPartFormContent content = body.ToMultipartFormContent(new LifecycleModelReaderWriterOptions(LifecycleVisibility.Create, "W"));
             ClientResult result = await TranscribeAsync(content, content.MediaType, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
             return ClientResult.FromValue((TranscriptionResult)result, result.GetRawResponse());
         }

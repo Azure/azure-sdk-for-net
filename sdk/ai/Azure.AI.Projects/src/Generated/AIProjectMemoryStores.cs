@@ -120,7 +120,9 @@ namespace Azure.AI.Projects.Memory
             Argument.AssertNotNull(definition, nameof(definition));
 
             InternalCreateMemoryStoreRequest spreadModel = new InternalCreateMemoryStoreRequest(name, description, metadata ?? new ChangeTrackingDictionary<string, string>(), definition, default);
-            ClientResult result = CreateMemoryStore(spreadModel, cancellationToken.ToRequestOptions());
+            using Utf8JsonBinaryContent content = new Utf8JsonBinaryContent();
+            content.JsonWriter.WriteObjectValue(spreadModel, new LifecycleModelReaderWriterOptions(LifecycleVisibility.Create, "W"));
+            ClientResult result = CreateMemoryStore(content, cancellationToken.ToRequestOptions());
             return ClientResult.FromValue((MemoryStore)result, result.GetRawResponse());
         }
 
@@ -139,7 +141,9 @@ namespace Azure.AI.Projects.Memory
             Argument.AssertNotNull(definition, nameof(definition));
 
             InternalCreateMemoryStoreRequest spreadModel = new InternalCreateMemoryStoreRequest(name, description, metadata ?? new ChangeTrackingDictionary<string, string>(), definition, default);
-            ClientResult result = await CreateMemoryStoreAsync(spreadModel, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
+            using Utf8JsonBinaryContent content = new Utf8JsonBinaryContent();
+            content.JsonWriter.WriteObjectValue(spreadModel, new LifecycleModelReaderWriterOptions(LifecycleVisibility.Create, "W"));
+            ClientResult result = await CreateMemoryStoreAsync(content, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
             return ClientResult.FromValue((MemoryStore)result, result.GetRawResponse());
         }
 

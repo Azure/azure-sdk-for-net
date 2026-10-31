@@ -87,15 +87,18 @@ namespace Azure.AI.Projects
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
-            if (Optional.IsCollectionDefined(DomainSecrets))
+            if (LifecycleModelReaderWriterOptions.IsVisible(options, LifecycleVisibility.Create))
             {
-                writer.WritePropertyName("domain_secrets"u8);
-                writer.WriteStartArray();
-                foreach (InternalContainerNetworkPolicyDomainSecretParam item in DomainSecrets)
+                if (Optional.IsCollectionDefined(DomainSecrets))
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WritePropertyName("domain_secrets"u8);
+                    writer.WriteStartArray();
+                    foreach (InternalContainerNetworkPolicyDomainSecretParam item in DomainSecrets)
+                    {
+                        writer.WriteObjectValue(item, options);
+                    }
+                    writer.WriteEndArray();
                 }
-                writer.WriteEndArray();
             }
         }
 

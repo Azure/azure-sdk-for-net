@@ -75,38 +75,11 @@ namespace Azure.AI.Projects
             {
                 throw new FormatException($"The model {nameof(AIProjectIndexFieldMapping)} does not support writing '{format}' format.");
             }
-            writer.WritePropertyName("contentFields"u8);
-            writer.WriteStartArray();
-            foreach (string item in ContentFields)
+            if (LifecycleModelReaderWriterOptions.IsVisible(options, LifecycleVisibility.Create))
             {
-                if (item == null)
-                {
-                    writer.WriteNullValue();
-                    continue;
-                }
-                writer.WriteStringValue(item);
-            }
-            writer.WriteEndArray();
-            if (Optional.IsDefined(FilepathField))
-            {
-                writer.WritePropertyName("filepathField"u8);
-                writer.WriteStringValue(FilepathField);
-            }
-            if (Optional.IsDefined(TitleField))
-            {
-                writer.WritePropertyName("titleField"u8);
-                writer.WriteStringValue(TitleField);
-            }
-            if (Optional.IsDefined(UrlField))
-            {
-                writer.WritePropertyName("urlField"u8);
-                writer.WriteStringValue(UrlField);
-            }
-            if (Optional.IsCollectionDefined(VectorFields))
-            {
-                writer.WritePropertyName("vectorFields"u8);
+                writer.WritePropertyName("contentFields"u8);
                 writer.WriteStartArray();
-                foreach (string item in VectorFields)
+                foreach (string item in ContentFields)
                 {
                     if (item == null)
                     {
@@ -117,20 +90,65 @@ namespace Azure.AI.Projects
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(MetadataFields))
+            if (LifecycleModelReaderWriterOptions.IsVisible(options, LifecycleVisibility.Create))
             {
-                writer.WritePropertyName("metadataFields"u8);
-                writer.WriteStartArray();
-                foreach (string item in MetadataFields)
+                if (Optional.IsDefined(FilepathField))
                 {
-                    if (item == null)
-                    {
-                        writer.WriteNullValue();
-                        continue;
-                    }
-                    writer.WriteStringValue(item);
+                    writer.WritePropertyName("filepathField"u8);
+                    writer.WriteStringValue(FilepathField);
                 }
-                writer.WriteEndArray();
+            }
+            if (LifecycleModelReaderWriterOptions.IsVisible(options, LifecycleVisibility.Create))
+            {
+                if (Optional.IsDefined(TitleField))
+                {
+                    writer.WritePropertyName("titleField"u8);
+                    writer.WriteStringValue(TitleField);
+                }
+            }
+            if (LifecycleModelReaderWriterOptions.IsVisible(options, LifecycleVisibility.Create))
+            {
+                if (Optional.IsDefined(UrlField))
+                {
+                    writer.WritePropertyName("urlField"u8);
+                    writer.WriteStringValue(UrlField);
+                }
+            }
+            if (LifecycleModelReaderWriterOptions.IsVisible(options, LifecycleVisibility.Create))
+            {
+                if (Optional.IsCollectionDefined(VectorFields))
+                {
+                    writer.WritePropertyName("vectorFields"u8);
+                    writer.WriteStartArray();
+                    foreach (string item in VectorFields)
+                    {
+                        if (item == null)
+                        {
+                            writer.WriteNullValue();
+                            continue;
+                        }
+                        writer.WriteStringValue(item);
+                    }
+                    writer.WriteEndArray();
+                }
+            }
+            if (LifecycleModelReaderWriterOptions.IsVisible(options, LifecycleVisibility.Create))
+            {
+                if (Optional.IsCollectionDefined(MetadataFields))
+                {
+                    writer.WritePropertyName("metadataFields"u8);
+                    writer.WriteStartArray();
+                    foreach (string item in MetadataFields)
+                    {
+                        if (item == null)
+                        {
+                            writer.WriteNullValue();
+                            continue;
+                        }
+                        writer.WriteStringValue(item);
+                    }
+                    writer.WriteEndArray();
+                }
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {

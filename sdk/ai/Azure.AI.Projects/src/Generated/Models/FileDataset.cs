@@ -11,12 +11,8 @@ namespace Azure.AI.Projects
     public partial class FileDataset : AIProjectDataset
     {
         /// <summary> Initializes a new instance of <see cref="FileDataset"/>. </summary>
-        /// <param name="dataUri"> URI of the data ([example](https://go.microsoft.com/fwlink/?linkid=2202330)). </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="dataUri"/> is null. </exception>
-        public FileDataset(Uri dataUri) : base(dataUri, DatasetType.UriFile)
+        public FileDataset() : base(DatasetType.UriFile)
         {
-            Argument.AssertNotNull(dataUri, nameof(dataUri));
-
         }
 
         /// <summary> Initializes a new instance of <see cref="FileDataset"/>. </summary>

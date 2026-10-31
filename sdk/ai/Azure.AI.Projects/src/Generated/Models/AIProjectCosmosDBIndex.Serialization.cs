@@ -12,11 +12,6 @@ namespace Azure.AI.Projects
     /// <summary> CosmosDB Vector Store Index Definition. </summary>
     public partial class AIProjectCosmosDBIndex : AIProjectIndex, IJsonModel<AIProjectCosmosDBIndex>
     {
-        /// <summary> Initializes a new instance of <see cref="AIProjectCosmosDBIndex"/> for deserialization. </summary>
-        internal AIProjectCosmosDBIndex()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override AIProjectIndex PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
@@ -76,16 +71,46 @@ namespace Azure.AI.Projects
                 throw new FormatException($"The model {nameof(AIProjectCosmosDBIndex)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            writer.WritePropertyName("connectionName"u8);
-            writer.WriteStringValue(ConnectionName);
-            writer.WritePropertyName("databaseName"u8);
-            writer.WriteStringValue(DatabaseName);
-            writer.WritePropertyName("containerName"u8);
-            writer.WriteStringValue(ContainerName);
-            writer.WritePropertyName("embeddingConfiguration"u8);
-            writer.WriteObjectValue(EmbeddingConfiguration, options);
-            writer.WritePropertyName("fieldMapping"u8);
-            writer.WriteObjectValue(FieldMapping, options);
+            if (LifecycleModelReaderWriterOptions.IsVisible(options, LifecycleVisibility.Create))
+            {
+                if (Optional.IsDefined(ConnectionName))
+                {
+                    writer.WritePropertyName("connectionName"u8);
+                    writer.WriteStringValue(ConnectionName);
+                }
+            }
+            if (LifecycleModelReaderWriterOptions.IsVisible(options, LifecycleVisibility.Create))
+            {
+                if (Optional.IsDefined(DatabaseName))
+                {
+                    writer.WritePropertyName("databaseName"u8);
+                    writer.WriteStringValue(DatabaseName);
+                }
+            }
+            if (LifecycleModelReaderWriterOptions.IsVisible(options, LifecycleVisibility.Create))
+            {
+                if (Optional.IsDefined(ContainerName))
+                {
+                    writer.WritePropertyName("containerName"u8);
+                    writer.WriteStringValue(ContainerName);
+                }
+            }
+            if (LifecycleModelReaderWriterOptions.IsVisible(options, LifecycleVisibility.Create))
+            {
+                if (Optional.IsDefined(EmbeddingConfiguration))
+                {
+                    writer.WritePropertyName("embeddingConfiguration"u8);
+                    writer.WriteObjectValue(EmbeddingConfiguration, options);
+                }
+            }
+            if (LifecycleModelReaderWriterOptions.IsVisible(options, LifecycleVisibility.Create))
+            {
+                if (Optional.IsDefined(FieldMapping))
+                {
+                    writer.WritePropertyName("fieldMapping"u8);
+                    writer.WriteObjectValue(FieldMapping, options);
+                }
+            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -190,11 +215,19 @@ namespace Azure.AI.Projects
                 }
                 if (prop.NameEquals("embeddingConfiguration"u8))
                 {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     embeddingConfiguration = EmbeddingConfiguration.DeserializeEmbeddingConfiguration(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("fieldMapping"u8))
                 {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     fieldMapping = AIProjectIndexFieldMapping.DeserializeAIProjectIndexFieldMapping(prop.Value, options);
                     continue;
                 }
