@@ -18,7 +18,7 @@ namespace Azure.Provisioning.Network
         private BicepValue<ResourceIdentifier> _privateLinkServiceId;
         private BicepList<string> _groupIds;
         private BicepValue<string> _requestMessage;
-        private NetworkPrivateLinkServiceConnectionState _privateLinkServiceConnectionState;
+        private NetworkPrivateLinkServiceConnectionState _connectionState;
         private ApprovalReference _approvalReference;
 
         /// <summary> Creates a new PrivateLinkServiceConnectionProperties. </summary>
@@ -81,18 +81,18 @@ namespace Azure.Provisioning.Network
             }
         }
 
-        /// <summary> Gets or sets the PrivateLinkServiceConnectionState. </summary>
-        public NetworkPrivateLinkServiceConnectionState PrivateLinkServiceConnectionState
+        /// <summary> Gets or sets the ConnectionState. </summary>
+        public NetworkPrivateLinkServiceConnectionState ConnectionState
         {
             get
             {
                 Initialize();
-                return _privateLinkServiceConnectionState;
+                return _connectionState;
             }
             set
             {
                 Initialize();
-                AssignOrReplace(ref _privateLinkServiceConnectionState, value);
+                AssignOrReplace(ref _connectionState, value);
             }
         }
 
@@ -136,7 +136,7 @@ namespace Azure.Provisioning.Network
             _privateLinkServiceId = DefineProperty<ResourceIdentifier>(nameof(PrivateLinkServiceId), new string[] { "privateLinkServiceId" });
             _groupIds = DefineListProperty<string>(nameof(GroupIds), new string[] { "groupIds" });
             _requestMessage = DefineProperty<string>(nameof(RequestMessage), new string[] { "requestMessage" });
-            _privateLinkServiceConnectionState = DefineModelProperty<NetworkPrivateLinkServiceConnectionState>(nameof(PrivateLinkServiceConnectionState), new string[] { "privateLinkServiceConnectionState" });
+            _connectionState = DefineModelProperty<NetworkPrivateLinkServiceConnectionState>(nameof(ConnectionState), new string[] { "privateLinkServiceConnectionState" });
             _approvalReference = DefineModelProperty<ApprovalReference>(nameof(ApprovalReference), new string[] { "approvalReference" });
             DefineAdditionalProperties();
         }

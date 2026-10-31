@@ -29,8 +29,6 @@ namespace Azure.ResourceManager.Network
     {
         private readonly ClientDiagnostics _expressRouteGatewaysClientDiagnostics;
         private readonly ExpressRouteGateways _expressRouteGatewaysRestClient;
-        private readonly ClientDiagnostics _expressRouteConnectionsClientDiagnostics;
-        private readonly ExpressRouteConnections _expressRouteConnectionsRestClient;
         private readonly ExpressRouteGatewayData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Network/expressRouteGateways";
@@ -54,11 +52,8 @@ namespace Azure.ResourceManager.Network
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ExpressRouteGatewayResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string expressRouteGatewayApiVersion);
             _expressRouteGatewaysClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, Diagnostics);
-            _expressRouteGatewaysRestClient = new ExpressRouteGateways(_expressRouteGatewaysClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, expressRouteGatewayApiVersion ?? "2026-01-01");
-            _expressRouteConnectionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, Diagnostics);
-            _expressRouteConnectionsRestClient = new ExpressRouteConnections(_expressRouteConnectionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, expressRouteGatewayApiVersion ?? "2026-01-01");
+            _expressRouteGatewaysRestClient = new ExpressRouteGateways(_expressRouteGatewaysClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 
@@ -111,7 +106,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -159,7 +154,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -207,7 +202,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -266,7 +261,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -325,7 +320,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -374,7 +369,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -423,7 +418,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -480,7 +475,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -537,7 +532,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -599,7 +594,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -661,7 +656,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -717,7 +712,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -773,7 +768,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -829,7 +824,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -873,102 +868,6 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary>
-        /// Lists ExpressRouteConnections.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteGateways/{expressRouteGatewayName}/expressRouteConnections. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ExpressRouteGateways_List. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
-        /// </item>
-        /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="ExpressRouteGatewayResource"/>. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ExpressRouteConnectionList>> GetExpressRouteConnectionsAsync(CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _expressRouteConnectionsClientDiagnostics.CreateScope("ExpressRouteGatewayResource.GetExpressRouteConnections");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _expressRouteConnectionsRestClient.CreateGetExpressRouteConnectionsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<ExpressRouteConnectionList> response = Response.FromValue(ExpressRouteConnectionList.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Lists ExpressRouteConnections.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteGateways/{expressRouteGatewayName}/expressRouteConnections. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ExpressRouteGateways_List. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
-        /// </item>
-        /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="ExpressRouteGatewayResource"/>. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ExpressRouteConnectionList> GetExpressRouteConnections(CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _expressRouteConnectionsClientDiagnostics.CreateScope("ExpressRouteGatewayResource.GetExpressRouteConnections");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _expressRouteConnectionsRestClient.CreateGetExpressRouteConnectionsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<ExpressRouteConnectionList> response = Response.FromValue(ExpressRouteConnectionList.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
         /// Starts failover simulation on the ExpressRoute gateway for the specified peering location.
         /// <list type="bullet">
         /// <item>
@@ -981,7 +880,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -1041,7 +940,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -1101,7 +1000,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -1160,7 +1059,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>

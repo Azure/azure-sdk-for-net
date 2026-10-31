@@ -1447,6 +1447,42 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         }
 
         /// <summary>
+        /// Gets an object representing a <see cref="IPAddressResource"/> along with the instance operations that can be performed on it but with no data.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecTestsArmClient.GetIPAddressResource(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="IPAddressResource"/> object. </returns>
+        public static IPAddressResource GetIPAddressResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableAzureGeneratorMgmtTypeSpecTestsArmClient(client).GetIPAddressResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="AcronymWidgetResource"/> along with the instance operations that can be performed on it but with no data.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecTestsArmClient.GetAcronymWidgetResource(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="AcronymWidgetResource"/> object. </returns>
+        public static AcronymWidgetResource GetAcronymWidgetResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableAzureGeneratorMgmtTypeSpecTestsArmClient(client).GetAcronymWidgetResource(id);
+        }
+
+        /// <summary>
         /// Gets an object representing a <see cref="BarResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
@@ -2784,6 +2820,119 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableAzureGeneratorMgmtTypeSpecTestsResourceGroupResource(resourceGroupResource).GetSolutionsApplicationDefinition();
+        }
+
+        /// <summary>
+        /// Gets a collection of IPAddresses in the <see cref="ResourceGroupResource"/>
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecTestsResourceGroupResource.GetIPAddresses()"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        /// <returns> An object representing collection of IPAddresses and their operations over a IPAddressResource. </returns>
+        public static IPAddressCollection GetIPAddresses(this ResourceGroupResource resourceGroupResource)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableAzureGeneratorMgmtTypeSpecTestsResourceGroupResource(resourceGroupResource).GetIPAddresses();
+        }
+
+        /// <summary>
+        /// Get a IpAddress
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecTestsResourceGroupResource.GetIPAddressAsync(string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="ipAddressName"> The name of the IpAddress. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<IPAddressResource>> GetIPAddressAsync(this ResourceGroupResource resourceGroupResource, string ipAddressName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableAzureGeneratorMgmtTypeSpecTestsResourceGroupResource(resourceGroupResource).GetIPAddressAsync(ipAddressName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get a IpAddress
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecTestsResourceGroupResource.GetIPAddress(string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="ipAddressName"> The name of the IpAddress. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<IPAddressResource> GetIPAddress(this ResourceGroupResource resourceGroupResource, string ipAddressName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableAzureGeneratorMgmtTypeSpecTestsResourceGroupResource(resourceGroupResource).GetIPAddress(ipAddressName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets a collection of AcronymWidgets in the <see cref="ResourceGroupResource"/>
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecTestsResourceGroupResource.GetAcronymWidgets(string)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="sourceIPv6Address"> The sourceIPv6Address for the resource. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        /// <returns> An object representing collection of AcronymWidgets and their operations over a AcronymWidgetResource. </returns>
+        public static AcronymWidgetCollection GetAcronymWidgets(this ResourceGroupResource resourceGroupResource, string sourceIPv6Address)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableAzureGeneratorMgmtTypeSpecTestsResourceGroupResource(resourceGroupResource).GetAcronymWidgets(sourceIPv6Address);
+        }
+
+        /// <summary>
+        /// Get a AcronymWidget
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecTestsResourceGroupResource.GetAcronymWidgetAsync(string, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="sourceIPv6Address"> The sourceIPv6Address for the resource. </param>
+        /// <param name="sourceIPAddress"> The name of the AcronymWidget. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<AcronymWidgetResource>> GetAcronymWidgetAsync(this ResourceGroupResource resourceGroupResource, string sourceIPv6Address, string sourceIPAddress, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableAzureGeneratorMgmtTypeSpecTestsResourceGroupResource(resourceGroupResource).GetAcronymWidgetAsync(sourceIPv6Address, sourceIPAddress, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get a AcronymWidget
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecTestsResourceGroupResource.GetAcronymWidget(string, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="sourceIPv6Address"> The sourceIPv6Address for the resource. </param>
+        /// <param name="sourceIPAddress"> The name of the AcronymWidget. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<AcronymWidgetResource> GetAcronymWidget(this ResourceGroupResource resourceGroupResource, string sourceIPv6Address, string sourceIPAddress, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableAzureGeneratorMgmtTypeSpecTestsResourceGroupResource(resourceGroupResource).GetAcronymWidget(sourceIPv6Address, sourceIPAddress, cancellationToken);
         }
 
         /// <summary>

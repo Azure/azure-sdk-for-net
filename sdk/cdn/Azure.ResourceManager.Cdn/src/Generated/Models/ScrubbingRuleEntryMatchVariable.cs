@@ -18,10 +18,6 @@ namespace Azure.ResourceManager.Cdn.Models
         private const string RequestIPAddressValue = "RequestIPAddress";
         private const string RequestUriValue = "RequestUri";
         private const string QueryStringArgNamesValue = "QueryStringArgNames";
-        private const string RequestHeaderNamesValue = "RequestHeaderNames";
-        private const string RequestCookieNamesValue = "RequestCookieNames";
-        private const string RequestBodyPostArgNamesValue = "RequestBodyPostArgNames";
-        private const string RequestBodyJsonArgNamesValue = "RequestBodyJsonArgNames";
 
         /// <summary> Initializes a new instance of <see cref="ScrubbingRuleEntryMatchVariable"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -41,18 +37,6 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> Gets the QueryStringArgNames. </summary>
         public static ScrubbingRuleEntryMatchVariable QueryStringArgNames { get; } = new ScrubbingRuleEntryMatchVariable(QueryStringArgNamesValue);
-
-        /// <summary> Gets the RequestHeaderNames. </summary>
-        public static ScrubbingRuleEntryMatchVariable RequestHeaderNames { get; } = new ScrubbingRuleEntryMatchVariable(RequestHeaderNamesValue);
-
-        /// <summary> Gets the RequestCookieNames. </summary>
-        public static ScrubbingRuleEntryMatchVariable RequestCookieNames { get; } = new ScrubbingRuleEntryMatchVariable(RequestCookieNamesValue);
-
-        /// <summary> Gets the RequestBodyPostArgNames. </summary>
-        public static ScrubbingRuleEntryMatchVariable RequestBodyPostArgNames { get; } = new ScrubbingRuleEntryMatchVariable(RequestBodyPostArgNamesValue);
-
-        /// <summary> Gets the RequestBodyJsonArgNames. </summary>
-        public static ScrubbingRuleEntryMatchVariable RequestBodyJsonArgNames { get; } = new ScrubbingRuleEntryMatchVariable(RequestBodyJsonArgNamesValue);
 
         /// <summary> Determines if two <see cref="ScrubbingRuleEntryMatchVariable"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

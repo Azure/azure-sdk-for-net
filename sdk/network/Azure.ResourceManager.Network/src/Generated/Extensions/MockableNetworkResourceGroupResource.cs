@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.ComponentModel;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -23,8 +24,6 @@ namespace Azure.ResourceManager.Network.Mocking
     {
         private ClientDiagnostics _privateLinkServicesClientDiagnostics;
         private PrivateLinkServices _privateLinkServicesRestClient;
-        private ClientDiagnostics _expressRouteGatewaysClientDiagnostics;
-        private ExpressRouteGateways _expressRouteGatewaysRestClient;
         private ClientDiagnostics _publicIPAddressesOperationGroupClientDiagnostics;
         private PublicIPAddressesOperationGroup _publicIPAddressesOperationGroupRestClient;
         private ClientDiagnostics _availableResourceGroupDelegationsClientDiagnostics;
@@ -55,12 +54,8 @@ namespace Azure.ResourceManager.Network.Mocking
             Pipeline,
             Diagnostics.ApplicationId,
             Endpoint,
-            "2026-01-01",
+            "2026-03-01",
             resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
-
-        private ClientDiagnostics ExpressRouteGatewaysClientDiagnostics => _expressRouteGatewaysClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-
-        private ExpressRouteGateways ExpressRouteGatewaysRestClient => _expressRouteGatewaysRestClient ??= new ExpressRouteGateways(ExpressRouteGatewaysClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-01-01");
 
         private ClientDiagnostics PublicIPAddressesOperationGroupClientDiagnostics => _publicIPAddressesOperationGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
@@ -68,15 +63,15 @@ namespace Azure.ResourceManager.Network.Mocking
 
         private ClientDiagnostics AvailableResourceGroupDelegationsClientDiagnostics => _availableResourceGroupDelegationsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private AvailableResourceGroupDelegations AvailableResourceGroupDelegationsRestClient => _availableResourceGroupDelegationsRestClient ??= new AvailableResourceGroupDelegations(AvailableResourceGroupDelegationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-01-01");
+        private AvailableResourceGroupDelegations AvailableResourceGroupDelegationsRestClient => _availableResourceGroupDelegationsRestClient ??= new AvailableResourceGroupDelegations(AvailableResourceGroupDelegationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-03-01");
 
         private ClientDiagnostics AvailableServiceAliasesClientDiagnostics => _availableServiceAliasesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private AvailableServiceAliases AvailableServiceAliasesRestClient => _availableServiceAliasesRestClient ??= new AvailableServiceAliases(AvailableServiceAliasesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-01-01");
+        private AvailableServiceAliases AvailableServiceAliasesRestClient => _availableServiceAliasesRestClient ??= new AvailableServiceAliases(AvailableServiceAliasesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-03-01");
 
         private ClientDiagnostics AvailablePrivateEndpointTypesClientDiagnostics => _availablePrivateEndpointTypesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private AvailablePrivateEndpointTypes AvailablePrivateEndpointTypesRestClient => _availablePrivateEndpointTypesRestClient ??= new AvailablePrivateEndpointTypes(AvailablePrivateEndpointTypesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-01-01");
+        private AvailablePrivateEndpointTypes AvailablePrivateEndpointTypesRestClient => _availablePrivateEndpointTypesRestClient ??= new AvailablePrivateEndpointTypes(AvailablePrivateEndpointTypesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-03-01");
 
         private ClientDiagnostics VirtualMachineScaleSetNetworkClientDiagnostics => _virtualMachineScaleSetNetworkClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
@@ -102,7 +97,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -131,7 +126,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -167,7 +162,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -196,7 +191,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -232,7 +227,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -261,7 +256,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -297,7 +292,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -326,7 +321,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -362,7 +357,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -391,7 +386,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -427,7 +422,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -457,7 +452,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -494,21 +489,21 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="publicIpAddressName"> The name of the public IP address. </param>
+        /// <param name="publicIPAddressName"> The name of the public IP address. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="publicIpAddressName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="publicIpAddressName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="publicIPAddressName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="publicIPAddressName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<PublicIPAddressResource>> GetPublicIPAddressAsync(string publicIpAddressName, string expand = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PublicIPAddressResource>> GetPublicIPAddressAsync(string publicIPAddressName, string expand = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(publicIpAddressName, nameof(publicIpAddressName));
+            Argument.AssertNotNullOrEmpty(publicIPAddressName, nameof(publicIPAddressName));
 
-            return await GetPublicIPAddresses().GetAsync(publicIpAddressName, expand, cancellationToken).ConfigureAwait(false);
+            return await GetPublicIPAddresses().GetAsync(publicIPAddressName, expand, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -524,21 +519,21 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="publicIpAddressName"> The name of the public IP address. </param>
+        /// <param name="publicIPAddressName"> The name of the public IP address. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="publicIpAddressName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="publicIpAddressName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="publicIPAddressName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="publicIPAddressName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<PublicIPAddressResource> GetPublicIPAddress(string publicIpAddressName, string expand = default, CancellationToken cancellationToken = default)
+        public virtual Response<PublicIPAddressResource> GetPublicIPAddress(string publicIPAddressName, string expand = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(publicIpAddressName, nameof(publicIpAddressName));
+            Argument.AssertNotNullOrEmpty(publicIPAddressName, nameof(publicIPAddressName));
 
-            return GetPublicIPAddresses().Get(publicIpAddressName, expand, cancellationToken);
+            return GetPublicIPAddresses().Get(publicIPAddressName, expand, cancellationToken);
         }
 
         /// <summary> Gets a collection of DdosCustomPolicies in the <see cref="ResourceGroupResource"/>. </summary>
@@ -561,7 +556,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -590,7 +585,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -626,7 +621,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -655,7 +650,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -691,7 +686,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -720,7 +715,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -756,7 +751,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -785,7 +780,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -821,7 +816,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -850,7 +845,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -886,7 +881,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -915,7 +910,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -951,7 +946,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -981,7 +976,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1018,7 +1013,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1047,7 +1042,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1083,7 +1078,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1113,7 +1108,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1150,7 +1145,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1180,7 +1175,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1217,7 +1212,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1248,7 +1243,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1286,7 +1281,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1316,7 +1311,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1353,7 +1348,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1383,7 +1378,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1420,7 +1415,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1450,7 +1445,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1487,7 +1482,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1516,7 +1511,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1552,7 +1547,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1582,7 +1577,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1619,7 +1614,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1648,7 +1643,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1684,7 +1679,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1714,7 +1709,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1751,7 +1746,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1781,7 +1776,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1818,21 +1813,21 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="publicIpPrefixName"> The name of the public IP prefix. </param>
+        /// <param name="publicIPPrefixName"> The name of the public IP prefix. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="publicIpPrefixName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="publicIpPrefixName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="publicIPPrefixName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="publicIPPrefixName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<PublicIPPrefixResource>> GetPublicIPPrefixAsync(string publicIpPrefixName, string expand = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PublicIPPrefixResource>> GetPublicIPPrefixAsync(string publicIPPrefixName, string expand = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(publicIpPrefixName, nameof(publicIpPrefixName));
+            Argument.AssertNotNullOrEmpty(publicIPPrefixName, nameof(publicIPPrefixName));
 
-            return await GetPublicIPPrefixes().GetAsync(publicIpPrefixName, expand, cancellationToken).ConfigureAwait(false);
+            return await GetPublicIPPrefixes().GetAsync(publicIPPrefixName, expand, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1848,21 +1843,21 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="publicIpPrefixName"> The name of the public IP prefix. </param>
+        /// <param name="publicIPPrefixName"> The name of the public IP prefix. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="publicIpPrefixName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="publicIpPrefixName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="publicIPPrefixName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="publicIPPrefixName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<PublicIPPrefixResource> GetPublicIPPrefix(string publicIpPrefixName, string expand = default, CancellationToken cancellationToken = default)
+        public virtual Response<PublicIPPrefixResource> GetPublicIPPrefix(string publicIPPrefixName, string expand = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(publicIpPrefixName, nameof(publicIpPrefixName));
+            Argument.AssertNotNullOrEmpty(publicIPPrefixName, nameof(publicIPPrefixName));
 
-            return GetPublicIPPrefixes().Get(publicIpPrefixName, expand, cancellationToken);
+            return GetPublicIPPrefixes().Get(publicIPPrefixName, expand, cancellationToken);
         }
 
         /// <summary> Gets a collection of RouteFilters in the <see cref="ResourceGroupResource"/>. </summary>
@@ -1885,7 +1880,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1915,7 +1910,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1952,7 +1947,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1982,7 +1977,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2019,7 +2014,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2048,7 +2043,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2084,7 +2079,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2114,7 +2109,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2151,7 +2146,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2181,7 +2176,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2218,7 +2213,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2247,7 +2242,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2283,7 +2278,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2312,7 +2307,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2348,7 +2343,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2377,7 +2372,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2413,7 +2408,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2442,7 +2437,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2478,7 +2473,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2508,7 +2503,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2545,20 +2540,20 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="virtualWANName"> The name of the VirtualWAN being retrieved. </param>
+        /// <param name="virtualWanName"> The name of the VirtualWAN being retrieved. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="virtualWANName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="virtualWANName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="virtualWanName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="virtualWanName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<VirtualWanResource>> GetVirtualWanAsync(string virtualWANName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<VirtualWanResource>> GetVirtualWanAsync(string virtualWanName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(virtualWANName, nameof(virtualWANName));
+            Argument.AssertNotNullOrEmpty(virtualWanName, nameof(virtualWanName));
 
-            return await GetVirtualWans().GetAsync(virtualWANName, cancellationToken).ConfigureAwait(false);
+            return await GetVirtualWans().GetAsync(virtualWanName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -2574,20 +2569,20 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="virtualWANName"> The name of the VirtualWAN being retrieved. </param>
+        /// <param name="virtualWanName"> The name of the VirtualWAN being retrieved. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="virtualWANName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="virtualWANName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="virtualWanName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="virtualWanName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<VirtualWanResource> GetVirtualWan(string virtualWANName, CancellationToken cancellationToken = default)
+        public virtual Response<VirtualWanResource> GetVirtualWan(string virtualWanName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(virtualWANName, nameof(virtualWANName));
+            Argument.AssertNotNullOrEmpty(virtualWanName, nameof(virtualWanName));
 
-            return GetVirtualWans().Get(virtualWANName, cancellationToken);
+            return GetVirtualWans().Get(virtualWanName, cancellationToken);
         }
 
         /// <summary> Gets a collection of VpnSites in the <see cref="ResourceGroupResource"/>. </summary>
@@ -2610,7 +2605,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2639,7 +2634,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2675,7 +2670,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2704,7 +2699,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2740,7 +2735,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2769,7 +2764,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2805,7 +2800,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2834,7 +2829,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2870,7 +2865,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2899,7 +2894,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2935,7 +2930,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2964,7 +2959,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -3000,7 +2995,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -3029,7 +3024,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -3065,7 +3060,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -3094,7 +3089,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -3130,7 +3125,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -3159,7 +3154,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -3195,7 +3190,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -3224,7 +3219,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -3260,21 +3255,21 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="customIpPrefixName"> The name of the custom IP prefix. </param>
+        /// <param name="customIPPrefixName"> The name of the custom IP prefix. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="customIpPrefixName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="customIpPrefixName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="customIPPrefixName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="customIPPrefixName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<CustomIPPrefixResource>> GetCustomIPPrefixAsync(string customIpPrefixName, string expand = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CustomIPPrefixResource>> GetCustomIPPrefixAsync(string customIPPrefixName, string expand = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(customIpPrefixName, nameof(customIpPrefixName));
+            Argument.AssertNotNullOrEmpty(customIPPrefixName, nameof(customIPPrefixName));
 
-            return await GetCustomIPPrefixes().GetAsync(customIpPrefixName, expand, cancellationToken).ConfigureAwait(false);
+            return await GetCustomIPPrefixes().GetAsync(customIPPrefixName, expand, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -3290,21 +3285,21 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="customIpPrefixName"> The name of the custom IP prefix. </param>
+        /// <param name="customIPPrefixName"> The name of the custom IP prefix. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="customIpPrefixName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="customIpPrefixName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="customIPPrefixName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="customIPPrefixName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<CustomIPPrefixResource> GetCustomIPPrefix(string customIpPrefixName, string expand = default, CancellationToken cancellationToken = default)
+        public virtual Response<CustomIPPrefixResource> GetCustomIPPrefix(string customIPPrefixName, string expand = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(customIpPrefixName, nameof(customIpPrefixName));
+            Argument.AssertNotNullOrEmpty(customIPPrefixName, nameof(customIPPrefixName));
 
-            return GetCustomIPPrefixes().Get(customIpPrefixName, expand, cancellationToken);
+            return GetCustomIPPrefixes().Get(customIPPrefixName, expand, cancellationToken);
         }
 
         /// <summary> Gets a collection of DscpConfigurations in the <see cref="ResourceGroupResource"/>. </summary>
@@ -3327,7 +3322,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -3356,7 +3351,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -3392,7 +3387,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -3421,7 +3416,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -3523,7 +3518,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -3532,11 +3527,11 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation<PrivateLinkServiceVisibility>> CheckPrivateLinkServiceVisibilityByResourceGroupAsync(WaitUntil waitUntil, AzureLocation location, CheckPrivateLinkServiceVisibilityRequest content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<PrivateLinkServiceVisibility>> CheckPrivateLinkServiceVisibilityAsync(WaitUntil waitUntil, AzureLocation location, CheckPrivateLinkServiceVisibilityRequest content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = PrivateLinkServicesClientDiagnostics.CreateScope("MockableNetworkResourceGroupResource.CheckPrivateLinkServiceVisibilityByResourceGroup");
+            using DiagnosticScope scope = PrivateLinkServicesClientDiagnostics.CreateScope("MockableNetworkResourceGroupResource.CheckPrivateLinkServiceVisibility");
             scope.Start();
             try
             {
@@ -3544,7 +3539,7 @@ namespace Azure.ResourceManager.Network.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = PrivateLinkServicesRestClient.CreateCheckPrivateLinkServiceVisibilityByResourceGroupRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, location, CheckPrivateLinkServiceVisibilityRequest.ToRequestContent(content), context);
+                HttpMessage message = PrivateLinkServicesRestClient.CreateCheckPrivateLinkServiceVisibilityRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, location, CheckPrivateLinkServiceVisibilityRequest.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NetworkArmOperation<PrivateLinkServiceVisibility> operation = new NetworkArmOperation<PrivateLinkServiceVisibility>(
                     new PrivateLinkServiceVisibilityOperationSource(),
@@ -3579,7 +3574,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -3588,11 +3583,11 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation<PrivateLinkServiceVisibility> CheckPrivateLinkServiceVisibilityByResourceGroup(WaitUntil waitUntil, AzureLocation location, CheckPrivateLinkServiceVisibilityRequest content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<PrivateLinkServiceVisibility> CheckPrivateLinkServiceVisibility(WaitUntil waitUntil, AzureLocation location, CheckPrivateLinkServiceVisibilityRequest content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = PrivateLinkServicesClientDiagnostics.CreateScope("MockableNetworkResourceGroupResource.CheckPrivateLinkServiceVisibilityByResourceGroup");
+            using DiagnosticScope scope = PrivateLinkServicesClientDiagnostics.CreateScope("MockableNetworkResourceGroupResource.CheckPrivateLinkServiceVisibility");
             scope.Start();
             try
             {
@@ -3600,7 +3595,7 @@ namespace Azure.ResourceManager.Network.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = PrivateLinkServicesRestClient.CreateCheckPrivateLinkServiceVisibilityByResourceGroupRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, location, CheckPrivateLinkServiceVisibilityRequest.ToRequestContent(content), context);
+                HttpMessage message = PrivateLinkServicesRestClient.CreateCheckPrivateLinkServiceVisibilityRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, location, CheckPrivateLinkServiceVisibilityRequest.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NetworkArmOperation<PrivateLinkServiceVisibility> operation = new NetworkArmOperation<PrivateLinkServiceVisibility>(
                     new PrivateLinkServiceVisibilityOperationSource(),
@@ -3635,19 +3630,15 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> The location name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> A collection of <see cref="AutoApprovedPrivateLinkService"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<AutoApprovedPrivateLinkService> GetAutoApprovedPrivateLinkServicesByResourceGroupAsync(string location, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<AutoApprovedPrivateLinkService> GetAutoApprovedPrivateLinkServicesByResourceGroupPrivateLinkServicesAsync(AzureLocation location, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(location, nameof(location));
-
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
@@ -3658,7 +3649,7 @@ namespace Azure.ResourceManager.Network.Mocking
                 Id.ResourceGroupName,
                 location,
                 context,
-                "MockableNetworkResourceGroupResource.GetAutoApprovedPrivateLinkServicesByResourceGroup");
+                "MockableNetworkResourceGroupResource.GetAutoApprovedPrivateLinkServicesByResourceGroupPrivateLinkServices");
         }
 
         /// <summary>
@@ -3674,19 +3665,15 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> The location name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> A collection of <see cref="AutoApprovedPrivateLinkService"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<AutoApprovedPrivateLinkService> GetAutoApprovedPrivateLinkServicesByResourceGroup(string location, CancellationToken cancellationToken = default)
+        public virtual Pageable<AutoApprovedPrivateLinkService> GetAutoApprovedPrivateLinkServicesByResourceGroupPrivateLinkServices(AzureLocation location, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(location, nameof(location));
-
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
@@ -3697,95 +3684,7 @@ namespace Azure.ResourceManager.Network.Mocking
                 Id.ResourceGroupName,
                 location,
                 context,
-                "MockableNetworkResourceGroupResource.GetAutoApprovedPrivateLinkServicesByResourceGroup");
-        }
-
-        /// <summary>
-        /// Lists ExpressRoute gateways in a given resource group.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteGateways. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ExpressRouteGateways_ListByResourceGroup. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ExpressRouteGatewayList>> GetByResourceGroupAsync(CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = ExpressRouteGatewaysClientDiagnostics.CreateScope("MockableNetworkResourceGroupResource.GetByResourceGroup");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = ExpressRouteGatewaysRestClient.CreateGetByResourceGroupRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<ExpressRouteGatewayList> response = Response.FromValue(ExpressRouteGatewayList.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Lists ExpressRoute gateways in a given resource group.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteGateways. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ExpressRouteGateways_ListByResourceGroup. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ExpressRouteGatewayList> GetByResourceGroup(CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = ExpressRouteGatewaysClientDiagnostics.CreateScope("MockableNetworkResourceGroupResource.GetByResourceGroup");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = ExpressRouteGatewaysRestClient.CreateGetByResourceGroupRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<ExpressRouteGatewayList> response = Response.FromValue(ExpressRouteGatewayList.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+                "MockableNetworkResourceGroupResource.GetAutoApprovedPrivateLinkServicesByResourceGroupPrivateLinkServices");
         }
 
         /// <summary>
@@ -3879,19 +3778,15 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> The location name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> A collection of <see cref="AvailableDelegation"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<AvailableDelegation> GetAvailableResourceGroupDelegationsAsync(string location, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<AvailableDelegation> GetAvailableResourceGroupDelegationsAsync(AzureLocation location, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(location, nameof(location));
-
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
@@ -3918,19 +3813,15 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> The location name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> A collection of <see cref="AvailableDelegation"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<AvailableDelegation> GetAvailableResourceGroupDelegations(string location, CancellationToken cancellationToken = default)
+        public virtual Pageable<AvailableDelegation> GetAvailableResourceGroupDelegations(AzureLocation location, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(location, nameof(location));
-
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
@@ -3957,19 +3848,15 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> The location name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> A collection of <see cref="AvailableServiceAlias"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<AvailableServiceAlias> GetAvailableServiceAliasesByResourceGroupAsync(string location, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<AvailableServiceAlias> GetAvailableServiceAliasesByResourceGroupAsync(AzureLocation location, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(location, nameof(location));
-
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
@@ -3996,19 +3883,15 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> The location name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> A collection of <see cref="AvailableServiceAlias"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<AvailableServiceAlias> GetAvailableServiceAliasesByResourceGroup(string location, CancellationToken cancellationToken = default)
+        public virtual Pageable<AvailableServiceAlias> GetAvailableServiceAliasesByResourceGroup(AzureLocation location, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(location, nameof(location));
-
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
@@ -4035,19 +3918,15 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> The location name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> A collection of <see cref="AvailablePrivateEndpointType"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<AvailablePrivateEndpointType> GetAvailablePrivateEndpointTypesByResourceGroupAsync(string location, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<AvailablePrivateEndpointType> GetAvailablePrivateEndpointTypesByResourceGroupAsync(AzureLocation location, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(location, nameof(location));
-
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
@@ -4074,19 +3953,15 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> The location name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> A collection of <see cref="AvailablePrivateEndpointType"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<AvailablePrivateEndpointType> GetAvailablePrivateEndpointTypesByResourceGroup(string location, CancellationToken cancellationToken = default)
+        public virtual Pageable<AvailablePrivateEndpointType> GetAvailablePrivateEndpointTypesByResourceGroup(AzureLocation location, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(location, nameof(location));
-
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
@@ -4130,7 +4005,7 @@ namespace Azure.ResourceManager.Network.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new NetworkInterfaceDataAsync2CollectionResultOfT(
+            return new NetworkInterfaceDataAsync3CollectionResultOfT(
                 VirtualMachineScaleSetNetworkRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -4169,7 +4044,7 @@ namespace Azure.ResourceManager.Network.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new NetworkInterfaceData2CollectionResultOfT(
+            return new NetworkInterfaceData3CollectionResultOfT(
                 VirtualMachineScaleSetNetworkRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -4177,5 +4052,67 @@ namespace Azure.ResourceManager.Network.Mocking
                 context,
                 "MockableNetworkResourceGroupResource.GetVirtualMachineScaleSetNetworkInterfaces");
         }
+
+        /// <summary>
+        /// Gets the specified load balancer.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/loadBalancers/{loadBalancerName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> LoadBalancers_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="loadBalancerName"> The name of the load balancer. </param>
+        /// <param name="expand"> Expands referenced resources. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="loadBalancerName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="loadBalancerName"/> is an empty string, and was expected to be non-empty. </exception>
+#pragma warning disable AZC0002 // Back-compat overload preserves the previous method signature where CancellationToken was the trailing parameter. Making it optional would introduce an ambiguous call with the new method.
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [ForwardsClientCalls]
+        public virtual Task<Response<LoadBalancerResource>> GetLoadBalancerAsync(string loadBalancerName, string expand, CancellationToken cancellationToken)
+        {
+            return GetLoadBalancerAsync(loadBalancerName: loadBalancerName, expand: expand, detailLevel: default, cancellationToken: cancellationToken);
+        }
+#pragma warning restore AZC0002 // Back-compat overload preserves the previous method signature where CancellationToken was the trailing parameter. Making it optional would introduce an ambiguous call with the new method.
+
+        /// <summary>
+        /// Gets the specified load balancer.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/loadBalancers/{loadBalancerName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> LoadBalancers_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="loadBalancerName"> The name of the load balancer. </param>
+        /// <param name="expand"> Expands referenced resources. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="loadBalancerName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="loadBalancerName"/> is an empty string, and was expected to be non-empty. </exception>
+#pragma warning disable AZC0002 // Back-compat overload preserves the previous method signature where CancellationToken was the trailing parameter. Making it optional would introduce an ambiguous call with the new method.
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [ForwardsClientCalls]
+        public virtual Response<LoadBalancerResource> GetLoadBalancer(string loadBalancerName, string expand, CancellationToken cancellationToken)
+        {
+            return GetLoadBalancer(loadBalancerName: loadBalancerName, expand: expand, detailLevel: default, cancellationToken: cancellationToken);
+        }
+#pragma warning restore AZC0002 // Back-compat overload preserves the previous method signature where CancellationToken was the trailing parameter. Making it optional would introduce an ambiguous call with the new method.
     }
 }

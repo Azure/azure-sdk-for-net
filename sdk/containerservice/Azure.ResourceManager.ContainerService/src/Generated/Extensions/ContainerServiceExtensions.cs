@@ -93,6 +93,42 @@ namespace Azure.ResourceManager.ContainerService
         }
 
         /// <summary>
+        /// Gets an object representing a <see cref="ContainerServiceGuardrailsAvailableVersionResource"/> along with the instance operations that can be performed on it but with no data.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableContainerServiceArmClient.GetContainerServiceGuardrailsAvailableVersionResource(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="ContainerServiceGuardrailsAvailableVersionResource"/> object. </returns>
+        public static ContainerServiceGuardrailsAvailableVersionResource GetContainerServiceGuardrailsAvailableVersionResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableContainerServiceArmClient(client).GetContainerServiceGuardrailsAvailableVersionResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="ContainerServiceSafeguardsAvailableVersionResource"/> along with the instance operations that can be performed on it but with no data.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableContainerServiceArmClient.GetContainerServiceSafeguardsAvailableVersionResource(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="ContainerServiceSafeguardsAvailableVersionResource"/> object. </returns>
+        public static ContainerServiceSafeguardsAvailableVersionResource GetContainerServiceSafeguardsAvailableVersionResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableContainerServiceArmClient(client).GetContainerServiceSafeguardsAvailableVersionResource(id);
+        }
+
+        /// <summary>
         /// Gets an object representing a <see cref="MeshRevisionProfileResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
@@ -144,6 +180,24 @@ namespace Azure.ResourceManager.ContainerService
             Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableContainerServiceArmClient(client).GetContainerServiceMaintenanceConfigurationResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="ContainerServiceManagedMaintenanceWindowResource"/> along with the instance operations that can be performed on it but with no data.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableContainerServiceArmClient.GetContainerServiceManagedMaintenanceWindowResource(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="ContainerServiceManagedMaintenanceWindowResource"/> object. </returns>
+        public static ContainerServiceManagedMaintenanceWindowResource GetContainerServiceManagedMaintenanceWindowResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableContainerServiceArmClient(client).GetContainerServiceManagedMaintenanceWindowResource(id);
         }
 
         /// <summary>
@@ -237,6 +291,24 @@ namespace Azure.ResourceManager.ContainerService
         }
 
         /// <summary>
+        /// Gets an object representing a <see cref="ManagedClusterSnapshotResource"/> along with the instance operations that can be performed on it but with no data.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableContainerServiceArmClient.GetManagedClusterSnapshotResource(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="ManagedClusterSnapshotResource"/> object. </returns>
+        public static ManagedClusterSnapshotResource GetManagedClusterSnapshotResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableContainerServiceArmClient(client).GetManagedClusterSnapshotResource(id);
+        }
+
+        /// <summary>
         /// Gets an object representing a <see cref="ContainerServiceTrustedAccessRoleBindingResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
@@ -255,6 +327,24 @@ namespace Azure.ResourceManager.ContainerService
         }
 
         /// <summary>
+        /// Gets an object representing a <see cref="ManagedClusterLoadBalancerResource"/> along with the instance operations that can be performed on it but with no data.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableContainerServiceArmClient.GetManagedClusterLoadBalancerResource(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="ManagedClusterLoadBalancerResource"/> object. </returns>
+        public static ManagedClusterLoadBalancerResource GetManagedClusterLoadBalancerResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableContainerServiceArmClient(client).GetManagedClusterLoadBalancerResource(id);
+        }
+
+        /// <summary>
         /// Gets an object representing a <see cref="ManagedClusterIdentityBindingResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
@@ -270,6 +360,96 @@ namespace Azure.ResourceManager.ContainerService
             Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableContainerServiceArmClient(client).GetManagedClusterIdentityBindingResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="ManagedClusterJwtAuthenticatorResource"/> along with the instance operations that can be performed on it but with no data.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableContainerServiceArmClient.GetManagedClusterJwtAuthenticatorResource(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="ManagedClusterJwtAuthenticatorResource"/> object. </returns>
+        public static ManagedClusterJwtAuthenticatorResource GetManagedClusterJwtAuthenticatorResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableContainerServiceArmClient(client).GetManagedClusterJwtAuthenticatorResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="ManagedClusterMeshMembershipResource"/> along with the instance operations that can be performed on it but with no data.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableContainerServiceArmClient.GetManagedClusterMeshMembershipResource(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="ManagedClusterMeshMembershipResource"/> object. </returns>
+        public static ManagedClusterMeshMembershipResource GetManagedClusterMeshMembershipResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableContainerServiceArmClient(client).GetManagedClusterMeshMembershipResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="AgentFabricMembershipResource"/> along with the instance operations that can be performed on it but with no data.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableContainerServiceArmClient.GetAgentFabricMembershipResource(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="AgentFabricMembershipResource"/> object. </returns>
+        public static AgentFabricMembershipResource GetAgentFabricMembershipResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableContainerServiceArmClient(client).GetAgentFabricMembershipResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="ContainerServiceAlertConfigurationResource"/> along with the instance operations that can be performed on it but with no data.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableContainerServiceArmClient.GetContainerServiceAlertConfigurationResource(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="ContainerServiceAlertConfigurationResource"/> object. </returns>
+        public static ContainerServiceAlertConfigurationResource GetContainerServiceAlertConfigurationResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableContainerServiceArmClient(client).GetContainerServiceAlertConfigurationResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="UpgradeInsightResource"/> along with the instance operations that can be performed on it but with no data.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableContainerServiceArmClient.GetUpgradeInsightResource(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="UpgradeInsightResource"/> object. </returns>
+        public static UpgradeInsightResource GetUpgradeInsightResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableContainerServiceArmClient(client).GetUpgradeInsightResource(id);
         }
 
         /// <summary>
@@ -328,6 +508,61 @@ namespace Azure.ResourceManager.ContainerService
         }
 
         /// <summary>
+        /// Gets a collection of ContainerServiceManagedMaintenanceWindows in the <see cref="ResourceGroupResource"/>
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableContainerServiceResourceGroupResource.GetContainerServiceManagedMaintenanceWindows()"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        /// <returns> An object representing collection of ContainerServiceManagedMaintenanceWindows and their operations over a ContainerServiceManagedMaintenanceWindowResource. </returns>
+        public static ContainerServiceManagedMaintenanceWindowCollection GetContainerServiceManagedMaintenanceWindows(this ResourceGroupResource resourceGroupResource)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableContainerServiceResourceGroupResource(resourceGroupResource).GetContainerServiceManagedMaintenanceWindows();
+        }
+
+        /// <summary>
+        /// Gets the specified maintenance window.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableContainerServiceResourceGroupResource.GetContainerServiceManagedMaintenanceWindowAsync(string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="maintenanceWindowName"> The name of the maintenance window. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<ContainerServiceManagedMaintenanceWindowResource>> GetContainerServiceManagedMaintenanceWindowAsync(this ResourceGroupResource resourceGroupResource, string maintenanceWindowName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableContainerServiceResourceGroupResource(resourceGroupResource).GetContainerServiceManagedMaintenanceWindowAsync(maintenanceWindowName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets the specified maintenance window.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableContainerServiceResourceGroupResource.GetContainerServiceManagedMaintenanceWindow(string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="maintenanceWindowName"> The name of the maintenance window. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<ContainerServiceManagedMaintenanceWindowResource> GetContainerServiceManagedMaintenanceWindow(this ResourceGroupResource resourceGroupResource, string maintenanceWindowName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableContainerServiceResourceGroupResource(resourceGroupResource).GetContainerServiceManagedMaintenanceWindow(maintenanceWindowName, cancellationToken);
+        }
+
+        /// <summary>
         /// Gets a collection of AgentPoolSnapshots in the <see cref="ResourceGroupResource"/>
         /// <item>
         /// <term> Mocking. </term>
@@ -380,6 +615,177 @@ namespace Azure.ResourceManager.ContainerService
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableContainerServiceResourceGroupResource(resourceGroupResource).GetAgentPoolSnapshot(resourceName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets a collection of ManagedClusterSnapshots in the <see cref="ResourceGroupResource"/>
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableContainerServiceResourceGroupResource.GetManagedClusterSnapshots()"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        /// <returns> An object representing collection of ManagedClusterSnapshots and their operations over a ManagedClusterSnapshotResource. </returns>
+        public static ManagedClusterSnapshotCollection GetManagedClusterSnapshots(this ResourceGroupResource resourceGroupResource)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableContainerServiceResourceGroupResource(resourceGroupResource).GetManagedClusterSnapshots();
+        }
+
+        /// <summary>
+        /// Gets a managed cluster snapshot.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableContainerServiceResourceGroupResource.GetManagedClusterSnapshotAsync(string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="resourceName"> The name of the managed cluster resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<ManagedClusterSnapshotResource>> GetManagedClusterSnapshotAsync(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableContainerServiceResourceGroupResource(resourceGroupResource).GetManagedClusterSnapshotAsync(resourceName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets a managed cluster snapshot.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableContainerServiceResourceGroupResource.GetManagedClusterSnapshot(string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="resourceName"> The name of the managed cluster resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<ManagedClusterSnapshotResource> GetManagedClusterSnapshot(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableContainerServiceResourceGroupResource(resourceGroupResource).GetManagedClusterSnapshot(resourceName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets a collection of ContainerServiceGuardrailsAvailableVersions in the <see cref="SubscriptionResource"/>
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableContainerServiceSubscriptionResource.GetContainerServiceGuardrailsAvailableVersions(AzureLocation)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="location"> The location for the resource. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> An object representing collection of ContainerServiceGuardrailsAvailableVersions and their operations over a ContainerServiceGuardrailsAvailableVersionResource. </returns>
+        public static ContainerServiceGuardrailsAvailableVersionCollection GetContainerServiceGuardrailsAvailableVersions(this SubscriptionResource subscriptionResource, AzureLocation location)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableContainerServiceSubscriptionResource(subscriptionResource).GetContainerServiceGuardrailsAvailableVersions(location);
+        }
+
+        /// <summary>
+        /// Contains Guardrails version along with its support info and whether it is a default version.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableContainerServiceSubscriptionResource.GetContainerServiceGuardrailsAvailableVersionAsync(AzureLocation, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="location"> The location for the resource. </param>
+        /// <param name="version"> Safeguards version. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<ContainerServiceGuardrailsAvailableVersionResource>> GetContainerServiceGuardrailsAvailableVersionAsync(this SubscriptionResource subscriptionResource, AzureLocation location, string version, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return await GetMockableContainerServiceSubscriptionResource(subscriptionResource).GetContainerServiceGuardrailsAvailableVersionAsync(location, version, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Contains Guardrails version along with its support info and whether it is a default version.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableContainerServiceSubscriptionResource.GetContainerServiceGuardrailsAvailableVersion(AzureLocation, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="location"> The location for the resource. </param>
+        /// <param name="version"> Safeguards version. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<ContainerServiceGuardrailsAvailableVersionResource> GetContainerServiceGuardrailsAvailableVersion(this SubscriptionResource subscriptionResource, AzureLocation location, string version, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableContainerServiceSubscriptionResource(subscriptionResource).GetContainerServiceGuardrailsAvailableVersion(location, version, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets a collection of ContainerServiceSafeguardsAvailableVersions in the <see cref="SubscriptionResource"/>
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableContainerServiceSubscriptionResource.GetContainerServiceSafeguardsAvailableVersions(AzureLocation)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="location"> The location for the resource. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> An object representing collection of ContainerServiceSafeguardsAvailableVersions and their operations over a ContainerServiceSafeguardsAvailableVersionResource. </returns>
+        public static ContainerServiceSafeguardsAvailableVersionCollection GetContainerServiceSafeguardsAvailableVersions(this SubscriptionResource subscriptionResource, AzureLocation location)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableContainerServiceSubscriptionResource(subscriptionResource).GetContainerServiceSafeguardsAvailableVersions(location);
+        }
+
+        /// <summary>
+        /// Contains Safeguards version along with its support info and whether it is a default version.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableContainerServiceSubscriptionResource.GetContainerServiceSafeguardsAvailableVersionAsync(AzureLocation, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="location"> The location for the resource. </param>
+        /// <param name="version"> Safeguards version. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<ContainerServiceSafeguardsAvailableVersionResource>> GetContainerServiceSafeguardsAvailableVersionAsync(this SubscriptionResource subscriptionResource, AzureLocation location, string version, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return await GetMockableContainerServiceSubscriptionResource(subscriptionResource).GetContainerServiceSafeguardsAvailableVersionAsync(location, version, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Contains Safeguards version along with its support info and whether it is a default version.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableContainerServiceSubscriptionResource.GetContainerServiceSafeguardsAvailableVersion(AzureLocation, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="location"> The location for the resource. </param>
+        /// <param name="version"> Safeguards version. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<ContainerServiceSafeguardsAvailableVersionResource> GetContainerServiceSafeguardsAvailableVersion(this SubscriptionResource subscriptionResource, AzureLocation location, string version, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableContainerServiceSubscriptionResource(subscriptionResource).GetContainerServiceSafeguardsAvailableVersion(location, version, cancellationToken);
         }
 
         /// <summary>
@@ -477,6 +883,42 @@ namespace Azure.ResourceManager.ContainerService
         }
 
         /// <summary>
+        /// Lists maintenance windows in the specified subscription.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableContainerServiceSubscriptionResource.GetContainerServiceManagedMaintenanceWindowsAsync(CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="ContainerServiceManagedMaintenanceWindowResource"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<ContainerServiceManagedMaintenanceWindowResource> GetContainerServiceManagedMaintenanceWindowsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableContainerServiceSubscriptionResource(subscriptionResource).GetContainerServiceManagedMaintenanceWindowsAsync(cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists maintenance windows in the specified subscription.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableContainerServiceSubscriptionResource.GetContainerServiceManagedMaintenanceWindows(CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="ContainerServiceManagedMaintenanceWindowResource"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<ContainerServiceManagedMaintenanceWindowResource> GetContainerServiceManagedMaintenanceWindows(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableContainerServiceSubscriptionResource(subscriptionResource).GetContainerServiceManagedMaintenanceWindows(cancellationToken);
+        }
+
+        /// <summary>
         /// Gets a list of snapshots in the specified subscription.
         /// <item>
         /// <term> Mocking. </term>
@@ -510,6 +952,42 @@ namespace Azure.ResourceManager.ContainerService
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableContainerServiceSubscriptionResource(subscriptionResource).GetAgentPoolSnapshots(cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets a list of managed cluster snapshots in the specified subscription.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableContainerServiceSubscriptionResource.GetManagedClusterSnapshotsAsync(CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="ManagedClusterSnapshotResource"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<ManagedClusterSnapshotResource> GetManagedClusterSnapshotsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableContainerServiceSubscriptionResource(subscriptionResource).GetManagedClusterSnapshotsAsync(cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets a list of managed cluster snapshots in the specified subscription.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableContainerServiceSubscriptionResource.GetManagedClusterSnapshots(CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="ManagedClusterSnapshotResource"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<ManagedClusterSnapshotResource> GetManagedClusterSnapshots(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableContainerServiceSubscriptionResource(subscriptionResource).GetManagedClusterSnapshots(cancellationToken);
         }
 
         /// <summary>
@@ -584,6 +1062,84 @@ namespace Azure.ResourceManager.ContainerService
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableContainerServiceSubscriptionResource(subscriptionResource).GetTrustedAccessRoles(location, cancellationToken);
+        }
+
+        /// <summary>
+        /// Only returns the latest version of each node image. For example there may be an AKSUbuntu-1804gen2containerd-2024.01.26, but only AKSUbuntu-1804gen2containerd-2024.02.02 is visible in this list.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableContainerServiceSubscriptionResource.GetNodeImageVersionsAsync(AzureLocation, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="location"> The name of the Azure region. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="ContainerServiceNodeImageVersion"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<ContainerServiceNodeImageVersion> GetNodeImageVersionsAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableContainerServiceSubscriptionResource(subscriptionResource).GetNodeImageVersionsAsync(location, cancellationToken);
+        }
+
+        /// <summary>
+        /// Only returns the latest version of each node image. For example there may be an AKSUbuntu-1804gen2containerd-2024.01.26, but only AKSUbuntu-1804gen2containerd-2024.02.02 is visible in this list.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableContainerServiceSubscriptionResource.GetNodeImageVersions(AzureLocation, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="location"> The name of the Azure region. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="ContainerServiceNodeImageVersion"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<ContainerServiceNodeImageVersion> GetNodeImageVersions(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableContainerServiceSubscriptionResource(subscriptionResource).GetNodeImageVersions(location, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets the list of VM SKUs accepted by AKS when creating node pools in a specified location. AKS will perform a best effort approach to provision the requested VM SKUs, but availability is not guaranteed.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableContainerServiceSubscriptionResource.GetVmSkusAsync(AzureLocation, bool?, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="location"> The name of the Azure region. </param>
+        /// <param name="includeExtendedLocations"> To Include Extended Locations information or not in the response. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="ContainerServiceVmSku"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<ContainerServiceVmSku> GetVmSkusAsync(this SubscriptionResource subscriptionResource, AzureLocation location, bool? includeExtendedLocations = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableContainerServiceSubscriptionResource(subscriptionResource).GetVmSkusAsync(location, includeExtendedLocations, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets the list of VM SKUs accepted by AKS when creating node pools in a specified location. AKS will perform a best effort approach to provision the requested VM SKUs, but availability is not guaranteed.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableContainerServiceSubscriptionResource.GetVmSkus(AzureLocation, bool?, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="location"> The name of the Azure region. </param>
+        /// <param name="includeExtendedLocations"> To Include Extended Locations information or not in the response. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="ContainerServiceVmSku"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<ContainerServiceVmSku> GetVmSkus(this SubscriptionResource subscriptionResource, AzureLocation location, bool? includeExtendedLocations = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableContainerServiceSubscriptionResource(subscriptionResource).GetVmSkus(location, includeExtendedLocations, cancellationToken);
         }
     }
 }

@@ -56,7 +56,7 @@ namespace Azure.Security.KeyVault.Secrets.Tests
             {
                 GetTokenCallback = (_, _) => credentialCalls++
             };
-            SecretClient client = InstrumentClient(new SecretClient(
+            using SecretClient client = InstrumentClient(new SecretClient(
                 new Uri("https://test.contoso.test"), credential, new SecretClientOptions { Transport = transport }));
 
             Assert.ThrowsAsync<InvalidOperationException>(async () => await client.GetSecretAsync("test"));
@@ -107,7 +107,7 @@ namespace Azure.Security.KeyVault.Secrets.Tests
                 options.AddPolicy(new HttpPipelineSynchronousPolicyForTest(
                     message => RedirectPolicy.SetAllowAutoRedirect(message, true)), HttpPipelinePosition.PerCall);
             }
-            SecretClient client = InstrumentClient(new SecretClient(
+            using SecretClient client = InstrumentClient(new SecretClient(
                 new Uri("https://redirect.vault.azure.net"), credential, options));
 
             if (allowRedirect)
@@ -168,7 +168,7 @@ namespace Azure.Security.KeyVault.Secrets.Tests
         {
             var transport = new MockTransport(new MockResponse(200).WithJson(
                 @"{""value"":""value"",""id"":""https://example.vault.azure.net/secrets/x/abc123"",""contentType"":""text/plain"",""attributes"":{""enabled"":true,""created"":10,""updated"":20},""tags"":{""env"":""test""}}"));
-            SecretClient client = InstrumentClient(new SecretClient(
+            using SecretClient client = InstrumentClient(new SecretClient(
                 new Uri("https://example.vault.azure.net"),
                 new MockCredential(),
                 new SecretClientOptions { Transport = transport }));
@@ -190,7 +190,7 @@ namespace Azure.Security.KeyVault.Secrets.Tests
         {
             var transport = new MockTransport(new MockResponse(200).WithJson(
                 @"{""id"":""https://example.vault.azure.net/secrets/x/abc123"",""contentType"":""application/json"",""attributes"":{""enabled"":false,""updated"":20},""tags"":{""env"":""test""}}"));
-            SecretClient client = InstrumentClient(new SecretClient(
+            using SecretClient client = InstrumentClient(new SecretClient(
                 new Uri("https://example.vault.azure.net"),
                 new MockCredential(),
                 new SecretClientOptions { Transport = transport }));

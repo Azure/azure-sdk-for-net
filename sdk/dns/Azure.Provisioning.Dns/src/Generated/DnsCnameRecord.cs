@@ -231,7 +231,7 @@ namespace Azure.Provisioning.Dns
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _properties = DefineModelProperty<DnsRecordSetProperties>(nameof(Properties), new string[] { "properties" });
             _eTag = DefineProperty<ETag>(nameof(ETag), new string[] { "etag" });
-            _parent = DefineResource<DnsZone>(nameof(Parent), new string[] { "parent" }, isRequired: true);
+            _parent = DefineResource<DnsZone>(nameof(Parent), new string[] { "parent" });
             DefineAdditionalProperties();
         }
 

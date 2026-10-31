@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Network
         {
             TryGetApiVersion(ReachabilityAnalysisRunResource.ResourceType, out string reachabilityAnalysisRunApiVersion);
             _reachabilityAnalysisRunsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ReachabilityAnalysisRunResource.ResourceType.Namespace, Diagnostics);
-            _reachabilityAnalysisRunsRestClient = new ReachabilityAnalysisRuns(_reachabilityAnalysisRunsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, reachabilityAnalysisRunApiVersion ?? "2026-01-01");
+            _reachabilityAnalysisRunsRestClient = new ReachabilityAnalysisRuns(_reachabilityAnalysisRunsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, reachabilityAnalysisRunApiVersion ?? "2026-03-01");
             ValidateResourceId(id);
         }
 
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -275,18 +275,18 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="skipToken"> Optional skip token. </param>
         /// <param name="skip"> Optional num entries to skip. </param>
-        /// <param name="maxCount"> Optional num entries to show. </param>
+        /// <param name="top"> Optional num entries to show. </param>
         /// <param name="sortKey"> Optional key by which to sort. </param>
         /// <param name="sortValue"> Optional sort value for pagination. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ReachabilityAnalysisRunResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ReachabilityAnalysisRunResource> GetAllAsync(string skipToken = default, int? skip = default, int? maxCount = default, string sortKey = default, string sortValue = default, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ReachabilityAnalysisRunResource> GetAllAsync(string skipToken = default, int? skip = default, int? top = default, string sortKey = default, string sortValue = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
@@ -300,7 +300,7 @@ namespace Azure.ResourceManager.Network
                 Id.Name,
                 skipToken,
                 skip,
-                maxCount,
+                top,
                 sortKey,
                 sortValue,
                 context,
@@ -320,18 +320,18 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="skipToken"> Optional skip token. </param>
         /// <param name="skip"> Optional num entries to skip. </param>
-        /// <param name="maxCount"> Optional num entries to show. </param>
+        /// <param name="top"> Optional num entries to show. </param>
         /// <param name="sortKey"> Optional key by which to sort. </param>
         /// <param name="sortValue"> Optional sort value for pagination. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ReachabilityAnalysisRunResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ReachabilityAnalysisRunResource> GetAll(string skipToken = default, int? skip = default, int? maxCount = default, string sortKey = default, string sortValue = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<ReachabilityAnalysisRunResource> GetAll(string skipToken = default, int? skip = default, int? top = default, string sortKey = default, string sortValue = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
@@ -345,7 +345,7 @@ namespace Azure.ResourceManager.Network
                 Id.Name,
                 skipToken,
                 skip,
-                maxCount,
+                top,
                 sortKey,
                 sortValue,
                 context,
@@ -365,7 +365,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -422,7 +422,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -479,7 +479,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -540,7 +540,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>

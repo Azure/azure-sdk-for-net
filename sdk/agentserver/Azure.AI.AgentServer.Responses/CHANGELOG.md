@@ -3,10 +3,23 @@
 ## 1.0.0-beta.10 (Unreleased)
 
 ### Features Added
+- Either `ResilientBackground` or `SteerableConversations` now activates the Core
+  durable task runtime without a separate `SetResilientTasksEnabled()` call. Steering-only
+  deployments retain durable task bookkeeping but mark interrupted background responses
+  failed instead of re-invoking their handlers.
 
 ### Breaking Changes
 
+- Core's `SetResilientTasksEnabled()` no longer activates Responses when both
+  Responses feature flags are disabled. Configure `ResilientBackground` or
+  `SteerableConversations` to opt in to task-backed Responses execution.
+
 ### Bugs Fixed
+
+- Do not reclaim, delete, or dispatch Responses tasks during startup or inline
+  recovery when Responses task execution is disabled, even if Invocations
+  enables the shared Core runtime. Tasks started from a Responses request retain
+  Responses ownership across restart.
 
 ### Other Changes
 

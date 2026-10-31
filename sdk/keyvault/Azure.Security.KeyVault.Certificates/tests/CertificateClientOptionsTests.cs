@@ -68,6 +68,7 @@ namespace Azure.Security.KeyVault.Certificates.Tests
         [TestCase(CertificateClientOptions.ServiceVersion.V7_5, "7.5")]
         [TestCase(CertificateClientOptions.ServiceVersion.V7_6, "7.6")]
         [TestCase(CertificateClientOptions.ServiceVersion.V2025_07_01, "2025-07-01")]
+        [TestCase(CertificateClientOptions.ServiceVersion.V2026_03_01_Preview, "2026-03-01-preview")]
         [TestCase(CertificateClientOptions.ServiceVersion.V2026_04_01, "2026-04-01")]
         public void GetVersionString_MatchesWireString(CertificateClientOptions.ServiceVersion version, string expected)
         {
@@ -76,7 +77,9 @@ namespace Azure.Security.KeyVault.Certificates.Tests
         }
 
         [TestCase(CertificateClientOptions.ServiceVersion.V7_6, "7.6")]
+        [TestCase(CertificateClientOptions.ServiceVersion.V2026_03_01_Preview, "2026-03-01-preview")]
         [TestCase(CertificateClientOptions.ServiceVersion.V2026_04_01, "2026-04-01")]
+        [TestCase((CertificateClientOptions.ServiceVersion)8, "2026-04-01", TestName = "ReleasedServiceVersionValue_PropagatesToWireApiVersionQuery")]
         [TestCase(null, "2026-04-01")]
         public async Task ServiceVersion_PropagatesToWireApiVersionQuery(CertificateClientOptions.ServiceVersion? version, string expected)
         {

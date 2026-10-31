@@ -1,7 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.AI.AgentServer.Core.Tasks;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
@@ -16,7 +15,6 @@ internal sealed class ResponsesStartupLogger : IHostedService
     private readonly ILogger<ResponsesStartupLogger> _logger;
     private readonly IOptions<ResponsesServerOptions> _options;
     private readonly IOptions<InMemoryProviderOptions> _providerOptions;
-    private readonly IOptions<ResilientTaskOptions> _resilientTaskOptions;
     private readonly ResponsesProvider _provider;
     private readonly ResponsesHostedCredentialFallback? _credentialFallback;
 
@@ -24,14 +22,12 @@ internal sealed class ResponsesStartupLogger : IHostedService
         ILogger<ResponsesStartupLogger> logger,
         IOptions<ResponsesServerOptions> options,
         IOptions<InMemoryProviderOptions> providerOptions,
-        IOptions<ResilientTaskOptions> resilientTaskOptions,
         ResponsesProvider provider,
         ResponsesHostedCredentialFallback? credentialFallback = null)
     {
         _logger = logger;
         _options = options;
         _providerOptions = providerOptions;
-        _resilientTaskOptions = resilientTaskOptions;
         _provider = provider;
         _credentialFallback = credentialFallback;
     }
@@ -71,7 +67,7 @@ internal sealed class ResponsesStartupLogger : IHostedService
             }
         }
 
-        if (_resilientTaskOptions.Value.Enabled)
+        if (opts.ResilientBackground || opts.SteerableConversations)
         {
             _logger.LogInformation(
                 "Responses resilience is enabled; stored responses use durable tasks and startup recovery.");
@@ -80,7 +76,7 @@ internal sealed class ResponsesStartupLogger : IHostedService
         {
             _logger.LogWarning(
                 "Responses resilience is disabled; stored responses run in-process and are not recovered after an ungraceful crash. " +
-                "Call SetResilientTasksEnabled() or enable ResilientBackground to opt in.");
+                "Enable ResilientBackground or SteerableConversations to opt in.");
         }
 
         return Task.CompletedTask;

@@ -38,3 +38,10 @@ tsp compile . --emit=@azure-typespec/http-client-csharp-provisioning
 emit:
   - '@azure-typespec/http-client-csharp-provisioning'
 ```
+
+## Development
+
+Keep all three generator dependencies in `package.json` aligned with
+`eng/centralpackagemanagement/Directory.Generation.Packages.props` and compatible
+with each other. After updating the pins, run `npm install` in this directory,
+then run `eng/scripts/Generate.ps1` to regenerate and build both local fixtures.

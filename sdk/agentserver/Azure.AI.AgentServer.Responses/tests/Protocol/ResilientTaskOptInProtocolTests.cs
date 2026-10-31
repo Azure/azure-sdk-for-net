@@ -68,27 +68,37 @@ public sealed class ResilientTaskOptInProtocolTests
     }
 
     [Test]
-    public async Task ExplicitCoreOptIn_EnablesTasksWithoutResilientBackground()
+    public async Task ExplicitCoreOptIn_DoesNotEnableResponsesWithoutFeatureFlags()
     {
         await AssertTaskRuntimeUsedAsync(
             configureOptions: null,
-            configureServices: services => services.SetResilientTasksEnabled());
+            configureServices: services => services.SetResilientTasksEnabled(),
+            expectTaskRuntime: false);
+    }
+
+    [TestCase(false)]
+    [TestCase(true)]
+    public async Task SteerableConversations_AutomaticallyEnablesTaskRuntime(bool stream)
+    {
+        await AssertTaskRuntimeUsedAsync(
+            configureOptions: options => options.SteerableConversations = true,
+            configureServices: null,
+            stream: stream);
     }
 
     [Test]
-    public void SteerableConversations_WithoutTaskOptIn_FailsStartup()
+    public async Task SteerableConversations_CannotBeSilentlyDisabledByLaterConfiguration()
     {
-        InvalidOperationException exception = Assert.Throws<InvalidOperationException>(
-            () => new TestWebApplicationFactory(
-                configureOptions: options => options.SteerableConversations = true))!;
-
-        Assert.That(exception.Message, Does.Contain(nameof(ResponsesServerOptions.SteerableConversations)));
-        Assert.That(exception.Message, Does.Contain(nameof(ResilientTaskEnablementExtensions.SetResilientTasksEnabled)));
+        await AssertTaskRuntimeUsedAsync(
+            configureOptions: options => options.SteerableConversations = true,
+            configureServices: services => services.SetResilientTasksEnabled(false));
     }
 
     private static async Task AssertTaskRuntimeUsedAsync(
         Action<ResponsesServerOptions>? configureOptions,
-        Action<IServiceCollection>? configureServices)
+        Action<IServiceCollection>? configureServices,
+        bool stream = false,
+        bool expectTaskRuntime = true)
     {
         string root = Path.Combine(
             Path.GetTempPath(),
@@ -110,13 +120,15 @@ public sealed class ResilientTaskOptInProtocolTests
 
             using HttpResponseMessage response = await client.PostAsync(
                 "/responses",
-                Json(new { model = "test", store = true, background = true }));
+                Json(new { model = "test", store = true, background = true, stream }));
             string body = await response.Content.ReadAsStringAsync();
 
             Assert.Multiple(() =>
             {
                 Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK), body);
-                Assert.That(store.CreateCallCount, Is.GreaterThan(0));
+                Assert.That(
+                    store.CreateCallCount,
+                    expectTaskRuntime ? Is.GreaterThan(0) : Is.Zero);
                 Assert.That(
                     factory.Services.GetRequiredService<IOptions<ResilientTaskOptions>>().Value.Enabled,
                     Is.True);

@@ -18,11 +18,11 @@ using Azure.ResourceManager.Network.Models;
 namespace Azure.ResourceManager.Network
 {
     /// <summary> The commit resource. </summary>
-    public partial class NetworkManagerConfigurationCommitData : NetworkChildResource, IJsonModel<NetworkManagerConfigurationCommitData>
+    public partial class NetworkManagerConfigurationCommitData : NetworkChildResourceData, IJsonModel<NetworkManagerConfigurationCommitData>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override NetworkChildResource PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override NetworkChildResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<NetworkManagerConfigurationCommitData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Network
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override NetworkChildResource JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override NetworkChildResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<NetworkManagerConfigurationCommitData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -135,8 +135,8 @@ namespace Azure.ResourceManager.Network
             }
             ResourceIdentifier id = default;
             string name = default;
-            string @type = default;
-            string eTag = default;
+            ResourceType? resourceType = default;
+            ETag? eTag = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             CommitProperties properties = default;
             SystemData systemData = default;
@@ -158,12 +158,20 @@ namespace Azure.ResourceManager.Network
                 }
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    resourceType = new ResourceType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("etag"u8))
                 {
-                    eTag = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    eTag = new ETag(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("properties"u8))
@@ -192,7 +200,7 @@ namespace Azure.ResourceManager.Network
             return new NetworkManagerConfigurationCommitData(
                 id,
                 name,
-                @type,
+                resourceType,
                 eTag,
                 additionalBinaryDataProperties,
                 properties,

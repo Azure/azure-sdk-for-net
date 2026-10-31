@@ -94,6 +94,11 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("privateIPAddressVersion"u8);
                 writer.WriteStringValue(PrivateIPAddressVersion.Value.ToString());
             }
+            if (Optional.IsDefined(PrivateIPAddressPrefixLength))
+            {
+                writer.WritePropertyName("privateIPAddressPrefixLength"u8);
+                writer.WriteNumberValue(PrivateIPAddressPrefixLength.Value);
+            }
             if (Optional.IsCollectionDefined(ApplicationSecurityGroupResources))
             {
                 writer.WritePropertyName("applicationSecurityGroups"u8);
@@ -170,6 +175,7 @@ namespace Azure.ResourceManager.Compute.Models
             bool? primary = default;
             VirtualMachinePublicIPAddressConfiguration publicIPAddressConfiguration = default;
             IPVersion? privateIPAddressVersion = default;
+            int? privateIPAddressPrefixLength = default;
             IList<ComputeWriteableSubResourceData> applicationSecurityGroupResources = default;
             IList<ComputeWriteableSubResourceData> applicationGatewayBackendAddressPoolResources = default;
             IList<ComputeWriteableSubResourceData> loadBalancerBackendAddressPoolResources = default;
@@ -210,6 +216,15 @@ namespace Azure.ResourceManager.Compute.Models
                         continue;
                     }
                     privateIPAddressVersion = new IPVersion(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("privateIPAddressPrefixLength"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    privateIPAddressPrefixLength = prop.Value.GetInt32();
                     continue;
                 }
                 if (prop.NameEquals("applicationSecurityGroups"u8))
@@ -264,6 +279,7 @@ namespace Azure.ResourceManager.Compute.Models
                 primary,
                 publicIPAddressConfiguration,
                 privateIPAddressVersion,
+                privateIPAddressPrefixLength,
                 applicationSecurityGroupResources ?? new ChangeTrackingList<ComputeWriteableSubResourceData>(),
                 applicationGatewayBackendAddressPoolResources ?? new ChangeTrackingList<ComputeWriteableSubResourceData>(),
                 loadBalancerBackendAddressPoolResources ?? new ChangeTrackingList<ComputeWriteableSubResourceData>(),

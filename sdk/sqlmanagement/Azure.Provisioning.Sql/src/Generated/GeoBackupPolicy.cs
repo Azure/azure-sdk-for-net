@@ -156,7 +156,7 @@ namespace Azure.Provisioning.Sql
             _properties = DefineModelProperty<GeoBackupPolicyProperties>(nameof(Properties), new string[] { "properties" });
             _location = DefineProperty<AzureLocation>(nameof(Location), new string[] { "location" }, isOutput: true);
             _kind = DefineProperty<string>(nameof(Kind), new string[] { "kind" }, isOutput: true);
-            _parent = DefineResource<SqlDatabase>(nameof(Parent), new string[] { "parent" }, isRequired: true);
+            _parent = DefineResource<SqlDatabase>(nameof(Parent), new string[] { "parent" });
             DefineAdditionalProperties();
         }
 

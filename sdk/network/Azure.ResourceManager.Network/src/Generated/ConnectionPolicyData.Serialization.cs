@@ -16,11 +16,11 @@ using Azure.ResourceManager.Network.Models;
 namespace Azure.ResourceManager.Network
 {
     /// <summary> ConnectionPolicy resource defined for VirtualHub. </summary>
-    public partial class ConnectionPolicyData : NetworkProxyResource, IJsonModel<ConnectionPolicyData>
+    public partial class ConnectionPolicyData : NetworkProxyResourceData, IJsonModel<ConnectionPolicyData>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override NetworkProxyResource PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override NetworkProxyResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<ConnectionPolicyData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Network
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override NetworkProxyResource JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override NetworkProxyResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<ConnectionPolicyData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -128,8 +128,8 @@ namespace Azure.ResourceManager.Network
             }
             ResourceIdentifier id = default;
             string name = default;
-            string @type = default;
-            string eTag = default;
+            ResourceType? resourceType = default;
+            ETag? eTag = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             ConnectionPolicyProperties properties = default;
             foreach (var prop in element.EnumerateObject())
@@ -150,12 +150,20 @@ namespace Azure.ResourceManager.Network
                 }
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    resourceType = new ResourceType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("etag"u8))
                 {
-                    eTag = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    eTag = new ETag(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("properties"u8))
@@ -175,7 +183,7 @@ namespace Azure.ResourceManager.Network
             return new ConnectionPolicyData(
                 id,
                 name,
-                @type,
+                resourceType,
                 eTag,
                 additionalBinaryDataProperties,
                 properties);

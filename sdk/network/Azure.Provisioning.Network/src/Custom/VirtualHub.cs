@@ -1,20 +1,26 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
-using System.ComponentModel;
+#nullable disable
+
+using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.Provisioning.Network;
 
 public partial class VirtualHub
 {
-    // Preserve the pre-TypeSpec property name because it maps to the same Bicep property as the generated member.
-    /// <inheritdoc cref="RouteTableRoutes"/>
-    [EditorBrowsable(EditorBrowsableState.Never)]
-    [Obsolete("This property is deprecated and it will be removed in a future version. Please use RouteTableRoutes instead.")]
+    /// <summary> Gets or sets the routes. </summary>
+    [CodeGenMember("RouteRoutes")]
     public BicepList<VirtualHubRoute> Routes
     {
-        get => RouteTableRoutes;
-        set => RouteTableRoutes = value;
+        get => Properties is null ? default : Properties.RouteRoutes;
+        set
+        {
+            if (Properties is null)
+            {
+                Properties = new VirtualHubProperties();
+            }
+            Properties.RouteRoutes = value;
+        }
     }
 }

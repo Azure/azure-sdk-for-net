@@ -108,8 +108,8 @@ namespace Azure.Generator.Provisioning.Primitives
         internal IReadOnlyList<ResourceScope> WritableScopes { get; }
 
         /// <summary>
-        /// Gets whether this resource should be emitted as a Bicep extension
-        /// resource with a language-level <c>scope</c> relationship.
+        /// Gets whether any readable or writable scope is an external scope.
+        /// Structural children inherit that scope through their parent.
         /// </summary>
         internal bool IsExtensionResource { get; }
 

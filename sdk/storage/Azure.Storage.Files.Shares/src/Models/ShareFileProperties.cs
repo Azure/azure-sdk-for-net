@@ -127,6 +127,13 @@ namespace Azure.Storage.Files.Shares.Models
         public FilePosixProperties PosixProperties { get; internal set; }
 
         /// <summary>
+        /// The name of the file.
+        /// Note that this property is only populated when the file is addressed
+        /// by its file ID.
+        /// </summary>
+        public string FileName { get; internal set; }
+
+        /// <summary>
         /// Constructor.
         /// </summary>
         internal ShareFileProperties() { }
@@ -159,7 +166,8 @@ namespace Azure.Storage.Files.Shares.Models
             CopyStatus copyStatus = default,
             bool isServerEncrypted = default,
             FileSmbProperties smbProperties = default,
-            FilePosixProperties posixProperties = default
+            FilePosixProperties posixProperties = default,
+            string fileName = default
             ) => new ShareFileProperties
             {
                 LastModified = lastModified,
@@ -181,7 +189,54 @@ namespace Azure.Storage.Files.Shares.Models
                 IsServerEncrypted = isServerEncrypted,
                 SmbProperties = smbProperties,
                 PosixProperties = posixProperties,
+                FileName = fileName,
             };
+
+        /// <summary>
+        /// Creates a new StorageFileProperties instance for mocking.
+        /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static ShareFileProperties StorageFileProperties(
+            DateTimeOffset lastModified,
+            IDictionary<string, string> metadata,
+            long contentLength,
+            string contentType,
+            ETag eTag,
+            byte[] contentHash,
+            IEnumerable<string> contentEncoding,
+            string cacheControl,
+            string contentDisposition,
+            IEnumerable<string> contentLanguage,
+            DateTimeOffset copyCompletedOn,
+            string copyStatusDescription,
+            string copyId,
+            string copyProgress,
+            string copySource,
+            CopyStatus copyStatus,
+            bool isServerEncrypted,
+            FileSmbProperties smbProperties,
+            FilePosixProperties posixProperties
+            ) => StorageFileProperties(
+                lastModified: lastModified,
+                metadata: metadata,
+                contentLength: contentLength,
+                contentType: contentType,
+                eTag: eTag,
+                contentHash: contentHash,
+                contentEncoding: contentEncoding,
+                cacheControl: cacheControl,
+                contentDisposition: contentDisposition,
+                contentLanguage: contentLanguage,
+                copyCompletedOn: copyCompletedOn,
+                copyStatusDescription: copyStatusDescription,
+                copyId: copyId,
+                copyProgress: copyProgress,
+                copySource: copySource,
+                copyStatus: copyStatus,
+                isServerEncrypted: isServerEncrypted,
+                smbProperties: smbProperties,
+                posixProperties: posixProperties,
+                fileName: default);
 
         /// <summary>
         /// Creates a new StorageFileProperties instance for mocking.

@@ -6,6 +6,9 @@ using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.AI.AgentServer.Core;
+using Azure.AI.AgentServer.Core.Tasks;
+using Azure.AI.AgentServer.Core.Tasks.Engine;
+using Azure.AI.AgentServer.Core.Tasks.Providers;
 using Azure.AI.AgentServer.Responses.Internal;
 using Azure.AI.AgentServer.Responses.Internal.Resilience;
 using Azure.AI.AgentServer.Responses.Models;
@@ -25,6 +28,37 @@ namespace Azure.AI.AgentServer.Responses.Tests.E2E.ResilienceContract;
 [NonParallelizable]
 public sealed class TestRecoveryDropPreconditionTests : CrashRecoveryE2ETestBase
 {
+    [Test]
+    public async Task DisabledResponses_DoesNotRecoverWhenCoreIsEnabledForInvocations()
+    {
+        string responseId = IdGenerator.NewResponseId();
+        await SeedInterruptedTaskAsync(new ResponseRecoveryPayload(
+            responseId: responseId,
+            disposition: ResponseRecoveryPayload.DispositionReinvoke,
+            request: new CreateResponse { Model = "test-model", Background = true, Store = true }));
+        var store = new LocalTaskStore(TasksDir);
+        string original = (await store.GetAsync(responseId))?.ToJson().ToJsonString()
+            ?? throw new InvalidOperationException("The seeded Responses task was not persisted.");
+
+        var handler = new TestHandler();
+        using var factory = new TestWebApplicationFactory(
+            handler,
+            configureTestServices: services =>
+            {
+                services.SetResilientTasksEnabled();
+                services.AddSingleton(CoreTaskRecoveryTestHelpers.CreateTaskStore(TasksDir));
+            });
+        using var client = factory.CreateClient();
+
+        await factory.Services.GetRequiredService<RecoveryScanner>().ScanAsync();
+        Assert.That(
+            (await store.GetAsync(responseId))?.ToJson().ToJsonString(),
+            Is.EqualTo(original),
+            "disabled Responses must not reclaim, delete, or mutate the persisted task");
+        Assert.That(RecoveryEntryCount(), Is.EqualTo(1));
+        Assert.That(handler.CallCount, Is.Zero);
+    }
+
     [Test]
     public async Task DefinitiveNotFound_DropsEntry_WithoutDispatch()
     {

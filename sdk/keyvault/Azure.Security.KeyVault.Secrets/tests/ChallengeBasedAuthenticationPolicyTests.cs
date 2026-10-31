@@ -80,7 +80,7 @@ namespace Azure.Security.KeyVault.Secrets.Tests
                 return new AccessToken("seed-token", DateTimeOffset.MaxValue);
             });
             MockTransport seedTransport = new(Challenge(), Success());
-            SecretClient lenientClient = new(
+            using SecretClient lenientClient = new(
                 sharedAuthority,
                 seedCredential,
                 new SecretClientOptions
@@ -96,7 +96,7 @@ namespace Azure.Security.KeyVault.Secrets.Tests
                 return new AccessToken("strict-token", DateTimeOffset.MaxValue);
             });
             MockTransport strictTransport = new(Challenge(), Success());
-            SecretClient strictClient = new(
+            using SecretClient strictClient = new(
                 sharedAuthority,
                 strictCredential,
                 new SecretClientOptions { Transport = strictTransport });

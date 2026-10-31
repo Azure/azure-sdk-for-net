@@ -29,8 +29,6 @@ namespace Azure.ResourceManager.Network
     {
         private readonly ClientDiagnostics _virtualNetworksClientDiagnostics;
         private readonly VirtualNetworks _virtualNetworksRestClient;
-        private readonly ClientDiagnostics _effectiveConfigurationsClientDiagnostics;
-        private readonly EffectiveConfigurations _effectiveConfigurationsRestClient;
         private readonly VirtualNetworkData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Network/virtualNetworks";
@@ -54,11 +52,8 @@ namespace Azure.ResourceManager.Network
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal VirtualNetworkResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string virtualNetworkApiVersion);
             _virtualNetworksClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, Diagnostics);
             _virtualNetworksRestClient = new VirtualNetworks(_virtualNetworksClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
-            _effectiveConfigurationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, Diagnostics);
-            _effectiveConfigurationsRestClient = new EffectiveConfigurations(_effectiveConfigurationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, virtualNetworkApiVersion ?? "2026-01-01");
             ValidateResourceId(id);
         }
 
@@ -111,7 +106,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -160,7 +155,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -209,7 +204,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -261,7 +256,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -313,7 +308,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -362,7 +357,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -399,6 +394,186 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary>
+        /// List all effective connectivity configurations applied on a virtual network.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworks/{virtualNetworkName}/listNetworkManagerEffectiveConnectivityConfigurations. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> EffectiveConfigurations_ListNetworkManagerEffectiveConnectivityConfigurations. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="VirtualNetworkResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> Parameters supplied to list correct page. </param>
+        /// <param name="top"> An optional query parameter which specifies the maximum number of records to be returned by the server. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <returns> A collection of <see cref="EffectiveConnectivityConfiguration"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<EffectiveConnectivityConfiguration> GetNetworkManagerEffectiveConnectivityConfigurationsAsync(NetworkManagementQueryContent content, int? top = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new EffectiveConnectivityConfigurationAsyncCollectionResultOfT(
+                _virtualNetworksRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                NetworkManagementQueryContent.ToRequestContent(content),
+                top,
+                context,
+                "VirtualNetworkResource.GetNetworkManagerEffectiveConnectivityConfigurations");
+        }
+
+        /// <summary>
+        /// List all effective connectivity configurations applied on a virtual network.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworks/{virtualNetworkName}/listNetworkManagerEffectiveConnectivityConfigurations. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> EffectiveConfigurations_ListNetworkManagerEffectiveConnectivityConfigurations. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="VirtualNetworkResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> Parameters supplied to list correct page. </param>
+        /// <param name="top"> An optional query parameter which specifies the maximum number of records to be returned by the server. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <returns> A collection of <see cref="EffectiveConnectivityConfiguration"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<EffectiveConnectivityConfiguration> GetNetworkManagerEffectiveConnectivityConfigurations(NetworkManagementQueryContent content, int? top = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new EffectiveConnectivityConfigurationCollectionResultOfT(
+                _virtualNetworksRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                NetworkManagementQueryContent.ToRequestContent(content),
+                top,
+                context,
+                "VirtualNetworkResource.GetNetworkManagerEffectiveConnectivityConfigurations");
+        }
+
+        /// <summary>
+        /// List all effective security admin rules applied on a virtual network.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworks/{virtualNetworkName}/listNetworkManagerEffectiveSecurityAdminRules. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> EffectiveConfigurations_ListNetworkManagerEffectiveSecurityAdminRules. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="VirtualNetworkResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> Parameters supplied to list correct page. </param>
+        /// <param name="top"> An optional query parameter which specifies the maximum number of records to be returned by the server. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <returns> A collection of <see cref="EffectiveBaseSecurityAdminRule"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<EffectiveBaseSecurityAdminRule> GetNetworkManagerEffectiveSecurityAdminRulesAsync(NetworkManagementQueryContent content, int? top = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new EffectiveBaseSecurityAdminRuleAsyncCollectionResultOfT(
+                _virtualNetworksRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                NetworkManagementQueryContent.ToRequestContent(content),
+                top,
+                context,
+                "VirtualNetworkResource.GetNetworkManagerEffectiveSecurityAdminRules");
+        }
+
+        /// <summary>
+        /// List all effective security admin rules applied on a virtual network.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworks/{virtualNetworkName}/listNetworkManagerEffectiveSecurityAdminRules. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> EffectiveConfigurations_ListNetworkManagerEffectiveSecurityAdminRules. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="VirtualNetworkResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> Parameters supplied to list correct page. </param>
+        /// <param name="top"> An optional query parameter which specifies the maximum number of records to be returned by the server. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <returns> A collection of <see cref="EffectiveBaseSecurityAdminRule"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<EffectiveBaseSecurityAdminRule> GetNetworkManagerEffectiveSecurityAdminRules(NetworkManagementQueryContent content, int? top = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new EffectiveBaseSecurityAdminRuleCollectionResultOfT(
+                _virtualNetworksRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                NetworkManagementQueryContent.ToRequestContent(content),
+                top,
+                context,
+                "VirtualNetworkResource.GetNetworkManagerEffectiveSecurityAdminRules");
+        }
+
+        /// <summary>
         /// Checks whether a private IP address is available for use.
         /// <list type="bullet">
         /// <item>
@@ -411,7 +586,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -464,7 +639,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -517,7 +692,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -574,7 +749,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -631,7 +806,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -669,7 +844,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -707,7 +882,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -719,11 +894,11 @@ namespace Azure.ResourceManager.Network
         /// <param name="content"> Parameters supplied to move IP configurations from one virtual network to another. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation> MoveIpConfigurationsAsync(WaitUntil waitUntil, MoveIPConfigurationsContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> MoveIPConfigurationsAsync(WaitUntil waitUntil, MoveIPConfigurationsContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = _virtualNetworksClientDiagnostics.CreateScope("VirtualNetworkResource.MoveIpConfigurations");
+            using DiagnosticScope scope = _virtualNetworksClientDiagnostics.CreateScope("VirtualNetworkResource.MoveIPConfigurations");
             scope.Start();
             try
             {
@@ -760,7 +935,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -772,11 +947,11 @@ namespace Azure.ResourceManager.Network
         /// <param name="content"> Parameters supplied to move IP configurations from one virtual network to another. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation MoveIpConfigurations(WaitUntil waitUntil, MoveIPConfigurationsContent content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation MoveIPConfigurations(WaitUntil waitUntil, MoveIPConfigurationsContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = _virtualNetworksClientDiagnostics.CreateScope("VirtualNetworkResource.MoveIpConfigurations");
+            using DiagnosticScope scope = _virtualNetworksClientDiagnostics.CreateScope("VirtualNetworkResource.MoveIPConfigurations");
             scope.Start();
             try
             {

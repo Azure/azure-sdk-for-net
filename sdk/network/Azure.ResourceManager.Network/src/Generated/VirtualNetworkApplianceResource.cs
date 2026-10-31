@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -306,7 +306,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -355,7 +355,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -661,6 +661,39 @@ namespace Azure.ResourceManager.Network
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary> Gets a collection of VirtualNetworkApplianceCapabilities in the <see cref="VirtualNetworkApplianceResource"/>. </summary>
+        /// <returns> An object representing collection of VirtualNetworkApplianceCapabilities and their operations over a VirtualNetworkApplianceCapabilityResource. </returns>
+        public virtual VirtualNetworkApplianceCapabilityCollection GetVirtualNetworkApplianceCapabilities()
+        {
+            return GetCachedClient(client => new VirtualNetworkApplianceCapabilityCollection(client, Id));
+        }
+
+        /// <summary> Gets the specified capability of a virtual network appliance. </summary>
+        /// <param name="capabilityName"> The name of the virtual network appliance capability. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="capabilityName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="capabilityName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<VirtualNetworkApplianceCapabilityResource>> GetVirtualNetworkApplianceCapabilityAsync(string capabilityName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(capabilityName, nameof(capabilityName));
+
+            return await GetVirtualNetworkApplianceCapabilities().GetAsync(capabilityName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Gets the specified capability of a virtual network appliance. </summary>
+        /// <param name="capabilityName"> The name of the virtual network appliance capability. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="capabilityName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="capabilityName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<VirtualNetworkApplianceCapabilityResource> GetVirtualNetworkApplianceCapability(string capabilityName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(capabilityName, nameof(capabilityName));
+
+            return GetVirtualNetworkApplianceCapabilities().Get(capabilityName, cancellationToken);
         }
     }
 }

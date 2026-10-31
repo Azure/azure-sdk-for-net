@@ -166,11 +166,6 @@ namespace Azure.ResourceManager.Cdn.Models
                 writer.WritePropertyName("enabledState"u8);
                 writer.WriteStringValue(EnabledState.Value.ToString());
             }
-            if (Optional.IsDefined(GrpcState))
-            {
-                writer.WritePropertyName("grpcState"u8);
-                writer.WriteStringValue(GrpcState.Value.ToString());
-            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -225,7 +220,6 @@ namespace Azure.ResourceManager.Cdn.Models
             LinkToDefaultDomain? linkToDefaultDomain = default;
             HttpsRedirect? httpsRedirect = default;
             EnabledState? enabledState = default;
-            FrontDoorRouteGrpcState? grpcState = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -363,15 +357,6 @@ namespace Azure.ResourceManager.Cdn.Models
                     enabledState = new EnabledState(prop.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("grpcState"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    grpcState = new FrontDoorRouteGrpcState(prop.Value.GetString());
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
@@ -390,7 +375,6 @@ namespace Azure.ResourceManager.Cdn.Models
                 linkToDefaultDomain,
                 httpsRedirect,
                 enabledState,
-                grpcState,
                 additionalBinaryDataProperties);
         }
     }

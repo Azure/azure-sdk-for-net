@@ -10,6 +10,7 @@ using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.Generator.Management.Utilities
 {
@@ -25,7 +26,8 @@ namespace Azure.Generator.Management.Utilities
             ParameterContextRegistry parameterMapping,
             TypeProvider? enclosingTypeProvider,
             bool shouldApplyLroHandling = false,
-            ParameterProvider? scopeParameter = null)
+            ParameterProvider? scopeParameter = null,
+            string? methodName = null)
         {
             var requiredParameters = new List<ParameterProvider>();
             var optionalParameters = new List<ParameterProvider>();
@@ -123,11 +125,27 @@ namespace Azure.Generator.Management.Utilities
 
             optionalParameters.Add(KnownParameters.CancellationTokenParameter);
 
-            return [.. requiredParameters, .. optionalParameters];
+            List<ParameterProvider> parameters = [.. requiredParameters, .. optionalParameters];
+            if (enclosingTypeProvider is not null && methodName is not null)
+            {
+                var parameterTypes = parameters.Select(p => p.Type).ToArray();
+                for (int index = 0; index < parameters.Count; index++)
+                {
+                    var parameter = parameters[index];
+                    if (parameter.Location == ParameterLocation.Body &&
+                        parameter.InputParameter?.IsExactName != true &&
+                        SynthesizedParameterNameHelper.GetExistingParameterName(enclosingTypeProvider, methodName, parameterTypes, index) is { } existingName)
+                    {
+                        parameters[index] = RenameWithNewInstance(parameter, existingName);
+                    }
+                }
+            }
+
+            return parameters;
         }
 
         private static ParameterProvider RenameWithNewInstance(ParameterProvider outputParameter, string normalizedName, FormattableString? description = null, CSharpType? type = null, ParameterValidationType? validation = null, bool preserveWireInfo = true)
-            => new(
+            => SynthesizedParameterNameHelper.PreserveName(new(
                     name: normalizedName,
                     description: description ?? outputParameter.Description,
                     type: type ?? outputParameter.Type,
@@ -149,7 +167,8 @@ namespace Azure.Generator.Management.Utilities
                     // ParameterContextRegistry.PopulateArguments matches arguments by WireInfo.SerializedName.
                     // See issue #58484.
                     wireInfo: preserveWireInfo ? outputParameter.WireInfo : new WireInformation(SerializationFormat.Default, string.Empty),
-                    validation: validation ?? outputParameter.Validation);
+                    validation: validation ?? outputParameter.Validation,
+                    inputParameter: outputParameter.InputParameter));
 
         private static CSharpType? GetResourceDataTypeOverride(TypeProvider? enclosingTypeProvider, CSharpType type)
         {

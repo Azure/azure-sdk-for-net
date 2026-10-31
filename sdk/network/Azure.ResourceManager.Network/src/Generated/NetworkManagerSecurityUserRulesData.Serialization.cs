@@ -20,6 +20,23 @@ namespace Azure.ResourceManager.Network
     /// <summary> Defines the security user rule collection. </summary>
     public partial class NetworkManagerSecurityUserRulesData : ResourceData, IJsonModel<NetworkManagerSecurityUserRulesData>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<NetworkManagerSecurityUserRulesData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeNetworkManagerSecurityUserRulesData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(NetworkManagerSecurityUserRulesData)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
@@ -38,7 +55,7 @@ namespace Azure.ResourceManager.Network
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        NetworkManagerSecurityUserRulesData IPersistableModel<NetworkManagerSecurityUserRulesData>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        NetworkManagerSecurityUserRulesData IPersistableModel<NetworkManagerSecurityUserRulesData>.Create(BinaryData data, ModelReaderWriterOptions options) => (NetworkManagerSecurityUserRulesData)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<NetworkManagerSecurityUserRulesData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
@@ -108,7 +125,20 @@ namespace Azure.ResourceManager.Network
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        NetworkManagerSecurityUserRulesData IJsonModel<NetworkManagerSecurityUserRulesData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        NetworkManagerSecurityUserRulesData IJsonModel<NetworkManagerSecurityUserRulesData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (NetworkManagerSecurityUserRulesData)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<NetworkManagerSecurityUserRulesData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(NetworkManagerSecurityUserRulesData)} does not support reading '{format}' format.");
+            }
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeNetworkManagerSecurityUserRulesData(document.RootElement, options);
+        }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

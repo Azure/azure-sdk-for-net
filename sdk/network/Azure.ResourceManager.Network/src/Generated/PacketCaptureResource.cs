@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Network
         {
             TryGetApiVersion(ResourceType, out string packetCaptureApiVersion);
             _packetCapturesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, Diagnostics);
-            _packetCapturesRestClient = new PacketCaptures(_packetCapturesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, packetCaptureApiVersion ?? "2026-01-01");
+            _packetCapturesRestClient = new PacketCaptures(_packetCapturesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, packetCaptureApiVersion ?? "2026-03-01");
             ValidateResourceId(id);
         }
 
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -299,7 +299,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -354,7 +354,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -409,7 +409,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -458,7 +458,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -507,7 +507,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -519,7 +519,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="content"> Parameters that define the create packet capture operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation<PacketCaptureResource>> UpdateAsync(WaitUntil waitUntil, PacketCaptureContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<PacketCaptureResource>> UpdateAsync(WaitUntil waitUntil, PacketCaptureCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -531,7 +531,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _packetCapturesRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, PacketCaptureContent.ToRequestContent(content), context);
+                HttpMessage message = _packetCapturesRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, PacketCaptureCreateOrUpdateContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NetworkArmOperation<PacketCaptureResource> operation = new NetworkArmOperation<PacketCaptureResource>(
                     new PacketCaptureResourceOperationSource(Client),
@@ -566,7 +566,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -578,7 +578,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="content"> Parameters that define the create packet capture operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation<PacketCaptureResource> Update(WaitUntil waitUntil, PacketCaptureContent content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<PacketCaptureResource> Update(WaitUntil waitUntil, PacketCaptureCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -590,7 +590,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _packetCapturesRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, PacketCaptureContent.ToRequestContent(content), context);
+                HttpMessage message = _packetCapturesRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, PacketCaptureCreateOrUpdateContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NetworkArmOperation<PacketCaptureResource> operation = new NetworkArmOperation<PacketCaptureResource>(
                     new PacketCaptureResourceOperationSource(Client),

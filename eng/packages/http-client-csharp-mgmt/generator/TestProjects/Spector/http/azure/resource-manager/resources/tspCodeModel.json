@@ -3715,6 +3715,7 @@
                   "scopeResourceType": "Microsoft.Resources/resourceGroups"
                 },
                 "resourceName": "TopLevelTrackedResource",
+                "resourceNameIsExplicit": false,
                 "nameConstraints": {
                   "pattern": "^[A-Za-z0-9]([A-Za-z0-9-_.]{0,62}[A-Za-z0-9])?$"
                 },
@@ -3797,6 +3798,7 @@
                 },
                 "parentResourceId": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Azure.ResourceManager.Resources/topLevelTrackedResources/{topLevelTrackedResourceName}",
                 "resourceName": "NestedProxyResource",
+                "resourceNameIsExplicit": false,
                 "nameConstraints": {
                   "pattern": "^[A-Za-z0-9]([A-Za-z0-9-_.]{0,62}[A-Za-z0-9])?$"
                 },
@@ -3855,6 +3857,7 @@
                 },
                 "singletonResourceName": "default",
                 "resourceName": "SingletonTrackedResource",
+                "resourceNameIsExplicit": false,
                 "nameConstraints": {
                   "pattern": "^[a-zA-Z0-9-]{3,24}$"
                 },
@@ -3930,6 +3933,7 @@
                   "scopeIdPattern": "/{resourceUri}"
                 },
                 "resourceName": "ExtensionsResource",
+                "resourceNameIsExplicit": false,
                 "nameConstraints": {
                   "pattern": "^[a-zA-Z0-9-]{3,24}$"
                 },
@@ -4011,6 +4015,7 @@
                   "scopeResourceType": "Microsoft.Resources/subscriptions"
                 },
                 "resourceName": "LocationResource",
+                "resourceNameIsExplicit": false,
                 "nameConstraints": {
                   "pattern": "^[a-zA-Z0-9-]{3,24}$"
                 },

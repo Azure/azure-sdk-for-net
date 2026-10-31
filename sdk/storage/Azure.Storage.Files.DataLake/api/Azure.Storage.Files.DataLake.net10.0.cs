@@ -8,11 +8,12 @@ namespace Azure.Storage.Files.DataLake
     }
     public partial class DataLakeClientOptions : Azure.Core.ClientOptions
     {
-        public DataLakeClientOptions(Azure.Storage.Files.DataLake.DataLakeClientOptions.ServiceVersion version = Azure.Storage.Files.DataLake.DataLakeClientOptions.ServiceVersion.V2026_10_06) { }
+        public DataLakeClientOptions(Azure.Storage.Files.DataLake.DataLakeClientOptions.ServiceVersion version = Azure.Storage.Files.DataLake.DataLakeClientOptions.ServiceVersion.V2027_03_07) { }
         public Azure.Storage.Files.DataLake.Models.DataLakeAudience? Audience { get { throw null; } set { } }
         public Azure.Storage.Files.DataLake.Models.DataLakeCustomerProvidedKey? CustomerProvidedKey { get { throw null; } set { } }
         public bool EnableTenantDiscovery { get { throw null; } set { } }
         public System.Uri GeoRedundantSecondaryUri { get { throw null; } set { } }
+        public Azure.Storage.Blobs.Models.SessionOptions SessionOptions { get { throw null; } set { } }
         public Azure.Storage.TransferValidationOptions TransferValidation { get { throw null; } }
         public Azure.Storage.Files.DataLake.DataLakeClientOptions.ServiceVersion Version { get { throw null; } }
         public enum ServiceVersion
@@ -49,6 +50,8 @@ namespace Azure.Storage.Files.DataLake
             V2026_04_06 = 30,
             V2026_06_06 = 31,
             V2026_10_06 = 32,
+            V2026_12_06 = 33,
+            V2027_03_07 = 34,
         }
     }
     public partial class DataLakeDirectoryClient : Azure.Storage.Files.DataLake.DataLakePathClient
@@ -658,6 +661,7 @@ namespace Azure.Storage.Files.DataLake.Models
     {
         public DataLakeFileReadToOptions() { }
         public Azure.Storage.Files.DataLake.Models.DataLakeRequestConditions Conditions { get { throw null; } set { } }
+        public Azure.Storage.Blobs.Models.LayoutAwareRouting LayoutAwareRouting { get { throw null; } set { } }
         public Azure.Storage.StorageTransferOptions TransferOptions { get { throw null; } set { } }
         public Azure.Storage.DownloadTransferValidationOptions TransferValidation { get { throw null; } set { } }
     }
@@ -796,6 +800,7 @@ namespace Azure.Storage.Files.DataLake.Models
         public DataLakeOpenReadOptions(bool allowModifications) { }
         public int? BufferSize { get { throw null; } set { } }
         public Azure.Storage.Files.DataLake.Models.DataLakeRequestConditions Conditions { get { throw null; } set { } }
+        public Azure.Storage.Blobs.Models.LayoutAwareRouting LayoutAwareRouting { get { throw null; } set { } }
         public long Position { get { throw null; } set { } }
         public Azure.Storage.DownloadTransferValidationOptions TransferValidation { get { throw null; } set { } }
     }

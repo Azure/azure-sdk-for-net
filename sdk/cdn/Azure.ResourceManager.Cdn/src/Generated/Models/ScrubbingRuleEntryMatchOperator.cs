@@ -16,7 +16,6 @@ namespace Azure.ResourceManager.Cdn.Models
     {
         private readonly string _value;
         private const string EqualsAnyValue = "EqualsAny";
-        private const string EqualsValueValue = "Equals";
 
         /// <summary> Initializes a new instance of <see cref="ScrubbingRuleEntryMatchOperator"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -30,9 +29,6 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> Gets the EqualsAny. </summary>
         public static ScrubbingRuleEntryMatchOperator EqualsAny { get; } = new ScrubbingRuleEntryMatchOperator(EqualsAnyValue);
-
-        /// <summary> Gets the EqualsValue. </summary>
-        public static ScrubbingRuleEntryMatchOperator EqualsValue { get; } = new ScrubbingRuleEntryMatchOperator(EqualsValueValue);
 
         /// <summary> Determines if two <see cref="ScrubbingRuleEntryMatchOperator"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

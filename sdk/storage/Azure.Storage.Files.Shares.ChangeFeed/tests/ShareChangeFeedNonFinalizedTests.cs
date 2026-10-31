@@ -145,8 +145,8 @@ namespace Azure.Storage.Files.Shares.ChangeFeed.Tests
 
             List<ShareChangeFeedEvent> events = new List<ShareChangeFeedEvent>
             {
-                new ShareChangeFeedEvent { EventTime = bucket.AddMinutes(2), Id = "event-in-finalized-segment" },
-                new ShareChangeFeedEvent { EventTime = endTime, Id = "event-at-caller-end" },
+                new ShareChangeFeedEvent { EventOccurredOn = bucket.AddMinutes(2), Id = "event-in-finalized-segment" },
+                new ShareChangeFeedEvent { EventOccurredOn = endTime, Id = "event-at-caller-end" },
             };
 
             SegmentBase<ShareChangeFeedEvent> segment = BuildSegmentWithEvents(
@@ -175,7 +175,7 @@ namespace Azure.Storage.Files.Shares.ChangeFeed.Tests
                 CancellationToken.None);
 
             Assert.AreEqual(1, page.Values.Count);
-            Assert.AreEqual(bucket.AddMinutes(2), page.Values[0].EventTime);
+            Assert.AreEqual(bucket.AddMinutes(2), page.Values[0].EventOccurredOn);
         }
 
         [Test]

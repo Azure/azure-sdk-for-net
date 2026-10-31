@@ -225,5 +225,57 @@ namespace Azure.ResourceManager.Network
             request.Content = content;
             return message;
         }
+
+        internal HttpMessage CreateGetResourceNavigationLinksRequest(Guid subscriptionId, string resourceGroupName, string virtualNetworkName, string subnetName, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId.ToString(), true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Network/virtualNetworks/", false);
+            uri.AppendPath(virtualNetworkName, true);
+            uri.AppendPath("/subnets/", false);
+            uri.AppendPath(subnetName, true);
+            uri.AppendPath("/resourceNavigationLinks", false);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Get;
+            _userAgent.Apply(message);
+            request.Headers.SetValue("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateGetServiceAssociationLinksRequest(Guid subscriptionId, string resourceGroupName, string virtualNetworkName, string subnetName, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId.ToString(), true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Network/virtualNetworks/", false);
+            uri.AppendPath(virtualNetworkName, true);
+            uri.AppendPath("/subnets/", false);
+            uri.AppendPath(subnetName, true);
+            uri.AppendPath("/serviceAssociationLinks", false);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Get;
+            _userAgent.Apply(message);
+            request.Headers.SetValue("Accept", "application/json");
+            return message;
+        }
     }
 }

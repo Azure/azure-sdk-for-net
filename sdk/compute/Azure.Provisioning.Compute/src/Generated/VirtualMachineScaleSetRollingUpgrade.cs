@@ -26,7 +26,7 @@ namespace Azure.Provisioning.Compute
         /// <summary> Creates a new VirtualMachineScaleSetRollingUpgrade. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
         /// <param name="resourceVersion"> The resource API version. </param>
-        internal VirtualMachineScaleSetRollingUpgrade(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.Compute/virtualMachineScaleSets/rollingUpgrades", resourceVersion ?? "2026-03-01")
+        internal VirtualMachineScaleSetRollingUpgrade(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.Compute/virtualMachineScaleSets/rollingUpgrades", resourceVersion ?? "2026-04-01")
         {
         }
 
@@ -40,13 +40,18 @@ namespace Azure.Provisioning.Compute
             }
         }
 
-        /// <summary> Gets the Name. </summary>
+        /// <summary> Gets or sets the Name. </summary>
         public BicepValue<string> Name
         {
             get
             {
                 Initialize();
                 return _name;
+            }
+            set
+            {
+                Initialize();
+                _name.Assign(value);
             }
         }
 
@@ -151,7 +156,7 @@ namespace Azure.Provisioning.Compute
             _tags = DefineDictionaryProperty<string>(nameof(Tags), new string[] { "tags" });
             _location = DefineProperty<AzureLocation>(nameof(Location), new string[] { "location" });
             _properties = DefineModelProperty<VirtualMachineScaleSetRollingUpgradeProperties>(nameof(Properties), new string[] { "properties" });
-            _parent = DefineResource<VirtualMachineScaleSet>(nameof(Parent), new string[] { "parent" }, isRequired: true);
+            _parent = DefineResource<VirtualMachineScaleSet>(nameof(Parent), new string[] { "parent" });
             DefineAdditionalProperties();
         }
 
@@ -171,6 +176,8 @@ namespace Azure.Provisioning.Compute
         /// <summary></summary>
         public static partial class ResourceVersions
         {
+            /// <summary> API version "2026-04-01". </summary>
+            public static readonly string V2026_04_01 = "2026-04-01";
             /// <summary> API version "2026-03-01". </summary>
             public static readonly string V2026_03_01 = "2026-03-01";
             /// <summary> API version "2025-11-01". </summary>

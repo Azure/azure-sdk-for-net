@@ -8,13 +8,16 @@ overrides:
       - gbps
       - ipam
       - lacp
+      - PLIP
       - snat
       - vnets
       - vxlan
       - quic
   - filename: '**/sdk/network/Azure.ResourceManager.Network/api/*.cs'
     words:
+      - gbps
       - lacp
+      - PLIP
       - TLSDHEDSSWITH
       - TLSDHEDSSWITHAES
       - TLSDHERSAWITHAES

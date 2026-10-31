@@ -61,10 +61,10 @@ namespace Azure.ResourceManager.Network
                 Pipeline,
                 Diagnostics.ApplicationId,
                 Endpoint,
-                applicationGatewayApiVersion ?? "2026-01-01",
+                applicationGatewayApiVersion ?? "2026-03-01",
                 resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             _applicationGatewayPrivateLinkResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, Diagnostics);
-            _applicationGatewayPrivateLinkResourcesRestClient = new ApplicationGatewayPrivateLinkResources(_applicationGatewayPrivateLinkResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, applicationGatewayApiVersion ?? "2026-01-01");
+            _applicationGatewayPrivateLinkResourcesRestClient = new ApplicationGatewayPrivateLinkResources(_applicationGatewayPrivateLinkResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, applicationGatewayApiVersion ?? "2026-03-01");
             ValidateResourceId(id);
         }
 
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -265,7 +265,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -317,7 +317,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -366,7 +366,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -415,7 +415,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -425,7 +425,7 @@ namespace Azure.ResourceManager.Network
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ApplicationGatewayPrivateLinkResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ApplicationGatewayPrivateLinkResource> GetAllAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ApplicationGatewayPrivateLinkResource> GetApplicationGatewayPrivateLinkResourcesAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
@@ -437,7 +437,7 @@ namespace Azure.ResourceManager.Network
                 Id.ResourceGroupName,
                 Id.Name,
                 context,
-                "ApplicationGatewayResource.GetAll");
+                "ApplicationGatewayResource.GetApplicationGatewayPrivateLinkResources");
         }
 
         /// <summary>
@@ -453,7 +453,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -463,7 +463,7 @@ namespace Azure.ResourceManager.Network
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ApplicationGatewayPrivateLinkResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ApplicationGatewayPrivateLinkResource> GetAll(CancellationToken cancellationToken = default)
+        public virtual Pageable<ApplicationGatewayPrivateLinkResource> GetApplicationGatewayPrivateLinkResources(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
@@ -475,7 +475,7 @@ namespace Azure.ResourceManager.Network
                 Id.ResourceGroupName,
                 Id.Name,
                 context,
-                "ApplicationGatewayResource.GetAll");
+                "ApplicationGatewayResource.GetApplicationGatewayPrivateLinkResources");
         }
 
         /// <summary>
@@ -491,7 +491,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -547,7 +547,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -603,7 +603,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -663,7 +663,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -723,7 +723,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -772,7 +772,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -821,7 +821,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -870,7 +870,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>

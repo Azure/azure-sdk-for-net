@@ -15,6 +15,7 @@ namespace Azure.Provisioning.Compute
     {
         private BicepValue<VirtualMachineSizeType> _vmSize;
         private VirtualMachineSizeProperties _vmSizeProperties;
+        private BicepValue<ProcessorMode> _processorMode;
 
         /// <summary> Creates a new VirtualMachineHardwareProfile. </summary>
         public VirtualMachineHardwareProfile()
@@ -51,12 +52,28 @@ namespace Azure.Provisioning.Compute
             }
         }
 
+        /// <summary> Gets or sets the ProcessorMode. </summary>
+        public BicepValue<ProcessorMode> ProcessorMode
+        {
+            get
+            {
+                Initialize();
+                return _processorMode;
+            }
+            set
+            {
+                Initialize();
+                _processorMode.Assign(value);
+            }
+        }
+
         /// <summary> Define all the provisionable properties for VirtualMachineHardwareProfile. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
             _vmSize = DefineProperty<VirtualMachineSizeType>(nameof(VmSize), new string[] { "vmSize" });
             _vmSizeProperties = DefineModelProperty<VirtualMachineSizeProperties>(nameof(VmSizeProperties), new string[] { "vmSizeProperties" });
+            _processorMode = DefineProperty<ProcessorMode>(nameof(ProcessorMode), new string[] { "processorMode" });
             DefineAdditionalProperties();
         }
 

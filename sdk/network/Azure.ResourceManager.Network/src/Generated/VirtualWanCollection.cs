@@ -67,19 +67,19 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="virtualWANName"> The name of the VirtualWAN being retrieved. </param>
+        /// <param name="virtualWanName"> The name of the VirtualWAN being retrieved. </param>
         /// <param name="data"> Parameters supplied to create or update VirtualWAN. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="virtualWANName"/> or <paramref name="data"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="virtualWANName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<ArmOperation<VirtualWanResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string virtualWANName, VirtualWanData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="virtualWanName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="virtualWanName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<ArmOperation<VirtualWanResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string virtualWanName, VirtualWanData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(virtualWANName, nameof(virtualWANName));
+            Argument.AssertNotNullOrEmpty(virtualWanName, nameof(virtualWanName));
             Argument.AssertNotNull(data, nameof(data));
 
             using DiagnosticScope scope = _virtualWansClientDiagnostics.CreateScope("VirtualWanCollection.CreateOrUpdate");
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualWansRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, virtualWANName, VirtualWanData.ToRequestContent(data), context);
+                HttpMessage message = _virtualWansRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, virtualWanName, VirtualWanData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NetworkArmOperation<VirtualWanResource> operation = new NetworkArmOperation<VirtualWanResource>(
                     new VirtualWanResourceOperationSource(Client),
@@ -125,19 +125,19 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="virtualWANName"> The name of the VirtualWAN being retrieved. </param>
+        /// <param name="virtualWanName"> The name of the VirtualWAN being retrieved. </param>
         /// <param name="data"> Parameters supplied to create or update VirtualWAN. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="virtualWANName"/> or <paramref name="data"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="virtualWANName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ArmOperation<VirtualWanResource> CreateOrUpdate(WaitUntil waitUntil, string virtualWANName, VirtualWanData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="virtualWanName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="virtualWanName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual ArmOperation<VirtualWanResource> CreateOrUpdate(WaitUntil waitUntil, string virtualWanName, VirtualWanData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(virtualWANName, nameof(virtualWANName));
+            Argument.AssertNotNullOrEmpty(virtualWanName, nameof(virtualWanName));
             Argument.AssertNotNull(data, nameof(data));
 
             using DiagnosticScope scope = _virtualWansClientDiagnostics.CreateScope("VirtualWanCollection.CreateOrUpdate");
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualWansRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, virtualWANName, VirtualWanData.ToRequestContent(data), context);
+                HttpMessage message = _virtualWansRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, virtualWanName, VirtualWanData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NetworkArmOperation<VirtualWanResource> operation = new NetworkArmOperation<VirtualWanResource>(
                     new VirtualWanResourceOperationSource(Client),
@@ -183,17 +183,17 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="virtualWANName"> The name of the VirtualWAN being retrieved. </param>
+        /// <param name="virtualWanName"> The name of the VirtualWAN being retrieved. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="virtualWANName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="virtualWANName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<VirtualWanResource>> GetAsync(string virtualWANName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="virtualWanName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="virtualWanName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<VirtualWanResource>> GetAsync(string virtualWanName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(virtualWANName, nameof(virtualWANName));
+            Argument.AssertNotNullOrEmpty(virtualWanName, nameof(virtualWanName));
 
             using DiagnosticScope scope = _virtualWansClientDiagnostics.CreateScope("VirtualWanCollection.Get");
             scope.Start();
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualWansRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, virtualWANName, context);
+                HttpMessage message = _virtualWansRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, virtualWanName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<VirtualWanData> response = Response.FromValue(VirtualWanData.FromResponse(result), result);
                 if (response.Value == null)
@@ -232,17 +232,17 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="virtualWANName"> The name of the VirtualWAN being retrieved. </param>
+        /// <param name="virtualWanName"> The name of the VirtualWAN being retrieved. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="virtualWANName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="virtualWANName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<VirtualWanResource> Get(string virtualWANName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="virtualWanName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="virtualWanName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<VirtualWanResource> Get(string virtualWanName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(virtualWANName, nameof(virtualWANName));
+            Argument.AssertNotNullOrEmpty(virtualWanName, nameof(virtualWanName));
 
             using DiagnosticScope scope = _virtualWansClientDiagnostics.CreateScope("VirtualWanCollection.Get");
             scope.Start();
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualWansRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, virtualWANName, context);
+                HttpMessage message = _virtualWansRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, virtualWanName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<VirtualWanData> response = Response.FromValue(VirtualWanData.FromResponse(result), result);
                 if (response.Value == null)
@@ -281,7 +281,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -309,7 +309,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -337,17 +337,17 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="virtualWANName"> The name of the VirtualWAN being retrieved. </param>
+        /// <param name="virtualWanName"> The name of the VirtualWAN being retrieved. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="virtualWANName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="virtualWANName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<bool>> ExistsAsync(string virtualWANName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="virtualWanName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="virtualWanName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<bool>> ExistsAsync(string virtualWanName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(virtualWANName, nameof(virtualWANName));
+            Argument.AssertNotNullOrEmpty(virtualWanName, nameof(virtualWanName));
 
             using DiagnosticScope scope = _virtualWansClientDiagnostics.CreateScope("VirtualWanCollection.Exists");
             scope.Start();
@@ -357,7 +357,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualWansRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, virtualWANName, context);
+                HttpMessage message = _virtualWansRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, virtualWanName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<VirtualWanData> response = default;
@@ -394,17 +394,17 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="virtualWANName"> The name of the VirtualWAN being retrieved. </param>
+        /// <param name="virtualWanName"> The name of the VirtualWAN being retrieved. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="virtualWANName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="virtualWANName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<bool> Exists(string virtualWANName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="virtualWanName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="virtualWanName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<bool> Exists(string virtualWanName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(virtualWANName, nameof(virtualWANName));
+            Argument.AssertNotNullOrEmpty(virtualWanName, nameof(virtualWanName));
 
             using DiagnosticScope scope = _virtualWansClientDiagnostics.CreateScope("VirtualWanCollection.Exists");
             scope.Start();
@@ -414,7 +414,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualWansRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, virtualWANName, context);
+                HttpMessage message = _virtualWansRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, virtualWanName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<VirtualWanData> response = default;
@@ -451,17 +451,17 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="virtualWANName"> The name of the VirtualWAN being retrieved. </param>
+        /// <param name="virtualWanName"> The name of the VirtualWAN being retrieved. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="virtualWANName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="virtualWANName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<NullableResponse<VirtualWanResource>> GetIfExistsAsync(string virtualWANName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="virtualWanName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="virtualWanName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<NullableResponse<VirtualWanResource>> GetIfExistsAsync(string virtualWanName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(virtualWANName, nameof(virtualWANName));
+            Argument.AssertNotNullOrEmpty(virtualWanName, nameof(virtualWanName));
 
             using DiagnosticScope scope = _virtualWansClientDiagnostics.CreateScope("VirtualWanCollection.GetIfExists");
             scope.Start();
@@ -471,7 +471,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualWansRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, virtualWANName, context);
+                HttpMessage message = _virtualWansRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, virtualWanName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<VirtualWanData> response = default;
@@ -512,17 +512,17 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="virtualWANName"> The name of the VirtualWAN being retrieved. </param>
+        /// <param name="virtualWanName"> The name of the VirtualWAN being retrieved. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="virtualWANName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="virtualWANName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual NullableResponse<VirtualWanResource> GetIfExists(string virtualWANName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="virtualWanName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="virtualWanName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual NullableResponse<VirtualWanResource> GetIfExists(string virtualWanName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(virtualWANName, nameof(virtualWANName));
+            Argument.AssertNotNullOrEmpty(virtualWanName, nameof(virtualWanName));
 
             using DiagnosticScope scope = _virtualWansClientDiagnostics.CreateScope("VirtualWanCollection.GetIfExists");
             scope.Start();
@@ -532,7 +532,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualWansRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, virtualWANName, context);
+                HttpMessage message = _virtualWansRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, virtualWanName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<VirtualWanData> response = default;

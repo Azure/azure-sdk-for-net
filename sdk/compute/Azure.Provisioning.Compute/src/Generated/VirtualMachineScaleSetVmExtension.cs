@@ -25,7 +25,7 @@ namespace Azure.Provisioning.Compute
         /// <summary> Creates a new VirtualMachineScaleSetVmExtension. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
         /// <param name="resourceVersion"> The resource API version. </param>
-        public VirtualMachineScaleSetVmExtension(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.Compute/virtualMachineScaleSets/virtualMachines/extensions", resourceVersion ?? "2026-03-01")
+        public VirtualMachineScaleSetVmExtension(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.Compute/virtualMachineScaleSets/virtualMachines/extensions", resourceVersion ?? "2026-04-01")
         {
         }
 
@@ -335,7 +335,7 @@ namespace Azure.Provisioning.Compute
             _location = DefineProperty<AzureLocation>(nameof(Location), new string[] { "location" });
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _vmssExtensionName = DefineProperty<string>(nameof(VmssExtensionName), new string[] { "vmssExtensionName" }, isOutput: true, isRequired: true);
-            _parent = DefineResource<VirtualMachineScaleSetVm>(nameof(Parent), new string[] { "parent" }, isRequired: true);
+            _parent = DefineResource<VirtualMachineScaleSetVm>(nameof(Parent), new string[] { "parent" });
             DefineAdditionalProperties();
         }
 
@@ -355,6 +355,8 @@ namespace Azure.Provisioning.Compute
         /// <summary></summary>
         public static partial class ResourceVersions
         {
+            /// <summary> API version "2026-04-01". </summary>
+            public static readonly string V2026_04_01 = "2026-04-01";
             /// <summary> API version "2026-03-01". </summary>
             public static readonly string V2026_03_01 = "2026-03-01";
             /// <summary> API version "2025-11-01". </summary>

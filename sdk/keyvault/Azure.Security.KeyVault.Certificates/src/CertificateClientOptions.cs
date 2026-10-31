@@ -66,6 +66,11 @@ namespace Azure.Security.KeyVault.Certificates
             V2025_07_01 = 7,
 
             /// <summary>
+            /// The Key Vault API version 2026-03-01-preview.
+            /// </summary>
+            V2026_03_01_Preview = 9,
+
+            /// <summary>
             /// The Key Vault API version 2026-04-01.
             /// </summary>
             V2026_04_01 = 8,
@@ -87,12 +92,14 @@ namespace Azure.Security.KeyVault.Certificates
         /// The <see cref="ServiceVersion"/> of the service API used when
         /// making requests.
         /// </param>
+#pragma warning disable AZC0010 // Preserve the released stable default even though the preview has a higher numeric value.
         public CertificateClientOptions(ServiceVersion version = LatestVersion)
         {
             Version = version;
 
             this.ConfigureLogging();
         }
+#pragma warning restore AZC0010
 
         /// <summary>
         /// Gets or sets whether to disable verification that the authentication challenge resource matches the Key Vault domain.
@@ -111,6 +118,7 @@ namespace Azure.Security.KeyVault.Certificates
                 ServiceVersion.V7_5 => "7.5",
                 ServiceVersion.V7_6 => "7.6",
                 ServiceVersion.V2025_07_01 => "2025-07-01",
+                ServiceVersion.V2026_03_01_Preview => "2026-03-01-preview",
                 ServiceVersion.V2026_04_01 => "2026-04-01",
                 _ => throw new ArgumentException(Version.ToString()),
             };

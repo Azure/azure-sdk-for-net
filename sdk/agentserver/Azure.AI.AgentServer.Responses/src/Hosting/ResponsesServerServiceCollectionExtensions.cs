@@ -1,6 +1,8 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+#pragma warning disable AAAS003 // Internal registration of the experimental Responses task scope.
+
 using Azure.AI.AgentServer.Core;
 using Azure.AI.AgentServer.Core.Streaming;
 using Azure.AI.AgentServer.Core.Tasks;
@@ -105,6 +107,7 @@ public static class ResponsesServerServiceCollectionExtensions
         // AddAgentEventStreams below), not a pluggable Responses stream provider.
 
         var taskOptions = new ResponsesResilientTaskOptions();
+        services.RegisterResilientTaskProtocol("responses", taskOptions.IsEnabled);
         services.AddHostedService(serviceProvider =>
         {
             taskOptions.Initialize(
@@ -161,7 +164,7 @@ public static class ResponsesServerServiceCollectionExtensions
         // the Core event-stream primitive (AgentEventStreamRegistry/AgentEventStream) — matching Python,
         // which uses the core EventStream registry directly. Register it once here. The backing is
         // chosen from the effective options when the registry is resolved: local +
-        // ResilientBackground uses a durable file-backed replay so a
+        // an enabled task runtime uses a durable file-backed replay so a
         // reconnecting client can replay pre-restart SSE events after a single-sandbox recovery;
         // otherwise an in-memory replay buffer is sufficient. Register this as a protocol default:
         // an explicit application backing overrides it regardless of registration order, while
@@ -174,9 +177,8 @@ public static class ResponsesServerServiceCollectionExtensions
             TimeSpan streamTtl = serviceProvider
                 .GetRequiredService<IOptions<InMemoryProviderOptions>>()
                 .Value.EventStreamTtl;
-            bool resilientTasksEnabled = serviceProvider
-                .GetRequiredService<IOptions<ResilientTaskOptions>>()
-                .Value.Enabled;
+            bool resilientTasksEnabled = responseOptions.ResilientBackground
+                || responseOptions.SteerableConversations;
             var streamOptions = new AgentEventStreamOptions();
             if (resilientTasksEnabled && hostedStorage is null)
             {
@@ -196,11 +198,10 @@ public static class ResponsesServerServiceCollectionExtensions
         services.AddHostedService(sp => sp.GetRequiredService<ResponseExecutionTracker>());
 
         // Compose the Core resilient-task primitive (do NOT reinvent recovery/leasing/steering).
-        // In a local sandbox the Core task subsystem is ALWAYS available — matching Python, whose
-        // task subsystem is not gated on any option (`_pick_primitive` routes any conversation
-        // through the multi-turn task, and every stored response is tracked by a task so the
-        // next-lifetime recovery scan can act on it). The response orchestration runs INSIDE a Core
-        // @task / @multi_turn_task: Core's task engine owns crash recovery (its TaskDurabilityService
+        // The Core task subsystem is registered in every host. Responses activates its task
+        // registrations only when a Responses feature flag is enabled; an explicit Core opt-in
+        // for Invocations does not activate Responses. When enabled, response
+        // orchestration runs inside a Core task: its engine owns crash recovery (TaskDurabilityService
         // cold-start scan), leasing, and steering. This composition is active in BOTH local and hosted
         // environments; hosted mode selects the hosted task store via AddResilientTasks(credential),
         // matching Python's hosted behavior.
@@ -208,8 +209,8 @@ public static class ResponsesServerServiceCollectionExtensions
         // The multi-turn task is registered steerable only when SteerableConversations is set:
         // a non-steerable multi-turn conversation turns concurrent overlap into a Core lock conflict
         // (→ HTTP 409 conversation_locked), which is exactly the concurrency protection a plain
-        // conversation_id chain requires. Checkpoint/durable-stream backing stays resilient-only
-        // (see the useDurableStreams gate above) — this registration does not change that.
+        // conversation_id chain requires. Handler re-invocation remains resilient-background-only;
+        // steering alone still uses the task store and local replay backing.
         if (hostedStorage is not null)
         {
             // Flat AddResilientTask/AddResilientMultiTurnTask calls self-initialize the core
@@ -224,13 +225,15 @@ public static class ResponsesServerServiceCollectionExtensions
             ResponseTaskInput,
             ResponseTaskOutput,
             ResponsesResilientTaskHandler>(
-            ResponsesResilientTaskHandler.OneShotTaskName);
+            ResponsesResilientTaskHandler.OneShotTaskName,
+            configure: options => options.IsEnabled = taskOptions.IsEnabled);
         services.AddResilientMultiTurnTask<
             ResponseTaskInput,
             ResponseTaskOutput,
             ResponsesResilientTaskHandler>(
             ResponsesResilientTaskHandler.MultiTurnTaskName,
-            isSteerable: taskOptions.IsSteerable);
+            isSteerable: taskOptions.IsSteerable,
+            configure: options => options.IsEnabled = taskOptions.IsEnabled);
 
         services.AddScoped<ResponseOrchestrator>();
         services.AddScoped<ResponseEndpointHandler>();

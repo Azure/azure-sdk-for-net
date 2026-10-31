@@ -428,6 +428,7 @@ namespace Azure.Storage.Blobs.Test
 
         [RecordedTest]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2026_02_06)]
+        [Ignore("Smart Tier feature is paused by the service team; re-enable once the feature is restored.")]
         public async Task UploadAsync_Stream_AccessTier_Smart()
         {
             await using DisposingContainer test = await GetTestContainerAsync();

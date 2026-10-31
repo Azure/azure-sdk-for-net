@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Network
             _networkInterfacesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, Diagnostics);
             _networkInterfacesRestClient = new NetworkInterfaces(_networkInterfacesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             _networkInterfaceLoadBalancersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, Diagnostics);
-            _networkInterfaceLoadBalancersRestClient = new NetworkInterfaceLoadBalancers(_networkInterfaceLoadBalancersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, networkInterfaceApiVersion ?? "2026-01-01");
+            _networkInterfaceLoadBalancersRestClient = new NetworkInterfaceLoadBalancers(_networkInterfaceLoadBalancersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, networkInterfaceApiVersion ?? "2026-03-01");
             ValidateResourceId(id);
         }
 
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -313,7 +313,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -362,7 +362,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -411,7 +411,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -466,7 +466,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -521,7 +521,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -576,7 +576,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -631,7 +631,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -641,19 +641,19 @@ namespace Azure.ResourceManager.Network
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="LoadBalancerResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<LoadBalancerResource> GetAllAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<LoadBalancerResource> GetNetworkInterfaceLoadBalancersAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<LoadBalancerData, LoadBalancerResource>(new NetworkInterfaceLoadBalancersGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<LoadBalancerData, LoadBalancerResource>(new LoadBalancerDataAsyncCollectionResultOfT(
                 _networkInterfaceLoadBalancersRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
                 Id.Name,
                 context,
-                "NetworkInterfaceResource.GetAll"), data => new LoadBalancerResource(Client, data));
+                "NetworkInterfaceResource.GetNetworkInterfaceLoadBalancers"), data => new LoadBalancerResource(Client, data));
         }
 
         /// <summary>
@@ -669,7 +669,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -679,19 +679,19 @@ namespace Azure.ResourceManager.Network
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="LoadBalancerResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<LoadBalancerResource> GetAll(CancellationToken cancellationToken = default)
+        public virtual Pageable<LoadBalancerResource> GetNetworkInterfaceLoadBalancers(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<LoadBalancerData, LoadBalancerResource>(new NetworkInterfaceLoadBalancersGetAllCollectionResultOfT(
+            return new PageableWrapper<LoadBalancerData, LoadBalancerResource>(new LoadBalancerDataCollectionResultOfT(
                 _networkInterfaceLoadBalancersRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
                 Id.Name,
                 context,
-                "NetworkInterfaceResource.GetAll"), data => new LoadBalancerResource(Client, data));
+                "NetworkInterfaceResource.GetNetworkInterfaceLoadBalancers"), data => new LoadBalancerResource(Client, data));
         }
 
         /// <summary> Add a tag to the current resource. </summary>

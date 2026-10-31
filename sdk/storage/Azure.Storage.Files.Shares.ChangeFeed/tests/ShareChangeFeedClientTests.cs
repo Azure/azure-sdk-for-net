@@ -160,7 +160,7 @@ namespace Azure.Storage.Files.Shares.ChangeFeed.Tests
         {
             ShareChangeFeedClientOptions options = new ShareChangeFeedClientOptions
             {
-                MaximumTransferSize = 4 * 1024 * 1024,
+                MaximumTransferSizeInBytes = 4 * 1024 * 1024,
             };
 
             ShareChangeFeedClient client = new ShareChangeFeedClient(
