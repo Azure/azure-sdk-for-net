@@ -86,17 +86,21 @@ internal sealed class FoundryEnrichmentProcessor : BaseProcessor<Activity>
     /// </remarks>
     public override void OnEnd(Activity activity)
     {
-        if (_agentName is not null)
+        // A2A protocol spans describe the native Agent Card, not the deployed host.
+        // The enclosing Internal invoke_agent span still uses deployment identity.
+        bool nativeA2A = activity.Source.Name == "Azure.AI.AgentServer.A2A"
+            && activity.Kind == ActivityKind.Server;
+        if (!nativeA2A && _agentName is not null)
         {
             activity.SetTag("gen_ai.agent.name", _agentName);
         }
 
-        if (_agentVersion is not null)
+        if (!nativeA2A && _agentVersion is not null)
         {
             activity.SetTag("gen_ai.agent.version", _agentVersion);
         }
 
-        if (_agentId is not null)
+        if (!nativeA2A && _agentId is not null)
         {
             activity.SetTag("gen_ai.agent.id", _agentId);
         }

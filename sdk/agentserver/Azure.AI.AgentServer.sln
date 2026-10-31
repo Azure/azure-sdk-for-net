@@ -17,6 +17,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.AI.AgentServer.Activi
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.AI.AgentServer.Activity.Tests", "Azure.AI.AgentServer.Activity\tests\Azure.AI.AgentServer.Activity.Tests.csproj", "{C1D2E3F4-A5B6-7890-ABCD-EF1234567891}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.AI.AgentServer.A2A", "Azure.AI.AgentServer.A2A\src\Azure.AI.AgentServer.A2A.csproj", "{BB7A76B4-D4CA-4D5A-9894-064CFFC8DAE7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.AI.AgentServer.A2A.Tests", "Azure.AI.AgentServer.A2A\tests\Azure.AI.AgentServer.A2A.Tests.csproj", "{5D87EFAD-1F08-4A58-B854-06CC07EF5AB3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -59,5 +63,13 @@ Global
 		{C1D2E3F4-A5B6-7890-ABCD-EF1234567891}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C1D2E3F4-A5B6-7890-ABCD-EF1234567891}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C1D2E3F4-A5B6-7890-ABCD-EF1234567891}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BB7A76B4-D4CA-4D5A-9894-064CFFC8DAE7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BB7A76B4-D4CA-4D5A-9894-064CFFC8DAE7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BB7A76B4-D4CA-4D5A-9894-064CFFC8DAE7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BB7A76B4-D4CA-4D5A-9894-064CFFC8DAE7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5D87EFAD-1F08-4A58-B854-06CC07EF5AB3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5D87EFAD-1F08-4A58-B854-06CC07EF5AB3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5D87EFAD-1F08-4A58-B854-06CC07EF5AB3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5D87EFAD-1F08-4A58-B854-06CC07EF5AB3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

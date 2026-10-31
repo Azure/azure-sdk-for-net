@@ -46,6 +46,26 @@ public class FoundryEnrichmentProcessorTests
             .Build()!;
     }
 
+    [TestCase(ActivityKind.Server, "native-card", "1.0", null)]
+    [TestCase(ActivityKind.Internal, "deployment", "2.0", "deployment:2.0")]
+    public void A2AOperationPreservesCardWhileInvocationUsesDeployment(
+        ActivityKind kind, string expectedName, string expectedVersion, string expectedId)
+    {
+        SetEnv("deployment", "2.0");
+        using var source = new ActivitySource("Azure.AI.AgentServer.A2A");
+        using var provider = Sdk.CreateTracerProviderBuilder()
+            .AddSource(source.Name)
+            .AddProcessor(new FoundryEnrichmentProcessor())
+            .Build();
+        using var activity = source.StartActivity("SendMessage", kind)!;
+        activity.SetTag("gen_ai.agent.name", "native-card");
+        activity.SetTag("gen_ai.agent.version", "1.0");
+        activity.Stop();
+        Assert.That(activity.GetTagItem("gen_ai.agent.name"), Is.EqualTo(expectedName));
+        Assert.That(activity.GetTagItem("gen_ai.agent.version"), Is.EqualTo(expectedVersion));
+        Assert.That(activity.GetTagItem("gen_ai.agent.id"), Is.EqualTo(expectedId));
+    }
+
     [Test]
     public void SetsAllTags_WhenAllEnvVarsPresent()
     {

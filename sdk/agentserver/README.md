@@ -9,12 +9,14 @@ The Azure AI Agent Server libraries let you build ASP.NET Core servers that impl
 | [Azure.AI.AgentServer.Core](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/agentserver/Azure.AI.AgentServer.Core) | Shared hosting foundation: library-owned ASP.NET Core host with OpenTelemetry, health checks, server version header, inbound request logging, and multi-protocol composition. | [![NuGet](https://img.shields.io/nuget/vpre/Azure.AI.AgentServer.Core.svg)](https://www.nuget.org/packages/Azure.AI.AgentServer.Core) |
 | [Azure.AI.AgentServer.Responses](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/agentserver/Azure.AI.AgentServer.Responses) | Responses protocol implementation: SSE streaming, background execution, response lifecycle management, and `ResponseHandler` interface. | [![NuGet](https://img.shields.io/nuget/vpre/Azure.AI.AgentServer.Responses.svg)](https://www.nuget.org/packages/Azure.AI.AgentServer.Responses) |
 | [Azure.AI.AgentServer.Invocations](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/agentserver/Azure.AI.AgentServer.Invocations) | Invocations protocol implementation: `InvocationHandler` abstract class, session resolution, client header forwarding, and invocation lifecycle. | [![NuGet](https://img.shields.io/nuget/vpre/Azure.AI.AgentServer.Invocations.svg)](https://www.nuget.org/packages/Azure.AI.AgentServer.Invocations) |
+| [Azure.AI.AgentServer.A2A](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.A2A/README.md) | Native A2A v1.0 JSON-RPC hosting, Foundry task persistence, request context, and semantic tracing. | Unreleased preview |
 
 ## When to use which package
 
 - **Core** is the foundation — install it when you need a server host. It is automatically referenced by both protocol packages.
 - **Responses** implements the Azure AI Responses API (SSE streaming, function calling, conversation history). Use it when your agent communicates via the Responses protocol.
 - **Invocations** implements the Azure AI Invocations protocol (request/response handler pattern). Use it when your agent communicates via the Invocations protocol.
+- **A2A** hosts native A2A applications without translating messages into Responses requests. Use `AddA2A<THandler>(card)` to compose it on the shared Core host, or `AddFoundryA2A` / `MapFoundryA2A` in an existing ASP.NET Core application.
 - **Both protocols together**: Use `AgentHostBuilder` with `.AddResponses<T>()` and `.AddInvocations<T>()` to compose both protocols on a single host.
 
 ## Getting started
@@ -88,4 +90,3 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [code_of_conduct]: https://opensource.microsoft.com/codeofconduct/
 [code_of_conduct_faq]: https://opensource.microsoft.com/codeofconduct/faq/
 [email_opencode]: mailto:opencode@microsoft.com
-

@@ -14,6 +14,8 @@
     <PackageReference Include="Azure.Monitor.Query.Logs" />
   </ItemGroup>
   <ItemGroup Condition="$([MSBuild]::IsTargetFrameworkCompatible('$(TargetFramework)', 'net8.0'))">
+    <!-- Invocations references released Core; these tests must load the Core project under test. -->
+    <PackageReference Include="Azure.AI.AgentServer.Core" ExcludeAssets="all" PrivateAssets="all" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" />
   </ItemGroup>
   <ItemGroup>

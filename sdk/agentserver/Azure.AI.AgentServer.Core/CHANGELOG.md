@@ -16,6 +16,9 @@
 
 ### Bugs Fixed
 
+- Preserve native Agent Card identity on A2A protocol spans while retaining
+  Foundry deployment identity on the enclosing hosted invocation span.
+
 ### Other Changes
 
 ## 1.0.0-beta.30 (2026-10-15)
