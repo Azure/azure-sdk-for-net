@@ -17,40 +17,40 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.DataProtectionBackup
 {
     /// <summary>
-    /// A class representing a DataProtectionBackupJob along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DataProtectionBackupJobResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="DataProtectionBackupVaultResource"/> using the GetDataProtectionBackupJobs method.
+    /// A class representing a JobFromDppCrossTenantVault along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="JobFromDppCrossTenantVaultResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="CrossTenantVaultMappingResource"/> using the GetJobFromDppCrossTenantVaults method.
     /// </summary>
-    public partial class DataProtectionBackupJobResource : ArmResource
+    public partial class JobFromDppCrossTenantVaultResource : ArmResource
     {
-        private readonly ClientDiagnostics _azureBackupJobResourcesClientDiagnostics;
-        private readonly AzureBackupJobResources _azureBackupJobResourcesRestClient;
+        private readonly ClientDiagnostics _jobFromDppCrossTenantVaultClientDiagnostics;
+        private readonly JobFromDppCrossTenantVault _jobFromDppCrossTenantVaultRestClient;
         private readonly DataProtectionBackupJobData _data;
         /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.DataProtection/backupVaults/backupJobs";
+        public static readonly ResourceType ResourceType = "Microsoft.DataProtection/backupVaults/crossTenantVaultMappings/backupJobs";
 
-        /// <summary> Initializes a new instance of DataProtectionBackupJobResource for mocking. </summary>
-        protected DataProtectionBackupJobResource()
+        /// <summary> Initializes a new instance of JobFromDppCrossTenantVaultResource for mocking. </summary>
+        protected JobFromDppCrossTenantVaultResource()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="DataProtectionBackupJobResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="JobFromDppCrossTenantVaultResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal DataProtectionBackupJobResource(ArmClient client, DataProtectionBackupJobData data) : this(client, data.Id)
+        internal JobFromDppCrossTenantVaultResource(ArmClient client, DataProtectionBackupJobData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of <see cref="DataProtectionBackupJobResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="JobFromDppCrossTenantVaultResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal DataProtectionBackupJobResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal JobFromDppCrossTenantVaultResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string dataProtectionBackupJobApiVersion);
-            _azureBackupJobResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DataProtectionBackup", ResourceType.Namespace, Diagnostics);
-            _azureBackupJobResourcesRestClient = new AzureBackupJobResources(_azureBackupJobResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, dataProtectionBackupJobApiVersion ?? "2026-06-01");
+            TryGetApiVersion(ResourceType, out string jobFromDppCrossTenantVaultApiVersion);
+            _jobFromDppCrossTenantVaultClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DataProtectionBackup", ResourceType.Namespace, Diagnostics);
+            _jobFromDppCrossTenantVaultRestClient = new JobFromDppCrossTenantVault(_jobFromDppCrossTenantVaultClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, jobFromDppCrossTenantVaultApiVersion ?? "2026-08-31-preview");
             ValidateResourceId(id);
         }
 
@@ -74,10 +74,11 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <param name="subscriptionId"> The subscriptionId. </param>
         /// <param name="resourceGroupName"> The resourceGroupName. </param>
         /// <param name="vaultName"> The vaultName. </param>
+        /// <param name="mappingName"> The mappingName. </param>
         /// <param name="jobId"> The jobId. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string vaultName, string jobId)
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string vaultName, string mappingName, string jobId)
         {
-            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/backupVaults/{vaultName}/backupJobs/{jobId}";
+            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/backupVaults/{vaultName}/crossTenantVaultMappings/{mappingName}/backupJobs/{jobId}";
             return new ResourceIdentifier(resourceId);
         }
 
@@ -92,30 +93,30 @@ namespace Azure.ResourceManager.DataProtectionBackup
         }
 
         /// <summary>
-        /// Gets a job with id in a backup vault
+        /// Gets a job of the mapped source vault in a different tenant.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/backupVaults/{vaultName}/backupJobs/{jobId}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/backupVaults/{vaultName}/crossTenantVaultMappings/{mappingName}/backupJobs/{jobId}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> AzureBackupJobResources_Get. </description>
+        /// <description> JobFromDppCrossTenantVault_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-06-01. </description>
+        /// <description> 2026-08-31-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="DataProtectionBackupJobResource"/>. </description>
+        /// <description> <see cref="JobFromDppCrossTenantVaultResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<DataProtectionBackupJobResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<JobFromDppCrossTenantVaultResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _azureBackupJobResourcesClientDiagnostics.CreateScope("DataProtectionBackupJobResource.Get");
+            using DiagnosticScope scope = _jobFromDppCrossTenantVaultClientDiagnostics.CreateScope("JobFromDppCrossTenantVaultResource.Get");
             scope.Start();
             try
             {
@@ -123,14 +124,14 @@ namespace Azure.ResourceManager.DataProtectionBackup
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _azureBackupJobResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _jobFromDppCrossTenantVaultRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<DataProtectionBackupJobData> response = Response.FromValue(DataProtectionBackupJobData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new DataProtectionBackupJobResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new JobFromDppCrossTenantVaultResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -140,30 +141,30 @@ namespace Azure.ResourceManager.DataProtectionBackup
         }
 
         /// <summary>
-        /// Gets a job with id in a backup vault
+        /// Gets a job of the mapped source vault in a different tenant.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/backupVaults/{vaultName}/backupJobs/{jobId}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/backupVaults/{vaultName}/crossTenantVaultMappings/{mappingName}/backupJobs/{jobId}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> AzureBackupJobResources_Get. </description>
+        /// <description> JobFromDppCrossTenantVault_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-06-01. </description>
+        /// <description> 2026-08-31-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="DataProtectionBackupJobResource"/>. </description>
+        /// <description> <see cref="JobFromDppCrossTenantVaultResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<DataProtectionBackupJobResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<JobFromDppCrossTenantVaultResource> Get(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _azureBackupJobResourcesClientDiagnostics.CreateScope("DataProtectionBackupJobResource.Get");
+            using DiagnosticScope scope = _jobFromDppCrossTenantVaultClientDiagnostics.CreateScope("JobFromDppCrossTenantVaultResource.Get");
             scope.Start();
             try
             {
@@ -171,14 +172,14 @@ namespace Azure.ResourceManager.DataProtectionBackup
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _azureBackupJobResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _jobFromDppCrossTenantVaultRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<DataProtectionBackupJobData> response = Response.FromValue(DataProtectionBackupJobData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new DataProtectionBackupJobResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new JobFromDppCrossTenantVaultResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
