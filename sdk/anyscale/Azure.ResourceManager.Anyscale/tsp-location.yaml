@@ -1,0 +1,6 @@
+directory: specification/anyscale/resource-manager/Anyscale.Platform/platform
+commit: c493f1015805bb46b5d46f3408f6b763abc03e5c
+repo: Azure/azure-rest-api-specs
+additionalDirectories: 
+
+emitterPackageJsonPath: eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json
