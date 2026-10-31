@@ -94,6 +94,11 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 writer.WritePropertyName("appliedCommitId"u8);
                 writer.WriteStringValue(AppliedCommitId);
             }
+            if (options.Format != "W" && Optional.IsDefined(RootProviderNamespace))
+            {
+                writer.WritePropertyName("rootProviderNamespace"u8);
+                writer.WriteStringValue(RootProviderNamespace);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -140,6 +145,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             DateTimeOffset? manifestAppliedOn = default;
             string previousCommitId = default;
             string appliedCommitId = default;
+            string rootProviderNamespace = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -167,12 +173,23 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     appliedCommitId = prop.Value.GetString();
                     continue;
                 }
+                if (prop.NameEquals("rootProviderNamespace"u8))
+                {
+                    rootProviderNamespace = prop.Value.GetString();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new AppliedManifestInfo(region, manifestAppliedOn, previousCommitId, appliedCommitId, additionalBinaryDataProperties);
+            return new AppliedManifestInfo(
+                region,
+                manifestAppliedOn,
+                previousCommitId,
+                appliedCommitId,
+                rootProviderNamespace,
+                additionalBinaryDataProperties);
         }
     }
 }

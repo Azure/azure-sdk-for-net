@@ -80,6 +80,15 @@ namespace Azure.ResourceManager.ProviderHub.Mocking
             return new ResourceTypeRegistrationResource(Client, id);
         }
 
+        /// <summary> Gets an object representing a <see cref="ResourceTypeRegistrationResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ResourceTypeRegistrationResource"/> object. </returns>
+        public virtual ResourceTypeRegistrationResource GetResourceTypeRegistrationResource(ResourceIdentifier id)
+        {
+            ResourceTypeRegistrationResource.ValidateResourceId(id);
+            return new ResourceTypeRegistrationResource(Client, id);
+        }
+
         /// <summary> Gets an object representing a <see cref="NestedResourceTypeFirstSkuResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="NestedResourceTypeFirstSkuResource"/> object. </returns>
@@ -141,6 +150,42 @@ namespace Azure.ResourceManager.ProviderHub.Mocking
         {
             ManifestInfoResource.ValidateResourceId(id);
             return new ManifestInfoResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="EndpointRegistrationResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="EndpointRegistrationResource"/> object. </returns>
+        public virtual EndpointRegistrationResource GetEndpointRegistrationResource(ResourceIdentifier id)
+        {
+            EndpointRegistrationResource.ValidateResourceId(id);
+            return new EndpointRegistrationResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="EndpointRegistrationResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="EndpointRegistrationResource"/> object. </returns>
+        public virtual EndpointRegistrationResource GetEndpointRegistrationResource(ResourceIdentifier id)
+        {
+            EndpointRegistrationResource.ValidateResourceId(id);
+            return new EndpointRegistrationResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="EndpointRegistrationResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="EndpointRegistrationResource"/> object. </returns>
+        public virtual EndpointRegistrationResource GetEndpointRegistrationResource(ResourceIdentifier id)
+        {
+            EndpointRegistrationResource.ValidateResourceId(id);
+            return new EndpointRegistrationResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="EndpointRegistrationResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="EndpointRegistrationResource"/> object. </returns>
+        public virtual EndpointRegistrationResource GetEndpointRegistrationResource(ResourceIdentifier id)
+        {
+            EndpointRegistrationResource.ValidateResourceId(id);
+            return new EndpointRegistrationResource(Client, id);
         }
     }
 }

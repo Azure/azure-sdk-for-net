@@ -146,6 +146,24 @@ namespace Azure.ResourceManager.ProviderHub
         }
 
         /// <summary>
+        /// Gets an object representing a <see cref="ResourceTypeRegistrationResource"/> along with the instance operations that can be performed on it but with no data.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableProviderHubArmClient.GetResourceTypeRegistrationResource(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="ResourceTypeRegistrationResource"/> object. </returns>
+        public static ResourceTypeRegistrationResource GetResourceTypeRegistrationResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableProviderHubArmClient(client).GetResourceTypeRegistrationResource(id);
+        }
+
+        /// <summary>
         /// Gets an object representing a <see cref="NestedResourceTypeFirstSkuResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
@@ -269,6 +287,78 @@ namespace Azure.ResourceManager.ProviderHub
             Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableProviderHubArmClient(client).GetManifestInfoResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="EndpointRegistrationResource"/> along with the instance operations that can be performed on it but with no data.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableProviderHubArmClient.GetEndpointRegistrationResource(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="EndpointRegistrationResource"/> object. </returns>
+        public static EndpointRegistrationResource GetEndpointRegistrationResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableProviderHubArmClient(client).GetEndpointRegistrationResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="EndpointRegistrationResource"/> along with the instance operations that can be performed on it but with no data.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableProviderHubArmClient.GetEndpointRegistrationResource(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="EndpointRegistrationResource"/> object. </returns>
+        public static EndpointRegistrationResource GetEndpointRegistrationResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableProviderHubArmClient(client).GetEndpointRegistrationResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="EndpointRegistrationResource"/> along with the instance operations that can be performed on it but with no data.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableProviderHubArmClient.GetEndpointRegistrationResource(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="EndpointRegistrationResource"/> object. </returns>
+        public static EndpointRegistrationResource GetEndpointRegistrationResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableProviderHubArmClient(client).GetEndpointRegistrationResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="EndpointRegistrationResource"/> along with the instance operations that can be performed on it but with no data.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableProviderHubArmClient.GetEndpointRegistrationResource(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="EndpointRegistrationResource"/> object. </returns>
+        public static EndpointRegistrationResource GetEndpointRegistrationResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableProviderHubArmClient(client).GetEndpointRegistrationResource(id);
         }
 
         /// <summary>

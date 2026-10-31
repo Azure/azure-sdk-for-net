@@ -129,6 +129,11 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 writer.WritePropertyName("rolloutId"u8);
                 writer.WriteStringValue(RolloutId);
             }
+            if (Optional.IsDefined(RolloutOrchestrationMetadata))
+            {
+                writer.WritePropertyName("rolloutOrchestrationMetadata"u8);
+                writer.WriteObjectValue(RolloutOrchestrationMetadata, options);
+            }
             if (Optional.IsDefined(ManifestCheckinSpecification))
             {
                 writer.WritePropertyName("manifestCheckinSpecification"u8);
@@ -184,6 +189,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             ProviderRegistrationData providerRegistration = default;
             IList<ResourceTypeRegistrationData> resourceTypeRegistrations = default;
             string rolloutId = default;
+            RolloutOrchestrationMetadata rolloutOrchestrationMetadata = default;
             ManifestCheckinSpecification manifestCheckinSpecification = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -273,6 +279,15 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     rolloutId = prop.Value.GetString();
                     continue;
                 }
+                if (prop.NameEquals("rolloutOrchestrationMetadata"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    rolloutOrchestrationMetadata = RolloutOrchestrationMetadata.DeserializeRolloutOrchestrationMetadata(prop.Value, options);
+                    continue;
+                }
                 if (prop.NameEquals("manifestCheckinSpecification"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -296,6 +311,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 providerRegistration,
                 resourceTypeRegistrations ?? new ChangeTrackingList<ResourceTypeRegistrationData>(),
                 rolloutId,
+                rolloutOrchestrationMetadata,
                 manifestCheckinSpecification,
                 additionalBinaryDataProperties);
         }

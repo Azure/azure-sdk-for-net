@@ -6,8 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
@@ -20,10 +18,10 @@ namespace Azure.ResourceManager.ProviderHub
 {
     /// <summary>
     /// A class representing a collection of <see cref="ResourceTypeRegistrationResource"/> and their operations.
-    /// Each <see cref="ResourceTypeRegistrationResource"/> in the collection will belong to the same instance of <see cref="ProviderRegistrationResource"/>.
-    /// To get a <see cref="ResourceTypeRegistrationCollection"/> instance call the GetResourceTypeRegistrations method from an instance of <see cref="ProviderRegistrationResource"/>.
+    /// Each <see cref="ResourceTypeRegistrationResource"/> in the collection will belong to the same instance of <see cref="ResourceTypeRegistrationResource"/>.
+    /// To get a <see cref="ResourceTypeRegistrationCollection"/> instance call the GetResourceTypeRegistrations method from an instance of <see cref="ResourceTypeRegistrationResource"/>.
     /// </summary>
-    public partial class ResourceTypeRegistrationCollection : ArmCollection, IEnumerable<ResourceTypeRegistrationResource>, IAsyncEnumerable<ResourceTypeRegistrationResource>
+    public partial class ResourceTypeRegistrationCollection : ArmCollection
     {
         private readonly ClientDiagnostics _resourceTypeRegistrationsClientDiagnostics;
         private readonly ResourceTypeRegistrations _resourceTypeRegistrationsRestClient;
@@ -38,41 +36,41 @@ namespace Azure.ResourceManager.ProviderHub
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ResourceTypeRegistrationCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceTypeRegistrationResource.ResourceType, out string resourceTypeRegistrationApiVersion);
+            this.TryGetApiVersion(ResourceTypeRegistrationResource.ResourceType, out string resourceTypeRegistrationApiVersion);
             _resourceTypeRegistrationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ProviderHub", ResourceTypeRegistrationResource.ResourceType.Namespace, Diagnostics);
-            _resourceTypeRegistrationsRestClient = new ResourceTypeRegistrations(_resourceTypeRegistrationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceTypeRegistrationApiVersion ?? "2025-10-01");
-            ValidateResourceId(id);
+            _resourceTypeRegistrationsRestClient = new ResourceTypeRegistrations(_resourceTypeRegistrationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceTypeRegistrationApiVersion ?? "2026-10-01");
+            ResourceTypeRegistrationCollection.ValidateResourceId(id);
         }
 
         /// <param name="id"></param>
         [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != ProviderRegistrationResource.ResourceType)
+            if (id.ResourceType != ResourceTypeRegistrationResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ProviderRegistrationResource.ResourceType), nameof(id));
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceTypeRegistrationResource.ResourceType), nameof(id));
             }
         }
 
         /// <summary>
-        /// Creates or updates a resource type.
+        /// Creates or updates a nested resource type.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/resourcetypeRegistrations/{resourceType}. </description>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/resourcetypeRegistrations/{resourceType}/resourcetypeRegistrations/{nestedResourceTypeFirst}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> ResourceTypeRegistrations_CreateOrUpdate. </description>
+        /// <description> ResourceTypeRegistrations_CreateOrUpdateNestedResourceTypeFirst. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="resourceType"> The resource type. </param>
+        /// <param name="resourceType"> The first child resource type. </param>
         /// <param name="data"> The required request body parameters supplied to the resource type registration CreateOrUpdate operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceType"/> or <paramref name="data"/> is null. </exception>
@@ -90,7 +88,7 @@ namespace Azure.ResourceManager.ProviderHub
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _resourceTypeRegistrationsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.Name, resourceType, ResourceTypeRegistrationData.ToRequestContent(data), context);
+                HttpMessage message = _resourceTypeRegistrationsRestClient.CreateCreateOrUpdateNestedResourceTypeFirstRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, resourceType, ResourceTypeRegistrationData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ProviderHubArmOperation<ResourceTypeRegistrationResource> operation = new ProviderHubArmOperation<ResourceTypeRegistrationResource>(
                     new ResourceTypeRegistrationResourceOperationSource(Client),
@@ -113,24 +111,24 @@ namespace Azure.ResourceManager.ProviderHub
         }
 
         /// <summary>
-        /// Creates or updates a resource type.
+        /// Creates or updates a nested resource type.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/resourcetypeRegistrations/{resourceType}. </description>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/resourcetypeRegistrations/{resourceType}/resourcetypeRegistrations/{nestedResourceTypeFirst}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> ResourceTypeRegistrations_CreateOrUpdate. </description>
+        /// <description> ResourceTypeRegistrations_CreateOrUpdateNestedResourceTypeFirst. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="resourceType"> The resource type. </param>
+        /// <param name="resourceType"> The first child resource type. </param>
         /// <param name="data"> The required request body parameters supplied to the resource type registration CreateOrUpdate operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceType"/> or <paramref name="data"/> is null. </exception>
@@ -148,7 +146,7 @@ namespace Azure.ResourceManager.ProviderHub
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _resourceTypeRegistrationsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.Name, resourceType, ResourceTypeRegistrationData.ToRequestContent(data), context);
+                HttpMessage message = _resourceTypeRegistrationsRestClient.CreateCreateOrUpdateNestedResourceTypeFirstRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, resourceType, ResourceTypeRegistrationData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ProviderHubArmOperation<ResourceTypeRegistrationResource> operation = new ProviderHubArmOperation<ResourceTypeRegistrationResource>(
                     new ResourceTypeRegistrationResourceOperationSource(Client),
@@ -171,23 +169,23 @@ namespace Azure.ResourceManager.ProviderHub
         }
 
         /// <summary>
-        /// Gets a resource type details in the given subscription and provider.
+        /// Gets a nested resource type details in the given subscription and provider.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/resourcetypeRegistrations/{resourceType}. </description>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/resourcetypeRegistrations/{resourceType}/resourcetypeRegistrations/{nestedResourceTypeFirst}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> ResourceTypeRegistrations_Get. </description>
+        /// <description> ResourceTypeRegistrations_GetNestedResourceTypeFirst. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="resourceType"> The resource type. </param>
+        /// <param name="resourceType"> The first child resource type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceType"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="resourceType"/> is an empty string, and was expected to be non-empty. </exception>
@@ -203,7 +201,7 @@ namespace Azure.ResourceManager.ProviderHub
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _resourceTypeRegistrationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Name, resourceType, context);
+                HttpMessage message = _resourceTypeRegistrationsRestClient.CreateGetNestedResourceTypeFirstRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, resourceType, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ResourceTypeRegistrationData> response = Response.FromValue(ResourceTypeRegistrationData.FromResponse(result), result);
                 if (response.Value == null)
@@ -220,23 +218,23 @@ namespace Azure.ResourceManager.ProviderHub
         }
 
         /// <summary>
-        /// Gets a resource type details in the given subscription and provider.
+        /// Gets a nested resource type details in the given subscription and provider.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/resourcetypeRegistrations/{resourceType}. </description>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/resourcetypeRegistrations/{resourceType}/resourcetypeRegistrations/{nestedResourceTypeFirst}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> ResourceTypeRegistrations_Get. </description>
+        /// <description> ResourceTypeRegistrations_GetNestedResourceTypeFirst. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="resourceType"> The resource type. </param>
+        /// <param name="resourceType"> The first child resource type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceType"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="resourceType"/> is an empty string, and was expected to be non-empty. </exception>
@@ -252,7 +250,7 @@ namespace Azure.ResourceManager.ProviderHub
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _resourceTypeRegistrationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Name, resourceType, context);
+                HttpMessage message = _resourceTypeRegistrationsRestClient.CreateGetNestedResourceTypeFirstRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, resourceType, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ResourceTypeRegistrationData> response = Response.FromValue(ResourceTypeRegistrationData.FromResponse(result), result);
                 if (response.Value == null)
@@ -269,79 +267,23 @@ namespace Azure.ResourceManager.ProviderHub
         }
 
         /// <summary>
-        /// Gets the list of the resource types for the given provider.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/resourcetypeRegistrations. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ResourceTypeRegistrations_ListByProviderRegistration. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ResourceTypeRegistrationResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ResourceTypeRegistrationResource> GetAllAsync(CancellationToken cancellationToken = default)
-        {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new AsyncPageableWrapper<ResourceTypeRegistrationData, ResourceTypeRegistrationResource>(new ResourceTypeRegistrationDataAsyncCollectionResultOfT(_resourceTypeRegistrationsRestClient, Guid.Parse(Id.SubscriptionId), Id.Name, context, "ResourceTypeRegistrationCollection.GetAll"), data => new ResourceTypeRegistrationResource(Client, data));
-        }
-
-        /// <summary>
-        /// Gets the list of the resource types for the given provider.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/resourcetypeRegistrations. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ResourceTypeRegistrations_ListByProviderRegistration. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ResourceTypeRegistrationResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ResourceTypeRegistrationResource> GetAll(CancellationToken cancellationToken = default)
-        {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new PageableWrapper<ResourceTypeRegistrationData, ResourceTypeRegistrationResource>(new ResourceTypeRegistrationDataCollectionResultOfT(_resourceTypeRegistrationsRestClient, Guid.Parse(Id.SubscriptionId), Id.Name, context, "ResourceTypeRegistrationCollection.GetAll"), data => new ResourceTypeRegistrationResource(Client, data));
-        }
-
-        /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/resourcetypeRegistrations/{resourceType}. </description>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/resourcetypeRegistrations/{resourceType}/resourcetypeRegistrations/{nestedResourceTypeFirst}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> ResourceTypeRegistrations_Get. </description>
+        /// <description> ResourceTypeRegistrations_GetNestedResourceTypeFirst. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="resourceType"> The resource type. </param>
+        /// <param name="resourceType"> The first child resource type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceType"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="resourceType"/> is an empty string, and was expected to be non-empty. </exception>
@@ -357,7 +299,7 @@ namespace Azure.ResourceManager.ProviderHub
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _resourceTypeRegistrationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Name, resourceType, context);
+                HttpMessage message = _resourceTypeRegistrationsRestClient.CreateGetNestedResourceTypeFirstRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, resourceType, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ResourceTypeRegistrationData> response = default;
@@ -386,19 +328,19 @@ namespace Azure.ResourceManager.ProviderHub
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/resourcetypeRegistrations/{resourceType}. </description>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/resourcetypeRegistrations/{resourceType}/resourcetypeRegistrations/{nestedResourceTypeFirst}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> ResourceTypeRegistrations_Get. </description>
+        /// <description> ResourceTypeRegistrations_GetNestedResourceTypeFirst. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="resourceType"> The resource type. </param>
+        /// <param name="resourceType"> The first child resource type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceType"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="resourceType"/> is an empty string, and was expected to be non-empty. </exception>
@@ -414,7 +356,7 @@ namespace Azure.ResourceManager.ProviderHub
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _resourceTypeRegistrationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Name, resourceType, context);
+                HttpMessage message = _resourceTypeRegistrationsRestClient.CreateGetNestedResourceTypeFirstRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, resourceType, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ResourceTypeRegistrationData> response = default;
@@ -443,19 +385,19 @@ namespace Azure.ResourceManager.ProviderHub
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/resourcetypeRegistrations/{resourceType}. </description>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/resourcetypeRegistrations/{resourceType}/resourcetypeRegistrations/{nestedResourceTypeFirst}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> ResourceTypeRegistrations_Get. </description>
+        /// <description> ResourceTypeRegistrations_GetNestedResourceTypeFirst. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="resourceType"> The resource type. </param>
+        /// <param name="resourceType"> The first child resource type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceType"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="resourceType"/> is an empty string, and was expected to be non-empty. </exception>
@@ -471,7 +413,7 @@ namespace Azure.ResourceManager.ProviderHub
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _resourceTypeRegistrationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Name, resourceType, context);
+                HttpMessage message = _resourceTypeRegistrationsRestClient.CreateGetNestedResourceTypeFirstRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, resourceType, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ResourceTypeRegistrationData> response = default;
@@ -504,19 +446,19 @@ namespace Azure.ResourceManager.ProviderHub
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/resourcetypeRegistrations/{resourceType}. </description>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/resourcetypeRegistrations/{resourceType}/resourcetypeRegistrations/{nestedResourceTypeFirst}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> ResourceTypeRegistrations_Get. </description>
+        /// <description> ResourceTypeRegistrations_GetNestedResourceTypeFirst. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="resourceType"> The resource type. </param>
+        /// <param name="resourceType"> The first child resource type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceType"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="resourceType"/> is an empty string, and was expected to be non-empty. </exception>
@@ -532,7 +474,7 @@ namespace Azure.ResourceManager.ProviderHub
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _resourceTypeRegistrationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Name, resourceType, context);
+                HttpMessage message = _resourceTypeRegistrationsRestClient.CreateGetNestedResourceTypeFirstRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, resourceType, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ResourceTypeRegistrationData> response = default;
@@ -558,22 +500,6 @@ namespace Azure.ResourceManager.ProviderHub
                 scope.Failed(e);
                 throw;
             }
-        }
-
-        IEnumerator<ResourceTypeRegistrationResource> IEnumerable<ResourceTypeRegistrationResource>.GetEnumerator()
-        {
-            return GetAll().GetEnumerator();
-        }
-
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return GetAll().GetEnumerator();
-        }
-
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        IAsyncEnumerator<ResourceTypeRegistrationResource> IAsyncEnumerable<ResourceTypeRegistrationResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
-        {
-            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
     }
 }
