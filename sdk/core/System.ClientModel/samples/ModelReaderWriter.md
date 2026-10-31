@@ -54,3 +54,200 @@ string json = @"{
     }";
 OutputModel? model = JsonSerializer.Deserialize<OutputModel>(json, options);
 ```
+
+## Using a Proxy
+
+In more advanced scenarios a library user might want to override the behavior of how a model is read or written. In this case you can implement your own class which implements the same interface, either `IPersistableModel<T>` or `IJsonModel<T>`, and register it with the `ModelReaderWriterOptions`. The proxy is only valid for a single instance of `ModelReaderWriterOptions` giving you more flexibility to turn it on or off.
+
+For a client that uses `ClientPipelineOptions`, register a proxy on the client options **before constructing the client**:
+
+```C# Snippet:Readme_ClientOptions_AddProxy
+var clientOptions = new ClientPipelineOptions();
+clientOptions.AddProxy<OutputModel>(new OutputModelProxy());
+// Pass clientOptions to the generated client constructor.
+```
+
+This works when the client forwards its configured options to `ModelReaderWriter` during serialization and deserialization; support in published generated clients requires the separate generator change. An Azure client that installs its own proxy internally needs no additional customer registration. The direct `ModelReaderWriterOptions` examples below are for standalone model serialization rather than client construction.
+
+### Unconditional Proxy
+
+An unconditional proxy always handles the type it's registered for. Simply implement `IJsonModel<T>` (or `IPersistableModel<T>`) and register it.
+
+Using a proxy with the following definition
+
+```C# Snippet:Readme_Read_Proxy_ClassStub
+public class OutputModelProxy : IJsonModel<OutputModel>
+```
+
+The example below shows how to read JSON to create a strongly-typed model instance using a proxy.
+
+```C# Snippet:Readme_Read_Proxy
+string json = @"{
+      ""x"": 1,
+      ""y"": 2,
+      ""z"": 3
+    }";
+
+ModelReaderWriterOptions options = new ModelReaderWriterOptions("W");
+options.AddProxy<OutputModel>((IJsonModel<OutputModel>)new OutputModelProxy());
+
+OutputModel? model = ModelReaderWriter.Read<OutputModel>(BinaryData.FromString(json), options);
+```
+
+Using a proxy with the following definition
+
+```C# Snippet:Readme_Write_Proxy_ClassStub
+public class InputModelProxy : IJsonModel<InputModel>
+```
+
+The example below shows how to write a persistable model using a proxy to `BinaryData`. On the write path, call `ResolveProxy` to get the proxy (or the model itself if none matches),
+then write through the returned interface.
+
+```C# Snippet:Readme_Write_Proxy
+InputModel model = new InputModel();
+
+ModelReaderWriterOptions options = new ModelReaderWriterOptions("W");
+options.AddProxy<InputModel>((IJsonModel<InputModel>)new InputModelProxy());
+
+// ResolveProxy returns the proxy if one is registered, otherwise the model itself.
+IJsonModel<InputModel> resolved = options.ResolveProxy((IJsonModel<InputModel>)model);
+BinaryData data = ((IPersistableModel<InputModel>)resolved).Write(options);
+```
+
+### Conditional proxy
+
+A conditional proxy inspects the data or model before deciding whether to handle it. Extend `ConditionalModelProxy<T>` and override `CanHandle`.
+
+```C# Snippet:Readme_Conditional_Proxy
+public class DerivedModelProxy : ConditionalModelProxy<BaseModel>
+{
+    public DerivedModelProxy() : base(new DerivedModelImpl()) { }
+
+    // Only handle if the JSON contains "kind": "derived"
+    public override bool CanHandle(ReadOnlyMemory<byte> data, ModelReaderWriterOptions options, ModelReaderWriterContext context)
+    {
+        using var doc = JsonDocument.Parse(data);
+        return doc.RootElement.TryGetProperty("kind", out var kind)
+            && kind.GetString() == "derived";
+    }
+
+    public override bool CanHandle(BaseModel model, ModelReaderWriterOptions options, ModelReaderWriterContext context) => model is DerivedModel;
+}
+```
+
+#### Context for conditional proxies
+
+`CanHandle` always receives a non-null `ModelReaderWriterContext`. Calls through
+`ModelReaderWriter` supply the context of that operation. Pass the library's
+generated context to its context-taking overloads for AOT-compatible serialization.
+The context-free `JsonModelConverter` constructors already use reflection and
+provide a reflection context; the context-taking constructor preserves the supplied
+context instead.
+
+For standalone `ResolveProxy` calls or `BinaryContent.Create` with conditional
+proxies, configure a context on the options:
+
+```C# Snippet:Readme_Options_With_Context
+var options = new ModelReaderWriterOptions("J", MyProjectContext.Default);
+options.AddProxy<BaseModel>(new DerivedModelProxy());
+```
+
+Client-library authors can copy registrations while supplying their library's
+generated context for request-body serialization:
+
+```C# Snippet:Readme_Options_Copy_With_Context
+var options = new ModelReaderWriterOptions("J", configuredOptions, MyProjectContext.Default);
+using BinaryContent content = BinaryContent.Create(model, options);
+```
+
+Options copies preserve the configured context. A `ModelReaderWriter` operation
+uses its own operation context instead. Outside such an operation, attempting to
+resolve a conditional proxy without a configured context throws
+`InvalidOperationException` before calling `CanHandle`; these paths do not silently
+introduce reflection. Unconditional proxies do not require a context.
+
+#### Multiple proxies and the chain of responsibility
+
+Multiple proxies can be registered for the same model type to form a chain of responsibility. Proxies are used in the order they are added, regardless of whether they are conditional or unconditional. This means the **first registered** proxy has the highest priority. If conditional proxies are added after an unconditional proxy, they will not be consulted.
+
+For each registered proxy:
+- If it is a conditional proxy, it's `CanHandle(model)` method is called, if it returns `true` then this proxy is used or returned
+- If it is an unconditional proxy, it will always match.
+- If nothing matches, the model itself is used or returned.
+
+**Write path:** Call `options.ResolveProxy(model)`, proxies are consulted first-to-last in the order they were registered. The proxy that should be applied is returned and can be used to write through the applicable model interface.
+
+**Read path:** Use `ModelReaderWriter.Read<T>(data, options)`, proxies are consulted first-to-last internally and the applicable proxy is used during the read process.
+
+> [!NOTE]
+> Registrations are keyed by the exact registered type. A proxy registered with `AddProxy<BaseModel>` applies when reading `BaseModel`, but when writing it applies only to instances whose runtime type is exactly `BaseModel`; derived instances are written by their own serializer. To override how a derived type is written, register the proxy for that derived type.
+
+```C# Snippet:Readme_Proxy_Chain
+string json = @"{
+      ""x"": 1,
+      ""y"": 2,
+      ""z"": 3
+    }";
+ModelReaderWriterOptions options = new ModelReaderWriterOptions("W");
+
+// Higher-priority proxy registered first — consulted first in the chain
+options.AddProxy(new OutputModelProxyOverride());
+
+// Base library registers a fallback proxy
+options.AddProxy(new OutputModelProxy());
+
+OutputModel? model = ModelReaderWriter.Read<OutputModel>(BinaryData.FromString(json), options);
+```
+
+### Writing nested models with proxies
+
+Proxy registration does not automatically intercept every model in an object graph.
+Each model or proxy serializer that writes child models must use a proxy-aware path
+and forward the working `ModelReaderWriterOptions` it receives. This applies even
+when the parent and child have the same model type.
+
+Calling a child's original `IJsonModel<T>.Write` method directly bypasses its proxy,
+even if the options are forwarded. Using `ModelReaderWriterOptions.Json` or omitting
+the options from a child `ModelReaderWriter.Write` call also loses the registered
+proxies.
+
+For streaming JSON, resolve the child's proxy before writing it:
+`options.ResolveProxy((IJsonModel<TChild>)child).Write(writer, options)`.
+Resolution updates `options.ProxiedModel` to the child, or clears it if no proxy
+matches. It does not restore the parent's value afterward, so capture the parent
+in a local variable before resolving children.
+
+For example, suppose `Node` implements `IJsonModel<Node>` and has `Name` and
+`Node? Child` properties. The following method belongs to a proxy for `Node`:
+
+```C# Snippet:Readme_Nested_Proxy_Write
+void IJsonModel<Node>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+{
+    Node parent = (Node)options.ProxiedModel!;
+
+    writer.WriteStartObject();
+    writer.WritePropertyName("child");
+    if (parent.Child is null)
+    {
+        writer.WriteNullValue();
+    }
+    else
+    {
+        options.ResolveProxy((IJsonModel<Node>)parent.Child).Write(writer, options);
+    }
+
+    // Use the captured parent: ProxiedModel may now refer to the child or be null.
+    writer.WriteString("name", parent.Name);
+    writer.WriteEndObject();
+}
+```
+
+Both proxy-aware dispatch and forwarding the received options are required at
+each level where nested proxy behavior is expected. This is a requirement for
+authors of model and proxy serializers, not an extra step for callers that
+register proxies and use a client.
+
+When the appropriate `ModelReaderWriterContext` is available, recursively calling
+`ModelReaderWriter.Write(child, options, context)` is another proxy-aware path.
+That call saves and restores the parent's proxy execution state, but returns
+`BinaryData` rather than writing directly to the existing `Utf8JsonWriter`.

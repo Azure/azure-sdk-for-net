@@ -20,8 +20,9 @@ namespace System.ClientModel.Primitives;
 public class JsonModelConverter : JsonConverter<IJsonModel<object>>
 #pragma warning restore AZC0014 // Avoid using banned types in public API
 {
-    private ModelReaderWriterOptions _options;
-    private ModelReaderWriterContext? _context;
+    private readonly ModelReaderWriterOptions _options;
+    private readonly ModelReaderWriterContext? _context;
+    private readonly ModelReaderWriterContext _proxyContext;
 
     /// <summary>
     /// Initializes a new instance of <see cref="JsonModelConverter"/> with a default options of <see cref="ModelReaderWriterOptions.Json"/>.
@@ -37,7 +38,14 @@ public class JsonModelConverter : JsonConverter<IJsonModel<object>>
     [RequiresUnreferencedCode("The constructors of the type being deserialized are dynamically accessed and may be trimmed.  Use the constructor which takes ModelReaderWriterContext to be compatible with AOT.")]
     public JsonModelConverter(ModelReaderWriterOptions options)
     {
+        Argument.AssertNotNull(options, nameof(options));
         _options = options;
+        _context = options.ProxyResolutionContext;
+        _proxyContext = _context ?? GetReflectionContext();
+
+        [UnconditionalSuppressMessage("Trimming", "IL2026", Justification = "Only called by the constructor already marked RequiresUnreferencedCode.")]
+        [UnconditionalSuppressMessage("Aot", "IL3050", Justification = "Only the existing reflection-based constructor uses this fallback; generated contexts are preserved.")]
+        static ModelReaderWriterContext GetReflectionContext() => ModelReaderWriterReflectionContext.Default;
     }
 
     /// <summary>
@@ -58,6 +66,7 @@ public class JsonModelConverter : JsonConverter<IJsonModel<object>>
         }
 
         _context = context;
+        _proxyContext = context;
         _options = options;
     }
 
@@ -92,7 +101,10 @@ public class JsonModelConverter : JsonConverter<IJsonModel<object>>
         {
             throw new InvalidOperationException($"Either {typeToConvert.ToFriendlyName()} or the PersistableModelProxyAttribute defined needs to implement IJsonModel.");
         }
-        var result = iJsonModel.Create(ref reader, _options);
+
+        var callOptions = _options.HasProxies ? new ModelReaderWriterOptions(_options) : _options;
+        callOptions.SetProxyResolutionContext(_proxyContext);
+        var result = callOptions.ReadWithChain(typeToConvert, iJsonModel, ref reader);
         return (IJsonModel<object>?)result;
     }
 
@@ -101,6 +113,8 @@ public class JsonModelConverter : JsonConverter<IJsonModel<object>>
     public override void Write(Utf8JsonWriter writer, IJsonModel<object> value, JsonSerializerOptions options)
 #pragma warning restore AZC0014 // Avoid using banned types in public API
     {
-        value.Write(writer, _options);
+        var callOptions = _options.HasProxies ? new ModelReaderWriterOptions(_options) : _options;
+        callOptions.SetProxyResolutionContext(_proxyContext);
+        callOptions.ResolveProxy(value).Write(writer, callOptions);
     }
 }

@@ -5,6 +5,7 @@
 ### Features Added
 
 - Added `ClientPipeline.Send` and `SendAsync` overloads accepting a `CancellationToken` to override cancellation for a send while preserving applied request options.
+- Added model proxy support to `ModelReaderWriter`: `ModelReaderWriterOptions.AddProxy` registers an `IPersistableModel<T>` or `ConditionalModelProxy<T>` that overrides how a model type is read or written, `ResolveProxy` and `ProxiedModel` let serializers apply proxies to nested models, and new `ModelReaderWriterOptions` constructors copy registrations and supply a `ModelReaderWriterContext`. `ClientPipelineOptions.AddProxy` registers proxies for clients before they are constructed.
 
 ### Breaking Changes
 
