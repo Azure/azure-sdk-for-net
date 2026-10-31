@@ -11,22 +11,22 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.FileShares.Models
 {
     /// <summary> Input for starting a redundancy conversion. </summary>
-    internal partial class StartRedundancyConversionInputProperties
+    internal partial class FileShareRedundancyConversionInputProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="StartRedundancyConversionInputProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="FileShareRedundancyConversionInputProperties"/>. </summary>
         /// <param name="targetRedundancy"> The requested target redundancy for the conversion. </param>
-        public StartRedundancyConversionInputProperties(FileShareRedundancyLevel targetRedundancy)
+        public FileShareRedundancyConversionInputProperties(FileShareRedundancyLevel targetRedundancy)
         {
             TargetRedundancy = targetRedundancy;
         }
 
-        /// <summary> Initializes a new instance of <see cref="StartRedundancyConversionInputProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="FileShareRedundancyConversionInputProperties"/>. </summary>
         /// <param name="targetRedundancy"> The requested target redundancy for the conversion. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal StartRedundancyConversionInputProperties(FileShareRedundancyLevel targetRedundancy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal FileShareRedundancyConversionInputProperties(FileShareRedundancyLevel targetRedundancy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             TargetRedundancy = targetRedundancy;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

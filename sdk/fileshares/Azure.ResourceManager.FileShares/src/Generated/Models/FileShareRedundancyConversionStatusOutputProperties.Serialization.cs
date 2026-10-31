@@ -14,51 +14,51 @@ using Azure.ResourceManager.FileShares;
 namespace Azure.ResourceManager.FileShares.Models
 {
     /// <summary> The status and details of the current or most recent redundancy conversion. </summary>
-    public partial class RedundancyConversionStatusOutputProperties : IJsonModel<RedundancyConversionStatusOutputProperties>
+    public partial class FileShareRedundancyConversionStatusOutputProperties : IJsonModel<FileShareRedundancyConversionStatusOutputProperties>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual RedundancyConversionStatusOutputProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual FileShareRedundancyConversionStatusOutputProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RedundancyConversionStatusOutputProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<FileShareRedundancyConversionStatusOutputProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeRedundancyConversionStatusOutputProperties(document.RootElement, options);
+                        return DeserializeFileShareRedundancyConversionStatusOutputProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RedundancyConversionStatusOutputProperties)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FileShareRedundancyConversionStatusOutputProperties)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RedundancyConversionStatusOutputProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<FileShareRedundancyConversionStatusOutputProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerFileSharesContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(RedundancyConversionStatusOutputProperties)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FileShareRedundancyConversionStatusOutputProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<RedundancyConversionStatusOutputProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<FileShareRedundancyConversionStatusOutputProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        RedundancyConversionStatusOutputProperties IPersistableModel<RedundancyConversionStatusOutputProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        FileShareRedundancyConversionStatusOutputProperties IPersistableModel<FileShareRedundancyConversionStatusOutputProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<RedundancyConversionStatusOutputProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<FileShareRedundancyConversionStatusOutputProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<RedundancyConversionStatusOutputProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<FileShareRedundancyConversionStatusOutputProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -69,10 +69,10 @@ namespace Azure.ResourceManager.FileShares.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RedundancyConversionStatusOutputProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<FileShareRedundancyConversionStatusOutputProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RedundancyConversionStatusOutputProperties)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(FileShareRedundancyConversionStatusOutputProperties)} does not support writing '{format}' format.");
             }
             if (options.Format != "W")
             {
@@ -113,31 +113,31 @@ namespace Azure.ResourceManager.FileShares.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        RedundancyConversionStatusOutputProperties IJsonModel<RedundancyConversionStatusOutputProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        FileShareRedundancyConversionStatusOutputProperties IJsonModel<FileShareRedundancyConversionStatusOutputProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual RedundancyConversionStatusOutputProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual FileShareRedundancyConversionStatusOutputProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RedundancyConversionStatusOutputProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<FileShareRedundancyConversionStatusOutputProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RedundancyConversionStatusOutputProperties)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(FileShareRedundancyConversionStatusOutputProperties)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeRedundancyConversionStatusOutputProperties(document.RootElement, options);
+            return DeserializeFileShareRedundancyConversionStatusOutputProperties(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static RedundancyConversionStatusOutputProperties DeserializeRedundancyConversionStatusOutputProperties(JsonElement element, ModelReaderWriterOptions options)
+        internal static FileShareRedundancyConversionStatusOutputProperties DeserializeFileShareRedundancyConversionStatusOutputProperties(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             FileShareRedundancyLevel targetRedundancy = default;
-            RedundancyConversionStatus conversionStatus = default;
+            FileShareRedundancyConversionStatus conversionStatus = default;
             string conversionFailedReason = default;
             string conversionFailedDetailedReason = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.FileShares.Models
                 }
                 if (prop.NameEquals("conversionStatus"u8))
                 {
-                    conversionStatus = new RedundancyConversionStatus(prop.Value.GetString());
+                    conversionStatus = new FileShareRedundancyConversionStatus(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("conversionFailedReason"u8))
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.FileShares.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new RedundancyConversionStatusOutputProperties(targetRedundancy, conversionStatus, conversionFailedReason, conversionFailedDetailedReason, additionalBinaryDataProperties);
+            return new FileShareRedundancyConversionStatusOutputProperties(targetRedundancy, conversionStatus, conversionFailedReason, conversionFailedDetailedReason, additionalBinaryDataProperties);
         }
     }
 }

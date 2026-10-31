@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.FileShares.Models
         /// <param name="lastKeyRotationOn"> The UTC timestamp when the service last successfully rotated the active customer-managed key version. </param>
         /// <param name="autoKeyRotationError"> The last customer-actionable error encountered while automatically rotating to the latest key version. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal FileShareEncryption(InfrastructureEncryption? infrastructureEncryption, CustomerManagedKeyEncryption customerManagedKeyEncryption, string currentKeyEncryptionKeyUri, DateTimeOffset? lastKeyRotationOn, ResponseError autoKeyRotationError, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal FileShareEncryption(FileShareInfrastructureEncryption? infrastructureEncryption, FileShareCustomerManagedKeyEncryption customerManagedKeyEncryption, string currentKeyEncryptionKeyUri, DateTimeOffset? lastKeyRotationOn, ResponseError autoKeyRotationError, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             InfrastructureEncryption = infrastructureEncryption;
             CustomerManagedKeyEncryption = customerManagedKeyEncryption;
@@ -40,10 +40,10 @@ namespace Azure.ResourceManager.FileShares.Models
         }
 
         /// <summary> Values are enabled and disabled. </summary>
-        public InfrastructureEncryption? InfrastructureEncryption { get; set; }
+        public FileShareInfrastructureEncryption? InfrastructureEncryption { get; set; }
 
         /// <summary> All Customer-managed key encryption properties for the resource. </summary>
-        public CustomerManagedKeyEncryption CustomerManagedKeyEncryption { get; set; }
+        public FileShareCustomerManagedKeyEncryption CustomerManagedKeyEncryption { get; set; }
 
         /// <summary> The versioned key encryption key URL currently applied to the file share by the service. When an unversioned keyEncryptionKeyUrl is supplied, this reflects the resolved latest key version currently in use. </summary>
         public string CurrentKeyEncryptionKeyUri { get; }

@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.FileShares.Models
             if (options.Format != "W")
             {
                 writer.WritePropertyName("redundancyConversionInProgress"u8);
-                writer.WriteBooleanValue(RedundancyConversionInProgress);
+                writer.WriteBooleanValue(IsRedundancyConversionInProgress);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -121,13 +121,13 @@ namespace Azure.ResourceManager.FileShares.Models
             {
                 return null;
             }
-            bool redundancyConversionInProgress = default;
+            bool isRedundancyConversionInProgress = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("redundancyConversionInProgress"u8))
                 {
-                    redundancyConversionInProgress = prop.Value.GetBoolean();
+                    isRedundancyConversionInProgress = prop.Value.GetBoolean();
                     continue;
                 }
                 if (options.Format != "W")
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.FileShares.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new MigrationState(redundancyConversionInProgress, additionalBinaryDataProperties);
+            return new MigrationState(isRedundancyConversionInProgress, additionalBinaryDataProperties);
         }
     }
 }

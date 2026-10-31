@@ -64,10 +64,10 @@ namespace Azure.ResourceManager.FileShares.Models
         /// <param name="provisioningState"> The status of the last operation. </param>
         /// <param name="publicNetworkAccess"> Gets or sets allow or disallow public network access to azure managed file share. </param>
         /// <param name="privateEndpointConnections"> The list of associated private endpoint connections. </param>
-        /// <param name="redundancyConversionInProgress"> Indicates whether a redundancy conversion is in progress for the file share. </param>
+        /// <param name="isRedundancyConversionInProgress"> Indicates whether a redundancy conversion is in progress for the file share. </param>
         /// <param name="encryption"> Encryption settings for the file share. </param>
         /// <returns> A new <see cref="Models.FileShareProperties"/> instance for mocking. </returns>
-        public static FileShareProperties FileShareProperties(string mountName = default, string hostName = default, FileShareMediaTier? mediaTier = default, FileShareRedundancyLevel? redundancy = default, FileShareProtocol? protocol = default, ScaleMode? scaleMode = default, int? provisionedStorageInGiB = default, DateTimeOffset? provisionedStorageNextAllowedDowngradeOn = default, int? provisionedIOPerSec = default, DateTimeOffset? provisionedIOPerSecNextAllowedDowngradeOn = default, int? provisionedThroughputMiBPerSec = default, DateTimeOffset? provisionedThroughputNextAllowedDowngradeOn = default, int? includedBurstIOPerSec = default, long? maxBurstIOPerSecCredits = default, NfsProtocolProperties nfsProtocolProperties = default, IEnumerable<string> publicAccessAllowedSubnets = default, FileShareProvisioningState? provisioningState = default, FileSharePublicNetworkAccess? publicNetworkAccess = default, IEnumerable<FileSharePrivateEndpointConnectionData> privateEndpointConnections = default, bool? redundancyConversionInProgress = default, FileShareEncryption encryption = default)
+        public static FileShareProperties FileShareProperties(string mountName = default, string hostName = default, FileShareMediaTier? mediaTier = default, FileShareRedundancyLevel? redundancy = default, FileShareProtocol? protocol = default, FileShareScaleMode? scaleMode = default, int? provisionedStorageInGiB = default, DateTimeOffset? provisionedStorageNextAllowedDowngradeOn = default, int? provisionedIOPerSec = default, DateTimeOffset? provisionedIOPerSecNextAllowedDowngradeOn = default, int? provisionedThroughputMiBPerSec = default, DateTimeOffset? provisionedThroughputNextAllowedDowngradeOn = default, int? includedBurstIOPerSec = default, long? maxBurstIOPerSecCredits = default, NfsProtocolProperties nfsProtocolProperties = default, IEnumerable<string> publicAccessAllowedSubnets = default, FileShareProvisioningState? provisioningState = default, FileSharePublicNetworkAccess? publicNetworkAccess = default, IEnumerable<FileSharePrivateEndpointConnectionData> privateEndpointConnections = default, bool? isRedundancyConversionInProgress = default, FileShareEncryption encryption = default)
         {
             privateEndpointConnections ??= new ChangeTrackingList<FileSharePrivateEndpointConnectionData>();
 
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.FileShares.Models
                 provisioningState,
                 publicNetworkAccess,
                 (privateEndpointConnections ?? new ChangeTrackingList<FileSharePrivateEndpointConnectionData>()).ToList(),
-                redundancyConversionInProgress is null ? default : new MigrationState(redundancyConversionInProgress.GetValueOrDefault(), default),
+                isRedundancyConversionInProgress is null ? default : new MigrationState(isRedundancyConversionInProgress.GetValueOrDefault(), default),
                 encryption,
                 default);
         }
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.FileShares.Models
         /// <param name="lastKeyRotationOn"> The UTC timestamp when the service last successfully rotated the active customer-managed key version. </param>
         /// <param name="autoKeyRotationError"> The last customer-actionable error encountered while automatically rotating to the latest key version. </param>
         /// <returns> A new <see cref="Models.FileShareEncryption"/> instance for mocking. </returns>
-        public static FileShareEncryption FileShareEncryption(InfrastructureEncryption? infrastructureEncryption = default, CustomerManagedKeyEncryption customerManagedKeyEncryption = default, string currentKeyEncryptionKeyUri = default, DateTimeOffset? lastKeyRotationOn = default, ResponseError autoKeyRotationError = default)
+        public static FileShareEncryption FileShareEncryption(FileShareInfrastructureEncryption? infrastructureEncryption = default, FileShareCustomerManagedKeyEncryption customerManagedKeyEncryption = default, string currentKeyEncryptionKeyUri = default, DateTimeOffset? lastKeyRotationOn = default, ResponseError autoKeyRotationError = default)
         {
             return new FileShareEncryption(
                 infrastructureEncryption,
@@ -166,10 +166,10 @@ namespace Azure.ResourceManager.FileShares.Models
         /// <summary> Customer-managed key encryption properties for the resource. </summary>
         /// <param name="keyEncryptionKeyIdentity"> All identity configuration for Customer-managed key settings defining which identity should be used to auth to Key Vault. </param>
         /// <param name="keyEncryptionKeyUri"> key encryption key Url, versioned or non-versioned. Ex: https://contosovault.vault.azure.net/keys/contosokek/562a4bb76b524a1493a6afe8e536ee78 or https://contosovault.vault.azure.net/keys/contosokek. </param>
-        /// <returns> A new <see cref="Models.CustomerManagedKeyEncryption"/> instance for mocking. </returns>
-        public static CustomerManagedKeyEncryption CustomerManagedKeyEncryption(KeyEncryptionKeyIdentity keyEncryptionKeyIdentity = default, string keyEncryptionKeyUri = default)
+        /// <returns> A new <see cref="Models.FileShareCustomerManagedKeyEncryption"/> instance for mocking. </returns>
+        public static FileShareCustomerManagedKeyEncryption FileShareCustomerManagedKeyEncryption(FileShareKeyEncryptionKeyIdentity keyEncryptionKeyIdentity = default, string keyEncryptionKeyUri = default)
         {
-            return new CustomerManagedKeyEncryption(keyEncryptionKeyIdentity, keyEncryptionKeyUri, default);
+            return new FileShareCustomerManagedKeyEncryption(keyEncryptionKeyIdentity, keyEncryptionKeyUri, default);
         }
 
         /// <summary> All identity configuration for Customer-managed key settings defining which identity should be used to auth to Key Vault. </summary>
@@ -177,10 +177,10 @@ namespace Azure.ResourceManager.FileShares.Models
         /// <param name="userAssignedIdentityResourceId"> User assigned identity to use for accessing key encryption key Url. Ex: /subscriptions/fa5fc227-a624-475e-b696-cdd604c735bc/resourceGroups/&lt;resource group&gt;/providers/Microsoft.ManagedIdentity/userAssignedIdentities/myId. Mutually exclusive with identityType systemAssignedIdentity. </param>
         /// <param name="federatedClientId"> application client identity to use for accessing key encryption key Url in a different tenant. Ex: f83c6b1b-4d34-47e4-bb34-9d83df58b540. </param>
         /// <param name="delegatedIdentityClientId"> delegated identity to use for accessing key encryption key Url. Ex: /subscriptions/fa5fc227-a624-475e-b696-cdd604c735bc/resourceGroups/&lt;resource group&gt;/providers/Microsoft.ManagedIdentity/userAssignedIdentities/myId. Mutually exclusive with identityType systemAssignedIdentity and userAssignedIdentity - internal use only. </param>
-        /// <returns> A new <see cref="Models.KeyEncryptionKeyIdentity"/> instance for mocking. </returns>
-        public static KeyEncryptionKeyIdentity KeyEncryptionKeyIdentity(KeyEncryptionKeyIdentityType? identityType = default, ResourceIdentifier userAssignedIdentityResourceId = default, Guid? federatedClientId = default, Guid? delegatedIdentityClientId = default)
+        /// <returns> A new <see cref="Models.FileShareKeyEncryptionKeyIdentity"/> instance for mocking. </returns>
+        public static FileShareKeyEncryptionKeyIdentity FileShareKeyEncryptionKeyIdentity(FileShareKeyEncryptionKeyIdentityType? identityType = default, ResourceIdentifier userAssignedIdentityResourceId = default, Guid? federatedClientId = default, Guid? delegatedIdentityClientId = default)
         {
-            return new KeyEncryptionKeyIdentity(identityType, userAssignedIdentityResourceId, federatedClientId, delegatedIdentityClientId, default);
+            return new FileShareKeyEncryptionKeyIdentity(identityType, userAssignedIdentityResourceId, federatedClientId, delegatedIdentityClientId, default);
         }
 
         /// <summary> The type used for update operations of the FileShare. </summary>
@@ -236,18 +236,18 @@ namespace Azure.ResourceManager.FileShares.Models
         }
 
         /// <param name="targetRedundancy"> The requested target redundancy for the conversion. </param>
-        /// <returns> A new <see cref="Models.StartRedundancyConversionContent"/> instance for mocking. </returns>
-        public static StartRedundancyConversionContent StartRedundancyConversionContent(FileShareRedundancyLevel targetRedundancy = default)
+        /// <returns> A new <see cref="Models.FileShareRedundancyConversionContent"/> instance for mocking. </returns>
+        public static FileShareRedundancyConversionContent FileShareRedundancyConversionContent(FileShareRedundancyLevel targetRedundancy = default)
         {
-            return new StartRedundancyConversionContent(new StartRedundancyConversionInputProperties(targetRedundancy, default), default);
+            return new FileShareRedundancyConversionContent(new FileShareRedundancyConversionInputProperties(targetRedundancy, default), default);
         }
 
         /// <summary> Response containing the status and details of the current or most recent redundancy conversion. </summary>
         /// <param name="properties"> Properties containing the redundancy conversion status output. </param>
-        /// <returns> A new <see cref="Models.RedundancyConversionStatusResult"/> instance for mocking. </returns>
-        public static RedundancyConversionStatusResult RedundancyConversionStatusResult(RedundancyConversionStatusOutputProperties properties = default)
+        /// <returns> A new <see cref="Models.FileShareRedundancyConversionStatusResult"/> instance for mocking. </returns>
+        public static FileShareRedundancyConversionStatusResult FileShareRedundancyConversionStatusResult(FileShareRedundancyConversionStatusOutputProperties properties = default)
         {
-            return new RedundancyConversionStatusResult(properties, default);
+            return new FileShareRedundancyConversionStatusResult(properties, default);
         }
 
         /// <summary> The status and details of the current or most recent redundancy conversion. </summary>
@@ -255,10 +255,10 @@ namespace Azure.ResourceManager.FileShares.Models
         /// <param name="conversionStatus"> The current status of the redundancy conversion. </param>
         /// <param name="conversionFailedReason"> The reason the redundancy conversion failed. </param>
         /// <param name="conversionFailedDetailedReason"> Detailed information about why the redundancy conversion failed. </param>
-        /// <returns> A new <see cref="Models.RedundancyConversionStatusOutputProperties"/> instance for mocking. </returns>
-        public static RedundancyConversionStatusOutputProperties RedundancyConversionStatusOutputProperties(FileShareRedundancyLevel targetRedundancy = default, RedundancyConversionStatus conversionStatus = default, string conversionFailedReason = default, string conversionFailedDetailedReason = default)
+        /// <returns> A new <see cref="Models.FileShareRedundancyConversionStatusOutputProperties"/> instance for mocking. </returns>
+        public static FileShareRedundancyConversionStatusOutputProperties FileShareRedundancyConversionStatusOutputProperties(FileShareRedundancyLevel targetRedundancy = default, FileShareRedundancyConversionStatus conversionStatus = default, string conversionFailedReason = default, string conversionFailedDetailedReason = default)
         {
-            return new RedundancyConversionStatusOutputProperties(targetRedundancy, conversionStatus, conversionFailedReason, conversionFailedDetailedReason, default);
+            return new FileShareRedundancyConversionStatusOutputProperties(targetRedundancy, conversionStatus, conversionFailedReason, conversionFailedDetailedReason, default);
         }
 
         /// <summary> FileShareSnapshot resource. </summary>
@@ -318,7 +318,7 @@ namespace Azure.ResourceManager.FileShares.Models
         /// <param name="mediaTier"> The storage media tier. Defaults to SSD. </param>
         /// <param name="scaleMode"> The scale mode. Defaults to Compatibility. </param>
         /// <returns> A new <see cref="Models.FileShareOfferInput"/> instance for mocking. </returns>
-        public static FileShareOfferInput FileShareOfferInput(FileShareProtocol? protocol = default, FileShareMediaTier? mediaTier = default, ScaleMode? scaleMode = default)
+        public static FileShareOfferInput FileShareOfferInput(FileShareProtocol? protocol = default, FileShareMediaTier? mediaTier = default, FileShareScaleMode? scaleMode = default)
         {
             return new FileShareOfferInput(protocol, mediaTier, scaleMode, default);
         }
@@ -402,7 +402,7 @@ namespace Azure.ResourceManager.FileShares.Models
         /// <param name="mediaTier"> The storage media tier. Defaults to SSD. </param>
         /// <param name="scaleMode"> The scale mode. Defaults to Compatibility. </param>
         /// <returns> A new <see cref="Models.FileShareProvisioningRecommendationInputProperties"/> instance for mocking. </returns>
-        public static FileShareProvisioningRecommendationInputProperties FileShareProvisioningRecommendationInputProperties(int provisionedStorageInGiB = default, FileShareProtocol? protocol = default, FileShareMediaTier? mediaTier = default, ScaleMode? scaleMode = default)
+        public static FileShareProvisioningRecommendationInputProperties FileShareProvisioningRecommendationInputProperties(int provisionedStorageInGiB = default, FileShareProtocol? protocol = default, FileShareMediaTier? mediaTier = default, FileShareScaleMode? scaleMode = default)
         {
             return new FileShareProvisioningRecommendationInputProperties(provisionedStorageInGiB, protocol, mediaTier, scaleMode, default);
         }

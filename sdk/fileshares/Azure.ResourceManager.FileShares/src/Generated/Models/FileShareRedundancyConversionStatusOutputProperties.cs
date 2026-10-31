@@ -11,23 +11,23 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.FileShares.Models
 {
     /// <summary> The status and details of the current or most recent redundancy conversion. </summary>
-    public partial class RedundancyConversionStatusOutputProperties
+    public partial class FileShareRedundancyConversionStatusOutputProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="RedundancyConversionStatusOutputProperties"/>. </summary>
-        internal RedundancyConversionStatusOutputProperties()
+        /// <summary> Initializes a new instance of <see cref="FileShareRedundancyConversionStatusOutputProperties"/>. </summary>
+        internal FileShareRedundancyConversionStatusOutputProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="RedundancyConversionStatusOutputProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="FileShareRedundancyConversionStatusOutputProperties"/>. </summary>
         /// <param name="targetRedundancy"> The target redundancy requested for the redundancy conversion. </param>
         /// <param name="conversionStatus"> The current status of the redundancy conversion. </param>
         /// <param name="conversionFailedReason"> The reason the redundancy conversion failed. </param>
         /// <param name="conversionFailedDetailedReason"> Detailed information about why the redundancy conversion failed. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RedundancyConversionStatusOutputProperties(FileShareRedundancyLevel targetRedundancy, RedundancyConversionStatus conversionStatus, string conversionFailedReason, string conversionFailedDetailedReason, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal FileShareRedundancyConversionStatusOutputProperties(FileShareRedundancyLevel targetRedundancy, FileShareRedundancyConversionStatus conversionStatus, string conversionFailedReason, string conversionFailedDetailedReason, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             TargetRedundancy = targetRedundancy;
             ConversionStatus = conversionStatus;
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.FileShares.Models
         public FileShareRedundancyLevel TargetRedundancy { get; }
 
         /// <summary> The current status of the redundancy conversion. </summary>
-        public RedundancyConversionStatus ConversionStatus { get; }
+        public FileShareRedundancyConversionStatus ConversionStatus { get; }
 
         /// <summary> The reason the redundancy conversion failed. </summary>
         public string ConversionFailedReason { get; }

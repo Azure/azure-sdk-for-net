@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.FileShares.Models
         /// <summary> SSD media tier. </summary>
         private const string SsdValue = "SSD";
         /// <summary> HDD media tier. </summary>
-        private const string HDDValue = "HDD";
+        private const string HddValue = "HDD";
 
         /// <summary> Initializes a new instance of <see cref="FileShareMediaTier"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.FileShares.Models
         public static FileShareMediaTier Ssd { get; } = new FileShareMediaTier(SsdValue);
 
         /// <summary> HDD media tier. </summary>
-        public static FileShareMediaTier HDD { get; } = new FileShareMediaTier(HDDValue);
+        public static FileShareMediaTier Hdd { get; } = new FileShareMediaTier(HddValue);
 
         /// <summary> Determines if two <see cref="FileShareMediaTier"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

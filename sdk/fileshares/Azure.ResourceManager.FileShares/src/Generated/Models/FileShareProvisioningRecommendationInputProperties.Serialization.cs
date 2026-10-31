@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.FileShares.Models
             int provisionedStorageInGiB = default;
             FileShareProtocol? protocol = default;
             FileShareMediaTier? mediaTier = default;
-            ScaleMode? scaleMode = default;
+            FileShareScaleMode? scaleMode = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.FileShares.Models
                     {
                         continue;
                     }
-                    scaleMode = new ScaleMode(prop.Value.GetString());
+                    scaleMode = new FileShareScaleMode(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

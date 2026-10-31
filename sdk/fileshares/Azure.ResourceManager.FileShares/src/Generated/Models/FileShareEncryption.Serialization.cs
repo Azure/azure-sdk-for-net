@@ -143,8 +143,8 @@ namespace Azure.ResourceManager.FileShares.Models
             {
                 return null;
             }
-            InfrastructureEncryption? infrastructureEncryption = default;
-            CustomerManagedKeyEncryption customerManagedKeyEncryption = default;
+            FileShareInfrastructureEncryption? infrastructureEncryption = default;
+            FileShareCustomerManagedKeyEncryption customerManagedKeyEncryption = default;
             string currentKeyEncryptionKeyUri = default;
             DateTimeOffset? lastKeyRotationOn = default;
             ResponseError autoKeyRotationError = default;
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.FileShares.Models
                     {
                         continue;
                     }
-                    infrastructureEncryption = new InfrastructureEncryption(prop.Value.GetString());
+                    infrastructureEncryption = new FileShareInfrastructureEncryption(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("customerManagedKeyEncryption"u8))
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.FileShares.Models
                     {
                         continue;
                     }
-                    customerManagedKeyEncryption = CustomerManagedKeyEncryption.DeserializeCustomerManagedKeyEncryption(prop.Value, options);
+                    customerManagedKeyEncryption = FileShareCustomerManagedKeyEncryption.DeserializeFileShareCustomerManagedKeyEncryption(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("currentKeyEncryptionKeyUrl"u8))

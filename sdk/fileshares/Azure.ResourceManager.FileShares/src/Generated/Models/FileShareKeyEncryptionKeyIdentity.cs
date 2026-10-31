@@ -12,23 +12,23 @@ using Azure.Core;
 namespace Azure.ResourceManager.FileShares.Models
 {
     /// <summary> All identity configuration for Customer-managed key settings defining which identity should be used to auth to Key Vault. </summary>
-    public partial class KeyEncryptionKeyIdentity
+    public partial class FileShareKeyEncryptionKeyIdentity
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="KeyEncryptionKeyIdentity"/>. </summary>
-        public KeyEncryptionKeyIdentity()
+        /// <summary> Initializes a new instance of <see cref="FileShareKeyEncryptionKeyIdentity"/>. </summary>
+        public FileShareKeyEncryptionKeyIdentity()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="KeyEncryptionKeyIdentity"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="FileShareKeyEncryptionKeyIdentity"/>. </summary>
         /// <param name="identityType"> The type of identity to use. Values can be systemAssignedIdentity, userAssignedIdentity, or delegatedResourceIdentity. </param>
         /// <param name="userAssignedIdentityResourceId"> User assigned identity to use for accessing key encryption key Url. Ex: /subscriptions/fa5fc227-a624-475e-b696-cdd604c735bc/resourceGroups/&lt;resource group&gt;/providers/Microsoft.ManagedIdentity/userAssignedIdentities/myId. Mutually exclusive with identityType systemAssignedIdentity. </param>
         /// <param name="federatedClientId"> application client identity to use for accessing key encryption key Url in a different tenant. Ex: f83c6b1b-4d34-47e4-bb34-9d83df58b540. </param>
         /// <param name="delegatedIdentityClientId"> delegated identity to use for accessing key encryption key Url. Ex: /subscriptions/fa5fc227-a624-475e-b696-cdd604c735bc/resourceGroups/&lt;resource group&gt;/providers/Microsoft.ManagedIdentity/userAssignedIdentities/myId. Mutually exclusive with identityType systemAssignedIdentity and userAssignedIdentity - internal use only. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal KeyEncryptionKeyIdentity(KeyEncryptionKeyIdentityType? identityType, ResourceIdentifier userAssignedIdentityResourceId, Guid? federatedClientId, Guid? delegatedIdentityClientId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal FileShareKeyEncryptionKeyIdentity(FileShareKeyEncryptionKeyIdentityType? identityType, ResourceIdentifier userAssignedIdentityResourceId, Guid? federatedClientId, Guid? delegatedIdentityClientId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             IdentityType = identityType;
             UserAssignedIdentityResourceId = userAssignedIdentityResourceId;
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.FileShares.Models
         }
 
         /// <summary> The type of identity to use. Values can be systemAssignedIdentity, userAssignedIdentity, or delegatedResourceIdentity. </summary>
-        public KeyEncryptionKeyIdentityType? IdentityType { get; set; }
+        public FileShareKeyEncryptionKeyIdentityType? IdentityType { get; set; }
 
         /// <summary> User assigned identity to use for accessing key encryption key Url. Ex: /subscriptions/fa5fc227-a624-475e-b696-cdd604c735bc/resourceGroups/&lt;resource group&gt;/providers/Microsoft.ManagedIdentity/userAssignedIdentities/myId. Mutually exclusive with identityType systemAssignedIdentity. </summary>
         public ResourceIdentifier UserAssignedIdentityResourceId { get; set; }

@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.FileShares.Models
         /// <param name="migrationState"> The current migration state of the file share. </param>
         /// <param name="encryption"> Encryption settings for the file share. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal FileShareProperties(string mountName, string hostName, FileShareMediaTier? mediaTier, FileShareRedundancyLevel? redundancy, FileShareProtocol? protocol, ScaleMode? scaleMode, int? provisionedStorageInGiB, DateTimeOffset? provisionedStorageNextAllowedDowngradeOn, int? provisionedIOPerSec, DateTimeOffset? provisionedIOPerSecNextAllowedDowngradeOn, int? provisionedThroughputMiBPerSec, DateTimeOffset? provisionedThroughputNextAllowedDowngradeOn, int? includedBurstIOPerSec, long? maxBurstIOPerSecCredits, NfsProtocolProperties nfsProtocolProperties, PublicAccessProperties publicAccessProperties, FileShareProvisioningState? provisioningState, FileSharePublicNetworkAccess? publicNetworkAccess, IReadOnlyList<FileSharePrivateEndpointConnectionData> privateEndpointConnections, MigrationState migrationState, FileShareEncryption encryption, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal FileShareProperties(string mountName, string hostName, FileShareMediaTier? mediaTier, FileShareRedundancyLevel? redundancy, FileShareProtocol? protocol, FileShareScaleMode? scaleMode, int? provisionedStorageInGiB, DateTimeOffset? provisionedStorageNextAllowedDowngradeOn, int? provisionedIOPerSec, DateTimeOffset? provisionedIOPerSecNextAllowedDowngradeOn, int? provisionedThroughputMiBPerSec, DateTimeOffset? provisionedThroughputNextAllowedDowngradeOn, int? includedBurstIOPerSec, long? maxBurstIOPerSecCredits, NfsProtocolProperties nfsProtocolProperties, PublicAccessProperties publicAccessProperties, FileShareProvisioningState? provisioningState, FileSharePublicNetworkAccess? publicNetworkAccess, IReadOnlyList<FileSharePrivateEndpointConnectionData> privateEndpointConnections, MigrationState migrationState, FileShareEncryption encryption, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             MountName = mountName;
             HostName = hostName;
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.FileShares.Models
         public FileShareProtocol? Protocol { get; set; }
 
         /// <summary> The scale mode selected when the file share is created. </summary>
-        public ScaleMode? ScaleMode { get; set; }
+        public FileShareScaleMode? ScaleMode { get; set; }
 
         /// <summary> The provisioned storage size of the share in GiB (1 GiB is 1024^3 bytes or 1073741824 bytes). A component of the file share's bill is the provisioned storage, regardless of the amount of used storage. </summary>
         public int? ProvisionedStorageInGiB { get; set; }
@@ -149,11 +149,11 @@ namespace Azure.ResourceManager.FileShares.Models
         }
 
         /// <summary> Indicates whether a redundancy conversion is in progress for the file share. </summary>
-        public bool? RedundancyConversionInProgress
+        public bool? IsRedundancyConversionInProgress
         {
             get
             {
-                return MigrationState is null ? (bool?)default : MigrationState.RedundancyConversionInProgress;
+                return MigrationState is null ? (bool?)default : MigrationState.IsRedundancyConversionInProgress;
             }
         }
     }

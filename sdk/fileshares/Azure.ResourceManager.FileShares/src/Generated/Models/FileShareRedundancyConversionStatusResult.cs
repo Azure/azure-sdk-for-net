@@ -11,28 +11,28 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.FileShares.Models
 {
     /// <summary> Response containing the status and details of the current or most recent redundancy conversion. </summary>
-    public partial class RedundancyConversionStatusResult
+    public partial class FileShareRedundancyConversionStatusResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="RedundancyConversionStatusResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="FileShareRedundancyConversionStatusResult"/>. </summary>
         /// <param name="properties"> Properties containing the redundancy conversion status output. </param>
-        internal RedundancyConversionStatusResult(RedundancyConversionStatusOutputProperties properties)
+        internal FileShareRedundancyConversionStatusResult(FileShareRedundancyConversionStatusOutputProperties properties)
         {
             Properties = properties;
         }
 
-        /// <summary> Initializes a new instance of <see cref="RedundancyConversionStatusResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="FileShareRedundancyConversionStatusResult"/>. </summary>
         /// <param name="properties"> Properties containing the redundancy conversion status output. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RedundancyConversionStatusResult(RedundancyConversionStatusOutputProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal FileShareRedundancyConversionStatusResult(FileShareRedundancyConversionStatusOutputProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Properties = properties;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Properties containing the redundancy conversion status output. </summary>
-        public RedundancyConversionStatusOutputProperties Properties { get; }
+        public FileShareRedundancyConversionStatusOutputProperties Properties { get; }
     }
 }

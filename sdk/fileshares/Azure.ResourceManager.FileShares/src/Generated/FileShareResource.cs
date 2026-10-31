@@ -434,7 +434,7 @@ namespace Azure.ResourceManager.FileShares
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<RedundancyConversionStatusResult>> GetRedundancyConversionStatusAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<FileShareRedundancyConversionStatusResult>> GetRedundancyConversionStatusAsync(CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _fileSharesInterfaceClientDiagnostics.CreateScope("FileShareResource.GetRedundancyConversionStatus");
             scope.Start();
@@ -446,7 +446,7 @@ namespace Azure.ResourceManager.FileShares
                 };
                 HttpMessage message = _fileSharesInterfaceRestClient.CreateGetRedundancyConversionStatusRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<RedundancyConversionStatusResult> response = Response.FromValue(RedundancyConversionStatusResult.FromResponse(result), result);
+                Response<FileShareRedundancyConversionStatusResult> response = Response.FromValue(FileShareRedundancyConversionStatusResult.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -482,7 +482,7 @@ namespace Azure.ResourceManager.FileShares
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<RedundancyConversionStatusResult> GetRedundancyConversionStatus(CancellationToken cancellationToken = default)
+        public virtual Response<FileShareRedundancyConversionStatusResult> GetRedundancyConversionStatus(CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _fileSharesInterfaceClientDiagnostics.CreateScope("FileShareResource.GetRedundancyConversionStatus");
             scope.Start();
@@ -494,7 +494,7 @@ namespace Azure.ResourceManager.FileShares
                 };
                 HttpMessage message = _fileSharesInterfaceRestClient.CreateGetRedundancyConversionStatusRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<RedundancyConversionStatusResult> response = Response.FromValue(RedundancyConversionStatusResult.FromResponse(result), result);
+                Response<FileShareRedundancyConversionStatusResult> response = Response.FromValue(FileShareRedundancyConversionStatusResult.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -532,7 +532,7 @@ namespace Azure.ResourceManager.FileShares
         /// <param name="content"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response> StartRedundancyConversionAsync(StartRedundancyConversionContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> StartRedundancyConversionAsync(FileShareRedundancyConversionContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -544,7 +544,7 @@ namespace Azure.ResourceManager.FileShares
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _fileSharesInterfaceRestClient.CreateStartRedundancyConversionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, StartRedundancyConversionContent.ToRequestContent(content), context);
+                HttpMessage message = _fileSharesInterfaceRestClient.CreateStartRedundancyConversionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, FileShareRedundancyConversionContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 return response;
             }
@@ -579,7 +579,7 @@ namespace Azure.ResourceManager.FileShares
         /// <param name="content"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response StartRedundancyConversion(StartRedundancyConversionContent content, CancellationToken cancellationToken = default)
+        public virtual Response StartRedundancyConversion(FileShareRedundancyConversionContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -591,7 +591,7 @@ namespace Azure.ResourceManager.FileShares
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _fileSharesInterfaceRestClient.CreateStartRedundancyConversionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, StartRedundancyConversionContent.ToRequestContent(content), context);
+                HttpMessage message = _fileSharesInterfaceRestClient.CreateStartRedundancyConversionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, FileShareRedundancyConversionContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 return response;
             }

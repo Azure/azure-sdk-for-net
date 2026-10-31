@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.FileShares.Models
         /// <param name="mediaTier"> The storage media tier. Defaults to SSD. </param>
         /// <param name="scaleMode"> The scale mode. Defaults to Compatibility. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal FileShareProvisioningRecommendationInputProperties(int provisionedStorageInGiB, FileShareProtocol? protocol, FileShareMediaTier? mediaTier, ScaleMode? scaleMode, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal FileShareProvisioningRecommendationInputProperties(int provisionedStorageInGiB, FileShareProtocol? protocol, FileShareMediaTier? mediaTier, FileShareScaleMode? scaleMode, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisionedStorageInGiB = provisionedStorageInGiB;
             Protocol = protocol;
@@ -48,6 +48,6 @@ namespace Azure.ResourceManager.FileShares.Models
         public FileShareMediaTier? MediaTier { get; set; }
 
         /// <summary> The scale mode. Defaults to Compatibility. </summary>
-        public ScaleMode? ScaleMode { get; set; }
+        public FileShareScaleMode? ScaleMode { get; set; }
     }
 }

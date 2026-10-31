@@ -11,30 +11,30 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.FileShares.Models
 {
     /// <summary> Parameters for starting a redundancy conversion. </summary>
-    public partial class StartRedundancyConversionContent
+    public partial class FileShareRedundancyConversionContent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="StartRedundancyConversionContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="FileShareRedundancyConversionContent"/>. </summary>
         /// <param name="targetRedundancy"> The requested target redundancy for the conversion. </param>
-        public StartRedundancyConversionContent(FileShareRedundancyLevel targetRedundancy)
+        public FileShareRedundancyConversionContent(FileShareRedundancyLevel targetRedundancy)
         {
 
-            Properties = new StartRedundancyConversionInputProperties(targetRedundancy);
+            Properties = new FileShareRedundancyConversionInputProperties(targetRedundancy);
         }
 
-        /// <summary> Initializes a new instance of <see cref="StartRedundancyConversionContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="FileShareRedundancyConversionContent"/>. </summary>
         /// <param name="properties"> Properties containing the redundancy conversion input. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal StartRedundancyConversionContent(StartRedundancyConversionInputProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal FileShareRedundancyConversionContent(FileShareRedundancyConversionInputProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Properties = properties;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Properties containing the redundancy conversion input. </summary>
-        internal StartRedundancyConversionInputProperties Properties { get; }
+        internal FileShareRedundancyConversionInputProperties Properties { get; }
 
         /// <summary> The requested target redundancy for the conversion. </summary>
         public FileShareRedundancyLevel TargetRedundancy

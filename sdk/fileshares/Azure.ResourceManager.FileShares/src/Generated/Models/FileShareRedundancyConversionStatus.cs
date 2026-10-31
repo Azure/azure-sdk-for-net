@@ -12,7 +12,7 @@ using Azure.ResourceManager.FileShares;
 namespace Azure.ResourceManager.FileShares.Models
 {
     /// <summary> Status of the redundancy conversion. </summary>
-    public readonly partial struct RedundancyConversionStatus : IEquatable<RedundancyConversionStatus>
+    public readonly partial struct FileShareRedundancyConversionStatus : IEquatable<FileShareRedundancyConversionStatus>
     {
         private readonly string _value;
         /// <summary> The redundancy conversion has been submitted. </summary>
@@ -24,10 +24,10 @@ namespace Azure.ResourceManager.FileShares.Models
         /// <summary> The redundancy conversion has failed. </summary>
         private const string FailedValue = "Failed";
 
-        /// <summary> Initializes a new instance of <see cref="RedundancyConversionStatus"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="FileShareRedundancyConversionStatus"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public RedundancyConversionStatus(string value)
+        public FileShareRedundancyConversionStatus(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -35,41 +35,41 @@ namespace Azure.ResourceManager.FileShares.Models
         }
 
         /// <summary> The redundancy conversion has been submitted. </summary>
-        public static RedundancyConversionStatus SubmittedForConversion { get; } = new RedundancyConversionStatus(SubmittedForConversionValue);
+        public static FileShareRedundancyConversionStatus SubmittedForConversion { get; } = new FileShareRedundancyConversionStatus(SubmittedForConversionValue);
 
         /// <summary> The redundancy conversion is in progress. </summary>
-        public static RedundancyConversionStatus InProgress { get; } = new RedundancyConversionStatus(InProgressValue);
+        public static FileShareRedundancyConversionStatus InProgress { get; } = new FileShareRedundancyConversionStatus(InProgressValue);
 
         /// <summary> The redundancy conversion has completed. </summary>
-        public static RedundancyConversionStatus Complete { get; } = new RedundancyConversionStatus(CompleteValue);
+        public static FileShareRedundancyConversionStatus Complete { get; } = new FileShareRedundancyConversionStatus(CompleteValue);
 
         /// <summary> The redundancy conversion has failed. </summary>
-        public static RedundancyConversionStatus Failed { get; } = new RedundancyConversionStatus(FailedValue);
+        public static FileShareRedundancyConversionStatus Failed { get; } = new FileShareRedundancyConversionStatus(FailedValue);
 
-        /// <summary> Determines if two <see cref="RedundancyConversionStatus"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="FileShareRedundancyConversionStatus"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(RedundancyConversionStatus left, RedundancyConversionStatus right) => left.Equals(right);
+        public static bool operator ==(FileShareRedundancyConversionStatus left, FileShareRedundancyConversionStatus right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="RedundancyConversionStatus"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="FileShareRedundancyConversionStatus"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(RedundancyConversionStatus left, RedundancyConversionStatus right) => !left.Equals(right);
+        public static bool operator !=(FileShareRedundancyConversionStatus left, FileShareRedundancyConversionStatus right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="RedundancyConversionStatus"/>. </summary>
+        /// <summary> Converts a string to a <see cref="FileShareRedundancyConversionStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator RedundancyConversionStatus(string value) => new RedundancyConversionStatus(value);
+        public static implicit operator FileShareRedundancyConversionStatus(string value) => new FileShareRedundancyConversionStatus(value);
 
-        /// <summary> Converts a string to a <see cref="RedundancyConversionStatus"/>. </summary>
+        /// <summary> Converts a string to a <see cref="FileShareRedundancyConversionStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator RedundancyConversionStatus?(string value) => value == null ? null : new RedundancyConversionStatus(value);
+        public static implicit operator FileShareRedundancyConversionStatus?(string value) => value == null ? null : new FileShareRedundancyConversionStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is RedundancyConversionStatus other && Equals(other);
+        public override bool Equals(object obj) => obj is FileShareRedundancyConversionStatus other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(RedundancyConversionStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(FileShareRedundancyConversionStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

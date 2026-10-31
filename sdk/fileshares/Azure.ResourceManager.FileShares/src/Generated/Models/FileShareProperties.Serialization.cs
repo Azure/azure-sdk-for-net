@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.FileShares.Models
             FileShareMediaTier? mediaTier = default;
             FileShareRedundancyLevel? redundancy = default;
             FileShareProtocol? protocol = default;
-            ScaleMode? scaleMode = default;
+            FileShareScaleMode? scaleMode = default;
             int? provisionedStorageInGiB = default;
             DateTimeOffset? provisionedStorageNextAllowedDowngradeOn = default;
             int? provisionedIOPerSec = default;
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.FileShares.Models
                     {
                         continue;
                     }
-                    scaleMode = new ScaleMode(prop.Value.GetString());
+                    scaleMode = new FileShareScaleMode(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("provisionedStorageGiB"u8))

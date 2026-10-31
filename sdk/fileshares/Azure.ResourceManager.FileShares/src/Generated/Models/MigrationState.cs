@@ -22,15 +22,15 @@ namespace Azure.ResourceManager.FileShares.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="MigrationState"/>. </summary>
-        /// <param name="redundancyConversionInProgress"> Indicates whether a redundancy conversion is in progress for the file share. </param>
+        /// <param name="isRedundancyConversionInProgress"> Indicates whether a redundancy conversion is in progress for the file share. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MigrationState(bool redundancyConversionInProgress, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MigrationState(bool isRedundancyConversionInProgress, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            RedundancyConversionInProgress = redundancyConversionInProgress;
+            IsRedundancyConversionInProgress = isRedundancyConversionInProgress;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Indicates whether a redundancy conversion is in progress for the file share. </summary>
-        public bool RedundancyConversionInProgress { get; }
+        public bool IsRedundancyConversionInProgress { get; }
     }
 }
