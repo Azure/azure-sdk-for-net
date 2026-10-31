@@ -1,5 +1,17 @@
 # Release History
 
+## 4.11.0-beta.1 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+- Preserved the service version value shipped for `2026-04-01` in version `4.10.0`.
+
+### Other Changes
+
 ## 4.10.0 (2026-10-27)
 
 ### Other Changes
