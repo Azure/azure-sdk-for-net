@@ -106,6 +106,16 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 writer.WritePropertyName("instantRpRetentionRangeInDays"u8);
                 writer.WriteNumberValue(InstantRPRetentionRangeInDays.Value);
             }
+            if (Optional.IsDefined(InstantAccessSnapshotEnabled))
+            {
+                writer.WritePropertyName("instantAccessSnapshotEnabled"u8);
+                writer.WriteBooleanValue(InstantAccessSnapshotEnabled.Value);
+            }
+            if (Optional.IsDefined(InstantAccessDurationMinutes))
+            {
+                writer.WritePropertyName("instantAccessDurationMinutes"u8);
+                writer.WriteNumberValue(InstantAccessDurationMinutes.Value);
+            }
             if (Optional.IsDefined(TimeZone))
             {
                 writer.WritePropertyName("timeZone"u8);
@@ -157,6 +167,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             BackupRetentionPolicy retentionPolicy = default;
             IDictionary<string, BackupTieringPolicy> tieringPolicy = default;
             int? instantRPRetentionRangeInDays = default;
+            bool? instantAccessSnapshotEnabled = default;
+            int? instantAccessDurationMinutes = default;
             string timeZone = default;
             IaasVmPolicyType? policyType = default;
             IaasVmSnapshotConsistencyType? snapshotConsistencyType = default;
@@ -247,6 +259,24 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     instantRPRetentionRangeInDays = prop.Value.GetInt32();
                     continue;
                 }
+                if (prop.NameEquals("instantAccessSnapshotEnabled"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    instantAccessSnapshotEnabled = prop.Value.GetBoolean();
+                    continue;
+                }
+                if (prop.NameEquals("instantAccessDurationMinutes"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    instantAccessDurationMinutes = prop.Value.GetInt32();
+                    continue;
+                }
                 if (prop.NameEquals("timeZone"u8))
                 {
                     timeZone = prop.Value.GetString();
@@ -285,6 +315,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 retentionPolicy,
                 tieringPolicy ?? new ChangeTrackingDictionary<string, BackupTieringPolicy>(),
                 instantRPRetentionRangeInDays,
+                instantAccessSnapshotEnabled,
+                instantAccessDurationMinutes,
                 timeZone,
                 policyType,
                 snapshotConsistencyType);

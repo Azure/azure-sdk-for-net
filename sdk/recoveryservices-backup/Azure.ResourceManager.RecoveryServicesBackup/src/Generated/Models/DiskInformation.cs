@@ -24,11 +24,15 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <summary> Initializes a new instance of <see cref="DiskInformation"/>. </summary>
         /// <param name="lun"></param>
         /// <param name="name"></param>
+        /// <param name="diskSizeInGb"> Size of the disk in GB. </param>
+        /// <param name="storageType"> Storage type of the disk. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DiskInformation(int? lun, string name, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DiskInformation(int? lun, string name, int? diskSizeInGb, string storageType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Lun = lun;
             Name = name;
+            DiskSizeInGb = diskSizeInGb;
+            StorageType = storageType;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -37,5 +41,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         /// <summary> Gets or sets the Name. </summary>
         public string Name { get; set; }
+
+        /// <summary> Size of the disk in GB. </summary>
+        public int? DiskSizeInGb { get; set; }
+
+        /// <summary> Storage type of the disk. </summary>
+        public string StorageType { get; set; }
     }
 }
