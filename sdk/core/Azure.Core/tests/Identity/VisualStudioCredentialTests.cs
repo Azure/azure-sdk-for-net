@@ -74,7 +74,9 @@ namespace Azure.Core.Tests.Identity
 
         protected virtual TokenCredential CreateBareCredential()
         {
-            return InstrumentClient(new VisualStudioCredential(default, default, CredentialTestHelpers.CreateFileSystemForVisualStudio(), new TestProcessService()));
+            var (_, _, processOutput) = CredentialTestHelpers.CreateTokenForVisualStudio();
+            var testProcess = new TestProcess { Output = processOutput };
+            return InstrumentClient(new VisualStudioCredential(default, default, CredentialTestHelpers.CreateFileSystemForVisualStudio(), new TestProcessService(testProcess)));
         }
 
         protected Type GetExpectedExceptionType(bool isChained)
