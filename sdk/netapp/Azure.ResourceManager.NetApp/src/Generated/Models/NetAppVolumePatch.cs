@@ -42,6 +42,23 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <summary> Patchable volume properties. </summary>
         internal VolumePatchProperties Properties { get; set; }
 
+        /// <summary> Async Directory Delete configuration for the volume. </summary>
+        public AsyncDirectoryDelete AsyncDirectoryDelete
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AsyncDirectoryDelete;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VolumePatchProperties();
+                }
+                Properties.AsyncDirectoryDelete = value;
+            }
+        }
+
         /// <summary> Specifies whether Cool Access(tiering) is enabled for the volume. </summary>
         public bool? IsCoolAccessEnabled
         {
@@ -73,6 +90,40 @@ namespace Azure.ResourceManager.NetApp.Models
                     Properties = new VolumePatchProperties();
                 }
                 Properties.IsSnapshotDirectoryVisible = value;
+            }
+        }
+
+        /// <summary> Enables or disables SMB opportunistic lock property for SMB Shares. Only applicable for SMB/DualProtocol volume. </summary>
+        public SmbOplocks? SmbOplocks
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SmbOplocks;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VolumePatchProperties();
+                }
+                Properties.SmbOplocks = value;
+            }
+        }
+
+        /// <summary> Indicates whether this volume is designated as an origin for cache volumes. </summary>
+        public OriginVolume? GeoNamespaceOriginVolume
+        {
+            get
+            {
+                return Properties is null ? default : Properties.GeoNamespaceOriginVolume;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VolumePatchProperties();
+                }
+                Properties.GeoNamespaceOriginVolume = value;
             }
         }
     }

@@ -233,6 +233,11 @@ namespace Azure.ResourceManager.NetApp.Models
                 writer.WritePropertyName("smbContinuouslyAvailable"u8);
                 writer.WriteBooleanValue(IsSmbContinuouslyAvailable.Value);
             }
+            if (Optional.IsDefined(SmbOplocks))
+            {
+                writer.WritePropertyName("smbOplocks"u8);
+                writer.WriteStringValue(SmbOplocks.Value.ToString());
+            }
             if (Optional.IsDefined(ThroughputMibps, _throughputMibpsIsDefined))
             {
                 if (ThroughputMibps != null)
@@ -264,6 +269,11 @@ namespace Azure.ResourceManager.NetApp.Models
             {
                 writer.WritePropertyName("ldapEnabled"u8);
                 writer.WriteBooleanValue(IsLdapEnabled.Value);
+            }
+            if (Optional.IsDefined(LdapServerType))
+            {
+                writer.WritePropertyName("ldapServerType"u8);
+                writer.WriteStringValue(LdapServerType.Value.ToString());
             }
             if (Optional.IsDefined(IsCoolAccessEnabled))
             {
@@ -338,6 +348,11 @@ namespace Azure.ResourceManager.NetApp.Models
             {
                 writer.WritePropertyName("isDefaultQuotaEnabled"u8);
                 writer.WriteBooleanValue(IsDefaultQuotaEnabled.Value);
+            }
+            if (Optional.IsDefined(AsyncDirectoryDelete))
+            {
+                writer.WritePropertyName("asyncDirectoryDelete"u8);
+                writer.WriteObjectValue(AsyncDirectoryDelete, options);
             }
             if (Optional.IsDefined(DefaultUserQuotaInKiBs))
             {
@@ -416,6 +431,11 @@ namespace Azure.ResourceManager.NetApp.Models
                 writer.WritePropertyName("isLargeVolume"u8);
                 writer.WriteBooleanValue(IsLargeVolume.Value);
             }
+            if (Optional.IsDefined(LargeVolumeType))
+            {
+                writer.WritePropertyName("largeVolumeType"u8);
+                writer.WriteStringValue(LargeVolumeType.Value.ToString());
+            }
             if (options.Format != "W" && Optional.IsDefined(OriginatingResourceId))
             {
                 writer.WritePropertyName("originatingResourceId"u8);
@@ -433,10 +453,20 @@ namespace Azure.ResourceManager.NetApp.Models
                     writer.WriteNull("inheritedSizeInBytes"u8);
                 }
             }
+            if (Optional.IsDefined(Language))
+            {
+                writer.WritePropertyName("language"u8);
+                writer.WriteStringValue(Language.Value.ToString());
+            }
             if (Optional.IsDefined(BreakthroughMode))
             {
                 writer.WritePropertyName("breakthroughMode"u8);
                 writer.WriteStringValue(BreakthroughMode.Value.ToString());
+            }
+            if (Optional.IsDefined(GeoNamespaceProperties))
+            {
+                writer.WritePropertyName("geoNamespaceProperties"u8);
+                writer.WriteObjectValue(GeoNamespaceProperties, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -509,12 +539,14 @@ namespace Azure.ResourceManager.NetApp.Models
             SmbAccessBasedEnumeration? smbAccessBasedEnumeration = default;
             SmbNonBrowsable? smbNonBrowsable = default;
             bool? isSmbContinuouslyAvailable = default;
+            SmbOplocks? smbOplocks = default;
             bool throughputMibpsIsDefined = false;
             float? throughputMibps = default;
             float? actualThroughputMibps = default;
             NetAppEncryptionKeySource? encryptionKeySource = default;
             ResourceIdentifier keyVaultPrivateEndpointResourceId = default;
             bool? isLdapEnabled = default;
+            NetAppLdapServerType? ldapServerType = default;
             bool? isCoolAccessEnabled = default;
             int? coolnessPeriod = default;
             CoolAccessRetrievalPolicy? coolAccessRetrievalPolicy = default;
@@ -527,6 +559,7 @@ namespace Azure.ResourceManager.NetApp.Models
             NetAppAvsDataStore? avsDataStore = default;
             IReadOnlyList<ResourceIdentifier> dataStoreResourceId = default;
             bool? isDefaultQuotaEnabled = default;
+            AsyncDirectoryDelete asyncDirectoryDelete = default;
             long? defaultUserQuotaInKiBs = default;
             long? defaultGroupQuotaInKiBs = default;
             long? maximumNumberOfFiles = default;
@@ -541,10 +574,13 @@ namespace Azure.ResourceManager.NetApp.Models
             bool provisionedAvailabilityZoneIsDefined = false;
             string provisionedAvailabilityZone = default;
             bool? isLargeVolume = default;
+            LargeVolumeType? largeVolumeType = default;
             ResourceIdentifier originatingResourceId = default;
             bool inheritedSizeInBytesIsDefined = false;
             long? inheritedSizeInBytes = default;
+            NetAppVolumeLanguage? language = default;
             BreakthroughMode? breakthroughMode = default;
+            VolumeNamespaceProperties geoNamespaceProperties = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -787,6 +823,15 @@ namespace Azure.ResourceManager.NetApp.Models
                     isSmbContinuouslyAvailable = prop.Value.GetBoolean();
                     continue;
                 }
+                if (prop.NameEquals("smbOplocks"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    smbOplocks = new SmbOplocks(prop.Value.GetString());
+                    continue;
+                }
                 if (prop.NameEquals("throughputMibps"u8))
                 {
                     throughputMibpsIsDefined = true;
@@ -832,6 +877,15 @@ namespace Azure.ResourceManager.NetApp.Models
                         continue;
                     }
                     isLdapEnabled = prop.Value.GetBoolean();
+                    continue;
+                }
+                if (prop.NameEquals("ldapServerType"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    ldapServerType = new NetAppLdapServerType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("coolAccess"u8))
@@ -938,6 +992,15 @@ namespace Azure.ResourceManager.NetApp.Models
                         continue;
                     }
                     isDefaultQuotaEnabled = prop.Value.GetBoolean();
+                    continue;
+                }
+                if (prop.NameEquals("asyncDirectoryDelete"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    asyncDirectoryDelete = AsyncDirectoryDelete.DeserializeAsyncDirectoryDelete(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("defaultUserQuotaInKiBs"u8))
@@ -1052,6 +1115,15 @@ namespace Azure.ResourceManager.NetApp.Models
                     isLargeVolume = prop.Value.GetBoolean();
                     continue;
                 }
+                if (prop.NameEquals("largeVolumeType"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    largeVolumeType = new LargeVolumeType(prop.Value.GetString());
+                    continue;
+                }
                 if (prop.NameEquals("originatingResourceId"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -1072,6 +1144,15 @@ namespace Azure.ResourceManager.NetApp.Models
                     inheritedSizeInBytes = prop.Value.GetInt64();
                     continue;
                 }
+                if (prop.NameEquals("language"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    language = new NetAppVolumeLanguage(prop.Value.GetString());
+                    continue;
+                }
                 if (prop.NameEquals("breakthroughMode"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -1079,6 +1160,15 @@ namespace Azure.ResourceManager.NetApp.Models
                         continue;
                     }
                     breakthroughMode = new BreakthroughMode(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("geoNamespaceProperties"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    geoNamespaceProperties = VolumeNamespaceProperties.DeserializeVolumeNamespaceProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -1115,11 +1205,13 @@ namespace Azure.ResourceManager.NetApp.Models
                 smbAccessBasedEnumeration,
                 smbNonBrowsable,
                 isSmbContinuouslyAvailable,
+                smbOplocks,
                 throughputMibps,
                 actualThroughputMibps,
                 encryptionKeySource,
                 keyVaultPrivateEndpointResourceId,
                 isLdapEnabled,
+                ldapServerType,
                 isCoolAccessEnabled,
                 coolnessPeriod,
                 coolAccessRetrievalPolicy,
@@ -1130,6 +1222,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 avsDataStore,
                 dataStoreResourceId ?? new ChangeTrackingList<ResourceIdentifier>(),
                 isDefaultQuotaEnabled,
+                asyncDirectoryDelete,
                 defaultUserQuotaInKiBs,
                 defaultGroupQuotaInKiBs,
                 maximumNumberOfFiles,
@@ -1143,9 +1236,12 @@ namespace Azure.ResourceManager.NetApp.Models
                 enableSubvolumes,
                 provisionedAvailabilityZone,
                 isLargeVolume,
+                largeVolumeType,
                 originatingResourceId,
                 inheritedSizeInBytes,
+                language,
                 breakthroughMode,
+                geoNamespaceProperties,
                 additionalBinaryDataProperties)
             {
                 _smbAccessBasedEnumerationIsDefined = smbAccessBasedEnumerationIsDefined,

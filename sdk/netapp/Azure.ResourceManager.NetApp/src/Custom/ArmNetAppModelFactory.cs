@@ -509,6 +509,18 @@ namespace Azure.ResourceManager.NetApp.Models
             return patch;
         }
 
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static NetAppAccountData NetAppAccountData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string provisioningState, IEnumerable<NetAppAccountActiveDirectory> activeDirectories, NetAppAccountEncryption encryption, bool? disableShowmount, string nfsV4IdDomain, MultiAdStatus? multiAdStatus, LdapConfiguration ldapConfiguration, ETag? eTag, ManagedServiceIdentity identity)
+        {
+            return NetAppAccountData(id, name, resourceType, systemData, tags, location, provisioningState, activeDirectories, (EntraIdConfig)null, encryption, disableShowmount, nfsV4IdDomain, multiAdStatus, ldapConfiguration, eTag, identity);
+        }
+
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static NetAppAccountPatch NetAppAccountPatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, IEnumerable<NetAppAccountActiveDirectory> activeDirectories, NetAppAccountEncryption encryption, string nfsV4IdDomain, LdapConfigurationPatch ldapConfiguration)
+        {
+            return NetAppAccountPatch(id, name, resourceType, systemData, tags, location, identity, activeDirectories, encryption, nfsV4IdDomain, (EntraIdConfigPatch)null, ldapConfiguration);
+        }
+
         private static NetAppAccountPatch CreateNetAppAccountPatchCompat(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, IEnumerable<NetAppAccountActiveDirectory> activeDirectories, NetAppAccountEncryption encryption, string nfsV4IdDomain)
         {
             var patch = new NetAppAccountPatch(location);
@@ -638,6 +650,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     throughputMibps,
                     dataProtection,
                     isDefaultQuotaEnabled,
+                    null,
                     defaultUserQuotaInKiBs,
                     defaultGroupQuotaInKiBs,
                     unixPermissions,
@@ -648,6 +661,8 @@ namespace Azure.ResourceManager.NetApp.Models
                     isSnapshotDirectoryVisible,
                     smbAccessBasedEnumeration,
                     smbNonBrowsable,
+                    null,
+                    null,
                     null),
                 additionalBinaryDataProperties: null);
         }

@@ -22,5 +22,5 @@ using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.NetApp
 {
-    public partial class NetAppElasticAccountResource : ArmResource { protected NetAppElasticAccountResource() { } internal NetAppElasticAccountResource(ArmClient client, ResourceIdentifier id) : base(client, id) { } }
+    public partial class NetAppElasticAccountResource : ArmResource { protected NetAppElasticAccountResource() { } internal NetAppElasticAccountResource(ArmClient client, ResourceIdentifier id) : base(client, id) { TryGetApiVersion(ResourceType, out string netAppElasticAccountApiVersion); _elasticAccountsClientDiagnostics = new Azure.Core.Pipeline.ClientDiagnostics("Azure.ResourceManager.NetApp", ResourceType.Namespace, Diagnostics); _elasticAccountsRestClient = new ElasticAccounts(_elasticAccountsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, netAppElasticAccountApiVersion ?? "2026-08-15-preview"); } }
 }

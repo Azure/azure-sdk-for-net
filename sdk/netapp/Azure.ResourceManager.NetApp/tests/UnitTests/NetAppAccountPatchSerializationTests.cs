@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.NetApp.Tests
             var encryption = new NetAppAccountEncryption();
             NetAppAccountPatch patch = ArmNetAppModelFactory.NetAppAccountPatch(
                 null, null, default, null, null, "westus2", null,
-                new[] { directory }, encryption, "contoso.com", null, null);
+                new[] { directory }, encryption, "contoso.com", (LdapConfiguration)null, null);
 
             directory.Domain = "updated.example";
             encryption.KeySource = new NetAppKeySource("Microsoft.KeyVault");
