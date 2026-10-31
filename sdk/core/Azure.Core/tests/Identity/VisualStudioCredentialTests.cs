@@ -4,14 +4,14 @@
 using System;
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.Core.Tests.Identity.Mock;
-using NUnit.Framework;
-
 using Azure.Identity;
+using NUnit.Framework;
 namespace Azure.Core.Tests.Identity
 {
     [RunOnlyOnPlatforms(Windows = true)] // VisualStudioCredential works only on Windows
@@ -66,6 +66,21 @@ namespace Azure.Core.Tests.Identity
             var options = new VisualStudioCredentialOptions { IsChainedCredential = isChained };
             return InstrumentClient(new VisualStudioCredential(default, default, fileSystem, processService, options));
         }
+
+        protected virtual void CreateCredentialForTenantValidation(string tenantId)
+        {
+            new VisualStudioCredential(tenantId, default, new TestFileSystemService(), new TestProcessService());
+        }
+
+        protected virtual TokenCredential CreateBareCredential()
+        {
+            var (_, _, processOutput) = CredentialTestHelpers.CreateTokenForVisualStudio();
+            var testProcess = new TestProcess { Output = processOutput };
+            return InstrumentClient(new VisualStudioCredential(default, default, CredentialTestHelpers.CreateFileSystemForVisualStudio(), new TestProcessService(testProcess)));
+        }
+
+        protected Type GetExpectedExceptionType(bool isChained)
+            => typeof(CredentialUnavailableException);
 
         [Test]
         public async Task AuthenticateWithVsCredential([Values(null, TenantIdHint)] string tenantId, [Values(true)] bool allowMultiTenantAuthentication)
@@ -279,6 +294,54 @@ namespace Azure.Core.Tests.Identity
             var credential = CreateCredential(testProcessFactory, fileSystem);
             Assert.ThrowsAsync<CredentialUnavailableException>(
                 async () => await credential.GetTokenAsync(new TokenRequestContext(new[] { "https://vault.azure.net/" }), CancellationToken.None));
+        }
+
+        [TestCaseSource(nameof(NegativeTestCharacters))]
+        public void VerifyCtorTenantIdValidation(char testChar)
+        {
+            string tenantId = Guid.NewGuid().ToString();
+
+            for (int i = 0; i < tenantId.Length; i++)
+            {
+                StringBuilder tenantIdBuilder = new StringBuilder(tenantId);
+                tenantIdBuilder.Insert(i, testChar);
+
+                Assert.Throws<ArgumentException>(() => CreateCredentialForTenantValidation(tenantIdBuilder.ToString()), Validations.InvalidTenantIdErrorMessage);
+            }
+        }
+
+        [TestCaseSource(nameof(NegativeTestCharacters))]
+        public void VerifyGetTokenTenantIdValidation(char testChar)
+        {
+            var credential = CreateBareCredential();
+            string tenantId = Guid.NewGuid().ToString();
+
+            for (int i = 0; i < tenantId.Length; i++)
+            {
+                StringBuilder tenantIdBuilder = new StringBuilder(tenantId);
+                tenantIdBuilder.Insert(i, testChar);
+                var tokenRequestContext = new TokenRequestContext(MockScopes.Default, tenantId: tenantIdBuilder.ToString());
+
+                Assert.ThrowsAsync(GetExpectedExceptionType(false),
+                    async () => await credential.GetTokenAsync(tokenRequestContext, default), Validations.InvalidTenantIdErrorMessage);
+            }
+        }
+
+        [TestCaseSource(nameof(NegativeTestCharacters))]
+        public void VerifyGetTokenScopeValidation(char testChar)
+        {
+            var credential = CreateBareCredential();
+            string scope = MockScopes.Default.ToString();
+
+            for (int i = 0; i < scope.Length; i++)
+            {
+                StringBuilder scopeBuilder = new StringBuilder(scope);
+                scopeBuilder.Insert(i, testChar);
+                var tokenRequestContext = new TokenRequestContext(new[] { scopeBuilder.ToString() });
+
+                Assert.ThrowsAsync(GetExpectedExceptionType(false),
+                    async () => await credential.GetTokenAsync(tokenRequestContext, default), ScopeUtilities.InvalidScopeMessage);
+            }
         }
 
         [Test]
