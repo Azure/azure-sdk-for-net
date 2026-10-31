@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Hci.Vm;
 
 namespace Azure.ResourceManager.Hci.Vm.Models
 {
@@ -19,6 +20,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         /// <summary> Initializes a new instance of <see cref="HciVmInstanceStatus"/>. </summary>
         internal HciVmInstanceStatus()
         {
+            OperationDetails = new ChangeTrackingList<OperationStepResult>();
         }
 
         /// <summary> Initializes a new instance of <see cref="HciVmInstanceStatus"/>. </summary>
@@ -26,13 +28,15 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         /// <param name="errorMessage"> Descriptive error message. </param>
         /// <param name="powerState"> The power state of the virtual machine instance. </param>
         /// <param name="provisioningStatus"> Provisioning status of the virtual machine instance. </param>
+        /// <param name="operationDetails"> Ordered steps of the current operation on the virtual machine instance. Steps are replaced when a new operation begins and are omitted when no step details are available. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal HciVmInstanceStatus(string errorCode, string errorMessage, HciVmPowerState? powerState, HciVmInstanceProvisioningStatus provisioningStatus, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HciVmInstanceStatus(string errorCode, string errorMessage, HciVmPowerState? powerState, HciVmInstanceProvisioningStatus provisioningStatus, IReadOnlyList<OperationStepResult> operationDetails, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ErrorCode = errorCode;
             ErrorMessage = errorMessage;
             PowerState = powerState;
             ProvisioningStatus = provisioningStatus;
+            OperationDetails = operationDetails;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -47,5 +51,8 @@ namespace Azure.ResourceManager.Hci.Vm.Models
 
         /// <summary> Provisioning status of the virtual machine instance. </summary>
         public HciVmInstanceProvisioningStatus ProvisioningStatus { get; }
+
+        /// <summary> Ordered steps of the current operation on the virtual machine instance. Steps are replaced when a new operation begins and are omitted when no step details are available. </summary>
+        public IReadOnlyList<OperationStepResult> OperationDetails { get; }
     }
 }
