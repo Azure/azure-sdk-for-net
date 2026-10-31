@@ -23,19 +23,8 @@ Describe "Update-MgmtPackageChangelog" {
         }
     }
 
-    It "dispatches changelog generation for a succeeded management package" {
-        $generatedPackage = [PSCustomObject]@{
-            result = "succeeded"
-            packageName = "Azure.ResourceManager.Test"
-            packageFolder = "package-folder"
-        }
-
-        Update-MgmtPackageChangelog -generatedPackage $generatedPackage
-
-        Should -Invoke pwsh -Times 1 -Exactly
-    }
-
-    It "skips a package with result '<result>'" -TestCases @(
+    It "dispatches changelog generation for a management package with result '<result>'" -TestCases @(
+        @{ result = "succeeded" }
         @{ result = "warning" }
         @{ result = "failed" }
     ) {
@@ -48,7 +37,7 @@ Describe "Update-MgmtPackageChangelog" {
 
         Update-MgmtPackageChangelog -generatedPackage $generatedPackage
 
-        Should -Invoke pwsh -Times 0 -Exactly
+        Should -Invoke pwsh -Times 1 -Exactly
     }
 
     It "skips a succeeded non-management package" {
@@ -56,6 +45,17 @@ Describe "Update-MgmtPackageChangelog" {
             result = "succeeded"
             packageName = "Azure.Test"
             packageFolder = "package-folder"
+        }
+
+        Update-MgmtPackageChangelog -generatedPackage $generatedPackage
+
+        Should -Invoke pwsh -Times 0 -Exactly
+    }
+
+    It "skips a failed generation result without package identity" {
+        $generatedPackage = [PSCustomObject]@{
+            result = "failed"
+            path = @("")
         }
 
         Update-MgmtPackageChangelog -generatedPackage $generatedPackage
