@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="src/Azure.Contoso.WidgetOpenPrVerification.csproj" />
+  <Project Path="tests/Azure.Contoso.WidgetOpenPrVerification.Tests.csproj" />
+</Solution>

@@ -1,0 +1,6 @@
+directory: specification/contosowidgetmanager/data-plane/Contoso.WidgetOpenPrVerification
+commit: 391e0f61267339afca6cf70589a7e8c5f36c5890
+repo: Azure/azure-rest-api-specs
+additionalDirectories: 
+
+emitterPackageJsonPath: eng/azure-typespec-http-client-csharp-emitter-package.json
