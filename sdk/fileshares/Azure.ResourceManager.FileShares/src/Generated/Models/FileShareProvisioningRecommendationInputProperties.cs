@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.FileShares.Models
 {
     /// <summary> File share provisioning parameters recommendation API input structure. </summary>
-    internal partial class FileShareProvisioningRecommendationInputProperties
+    public partial class FileShareProvisioningRecommendationInputProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
@@ -25,14 +25,29 @@ namespace Azure.ResourceManager.FileShares.Models
 
         /// <summary> Initializes a new instance of <see cref="FileShareProvisioningRecommendationInputProperties"/>. </summary>
         /// <param name="provisionedStorageInGiB"> The desired provisioned storage size of the share in GiB. Will be use to calculate the values of remaining provisioning parameters. </param>
+        /// <param name="protocol"> The file sharing protocol. Defaults to NFS. </param>
+        /// <param name="mediaTier"> The storage media tier. Defaults to SSD. </param>
+        /// <param name="scaleMode"> The scale mode. Defaults to Compatibility. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal FileShareProvisioningRecommendationInputProperties(int provisionedStorageInGiB, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal FileShareProvisioningRecommendationInputProperties(int provisionedStorageInGiB, FileShareProtocol? protocol, FileShareMediaTier? mediaTier, ScaleMode? scaleMode, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisionedStorageInGiB = provisionedStorageInGiB;
+            Protocol = protocol;
+            MediaTier = mediaTier;
+            ScaleMode = scaleMode;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The desired provisioned storage size of the share in GiB. Will be use to calculate the values of remaining provisioning parameters. </summary>
         public int ProvisionedStorageInGiB { get; }
+
+        /// <summary> The file sharing protocol. Defaults to NFS. </summary>
+        public FileShareProtocol? Protocol { get; set; }
+
+        /// <summary> The storage media tier. Defaults to SSD. </summary>
+        public FileShareMediaTier? MediaTier { get; set; }
+
+        /// <summary> The scale mode. Defaults to Compatibility. </summary>
+        public ScaleMode? ScaleMode { get; set; }
     }
 }

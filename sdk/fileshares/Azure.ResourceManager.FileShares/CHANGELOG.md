@@ -4,11 +4,13 @@
 
 ### Features Added
 
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- Upgraded API version to `2026-09-01`.
+- Added managed identity support: `FileShareData.Identity` and `FileSharePatch.Identity`.
+- Added encryption settings through `FileShareProperties.Encryption` and `FileSharePatchProperties.Encryption`, covering customer-managed keys (`CustomerManagedKeyEncryption`, `KeyEncryptionKeyIdentity`) and infrastructure encryption (`InfrastructureEncryption`).
+- Added redundancy conversion: `FileShareResource.StartRedundancyConversion` and `FileShareResource.GetRedundancyConversionStatus` (with async variants), and `FileShareProperties.RedundancyConversionInProgress`.
+- Added `GetLimits` and `GetLimitsAsync` overloads that accept a `FileShareLimitsContent` describing the offer to query. The existing overloads are unchanged.
+- Added `FileShareProvisioningRecommendationContent.Properties` for the additional provisioning recommendation inputs.
+- Added `FileShareMediaTier.HDD` and `FileShareProperties.ScaleMode`.
 
 ## 1.0.0 (2026-04-30)
 

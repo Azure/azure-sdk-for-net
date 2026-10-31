@@ -279,36 +279,38 @@ namespace Azure.ResourceManager.FileShares
         /// Get file shares limits.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableFileSharesSubscriptionResource.GetLimitsAsync(AzureLocation, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableFileSharesSubscriptionResource.GetLimitsAsync(AzureLocation, FileShareLimitsContent, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="location"> The name of the Azure region. </param>
+        /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static async Task<Response<FileShareLimitsResult>> GetLimitsAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
+        public static async Task<Response<FileShareLimitsResult>> GetLimitsAsync(this SubscriptionResource subscriptionResource, AzureLocation location, FileShareLimitsContent content = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return await GetMockableFileSharesSubscriptionResource(subscriptionResource).GetLimitsAsync(location, cancellationToken).ConfigureAwait(false);
+            return await GetMockableFileSharesSubscriptionResource(subscriptionResource).GetLimitsAsync(location, content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Get file shares limits.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableFileSharesSubscriptionResource.GetLimits(AzureLocation, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableFileSharesSubscriptionResource.GetLimits(AzureLocation, FileShareLimitsContent, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="location"> The name of the Azure region. </param>
+        /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static Response<FileShareLimitsResult> GetLimits(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
+        public static Response<FileShareLimitsResult> GetLimits(this SubscriptionResource subscriptionResource, AzureLocation location, FileShareLimitsContent content = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableFileSharesSubscriptionResource(subscriptionResource).GetLimits(location, cancellationToken);
+            return GetMockableFileSharesSubscriptionResource(subscriptionResource).GetLimits(location, content, cancellationToken);
         }
 
         /// <summary>

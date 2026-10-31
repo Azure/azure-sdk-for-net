@@ -7,7 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.FileShares;
 using Azure.ResourceManager.Models;
@@ -25,8 +27,9 @@ namespace Azure.ResourceManager.FileShares.Models
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <returns> A new <see cref="FileShares.FileShareData"/> instance for mocking. </returns>
-        public static FileShareData FileShareData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, FileShareProperties properties = default)
+        public static FileShareData FileShareData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, FileShareProperties properties = default, ManagedServiceIdentity identity = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -38,6 +41,7 @@ namespace Azure.ResourceManager.FileShares.Models
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 properties,
+                identity,
                 default);
         }
 
@@ -46,6 +50,7 @@ namespace Azure.ResourceManager.FileShares.Models
         /// <param name="mediaTier"> The storage media tier of the file share. </param>
         /// <param name="redundancy"> The chosen redundancy level of the file share. </param>
         /// <param name="protocol"> The file sharing protocol for this file share. </param>
+        /// <param name="scaleMode"> The scale mode selected when the file share is created. </param>
         /// <param name="provisionedStorageInGiB"> The provisioned storage size of the share in GiB (1 GiB is 1024^3 bytes or 1073741824 bytes). A component of the file share's bill is the provisioned storage, regardless of the amount of used storage. </param>
         /// <param name="provisionedStorageNextAllowedDowngradeOn"> A date/time value that specifies when the provisioned storage for the file share is permitted to be reduced. </param>
         /// <param name="provisionedIOPerSec"> The provisioned IO / sec of the share. </param>
@@ -59,8 +64,10 @@ namespace Azure.ResourceManager.FileShares.Models
         /// <param name="provisioningState"> The status of the last operation. </param>
         /// <param name="publicNetworkAccess"> Gets or sets allow or disallow public network access to azure managed file share. </param>
         /// <param name="privateEndpointConnections"> The list of associated private endpoint connections. </param>
+        /// <param name="redundancyConversionInProgress"> Indicates whether a redundancy conversion is in progress for the file share. </param>
+        /// <param name="encryption"> Encryption settings for the file share. </param>
         /// <returns> A new <see cref="Models.FileShareProperties"/> instance for mocking. </returns>
-        public static FileShareProperties FileShareProperties(string mountName = default, string hostName = default, FileShareMediaTier? mediaTier = default, FileShareRedundancyLevel? redundancy = default, FileShareProtocol? protocol = default, int? provisionedStorageInGiB = default, DateTimeOffset? provisionedStorageNextAllowedDowngradeOn = default, int? provisionedIOPerSec = default, DateTimeOffset? provisionedIOPerSecNextAllowedDowngradeOn = default, int? provisionedThroughputMiBPerSec = default, DateTimeOffset? provisionedThroughputNextAllowedDowngradeOn = default, int? includedBurstIOPerSec = default, long? maxBurstIOPerSecCredits = default, NfsProtocolProperties nfsProtocolProperties = default, IEnumerable<string> publicAccessAllowedSubnets = default, FileShareProvisioningState? provisioningState = default, FileSharePublicNetworkAccess? publicNetworkAccess = default, IEnumerable<FileSharePrivateEndpointConnectionData> privateEndpointConnections = default)
+        public static FileShareProperties FileShareProperties(string mountName = default, string hostName = default, FileShareMediaTier? mediaTier = default, FileShareRedundancyLevel? redundancy = default, FileShareProtocol? protocol = default, ScaleMode? scaleMode = default, int? provisionedStorageInGiB = default, DateTimeOffset? provisionedStorageNextAllowedDowngradeOn = default, int? provisionedIOPerSec = default, DateTimeOffset? provisionedIOPerSecNextAllowedDowngradeOn = default, int? provisionedThroughputMiBPerSec = default, DateTimeOffset? provisionedThroughputNextAllowedDowngradeOn = default, int? includedBurstIOPerSec = default, long? maxBurstIOPerSecCredits = default, NfsProtocolProperties nfsProtocolProperties = default, IEnumerable<string> publicAccessAllowedSubnets = default, FileShareProvisioningState? provisioningState = default, FileSharePublicNetworkAccess? publicNetworkAccess = default, IEnumerable<FileSharePrivateEndpointConnectionData> privateEndpointConnections = default, bool? redundancyConversionInProgress = default, FileShareEncryption encryption = default)
         {
             privateEndpointConnections ??= new ChangeTrackingList<FileSharePrivateEndpointConnectionData>();
 
@@ -70,6 +77,7 @@ namespace Azure.ResourceManager.FileShares.Models
                 mediaTier,
                 redundancy,
                 protocol,
+                scaleMode,
                 provisionedStorageInGiB,
                 provisionedStorageNextAllowedDowngradeOn,
                 provisionedIOPerSec,
@@ -83,6 +91,8 @@ namespace Azure.ResourceManager.FileShares.Models
                 provisioningState,
                 publicNetworkAccess,
                 (privateEndpointConnections ?? new ChangeTrackingList<FileSharePrivateEndpointConnectionData>()).ToList(),
+                redundancyConversionInProgress is null ? default : new MigrationState(redundancyConversionInProgress.GetValueOrDefault(), default),
+                encryption,
                 default);
         }
 
@@ -135,15 +145,54 @@ namespace Azure.ResourceManager.FileShares.Models
             return new FileSharePrivateLinkServiceConnectionState(status, description, actionsRequired, default);
         }
 
+        /// <summary> Encryption settings for the file share. Composes the standard common encryption type with read-only customer-managed key rotation status owned by the file share resource provider. Automatic key rotation follows the Azure Storage account model and is derived from the key URL shape: an unversioned customerManagedKeyEncryption.keyEncryptionKeyUrl opts into automatic rotation to the latest key version, while a versioned URL pins a specific version. </summary>
+        /// <param name="infrastructureEncryption"> Values are enabled and disabled. </param>
+        /// <param name="customerManagedKeyEncryption"> All Customer-managed key encryption properties for the resource. </param>
+        /// <param name="currentKeyEncryptionKeyUri"> The versioned key encryption key URL currently applied to the file share by the service. When an unversioned keyEncryptionKeyUrl is supplied, this reflects the resolved latest key version currently in use. </param>
+        /// <param name="lastKeyRotationOn"> The UTC timestamp when the service last successfully rotated the active customer-managed key version. </param>
+        /// <param name="autoKeyRotationError"> The last customer-actionable error encountered while automatically rotating to the latest key version. </param>
+        /// <returns> A new <see cref="Models.FileShareEncryption"/> instance for mocking. </returns>
+        public static FileShareEncryption FileShareEncryption(InfrastructureEncryption? infrastructureEncryption = default, CustomerManagedKeyEncryption customerManagedKeyEncryption = default, string currentKeyEncryptionKeyUri = default, DateTimeOffset? lastKeyRotationOn = default, ResponseError autoKeyRotationError = default)
+        {
+            return new FileShareEncryption(
+                infrastructureEncryption,
+                customerManagedKeyEncryption,
+                currentKeyEncryptionKeyUri,
+                lastKeyRotationOn,
+                autoKeyRotationError,
+                default);
+        }
+
+        /// <summary> Customer-managed key encryption properties for the resource. </summary>
+        /// <param name="keyEncryptionKeyIdentity"> All identity configuration for Customer-managed key settings defining which identity should be used to auth to Key Vault. </param>
+        /// <param name="keyEncryptionKeyUri"> key encryption key Url, versioned or non-versioned. Ex: https://contosovault.vault.azure.net/keys/contosokek/562a4bb76b524a1493a6afe8e536ee78 or https://contosovault.vault.azure.net/keys/contosokek. </param>
+        /// <returns> A new <see cref="Models.CustomerManagedKeyEncryption"/> instance for mocking. </returns>
+        public static CustomerManagedKeyEncryption CustomerManagedKeyEncryption(KeyEncryptionKeyIdentity keyEncryptionKeyIdentity = default, string keyEncryptionKeyUri = default)
+        {
+            return new CustomerManagedKeyEncryption(keyEncryptionKeyIdentity, keyEncryptionKeyUri, default);
+        }
+
+        /// <summary> All identity configuration for Customer-managed key settings defining which identity should be used to auth to Key Vault. </summary>
+        /// <param name="identityType"> The type of identity to use. Values can be systemAssignedIdentity, userAssignedIdentity, or delegatedResourceIdentity. </param>
+        /// <param name="userAssignedIdentityResourceId"> User assigned identity to use for accessing key encryption key Url. Ex: /subscriptions/fa5fc227-a624-475e-b696-cdd604c735bc/resourceGroups/&lt;resource group&gt;/providers/Microsoft.ManagedIdentity/userAssignedIdentities/myId. Mutually exclusive with identityType systemAssignedIdentity. </param>
+        /// <param name="federatedClientId"> application client identity to use for accessing key encryption key Url in a different tenant. Ex: f83c6b1b-4d34-47e4-bb34-9d83df58b540. </param>
+        /// <param name="delegatedIdentityClientId"> delegated identity to use for accessing key encryption key Url. Ex: /subscriptions/fa5fc227-a624-475e-b696-cdd604c735bc/resourceGroups/&lt;resource group&gt;/providers/Microsoft.ManagedIdentity/userAssignedIdentities/myId. Mutually exclusive with identityType systemAssignedIdentity and userAssignedIdentity - internal use only. </param>
+        /// <returns> A new <see cref="Models.KeyEncryptionKeyIdentity"/> instance for mocking. </returns>
+        public static KeyEncryptionKeyIdentity KeyEncryptionKeyIdentity(KeyEncryptionKeyIdentityType? identityType = default, ResourceIdentifier userAssignedIdentityResourceId = default, Guid? federatedClientId = default, Guid? delegatedIdentityClientId = default)
+        {
+            return new KeyEncryptionKeyIdentity(identityType, userAssignedIdentityResourceId, federatedClientId, delegatedIdentityClientId, default);
+        }
+
         /// <summary> The type used for update operations of the FileShare. </summary>
+        /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <returns> A new <see cref="Models.FileSharePatch"/> instance for mocking. </returns>
-        public static FileSharePatch FileSharePatch(IDictionary<string, string> tags = default, FileSharePatchProperties properties = default)
+        public static FileSharePatch FileSharePatch(ManagedServiceIdentity identity = default, IDictionary<string, string> tags = default, FileSharePatchProperties properties = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new FileSharePatch(tags ?? new ChangeTrackingDictionary<string, string>(), properties, default);
+            return new FileSharePatch(identity, tags ?? new ChangeTrackingDictionary<string, string>(), properties, default);
         }
 
         /// <param name="provisionedStorageInGiB"> The provisioned storage size of the share in GiB (1 GiB is 1024^3 bytes or 1073741824 bytes). A component of the file share's bill is the provisioned storage, regardless of the amount of used storage. </param>
@@ -152,8 +201,9 @@ namespace Azure.ResourceManager.FileShares.Models
         /// <param name="nfsProtocolProperties"> Protocol settings specific NFS. </param>
         /// <param name="publicAccessAllowedSubnets"> The allowed set of subnets when access is restricted. </param>
         /// <param name="publicNetworkAccess"> Gets or sets allow or disallow public network access to azure managed file share. </param>
+        /// <param name="encryption"> Encryption settings for the file share. </param>
         /// <returns> A new <see cref="Models.FileSharePatchProperties"/> instance for mocking. </returns>
-        public static FileSharePatchProperties FileSharePatchProperties(int? provisionedStorageInGiB = default, int? provisionedIOPerSec = default, int? provisionedThroughputMiBPerSec = default, NfsProtocolProperties nfsProtocolProperties = default, IEnumerable<string> publicAccessAllowedSubnets = default, FileSharePublicNetworkAccess? publicNetworkAccess = default)
+        public static FileSharePatchProperties FileSharePatchProperties(int? provisionedStorageInGiB = default, int? provisionedIOPerSec = default, int? provisionedThroughputMiBPerSec = default, NfsProtocolProperties nfsProtocolProperties = default, IEnumerable<string> publicAccessAllowedSubnets = default, FileSharePublicNetworkAccess? publicNetworkAccess = default, FileShareEncryption encryption = default)
         {
             return new FileSharePatchProperties(
                 provisionedStorageInGiB,
@@ -162,6 +212,7 @@ namespace Azure.ResourceManager.FileShares.Models
                 nfsProtocolProperties,
                 publicAccessAllowedSubnets is null ? default : new PublicAccessProperties((publicAccessAllowedSubnets ?? new ChangeTrackingList<string>()).ToList(), default),
                 publicNetworkAccess,
+                encryption,
                 default);
         }
 
@@ -182,6 +233,32 @@ namespace Azure.ResourceManager.FileShares.Models
         public static FileShareNameAvailabilityResult FileShareNameAvailabilityResult(bool? isNameAvailable = default, FileShareNameUnavailableReason? reason = default, string message = default)
         {
             return new FileShareNameAvailabilityResult(isNameAvailable, reason, message, default);
+        }
+
+        /// <param name="targetRedundancy"> The requested target redundancy for the conversion. </param>
+        /// <returns> A new <see cref="Models.StartRedundancyConversionContent"/> instance for mocking. </returns>
+        public static StartRedundancyConversionContent StartRedundancyConversionContent(FileShareRedundancyLevel targetRedundancy = default)
+        {
+            return new StartRedundancyConversionContent(new StartRedundancyConversionInputProperties(targetRedundancy, default), default);
+        }
+
+        /// <summary> Response containing the status and details of the current or most recent redundancy conversion. </summary>
+        /// <param name="properties"> Properties containing the redundancy conversion status output. </param>
+        /// <returns> A new <see cref="Models.RedundancyConversionStatusResult"/> instance for mocking. </returns>
+        public static RedundancyConversionStatusResult RedundancyConversionStatusResult(RedundancyConversionStatusOutputProperties properties = default)
+        {
+            return new RedundancyConversionStatusResult(properties, default);
+        }
+
+        /// <summary> The status and details of the current or most recent redundancy conversion. </summary>
+        /// <param name="targetRedundancy"> The target redundancy requested for the redundancy conversion. </param>
+        /// <param name="conversionStatus"> The current status of the redundancy conversion. </param>
+        /// <param name="conversionFailedReason"> The reason the redundancy conversion failed. </param>
+        /// <param name="conversionFailedDetailedReason"> Detailed information about why the redundancy conversion failed. </param>
+        /// <returns> A new <see cref="Models.RedundancyConversionStatusOutputProperties"/> instance for mocking. </returns>
+        public static RedundancyConversionStatusOutputProperties RedundancyConversionStatusOutputProperties(FileShareRedundancyLevel targetRedundancy = default, RedundancyConversionStatus conversionStatus = default, string conversionFailedReason = default, string conversionFailedDetailedReason = default)
+        {
+            return new RedundancyConversionStatusOutputProperties(targetRedundancy, conversionStatus, conversionFailedReason, conversionFailedDetailedReason, default);
         }
 
         /// <summary> FileShareSnapshot resource. </summary>
@@ -226,6 +303,24 @@ namespace Azure.ResourceManager.FileShares.Models
         public static FileShareUsageDataResult FileShareUsageDataResult(int liveSharesFileShareCount = default)
         {
             return new FileShareUsageDataResult(new FileShareUsageDataProperties(new LiveSharesUsageData(liveSharesFileShareCount, default), default), default);
+        }
+
+        /// <summary> Request structure for the file share limits API. </summary>
+        /// <param name="properties"> Properties used to select the file share offer. </param>
+        /// <returns> A new <see cref="Models.FileShareLimitsContent"/> instance for mocking. </returns>
+        public static FileShareLimitsContent FileShareLimitsContent(FileShareOfferInput properties = default)
+        {
+            return new FileShareLimitsContent(properties, default);
+        }
+
+        /// <summary> File share offer dimensions. </summary>
+        /// <param name="protocol"> The file sharing protocol. Defaults to NFS. </param>
+        /// <param name="mediaTier"> The storage media tier. Defaults to SSD. </param>
+        /// <param name="scaleMode"> The scale mode. Defaults to Compatibility. </param>
+        /// <returns> A new <see cref="Models.FileShareOfferInput"/> instance for mocking. </returns>
+        public static FileShareOfferInput FileShareOfferInput(FileShareProtocol? protocol = default, FileShareMediaTier? mediaTier = default, ScaleMode? scaleMode = default)
+        {
+            return new FileShareOfferInput(protocol, mediaTier, scaleMode, default);
         }
 
         /// <summary> Response structure for file share limits API. </summary>
@@ -293,11 +388,23 @@ namespace Azure.ResourceManager.FileShares.Models
                 default);
         }
 
-        /// <param name="fileShareProvisioningRecommendationInputProvisionedStorageInGiB"> The desired provisioned storage size of the share in GiB. Will be use to calculate the values of remaining provisioning parameters. </param>
+        /// <summary> Request structure for file share provisioning parameters recommendation API. </summary>
+        /// <param name="properties"> The properties of the file share provisioning recommendation input. </param>
         /// <returns> A new <see cref="Models.FileShareProvisioningRecommendationContent"/> instance for mocking. </returns>
-        public static FileShareProvisioningRecommendationContent FileShareProvisioningRecommendationContent(int fileShareProvisioningRecommendationInputProvisionedStorageInGiB = default)
+        public static FileShareProvisioningRecommendationContent FileShareProvisioningRecommendationContent(FileShareProvisioningRecommendationInputProperties properties = default)
         {
-            return new FileShareProvisioningRecommendationContent(new FileShareProvisioningRecommendationInputProperties(fileShareProvisioningRecommendationInputProvisionedStorageInGiB, default), default);
+            return new FileShareProvisioningRecommendationContent(properties, default);
+        }
+
+        /// <summary> File share provisioning parameters recommendation API input structure. </summary>
+        /// <param name="provisionedStorageInGiB"> The desired provisioned storage size of the share in GiB. Will be use to calculate the values of remaining provisioning parameters. </param>
+        /// <param name="protocol"> The file sharing protocol. Defaults to NFS. </param>
+        /// <param name="mediaTier"> The storage media tier. Defaults to SSD. </param>
+        /// <param name="scaleMode"> The scale mode. Defaults to Compatibility. </param>
+        /// <returns> A new <see cref="Models.FileShareProvisioningRecommendationInputProperties"/> instance for mocking. </returns>
+        public static FileShareProvisioningRecommendationInputProperties FileShareProvisioningRecommendationInputProperties(int provisionedStorageInGiB = default, FileShareProtocol? protocol = default, FileShareMediaTier? mediaTier = default, ScaleMode? scaleMode = default)
+        {
+            return new FileShareProvisioningRecommendationInputProperties(provisionedStorageInGiB, protocol, mediaTier, scaleMode, default);
         }
 
         /// <summary> Response structure for file share provisioning parameters recommendation API. </summary>
@@ -349,6 +456,97 @@ namespace Azure.ResourceManager.FileShares.Models
             requiredZoneNames ??= new ChangeTrackingList<string>();
 
             return new FileSharePrivateLinkResourceProperties(groupId, (requiredMembers ?? new ChangeTrackingList<string>()).ToList(), (requiredZoneNames ?? new ChangeTrackingList<string>()).ToList(), default);
+        }
+
+        /// <summary> File share resource. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="FileShares.FileShareData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static FileShareData FileShareData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, FileShareProperties properties)
+        {
+            return new FileShareData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                properties,
+                default,
+                default);
+        }
+
+        /// <summary> File share properties. </summary>
+        /// <param name="mountName"> The name of the file share as seen by the end user when mounting the share, such as in a URI or UNC format in their operating system. </param>
+        /// <param name="hostName"> The host name of the file share. </param>
+        /// <param name="mediaTier"> The storage media tier of the file share. </param>
+        /// <param name="redundancy"> The chosen redundancy level of the file share. </param>
+        /// <param name="protocol"> The file sharing protocol for this file share. </param>
+        /// <param name="provisionedStorageInGiB"> The provisioned storage size of the share in GiB (1 GiB is 1024^3 bytes or 1073741824 bytes). A component of the file share's bill is the provisioned storage, regardless of the amount of used storage. </param>
+        /// <param name="provisionedStorageNextAllowedDowngradeOn"> A date/time value that specifies when the provisioned storage for the file share is permitted to be reduced. </param>
+        /// <param name="provisionedIOPerSec"> The provisioned IO / sec of the share. </param>
+        /// <param name="provisionedIOPerSecNextAllowedDowngradeOn"> A date/time value that specifies when the provisioned IOPS for the file share is permitted to be reduced. </param>
+        /// <param name="provisionedThroughputMiBPerSec"> The provisioned throughput / sec of the share. </param>
+        /// <param name="provisionedThroughputNextAllowedDowngradeOn"> A date/time value that specifies when the provisioned throughput for the file share is permitted to be reduced. </param>
+        /// <param name="includedBurstIOPerSec"> Burst IOPS are extra buffer IOPS enabling you to consume more than your provisioned IOPS for a short period of time, depending on the burst credits available for your share. </param>
+        /// <param name="maxBurstIOPerSecCredits"> Max burst IOPS credits shows the maximum number of burst credits the share can have at the current IOPS provisioning level. </param>
+        /// <param name="nfsProtocolProperties"> Protocol settings specific NFS. </param>
+        /// <param name="publicAccessAllowedSubnets"> The allowed set of subnets when access is restricted. </param>
+        /// <param name="provisioningState"> The status of the last operation. </param>
+        /// <param name="publicNetworkAccess"> Gets or sets allow or disallow public network access to azure managed file share. </param>
+        /// <param name="privateEndpointConnections"> The list of associated private endpoint connections. </param>
+        /// <returns> A new <see cref="Models.FileShareProperties"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static FileShareProperties FileShareProperties(string mountName, string hostName, FileShareMediaTier? mediaTier, FileShareRedundancyLevel? redundancy, FileShareProtocol? protocol, int? provisionedStorageInGiB, DateTimeOffset? provisionedStorageNextAllowedDowngradeOn, int? provisionedIOPerSec, DateTimeOffset? provisionedIOPerSecNextAllowedDowngradeOn, int? provisionedThroughputMiBPerSec, DateTimeOffset? provisionedThroughputNextAllowedDowngradeOn, int? includedBurstIOPerSec, long? maxBurstIOPerSecCredits, NfsProtocolProperties nfsProtocolProperties, IEnumerable<string> publicAccessAllowedSubnets, FileShareProvisioningState? provisioningState, FileSharePublicNetworkAccess? publicNetworkAccess, IEnumerable<FileSharePrivateEndpointConnectionData> privateEndpointConnections)
+        {
+            return new FileShareProperties(
+                mountName,
+                hostName,
+                mediaTier,
+                redundancy,
+                protocol,
+                default,
+                provisionedStorageInGiB,
+                provisionedStorageNextAllowedDowngradeOn,
+                provisionedIOPerSec,
+                provisionedIOPerSecNextAllowedDowngradeOn,
+                provisionedThroughputMiBPerSec,
+                provisionedThroughputNextAllowedDowngradeOn,
+                includedBurstIOPerSec,
+                maxBurstIOPerSecCredits,
+                nfsProtocolProperties,
+                publicAccessAllowedSubnets is null ? default : new PublicAccessProperties((publicAccessAllowedSubnets ?? new ChangeTrackingList<string>()).ToList(), default),
+                provisioningState,
+                publicNetworkAccess,
+                (privateEndpointConnections ?? new ChangeTrackingList<FileSharePrivateEndpointConnectionData>()).ToList(),
+                default,
+                default,
+                default);
+        }
+
+        /// <summary> The type used for update operations of the FileShare. </summary>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="Models.FileSharePatch"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static FileSharePatch FileSharePatch(IDictionary<string, string> tags, FileSharePatchProperties properties)
+        {
+            return new FileSharePatch(default, tags ?? new ChangeTrackingDictionary<string, string>(), properties, default);
+        }
+
+        /// <summary> Request structure for file share provisioning parameters recommendation API. </summary>
+        /// <param name="fileShareProvisioningRecommendationInputProvisionedStorageInGiB"> The desired provisioned storage size of the share in GiB. Will be use to calculate the values of remaining provisioning parameters. </param>
+        /// <returns> A new <see cref="Models.FileShareProvisioningRecommendationContent"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static FileShareProvisioningRecommendationContent FileShareProvisioningRecommendationContent(int fileShareProvisioningRecommendationInputProvisionedStorageInGiB)
+        {
+            return new FileShareProvisioningRecommendationContent(new FileShareProvisioningRecommendationInputProperties(fileShareProvisioningRecommendationInputProvisionedStorageInGiB, default, default, default, default), default);
         }
     }
 }

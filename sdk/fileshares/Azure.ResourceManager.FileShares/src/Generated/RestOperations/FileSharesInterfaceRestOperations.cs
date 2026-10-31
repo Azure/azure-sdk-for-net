@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.FileShares
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.FileShares/fileShares/", false);
             uri.AppendPath(resourceName, true);
-            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.FileShares/fileShares") ?? "2026-06-01", true);
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.FileShares/fileShares") ?? "2026-09-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.FileShares
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.FileShares/fileShares/", false);
             uri.AppendPath(resourceName, true);
-            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.FileShares/fileShares") ?? "2026-06-01", true);
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.FileShares/fileShares") ?? "2026-09-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.FileShares
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.FileShares/fileShares/", false);
             uri.AppendPath(resourceName, true);
-            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.FileShares/fileShares") ?? "2026-06-01", true);
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.FileShares/fileShares") ?? "2026-09-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.FileShares
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.FileShares/fileShares/", false);
             uri.AppendPath(resourceName, true);
-            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.FileShares/fileShares") ?? "2026-06-01", true);
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.FileShares/fileShares") ?? "2026-09-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.FileShares
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/providers/Microsoft.FileShares/fileShares", false);
-            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.FileShares/fileShares") ?? "2026-06-01", true);
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.FileShares/fileShares") ?? "2026-09-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.FileShares
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            uri.UpdateQuery("api-version", _getApiVersion?.Invoke("Microsoft.FileShares/fileShares") ?? "2026-06-01");
+            uri.UpdateQuery("api-version", _getApiVersion?.Invoke("Microsoft.FileShares/fileShares") ?? "2026-09-01");
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.FileShares
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.FileShares/fileShares", false);
-            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.FileShares/fileShares") ?? "2026-06-01", true);
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.FileShares/fileShares") ?? "2026-09-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.FileShares
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            uri.UpdateQuery("api-version", _getApiVersion?.Invoke("Microsoft.FileShares/fileShares") ?? "2026-06-01");
+            uri.UpdateQuery("api-version", _getApiVersion?.Invoke("Microsoft.FileShares/fileShares") ?? "2026-09-01");
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -229,6 +229,49 @@ namespace Azure.ResourceManager.FileShares
             request.Headers.SetValue("Content-Type", "application/json");
             request.Headers.SetValue("Accept", "application/json");
             request.Content = content;
+            return message;
+        }
+
+        internal HttpMessage CreateStartRedundancyConversionRequest(Guid subscriptionId, string resourceGroupName, string resourceName, RequestContent content, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId.ToString(), true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.FileShares/fileShares/", false);
+            uri.AppendPath(resourceName, true);
+            uri.AppendPath("/startRedundancyConversion", false);
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.FileShares/fileShares") ?? "2026-09-01", true);
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Post;
+            _userAgent.Apply(message);
+            request.Headers.SetValue("Content-Type", "application/json");
+            request.Content = content;
+            return message;
+        }
+
+        internal HttpMessage CreateGetRedundancyConversionStatusRequest(Guid subscriptionId, string resourceGroupName, string resourceName, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId.ToString(), true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.FileShares/fileShares/", false);
+            uri.AppendPath(resourceName, true);
+            uri.AppendPath("/getRedundancyConversionStatus", false);
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.FileShares/fileShares") ?? "2026-09-01", true);
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Post;
+            _userAgent.Apply(message);
+            request.Headers.SetValue("Accept", "application/json");
             return message;
         }
     }

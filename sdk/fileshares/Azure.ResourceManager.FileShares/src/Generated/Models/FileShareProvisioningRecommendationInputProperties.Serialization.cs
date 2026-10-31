@@ -14,7 +14,7 @@ using Azure.ResourceManager.FileShares;
 namespace Azure.ResourceManager.FileShares.Models
 {
     /// <summary> File share provisioning parameters recommendation API input structure. </summary>
-    internal partial class FileShareProvisioningRecommendationInputProperties : IJsonModel<FileShareProvisioningRecommendationInputProperties>
+    public partial class FileShareProvisioningRecommendationInputProperties : IJsonModel<FileShareProvisioningRecommendationInputProperties>
     {
         /// <summary> Initializes a new instance of <see cref="FileShareProvisioningRecommendationInputProperties"/> for deserialization. </summary>
         internal FileShareProvisioningRecommendationInputProperties()
@@ -81,6 +81,21 @@ namespace Azure.ResourceManager.FileShares.Models
             }
             writer.WritePropertyName("provisionedStorageGiB"u8);
             writer.WriteNumberValue(ProvisionedStorageInGiB);
+            if (Optional.IsDefined(Protocol))
+            {
+                writer.WritePropertyName("protocol"u8);
+                writer.WriteStringValue(Protocol.Value.ToString());
+            }
+            if (Optional.IsDefined(MediaTier))
+            {
+                writer.WritePropertyName("mediaTier"u8);
+                writer.WriteStringValue(MediaTier.Value.ToString());
+            }
+            if (Optional.IsDefined(ScaleMode))
+            {
+                writer.WritePropertyName("scaleMode"u8);
+                writer.WriteStringValue(ScaleMode.Value.ToString());
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -124,6 +139,9 @@ namespace Azure.ResourceManager.FileShares.Models
                 return null;
             }
             int provisionedStorageInGiB = default;
+            FileShareProtocol? protocol = default;
+            FileShareMediaTier? mediaTier = default;
+            ScaleMode? scaleMode = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -132,12 +150,39 @@ namespace Azure.ResourceManager.FileShares.Models
                     provisionedStorageInGiB = prop.Value.GetInt32();
                     continue;
                 }
+                if (prop.NameEquals("protocol"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    protocol = new FileShareProtocol(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("mediaTier"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    mediaTier = new FileShareMediaTier(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("scaleMode"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    scaleMode = new ScaleMode(prop.Value.GetString());
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new FileShareProvisioningRecommendationInputProperties(provisionedStorageInGiB, additionalBinaryDataProperties);
+            return new FileShareProvisioningRecommendationInputProperties(provisionedStorageInGiB, protocol, mediaTier, scaleMode, additionalBinaryDataProperties);
         }
     }
 }
