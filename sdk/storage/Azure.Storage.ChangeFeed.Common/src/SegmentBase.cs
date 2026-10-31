@@ -116,12 +116,12 @@ namespace Azure.Storage.ChangeFeed.Common
                 if (_shardIndex >= _shards.Count) _shardIndex = 0;
 
                 // Filter by event time — skip events outside the requested window.
-                if (startTime.HasValue && changeFeedEvent.EventTime < startTime.Value)
+                if (startTime.HasValue && changeFeedEvent.EventOccurredOn < startTime.Value)
                 {
                     if (_finishedShards.Count == _shards.Count) break;
                     continue;
                 }
-                if (endTime.HasValue && changeFeedEvent.EventTime >= endTime.Value)
+                if (endTime.HasValue && changeFeedEvent.EventOccurredOn >= endTime.Value)
                 {
                     if (_finishedShards.Count == _shards.Count) break;
                     continue;

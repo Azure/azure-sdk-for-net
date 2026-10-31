@@ -28,7 +28,7 @@ namespace Azure.Provisioning.Network
         /// <summary> Creates a new VirtualHub. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
         /// <param name="resourceVersion"> The resource API version. </param>
-        public VirtualHub(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.Network/virtualHubs", resourceVersion ?? "2026-01-01")
+        public VirtualHub(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.Network/virtualHubs", resourceVersion ?? "2026-03-01")
         {
         }
 
@@ -473,23 +473,6 @@ namespace Azure.Provisioning.Network
             }
         }
 
-        /// <summary> Gets or sets the Routes. </summary>
-        public BicepList<VirtualHubRoute> RouteTableRoutes
-        {
-            get
-            {
-                return Properties is null ? default : Properties.RouteTableRoutes;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new VirtualHubProperties();
-                }
-                Properties.RouteTableRoutes = value;
-            }
-        }
-
         /// <summary> Gets or sets the MinCapacity. </summary>
         public BicepValue<int> VirtualRouterAutoScaleMinCapacity
         {
@@ -537,6 +520,8 @@ namespace Azure.Provisioning.Network
         /// <summary></summary>
         public static partial class ResourceVersions
         {
+            /// <summary> API version "2026-03-01". </summary>
+            public static readonly string V2026_03_01 = "2026-03-01";
             /// <summary> API version "2026-01-01". </summary>
             public static readonly string V2026_01_01 = "2026-01-01";
             /// <summary> API version "2025-09-01". </summary>

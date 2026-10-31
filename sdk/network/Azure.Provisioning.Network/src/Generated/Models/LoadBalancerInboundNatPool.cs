@@ -16,7 +16,7 @@ namespace Azure.Provisioning.Network
     {
         private BicepValue<string> _name;
         private BicepValue<ETag> _eTag;
-        private BicepValue<string> _type;
+        private BicepValue<ResourceType> _resourceType;
 
         /// <summary> Creates a new LoadBalancerInboundNatPool. </summary>
         public LoadBalancerInboundNatPool()
@@ -48,162 +48,13 @@ namespace Azure.Provisioning.Network
             }
         }
 
-        /// <summary> Gets the Type. </summary>
-        public BicepValue<string> Type
+        /// <summary> Gets the ResourceType. </summary>
+        public BicepValue<ResourceType> ResourceType
         {
             get
             {
                 Initialize();
-                return _type;
-            }
-        }
-
-        /// <summary> Gets or sets the Protocol. </summary>
-        public BicepValue<LoadBalancingTransportProtocol> Protocol
-        {
-            get
-            {
-                return Properties is null ? default : Properties.Protocol;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new LoadBalancerInboundNatPoolProperties();
-                }
-                Properties.Protocol = value;
-            }
-        }
-
-        /// <summary> Gets or sets the FrontendPortRangeStart. </summary>
-        public BicepValue<int> FrontendPortRangeStart
-        {
-            get
-            {
-                return Properties is null ? default : Properties.FrontendPortRangeStart;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new LoadBalancerInboundNatPoolProperties();
-                }
-                Properties.FrontendPortRangeStart = value;
-            }
-        }
-
-        /// <summary> Gets or sets the FrontendPortRangeEnd. </summary>
-        public BicepValue<int> FrontendPortRangeEnd
-        {
-            get
-            {
-                return Properties is null ? default : Properties.FrontendPortRangeEnd;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new LoadBalancerInboundNatPoolProperties();
-                }
-                Properties.FrontendPortRangeEnd = value;
-            }
-        }
-
-        /// <summary> Gets or sets the BackendPort. </summary>
-        public BicepValue<int> BackendPort
-        {
-            get
-            {
-                return Properties is null ? default : Properties.BackendPort;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new LoadBalancerInboundNatPoolProperties();
-                }
-                Properties.BackendPort = value;
-            }
-        }
-
-        /// <summary> Gets or sets the IdleTimeoutInMinutes. </summary>
-        public BicepValue<int> IdleTimeoutInMinutes
-        {
-            get
-            {
-                return Properties is null ? default : Properties.IdleTimeoutInMinutes;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new LoadBalancerInboundNatPoolProperties();
-                }
-                Properties.IdleTimeoutInMinutes = value;
-            }
-        }
-
-        /// <summary> Gets or sets the EnableFloatingIP. </summary>
-        public BicepValue<bool> EnableFloatingIP
-        {
-            get
-            {
-                return Properties is null ? default : Properties.EnableFloatingIP;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new LoadBalancerInboundNatPoolProperties();
-                }
-                Properties.EnableFloatingIP = value;
-            }
-        }
-
-        /// <summary> Gets or sets the EnableTcpReset. </summary>
-        public BicepValue<bool> EnableTcpReset
-        {
-            get
-            {
-                return Properties is null ? default : Properties.EnableTcpReset;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new LoadBalancerInboundNatPoolProperties();
-                }
-                Properties.EnableTcpReset = value;
-            }
-        }
-
-        /// <summary> Gets the ProvisioningState. </summary>
-        public BicepValue<NetworkProvisioningState> ProvisioningState
-        {
-            get
-            {
-                if (Properties is null)
-                {
-                    Properties = new LoadBalancerInboundNatPoolProperties();
-                }
-                return Properties.ProvisioningState;
-            }
-        }
-
-        /// <summary> Gets or sets the Id. </summary>
-        public BicepValue<ResourceIdentifier> FrontendIPConfigurationId
-        {
-            get
-            {
-                return Properties is null ? default : Properties.FrontendIPConfigurationId;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new LoadBalancerInboundNatPoolProperties();
-                }
-                Properties.FrontendIPConfigurationId = value;
+                return _resourceType;
             }
         }
 
@@ -213,7 +64,7 @@ namespace Azure.Provisioning.Network
             base.DefineProvisionableProperties();
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" });
             _eTag = DefineProperty<ETag>(nameof(ETag), new string[] { "etag" }, isOutput: true);
-            _type = DefineProperty<string>(nameof(Type), new string[] { "type" }, isOutput: true);
+            _resourceType = DefineProperty<ResourceType>(nameof(ResourceType), new string[] { "type" }, isOutput: true);
             DefineAdditionalProperties();
         }
 

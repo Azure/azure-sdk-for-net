@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using Azure.Provisioning.Generator.Model;
-using Azure.ResourceManager.AppService;
 using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.Sql;
 using Azure.ResourceManager.Sql.Models;

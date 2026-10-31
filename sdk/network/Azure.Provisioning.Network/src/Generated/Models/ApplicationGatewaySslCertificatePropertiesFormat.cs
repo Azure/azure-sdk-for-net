@@ -110,9 +110,9 @@ namespace Azure.Provisioning.Network
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            _data = DefineProperty<BinaryData>(nameof(Data), new string[] { "data" }, format: "base64");
+            _data = DefineProperty<BinaryData>(nameof(Data), new string[] { "data" });
             _password = DefineProperty<string>(nameof(Password), new string[] { "password" });
-            _publicCertData = DefineProperty<BinaryData>(nameof(PublicCertData), new string[] { "publicCertData" }, isOutput: true, format: "base64");
+            _publicCertData = DefineProperty<BinaryData>(nameof(PublicCertData), new string[] { "publicCertData" }, isOutput: true);
             _keyVaultSecretId = DefineProperty<string>(nameof(KeyVaultSecretId), new string[] { "keyVaultSecretId" });
             _hsm = DefineModelProperty<ApplicationGatewayManagedHsm>(nameof(Hsm), new string[] { "hsm" });
             _provisioningState = DefineProperty<NetworkProvisioningState>(nameof(ProvisioningState), new string[] { "provisioningState" }, isOutput: true);

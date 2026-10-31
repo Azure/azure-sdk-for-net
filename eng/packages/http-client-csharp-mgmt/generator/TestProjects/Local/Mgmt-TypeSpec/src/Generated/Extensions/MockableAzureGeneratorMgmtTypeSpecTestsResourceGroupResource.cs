@@ -1396,6 +1396,139 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
             return new SolutionsApplicationDefinitionResource(Client, Id.AppendProviderResource("MgmtTypeSpec", "applicationDefinitions", "{applicationDefinitionName}?disambiguation_dummy"));
         }
 
+        /// <summary> Gets a collection of IPAddresses in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of IPAddresses and their operations over a IPAddressResource. </returns>
+        public virtual IPAddressCollection GetIPAddresses()
+        {
+            return GetCachedClient(client => new IPAddressCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Get a IpAddress
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/ipAddresses/{ipAddressName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> IpAddresses_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="ipAddressName"> The name of the IpAddress. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="ipAddressName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ipAddressName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<IPAddressResource>> GetIPAddressAsync(string ipAddressName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(ipAddressName, nameof(ipAddressName));
+
+            return await GetIPAddresses().GetAsync(ipAddressName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get a IpAddress
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/ipAddresses/{ipAddressName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> IpAddresses_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="ipAddressName"> The name of the IpAddress. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="ipAddressName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ipAddressName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<IPAddressResource> GetIPAddress(string ipAddressName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(ipAddressName, nameof(ipAddressName));
+
+            return GetIPAddresses().Get(ipAddressName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of AcronymWidgets in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <param name="sourceIPv6Address"> The sourceIPv6Address for the resource. </param>
+        /// <returns> An object representing collection of AcronymWidgets and their operations over a AcronymWidgetResource. </returns>
+        public virtual AcronymWidgetCollection GetAcronymWidgets(string sourceIPv6Address)
+        {
+            return new AcronymWidgetCollection(Client, Id, sourceIPv6Address);
+        }
+
+        /// <summary>
+        /// Get a AcronymWidget
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/sourceAddresses/{sourceIpv6Address}/acronymWidgets/{sourceIpAddress}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> AcronymWidgets_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="sourceIPv6Address"> The sourceIPv6Address for the resource. </param>
+        /// <param name="sourceIPAddress"> The name of the AcronymWidget. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="sourceIPAddress"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="sourceIPAddress"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<AcronymWidgetResource>> GetAcronymWidgetAsync(string sourceIPv6Address, string sourceIPAddress, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(sourceIPAddress, nameof(sourceIPAddress));
+
+            return await GetAcronymWidgets(sourceIPv6Address).GetAsync(sourceIPAddress, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get a AcronymWidget
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/sourceAddresses/{sourceIpv6Address}/acronymWidgets/{sourceIpAddress}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> AcronymWidgets_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="sourceIPv6Address"> The sourceIPv6Address for the resource. </param>
+        /// <param name="sourceIPAddress"> The name of the AcronymWidget. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="sourceIPAddress"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="sourceIPAddress"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<AcronymWidgetResource> GetAcronymWidget(string sourceIPv6Address, string sourceIPAddress, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(sourceIPAddress, nameof(sourceIPAddress));
+
+            return GetAcronymWidgets(sourceIPv6Address).Get(sourceIPAddress, cancellationToken);
+        }
+
         /// <summary> Gets a collection of WorkloadNetworkVmGroups in the <see cref="ResourceGroupResource"/>. </summary>
         /// <returns> An object representing collection of WorkloadNetworkVmGroups and their operations over a WorkloadNetworkVmGroupResource. </returns>
         public virtual WorkloadNetworkVmGroupCollection GetWorkloadNetworkVmGroups()

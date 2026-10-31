@@ -5,14 +5,16 @@
 
 #nullable disable
 
+using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.Compute
 {
     /// <summary> Specifies the hardware settings for the virtual machine scale set. </summary>
-    internal partial class VirtualMachineScaleSetHardwareProfile : ProvisionableConstruct
+    public partial class VirtualMachineScaleSetHardwareProfile : ProvisionableConstruct
     {
         private VirtualMachineSizeProperties _vmSizeProperties;
+        private BicepValue<ProcessorMode> _processorMode;
 
         /// <summary> Creates a new VirtualMachineScaleSetHardwareProfile. </summary>
         public VirtualMachineScaleSetHardwareProfile()
@@ -34,11 +36,27 @@ namespace Azure.Provisioning.Compute
             }
         }
 
+        /// <summary> Gets or sets the ProcessorMode. </summary>
+        public BicepValue<ProcessorMode> ProcessorMode
+        {
+            get
+            {
+                Initialize();
+                return _processorMode;
+            }
+            set
+            {
+                Initialize();
+                _processorMode.Assign(value);
+            }
+        }
+
         /// <summary> Define all the provisionable properties for VirtualMachineScaleSetHardwareProfile. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
             _vmSizeProperties = DefineModelProperty<VirtualMachineSizeProperties>(nameof(VmSizeProperties), new string[] { "vmSizeProperties" });
+            _processorMode = DefineProperty<ProcessorMode>(nameof(ProcessorMode), new string[] { "processorMode" });
             DefineAdditionalProperties();
         }
 

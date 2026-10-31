@@ -81,7 +81,7 @@ namespace Azure.Provisioning.Compute
         }
 
         /// <summary> Gets or sets the SoftDeletePolicy. </summary>
-        internal SoftDeletePolicy SoftDeletePolicy
+        public SoftDeletePolicy SoftDeletePolicy
         {
             get
             {
@@ -115,23 +115,6 @@ namespace Azure.Provisioning.Compute
                     Identifier = new GalleryIdentifier();
                 }
                 return Identifier.UniqueName;
-            }
-        }
-
-        /// <summary> Gets or sets the IsSoftDeleteEnabled. </summary>
-        public BicepValue<bool> IsSoftDeleteEnabled
-        {
-            get
-            {
-                return SoftDeletePolicy is null ? default : SoftDeletePolicy.IsSoftDeleteEnabled;
-            }
-            set
-            {
-                if (SoftDeletePolicy is null)
-                {
-                    SoftDeletePolicy = new SoftDeletePolicy();
-                }
-                SoftDeletePolicy.IsSoftDeleteEnabled = value;
             }
         }
 

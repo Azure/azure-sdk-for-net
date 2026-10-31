@@ -17,6 +17,8 @@ namespace Azure.ResourceManager.Compute.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private int? _privateIPAddressPrefixLength;
+        private bool _privateIPAddressPrefixLengthIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="VirtualMachineScaleSetUpdateIPConfigurationProperties"/>. </summary>
         public VirtualMachineScaleSetUpdateIPConfigurationProperties()
@@ -32,17 +34,19 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="primary"> Specifies the primary IP Configuration in case the network interface has more than one IP Configuration. </param>
         /// <param name="publicIPAddressConfiguration"> The publicIPAddressConfiguration. </param>
         /// <param name="privateIPAddressVersion"> Available from Api-Version 2017-03-30 onwards, it represents whether the specific ipconfiguration is IPv4 or IPv6. Default is taken as IPv4.  Possible values are: 'IPv4' and 'IPv6'. </param>
+        /// <param name="privateIPAddressPrefixLength"> The private IP address prefix length. If specified and the allocation method is dynamic, the service will allocate a CIDR block instead of a single IP address. </param>
         /// <param name="applicationGatewayBackendAddressPoolResources"> The application gateway backend address pools. </param>
         /// <param name="applicationSecurityGroupResources"> Specifies an array of references to application security group. </param>
         /// <param name="loadBalancerBackendAddressPoolResources"> The load balancer backend address pools. </param>
         /// <param name="loadBalancerInboundNatPoolResources"> The load balancer inbound nat pools. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualMachineScaleSetUpdateIPConfigurationProperties(ComputeApiEntityReference subnet, bool? primary, VirtualMachineScaleSetUpdatePublicIPAddressConfiguration publicIPAddressConfiguration, IPVersion? privateIPAddressVersion, IList<ComputeWriteableSubResourceData> applicationGatewayBackendAddressPoolResources, IList<ComputeWriteableSubResourceData> applicationSecurityGroupResources, IList<ComputeWriteableSubResourceData> loadBalancerBackendAddressPoolResources, IList<ComputeWriteableSubResourceData> loadBalancerInboundNatPoolResources, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VirtualMachineScaleSetUpdateIPConfigurationProperties(ComputeApiEntityReference subnet, bool? primary, VirtualMachineScaleSetUpdatePublicIPAddressConfiguration publicIPAddressConfiguration, IPVersion? privateIPAddressVersion, int? privateIPAddressPrefixLength, IList<ComputeWriteableSubResourceData> applicationGatewayBackendAddressPoolResources, IList<ComputeWriteableSubResourceData> applicationSecurityGroupResources, IList<ComputeWriteableSubResourceData> loadBalancerBackendAddressPoolResources, IList<ComputeWriteableSubResourceData> loadBalancerInboundNatPoolResources, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Subnet = subnet;
             Primary = primary;
             PublicIPAddressConfiguration = publicIPAddressConfiguration;
             PrivateIPAddressVersion = privateIPAddressVersion;
+            _privateIPAddressPrefixLength = privateIPAddressPrefixLength;
             ApplicationGatewayBackendAddressPoolResources = applicationGatewayBackendAddressPoolResources;
             ApplicationSecurityGroupResources = applicationSecurityGroupResources;
             LoadBalancerBackendAddressPoolResources = loadBalancerBackendAddressPoolResources;
@@ -61,6 +65,20 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> Available from Api-Version 2017-03-30 onwards, it represents whether the specific ipconfiguration is IPv4 or IPv6. Default is taken as IPv4.  Possible values are: 'IPv4' and 'IPv6'. </summary>
         public IPVersion? PrivateIPAddressVersion { get; set; }
+
+        /// <summary> The private IP address prefix length. If specified and the allocation method is dynamic, the service will allocate a CIDR block instead of a single IP address. </summary>
+        public int? PrivateIPAddressPrefixLength
+        {
+            get
+            {
+                return _privateIPAddressPrefixLength;
+            }
+            set
+            {
+                _privateIPAddressPrefixLength = value;
+                _privateIPAddressPrefixLengthIsDefined = true;
+            }
+        }
 
         /// <summary> The application gateway backend address pools. </summary>
         public IList<ComputeWriteableSubResourceData> ApplicationGatewayBackendAddressPoolResources { get; } = new ChangeTrackingList<ComputeWriteableSubResourceData>();

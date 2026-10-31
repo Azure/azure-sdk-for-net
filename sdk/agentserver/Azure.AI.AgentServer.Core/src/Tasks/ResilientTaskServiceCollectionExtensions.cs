@@ -629,7 +629,8 @@ public static class ResilientTaskServiceCollectionExtensions
                 sessionId,
                 sp.GetRequiredService<AgentEventStreamRegistry>(),
                 logger,
-                sp.GetRequiredService<IServiceScopeFactory>());
+                sp.GetRequiredService<IServiceScopeFactory>(),
+                sp.GetRequiredService<ResilientTaskEnablementState>());
 
             // Late-bind the engine so a TaskDefinition (created at registration time, before the
             // container existed) can resolve it at invocation time. The engine is always resolved

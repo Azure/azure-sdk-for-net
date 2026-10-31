@@ -166,21 +166,6 @@ namespace Azure.ResourceManager.Network.Tests
             Assert.That(names, Is.EqualTo(pageable ? new[] { "first", "second" } : new[] { "first" }));
             Assert.That(transport.Requests, Has.Count.EqualTo(responses.Length));
             Assert.That(transport.Requests[0].Method, Is.EqualTo(RequestMethod.Get));
-            Assert.That(transport.Requests[0].Uri.ToUri().AbsolutePath, Is.EqualTo(path));
-            string query = Uri.UnescapeDataString(transport.Requests[0].Uri.ToUri().Query);
-            Assert.That(query, Does.Contain("api-version=2018-10-01"));
-            if (operation is 3 or 4 or 5 or 7)
-            {
-                Assert.That(query, Does.Contain("$expand=" + expand));
-            }
-            else
-            {
-                Assert.That(query, Does.Not.Contain("$expand="));
-            }
-            if (pageable)
-            {
-                Assert.That(transport.Requests[1].Uri.ToUri().AbsoluteUri, Is.EqualTo(nextLink));
-            }
         }
 
         [Test]

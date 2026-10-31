@@ -15,7 +15,7 @@ using Azure.Storage.Files.Shares;
 
 namespace Azure.Storage.Files.Shares.Models
 {
-    /// <summary> Settings for SMB protocol. </summary>
+    /// <summary> Settings for NFS protocol. </summary>
     public partial class ShareNfsSettings : IPersistableModel<ShareNfsSettings>, IXmlSerializable
     {
         /// <param name="data"> The data to parse. </param>

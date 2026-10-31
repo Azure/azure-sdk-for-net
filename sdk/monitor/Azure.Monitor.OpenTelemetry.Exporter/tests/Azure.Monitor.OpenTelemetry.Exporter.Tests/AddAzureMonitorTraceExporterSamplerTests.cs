@@ -3,6 +3,7 @@
 
 using System;
 using System.Reflection;
+using Azure.Core.TestFramework;
 using OpenTelemetry;
 using OpenTelemetry.Trace;
 using Xunit;
@@ -25,7 +26,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
                 Environment.SetEnvironmentVariable("OTEL_TRACES_SAMPLER_ARG", "7");
 
                 using var provider = Sdk.CreateTracerProviderBuilder()
-                    .AddAzureMonitorTraceExporter(o => o.ConnectionString = ConnStr)
+                    .AddAzureMonitorTraceExporter(ConfigureOfflineExporter)
                     .Build();
 
                 var sampler = GetSampler(provider);
@@ -49,7 +50,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
                 Environment.SetEnvironmentVariable("OTEL_TRACES_SAMPLER_ARG", "0.25");
 
                 using var provider = Sdk.CreateTracerProviderBuilder()
-                    .AddAzureMonitorTraceExporter(o => o.ConnectionString = ConnStr)
+                    .AddAzureMonitorTraceExporter(ConfigureOfflineExporter)
                     .Build();
 
                 var sampler = GetSampler(provider);
@@ -73,7 +74,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
                 Environment.SetEnvironmentVariable("OTEL_TRACES_SAMPLER_ARG", "0.10");
 
                 using var provider = Sdk.CreateTracerProviderBuilder()
-                    .AddAzureMonitorTraceExporter(o => { o.ConnectionString = ConnStr; o.TracesPerSecond = 5; })
+                    .AddAzureMonitorTraceExporter(o =>
+                    {
+                        ConfigureOfflineExporter(o);
+                        o.TracesPerSecond = 5;
+                    })
                     .Build();
 
                 var sampler = GetSampler(provider);
@@ -84,6 +89,14 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
                 Environment.SetEnvironmentVariable("OTEL_TRACES_SAMPLER", prevSampler);
                 Environment.SetEnvironmentVariable("OTEL_TRACES_SAMPLER_ARG", prevArg);
             }
+        }
+
+        private static void ConfigureOfflineExporter(AzureMonitorExporterOptions options)
+        {
+            options.ConnectionString = ConnStr;
+            options.DisableOfflineStorage = true;
+            options.EnableStatsbeat = false;
+            options.Transport = new MockTransport(new MockResponse(200));
         }
 
         private static Sampler GetSampler(TracerProvider provider)

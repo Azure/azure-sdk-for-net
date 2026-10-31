@@ -19,7 +19,7 @@ namespace Azure.Provisioning.Network
         private BicepValue<long> _tunnelIdentifier;
         private BicepList<string> _bgpPeerAddress;
         private BicepValue<bool> _enableInternetSecurity;
-        private RoutingConfiguration _routingConfiguration;
+        private RoutingConfiguration _connectionRoutingConfiguration;
 
         /// <summary> Creates a new NetworkVirtualApplianceConnectionProperties. </summary>
         public NetworkVirtualApplianceConnectionProperties()
@@ -111,18 +111,18 @@ namespace Azure.Provisioning.Network
             }
         }
 
-        /// <summary> Gets or sets the RoutingConfiguration. </summary>
-        public RoutingConfiguration RoutingConfiguration
+        /// <summary> Gets or sets the ConnectionRoutingConfiguration. </summary>
+        public RoutingConfiguration ConnectionRoutingConfiguration
         {
             get
             {
                 Initialize();
-                return _routingConfiguration;
+                return _connectionRoutingConfiguration;
             }
             set
             {
                 Initialize();
-                AssignOrReplace(ref _routingConfiguration, value);
+                AssignOrReplace(ref _connectionRoutingConfiguration, value);
             }
         }
 
@@ -136,7 +136,7 @@ namespace Azure.Provisioning.Network
             _tunnelIdentifier = DefineProperty<long>(nameof(TunnelIdentifier), new string[] { "tunnelIdentifier" });
             _bgpPeerAddress = DefineListProperty<string>(nameof(BgpPeerAddress), new string[] { "bgpPeerAddress" });
             _enableInternetSecurity = DefineProperty<bool>(nameof(EnableInternetSecurity), new string[] { "enableInternetSecurity" });
-            _routingConfiguration = DefineModelProperty<RoutingConfiguration>(nameof(RoutingConfiguration), new string[] { "routingConfiguration" });
+            _connectionRoutingConfiguration = DefineModelProperty<RoutingConfiguration>(nameof(ConnectionRoutingConfiguration), new string[] { "routingConfiguration" });
             DefineAdditionalProperties();
         }
 

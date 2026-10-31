@@ -193,7 +193,17 @@ namespace Azure.Storage.Blobs
             /// <summary>
             /// The 2026-10-06 service version.
             /// </summary>
-            V2026_10_06 = 32
+            V2026_10_06 = 32,
+
+            /// <summary>
+            /// The 2026-12-06 service version.
+            /// </summary>
+            V2026_12_06 = 33,
+
+            /// <summary>
+            /// The 2027-03-07 service version.
+            /// </summary>
+            V2027_03_07 = 34
 #pragma warning restore CA1707 // Identifiers should not contain underscores
         }
 
@@ -245,6 +255,12 @@ namespace Azure.Storage.Blobs
         /// </summary>
         public Request100ContinueOptions Request100ContinueOptions { get; set; }
 
+        /// <summary>
+        /// Options for configuring session token authentication for blob operations.
+        /// Note: Session token authentication currently only applies when using TokenCredentials for Blob Download operations.
+        /// </summary>
+        public SessionOptions SessionOptions { get; set; }
+
         #region Advanced Options
         internal ClientSideEncryptionOptions _clientSideEncryptionOptions;
         #endregion
@@ -271,6 +287,7 @@ namespace Azure.Storage.Blobs
 
             this.Initialize();
             AddHeadersAndQueryParameters();
+            this.AddPolicy(DataLocalityPolicy.Shared, HttpPipelinePosition.PerCall);
         }
 
         /// <summary> Initializes a new instance of BlobClientOptions from configuration. </summary>
@@ -314,6 +331,7 @@ namespace Azure.Storage.Blobs
             }
             this.Initialize();
             AddHeadersAndQueryParameters();
+            this.AddPolicy(DataLocalityPolicy.Shared, HttpPipelinePosition.PerCall);
         }
 
         /// <summary>
@@ -565,6 +583,12 @@ namespace Azure.Storage.Blobs
                     return true;
                 case "2026-10-06":
                     serviceVersion = ServiceVersion.V2026_10_06;
+                    return true;
+                case "2026-12-06":
+                    serviceVersion = ServiceVersion.V2026_12_06;
+                    return true;
+                case "2027-03-07":
+                    serviceVersion = ServiceVersion.V2027_03_07;
                     return true;
                 default:
                     return false;

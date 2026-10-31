@@ -31,6 +31,7 @@ namespace Azure.Provisioning.Compute
         private VirtualMachinePatchStatus _patchStatus;
         private BicepValue<bool> _isVmInStandbyPool;
         private InterconnectInstanceView _interconnectInstanceView;
+        private BicepValue<ComputeCapacityReservationType> _capacityReservationType;
 
         /// <summary> Creates a new VirtualMachineInstanceView. </summary>
         public VirtualMachineInstanceView()
@@ -217,6 +218,16 @@ namespace Azure.Provisioning.Compute
             }
         }
 
+        /// <summary> Gets the CapacityReservationType. </summary>
+        public BicepValue<ComputeCapacityReservationType> CapacityReservationType
+        {
+            get
+            {
+                Initialize();
+                return _capacityReservationType;
+            }
+        }
+
         /// <summary> Gets the Status. </summary>
         public InstanceViewStatus VmHealthStatus
         {
@@ -257,6 +268,7 @@ namespace Azure.Provisioning.Compute
             _patchStatus = DefineModelProperty<VirtualMachinePatchStatus>(nameof(PatchStatus), new string[] { "patchStatus" });
             _isVmInStandbyPool = DefineProperty<bool>(nameof(IsVmInStandbyPool), new string[] { "isVMInStandbyPool" }, isOutput: true);
             _interconnectInstanceView = DefineModelProperty<InterconnectInstanceView>(nameof(InterconnectInstanceView), new string[] { "interconnectInstanceView" }, isOutput: true);
+            _capacityReservationType = DefineProperty<ComputeCapacityReservationType>(nameof(CapacityReservationType), new string[] { "capacityReservationType" }, isOutput: true);
             DefineAdditionalProperties();
         }
 

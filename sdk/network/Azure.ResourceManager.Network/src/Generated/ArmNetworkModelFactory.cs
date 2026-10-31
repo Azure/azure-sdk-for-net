@@ -3527,39 +3527,6 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <param name="id"> Resource ID. </param>
-        /// <param name="name"> Resource name. </param>
-        /// <param name="resourceType"> Resource type. </param>
-        /// <param name="location"> Resource location. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="resourceGuid"> The resource GUID property of the DDoS custom policy resource. It uniquely identifies the resource, even if the user changes its name or migrate the resource across subscriptions or resource groups. </param>
-        /// <param name="provisioningState"> The provisioning state of the DDoS custom policy resource. </param>
-        /// <param name="detectionRules"> The list of DDoS detection rules associated with the custom policy. </param>
-        /// <param name="frontEndIPConfiguration"> The list of frontend IP configurations associated with the custom policy. </param>
-        /// <param name="publicIPAddresses"> The list of public IP addresses associated with the custom policy. This list is read-only. </param>
-        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <returns> A new <see cref="Network.DdosCustomPolicyData"/> instance for mocking. </returns>
-        public static DdosCustomPolicyData DdosCustomPolicyData(ResourceIdentifier id = default, string name = default, ResourceType? resourceType = default, AzureLocation? location = default, IDictionary<string, string> tags = default, Guid? resourceGuid = default, NetworkProvisioningState? provisioningState = default, IEnumerable<DdosDetectionRule> detectionRules = default, IEnumerable<WritableSubResource> frontEndIPConfiguration = default, IEnumerable<WritableSubResource> publicIPAddresses = default, ETag? eTag = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new DdosCustomPolicyData(
-                id,
-                name,
-                resourceType,
-                location,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                default,
-                resourceGuid is null && provisioningState is null && detectionRules is null && frontEndIPConfiguration is null && publicIPAddresses is null ? default : new DdosCustomPolicyPropertiesFormat(
-                    resourceGuid,
-                    provisioningState,
-                    (detectionRules ?? new ChangeTrackingList<DdosDetectionRule>()).ToList(),
-                    (frontEndIPConfiguration ?? new ChangeTrackingList<WritableSubResource>()).ToList(),
-                    (publicIPAddresses ?? new ChangeTrackingList<WritableSubResource>()).ToList(),
-                    default),
-                eTag);
-        }
-
-        /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Name of the resource. </param>
         /// <param name="resourceType"> Resource type. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
@@ -3585,6 +3552,61 @@ namespace Azure.ResourceManager.Network.Models
         public static TrafficDetectionRule TrafficDetectionRule(DdosTrafficType? trafficType = default, int? packetsPerSecond = default)
         {
             return new TrafficDetectionRule(trafficType, packetsPerSecond, default);
+        }
+
+        /// <summary> A DDoS mitigation rule resource. </summary>
+        /// <param name="id"> Resource ID. </param>
+        /// <param name="name"> The name of the DDoS mitigation rule. </param>
+        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
+        /// <param name="type"> The resource type. </param>
+        /// <param name="properties"> Properties of the DDoS mitigation rule. </param>
+        /// <returns> A new <see cref="Models.DdosMitigationRule"/> instance for mocking. </returns>
+        public static DdosMitigationRule DdosMitigationRule(ResourceIdentifier id = default, string name = default, ETag? eTag = default, string @type = default, DdosMitigationRulePropertiesFormat properties = default)
+        {
+            return new DdosMitigationRule(
+                id,
+                default,
+                name,
+                eTag,
+                @type,
+                properties);
+        }
+
+        /// <param name="packetsPerSecond"> The maximum number of TCP packets allowed per second from a source IP. </param>
+        /// <param name="connectionsPerSecond"> The maximum number of new TCP connections established per second from a source IP. </param>
+        /// <returns> A new <see cref="Models.DdosTcpDefaultMitigations"/> instance for mocking. </returns>
+        public static DdosTcpDefaultMitigations DdosTcpDefaultMitigations(int? packetsPerSecond = default, int? connectionsPerSecond = default)
+        {
+            return new DdosTcpDefaultMitigations(packetsPerSecond is null ? default : new DdosTcpPerSourceRateLimitPolicy(packetsPerSecond.GetValueOrDefault(), default), connectionsPerSecond is null ? default : new DdosTcpPerSourceConnectionRateLimitPolicy(connectionsPerSecond.GetValueOrDefault(), default), default);
+        }
+
+        /// <param name="actionType"> The source policy action type. </param>
+        /// <param name="conditions"> The source conditions that select traffic for the action. </param>
+        /// <returns> A new <see cref="Models.DdosSourcePolicyOverride"/> instance for mocking. </returns>
+        public static DdosSourcePolicyOverride DdosSourcePolicyOverride(DdosSourcePolicyActionType actionType = default, DdosSourceMatchConditions conditions = default)
+        {
+            return new DdosSourcePolicyOverride(new DdosSourcePolicyAction(actionType, default), conditions, default);
+        }
+
+        /// <summary> Source conditions for a DDoS source policy override. A source matches when it matches any IP prefix or any geographic match. </summary>
+        /// <param name="ipPrefixes"> The IPv4 or IPv6 CIDR prefixes in `&lt;address&gt;/&lt;prefix-length&gt;` format. Entries are evaluated with OR semantics. </param>
+        /// <param name="geoMatches"> The geographic matches. Entries are evaluated with OR semantics. </param>
+        /// <returns> A new <see cref="Models.DdosSourceMatchConditions"/> instance for mocking. </returns>
+        public static DdosSourceMatchConditions DdosSourceMatchConditions(IEnumerable<string> ipPrefixes = default, IEnumerable<DdosGeoMatch> geoMatches = default)
+        {
+            ipPrefixes ??= new ChangeTrackingList<string>();
+            geoMatches ??= new ChangeTrackingList<DdosGeoMatch>();
+
+            return new DdosSourceMatchConditions((ipPrefixes ?? new ChangeTrackingList<string>()).ToList(), (geoMatches ?? new ChangeTrackingList<DdosGeoMatch>()).ToList(), default);
+        }
+
+        /// <summary> A geographic source match. The service validates that at least one of continent or countryCode is specified. If both are specified, the service validates that the country belongs to the continent according to the service-defined mapping. For example, RU, TR, and KZ map to Asia, EG maps to Africa, and CY maps to Europe. </summary>
+        /// <param name="continent"> The continent to match. Country membership follows the service-defined mapping documented on DdosGeoMatch. </param>
+        /// <param name="countryCode"> The uppercase two-letter ISO 3166-1 alpha-2 code for the country or territory to match. </param>
+        /// <returns> A new <see cref="Models.DdosGeoMatch"/> instance for mocking. </returns>
+        public static DdosGeoMatch DdosGeoMatch(DdosContinent? continent = default, string countryCode = default)
+        {
+            return new DdosGeoMatch(continent, countryCode, default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -4549,6 +4571,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="etherType"> Ether type of the LAG. </param>
         /// <param name="links"> The set of links of the ExpressRouteLag resource. </param>
         /// <param name="circuits"> Reference the ExpressRoute circuit(s) that are provisioned on this ExpressRouteLag resource. </param>
+        /// <param name="authorizations"> The set of authorizations of the ExpressRouteLag resource. </param>
         /// <param name="allocationDate"> The date and time when the ExpressRouteLag was allocated. </param>
         /// <param name="provisioningState"> The provisioning state of the express route LAG resource. </param>
         /// <param name="resourceGuid"> The resource GUID property of the express route LAG resource. </param>
@@ -4557,10 +4580,11 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="minimumActivePortsRequired"> Minimum number of active ports required for LAG. </param>
         /// <param name="lacpTimer"> LACP timer configuration. </param>
         /// <returns> A new <see cref="Models.ExpressRouteLagPropertiesFormat"/> instance for mocking. </returns>
-        public static ExpressRouteLagPropertiesFormat ExpressRouteLagPropertiesFormat(string peeringLocation = default, int? bandwidthInGbps = default, double? provisionedBandwidthInGbps = default, string mtu = default, ExpressRouteLagEncapsulation? encapsulation = default, string etherType = default, IEnumerable<ExpressRouteLagLink> links = default, IEnumerable<NetworkSubResource> circuits = default, string allocationDate = default, NetworkProvisioningState? provisioningState = default, string resourceGuid = default, ExpressRouteLagBillingType? billingType = default, int? numberOfPorts = default, int? minimumActivePortsRequired = default, ExpressRouteLagLacpTimer? lacpTimer = default)
+        public static ExpressRouteLagPropertiesFormat ExpressRouteLagPropertiesFormat(string peeringLocation = default, int? bandwidthInGbps = default, double? provisionedBandwidthInGbps = default, string mtu = default, ExpressRouteLagEncapsulation? encapsulation = default, string etherType = default, IEnumerable<ExpressRouteLagLink> links = default, IEnumerable<NetworkSubResource> circuits = default, IEnumerable<ExpressRouteLagAuthorizationData> authorizations = default, string allocationDate = default, NetworkProvisioningState? provisioningState = default, string resourceGuid = default, ExpressRouteLagBillingType? billingType = default, int? numberOfPorts = default, int? minimumActivePortsRequired = default, ExpressRouteLagLacpTimer? lacpTimer = default)
         {
             links ??= new ChangeTrackingList<ExpressRouteLagLink>();
             circuits ??= new ChangeTrackingList<NetworkSubResource>();
+            authorizations ??= new ChangeTrackingList<ExpressRouteLagAuthorizationData>();
 
             return new ExpressRouteLagPropertiesFormat(
                 peeringLocation,
@@ -4571,6 +4595,7 @@ namespace Azure.ResourceManager.Network.Models
                 etherType,
                 (links ?? new ChangeTrackingList<ExpressRouteLagLink>()).ToList(),
                 (circuits ?? new ChangeTrackingList<NetworkSubResource>()).ToList(),
+                (authorizations ?? new ChangeTrackingList<ExpressRouteLagAuthorizationData>()).ToList(),
                 allocationDate,
                 provisioningState,
                 resourceGuid,
@@ -4659,6 +4684,36 @@ namespace Azure.ResourceManager.Network.Models
                 adminState,
                 provisioningState,
                 default);
+        }
+
+        /// <summary> ExpressRoute Lag Authorization. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> ExpressRouteLag authorization properties. </param>
+        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
+        /// <returns> A new <see cref="Network.ExpressRouteLagAuthorizationData"/> instance for mocking. </returns>
+        public static ExpressRouteLagAuthorizationData ExpressRouteLagAuthorizationData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ExpressRouteLagAuthorizationPropertiesFormat properties = default, ETag? eTag = default)
+        {
+            return new ExpressRouteLagAuthorizationData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                eTag,
+                default);
+        }
+
+        /// <summary> ExpressRoute Lag Authorization Properties. </summary>
+        /// <param name="authorizationUseStatus"> The authorization use status. </param>
+        /// <param name="circuitResourceUri"> The reference to the ExpressRoute circuit resource using the authorization. </param>
+        /// <param name="provisioningState"> The provisioning state of the authorization resource. </param>
+        /// <returns> A new <see cref="Models.ExpressRouteLagAuthorizationPropertiesFormat"/> instance for mocking. </returns>
+        public static ExpressRouteLagAuthorizationPropertiesFormat ExpressRouteLagAuthorizationPropertiesFormat(ExpressRouteLagAuthorizationUseStatus? authorizationUseStatus = default, string circuitResourceUri = default, NetworkProvisioningState? provisioningState = default)
+        {
+            return new ExpressRouteLagAuthorizationPropertiesFormat(authorizationUseStatus, circuitResourceUri, provisioningState, default);
         }
 
         /// <summary> ExpressRouteLag Update Tags or Identity Request. </summary>
@@ -6341,17 +6396,17 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> The commit resource. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
-        /// <param name="type"> Resource type. </param>
+        /// <param name="resourceType"> Resource type. </param>
         /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="properties"> The Commit properties. </param>
         /// <param name="systemData"> The system metadata related to this resource. </param>
         /// <returns> A new <see cref="Network.NetworkManagerConfigurationCommitData"/> instance for mocking. </returns>
-        public static NetworkManagerConfigurationCommitData NetworkManagerConfigurationCommitData(ResourceIdentifier id = default, string name = default, string @type = default, string eTag = default, CommitProperties properties = default, SystemData systemData = default)
+        public static NetworkManagerConfigurationCommitData NetworkManagerConfigurationCommitData(ResourceIdentifier id = default, string name = default, ResourceType? resourceType = default, ETag? eTag = default, CommitProperties properties = default, SystemData systemData = default)
         {
             return new NetworkManagerConfigurationCommitData(
                 id,
                 name,
-                @type,
+                resourceType,
                 eTag,
                 default,
                 properties,
@@ -6389,12 +6444,12 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Proxy resource representation. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
-        /// <param name="type"> Resource type. </param>
+        /// <param name="resourceType"> Resource type. </param>
         /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <returns> A new <see cref="Models.NetworkChildResourceData"/> instance for mocking. </returns>
-        public static NetworkChildResourceData NetworkChildResourceData(ResourceIdentifier id = default, string name = default, string @type = default, string eTag = default)
+        public static NetworkChildResourceData NetworkChildResourceData(ResourceIdentifier id = default, string name = default, ResourceType? resourceType = default, ETag? eTag = default)
         {
-            return new NetworkChildResourceData(id, name, @type, eTag, default);
+            return new NetworkChildResourceData(id, name, resourceType, eTag, default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -10592,16 +10647,16 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> ConnectionPolicy resource defined for VirtualHub. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
-        /// <param name="type"> Resource type. </param>
+        /// <param name="resourceType"> Resource type. </param>
         /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="properties"> Properties of the ConnectionPolicy resource. </param>
         /// <returns> A new <see cref="Network.ConnectionPolicyData"/> instance for mocking. </returns>
-        public static ConnectionPolicyData ConnectionPolicyData(ResourceIdentifier id = default, string name = default, string @type = default, string eTag = default, ConnectionPolicyProperties properties = default)
+        public static ConnectionPolicyData ConnectionPolicyData(ResourceIdentifier id = default, string name = default, ResourceType? resourceType = default, ETag? eTag = default, ConnectionPolicyProperties properties = default)
         {
             return new ConnectionPolicyData(
                 id,
                 name,
-                @type,
+                resourceType,
                 eTag,
                 default,
                 properties);
@@ -10623,12 +10678,12 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Proxy resource representation. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
-        /// <param name="type"> Resource type. </param>
+        /// <param name="resourceType"> Resource type. </param>
         /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <returns> A new <see cref="Models.NetworkProxyResourceData"/> instance for mocking. </returns>
-        public static NetworkProxyResourceData NetworkProxyResourceData(ResourceIdentifier id = default, string name = default, string @type = default, string eTag = default)
+        public static NetworkProxyResourceData NetworkProxyResourceData(ResourceIdentifier id = default, string name = default, ResourceType? resourceType = default, ETag? eTag = default)
         {
-            return new NetworkProxyResourceData(id, name, @type, eTag, default);
+            return new NetworkProxyResourceData(id, name, resourceType, eTag, default);
         }
 
         /// <param name="id"> Resource ID. </param>
@@ -10945,9 +11000,10 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="provisioningState"> The provisioning state of the virtual network appliance resource. </param>
         /// <param name="resourceGuid"> The resource GUID property of the virtual network appliance resource. </param>
         /// <param name="subnet"> The reference to the subnet resource. </param>
+        /// <param name="capacityProviderId"> Resource ID. </param>
         /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <returns> A new <see cref="Network.VirtualNetworkApplianceData"/> instance for mocking. </returns>
-        public static VirtualNetworkApplianceData VirtualNetworkApplianceData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, double? bandwidthGbps, IEnumerable<VirtualNetworkApplianceIPConfiguration> ipConfigurations, VirtualNetworkApplianceIPVersionType? privateIPAddressVersion, NetworkProvisioningState? provisioningState, Guid? resourceGuid, SubnetData subnet, ETag? eTag)
+        public static VirtualNetworkApplianceData VirtualNetworkApplianceData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, double? bandwidthGbps, IEnumerable<VirtualNetworkApplianceIPConfiguration> ipConfigurations, VirtualNetworkApplianceIPVersionType? privateIPAddressVersion, NetworkProvisioningState? provisioningState, Guid? resourceGuid, SubnetData subnet, ResourceIdentifier capacityProviderId, ETag? eTag = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -10958,8 +11014,9 @@ namespace Azure.ResourceManager.Network.Models
                 location,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 default,
-                bandwidthGbps is null && ipConfigurations is null && privateIPAddressVersion is null && provisioningState is null && resourceGuid is null && subnet is null ? default : new VirtualNetworkAppliancePropertiesFormat(
+                bandwidthGbps is null && capacityProviderId is null && ipConfigurations is null && privateIPAddressVersion is null && provisioningState is null && resourceGuid is null && subnet is null ? default : new VirtualNetworkAppliancePropertiesFormat(
                     bandwidthGbps,
+                    capacityProviderId is null ? default : new NetworkSubResource(capacityProviderId, default),
                     (ipConfigurations ?? new ChangeTrackingList<VirtualNetworkApplianceIPConfiguration>()).ToList(),
                     privateIPAddressVersion,
                     provisioningState,
@@ -10994,6 +11051,155 @@ namespace Azure.ResourceManager.Network.Models
                     privateIPAddressVersion,
                     default),
                 eTag);
+        }
+
+        /// <summary>
+        /// A capability enabled on a virtual network appliance. The top-level `kind` discriminator selects the
+        /// capability family; every kind shares the same `properties` schema (see
+        /// VirtualNetworkApplianceCapabilityProperties). One capability of a given kind may exist per appliance.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.Nat64Capability"/>, <see cref="Models.PLGatewayCapability"/>, <see cref="Models.PLGatewayFastpathCapability"/>, and <see cref="Models.PLIPForwardersCapability"/>.
+        /// </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <param name="kind"> The kind of capability (the top-level discriminator). </param>
+        /// <returns> A new <see cref="Network.VirtualNetworkApplianceCapabilityData"/> instance for mocking. </returns>
+        public static VirtualNetworkApplianceCapabilityData VirtualNetworkApplianceCapabilityData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, VirtualNetworkApplianceCapabilityProperties properties = default, string kind = default)
+        {
+            return new UnknownVirtualNetworkApplianceCapability(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                default,
+                kind is null ? default : new VirtualNetworkApplianceCapabilityKind(kind));
+        }
+
+        /// <summary> Concrete proxy resource types can be created by aliasing this type using a specific property type. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="Models.VirtualNetworkApplianceCapabilityBaseData"/> instance for mocking. </returns>
+        public static VirtualNetworkApplianceCapabilityBaseData VirtualNetworkApplianceCapabilityBaseData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, VirtualNetworkApplianceCapabilityProperties properties = default)
+        {
+            return new VirtualNetworkApplianceCapabilityBaseData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                default);
+        }
+
+        /// <summary> Properties common to every virtual network appliance capability, independent of kind. </summary>
+        /// <param name="linkedResourceId"> The Azure resource ID of the owning virtual network. System-derived and read-only. </param>
+        /// <param name="provisioningState"> The provisioning state of the capability resource. </param>
+        /// <param name="ipVersion">
+        /// The IP version the capability applies to. Private Link Gateway FastPath (`PLGatewayFastpath`)
+        /// only accepts `DualStack`; Private Link Gateway (`PLGateway`) and Private Link IP-forwarders
+        /// (`PLIPForwarders`) only accept `IPv6`. Not applicable to `NAT64`, which is property-less and must
+        /// omit this value. The service validates the value against the resource's `kind` when the
+        /// capability is created or updated.
+        /// </param>
+        /// <returns> A new <see cref="Models.VirtualNetworkApplianceCapabilityProperties"/> instance for mocking. </returns>
+        public static VirtualNetworkApplianceCapabilityProperties VirtualNetworkApplianceCapabilityProperties(ResourceIdentifier linkedResourceId = default, NetworkProvisioningState? provisioningState = default, VirtualNetworkApplianceCapabilityIPVersion? ipVersion = default)
+        {
+            return new VirtualNetworkApplianceCapabilityProperties(linkedResourceId, provisioningState, ipVersion, default);
+        }
+
+        /// <summary>
+        /// The Private Link Gateway FastPath capability. Private Link fast-path programming on the appliance's gateway;
+        /// supported on a dual-stack appliance.
+        /// </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="Models.PLGatewayFastpathCapability"/> instance for mocking. </returns>
+        public static PLGatewayFastpathCapability PLGatewayFastpathCapability(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, VirtualNetworkApplianceCapabilityProperties properties = default)
+        {
+            return new PLGatewayFastpathCapability(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                default,
+                VirtualNetworkApplianceCapabilityKind.PLGatewayFastpath);
+        }
+
+        /// <summary>
+        /// The Private Link Gateway (slow-path) capability. Private Link programming offloaded to the appliance's gateway;
+        /// IPv6 on a dual-stack appliance.
+        /// </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="Models.PLGatewayCapability"/> instance for mocking. </returns>
+        public static PLGatewayCapability PLGatewayCapability(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, VirtualNetworkApplianceCapabilityProperties properties = default)
+        {
+            return new PLGatewayCapability(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                default,
+                VirtualNetworkApplianceCapabilityKind.PLGateway);
+        }
+
+        /// <summary>
+        /// The Private Link IP-forwarders (NVA) capability. Private Link programming offloaded to the appliance NVA;
+        /// IPv6 on a dual-stack appliance.
+        /// </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="Models.PLIPForwardersCapability"/> instance for mocking. </returns>
+        public static PLIPForwardersCapability PLIPForwardersCapability(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, VirtualNetworkApplianceCapabilityProperties properties = default)
+        {
+            return new PLIPForwardersCapability(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                default,
+                VirtualNetworkApplianceCapabilityKind.PLIPForwarders);
+        }
+
+        /// <summary>
+        /// The NAT64 capability. Enables stateful NAT64 translation (IPv6-only workloads reaching IPv4
+        /// destinations) on the appliance's floating NIC; supported on a dual-stack appliance. This kind is
+        /// property-less: it carries no `ipVersion` (the parent appliance's dual-stack configuration is the
+        /// precondition, service-validated) beyond the properties common to every capability.
+        /// </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="Models.Nat64Capability"/> instance for mocking. </returns>
+        public static Nat64Capability Nat64Capability(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, VirtualNetworkApplianceCapabilityProperties properties = default)
+        {
+            return new Nat64Capability(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                default,
+                VirtualNetworkApplianceCapabilityKind.NAT64);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -11296,16 +11502,16 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Address prefix set child resource of an application security group. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
-        /// <param name="type"> Resource type. </param>
+        /// <param name="resourceType"> Resource type. </param>
         /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="properties"> Properties of the address prefix set. </param>
         /// <returns> A new <see cref="Network.AddressPrefixSetData"/> instance for mocking. </returns>
-        public static AddressPrefixSetData AddressPrefixSetData(ResourceIdentifier id = default, string name = default, string @type = default, string eTag = default, AddressPrefixSetPropertiesFormat properties = default)
+        public static AddressPrefixSetData AddressPrefixSetData(ResourceIdentifier id = default, string name = default, ResourceType? resourceType = default, ETag? eTag = default, AddressPrefixSetPropertiesFormat properties = default)
         {
             return new AddressPrefixSetData(
                 id,
                 name,
-                @type,
+                resourceType,
                 eTag,
                 default,
                 properties);
@@ -15888,38 +16094,6 @@ namespace Azure.ResourceManager.Network.Models
                 (zones ?? new ChangeTrackingList<string>()).ToList());
         }
 
-        /// <summary> A DDoS custom policy in a resource group. </summary>
-        /// <param name="id"> Resource ID. </param>
-        /// <param name="name"> Resource name. </param>
-        /// <param name="resourceType"> Resource type. </param>
-        /// <param name="location"> Resource location. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <param name="resourceGuid"> The resource GUID property of the DDoS custom policy resource. It uniquely identifies the resource, even if the user changes its name or migrate the resource across subscriptions or resource groups. </param>
-        /// <param name="provisioningState"> The provisioning state of the DDoS custom policy resource. </param>
-        /// <param name="detectionRules"> The list of DDoS detection rules associated with the custom policy. </param>
-        /// <param name="frontEndIPConfiguration"> The list of frontend IP configurations associated with the custom policy. </param>
-        /// <returns> A new <see cref="Network.DdosCustomPolicyData"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static DdosCustomPolicyData DdosCustomPolicyData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, ETag? etag, Guid? resourceGuid, NetworkProvisioningState? provisioningState, IEnumerable<DdosDetectionRule> detectionRules, IEnumerable<WritableSubResource> frontEndIPConfiguration)
-        {
-            return new DdosCustomPolicyData(
-                id,
-                name,
-                resourceType,
-                location,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                default,
-                resourceGuid is null && provisioningState is null && detectionRules is null && frontEndIPConfiguration is null ? default : new DdosCustomPolicyPropertiesFormat(
-                    resourceGuid,
-                    provisioningState,
-                    (detectionRules ?? new ChangeTrackingList<DdosDetectionRule>()).ToList(),
-                    (frontEndIPConfiguration ?? new ChangeTrackingList<WritableSubResource>()).ToList(),
-                    default,
-                    default),
-                etag);
-        }
-
         /// <summary> A DDoS protection plan in a resource group. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
@@ -19139,36 +19313,6 @@ namespace Azure.ResourceManager.Network.Models
                     default,
                     default,
                     provisioningState,
-                    default),
-                etag);
-        }
-
-        /// <summary> A DDoS custom policy in a resource group. </summary>
-        /// <param name="id"> Resource ID. </param>
-        /// <param name="name"> Resource name. </param>
-        /// <param name="resourceType"> Resource type. </param>
-        /// <param name="location"> Resource location. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <param name="resourceGuid"> The resource GUID property of the DDoS custom policy resource. It uniquely identifies the resource, even if the user changes its name or migrate the resource across subscriptions or resource groups. </param>
-        /// <param name="provisioningState"> The provisioning state of the DDoS custom policy resource. </param>
-        /// <returns> A new <see cref="Network.DdosCustomPolicyData"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static DdosCustomPolicyData DdosCustomPolicyData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, ETag? etag, Guid? resourceGuid, NetworkProvisioningState? provisioningState)
-        {
-            return new DdosCustomPolicyData(
-                id,
-                name,
-                resourceType,
-                location,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                default,
-                resourceGuid is null && provisioningState is null ? default : new DdosCustomPolicyPropertiesFormat(
-                    resourceGuid,
-                    provisioningState,
-                    default,
-                    default,
-                    default,
                     default),
                 etag);
         }

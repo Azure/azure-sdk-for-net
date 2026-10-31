@@ -254,6 +254,7 @@ namespace Azure.Security.CodeTransparency
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
+        [Obsolete("The /operations/{operationId} endpoint is deprecated in SCRAPI v09 (api-version=2026-03-26). Clients should poll /entries/{entryId} directly. Behavior is unchanged for backward compatibility.")]
         internal virtual Response GetOperationV09(string operationId, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("CodeTransparencyClient.GetOperationV09");
@@ -282,6 +283,7 @@ namespace Azure.Security.CodeTransparency
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
+        [Obsolete("The /operations/{operationId} endpoint is deprecated in SCRAPI v09 (api-version=2026-03-26). Clients should poll /entries/{entryId} directly. Behavior is unchanged for backward compatibility.")]
         internal virtual async Task<Response> GetOperationV09Async(string operationId, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("CodeTransparencyClient.GetOperationV09");
@@ -301,6 +303,7 @@ namespace Azure.Security.CodeTransparency
         /// <summary> Get status of the long running registration operation. Deprecated in SCRAPI v09 but retained unchanged for backward compatibility; clients should poll /entries/{entryId} directly. </summary>
         /// <param name="operationId"> ID of the operation to retrieve. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        [Obsolete("The /operations/{operationId} endpoint is deprecated in SCRAPI v09 (api-version=2026-03-26). Clients should poll /entries/{entryId} directly. Behavior is unchanged for backward compatibility.")]
         internal virtual NullableResponse<BinaryData> GetOperationV09(string operationId, CancellationToken cancellationToken = default)
         {
             Response result = GetOperationV09(operationId, cancellationToken.ToRequestContext());
@@ -314,6 +317,7 @@ namespace Azure.Security.CodeTransparency
         /// <summary> Get status of the long running registration operation. Deprecated in SCRAPI v09 but retained unchanged for backward compatibility; clients should poll /entries/{entryId} directly. </summary>
         /// <param name="operationId"> ID of the operation to retrieve. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        [Obsolete("The /operations/{operationId} endpoint is deprecated in SCRAPI v09 (api-version=2026-03-26). Clients should poll /entries/{entryId} directly. Behavior is unchanged for backward compatibility.")]
         internal virtual async Task<NullableResponse<BinaryData>> GetOperationV09Async(string operationId, CancellationToken cancellationToken = default)
         {
             Response result = await GetOperationV09Async(operationId, cancellationToken.ToRequestContext()).ConfigureAwait(false);

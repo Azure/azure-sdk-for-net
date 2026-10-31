@@ -1,0 +1,38 @@
+name: CI Failure Analysis Tests
+
+on:
+  pull_request:
+    paths:
+      - '.github/workflows/ci-failure-analysis*'
+      - '.github/workflows/ci-failure-analysis/**'
+      - '.github/workflows/provisioning-review*'
+      - '.github/workflows/shared/copilot-cli-version-probe-guard.md'
+      - '.github/workflows/mgmt-review*'
+      - '.github/skills/analyze-ci-failures/**'
+      - '.github/aw/actions-lock.json'
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    name: CI workflow guards and cutover
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+          sparse-checkout: .github
+
+      - name: Run CI workflow guard and cutover tests
+        shell: pwsh
+        run: |
+          Import-Module Pester -MinimumVersion 5.3.3 -ErrorAction Stop
+          $result = Invoke-Pester -Path .github/workflows/ci-failure-analysis -Output Detailed -PassThru
+          if ($result.TotalCount -eq 0 -or $result.Result -ne 'Passed') {
+            throw 'CI workflow guard and cutover tests did not pass.'
+          }
+          # GitHub's wrapper otherwise propagates the last native test command's exit code.
+          exit 0

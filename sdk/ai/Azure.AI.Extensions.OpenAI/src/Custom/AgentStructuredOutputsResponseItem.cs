@@ -11,6 +11,7 @@ namespace Azure.AI.Extensions.OpenAI;
 
 [CodeGenType("StructuredOutputsOutputItem")]
 [CodeGenSuppress("Patch")]
+[CodeGenSuppress("_patch")]
 public partial class AgentStructuredOutputsResponseItem
 {
     /// <summary> Initializes a new instance of <see cref="AgentStructuredOutputsResponseItem"/>. </summary>
@@ -36,7 +37,7 @@ public partial class AgentStructuredOutputsResponseItem
     /// <param name="patch"></param>
     internal AgentStructuredOutputsResponseItem(ResponseItemKind @type, string id, AgentReference agentReference, string responseId, BinaryData output, in JsonPatch patch) : base(@type)
     {
-        _patch = patch;
+        Patch = patch;
         this.ApplyAgentAttribution(agentReference, responseId, null);
         Id = id;
         Output = output;

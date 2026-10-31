@@ -12,6 +12,7 @@ namespace Azure.Provisioning.Subscription
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } }
         public Azure.Provisioning.Subscription.BillingAccountPolicyProperties Properties { get { throw null; } }
+        public Azure.Provisioning.Primitives.ProvisionableResource Scope { get { throw null; } set { } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
         public static Azure.Provisioning.Subscription.BillingAccountPolicy FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }

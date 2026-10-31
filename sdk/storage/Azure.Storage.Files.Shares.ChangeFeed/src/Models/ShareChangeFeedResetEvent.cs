@@ -18,9 +18,9 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
     /// ordered position in the stream, or via <see cref="ShareChangeFeedResetException.ResetEvent"/>
     /// when the client is configured with <see cref="ShareChangeFeedResetPolicy.ThrowOnReset"/>.
     /// The base <see cref="ShareChangeFeedEvent.Reason"/> is always
-    /// <see cref="ShareChangeFeedReasonType.Reset"/>; the base <see cref="ShareChangeFeedEvent.Id"/>
+    /// <see cref="ShareChangeFeedReasonKind.Reset"/>; the base <see cref="ShareChangeFeedEvent.Id"/>
     /// holds the reset event GUID as its string form; the base
-    /// <see cref="ShareChangeFeedEvent.EventTime"/> holds the reset time.
+    /// <see cref="ShareChangeFeedEvent.EventOccurredOn"/> holds the reset time.
     /// </remarks>
     public class ShareChangeFeedResetEvent : ShareChangeFeedEvent
     {
@@ -51,8 +51,8 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
         /// "Customer-managed unplanned failover" or "Tracking State Reset"). This is the free-form
         /// <c>reason</c> field from the reset marker JSON; it is exposed here under a distinct
         /// name to avoid shadowing the inherited <see cref="ShareChangeFeedEvent.Reason"/> property
-        /// (which is the strongly-typed <see cref="ShareChangeFeedReasonType"/> and is always
-        /// <see cref="ShareChangeFeedReasonType.Reset"/> for a reset event).
+        /// (which is the strongly-typed <see cref="ShareChangeFeedReasonKind"/> and is always
+        /// <see cref="ShareChangeFeedReasonKind.Reset"/> for a reset event).
         /// </summary>
         public string ResetReason { get; internal set; }
 
@@ -75,9 +75,9 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
             // ordered stream indistinguishably from a normal event, except for Reason and the
             // reset-specific properties below.
             SchemaVersion = perEvent.SchemaVersion;
-            Reason = ShareChangeFeedReasonType.Reset;
+            Reason = ShareChangeFeedReasonKind.Reset;
             // Reset markers are not tied to a wire protocol (SMB/REST); leave Protocol at default.
-            EventTime = perEvent.ResetTimeUtc;
+            EventOccurredOn = perEvent.ResetTimeUtc;
             Id = perEvent.ResetId.ToString();
             // Reset events are not associated with a container version number.
             ContainerVersionNumber = 0;
@@ -95,13 +95,13 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
         /// </summary>
         internal ShareChangeFeedResetEvent()
         {
-            Reason = ShareChangeFeedReasonType.Reset;
+            Reason = ShareChangeFeedReasonKind.Reset;
         }
 
         /// <summary>
         /// Returns a human-readable string summarizing the reset event.
         /// </summary>
         public override string ToString()
-            => $"{EventTime}: Reset ({ResetReason ?? "Unknown"}) {AccountName}/{ContainerName} [{ResetId}]";
+            => $"{EventOccurredOn}: Reset ({ResetReason ?? "Unknown"}) {AccountName}/{ContainerName} [{ResetId}]";
     }
 }

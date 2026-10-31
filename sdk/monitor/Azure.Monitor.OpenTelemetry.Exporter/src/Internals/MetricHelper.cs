@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using Azure.Monitor.OpenTelemetry.Exporter.Internals.ConnectionString;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.CustomerSdkStats;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.MultiEndpoint;
@@ -56,8 +57,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         /// <remarks>
         /// Routing is per <see cref="MetricPoint"/>, not per <see cref="Metric"/>: one instrument's
         /// points carry different dimension values, so a single instrument can feed several endpoints.
+        /// Internal stats outside the selected meter use the configured default route.
         /// </remarks>
-        internal static void OtelToAzureMonitorMetricsMultiEndpoint(Batch<Metric> batch, AzureMonitorResource? resource, EndpointRouteBatch routeBatch)
+        internal static void OtelToAzureMonitorMetricsMultiEndpoint(
+            Batch<Metric> batch, AzureMonitorResource? resource, EndpointRouteBatch routeBatch,
+            ConnectionVars? defaultMetricRoute = null, string? routedMeterName = null)
         {
             int collected = 0;
             int rejected = 0;
@@ -67,12 +71,22 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                 // Reported once per instrument per export rather than once per point, so a reader at
                 // Informational learns what is being dropped and why without the per-point firehose.
                 var instrumentRejection = RoutingRejectionReason.None;
+                var useDefaultRoute = defaultMetricRoute != null && metric.MeterName != routedMeterName;
 
                 foreach (ref readonly var metricPoint in metric.GetMetricPoints())
                 {
                     try
                     {
-                        if (!TryGetMetricRoute(in metricPoint, out var instrumentationKey, out var ingestionEndpoint, out var isAad, out var cloudRole, out var rejection))
+                        string? instrumentationKey;
+                        string? ingestionEndpoint;
+                        string? cloudRole = null;
+                        bool isAad = false;
+                        if (useDefaultRoute)
+                        {
+                            instrumentationKey = defaultMetricRoute!.InstrumentationKey;
+                            ingestionEndpoint = defaultMetricRoute.IngestionEndpoint;
+                        }
+                        else if (!TryGetMetricRoute(in metricPoint, out instrumentationKey, out ingestionEndpoint, out isAad, out cloudRole, out var rejection))
                         {
                             // Routing dimensions are stamped upstream only on measurements meant to be
                             // routed. Host-derived instruments (runtime, process, HTTP client) carry
@@ -94,11 +108,14 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                             Data = new MonitorBase
                             {
                                 BaseType = "MetricData",
-                                BaseData = new MetricsData(Version, metric, metricPoint, consumeMultiEndpointAttributes: true)
+                                BaseData = new MetricsData(Version, metric, metricPoint, consumeMultiEndpointAttributes: !useDefaultRoute)
                             }
                         };
 
-                        telemetryItem.SetCloudRole(cloudRole);
+                        if (defaultMetricRoute == null)
+                        {
+                            telemetryItem.SetCloudRole(cloudRole!);
+                        }
 
                         routeBatch.GetOrAdd(ingestionEndpoint, isAad).TelemetryItems.Add(telemetryItem);
                         collected++;

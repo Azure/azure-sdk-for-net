@@ -16,6 +16,7 @@ namespace Azure.Provisioning.Compute
         private BicepValue<StorageAccountType> _storageAccountType;
         private DiskEncryptionSetParameters _diskEncryptionSet;
         private VirtualMachineDiskSecurityProfile _securityProfile;
+        private AdditionalDiskProperties _additionalDiskProperties;
 
         /// <summary> Creates a new VirtualMachineManagedDisk. </summary>
         public VirtualMachineManagedDisk()
@@ -67,6 +68,21 @@ namespace Azure.Provisioning.Compute
             }
         }
 
+        /// <summary> Gets or sets the AdditionalDiskProperties. </summary>
+        internal AdditionalDiskProperties AdditionalDiskProperties
+        {
+            get
+            {
+                Initialize();
+                return _additionalDiskProperties;
+            }
+            set
+            {
+                Initialize();
+                AssignOrReplace(ref _additionalDiskProperties, value);
+            }
+        }
+
         /// <summary> Gets or sets the Id. </summary>
         public BicepValue<ResourceIdentifier> DiskEncryptionSetId
         {
@@ -84,6 +100,23 @@ namespace Azure.Provisioning.Compute
             }
         }
 
+        /// <summary> Gets or sets the ManagedDiskProperties. </summary>
+        public VirtualMachineDiskProperties ManagedDiskProperties
+        {
+            get
+            {
+                return AdditionalDiskProperties is null ? default : AdditionalDiskProperties.ManagedDiskProperties;
+            }
+            set
+            {
+                if (AdditionalDiskProperties is null)
+                {
+                    AdditionalDiskProperties = new AdditionalDiskProperties();
+                }
+                AdditionalDiskProperties.ManagedDiskProperties = value;
+            }
+        }
+
         /// <summary> Define all the provisionable properties for VirtualMachineManagedDisk. </summary>
         protected override void DefineProvisionableProperties()
         {
@@ -91,6 +124,7 @@ namespace Azure.Provisioning.Compute
             _storageAccountType = DefineProperty<StorageAccountType>(nameof(StorageAccountType), new string[] { "storageAccountType" });
             _diskEncryptionSet = DefineModelProperty<DiskEncryptionSetParameters>(nameof(DiskEncryptionSet), new string[] { "diskEncryptionSet" });
             _securityProfile = DefineModelProperty<VirtualMachineDiskSecurityProfile>(nameof(SecurityProfile), new string[] { "securityProfile" });
+            _additionalDiskProperties = DefineModelProperty<AdditionalDiskProperties>(nameof(AdditionalDiskProperties), new string[] { "additionalDiskProperties" });
             DefineAdditionalProperties();
         }
 

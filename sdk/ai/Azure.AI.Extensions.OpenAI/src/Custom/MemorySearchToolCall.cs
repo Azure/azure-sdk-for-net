@@ -10,6 +10,7 @@ using OpenAI.Responses;
 namespace Azure.AI.Extensions.OpenAI;
 
 [CodeGenSuppress("Patch")]
+[CodeGenSuppress("_patch")]
 public partial class MemorySearchToolCall
 {
     /// <summary> Initializes a new instance of <see cref="MemorySearchToolCall"/> for deserialization. </summary>
@@ -30,7 +31,7 @@ public partial class MemorySearchToolCall
     /// <param name="patch"></param>
     internal MemorySearchToolCall(ResponseItemKind @type, string id, AgentReference agentReference, string responseId, ToolCallStatus status, IList<MemoryOutputItem> memories, in JsonPatch patch) : base(@type)
     {
-        _patch = patch;
+        Patch = patch;
         this.ApplyAgentAttribution(agentReference, responseId, null);
         Id = id;
         Status = status;
