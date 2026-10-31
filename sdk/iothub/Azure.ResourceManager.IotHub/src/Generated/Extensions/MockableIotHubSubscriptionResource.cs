@@ -45,12 +45,12 @@ namespace Azure.ResourceManager.IotHub.Mocking
             Pipeline,
             Diagnostics.ApplicationId,
             Endpoint,
-            "2026-10-01-preview",
+            "2026-11-01",
             resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
 
         private ClientDiagnostics ResourceProviderCommonClientDiagnostics => _resourceProviderCommonClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.IotHub.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ResourceProviderCommon ResourceProviderCommonRestClient => _resourceProviderCommonRestClient ??= new ResourceProviderCommon(ResourceProviderCommonClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-10-01-preview");
+        private ResourceProviderCommon ResourceProviderCommonRestClient => _resourceProviderCommonRestClient ??= new ResourceProviderCommon(ResourceProviderCommonClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-11-01");
 
         /// <summary>
         /// Get all the IoT hubs in a subscription.
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.IotHub.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-10-01-preview. </description>
+        /// <description> 2026-11-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.IotHub.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-10-01-preview. </description>
+        /// <description> 2026-11-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.IotHub.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-10-01-preview. </description>
+        /// <description> 2026-11-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.IotHub.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-10-01-preview. </description>
+        /// <description> 2026-11-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.IotHub.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-10-01-preview. </description>
+        /// <description> 2026-11-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.IotHub.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-10-01-preview. </description>
+        /// <description> 2026-11-01. </description>
         /// </item>
         /// </list>
         /// </summary>
