@@ -529,5 +529,171 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
         {
             return new CarbonEmissionAvailableDateRange(startOn, endOn, default);
         }
+
+        /// <summary>
+        /// Query filter parameter for billing account scoped carbon emissions queries. The billing account ID is derived from the URL scope parameter.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.BillingAccountItemDetailsReportQueryFilter"/>, <see cref="Models.BillingAccountMonthlySummaryReportQueryFilter"/>, <see cref="Models.BillingAccountOverallSummaryReportQueryFilter"/>, <see cref="Models.BillingAccountTopItemsMonthlySummaryReportQueryFilter"/>, and <see cref="Models.BillingAccountTopItemsSummaryReportQueryFilter"/>.
+        /// </summary>
+        /// <param name="reportType"> The ReportType requested for carbon emissions data. Required. Specifies how data is aggregated and displayed in the output, as explained in the ReportTypeEnum. </param>
+        /// <param name="dateRange"> The start and end dates for carbon emissions data. Required. For ItemDetailsReport and TopItemsSummaryReport, only one month of data is supported at a time, so start and end dates should be equal within DateRange (e.g., start: 2024-06-01 and end: 2024-06-01). </param>
+        /// <param name="subscriptionList"> List of subscription IDs for which carbon emissions data is requested. Optional. Each subscription ID should be in lowercase format. If not provided, data for all subscriptions under the billing account will be returned. </param>
+        /// <param name="resourceTypeList"> List of resource types for carbon emissions data. Optional. Each resource type should be specified in lowercase, following the format 'microsoft.{service}/{resourceType}', e.g., 'microsoft.storage/storageaccounts'. </param>
+        /// <param name="locationList"> List of locations(Azure Region Display Name) for carbon emissions data, with each location specified in lowercase (e.g., 'east us'). Optional. You can use the command 'az account list-locations -o table' to find Azure Region Display Names. </param>
+        /// <param name="carbonScopeList"> List of carbon emission scopes. Required. Accepts one or more values from EmissionScopeEnum (e.g., Scope1, Scope2, Scope3) in list form. The output will include the total emissions for the specified scopes. </param>
+        /// <returns> A new <see cref="Models.BillingAccountQueryFilter"/> instance for mocking. </returns>
+        public static BillingAccountQueryFilter BillingAccountQueryFilter(string reportType = default, CarbonEmissionQueryDateRange dateRange = default, IEnumerable<string> subscriptionList = default, IEnumerable<string> resourceTypeList = default, IEnumerable<string> locationList = default, IEnumerable<CarbonEmissionScope> carbonScopeList = default)
+        {
+            subscriptionList ??= new ChangeTrackingList<string>();
+            resourceTypeList ??= new ChangeTrackingList<string>();
+            locationList ??= new ChangeTrackingList<string>();
+            carbonScopeList ??= new ChangeTrackingList<CarbonEmissionScope>();
+
+            return new UnknownBillingAccountQueryFilter(
+                reportType is null ? default : new CarbonEmissionQueryReportType(reportType),
+                dateRange,
+                (subscriptionList ?? new ChangeTrackingList<string>()).ToList(),
+                (resourceTypeList ?? new ChangeTrackingList<string>()).ToList(),
+                (locationList ?? new ChangeTrackingList<string>()).ToList(),
+                (carbonScopeList ?? new ChangeTrackingList<CarbonEmissionScope>()).ToList(),
+                default);
+        }
+
+        /// <summary> Query filter parameter to configure OverallSummaryReport queries scoped to a billing account. </summary>
+        /// <param name="dateRange"> The start and end dates for carbon emissions data. Required. For ItemDetailsReport and TopItemsSummaryReport, only one month of data is supported at a time, so start and end dates should be equal within DateRange (e.g., start: 2024-06-01 and end: 2024-06-01). </param>
+        /// <param name="subscriptionList"> List of subscription IDs for which carbon emissions data is requested. Optional. Each subscription ID should be in lowercase format. If not provided, data for all subscriptions under the billing account will be returned. </param>
+        /// <param name="resourceTypeList"> List of resource types for carbon emissions data. Optional. Each resource type should be specified in lowercase, following the format 'microsoft.{service}/{resourceType}', e.g., 'microsoft.storage/storageaccounts'. </param>
+        /// <param name="locationList"> List of locations(Azure Region Display Name) for carbon emissions data, with each location specified in lowercase (e.g., 'east us'). Optional. You can use the command 'az account list-locations -o table' to find Azure Region Display Names. </param>
+        /// <param name="carbonScopeList"> List of carbon emission scopes. Required. Accepts one or more values from EmissionScopeEnum (e.g., Scope1, Scope2, Scope3) in list form. The output will include the total emissions for the specified scopes. </param>
+        /// <returns> A new <see cref="Models.BillingAccountOverallSummaryReportQueryFilter"/> instance for mocking. </returns>
+        public static BillingAccountOverallSummaryReportQueryFilter BillingAccountOverallSummaryReportQueryFilter(CarbonEmissionQueryDateRange dateRange = default, IEnumerable<string> subscriptionList = default, IEnumerable<string> resourceTypeList = default, IEnumerable<string> locationList = default, IEnumerable<CarbonEmissionScope> carbonScopeList = default)
+        {
+            subscriptionList ??= new ChangeTrackingList<string>();
+            resourceTypeList ??= new ChangeTrackingList<string>();
+            locationList ??= new ChangeTrackingList<string>();
+            carbonScopeList ??= new ChangeTrackingList<CarbonEmissionScope>();
+
+            return new BillingAccountOverallSummaryReportQueryFilter(
+                CarbonEmissionQueryReportType.OverallSummaryReport,
+                dateRange,
+                (subscriptionList ?? new ChangeTrackingList<string>()).ToList(),
+                (resourceTypeList ?? new ChangeTrackingList<string>()).ToList(),
+                (locationList ?? new ChangeTrackingList<string>()).ToList(),
+                (carbonScopeList ?? new ChangeTrackingList<CarbonEmissionScope>()).ToList(),
+                default);
+        }
+
+        /// <summary> Query filter parameter to configure MonthlySummaryReport queries scoped to a billing account. </summary>
+        /// <param name="dateRange"> The start and end dates for carbon emissions data. Required. For ItemDetailsReport and TopItemsSummaryReport, only one month of data is supported at a time, so start and end dates should be equal within DateRange (e.g., start: 2024-06-01 and end: 2024-06-01). </param>
+        /// <param name="subscriptionList"> List of subscription IDs for which carbon emissions data is requested. Optional. Each subscription ID should be in lowercase format. If not provided, data for all subscriptions under the billing account will be returned. </param>
+        /// <param name="resourceTypeList"> List of resource types for carbon emissions data. Optional. Each resource type should be specified in lowercase, following the format 'microsoft.{service}/{resourceType}', e.g., 'microsoft.storage/storageaccounts'. </param>
+        /// <param name="locationList"> List of locations(Azure Region Display Name) for carbon emissions data, with each location specified in lowercase (e.g., 'east us'). Optional. You can use the command 'az account list-locations -o table' to find Azure Region Display Names. </param>
+        /// <param name="carbonScopeList"> List of carbon emission scopes. Required. Accepts one or more values from EmissionScopeEnum (e.g., Scope1, Scope2, Scope3) in list form. The output will include the total emissions for the specified scopes. </param>
+        /// <returns> A new <see cref="Models.BillingAccountMonthlySummaryReportQueryFilter"/> instance for mocking. </returns>
+        public static BillingAccountMonthlySummaryReportQueryFilter BillingAccountMonthlySummaryReportQueryFilter(CarbonEmissionQueryDateRange dateRange = default, IEnumerable<string> subscriptionList = default, IEnumerable<string> resourceTypeList = default, IEnumerable<string> locationList = default, IEnumerable<CarbonEmissionScope> carbonScopeList = default)
+        {
+            subscriptionList ??= new ChangeTrackingList<string>();
+            resourceTypeList ??= new ChangeTrackingList<string>();
+            locationList ??= new ChangeTrackingList<string>();
+            carbonScopeList ??= new ChangeTrackingList<CarbonEmissionScope>();
+
+            return new BillingAccountMonthlySummaryReportQueryFilter(
+                CarbonEmissionQueryReportType.MonthlySummaryReport,
+                dateRange,
+                (subscriptionList ?? new ChangeTrackingList<string>()).ToList(),
+                (resourceTypeList ?? new ChangeTrackingList<string>()).ToList(),
+                (locationList ?? new ChangeTrackingList<string>()).ToList(),
+                (carbonScopeList ?? new ChangeTrackingList<CarbonEmissionScope>()).ToList(),
+                default);
+        }
+
+        /// <summary> Query filter parameter to configure TopItemsSummaryReport queries scoped to a billing account. </summary>
+        /// <param name="dateRange"> The start and end dates for carbon emissions data. Required. For ItemDetailsReport and TopItemsSummaryReport, only one month of data is supported at a time, so start and end dates should be equal within DateRange (e.g., start: 2024-06-01 and end: 2024-06-01). </param>
+        /// <param name="subscriptionList"> List of subscription IDs for which carbon emissions data is requested. Optional. Each subscription ID should be in lowercase format. If not provided, data for all subscriptions under the billing account will be returned. </param>
+        /// <param name="resourceTypeList"> List of resource types for carbon emissions data. Optional. Each resource type should be specified in lowercase, following the format 'microsoft.{service}/{resourceType}', e.g., 'microsoft.storage/storageaccounts'. </param>
+        /// <param name="locationList"> List of locations(Azure Region Display Name) for carbon emissions data, with each location specified in lowercase (e.g., 'east us'). Optional. You can use the command 'az account list-locations -o table' to find Azure Region Display Names. </param>
+        /// <param name="carbonScopeList"> List of carbon emission scopes. Required. Accepts one or more values from EmissionScopeEnum (e.g., Scope1, Scope2, Scope3) in list form. The output will include the total emissions for the specified scopes. </param>
+        /// <param name="categoryType"> Specifies the category type for which to retrieve top-emitting items. </param>
+        /// <param name="topItems"> The number of top items to return, based on emissions. This value must be between 1 and 10. </param>
+        /// <returns> A new <see cref="Models.BillingAccountTopItemsSummaryReportQueryFilter"/> instance for mocking. </returns>
+        public static BillingAccountTopItemsSummaryReportQueryFilter BillingAccountTopItemsSummaryReportQueryFilter(CarbonEmissionQueryDateRange dateRange = default, IEnumerable<string> subscriptionList = default, IEnumerable<string> resourceTypeList = default, IEnumerable<string> locationList = default, IEnumerable<CarbonEmissionScope> carbonScopeList = default, BillingAccountCategoryTypeEnum categoryType = default, int topItems = default)
+        {
+            subscriptionList ??= new ChangeTrackingList<string>();
+            resourceTypeList ??= new ChangeTrackingList<string>();
+            locationList ??= new ChangeTrackingList<string>();
+            carbonScopeList ??= new ChangeTrackingList<CarbonEmissionScope>();
+
+            return new BillingAccountTopItemsSummaryReportQueryFilter(
+                CarbonEmissionQueryReportType.TopItemsSummaryReport,
+                dateRange,
+                (subscriptionList ?? new ChangeTrackingList<string>()).ToList(),
+                (resourceTypeList ?? new ChangeTrackingList<string>()).ToList(),
+                (locationList ?? new ChangeTrackingList<string>()).ToList(),
+                (carbonScopeList ?? new ChangeTrackingList<CarbonEmissionScope>()).ToList(),
+                default,
+                categoryType,
+                topItems);
+        }
+
+        /// <summary> Query filter parameter to configure TopItemsMonthlySummaryReport queries scoped to a billing account. </summary>
+        /// <param name="dateRange"> The start and end dates for carbon emissions data. Required. For ItemDetailsReport and TopItemsSummaryReport, only one month of data is supported at a time, so start and end dates should be equal within DateRange (e.g., start: 2024-06-01 and end: 2024-06-01). </param>
+        /// <param name="subscriptionList"> List of subscription IDs for which carbon emissions data is requested. Optional. Each subscription ID should be in lowercase format. If not provided, data for all subscriptions under the billing account will be returned. </param>
+        /// <param name="resourceTypeList"> List of resource types for carbon emissions data. Optional. Each resource type should be specified in lowercase, following the format 'microsoft.{service}/{resourceType}', e.g., 'microsoft.storage/storageaccounts'. </param>
+        /// <param name="locationList"> List of locations(Azure Region Display Name) for carbon emissions data, with each location specified in lowercase (e.g., 'east us'). Optional. You can use the command 'az account list-locations -o table' to find Azure Region Display Names. </param>
+        /// <param name="carbonScopeList"> List of carbon emission scopes. Required. Accepts one or more values from EmissionScopeEnum (e.g., Scope1, Scope2, Scope3) in list form. The output will include the total emissions for the specified scopes. </param>
+        /// <param name="categoryType"> Specifies the category type to retrieve top-emitting items, aggregated by month. </param>
+        /// <param name="topItems"> The number of top items to return, based on emissions. Must be between 1 and 10. </param>
+        /// <returns> A new <see cref="Models.BillingAccountTopItemsMonthlySummaryReportQueryFilter"/> instance for mocking. </returns>
+        public static BillingAccountTopItemsMonthlySummaryReportQueryFilter BillingAccountTopItemsMonthlySummaryReportQueryFilter(CarbonEmissionQueryDateRange dateRange = default, IEnumerable<string> subscriptionList = default, IEnumerable<string> resourceTypeList = default, IEnumerable<string> locationList = default, IEnumerable<CarbonEmissionScope> carbonScopeList = default, BillingAccountCategoryTypeEnum categoryType = default, int topItems = default)
+        {
+            subscriptionList ??= new ChangeTrackingList<string>();
+            resourceTypeList ??= new ChangeTrackingList<string>();
+            locationList ??= new ChangeTrackingList<string>();
+            carbonScopeList ??= new ChangeTrackingList<CarbonEmissionScope>();
+
+            return new BillingAccountTopItemsMonthlySummaryReportQueryFilter(
+                CarbonEmissionQueryReportType.TopItemsMonthlySummaryReport,
+                dateRange,
+                (subscriptionList ?? new ChangeTrackingList<string>()).ToList(),
+                (resourceTypeList ?? new ChangeTrackingList<string>()).ToList(),
+                (locationList ?? new ChangeTrackingList<string>()).ToList(),
+                (carbonScopeList ?? new ChangeTrackingList<CarbonEmissionScope>()).ToList(),
+                default,
+                categoryType,
+                topItems);
+        }
+
+        /// <summary> Query filter parameter to configure ItemDetailsReport queries scoped to a billing account. </summary>
+        /// <param name="dateRange"> The start and end dates for carbon emissions data. Required. For ItemDetailsReport and TopItemsSummaryReport, only one month of data is supported at a time, so start and end dates should be equal within DateRange (e.g., start: 2024-06-01 and end: 2024-06-01). </param>
+        /// <param name="subscriptionList"> List of subscription IDs for which carbon emissions data is requested. Optional. Each subscription ID should be in lowercase format. If not provided, data for all subscriptions under the billing account will be returned. </param>
+        /// <param name="resourceTypeList"> List of resource types for carbon emissions data. Optional. Each resource type should be specified in lowercase, following the format 'microsoft.{service}/{resourceType}', e.g., 'microsoft.storage/storageaccounts'. </param>
+        /// <param name="locationList"> List of locations(Azure Region Display Name) for carbon emissions data, with each location specified in lowercase (e.g., 'east us'). Optional. You can use the command 'az account list-locations -o table' to find Azure Region Display Names. </param>
+        /// <param name="carbonScopeList"> List of carbon emission scopes. Required. Accepts one or more values from EmissionScopeEnum (e.g., Scope1, Scope2, Scope3) in list form. The output will include the total emissions for the specified scopes. </param>
+        /// <param name="categoryType"> Specifies the category type for item details. </param>
+        /// <param name="pageSize"> Number of items to return in one request, max value is 5000. </param>
+        /// <param name="skipToken"> Pagination token for fetching the next page of data. Optional. </param>
+        /// <param name="orderBy"> The column name to order the results by. See supported values in BillingAccountOrderByColumnEnum. </param>
+        /// <param name="sortDirection"> Sort direction. </param>
+        /// <returns> A new <see cref="Models.BillingAccountItemDetailsReportQueryFilter"/> instance for mocking. </returns>
+        public static BillingAccountItemDetailsReportQueryFilter BillingAccountItemDetailsReportQueryFilter(CarbonEmissionQueryDateRange dateRange = default, IEnumerable<string> subscriptionList = default, IEnumerable<string> resourceTypeList = default, IEnumerable<string> locationList = default, IEnumerable<CarbonEmissionScope> carbonScopeList = default, BillingAccountCategoryTypeEnum categoryType = default, int pageSize = default, string skipToken = default, BillingAccountOrderByColumnEnum? orderBy = default, CarbonEmissionQuerySortDirection? sortDirection = default)
+        {
+            subscriptionList ??= new ChangeTrackingList<string>();
+            resourceTypeList ??= new ChangeTrackingList<string>();
+            locationList ??= new ChangeTrackingList<string>();
+            carbonScopeList ??= new ChangeTrackingList<CarbonEmissionScope>();
+
+            return new BillingAccountItemDetailsReportQueryFilter(
+                CarbonEmissionQueryReportType.ItemDetailsReport,
+                dateRange,
+                (subscriptionList ?? new ChangeTrackingList<string>()).ToList(),
+                (resourceTypeList ?? new ChangeTrackingList<string>()).ToList(),
+                (locationList ?? new ChangeTrackingList<string>()).ToList(),
+                (carbonScopeList ?? new ChangeTrackingList<CarbonEmissionScope>()).ToList(),
+                default,
+                categoryType,
+                pageSize,
+                skipToken,
+                orderBy,
+                sortDirection);
+        }
     }
 }
