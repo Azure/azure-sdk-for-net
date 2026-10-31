@@ -186,7 +186,9 @@ function Update-MgmtPackageChangelog {
         [object]$generatedPackage
     )
 
-    if ($generatedPackage.result -ne "succeeded" -or -not $generatedPackage.packageName.StartsWith("Azure.ResourceManager.")) {
+    if ([string]::IsNullOrWhiteSpace($generatedPackage.packageName) -or
+        [string]::IsNullOrWhiteSpace($generatedPackage.packageFolder) -or
+        -not $generatedPackage.packageName.StartsWith("Azure.ResourceManager.")) {
         return
     }
 
