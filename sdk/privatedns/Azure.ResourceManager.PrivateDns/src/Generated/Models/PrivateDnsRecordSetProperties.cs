@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.PrivateDns;
 
 namespace Azure.ResourceManager.PrivateDns.Models
@@ -42,8 +43,10 @@ namespace Azure.ResourceManager.PrivateDns.Models
         /// <param name="privateDnsSoaRecord"> The SOA record in the record set. </param>
         /// <param name="privateDnsSrvRecords"> The list of SRV records in the record set. </param>
         /// <param name="privateDnsTxtRecords"> The list of TXT records in the record set. </param>
+        /// <param name="trafficManagementProfile"> A reference to an azure private traffic manager profile resource from where the record set value is taken. Cannot be combined with aRecords, aaaaRecords, or cnameRecord. </param>
+        /// <param name="provisioningState"> The provisioning state of the record set. This is a read-only property and any attempt to set this value will be ignored. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PrivateDnsRecordSetProperties(IDictionary<string, string> metadata, long? ttlInSeconds, string fqdn, bool? isAutoRegistered, IList<PrivateDnsARecordInfo> privateDnsARecords, IList<PrivateDnsAaaaRecordInfo> privateDnsAaaaRecords, PrivateDnsCnameRecordInfo privateDnsCnameRecord, IList<PrivateDnsMXRecordInfo> privateDnsMXRecords, IList<PrivateDnsPtrRecordInfo> privateDnsPtrRecords, PrivateDnsSoaRecordInfo privateDnsSoaRecord, IList<PrivateDnsSrvRecordInfo> privateDnsSrvRecords, IList<PrivateDnsTxtRecordInfo> privateDnsTxtRecords, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PrivateDnsRecordSetProperties(IDictionary<string, string> metadata, long? ttlInSeconds, string fqdn, bool? isAutoRegistered, IList<PrivateDnsARecordInfo> privateDnsARecords, IList<PrivateDnsAaaaRecordInfo> privateDnsAaaaRecords, PrivateDnsCnameRecordInfo privateDnsCnameRecord, IList<PrivateDnsMXRecordInfo> privateDnsMXRecords, IList<PrivateDnsPtrRecordInfo> privateDnsPtrRecords, PrivateDnsSoaRecordInfo privateDnsSoaRecord, IList<PrivateDnsSrvRecordInfo> privateDnsSrvRecords, IList<PrivateDnsTxtRecordInfo> privateDnsTxtRecords, PrivateDnsSubResourceInfo trafficManagementProfile, PrivateDnsProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Metadata = metadata;
             TtlInSeconds = ttlInSeconds;
@@ -57,6 +60,8 @@ namespace Azure.ResourceManager.PrivateDns.Models
             PrivateDnsSoaRecord = privateDnsSoaRecord;
             PrivateDnsSrvRecords = privateDnsSrvRecords;
             PrivateDnsTxtRecords = privateDnsTxtRecords;
+            TrafficManagementProfile = trafficManagementProfile;
+            ProvisioningState = provisioningState;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -108,6 +113,14 @@ namespace Azure.ResourceManager.PrivateDns.Models
         [WirePath("txtRecords")]
         public IList<PrivateDnsTxtRecordInfo> PrivateDnsTxtRecords { get; }
 
+        /// <summary> A reference to an azure private traffic manager profile resource from where the record set value is taken. Cannot be combined with aRecords, aaaaRecords, or cnameRecord. </summary>
+        [WirePath("trafficManagementProfile")]
+        internal PrivateDnsSubResourceInfo TrafficManagementProfile { get; set; }
+
+        /// <summary> The provisioning state of the record set. This is a read-only property and any attempt to set this value will be ignored. </summary>
+        [WirePath("provisioningState")]
+        public PrivateDnsProvisioningState? ProvisioningState { get; }
+
         /// <summary> The canonical name for this CNAME record. </summary>
         [WirePath("cnameRecord.cname")]
         public string Cname
@@ -123,6 +136,24 @@ namespace Azure.ResourceManager.PrivateDns.Models
                     PrivateDnsCnameRecord = new PrivateDnsCnameRecordInfo();
                 }
                 PrivateDnsCnameRecord.Cname = value;
+            }
+        }
+
+        /// <summary> Resource ID. </summary>
+        [WirePath("trafficManagementProfile.id")]
+        public ResourceIdentifier TrafficManagementProfileId
+        {
+            get
+            {
+                return TrafficManagementProfile is null ? default : TrafficManagementProfile.Id;
+            }
+            set
+            {
+                if (TrafficManagementProfile is null)
+                {
+                    TrafficManagementProfile = new PrivateDnsSubResourceInfo();
+                }
+                TrafficManagementProfile.Id = value;
             }
         }
     }
