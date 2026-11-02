@@ -93,7 +93,7 @@ namespace Azure.Storage.Files.Shares.Models
             return new ShareSmbSettingsEncryptionInTransit(@required);
         }
 
-        /// <summary> Settings for SMB protocol. </summary>
+        /// <summary> Settings for NFS protocol. </summary>
         /// <param name="encryptionInTransit"> Enable or disable encryption in transit. </param>
         /// <returns> A new <see cref="Models.ShareNfsSettings"/> instance for mocking. </returns>
         public static ShareNfsSettings ShareNfsSettings(ShareNfsSettingsEncryptionInTransit encryptionInTransit = default)

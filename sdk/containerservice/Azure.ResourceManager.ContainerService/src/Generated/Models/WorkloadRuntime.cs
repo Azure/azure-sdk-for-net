@@ -19,6 +19,8 @@ namespace Azure.ResourceManager.ContainerService.Models
         private const string OciContainerValue = "OCIContainer";
         /// <summary> Nodes will use Krustlet to run WASM workloads using the WASI provider (Preview). </summary>
         private const string WasmWasiValue = "WasmWasi";
+        /// <summary> Nodes can use (Kata + Cloud Hypervisor + Hyper-V) to enable Nested VM-based pods (Preview). Due to the use Hyper-V, AKS node OS itself is a nested VM (the root OS) of Hyper-V. Thus it can only be used with VM series that support Nested Virtualization such as Dv3 series. This naming convention will be deprecated in future releases in favor of KataVmIsolation. </summary>
+        private const string KataMshvVmIsolationValue = "KataMshvVmIsolation";
         /// <summary> Nodes can use (Kata + Cloud Hypervisor + Hyper-V) to enable Nested VM-based pods. Due to the use Hyper-V, AKS node OS itself is a nested VM (the root OS) of Hyper-V. Thus it can only be used with VM series that support Nested Virtualization such as Dv3 series. </summary>
         private const string KataVmIsolationValue = "KataVmIsolation";
 
@@ -37,6 +39,9 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> Nodes will use Krustlet to run WASM workloads using the WASI provider (Preview). </summary>
         public static WorkloadRuntime WasmWasi { get; } = new WorkloadRuntime(WasmWasiValue);
+
+        /// <summary> Nodes can use (Kata + Cloud Hypervisor + Hyper-V) to enable Nested VM-based pods (Preview). Due to the use Hyper-V, AKS node OS itself is a nested VM (the root OS) of Hyper-V. Thus it can only be used with VM series that support Nested Virtualization such as Dv3 series. This naming convention will be deprecated in future releases in favor of KataVmIsolation. </summary>
+        public static WorkloadRuntime KataMshvVmIsolation { get; } = new WorkloadRuntime(KataMshvVmIsolationValue);
 
         /// <summary> Nodes can use (Kata + Cloud Hypervisor + Hyper-V) to enable Nested VM-based pods. Due to the use Hyper-V, AKS node OS itself is a nested VM (the root OS) of Hyper-V. Thus it can only be used with VM series that support Nested Virtualization such as Dv3 series. </summary>
         public static WorkloadRuntime KataVmIsolation { get; } = new WorkloadRuntime(KataVmIsolationValue);

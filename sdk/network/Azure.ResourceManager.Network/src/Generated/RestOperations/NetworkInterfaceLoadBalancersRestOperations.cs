@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        internal HttpMessage CreateGetAllRequest(Guid subscriptionId, string resourceGroupName, string networkInterfaceName, RequestContext context)
+        internal HttpMessage CreateGetNetworkInterfaceLoadBalancersRequest(Guid subscriptionId, string resourceGroupName, string networkInterfaceName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Network
             return message;
         }
 
-        internal HttpMessage CreateNextGetAllRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string networkInterfaceName, RequestContext context)
+        internal HttpMessage CreateNextGetNetworkInterfaceLoadBalancersRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string networkInterfaceName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)

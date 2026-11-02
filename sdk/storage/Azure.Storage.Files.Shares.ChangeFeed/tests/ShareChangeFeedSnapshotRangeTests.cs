@@ -126,13 +126,13 @@ namespace Azure.Storage.Files.Shares.ChangeFeed.Tests
             List<ShareChangeFeedEvent> events = new List<ShareChangeFeedEvent>
             {
                 ShareChangeFeedModelFactory.ShareChangeFeedEvent(
-                    reason: ShareChangeFeedReasonType.RestCreate, eventTime: Window.AddSeconds(2),
+                    reason: ShareChangeFeedReasonKind.RestCreate, eventTime: Window.AddSeconds(2),
                     containerVersionNumber: 0, id: "create-snapshotBaselineDir"),
                 ShareChangeFeedModelFactory.ShareChangeFeedEvent(
-                    reason: ShareChangeFeedReasonType.RestCreate, eventTime: Window.AddSeconds(2.1),
+                    reason: ShareChangeFeedReasonKind.RestCreate, eventTime: Window.AddSeconds(2.1),
                     containerVersionNumber: 0, id: "create-baseline.txt"),
                 ShareChangeFeedModelFactory.ShareChangeFeedEvent(
-                    reason: ShareChangeFeedReasonType.RestDelete, eventTime: Window.AddSeconds(9),
+                    reason: ShareChangeFeedReasonKind.RestDelete, eventTime: Window.AddSeconds(9),
                     containerVersionNumber: 1, id: "delete-baseline.txt"),
             };
 

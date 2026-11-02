@@ -40,13 +40,18 @@ namespace Azure.Provisioning.AppService
             }
         }
 
-        /// <summary> Gets the Name. </summary>
+        /// <summary> Gets or sets the Name. </summary>
         public BicepValue<string> Name
         {
             get
             {
                 Initialize();
                 return _name;
+            }
+            set
+            {
+                Initialize();
+                _name.Assign(value);
             }
         }
 
@@ -179,7 +184,7 @@ namespace Azure.Provisioning.AppService
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _properties = DefineModelProperty<MSDeployStatusProperties>(nameof(Properties), new string[] { "properties" });
             _kind = DefineProperty<string>(nameof(Kind), new string[] { "kind" });
-            _parent = DefineResource<SiteSlotInstance>(nameof(Parent), new string[] { "parent" }, isRequired: true);
+            _parent = DefineResource<SiteSlotInstance>(nameof(Parent), new string[] { "parent" });
             DefineAdditionalProperties();
         }
 

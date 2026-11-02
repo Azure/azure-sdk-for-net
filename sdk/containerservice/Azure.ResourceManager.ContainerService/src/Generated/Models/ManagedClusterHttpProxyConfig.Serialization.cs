@@ -99,6 +99,21 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
                 writer.WriteEndArray();
             }
+            if (options.Format != "W" && Optional.IsCollectionDefined(EffectiveNoProxy))
+            {
+                writer.WritePropertyName("effectiveNoProxy"u8);
+                writer.WriteStartArray();
+                foreach (string item in EffectiveNoProxy)
+                {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
             if (Optional.IsDefined(TrustedCA))
             {
                 writer.WritePropertyName("trustedCa"u8);
@@ -154,6 +169,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             string httpProxy = default;
             string httpsProxy = default;
             IList<string> noProxy = default;
+            IReadOnlyList<string> effectiveNoProxy = default;
             string trustedCA = default;
             bool? isHttpProxyEnabled = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -190,6 +206,27 @@ namespace Azure.ResourceManager.ContainerService.Models
                     noProxy = array;
                     continue;
                 }
+                if (prop.NameEquals("effectiveNoProxy"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
+                    }
+                    effectiveNoProxy = array;
+                    continue;
+                }
                 if (prop.NameEquals("trustedCa"u8))
                 {
                     trustedCA = prop.Value.GetString();
@@ -213,6 +250,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 httpProxy,
                 httpsProxy,
                 noProxy ?? new ChangeTrackingList<string>(),
+                effectiveNoProxy ?? new ChangeTrackingList<string>(),
                 trustedCA,
                 isHttpProxyEnabled,
                 additionalBinaryDataProperties);

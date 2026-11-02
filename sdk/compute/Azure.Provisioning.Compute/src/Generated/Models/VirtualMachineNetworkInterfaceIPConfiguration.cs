@@ -103,6 +103,23 @@ namespace Azure.Provisioning.Compute
             }
         }
 
+        /// <summary> Gets or sets the PrivateIPAddressPrefixLength. </summary>
+        public BicepValue<int> PrivateIPAddressPrefixLength
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PrivateIPAddressPrefixLength;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VirtualMachineNetworkInterfaceIPConfigurationProperties();
+                }
+                Properties.PrivateIPAddressPrefixLength = value;
+            }
+        }
+
         /// <summary> Gets or sets the ApplicationSecurityGroupResources. </summary>
         public BicepList<ComputeWriteableSubResourceData> ApplicationSecurityGroupResources
         {

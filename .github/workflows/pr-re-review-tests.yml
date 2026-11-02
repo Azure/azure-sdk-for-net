@@ -1,0 +1,37 @@
+name: PR Re-Review Tests
+
+on:
+  pull_request:
+    paths:
+      - '.github/workflows/pr-re-review*'
+      - '.github/workflows/pr-re-review/**'
+      - '.github/workflows/test/**'
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    name: PR re-review guards and routing
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+          sparse-checkout: .github
+
+      - name: Run PR re-review guard and routing tests
+        shell: pwsh
+        run: |
+          Import-Module Pester -MinimumVersion 5.3.3 -ErrorAction Stop
+          $result = Invoke-Pester -Path .github/workflows/pr-re-review, .github/workflows/test -Output Detailed -PassThru
+          if ($result.TotalCount -eq 0 -or $result.Result -ne 'Passed') {
+            throw 'PR re-review guard and routing tests did not pass.'
+          }
+          # GitHub's wrapper otherwise propagates the last native test command's exit code.
+          exit 0
+
+      - name: Run unresolve-review-thread job tests
+        run: node --test .github/workflows/test/pr-re-review-unresolve-thread.test.cjs

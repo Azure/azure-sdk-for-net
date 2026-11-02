@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Network
         {
             TryGetApiVersion(ResourceType, out string applicationGatewayWafDynamicManifestApiVersion);
             _applicationGatewayWafDynamicManifestsDefaultClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, Diagnostics);
-            _applicationGatewayWafDynamicManifestsDefaultRestClient = new ApplicationGatewayWafDynamicManifestsDefault(_applicationGatewayWafDynamicManifestsDefaultClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, applicationGatewayWafDynamicManifestApiVersion ?? "2026-01-01");
+            _applicationGatewayWafDynamicManifestsDefaultRestClient = new ApplicationGatewayWafDynamicManifestsDefault(_applicationGatewayWafDynamicManifestsDefaultClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, applicationGatewayWafDynamicManifestApiVersion ?? "2026-03-01");
             ValidateResourceId(id);
         }
 
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Generate the resource identifier for this resource. </summary>
         /// <param name="subscriptionId"> The subscriptionId. </param>
         /// <param name="location"> The location. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string location)
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, AzureLocation location)
         {
             string resourceId = $"/subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/applicationGatewayWafDynamicManifests/dafault";
             return new ResourceIdentifier(resourceId);
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>

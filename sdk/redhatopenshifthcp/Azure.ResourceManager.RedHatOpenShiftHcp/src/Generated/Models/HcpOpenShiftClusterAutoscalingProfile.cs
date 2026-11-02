@@ -26,11 +26,11 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
 
         /// <summary> Initializes a new instance of <see cref="HcpOpenShiftClusterAutoscalingProfile"/>. </summary>
         /// <param name="maxNodesTotal">
-        /// maxNodesTotal is the maximum allowable number of nodes for the Autoscaler scale out to be operational.
-        /// The autoscaler will not grow the cluster beyond this number. If omitted, the autoscaler will not have a maximum limit.
+        /// maxNodesTotal is the maximum allowable number of nodes. The autoscaler will not grow the cluster beyond this number.
+        /// If omitted, the autoscaler will not have a maximum limit.
         /// </param>
         /// <param name="maxPodGracePeriodSeconds">
-        /// maxPodGracePeriod is the maximum seconds to wait for graceful pod termination before scaling down a NodePool.
+        /// maxPodGracePeriodSeconds is the maximum amount of time in seconds to wait for graceful pod termination before scaling down a NodePool.
         /// The default is 600 seconds.
         /// </param>
         /// <param name="maxNodeProvisionTimeSeconds">
@@ -54,13 +54,13 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
         }
 
         /// <summary>
-        /// maxNodesTotal is the maximum allowable number of nodes for the Autoscaler scale out to be operational.
-        /// The autoscaler will not grow the cluster beyond this number. If omitted, the autoscaler will not have a maximum limit.
+        /// maxNodesTotal is the maximum allowable number of nodes. The autoscaler will not grow the cluster beyond this number.
+        /// If omitted, the autoscaler will not have a maximum limit.
         /// </summary>
         public int? MaxNodesTotal { get; set; }
 
         /// <summary>
-        /// maxPodGracePeriod is the maximum seconds to wait for graceful pod termination before scaling down a NodePool.
+        /// maxPodGracePeriodSeconds is the maximum amount of time in seconds to wait for graceful pod termination before scaling down a NodePool.
         /// The default is 600 seconds.
         /// </summary>
         public int? MaxPodGracePeriodSeconds { get; set; }

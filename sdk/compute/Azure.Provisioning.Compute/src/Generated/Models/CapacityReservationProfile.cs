@@ -12,9 +12,10 @@ using Azure.Provisioning.Primitives;
 namespace Azure.Provisioning.Compute
 {
     /// <summary> The parameters of a capacity reservation Profile. </summary>
-    internal partial class CapacityReservationProfile : ProvisionableConstruct
+    public partial class CapacityReservationProfile : ProvisionableConstruct
     {
         private ComputeWriteableSubResourceData _capacityReservationGroup;
+        private BicepValue<bool> _disableCapacityReservationAssignment;
 
         /// <summary> Creates a new CapacityReservationProfile. </summary>
         public CapacityReservationProfile()
@@ -33,6 +34,21 @@ namespace Azure.Provisioning.Compute
             {
                 Initialize();
                 AssignOrReplace(ref _capacityReservationGroup, value);
+            }
+        }
+
+        /// <summary> Gets or sets the DisableCapacityReservationAssignment. </summary>
+        public BicepValue<bool> DisableCapacityReservationAssignment
+        {
+            get
+            {
+                Initialize();
+                return _disableCapacityReservationAssignment;
+            }
+            set
+            {
+                Initialize();
+                _disableCapacityReservationAssignment.Assign(value);
             }
         }
 
@@ -58,6 +74,7 @@ namespace Azure.Provisioning.Compute
         {
             base.DefineProvisionableProperties();
             _capacityReservationGroup = DefineModelProperty<ComputeWriteableSubResourceData>(nameof(CapacityReservationGroup), new string[] { "capacityReservationGroup" });
+            _disableCapacityReservationAssignment = DefineProperty<bool>(nameof(DisableCapacityReservationAssignment), new string[] { "disableCapacityReservationAssignment" });
             DefineAdditionalProperties();
         }
 

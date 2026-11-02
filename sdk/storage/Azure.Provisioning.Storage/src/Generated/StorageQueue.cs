@@ -132,7 +132,7 @@ namespace Azure.Provisioning.Storage
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _queueProperties = DefineModelProperty<QueueProperties>(nameof(QueueProperties), new string[] { "properties" });
-            _parent = DefineResource<QueueService>(nameof(Parent), new string[] { "parent" }, isRequired: true);
+            _parent = DefineResource<QueueService>(nameof(Parent), new string[] { "parent" });
             DefineAdditionalProperties();
         }
 
