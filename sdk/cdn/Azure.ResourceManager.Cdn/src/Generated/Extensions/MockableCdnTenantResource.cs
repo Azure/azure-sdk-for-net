@@ -40,11 +40,11 @@ namespace Azure.ResourceManager.Cdn.Mocking
 
         private ClientDiagnostics CdnClientClientDiagnostics => _cdnClientClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Cdn.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private CdnClient CdnClientRestClient => _cdnClientRestClient ??= new CdnClient(CdnClientClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-09-01-preview");
+        private CdnClient CdnClientRestClient => _cdnClientRestClient ??= new CdnClient(CdnClientClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-10-01");
 
         private ClientDiagnostics EdgeNodesClientDiagnostics => _edgeNodesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Cdn.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private EdgeNodes EdgeNodesRestClient => _edgeNodesRestClient ??= new EdgeNodes(EdgeNodesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-09-01-preview");
+        private EdgeNodes EdgeNodesRestClient => _edgeNodesRestClient ??= new EdgeNodes(EdgeNodesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-10-01");
 
         /// <summary>
         /// Check the availability of a resource name. This is needed for resources where name is globally unique, such as a CDN endpoint.
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Cdn.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Cdn.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.Cdn.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.Cdn.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// </list>
         /// </summary>

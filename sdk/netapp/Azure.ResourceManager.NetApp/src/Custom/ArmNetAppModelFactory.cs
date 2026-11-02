@@ -663,5 +663,251 @@ namespace Azure.ResourceManager.NetApp.Models
             var properties = new BackupProperties(backupId, createdOn, snapshotCreationOn, completionOn, provisioningState, size, label, backupType, failureReason, volumeResourceId, useExistingSnapshot, snapshotName, backupPolicyResourceId, isLargeVolume, null);
             return new NetAppBackupData(id, name, resourceType, systemData, properties, additionalBinaryDataProperties: null);
         }
+
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static ChangeZoneContent ChangeZoneContent(string newZone = null)
+        {
+            return new ChangeZoneContent(newZone: newZone);
+        }
+
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static CheckElasticResourceAvailabilityResult CheckElasticResourceAvailabilityResult(CheckElasticResourceAvailabilityStatus? isAvailable = default, CheckElasticResourceAvailabilityReason? reason = default, string message = null)
+        {
+            return new CheckElasticResourceAvailabilityResult(isAvailable: isAvailable, reason: reason, message: message);
+        }
+
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static CheckElasticVolumeFilePathAvailabilityContent CheckElasticVolumeFilePathAvailabilityContent(string filePath = null)
+        {
+            return new CheckElasticVolumeFilePathAvailabilityContent(filePath: filePath);
+        }
+
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static ElasticAccountProperties ElasticAccountProperties(NetAppProvisioningState? provisioningState = default, ElasticEncryption encryption = null)
+        {
+            return new ElasticAccountProperties(provisioningState: provisioningState, encryption: encryption);
+        }
+
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static ElasticEncryption ElasticEncryption(NetAppKeySource? keySource = default, ElasticKeyVaultProperties keyVaultProperties = null, ElasticEncryptionIdentity identity = null)
+        {
+            return new ElasticEncryption(keySource: keySource, keyVaultProperties: keyVaultProperties, identity: identity);
+        }
+
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static ElasticKeyVaultProperties ElasticKeyVaultProperties(Uri keyVaultUri = null, string keyName = null, ResourceIdentifier keyVaultResourceId = null, ElasticKeyVaultStatus? status = default)
+        {
+            return new ElasticKeyVaultProperties(keyVaultUri: keyVaultUri, keyName: keyName, keyVaultResourceId: keyVaultResourceId, status: status);
+        }
+
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static ElasticEncryptionIdentity ElasticEncryptionIdentity(string principalId = null, ResourceIdentifier userAssignedIdentity = null, string federatedClientId = null)
+        {
+            return new ElasticEncryptionIdentity(principalId: principalId, userAssignedIdentity: userAssignedIdentity, federatedClientId: federatedClientId);
+        }
+
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static ElasticEncryptionConfiguration ElasticEncryptionConfiguration(ElasticPoolEncryptionKeySource elasticPoolEncryptionKeySource = default, ResourceIdentifier keyVaultPrivateEndpointResourceId = null)
+        {
+            return new ElasticEncryptionConfiguration(elasticPoolEncryptionKeySource: elasticPoolEncryptionKeySource, keyVaultPrivateEndpointResourceId: keyVaultPrivateEndpointResourceId);
+        }
+
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static ElasticCapacityPoolProperties ElasticCapacityPoolProperties(long size = 0, ElasticServiceLevel serviceLevel = default, NetAppProvisioningState? provisioningState = default, ElasticEncryptionConfiguration encryption = null, double? totalThroughputMibps = default, ResourceIdentifier subnetResourceId = null, string currentZone = null, ElasticResourceAvailabilityStatus? availabilityStatus = default, ResourceIdentifier activeDirectoryConfigResourceId = null)
+        {
+            return new ElasticCapacityPoolProperties(size: size, serviceLevel: serviceLevel, provisioningState: provisioningState, encryption: encryption, totalThroughputMibps: totalThroughputMibps, subnetResourceId: subnetResourceId, currentZone: currentZone, availabilityStatus: availabilityStatus, activeDirectoryConfigResourceId: activeDirectoryConfigResourceId);
+        }
+
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static ElasticExportPolicyRule ElasticExportPolicyRule(int? ruleIndex = default, ElasticUnixAccessRule? unixAccessRule = default, ElasticNfsv3Access? nfsv3 = default, ElasticNfsv4Access? nfsv4 = default, IEnumerable<string> allowedClients = null, ElasticRootAccess? rootAccess = default)
+        {
+            return new ElasticExportPolicyRule(ruleIndex: ruleIndex, unixAccessRule: unixAccessRule, nfsv3: nfsv3, nfsv4: nfsv4, allowedClients: allowedClients?.ToList(), rootAccess: rootAccess);
+        }
+
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static ElasticMountTargetProperties ElasticMountTargetProperties(IPAddress ipAddress = null, string smbServerFqdn = null)
+        {
+            return new ElasticMountTargetProperties(ipAddress: ipAddress, smbServerFqdn: smbServerFqdn);
+        }
+
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static ElasticVolumeBackupProperties ElasticVolumeBackupProperties(ResourceIdentifier elasticBackupPolicyResourceId = null, ElasticVolumePolicyEnforcement? policyEnforcement = default, ResourceIdentifier elasticBackupVaultResourceId = null)
+        {
+            return new ElasticVolumeBackupProperties(elasticBackupPolicyResourceId: elasticBackupPolicyResourceId, policyEnforcement: policyEnforcement, elasticBackupVaultResourceId: elasticBackupVaultResourceId);
+        }
+
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static ElasticVolumeDataProtectionProperties ElasticVolumeDataProtectionProperties(ResourceIdentifier snapshotPolicyResourceId = null, ElasticVolumeBackupProperties backup = null)
+        {
+            return new ElasticVolumeDataProtectionProperties(snapshotPolicyResourceId: snapshotPolicyResourceId, backup: backup);
+        }
+
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static ElasticVolumeDataProtectionPatchProperties ElasticVolumeDataProtectionPatchProperties(ResourceIdentifier snapshotPolicyResourceId = null, ElasticVolumeBackupProperties backup = null)
+        {
+            return new ElasticVolumeDataProtectionPatchProperties(snapshotPolicyResourceId: snapshotPolicyResourceId, backup: backup);
+        }
+
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static ElasticVolumeProperties ElasticVolumeProperties(string filePath = null, long size = 0, IEnumerable<ElasticExportPolicyRule> exportRules = null, IEnumerable<ElasticProtocolType> protocolTypes = null, NetAppProvisioningState? provisioningState = default, ElasticResourceAvailabilityStatus? availabilityStatus = default, ResourceIdentifier snapshotResourceId = null, IEnumerable<ElasticMountTargetProperties> mountTargets = null, ElasticVolumeDataProtectionProperties dataProtection = null, SnapshotDirectoryVisibility? snapshotDirectoryVisibility = default, ElasticSmbEncryption? smbEncryption = default, ResourceIdentifier backupResourceId = null, ElasticVolumeRestorationState? restorationState = default)
+        {
+            return new ElasticVolumeProperties(filePath: filePath, size: size, exportRules: exportRules?.ToList(), protocolTypes: protocolTypes?.ToList(), provisioningState: provisioningState, availabilityStatus: availabilityStatus, snapshotResourceId: snapshotResourceId, mountTargets: mountTargets?.ToList(), dataProtection: dataProtection, snapshotDirectoryVisibility: snapshotDirectoryVisibility, smbEncryption: smbEncryption, backupResourceId: backupResourceId, restorationState: restorationState);
+        }
+
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static ElasticVolumeRevert ElasticVolumeRevert(ResourceIdentifier snapshotResourceId = null)
+        {
+            return new ElasticVolumeRevert(snapshotResourceId: snapshotResourceId);
+        }
+
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static ElasticSnapshotPolicyHourlySchedule ElasticSnapshotPolicyHourlySchedule(int? snapshotsToKeep = default, int? minute = default)
+        {
+            return new ElasticSnapshotPolicyHourlySchedule(snapshotsToKeep: snapshotsToKeep, minute: minute);
+        }
+
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static ElasticSnapshotPolicyDailySchedule ElasticSnapshotPolicyDailySchedule(int? snapshotsToKeep = default, int? hour = default, int? minute = default)
+        {
+            return new ElasticSnapshotPolicyDailySchedule(snapshotsToKeep: snapshotsToKeep, hour: hour, minute: minute);
+        }
+
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static ElasticSnapshotPolicyWeeklySchedule ElasticSnapshotPolicyWeeklySchedule(int? snapshotsToKeep = default, IEnumerable<Azure.ResourceManager.NetApp.Models.DayOfWeek> days = null, int? hour = default, int? minute = default)
+        {
+            return new ElasticSnapshotPolicyWeeklySchedule(snapshotsToKeep: snapshotsToKeep, days: days?.ToList(), hour: hour, minute: minute);
+        }
+
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static ElasticSnapshotPolicyMonthlySchedule ElasticSnapshotPolicyMonthlySchedule(int? snapshotsToKeep = default, IEnumerable<int> daysOfMonth = null, int? hour = default, int? minute = default)
+        {
+            return new ElasticSnapshotPolicyMonthlySchedule(snapshotsToKeep: snapshotsToKeep, daysOfMonth: daysOfMonth?.ToList(), hour: hour, minute: minute);
+        }
+
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static ElasticSnapshotPolicyProperties ElasticSnapshotPolicyProperties(ElasticSnapshotPolicyHourlySchedule hourlySchedule = null, ElasticSnapshotPolicyDailySchedule dailySchedule = null, ElasticSnapshotPolicyWeeklySchedule weeklySchedule = null, ElasticSnapshotPolicyMonthlySchedule monthlySchedule = null, ElasticSnapshotPolicyStatus? policyStatus = default, NetAppProvisioningState? provisioningState = default)
+        {
+            return new ElasticSnapshotPolicyProperties(hourlySchedule: hourlySchedule, dailySchedule: dailySchedule, weeklySchedule: weeklySchedule, monthlySchedule: monthlySchedule, policyStatus: policyStatus, provisioningState: provisioningState);
+        }
+
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static ElasticBackupPolicyProperties ElasticBackupPolicyProperties(NetAppProvisioningState? provisioningState = default, int? dailyBackupsToKeep = default, int? weeklyBackupsToKeep = default, int? monthlyBackupsToKeep = default, int? assignedVolumesCount = default, ElasticBackupPolicyState? policyState = default)
+        {
+            return new ElasticBackupPolicyProperties(provisioningState: provisioningState, dailyBackupsToKeep: dailyBackupsToKeep, weeklyBackupsToKeep: weeklyBackupsToKeep, monthlyBackupsToKeep: monthlyBackupsToKeep, assignedVolumesCount: assignedVolumesCount, policyState: policyState);
+        }
+
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static NetAppSecretPasswordKeyVaultPatchProperties NetAppSecretPasswordKeyVaultPatchProperties(Uri keyVaultUri = null, string secretName = null)
+        {
+            return new NetAppSecretPasswordKeyVaultPatchProperties(keyVaultUri: keyVaultUri, secretName: secretName);
+        }
+
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static NetAppSecretPasswordIdentity NetAppSecretPasswordIdentity(string principalId = null, string userAssignedIdentity = null)
+        {
+            return new NetAppSecretPasswordIdentity(principalId: principalId, userAssignedIdentity: userAssignedIdentity, additionalBinaryDataProperties: null);
+        }
+
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static NetAppSecretPassword NetAppSecretPassword(NetAppSecretPasswordKeyVaultPatchProperties keyVaultProperties = null, NetAppSecretPasswordIdentity identity = null)
+        {
+            return new NetAppSecretPassword(keyVaultProperties: keyVaultProperties, identity: identity, additionalBinaryDataProperties: null);
+        }
+
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static NetAppActiveDirectoryConfigPatch NetAppActiveDirectoryConfigPatch(ManagedServiceIdentity identity = null, IDictionary<string, string> tags = null, NetAppActiveDirectoryConfigPatchProperties properties = null)
+        {
+            return new NetAppActiveDirectoryConfigPatch(identity: identity, tags: tags ?? new Dictionary<string, string>(), properties: properties, additionalBinaryDataProperties: null);
+        }
+
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static NetAppElasticAccountPatch NetAppElasticAccountPatch(ManagedServiceIdentity identity = null, IDictionary<string, string> tags = null, ElasticEncryption elasticAccountUpdateEncryption = null)
+        {
+            return new NetAppElasticAccountPatch(identity: identity, tags: tags, elasticAccountUpdateEncryption: elasticAccountUpdateEncryption);
+        }
+
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static NetAppElasticCapacityPoolPatch NetAppElasticCapacityPoolPatch(IDictionary<string, string> tags = null, NetAppElasticCapacityPoolPatchProperties properties = null)
+        {
+            return new NetAppElasticCapacityPoolPatch(tags: tags, properties: properties);
+        }
+
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static NetAppElasticVolumePatch NetAppElasticVolumePatch(IDictionary<string, string> tags = null, NetAppElasticVolumePatchProperties properties = null)
+        {
+            return new NetAppElasticVolumePatch(tags: tags, properties: properties);
+        }
+
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static NetAppElasticSnapshotPolicyPatch NetAppElasticSnapshotPolicyPatch(IDictionary<string, string> tags = null, NetAppElasticSnapshotPolicyPatchProperties properties = null)
+        {
+            return new NetAppElasticSnapshotPolicyPatch(tags: tags, properties: properties);
+        }
+
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static NetAppElasticBackupVaultPatch NetAppElasticBackupVaultPatch(IDictionary<string, string> tags = null)
+        {
+            return new NetAppElasticBackupVaultPatch(tags: tags);
+        }
+
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static NetAppElasticBackupPolicyPatch NetAppElasticBackupPolicyPatch(IDictionary<string, string> tags = null, NetAppElasticBackupPolicyPatchProperties properties = null)
+        {
+            return new NetAppElasticBackupPolicyPatch(tags: tags, properties: properties);
+        }
+
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static NetAppElasticAccountData NetAppElasticAccountData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ElasticAccountProperties properties = null, ETag? eTag = default, ManagedServiceIdentity identity = null)
+        {
+            tags ??= new Dictionary<string, string>();
+            return new NetAppElasticAccountData(id, name, resourceType, systemData, tags, location, properties, eTag, identity);
+        }
+
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static NetAppElasticCapacityPoolData NetAppElasticCapacityPoolData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ElasticCapacityPoolProperties properties = null, ETag? eTag = default, IEnumerable<string> zones = null)
+        {
+            tags ??= new Dictionary<string, string>();
+            return new NetAppElasticCapacityPoolData(id, name, resourceType, systemData, tags, location, properties, eTag, zones);
+        }
+
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static NetAppElasticVolumeData NetAppElasticVolumeData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ElasticVolumeProperties properties = null, ETag? eTag = default, IEnumerable<string> zones = null)
+        {
+            tags ??= new Dictionary<string, string>();
+            return new NetAppElasticVolumeData(id, name, resourceType, systemData, tags, location, properties, eTag, zones);
+        }
+
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static NetAppElasticSnapshotPolicyData NetAppElasticSnapshotPolicyData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ElasticSnapshotPolicyProperties properties = null, ETag? eTag = default)
+        {
+            tags ??= new Dictionary<string, string>();
+            return new NetAppElasticSnapshotPolicyData(id, name, resourceType, systemData, tags, location, properties, eTag);
+        }
+
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static NetAppElasticBackupPolicyData NetAppElasticBackupPolicyData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ElasticBackupPolicyProperties properties = null, ETag? eTag = default)
+        {
+            tags ??= new Dictionary<string, string>();
+            return new NetAppElasticBackupPolicyData(id, name, resourceType, systemData, tags, location, properties, eTag);
+        }
+
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static NetAppElasticBackupVaultData NetAppElasticBackupVaultData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, NetAppProvisioningState? elasticBackupVaultProvisioningState = default, ETag? eTag = default)
+        {
+            tags ??= new Dictionary<string, string>();
+            return new NetAppElasticBackupVaultData(id, name, resourceType, systemData, tags, location, elasticBackupVaultProvisioningState, eTag);
+        }
+
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static NetAppElasticSnapshotData NetAppElasticSnapshotData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, NetAppProvisioningState? elasticSnapshotProvisioningState = default)
+        {
+            return new NetAppElasticSnapshotData(id, name, resourceType, systemData, elasticSnapshotProvisioningState);
+        }
+
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static NetAppElasticBackupData NetAppElasticBackupData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ElasticBackupProperties properties = null)
+        {
+            return new NetAppElasticBackupData(id, name, resourceType, systemData, properties);
+        }
     }
 }

@@ -123,7 +123,7 @@ namespace Azure.Provisioning.Sql
             _id = DefineProperty<ResourceIdentifier>(nameof(Id), new string[] { "id" }, isOutput: true);
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _properties = DefineModelProperty<ServerFirewallRuleProperties>(nameof(Properties), new string[] { "properties" });
-            _parent = DefineResource<SqlServer>(nameof(Parent), new string[] { "parent" }, isRequired: true);
+            _parent = DefineResource<SqlServer>(nameof(Parent), new string[] { "parent" });
             DefineAdditionalProperties();
         }
 

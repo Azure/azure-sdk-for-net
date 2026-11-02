@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     public partial class WorkloadSqlRestoreContent : WorkloadRestoreContent
     {
         /// <summary> Initializes a new instance of <see cref="WorkloadSqlRestoreContent"/>. </summary>
-        public WorkloadSqlRestoreContent()
+        public WorkloadSqlRestoreContent() : base("AzureWorkloadSQLRestoreRequest")
         {
             AlternateDirectoryPaths = new ChangeTrackingList<SqlDataDirectoryMapping>();
         }

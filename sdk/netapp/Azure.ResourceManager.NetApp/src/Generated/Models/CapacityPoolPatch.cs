@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <summary> Capacity pool properties. </summary>
         internal PoolPatchProperties Properties { get; set; }
 
-        /// <summary> Provisioned size of the pool (in bytes). Allowed values are 512GiB (549755813888 bytes) or in 1TiB chunks (value must be multiple of 1099511627776). </summary>
+        /// <summary> Provisioned size of the pool (in bytes). Allowed values are in 1TiB chunks (value must be multiple of 1099511627776). </summary>
         public long? Size
         {
             get

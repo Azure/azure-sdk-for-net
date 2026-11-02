@@ -13,7 +13,7 @@ using NUnit.Framework;
 namespace Azure.Security.KeyVault.Secrets.Tests
 {
     [NonParallelizable]
-    public class SecretClientTests: ClientTestBase
+    public class SecretClientTests : ClientTestBase
     {
         public SecretClientTests(bool isAsync) : base(isAsync)
         {
@@ -354,19 +354,22 @@ namespace Azure.Security.KeyVault.Secrets.Tests
         // SecretClientOptions.ServiceVersion enum value. The mapping must
         // match the legacy hand-written SecretClientOptions.GetVersionString()
         // exactly so existing customers see byte-identical wire requests.
-        [TestCase(SecretClientOptions.ServiceVersion.V7_0,        "7.0")]
-        [TestCase(SecretClientOptions.ServiceVersion.V7_1,        "7.1")]
-        [TestCase(SecretClientOptions.ServiceVersion.V7_2,        "7.2")]
-        [TestCase(SecretClientOptions.ServiceVersion.V7_3,        "7.3")]
-        [TestCase(SecretClientOptions.ServiceVersion.V7_4,        "7.4")]
-        [TestCase(SecretClientOptions.ServiceVersion.V7_5,        "7.5")]
-        [TestCase(SecretClientOptions.ServiceVersion.V7_6,        "7.6")]
+        [TestCase(SecretClientOptions.ServiceVersion.V7_0, "7.0")]
+        [TestCase(SecretClientOptions.ServiceVersion.V7_1, "7.1")]
+        [TestCase(SecretClientOptions.ServiceVersion.V7_2, "7.2")]
+        [TestCase(SecretClientOptions.ServiceVersion.V7_3, "7.3")]
+        [TestCase(SecretClientOptions.ServiceVersion.V7_4, "7.4")]
+        [TestCase(SecretClientOptions.ServiceVersion.V7_5, "7.5")]
+        [TestCase(SecretClientOptions.ServiceVersion.V7_6, "7.6")]
         [TestCase(SecretClientOptions.ServiceVersion.V2025_07_01, "2025-07-01")]
-        public async Task ServiceVersion_SendsExpectedWireApiVersion(SecretClientOptions.ServiceVersion version, string expectedWireVersion)
+        [TestCase(SecretClientOptions.ServiceVersion.V2026_04_01, "2026-04-01")]
+        [TestCase(null, "2026-04-01")]
+        public async Task ServiceVersion_SendsExpectedWireApiVersion(SecretClientOptions.ServiceVersion? version, string expectedWireVersion)
         {
             var transport = new MockTransport(new MockResponse(200).WithJson(
                 @"{""value"":""v"",""id"":""https://example.vault.azure.net/secrets/x/1""}"));
-            var options = new SecretClientOptions(version) { Transport = transport };
+            var options = version.HasValue ? new SecretClientOptions(version.Value) : new SecretClientOptions();
+            options.Transport = transport;
 
             SecretClient client = InstrumentClient(new SecretClient(new Uri("https://example.vault.azure.net"), new MockCredential(), options));
             await client.GetSecretAsync("x");
@@ -379,7 +382,8 @@ namespace Azure.Security.KeyVault.Secrets.Tests
             foreach (string kv in query.TrimStart('?').Split('&'))
             {
                 int eq = kv.IndexOf('=');
-                if (eq < 0) continue;
+                if (eq < 0)
+                    continue;
                 if (string.Equals(kv.Substring(0, eq), "api-version", StringComparison.OrdinalIgnoreCase))
                 {
                     actual = System.Uri.UnescapeDataString(kv.Substring(eq + 1));
@@ -508,9 +512,9 @@ namespace Azure.Security.KeyVault.Secrets.Tests
             await Task.Delay(50);
 
             string log = capturedLogContent.ToString();
-            Assert.That(log, Does.Contain("kv-pt-test"),                 "ApplicationId must reach the logging layer via User-Agent.");
-            Assert.That(log, Does.Contain("diag-marker-1234"),           "LoggedHeaderNames allow-listed value must appear unsanitized in logs.");
-            Assert.That(log, Does.Contain("audit-marker-5678"),          "LoggedQueryParameters allow-listed value must appear unsanitized in logs.");
+            Assert.That(log, Does.Contain("kv-pt-test"), "ApplicationId must reach the logging layer via User-Agent.");
+            Assert.That(log, Does.Contain("diag-marker-1234"), "LoggedHeaderNames allow-listed value must appear unsanitized in logs.");
+            Assert.That(log, Does.Contain("audit-marker-5678"), "LoggedQueryParameters allow-listed value must appear unsanitized in logs.");
         }
 
         // Tiny no-op policy used by the AddPolicy tests above. Increments a
@@ -602,14 +606,14 @@ namespace Azure.Security.KeyVault.Secrets.Tests
         public void WriteUpdateBody_TagsSet_EmitsTagsField()
         {
             var props = new SecretProperties("name") { Version = "ver" };
-            props.Tags["env"]   = "prod";
+            props.Tags["env"] = "prod";
             props.Tags["owner"] = "rohit";
 
             using var body = SecretMapper.WriteUpdateBody(props);
             using var doc = System.Text.Json.JsonDocument.Parse(body);
 
             Assert.IsTrue(doc.RootElement.TryGetProperty("tags", out var tags));
-            Assert.AreEqual("prod",  tags.GetProperty("env").GetString());
+            Assert.AreEqual("prod", tags.GetProperty("env").GetString());
             Assert.AreEqual("rohit", tags.GetProperty("owner").GetString());
         }
 
@@ -623,8 +627,8 @@ namespace Azure.Security.KeyVault.Secrets.Tests
             var pivot = new DateTimeOffset(2026, 6, 15, 12, 0, 0, TimeSpan.Zero);
             var props = new SecretProperties("name")
             {
-                Version   = "ver",
-                Enabled   = false,
+                Version = "ver",
+                Enabled = false,
                 NotBefore = pivot,
                 ExpiresOn = pivot.AddDays(30),
                 ContentType = "application/json",
@@ -636,13 +640,13 @@ namespace Azure.Security.KeyVault.Secrets.Tests
             Assert.AreEqual("application/json", doc.RootElement.GetProperty("contentType").GetString());
             System.Text.Json.JsonElement attrs = doc.RootElement.GetProperty("attributes");
             Assert.IsFalse(attrs.GetProperty("enabled").GetBoolean());
-            Assert.AreEqual(pivot.ToUnixTimeSeconds(),               attrs.GetProperty("nbf").GetInt64());
-            Assert.AreEqual(pivot.AddDays(30).ToUnixTimeSeconds(),   attrs.GetProperty("exp").GetInt64());
+            Assert.AreEqual(pivot.ToUnixTimeSeconds(), attrs.GetProperty("nbf").GetInt64());
+            Assert.AreEqual(pivot.AddDays(30).ToUnixTimeSeconds(), attrs.GetProperty("exp").GetInt64());
             // read-only fields must not be present
-            Assert.IsFalse(attrs.TryGetProperty("created",         out _));
-            Assert.IsFalse(attrs.TryGetProperty("updated",         out _));
+            Assert.IsFalse(attrs.TryGetProperty("created", out _));
+            Assert.IsFalse(attrs.TryGetProperty("updated", out _));
             Assert.IsFalse(attrs.TryGetProperty("recoverableDays", out _));
-            Assert.IsFalse(attrs.TryGetProperty("recoveryLevel",   out _));
+            Assert.IsFalse(attrs.TryGetProperty("recoveryLevel", out _));
         }
 
         [Test]
@@ -657,9 +661,9 @@ namespace Azure.Security.KeyVault.Secrets.Tests
             using var doc = System.Text.Json.JsonDocument.Parse(body);
 
             Assert.AreEqual(System.Text.Json.JsonValueKind.Object, doc.RootElement.ValueKind);
-            Assert.IsFalse(doc.RootElement.TryGetProperty("attributes",  out _));
+            Assert.IsFalse(doc.RootElement.TryGetProperty("attributes", out _));
             Assert.IsFalse(doc.RootElement.TryGetProperty("contentType", out _));
-            Assert.IsFalse(doc.RootElement.TryGetProperty("tags",        out _));
+            Assert.IsFalse(doc.RootElement.TryGetProperty("tags", out _));
         }
         // -------------------------------------------------------------------
         // Wire-shape guards for GetSecret(outContentType), SetSecret tags,
@@ -685,7 +689,8 @@ namespace Azure.Security.KeyVault.Secrets.Tests
             foreach (string kv in query.TrimStart('?').Split('&'))
             {
                 int eq = kv.IndexOf('=');
-                if (eq < 0) continue;
+                if (eq < 0)
+                    continue;
                 if (string.Equals(kv.Substring(0, eq), "outContentType", StringComparison.OrdinalIgnoreCase))
                 {
                     actual = System.Uri.UnescapeDataString(kv.Substring(eq + 1));
@@ -734,9 +739,9 @@ namespace Azure.Security.KeyVault.Secrets.Tests
             Assert.IsNotNull(captured, "Request body was not captured.");
             using var doc = System.Text.Json.JsonDocument.Parse(captured);
             Assert.IsTrue(doc.RootElement.TryGetProperty("tags", out var tags));
-            Assert.AreEqual("prod",   tags.GetProperty("env").GetString());
+            Assert.AreEqual("prod", tags.GetProperty("env").GetString());
             Assert.AreEqual("westus", tags.GetProperty("region").GetString());
-            Assert.AreEqual("value",  doc.RootElement.GetProperty("value").GetString());
+            Assert.AreEqual("value", doc.RootElement.GetProperty("value").GetString());
         }
 
         [Test]
@@ -852,7 +857,8 @@ namespace Azure.Security.KeyVault.Secrets.Tests
         {
             var payload = @"{""value"":""v"",""id"":""https://example.vault.azure.net/secrets/x/1"",""recoveryId"":""https://example.vault.azure.net/deletedsecrets/x""}";
             var pollResponse = new MockResponse(statusCode);
-            if (statusCode == 200) pollResponse = pollResponse.WithJson(payload);
+            if (statusCode == 200)
+                pollResponse = pollResponse.WithJson(payload);
 
             var transport = new MockTransport(
                 new MockResponse(200).WithJson(payload),
@@ -899,7 +905,8 @@ namespace Azure.Security.KeyVault.Secrets.Tests
         {
             var payload = @"{""value"":""v"",""id"":""https://example.vault.azure.net/secrets/x/1""}";
             var pollResponse = new MockResponse(statusCode);
-            if (statusCode == 200) pollResponse = pollResponse.WithJson(payload);
+            if (statusCode == 200)
+                pollResponse = pollResponse.WithJson(payload);
 
             var transport = new MockTransport(
                 new MockResponse(200).WithJson(payload),

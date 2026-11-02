@@ -1,17 +1,26 @@
 # Release History
 
-## 3.0.0-beta.6 (Unreleased)
+## 3.0.0-beta.7 (Unreleased)
 
 ### Features Added
 
 ### Breaking Changes
-- `BrowserAutomationPreviewTool` is deprecated and hidden from IntelliSense. Please use `BrowserAutomationTool` instead.
-
-- Removed the `type` parameter from response-item methods on `ExtensionsOpenAIModelFactory`. Each factory now uses the discriminator value for its concrete response-item type.
 
 ### Bugs Fixed
 
 ### Other Changes
+
+## 3.0.0-beta.6 (2026-10-30)
+
+### Features Added
+- Exposed the constructors of `GitHubCopilotToolsetPreview`, `GitHubCopilotToolsetDefaultConfig` `GitHubCopilotToolsetConfig`, `MicrosoftCopilotToolsetPreview`, `MicrosoftCopilotToolsetDefaultConfig` and `MicrosoftCopilotToolsetConfig`.
+
+### Breaking Changes
+- `BrowserAutomationPreviewTool` is deprecated and hidden from IntelliSense. Please use `BrowserAutomationTool` instead.
+- Removed the `type` parameter from response-item methods on `ExtensionsOpenAIModelFactory`. Each factory now uses the discriminator value for its concrete response-item type.
+
+### Sample Updates
+- Added sample for Hosted Agent identity isolation.
 
 ## 3.0.0-beta.5 (2026-10-16)
 

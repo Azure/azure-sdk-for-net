@@ -40,13 +40,18 @@ namespace Azure.Provisioning.Storage
             }
         }
 
-        /// <summary> Gets the Name. </summary>
+        /// <summary> Gets or sets the Name. </summary>
         public BicepValue<string> Name
         {
             get
             {
                 Initialize();
                 return _name;
+            }
+            set
+            {
+                Initialize();
+                _name.Assign(value);
             }
         }
 
@@ -173,7 +178,7 @@ namespace Azure.Provisioning.Storage
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _properties = DefineModelProperty<ImmutabilityPolicyProperty>(nameof(Properties), new string[] { "properties" }, isRequired: true);
             _eTag = DefineProperty<ETag>(nameof(ETag), new string[] { "etag" }, isOutput: true);
-            _parent = DefineResource<BlobContainer>(nameof(Parent), new string[] { "parent" }, isRequired: true);
+            _parent = DefineResource<BlobContainer>(nameof(Parent), new string[] { "parent" });
             DefineAdditionalProperties();
         }
 

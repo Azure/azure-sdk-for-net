@@ -42,12 +42,12 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="provisioningState"> The provisioning state of the virtual network peering resource. </param>
         /// <param name="doNotVerifyRemoteGateways"> If we need to verify the provisioning state of the remote gateway. </param>
         /// <param name="resourceGuid"> The resourceGuid property of the Virtual Network peering resource. </param>
-        /// <param name="peerCompleteVnets"> Whether complete virtual network address space is peered. </param>
+        /// <param name="areCompleteVnetsPeered"> Whether complete virtual network address space is peered. </param>
         /// <param name="enableOnlyIPv6Peering"> Whether only Ipv6 address space is peered for subnet peering. </param>
         /// <param name="localSubnetNames"> List of local subnet names that are subnet peered with remote virtual network. </param>
         /// <param name="remoteSubnetNames"> List of remote subnet names from remote virtual network that are subnet peered. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualNetworkPeeringPropertiesFormat(bool? allowVirtualNetworkAccess, bool? allowForwardedTraffic, bool? allowGatewayTransit, bool? useRemoteGateways, NetworkSubResource remoteVirtualNetwork, VirtualNetworkAddressSpace localAddressSpace, VirtualNetworkAddressSpace localVirtualNetworkAddressSpace, VirtualNetworkAddressSpace remoteAddressSpace, VirtualNetworkAddressSpace remoteVirtualNetworkAddressSpace, VirtualNetworkBgpCommunities remoteBgpCommunities, VirtualNetworkEncryption remoteVirtualNetworkEncryption, VirtualNetworkPeeringState? peeringState, VirtualNetworkPeeringLevel? peeringSyncLevel, NetworkProvisioningState? provisioningState, bool? doNotVerifyRemoteGateways, Guid? resourceGuid, bool? peerCompleteVnets, bool? enableOnlyIPv6Peering, IList<string> localSubnetNames, IList<string> remoteSubnetNames, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VirtualNetworkPeeringPropertiesFormat(bool? allowVirtualNetworkAccess, bool? allowForwardedTraffic, bool? allowGatewayTransit, bool? useRemoteGateways, NetworkSubResource remoteVirtualNetwork, VirtualNetworkAddressSpace localAddressSpace, VirtualNetworkAddressSpace localVirtualNetworkAddressSpace, VirtualNetworkAddressSpace remoteAddressSpace, VirtualNetworkAddressSpace remoteVirtualNetworkAddressSpace, VirtualNetworkBgpCommunities remoteBgpCommunities, VirtualNetworkEncryption remoteVirtualNetworkEncryption, VirtualNetworkPeeringState? peeringState, VirtualNetworkPeeringLevel? peeringSyncLevel, NetworkProvisioningState? provisioningState, bool? doNotVerifyRemoteGateways, Guid? resourceGuid, bool? areCompleteVnetsPeered, bool? enableOnlyIPv6Peering, IList<string> localSubnetNames, IList<string> remoteSubnetNames, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AllowVirtualNetworkAccess = allowVirtualNetworkAccess;
             AllowForwardedTraffic = allowForwardedTraffic;
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Network.Models
             ProvisioningState = provisioningState;
             DoNotVerifyRemoteGateways = doNotVerifyRemoteGateways;
             ResourceGuid = resourceGuid;
-            PeerCompleteVnets = peerCompleteVnets;
+            AreCompleteVnetsPeered = areCompleteVnetsPeered;
             EnableOnlyIPv6Peering = enableOnlyIPv6Peering;
             LocalSubnetNames = localSubnetNames;
             RemoteSubnetNames = remoteSubnetNames;
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Whether complete virtual network address space is peered. </summary>
         [WirePath("peerCompleteVnets")]
-        public bool? PeerCompleteVnets { get; set; }
+        public bool? AreCompleteVnetsPeered { get; set; }
 
         /// <summary> Whether only Ipv6 address space is peered for subnet peering. </summary>
         [WirePath("enableOnlyIPv6Peering")]

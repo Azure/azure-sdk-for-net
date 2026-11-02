@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Compute.Models
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(Name))
             {
-                writer.WritePropertyName("name"u8);
+                writer.WritePropertyName("Name"u8);
                 writer.WriteStartArray();
                 foreach (string item in Name)
                 {
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.Compute.Models
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("name"u8))
+                if (prop.NameEquals("Name"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {

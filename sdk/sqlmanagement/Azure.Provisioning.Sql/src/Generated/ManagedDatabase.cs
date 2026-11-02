@@ -500,7 +500,7 @@ namespace Azure.Provisioning.Sql
             _tags = DefineDictionaryProperty<string>(nameof(Tags), new string[] { "tags" });
             _location = DefineProperty<AzureLocation>(nameof(Location), new string[] { "location" }, isRequired: true);
             _properties = DefineModelProperty<ManagedDatabaseProperties>(nameof(Properties), new string[] { "properties" });
-            _parent = DefineResource<ManagedInstance>(nameof(Parent), new string[] { "parent" }, isRequired: true);
+            _parent = DefineResource<ManagedInstance>(nameof(Parent), new string[] { "parent" });
             DefineAdditionalProperties();
         }
 

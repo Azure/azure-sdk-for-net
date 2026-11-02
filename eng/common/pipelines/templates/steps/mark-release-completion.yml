@@ -10,6 +10,15 @@ steps:
     parameters:
       SourceRootPath: ${{ parameters.SourceRootPath }}
 
+  # Runtime output variables must not be tested at template-expansion time.
+  # Initialize the optional macro before use on manual runs that have no SDK PR.
+  - ${{ if eq(parameters.SdkPullRequest, '') }}:
+    - pwsh: |
+        Write-Host '##vso[task.setvariable variable=AutoReleaseSdkPullRequestUrl]'
+        Write-Host 'AutoReleaseSdkPullRequestUrl is set to an empty string.'
+      displayName: Initialize optional auto-release SDK PR
+      condition: and(succeeded(), ne(variables['Skip.MarkReleaseCompletion'], 'true'), eq(variables['AutoReleaseSdkPullRequestUrl'], ''))
+
   - task: AzureCLI@2
     inputs:
       azureSubscription: opensource-api-connection
@@ -19,7 +28,7 @@ steps:
       arguments: >
         -PackageInfoFilePath '${{ parameters.ConfigFileDir }}/${{ parameters.PackageArtifactName }}.json' -AzsdkExePath '$(AZSDK)'
         -ReleasePlanId '${{ parameters.ReleasePlanId }}'
-        -SdkPullRequest '${{ parameters.SdkPullRequest }}'
+        -SdkPullRequest '${{ coalesce(parameters.SdkPullRequest, '$(AutoReleaseSdkPullRequestUrl)') }}'
         -PipelineUrl "$(System.CollectionUri)$(System.TeamProject)/_build/results?buildId=$(Build.BuildId)"
       workingDirectory: $(Pipeline.Workspace)
     displayName: Mark package as released

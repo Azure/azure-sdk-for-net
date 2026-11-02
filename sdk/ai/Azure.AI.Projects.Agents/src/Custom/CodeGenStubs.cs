@@ -22,3 +22,4 @@ public partial class ProjectsAgentRecord
 [CodeGenType("AgentVersionStatus")] public partial struct AgentVersionStatus { }
 [CodeGenType("FoundryFeaturesOptInKeys")] internal partial struct FoundryFeaturesOptInKeys { }
 [CodeGenType("AgentObjectVersions")] public partial class AgentObjectVersions { }
+[CodeGenType("VoiceAgentSoundscapeSound")] public partial struct VoiceAgentSoundscapeSound { }

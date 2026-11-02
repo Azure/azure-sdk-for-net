@@ -15,7 +15,7 @@ using Azure.ResourceManager.Network;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Response for ListExpressRouteProviderPort API service call. </summary>
-    public partial class ExpressRouteProviderPortListResult : IJsonModel<ExpressRouteProviderPortListResult>
+    internal partial class ExpressRouteProviderPortListResult : IJsonModel<ExpressRouteProviderPortListResult>
     {
         /// <summary> Initializes a new instance of <see cref="ExpressRouteProviderPortListResult"/> for deserialization. </summary>
         internal ExpressRouteProviderPortListResult()
