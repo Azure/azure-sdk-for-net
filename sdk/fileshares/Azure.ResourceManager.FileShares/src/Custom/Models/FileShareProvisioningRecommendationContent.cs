@@ -28,8 +28,9 @@ namespace Azure.ResourceManager.FileShares.Models
         /// </summary>
         /// <remarks>
         /// Back-compatibility accessor for the value flattened directly onto this type in api-version 2026-06-01. It
-        /// now forwards to <see cref="FileShareProvisioningRecommendationInputProperties.ProvisionedStorageInGiB"/>,
-        /// and returns 0 when <see cref="Properties"/> is not set, as the 1.0.0 property did for an unset value.
+        /// now forwards to <see cref="FileShareProvisioningRecommendationInputProperties.ProvisionedStorageInGiB"/>.
+        /// As a defensive fallback, it returns 0 when <see cref="Properties"/> is not set; the 1.0.0 accessor would
+        /// have thrown in that case.
         /// </remarks>
         public int FileShareProvisioningRecommendationInputProvisionedStorageInGiB => Properties?.ProvisionedStorageInGiB ?? 0;
     }
