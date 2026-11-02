@@ -17,6 +17,8 @@ namespace Azure.Generator.Management.Providers
         {
         }
 
+        internal string NormalizeRequestModelName(string name) => NormalizeTypeNameForNewContract(name);
+
         // Non-resource management-plane models are emitted under .Models. Build their
         // Type there up front so references cached before namespace visitors run do not
         // keep a stale root namespace.

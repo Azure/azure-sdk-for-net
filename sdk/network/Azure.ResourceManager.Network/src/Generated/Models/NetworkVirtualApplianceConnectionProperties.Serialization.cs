@@ -114,10 +114,10 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("enableInternetSecurity"u8);
                 writer.WriteBooleanValue(EnableInternetSecurity.Value);
             }
-            if (Optional.IsDefined(RoutingConfiguration))
+            if (Optional.IsDefined(ConnectionRoutingConfiguration))
             {
                 writer.WritePropertyName("routingConfiguration"u8);
-                writer.WriteObjectValue(RoutingConfiguration, options);
+                writer.WriteObjectValue(ConnectionRoutingConfiguration, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.Network.Models
             long? tunnelIdentifier = default;
             IList<string> bgpPeerAddress = default;
             bool? enableInternetSecurity = default;
-            RoutingConfigurationNfv routingConfiguration = default;
+            RoutingConfiguration connectionRoutingConfiguration = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    routingConfiguration = RoutingConfigurationNfv.DeserializeRoutingConfigurationNfv(prop.Value, options);
+                    connectionRoutingConfiguration = RoutingConfiguration.DeserializeRoutingConfiguration(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.Network.Models
                 tunnelIdentifier,
                 bgpPeerAddress ?? new ChangeTrackingList<string>(),
                 enableInternetSecurity,
-                routingConfiguration,
+                connectionRoutingConfiguration,
                 additionalBinaryDataProperties);
         }
     }

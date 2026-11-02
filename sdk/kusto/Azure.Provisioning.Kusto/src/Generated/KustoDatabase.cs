@@ -117,7 +117,7 @@ namespace Azure.Provisioning.Kusto
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _location = DefineProperty<AzureLocation>(nameof(Location), new string[] { "location" });
             _kind = DefineProperty<KustoKind>(nameof(Kind), new string[] { "kind" }, isRequired: true);
-            _parent = DefineResource<KustoCluster>(nameof(Parent), new string[] { "parent" }, isRequired: true);
+            _parent = DefineResource<KustoCluster>(nameof(Parent), new string[] { "parent" });
             DefineAdditionalProperties();
         }
 

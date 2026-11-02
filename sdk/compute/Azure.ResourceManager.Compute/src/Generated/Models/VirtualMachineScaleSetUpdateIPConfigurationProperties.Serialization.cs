@@ -94,6 +94,18 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("privateIPAddressVersion"u8);
                 writer.WriteStringValue(PrivateIPAddressVersion.Value.ToString());
             }
+            if (Optional.IsDefined(PrivateIPAddressPrefixLength, _privateIPAddressPrefixLengthIsDefined))
+            {
+                if (PrivateIPAddressPrefixLength != null)
+                {
+                    writer.WritePropertyName("privateIPAddressPrefixLength"u8);
+                    writer.WriteNumberValue(PrivateIPAddressPrefixLength.Value);
+                }
+                else
+                {
+                    writer.WriteNull("privateIPAddressPrefixLength"u8);
+                }
+            }
             if (Optional.IsCollectionDefined(ApplicationGatewayBackendAddressPoolResources))
             {
                 writer.WritePropertyName("applicationGatewayBackendAddressPools"u8);
@@ -180,6 +192,8 @@ namespace Azure.ResourceManager.Compute.Models
             bool? primary = default;
             VirtualMachineScaleSetUpdatePublicIPAddressConfiguration publicIPAddressConfiguration = default;
             IPVersion? privateIPAddressVersion = default;
+            bool privateIPAddressPrefixLengthIsDefined = false;
+            int? privateIPAddressPrefixLength = default;
             IList<ComputeWriteableSubResourceData> applicationGatewayBackendAddressPoolResources = default;
             IList<ComputeWriteableSubResourceData> applicationSecurityGroupResources = default;
             IList<ComputeWriteableSubResourceData> loadBalancerBackendAddressPoolResources = default;
@@ -221,6 +235,17 @@ namespace Azure.ResourceManager.Compute.Models
                         continue;
                     }
                     privateIPAddressVersion = new IPVersion(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("privateIPAddressPrefixLength"u8))
+                {
+                    privateIPAddressPrefixLengthIsDefined = true;
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        privateIPAddressPrefixLength = null;
+                        continue;
+                    }
+                    privateIPAddressPrefixLength = prop.Value.GetInt32();
                     continue;
                 }
                 if (prop.NameEquals("applicationGatewayBackendAddressPools"u8))
@@ -289,11 +314,15 @@ namespace Azure.ResourceManager.Compute.Models
                 primary,
                 publicIPAddressConfiguration,
                 privateIPAddressVersion,
+                privateIPAddressPrefixLength,
                 applicationGatewayBackendAddressPoolResources ?? new ChangeTrackingList<ComputeWriteableSubResourceData>(),
                 applicationSecurityGroupResources ?? new ChangeTrackingList<ComputeWriteableSubResourceData>(),
                 loadBalancerBackendAddressPoolResources ?? new ChangeTrackingList<ComputeWriteableSubResourceData>(),
                 loadBalancerInboundNatPoolResources ?? new ChangeTrackingList<ComputeWriteableSubResourceData>(),
-                additionalBinaryDataProperties);
+                additionalBinaryDataProperties)
+            {
+                _privateIPAddressPrefixLengthIsDefined = privateIPAddressPrefixLengthIsDefined
+            };
         }
     }
 }

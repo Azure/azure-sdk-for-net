@@ -26,7 +26,7 @@ namespace Azure.Storage
         /// Gets the default service version to use when building shared access
         /// signatures.
         /// </summary>
-        public const string DefaultSasVersion = "2026-10-06";
+        public const string DefaultSasVersion = "2027-03-07";
 
         /// <summary>
         /// Max download range size while requesting a transactional hash.
@@ -237,6 +237,15 @@ namespace Azure.Storage
         }
 
         /// <summary>
+        /// URI query parameter names used by the Storage REST protocol.
+        /// </summary>
+        internal static class UriQueryParameters
+        {
+            public const string Comp = "comp";
+            public const string ResType = "restype";
+        }
+
+        /// <summary>
         /// Blob constant values.
         /// </summary>
         internal static class Blob
@@ -260,7 +269,6 @@ namespace Azure.Storage
                 [EditorBrowsable(EditorBrowsableState.Never)]
                 public const int DefaultConcurrentTransfersCount = LegacyDefaultConcurrentTransfersCount;
                 public const int LegacyDefaultConcurrentTransfersCount = 5;
-                public const int DefaultInitalDownloadRangeSize = 256 * Constants.MB; // 256 MB
                 public const int Pre_2019_12_12_MaxUploadBytes = 256 * Constants.MB; // 256 MB
                 public const long MaxUploadBytes = 5000L * Constants.MB; // 5000MB
                 public const int MaxDownloadBytes = 256 * Constants.MB; // 256MB
@@ -319,6 +327,7 @@ namespace Azure.Storage
             public const int DefaultGetRangeListPageSize = 10000;
             public const string FileTimeFormat = "yyyy'-'MM'-'dd'T'HH':'mm':'ss'.'fffffff'Z'";
             public const string SnapshotParameterName = "sharesnapshot";
+            public const string FileIdParameterName = "fileid";
 
             public const string SmbProtocol = "SMB";
             public const string NfsProtocol = "NFS";

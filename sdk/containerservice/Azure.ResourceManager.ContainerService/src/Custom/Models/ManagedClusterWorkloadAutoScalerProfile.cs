@@ -18,7 +18,14 @@ namespace Azure.ResourceManager.ContainerService.Models
             get => VerticalPodAutoscaler is null ? default(bool?) : VerticalPodAutoscaler.IsVpaEnabled;
             set
             {
-                VerticalPodAutoscaler = value.HasValue ? new ManagedClusterVerticalPodAutoscaler(value.Value) : null;
+                if (value.HasValue && VerticalPodAutoscaler != null)
+                {
+                    VerticalPodAutoscaler.IsVpaEnabled = value.Value;
+                }
+                else
+                {
+                    VerticalPodAutoscaler = value.HasValue ? new ManagedClusterVerticalPodAutoscaler(value.Value) : null;
+                }
             }
         }
     }

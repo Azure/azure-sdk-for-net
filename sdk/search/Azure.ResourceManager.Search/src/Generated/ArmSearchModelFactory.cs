@@ -1069,15 +1069,5 @@ namespace Azure.ResourceManager.Search.Models
                 identity,
                 default);
         }
-
-        /// <summary> Input of check name availability API. </summary>
-        /// <param name="name"> The search service name to validate. Search service names must only contain lowercase letters, digits or dashes, cannot use dash as the first two or last one characters, cannot contain consecutive dashes, and must be between 2 and 60 characters in length. </param>
-        /// <param name="resourceType"></param>
-        /// <returns> A new <see cref="Models.SearchServiceNameAvailabilityContent"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static SearchServiceNameAvailabilityContent SearchServiceNameAvailabilityContent(string name, SearchServiceResourceType resourceType)
-        {
-            return new SearchServiceNameAvailabilityContent(name, default, default);
-        }
     }
 }

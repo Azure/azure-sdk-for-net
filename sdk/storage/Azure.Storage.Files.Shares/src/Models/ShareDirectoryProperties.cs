@@ -49,6 +49,13 @@ namespace Azure.Storage.Files.Shares.Models
         public FilePosixProperties PosixProperties { get; internal set; }
 
         /// <summary>
+        /// The name of the directory.
+        /// Note that this property is only populated when the directory is
+        /// addressed by its file ID.
+        /// </summary>
+        public string FileName { get; internal set; }
+
+        /// <summary>
         /// Constructor.
         /// </summary>
         internal ShareDirectoryProperties() { }
@@ -68,7 +75,31 @@ namespace Azure.Storage.Files.Shares.Models
                 DateTimeOffset lastModified = default,
                 bool isServerEncrypted = default,
                 FileSmbProperties smbProperties = default,
-                FilePosixProperties posixProperties = default
+                FilePosixProperties posixProperties = default,
+                string fileName = default
+            )
+            => new ShareDirectoryProperties
+            {
+                Metadata = metadata,
+                ETag = eTag,
+                LastModified = lastModified,
+                IsServerEncrypted = isServerEncrypted,
+                SmbProperties = smbProperties,
+                PosixProperties = posixProperties,
+                FileName = fileName
+            };
+
+        /// <summary>
+        /// Creates a new StorageDirectoryProperties instance for mocking.
+        /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static ShareDirectoryProperties StorageDirectoryProperties(
+                IDictionary<string, string> metadata,
+                ETag eTag,
+                DateTimeOffset lastModified,
+                bool isServerEncrypted,
+                FileSmbProperties smbProperties,
+                FilePosixProperties posixProperties
             )
             => new ShareDirectoryProperties
             {

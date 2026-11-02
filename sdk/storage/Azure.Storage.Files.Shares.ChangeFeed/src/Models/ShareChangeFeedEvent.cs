@@ -23,7 +23,7 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
         /// <summary>
         /// The reason (operation type) that triggered this event, such as SmbCreate, RestDelete, etc.
         /// </summary>
-        public ShareChangeFeedReasonType Reason { get; internal set; }
+        public ShareChangeFeedReasonKind Reason { get; internal set; }
 
         /// <summary>
         /// The protocol used for the operation that generated this event (SMB or REST).
@@ -33,7 +33,7 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
         /// <summary>
         /// The UTC timestamp when the event occurred.
         /// </summary>
-        public DateTimeOffset EventTime { get; internal set; }
+        public DateTimeOffset EventOccurredOn { get; internal set; }
 
         /// <summary>
         /// A unique identifier for this change feed event.
@@ -61,13 +61,13 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
         internal ShareChangeFeedEvent(Dictionary<string, object> record)
         {
             SchemaVersion = RequireLong(record, Constants.FilesChangeFeed.Event.SchemaVersion);
-            Reason = new ShareChangeFeedReasonType(RequireString(record, Constants.FilesChangeFeed.Event.Reason));
+            Reason = new ShareChangeFeedReasonKind(RequireString(record, Constants.FilesChangeFeed.Event.Reason));
             Protocol = new ShareChangeFeedProtocol(RequireString(record, Constants.FilesChangeFeed.Event.Protocol));
 
             string eventTime = RequireString(record, Constants.FilesChangeFeed.Event.EventTime);
             try
             {
-                EventTime = DateTimeOffset.Parse(eventTime, CultureInfo.InvariantCulture);
+                EventOccurredOn = DateTimeOffset.Parse(eventTime, CultureInfo.InvariantCulture);
             }
             catch (FormatException ex)
             {
@@ -123,6 +123,6 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
         /// </summary>
         /// <returns>A string representation of this change feed event.</returns>
         public override string ToString()
-            => $"{EventTime}: {Reason} ({Protocol}) {EventData?.FullFilePath ?? EventData?.FileName ?? "Unknown"}";
+            => $"{EventOccurredOn}: {Reason} ({Protocol}) {EventData?.FullFilePath ?? EventData?.FileName ?? "Unknown"}";
     }
 }

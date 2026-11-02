@@ -906,7 +906,6 @@
                 "$id": "59",
                 "name": "two6k",
                 "isExactName": false,
-                "resourceName": "LargeHeaders",
                 "doc": "",
                 "accessibility": "public",
                 "parameters": [
