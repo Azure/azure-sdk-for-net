@@ -35,7 +35,7 @@ public sealed class TestRecoveryDropPreconditionTests : CrashRecoveryE2ETestBase
         await SeedInterruptedTaskAsync(new ResponseRecoveryPayload(
             responseId: responseId,
             disposition: ResponseRecoveryPayload.DispositionReinvoke,
-            request: new CreateResponse { Model = "test-model", Background = true, Store = true }));
+            request: new CreateResponse { Model = "test-model", BackgroundModeEnabled = true, StoredOutputEnabled = true }));
         var store = new LocalTaskStore(TasksDir);
         string original = (await store.GetAsync(responseId))?.ToJson().ToJsonString()
             ?? throw new InvalidOperationException("The seeded Responses task was not persisted.");

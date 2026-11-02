@@ -14,12 +14,12 @@ using Azure.AI.AgentServer.Core.Tasks.Serialization;
 using Azure.AI.AgentServer.Core.Tests.Tasks;
 using Azure.AI.AgentServer.Invocations;
 using Azure.AI.AgentServer.Responses;
-using Azure.AI.AgentServer.Responses.Models;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.DependencyInjection;
 using NUnit.Framework;
+using OpenAI.Responses;
 
 namespace Azure.AI.AgentServer.Core.Tests;
 
@@ -630,24 +630,23 @@ public class MultiProtocolCompositionTests
 
     private sealed class TestResponseHandler : ResponseHandler
     {
-        public override async IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
-            CreateResponse request,
+        public override async IAsyncEnumerable<StreamingResponseUpdate> CreateAsync(
+            CreateResponseOptions request,
             ResponseContext context,
             [System.Runtime.CompilerServices.EnumeratorCancellation] CancellationToken cancellationToken)
         {
-            var response = new ResponseObject(context.ResponseId, request.Model ?? "test");
-            yield return new ResponseCreatedEvent(0, response);
+            var stream = new ResponseEventStream(context, request);
+            yield return stream.EmitCreated();
             await Task.Yield();
-            response.Status = ResponseStatus.Completed;
-            yield return new ResponseCompletedEvent(1, response);
+            yield return stream.EmitCompleted();
         }
     }
 
     private sealed class TaskProbeResponseHandler(
         IServiceProvider services, TaskCompletionSource<string> observed) : ResponseHandler
     {
-        public override async IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
-            CreateResponse request,
+        public override async IAsyncEnumerable<StreamingResponseUpdate> CreateAsync(
+            CreateResponseOptions request,
             ResponseContext context,
             [System.Runtime.CompilerServices.EnumeratorCancellation] CancellationToken cancellationToken)
         {
@@ -662,11 +661,10 @@ public class MultiProtocolCompositionTests
                 observed.TrySetResult("disabled");
             }
 
-            var response = new ResponseObject(context.ResponseId, request.Model ?? "test");
-            yield return new ResponseCreatedEvent(0, response);
+            var stream = new ResponseEventStream(context, request);
+            yield return stream.EmitCreated();
             await Task.Yield();
-            response.Status = ResponseStatus.Completed;
-            yield return new ResponseCompletedEvent(1, response);
+            yield return stream.EmitCompleted();
         }
     }
 
