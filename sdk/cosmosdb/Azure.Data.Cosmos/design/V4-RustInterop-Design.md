@@ -929,5 +929,5 @@ Parts 6–10 can run in parallel once Part 5 is done; Parts 11–13 can begin as
 - [observability.md](https://github.com/Azure/azure-cosmos-dotnet-v3/blob/main/docs/observability.md) — diagnostics conventions to mirror.
 - [versioning.md](https://github.com/Azure/azure-cosmos-dotnet-v3/blob/main/docs/versioning.md) — V3 versioning rules.
 - [Native driver POC](https://github.com/Azure/azure-cosmos-dotnet-v3/tree/users/ananth/poc-native-async-spike/tools/Microsoft.Azure.Cosmos.NativeDriverPoc) — .NET host over the Rust `azure_data_cosmos_driver_native` crate.
-- [Directory.Build.props](../Directory.Build.props) — package-level MSBuild settings (target frameworks).
-- [ci.yml](../../ci.yml) and [service.projects](../../service.projects) — data-plane pipeline registration and project filter.
+- [Directory.Build.props](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/cosmosdb/Azure.Data.Cosmos/Directory.Build.props) — package-level MSBuild settings (target frameworks).
+- [ci.yml](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/cosmosdb/ci.yml) and [service.projects](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/cosmosdb/service.projects) — data-plane pipeline registration and project filter.
