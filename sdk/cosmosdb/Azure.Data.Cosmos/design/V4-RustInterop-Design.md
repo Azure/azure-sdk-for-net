@@ -1,6 +1,6 @@
 # Cosmos DB .NET SDK V4 — Rust Driver Interop Design
 
-<!-- cspell:ignore cbindgen Cdecl Conv Convs MSVC PPAF slnx -->
+<!-- cspell:ignore cbindgen cdylib Cdecl Conv Convs MSVC PPAF slnx staticlib -->
 
 > Status: **Draft / Proposal**
 > Scope: .NET SDK V4 that delegates request execution to the Azure Cosmos DB Rust driver (Gateway-mode only).
@@ -15,7 +15,7 @@
 
 1. Build a new **`Azure.Data.Cosmos` (V4)** package whose public API surface is idiomatic .NET, but whose request execution path is routed through the **Cosmos DB Rust driver** via P/Invoke / FFI interop.
 2. Support **Gateway mode only** (matches Rust driver capability today).
-3. Deliver a single, **cross-platform** managed assembly, targeting the two most recent .NET releases (`net10.0` to start; no .NET Framework or .NET Standard), that loads the appropriate **native Rust library** (`.dll` / `.so` / `.dylib`) on Windows / Linux / macOS, x64 / arm64.
+3. Deliver a single, **cross-platform** managed assembly, targeting `net10.0` at GA and then the two most recent .NET LTS releases (no .NET Framework or .NET Standard; see C-1), that loads the appropriate **native Rust library** (`.dll` / `.so` / `.dylib`) on Windows / Linux / macOS, x64 / arm64.
 4. Preserve a familiar V3-like surface for: `CosmosClient`, `Database`, `Container`, `Item CRUD`, `Query`, `ChangeFeed`, `Batch (TransactionalBatch)`, `Bulk`.
 5. Keep the **diagnostics, telemetry, and error contract** consistent with Cosmos DB conventions (`CosmosException`, `Diagnostics`, sub-status codes, retry-after, activity ids, region info).
 6. Provide a stable, versioned **C ABI boundary** between managed and native — independent of internal Rust types.
@@ -27,7 +27,7 @@
 - **Client-side encryption** packages on day 1 (`Microsoft.Azure.Cosmos.Encryption*`) — out of scope for V1; can be revisited later.
 - **Bringing forward all V3 surface area verbatim.** V4 is a chance to clean up obsolete APIs, deprecated overloads, and legacy types.
 - **Replacing V3.** V3 continues to ship and is supported; V4 is a separate, parallel package.
-- **Hosting the Rust source in this repo.** Rust source lives in its own repository; we consume signed/published binaries.
+- **Hosting the Rust source in this repo.** The Rust SDK, driver, and native wrapper live in [`azure-sdk-for-rust` under `sdk/cosmos`](https://github.com/Azure/azure-sdk-for-rust/tree/main/sdk/cosmos); we consume signed/published binaries.
 
 ---
 
@@ -51,21 +51,21 @@
 ┌──────────────────────────────────────────────────────────┐
 │  Interop layer (internal, src/Interop/)                  │
 │  • SafeHandles for native objects                        │
-│  • Marshalling (UTF-8, spans, callbacks, error codes)    │
+│  • Marshalling (UTF-8, byte views, error codes)          │
 │  • Async bridge: native completion → TaskCompletionSource│
-│  • Native logging / tracing pump                         │
+│  • Completion-queue pump (one thread per CQ)             │
 └──────────────────────────────────────────────────────────┘
                      │  P/Invoke (LibraryImport, C ABI)
                      ▼
 ┌──────────────────────────────────────────────────────────┐
-│  cosmos_native.{dll|so|dylib}  (Rust C-ABI shim)         │
+│  azurecosmosdriver.{dll|so|dylib}  (Rust C-ABI shim)     │
 │  • Thin `extern "C"` wrappers over the Rust driver       │
-│  • Stable, versioned C header (cosmos_native.h)          │
+│  • Stable, versioned C header (azurecosmosdriver.h)      │
 └──────────────────────────────────────────────────────────┘
                      │  Rust function calls
                      ▼
 ┌──────────────────────────────────────────────────────────┐
-│  azure_data_cosmos (Rust driver crate)                   │
+│  azure_data_cosmos_driver (Rust driver crate)            │
 │  • Gateway HTTP client                                   │
 │  • Auth, retry, partition routing, query pipeline        │
 └──────────────────────────────────────────────────────────┘
@@ -83,13 +83,13 @@
 | Concern | Decision | Rationale |
 |---|---|---|
 | Interop boundary | **C ABI** (not COM, not C++/CLI) | Portable across OS/arch, easy to evolve, broad tool support, matches `cbindgen` output. |
-| Marshalling style | **`LibraryImport` (source-generated)** | Trim/AOT friendly, no reflection, faster than legacy `DllImport`. |
-| Async bridge | **Native callback + `TaskCompletionSource`** | Avoids polling; matches `tokio` task completion in Rust. |
-| Buffer handoff | **UTF-8 byte spans / pinned buffers** | Eliminates UTF-16↔UTF-8 conversions on hot path; Rust is UTF-8 native. |
-| Object lifetime | **`SafeHandle` per native object** | Deterministic cleanup, finalizer safety, matches GC semantics. |
-| Versioning | **`cosmos_native_abi_version()` probe at load** | Detects mismatched native/managed packages early. |
-| Error model | Native returns `int32` code + opaque error handle → managed throws `CosmosException` | Avoids exceptions across FFI; preserves rich error details. |
-| Logging | Native pushes events into a managed callback (`tracing` → `EventSource`) | Single, unified diagnostics pipeline. |
+| Marshalling style | **`LibraryImport` (source-generated)** (the POC uses `DllImport`) | Trim/AOT friendly, no reflection, faster than legacy `DllImport`. |
+| Async bridge | **Completion queue + one pump thread per queue + `TaskCompletionSource`** (as in the POC) | No callbacks cross the FFI boundary: Rust posts completions and the host decides how to schedule them, so no managed code runs on Rust threads. |
+| Buffer handoff | **NUL-terminated UTF-8 for names/ids; byte views (pointer + length) for bodies** | Rust is UTF-8 native; the library copies borrowed buffers during submit, so they only need to stay valid for one call. |
+| Object lifetime | **`SafeHandle` per native object** (the POC uses raw `IntPtr` with a staged build and ordered `Dispose`) | Deterministic cleanup, finalizer safety, matches GC semantics. |
+| Versioning | **Pin one exact native release; `cosmos_version()` available for a load-time check** (unused in the POC; Q8) | Upstream uses the native crate's SemVer as the compatibility contract. |
+| Error model | Synchronous calls return `CosmosErrorCode`; async failures arrive inline on the completion (status, sub-status, activity id, session token, etag, retry-after) → managed exception | Avoids exceptions across FFI; preserves rich error details. |
+| Logging | **No logging callback** (the ABI is callback-free); managed tracing is emitted from completion and diagnostics data | Keeps the boundary callback-free; single .NET diagnostics pipeline (`EventSource`, OpenTelemetry). |
 
 ---
 
@@ -141,112 +141,101 @@ Naming differences vs V3 (final list TBD in API review):
 
 ## 5. Native ABI Surface
 
-A **stable, hand-curated C header** (`cosmos_native.h`) is the contract. The Rust shim crate produces it (via `cbindgen`) and exports the `extern "C"` entry points. We commit the header to this repository (`sdk/cosmosdb/Azure.Data.Cosmos/native/cosmos_native.h`) for review/diffing.
+The C header is the contract. The Rust crate [`azure_data_cosmos_driver_native`](https://github.com/Azure/azure-sdk-for-rust/tree/main/sdk/cosmos/azure_data_cosmos_driver_native) generates it with `cbindgen` and checks it in upstream as [`include/azurecosmosdriver.h`](https://github.com/Azure/azure-sdk-for-rust/blob/main/sdk/cosmos/azure_data_cosmos_driver_native/include/azurecosmosdriver.h). We vendor the copy that matches the pinned native release at `sdk/cosmosdb/Azure.Data.Cosmos/native/azurecosmosdriver.h` for review/diffing.
+
+> This section follows the binding in the [native driver POC](https://github.com/Azure/azure-cosmos-dotnet-v3/blob/users/ananth/poc-native-async-spike/tools/Microsoft.Azure.Cosmos.NativeDriverPoc/README.md), which targets the header from Rust [PR #4515](https://github.com/Azure/azure-sdk-for-rust/pull/4515) (commit `4be377483`). The model is described upstream in [spec 0019](https://github.com/Azure/azure-sdk-for-rust/blob/main/sdk/cosmos/docs/specs/0019-native-wrapper.md), [spec 0020](https://github.com/Azure/azure-sdk-for-rust/blob/main/sdk/cosmos/docs/specs/0020-native-async-invocation.md), [spec 0029](https://github.com/Azure/azure-sdk-for-rust/blob/main/sdk/cosmos/docs/specs/0029-native-feed-cursor.md), and [ADR 0005](https://github.com/Azure/azure-sdk-for-rust/blob/main/sdk/cosmos/docs/adrs/0005-flat-native-abi-data-model.md). Upstream `main` has changed since the POC; see 5.4.
 
 ### 5.1 Conventions
 
-- All strings cross the boundary as **UTF-8 byte pointer + length** (`const uint8_t*`, `size_t`). No null-terminated strings.
-- All function calls are **non-blocking**. Long-running work returns immediately and completes via a callback.
-- Every native object is wrapped in an opaque handle (`cosmos_client_t*`, `cosmos_request_t*`, `cosmos_response_t*`, …).
-- Each handle has a matching `*_release` function. Managed side wraps in `SafeHandle`.
-- Errors: every call returns `int32_t cosmos_status_t` (0 = OK, non-zero = error). On error, an opaque `cosmos_error_t*` is produced that can be queried for status code, sub-status, message, retry-after, activity id, diagnostics JSON.
-- A single global ABI version: `uint32_t cosmos_native_abi_version(void)`.
+- Library `azurecosmosdriver`; every export is prefixed `cosmos_` and uses the C (`cdecl`) calling convention.
+- Native objects are opaque handles (`cosmos_runtime_t`, `cosmos_account_ref_t`, `cosmos_database_ref_t`, `cosmos_driver_t`, `cosmos_container_ref_t`, `cosmos_partition_key_t`, `cosmos_feed_range_t`, `cosmos_completion_queue_t`, `cosmos_operation_handle_t`), each with a matching `*_free` function.
+- Names, ids, and keys are NUL-terminated UTF-8 strings. Request bodies are byte views (pointer + length). Strings returned by the library are released with `cosmos_string_free`.
+- Pointers inside a request only need to stay valid for the duration of the submit call; the library deep-copies them before returning.
+- Synchronous calls return a `CosmosErrorCode`: 0 = success, 1–2 argument validation, 2xxx HTTP status from the service, 3xxx client-side, 4xxx wrapper/fatal, 5xxx non-fatal warnings. Many also take an optional rich-error out-parameter.
+- **No callbacks cross the boundary** (the one exception on upstream `main` is the AAD token provider; see 6.9). Asynchronous work is submitted with an opaque `user_data` cookie and completes by posting to a completion queue that the host drains.
+- `cosmos_version()` returns the library version string.
 
-### 5.2 Initial Function Set (illustrative)
+### 5.2 Function Set (as bound by the POC)
 
-```c
-// Lifecycle
-uint32_t        cosmos_native_abi_version(void);
-cosmos_status_t cosmos_runtime_init(const cosmos_runtime_options_t* opts, cosmos_runtime_t** out);
-void            cosmos_runtime_release(cosmos_runtime_t* rt);
+| Area | Functions |
+|---|---|
+| Version / memory | `cosmos_version`, `cosmos_string_free` |
+| Runtime | `cosmos_runtime_options_default`, `cosmos_runtime_build`, `cosmos_runtime_free` |
+| Completion queue | `cosmos_completion_queue_create` / `_wait` / `_free_completions` / `_shutdown` / `_state` / `_free`; `cosmos_completion_take_driver`, `cosmos_completion_take_container` |
+| Account / database | `cosmos_account_ref_with_master_key`, `cosmos_account_ref_clone`, `cosmos_account_ref_free`, `cosmos_database_ref_create`, `cosmos_database_ref_free` |
+| Driver / container | `cosmos_driver_get_or_create_blocking` / `_submit`, `cosmos_driver_resolve_container_blocking` / `_submit`, `cosmos_driver_free`, `cosmos_container_ref_free` |
+| Partition keys / feed ranges | `cosmos_partition_key_create` / `_empty` / `_component_count` / `_is_empty` / `_free`; `cosmos_feed_range_for_partition_key`, `cosmos_feed_range_free` |
+| Operations | `cosmos_operation_options_default`, `cosmos_submit_singleton_operation` (point operations), `cosmos_submit_operation` (feed / paginated operations) |
+| Operation handle | `cosmos_operation_handle_cancel` / `_state` / `_free` |
+| Errors | `cosmos_error_status_code` / `_sub_status` / `_is_from_wire` / `_message` / `_activity_id` / `_session_token` / `_etag` / `_retry_after_ms` / `_backtrace` / `_free` |
 
-// Logging / tracing pump
-typedef void (*cosmos_log_callback)(int32_t level, const uint8_t* msg, size_t len, void* ctx);
-cosmos_status_t cosmos_runtime_set_log_callback(cosmos_runtime_t*, cosmos_log_callback, void* ctx);
+Every operation is described by one flat request struct (`CosmosOperationRequest`: operation kind, references, ids, partition key, body, tokens, precondition, options) plus a flat options struct (`CosmosOperationOptions`, tri-state fields where 0 means "inherit"). `CosmosOperationKind` covers 24 kinds: database, container, and offer operations; item create/read/upsert/replace/delete/patch; read-all and query items; and batch.
 
-// Client
-cosmos_status_t cosmos_client_create(
-    cosmos_runtime_t* rt,
-    const uint8_t* endpoint, size_t endpoint_len,
-    const cosmos_credential_t* cred,
-    const cosmos_client_options_t* opts,
-    cosmos_client_t** out);
-void cosmos_client_release(cosmos_client_t*);
+The handles form one object graph, built in this order and freed children first:
 
-// Async completion callback
-typedef void (*cosmos_completion)(cosmos_response_t* resp, cosmos_error_t* err, void* ctx);
-
-// Item operations (one entry point per operation, or a generic dispatcher)
-cosmos_status_t cosmos_item_read(
-    cosmos_client_t*,
-    const uint8_t* db, size_t db_len,
-    const uint8_t* container, size_t container_len,
-    const uint8_t* id, size_t id_len,
-    const uint8_t* pk_json, size_t pk_len,
-    const cosmos_request_options_t* opts,
-    cosmos_completion cb, void* ctx);
-
-cosmos_status_t cosmos_item_create(...);
-cosmos_status_t cosmos_item_replace(...);
-cosmos_status_t cosmos_item_upsert(...);
-cosmos_status_t cosmos_item_patch(...);
-cosmos_status_t cosmos_item_delete(...);
-
-// Query
-cosmos_status_t cosmos_query_create(cosmos_client_t*, /* params */, cosmos_query_t** out);
-cosmos_status_t cosmos_query_next_page(cosmos_query_t*, cosmos_completion cb, void* ctx);
-void            cosmos_query_release(cosmos_query_t*);
-
-// Change feed
-cosmos_status_t cosmos_changefeed_create(cosmos_client_t*, /* params */, cosmos_changefeed_t** out);
-cosmos_status_t cosmos_changefeed_next_page(cosmos_changefeed_t*, cosmos_completion cb, void* ctx);
-void            cosmos_changefeed_release(cosmos_changefeed_t*);
-
-// Batch
-cosmos_status_t cosmos_batch_create(cosmos_client_t*, /* params */, cosmos_batch_t** out);
-cosmos_status_t cosmos_batch_add_operation(cosmos_batch_t*, cosmos_op_kind_t, /* payload */);
-cosmos_status_t cosmos_batch_execute(cosmos_batch_t*, cosmos_completion cb, void* ctx);
-void            cosmos_batch_release(cosmos_batch_t*);
-
-// Response inspection
-cosmos_status_t cosmos_response_status(cosmos_response_t*, int32_t* http_status, int32_t* sub_status);
-cosmos_status_t cosmos_response_body(cosmos_response_t*, const uint8_t** out_ptr, size_t* out_len);
-cosmos_status_t cosmos_response_header(cosmos_response_t*, const uint8_t* name, size_t name_len, const uint8_t** out_val, size_t* out_len);
-cosmos_status_t cosmos_response_diagnostics_json(cosmos_response_t*, const uint8_t** out_ptr, size_t* out_len);
-void            cosmos_response_release(cosmos_response_t*);
-
-// Error
-void cosmos_error_details(cosmos_error_t*, cosmos_error_details_t* out);
-void cosmos_error_release(cosmos_error_t*);
+```
+runtime → account → database → container
+   │                              │
+   └──► driver ──► operation ────►┴─► submit ──► completion queue ──► completion
+                                         │
+                                         └──► operation handle (cancel / free)
 ```
 
-### 5.3 Async Bridge Pattern
+### 5.3 Async Model: Completion Queue
 
-Native callbacks run on a Rust thread (likely a `tokio` worker). On completion:
+The library never calls into managed code. Instead (as implemented by the POC's `CompletionQueueLoop` and `NativeAsyncOperation`):
 
-1. Native invokes `cosmos_completion(response, error, ctx)`.
-2. `ctx` is a `GCHandle.ToIntPtr(handle)` of a managed continuation (e.g. a `CosmosCompletion` object holding a `TaskCompletionSource`).
-3. The managed callback runs on the Rust worker thread; it must do **minimal work**: capture pointers into `SafeHandle`s and call `tcs.TrySetResult` / `TrySetException`. No user code runs on the native thread.
-4. The awaiting `Task` continuation resumes on the captured `SynchronizationContext` / thread pool per normal .NET rules.
+1. Each client creates one completion queue (`cosmos_completion_queue_create`) and one background pump thread.
+2. For each operation the host allocates a `NativeAsyncOperation` (an id plus a `TaskCompletionSource` created with `RunContinuationsAsynchronously`) and passes `GCHandle.ToIntPtr(GCHandle.Alloc(op))` as `user_data`.
+3. Submit returns an operation handle immediately. If it returns NULL (pre-flight rejection), no completion will arrive, so the host frees the `GCHandle` itself and fails the task.
+4. The pump blocks in `cosmos_completion_queue_wait` (200 ms timeout), recovers the operation from `user_data`, copies every field out of the completion, settles the task (`Ok` → result, `Error` → exception, `Cancelled` → canceled), releases the slot with `cosmos_completion_queue_free_completions`, and frees the `GCHandle` exactly once.
+5. When the task settles, a continuation frees the operation handle.
+6. On dispose: `cosmos_completion_queue_shutdown`, keep draining until the queue reports a terminal state (Rust posts a completion for every in-flight operation), then `cosmos_completion_queue_free`.
+
+The `GCHandle` is the routing mechanism; there is no central dictionary of pending operations.
 
 ```csharp
-[UnmanagedCallersOnly(CallConvs = new[] { typeof(CallConvCdecl) })]
-private static unsafe void OnCompletion(IntPtr response, IntPtr error, IntPtr ctx)
+private bool DrainOne(uint timeoutMs)
 {
-    GCHandle handle = GCHandle.FromIntPtr(ctx);
-    var completion = (CosmosCompletion)handle.Target!;
-    handle.Free();
+    CosmosCompletion slot = default;
+    if (cosmos_completion_queue_wait(this.cqHandle, ref slot, (UIntPtr)1, timeoutMs) == UIntPtr.Zero)
+    {
+        return false;
+    }
 
-    if (error != IntPtr.Zero)
+    try
     {
-        completion.SetException(NativeError.ToCosmosException(error));
+        GCHandle gch = GCHandle.FromIntPtr(slot.UserData);
+        var op = (NativeAsyncOperation)gch.Target!;
+        try
+        {
+            Settle(op, ref slot); // TrySetResult / TrySetException / TrySetCanceled
+        }
+        finally
+        {
+            gch.Free();
+        }
     }
-    else
+    finally
     {
-        completion.SetResult(new ResponseHandle(response));
+        cosmos_completion_queue_free_completions(ref slot, (UIntPtr)1);
     }
+
+    return true;
 }
 ```
+
+### 5.4 Upstream Changes Since the POC
+
+Compared with the header the POC binds, `azure_data_cosmos_driver_native` 0.3.0 on upstream `main`:
+
+- Removes on-demand cancellation: `cosmos_operation_handle_cancel` is gone, the `Cancelled` outcome is reserved, and `cosmos_operation_handle_status` was added.
+- Returns error details as a `cosmos_error_t` struct with fields instead of the `cosmos_error_*` accessor functions.
+- Adds cursors for query, read-feed, and change feed (`cosmos_cursor_*`, with their own queue).
+- Adds diagnostics accessors (`cosmos_diagnostics_*`, including `cosmos_diagnostics_to_json`).
+- Adds AAD through a host token-provider callback (`cosmos_account_ref_with_credential`, `cosmos_token_request_complete`), driver options (`cosmos_driver_options_*`), and fault-injection helpers.
+
+The managed binding follows the header of the pinned release (Part 2), so these differences are absorbed when the first release is pinned.
 
 ---
 
@@ -287,7 +276,9 @@ using Azure.Data.Cosmos.ChangeFeed;        // ChangeFeedIterator, ...
 
 **Cross-repo coordination:**
 
-- Native `cosmos_native` Rust shim lives in **its own repository** (proposed name: **`azure-cosmos-native`** under the `Azure` GitHub org). It produces signed binaries per RID and publishes them to an internal feed. This repository consumes pinned versions, and the `cosmos_native.h` header is committed here for reviewability.
+- The Rust SDK (`azure_data_cosmos`), driver (`azure_data_cosmos_driver`), and native C ABI wrapper (`azure_data_cosmos_driver_native`) live in [`azure-sdk-for-rust` under `sdk/cosmos`](https://github.com/Azure/azure-sdk-for-rust/tree/main/sdk/cosmos) ([ADR 0001](https://github.com/Azure/azure-sdk-for-rust/blob/main/sdk/cosmos/docs/adrs/0001-sdk-driver-native-layering.md)). The native crate builds a `cdylib` + `staticlib` named `azurecosmosdriver` and isn't published to crates.io; native releases follow its [versioning and release policy](https://github.com/Azure/azure-sdk-for-rust/blob/main/sdk/cosmos/azure_data_cosmos_driver_native/docs/NATIVE_VERSIONING_AND_RELEASES.md).
+- **Release cadence:** Rust Cosmos releases ship every 1–2 months, moving to roughly every 3 months once stable. `Azure.Data.Cosmos` pins one native release at a time and picks up new ones on its own schedule.
+- This repository consumes pinned native releases, and the matching `azurecosmosdriver.h` header is vendored here for reviewability.
 - This doc lives at `sdk/cosmosdb/Azure.Data.Cosmos/design/V4-RustInterop-Design.md`. It was ported from the [original draft](https://github.com/Azure/azure-cosmos-dotnet-v3/blob/users/kundadebdatta/build_rust_interop_for_net/docs/V4-RustInterop-Design.md) in `azure-cosmos-dotnet-v3`.
 
 ### 6.2 Project Layout
@@ -310,14 +301,14 @@ azure-sdk-for-net/                                       # github.com/Azure/azur
             ├── Azure.Data.Cosmos.slnx
             ├── Directory.Build.props                    # Pins net10.0 for src + tests
             ├── MigrationGuide.md                        # Planned — V3 → V4 guide
-            ├── native-versions.props                    # Planned — pinned cosmos_native version
+            ├── native-versions.props                    # Planned — pinned native driver release
             ├── api/                                     # Generated public API listing
             │   └── Azure.Data.Cosmos.net10.0.cs
             ├── design/
             │   ├── V4-RustInterop-Design.md             # This doc
             │   └── V4-NativeAbi.md                      # Planned
             ├── native/
-            │   └── cosmos_native.h                      # Planned — committed C ABI header
+            │   └── azurecosmosdriver.h                  # Planned — vendored C ABI header
             ├── src/
             │   ├── Azure.Data.Cosmos.csproj
             │   ├── Properties/AssemblyInfo.cs           # InternalsVisibleTo for tests and Moq
@@ -330,17 +321,17 @@ azure-sdk-for-net/                                       # github.com/Azure/azur
             │   └── Interop/                             # Planned (Part 3)
             │       ├── NativeMethods.cs                 # LibraryImport declarations
             │       ├── NativeLibraryLoader.cs
-            │       ├── CosmosCompletion.cs              # async bridge
+            │       ├── CompletionQueueLoop.cs           # completion-queue pump (from the POC)
+            │       ├── NativeAsyncOperation.cs          # GCHandle user_data + TaskCompletionSource
+            │       ├── CosmosOperationRequestBuilder.cs # builds and pins the flat request for submit
             │       ├── NativeError.cs                   # error translation
-            │       ├── NativeLogPump.cs                 # tracing pump
             │       ├── Handles/
             │       │   ├── CosmosRuntimeHandle.cs
-            │       │   ├── CosmosClientHandle.cs
-            │       │   ├── CosmosResponseHandle.cs
+            │       │   ├── CosmosDriverHandle.cs
+            │       │   ├── CosmosOperationHandle.cs
             │       │   └── ...
             │       └── Marshalling/
-            │           ├── Utf8.cs
-            │           └── SpanWriter.cs
+            │           └── Utf8.cs
             ├── tests/                                   # One sub-folder per test project
             │   ├── Azure.Data.Cosmos.Tests/             # Unit tests (NUnit); snippet code under Samples/
             │   ├── Azure.Data.Cosmos.Emulator.Tests/    # Planned
@@ -355,72 +346,103 @@ azure-sdk-for-net/                                       # github.com/Azure/azur
             ├── perf/                                    # Planned — Azure SDK perf framework
             │   └── Azure.Data.Cosmos.Perf.csproj
             └── runtimes/                                # Planned — staged from native CI artifacts; not committed
-                ├── win-x64/native/cosmos_native.dll
-                ├── win-arm64/native/cosmos_native.dll
-                ├── linux-x64/native/libcosmos_native.so
-                ├── linux-arm64/native/libcosmos_native.so
-                ├── osx-x64/native/libcosmos_native.dylib
-                └── osx-arm64/native/libcosmos_native.dylib
+                ├── win-x64/native/azurecosmosdriver.dll
+                ├── win-arm64/native/azurecosmosdriver.dll
+                ├── linux-x64/native/libazurecosmosdriver.so
+                ├── linux-arm64/native/libazurecosmosdriver.so
+                ├── osx-x64/native/libazurecosmosdriver.dylib
+                └── osx-arm64/native/libazurecosmosdriver.dylib
 ```
 
 This layout follows the `azure-sdk-for-net` standard: `api/`, `src/`, `tests/`, `samples/`, `perf/`, top-level `README.md` + `CHANGELOG.md`, and a `.slnx` per package. Repository-specific notes:
 
-- **Pipelines are per service directory, not per package.** `sdk/cosmosdb/ci.yml` sets `SDKType: client`, and `sdk/cosmosdb/service.projects` limits that pipeline to `Azure.Data.Cosmos*` projects. The generated `ci.mgmt.yml` is left unchanged; it sets no `SDKType` (defaults to `all`), so it also builds and tests this package but doesn't release it.- **Test matrix.** The repository's default matrix runs tests with `--framework net8.0`, `net9.0`, and `net462`, which fail for a `net10.0`-only project. `ci.yml` therefore points `MatrixConfigs` at `sdk/cosmosdb/platform-matrix.json` (Linux, Windows, macOS on `net10.0`); the PR pipeline picks this up from package properties. For pipelines that still use the default matrix (`ci.mgmt.yml`), `service.projects` drops `Azure.Data.Cosmos*` projects from any leg whose target framework isn't `net10.0`.- **Target frameworks** are set once in `Azure.Data.Cosmos/Directory.Build.props` (`net10.0` for src and tests). Without it, the repository defaults would add `net8.0` and `netstandard2.0` to the library, and `net8.0`, `net9.0`, and `net462` (on Windows) to test projects.
+- **Pipelines are per service directory, not per package.** `sdk/cosmosdb/ci.yml` sets `SDKType: client`, and `sdk/cosmosdb/service.projects` limits that pipeline to `Azure.Data.Cosmos*` projects. The generated `ci.mgmt.yml` is left unchanged; it sets no `SDKType` (defaults to `all`), so it also builds and tests this package but doesn't release it.
+- **Test matrix.** The repository's default matrix runs tests with `--framework net8.0`, `net9.0`, and `net462`, which fail for a `net10.0`-only project. `ci.yml` therefore points `MatrixConfigs` at `sdk/cosmosdb/platform-matrix.json` (Linux, Windows, macOS on `net10.0`); the PR pipeline picks this up from package properties. For pipelines that still use the default matrix (`ci.mgmt.yml`), `service.projects` drops `Azure.Data.Cosmos*` projects from any leg whose target framework isn't `net10.0`.
+- **Target frameworks** are set once in `Azure.Data.Cosmos/Directory.Build.props` (`net10.0` for src and tests). Without it, the repository defaults would add `net8.0` and `netstandard2.0` to the library, and `net8.0`, `net9.0`, and `net462` (on Windows) to test projects.
 - **Test project names must end in `.Tests`** (for example `Azure.Data.Cosmos.Emulator.Tests`) for the engineering system to classify them as test projects. Each lives in its own sub-folder so SDK-style globbing doesn't pull one project's files into another.
 - **Samples** follow the repository snippet convention: markdown under `samples/`, compiled snippet code under `tests/Azure.Data.Cosmos.Tests/Samples/`, kept in sync by `eng/scripts/Update-Snippets.ps1`.
 - **Ownership:** `.github/CODEOWNERS` has no entry covering `sdk/cosmosdb/Azure.Data.Cosmos/` yet.
 
 ### 6.3 Native Library Loading
 
-- Use `NativeLibrary.SetDllImportResolver` to control which native binary is loaded.
-- Probe `runtimes/<RID>/native/` first; fall back to system path.
-- On load: call `cosmos_native_abi_version()` and verify it matches the managed-side expected major version. Fail fast with a clear error if mismatched.
-- Wrap `cosmos_runtime_init` in a singleton (one runtime per process by default; configurable via `CosmosClientOptions`).
+- Library name `azurecosmosdriver` (`[LibraryImport("azurecosmosdriver")]`), same as the POC.
+- Packaged: binaries under `runtimes/<rid>/native/` are resolved by the .NET host from the app's dependency manifest, so consumers need no custom resolver.
+- Development and tests: `NativeLibrary.SetDllImportResolver` can point at a locally built library. (The POC instead copies `azurecosmosdriver.dll` from `DriverNativeArtifactDir` next to its executable.)
+- On first use, compare `cosmos_version()` with the pinned release and fail fast on a mismatch (pending Q8; the POC declares `cosmos_version()` but doesn't call it).
+- Runtime: the POC builds one runtime per client with `cosmos_runtime_build`; whether to share one per process is Q2.
 
 ### 6.4 SafeHandle Pattern
 
 ```csharp
-internal sealed partial class CosmosClientHandle : SafeHandle
+internal sealed partial class CosmosDriverHandle : SafeHandle
 {
-    public CosmosClientHandle() : base(IntPtr.Zero, ownsHandle: true) { }
+    public CosmosDriverHandle() : base(IntPtr.Zero, ownsHandle: true) { }
     public override bool IsInvalid => handle == IntPtr.Zero;
 
     protected override bool ReleaseHandle()
     {
-        NativeMethods.cosmos_client_release(handle);
+        NativeMethods.cosmos_driver_free(handle);
         return true;
     }
 }
 ```
 
-Every native object that survives a single call uses a `SafeHandle`. Per-call objects (responses, errors) use `SafeHandle` too — wrapped in `using` for deterministic release.
+Every long-lived native object (runtime, account, database, driver, container, partition key, completion queue) uses a `SafeHandle`. As in the POC, the graph is built in a staged way (anything created before a failure is freed) and children are freed before parents. Operation handles and rich errors are released as soon as the operation settles.
 
 ### 6.5 Serialization
 
 - Default: `System.Text.Json` with a Cosmos-tuned `JsonSerializerOptions` (camelCase, ignore nulls on write, etc.).
-- Items are serialized **in managed memory** to a pooled `ArrayBufferWriter<byte>` (UTF-8) and handed to native as `(ptr, len)`.
-- Responses come back as a UTF-8 span pointing into the response handle's owned buffer; deserialized in managed.
+- Items are serialized **in managed memory** to a pooled `ArrayBufferWriter<byte>` (UTF-8) and handed to native as a byte view (pointer + length).
+- Response bodies are copied out of the completion before its slot is released (as in the POC), then deserialized in managed code.
 - Pluggable: `CosmosClientOptions.Serializer` allows custom (e.g. `Newtonsoft.Json`) implementations, mirroring V3.
 
 ### 6.6 Diagnostics
 
-- Native exposes a `cosmos_response_diagnostics_json(...)` returning a structured JSON blob (regions contacted, retries, latencies, request charges).
+- The POC reads status, sub-status, request charge, activity id, session token, etag, and continuation from each completion. Upstream `main` adds `cosmos_diagnostics_*` accessors, including `cosmos_diagnostics_to_json` (regions contacted, retries, latency, request charge).
 - Managed wraps this into a `CosmosDiagnostics` object with the V3 contract preserved (string `ToString()`, structured properties).
-- Native logs flow through `cosmos_runtime_set_log_callback` into an `EventSource` (`Azure-Cosmos-Operation`) so they show up in standard .NET tracing tooling (PerfView, dotnet-trace, OpenTelemetry).
+- The ABI has no logging callback. Managed code emits an `EventSource` (`Azure-Data-Cosmos`) and OpenTelemetry data from completion and diagnostics fields, so they show up in standard .NET tracing tooling (PerfView, dotnet-trace, OpenTelemetry).
 
 ### 6.7 Exception Translation
 
 | Native | Managed |
 |---|---|
-| `cosmos_status_t != 0` with `cosmos_error_t*` having HTTP status | `CosmosException` (StatusCode, SubStatusCode, ActivityId, RetryAfter, Diagnostics) |
-| Cancellation observed via `CancellationToken` registration | `OperationCanceledException` |
-| ABI-level failure (panic, invariant) | `CosmosInteropException` (new; non-retriable, fatal) |
+| Completion outcome `Error`, or a non-zero `CosmosErrorCode` with a rich error | `CosmosException` (StatusCode, SubStatusCode, ActivityId, SessionToken, ETag, RetryAfter, Diagnostics). The POC uses `CosmosNativeException`. |
+| Completion outcome `Cancelled`, or cancellation observed via `CancellationToken` | `OperationCanceledException` |
+| Wrapper/fatal codes (4xxx, e.g. queue shutdown, driver not initialized, runtime build failed) | `CosmosInteropException` (new; non-retriable, fatal) |
 
 Never let exceptions propagate **across** the FFI boundary in either direction.
 
 ### 6.8 Cancellation
 
-`CancellationToken` is bridged by registering a callback that calls `cosmos_request_cancel(request_handle)`. The Rust side observes the cancellation, aborts in-flight HTTP, and completes the callback with a cancellation error.
+As in the POC, `CancellationToken.Register` calls `cosmos_operation_handle_cancel(operationHandle)`. Either the operation hasn't finished and Rust posts a `Cancelled` completion, or it already finished and the normal result arrives; both are valid. A continuation unregisters the token and frees the operation handle once the task settles.
+
+Upstream `main` has since removed on-demand cancellation (5.4). Until it returns, cancellation only stops the managed wait: the task is canceled, and the completion that arrives later is drained and discarded.
+
+### 6.9 Authentication
+
+- **Account key / connection string:** `cosmos_account_ref_with_master_key` (as in the POC).
+- **AAD (`TokenCredential`):** upstream `main` adds `cosmos_account_ref_with_credential` with a host token provider. Rust asks the host for a token through a callback; managed code calls `TokenCredential.GetTokenAsync` off that thread and answers with `cosmos_token_request_complete`. This is the only callback into managed code, so it must do minimal work and never block the Rust thread. Not in the POC.
+- **Resource tokens:** not supported upstream yet.
+
+### 6.10 Configuration Mapping
+
+- `CosmosClientOptions` → runtime options (`cosmos_runtime_options_default` + overrides such as the user-agent suffix, as in the POC) and, on upstream `main`, driver options (`cosmos_driver_options_*`): preferred regions, consistency, timeouts, retries.
+- Request options → the flat `CosmosOperationOptions`, where 0 means "inherit from the client".
+- The field-by-field mapping is defined against the pinned header in `V4-NativeAbi.md` (Part 2).
+- Azure.Core's `HttpPipeline` is bypassed (C-2): the Rust driver sends all HTTP requests, so Azure.Core pipeline settings (transport, retry policy, custom policies) have no effect. Their equivalents are configured through the driver options.
+
+### 6.11 Threading and Scale
+
+- The POC creates one Rust runtime, one completion queue, and one pump thread per client.
+- Many clients therefore means many threads. Recommendation (Q2): one shared runtime per process, and clients reused as singletons (same guidance as V3). Several queues can share one runtime because `CompletionQueueLoop` takes the runtime as input.
+- The pump never runs user code: tasks use `RunContinuationsAsynchronously`.
+
+### 6.12 Feed Operations (Query, Read Feed, Change Feed)
+
+- Point operations use `cosmos_submit_singleton_operation`.
+- In the POC, feeds use `cosmos_submit_operation`, one page per submit, with the continuation token round-tripped as an opaque string.
+- Upstream `main` adds cursors (`cosmos_cursor_open_submit` / `_next_submit` / `_checkpoint_submit`) with their own queue. `AsyncPageable<T>` maps one page to one `next` call. Which model to bind is decided when the first release is pinned (Q8).
+- Known gap seen in the POC: cross-partition `ORDER BY` returns `400/1004` (`CrossPartitionQueryNotServable`).
 
 ---
 
@@ -428,8 +450,8 @@ Never let exceptions propagate **across** the FFI boundary in either direction.
 
 ### 7.1 Native Binary Sourcing
 
-- Rust `cosmos_native` shim is built in the **`azure-cosmos-native`** repository on its own pipeline.
-- That pipeline publishes signed binaries per RID to an internal Azure Artifacts feed.
+- The `azurecosmosdriver` native library is built from [`azure_data_cosmos_driver_native`](https://github.com/Azure/azure-sdk-for-rust/tree/main/sdk/cosmos/azure_data_cosmos_driver_native) in `azure-sdk-for-rust` by its [native release pipeline](https://github.com/Azure/azure-sdk-for-rust/blob/main/sdk/cosmos/azure_data_cosmos_driver_native/pipeline/native-driver.yml), following the [release guide](https://github.com/Azure/azure-sdk-for-rust/blob/main/sdk/cosmos/azure_data_cosmos_driver_native/docs/RELEASE_GUIDE.md). Releases come from protected source tags, every 1–2 months (about every 3 months once stable).
+- **Gap:** that pipeline currently targets Go: it publishes static libraries for Linux (glibc and musl, x64 and arm64) and macOS arm64 to [`Azure/azure-cosmos-driver`](https://github.com/Azure/azure-cosmos-driver), with Windows deferred and no macOS x64. .NET needs signed shared libraries (`cdylib`) for every RID in 7.2, published somewhere this repository's build can download them from (Q9).
 - The `azure-sdk-for-net` build for `Azure.Data.Cosmos` pulls a pinned version (recorded in `sdk/cosmosdb/Azure.Data.Cosmos/native-versions.props`) and stages assets into `sdk/cosmosdb/Azure.Data.Cosmos/runtimes/<rid>/native/` before pack. Staged binaries aren't committed.
 - The `Azure.Data.Cosmos.csproj` declares each native asset as `<Content>` with `PackagePath="runtimes/<rid>/native/"` so .NET runtime resolves them automatically.
 
@@ -440,25 +462,25 @@ Azure.Data.Cosmos.<version>.nupkg
 ├── lib/
 │   └── net10.0/Azure.Data.Cosmos.dll    # Next .NET release added when it ships; oldest dropped
 └── runtimes/
-    ├── win-x64/native/cosmos_native.dll
-    ├── win-arm64/native/cosmos_native.dll
-    ├── linux-x64/native/libcosmos_native.so
-    ├── linux-arm64/native/libcosmos_native.so
-    ├── osx-x64/native/libcosmos_native.dylib
-    └── osx-arm64/native/libcosmos_native.dylib
+    ├── win-x64/native/azurecosmosdriver.dll
+    ├── win-arm64/native/azurecosmosdriver.dll
+    ├── linux-x64/native/libazurecosmosdriver.so
+    ├── linux-arm64/native/libazurecosmosdriver.so
+    ├── osx-x64/native/libazurecosmosdriver.dylib
+    └── osx-arm64/native/libazurecosmosdriver.dylib
 ```
 
 ### 7.3 Pipelines
 
 - Builds run on the standard `azure-sdk-for-net` engineering system (`eng/`). Registration is via `sdk/cosmosdb/ci.yml` (`SDKType: client`, net10.0-only `MatrixConfigs` from `sdk/cosmosdb/platform-matrix.json`), with `sdk/cosmosdb/service.projects` limiting that pipeline to `Azure.Data.Cosmos*` projects. The generated `sdk/cosmosdb/ci.mgmt.yml` stays as is.
-- No step in the standard templates downloads native artifacts today. A pre-build step that pulls the pinned `cosmos_native` artifacts from the internal feed has to be added (Part 1).
+- No step in the standard templates downloads native artifacts today. A pre-build step that pulls the pinned `azurecosmosdriver` release artifacts has to be added (Part 1).
 - Emulator-driven integration tests can reuse the existing `eng/common/pipelines/templates/steps/cosmos-emulator.yml` step. Live tests are registered through `sdk/cosmosdb/tests.yml` (planned) with resources in `sdk/cosmosdb/test-resources.json`.
 - BinSkim scanning in `eng/pipelines/templates/stages/1es-redirect.yml` analyzes every `.dll`/`.exe`; the native binaries must pass it or be explicitly excluded there (as is done for a few third-party native DLLs today).
 - Release pipeline reuses the standard Azure SDK release pipeline (signing, NuGet push, GitHub release).
 
 ### 7.4 Signing
 
-- Native binaries are Authenticode-signed (Windows) and notarized (macOS) by the **`azure-cosmos-native`** pipeline before publication to the consumed feed.
+- Native binaries must be Authenticode-signed (Windows) and notarized (macOS) by the Rust native release pipeline before this repository consumes them. That pipeline already produces checksums and signed SPDX provenance; code signing of shared libraries for .NET is still to be confirmed with the Rust team (Q9).
 - Managed `Azure.Data.Cosmos.dll` is strong-named via the standard `azure-sdk-for-net` signing keys.
 
 ---
@@ -467,7 +489,7 @@ Azure.Data.Cosmos.<version>.nupkg
 
 | Layer | Tests | Coverage |
 |---|---|---|
-| **Interop unit** | A test-only native shim (in C or Rust) that lets us validate marshalling, callbacks, cancellation, error translation deterministically without hitting any backend. | High; runs on every PR. |
+| **Interop unit** | A test-only native build (shim, or the upstream crate with its `test-abi` feature) that lets us validate marshalling, the completion-queue pump, cancellation, and error translation deterministically without hitting any backend. | High; runs on every PR. |
 | **Managed unit** | NUnit tests (repository standard) in `Azure.Data.Cosmos.Tests` for facade types, options validation, serialization, LINQ-to-query. Native methods mocked with Moq behind an `INativeApi` seam. | High. |
 | **Emulator integration** | Scenarios ported from V3's [Microsoft.Azure.Cosmos.EmulatorTests](https://github.com/Azure/azure-cosmos-dotnet-v3/tree/main/Microsoft.Azure.Cosmos/tests/Microsoft.Azure.Cosmos.EmulatorTests), in `Azure.Data.Cosmos.Emulator.Tests`. Runs full V4 stack against the Cosmos DB Emulator. | Medium-high; CI gate. |
 | **Live multi-region** | Off by default; gated to a manual lab pipeline. Validates failover, hedging, retry behavior delegated to Rust. | Pre-release gate. |
@@ -475,7 +497,7 @@ Azure.Data.Cosmos.<version>.nupkg
 | **AOT / trim** | The engineering system's AOT compatibility check (`eng/scripts/compatibility/Check-AOT-Compatibility.ps1`) publishes a `PublishAot=true` app against the package; it must pass with no warnings. | CI gate. |
 | **Fuzz / soak** | Long-running soak in a scale lab to catch leaks (handle, native memory, GCHandle). Use `dotnet-counters` and Rust `tracing` to monitor. | Pre-release gate. |
 
-A new project, `tests/Azure.Data.Cosmos.Interop.Tests`, hosts a tiny `cosmos_native_test.{dll,so,dylib}` exporting the same ABI for deterministic tests.
+A new project, `tests/Azure.Data.Cosmos.Interop.Tests`, exercises the same ABI deterministically. The upstream crate already has a `test-abi` feature (in-memory emulator plus `__test_only_*` helpers used by its C tests), which may replace a hand-written shim.
 
 ---
 
@@ -484,10 +506,20 @@ A new project, `tests/Azure.Data.Cosmos.Interop.Tests`, hosts a tiny `cosmos_nat
 - **Repository:** Hosted in [`azure-sdk-for-net`](https://github.com/Azure/azure-sdk-for-net) under `sdk/cosmosdb/Azure.Data.Cosmos/`. V3 remains in [`azure-cosmos-dotnet-v3`](https://github.com/Azure/azure-cosmos-dotnet-v3).
 - **Side-by-side:** V4 ships as a **new package id `Azure.Data.Cosmos`** (preview → GA), independent of V3's `Microsoft.Azure.Cosmos`. Both packages can be installed in the same project.
 - **Namespace:** `Azure.Data.Cosmos` (Azure SDK convention). Distinct from V3's `Microsoft.Azure.Cosmos` — no aliasing required.
-- **Target frameworks:** the two most recent .NET releases, starting with `net10.0` only; no .NET Framework or .NET Standard. Set in `Azure.Data.Cosmos/Directory.Build.props`. The repository requires Azure SDK architect approval for client libraries that drop `netstandard2.0`.
-- **ABI versioning:** Managed expects `cosmos_native_abi_version() >= MinAbi && < MaxAbi+1`. Bumping ABI major requires a coordinated release of native and managed.
+- **Target frameworks:** `net10.0` at GA, then the two most recent .NET LTS releases (C-1); no .NET Framework or .NET Standard. Set in `Azure.Data.Cosmos/Directory.Build.props`. The repository requires Azure SDK architect approval for client libraries that drop `netstandard2.0`.
+- **ABI versioning:** The upstream policy uses the native crate's SemVer as the compatibility contract instead of a separate ABI version (pre-`1.0.0`, any C FFI change requires a minor bump). Managed pins an exact native release in `native-versions.props`; whether to also probe the version at load is open (Q8).
 - **Public API versioning:** Same SemVer rules used today. The public surface is tracked in `api/Azure.Data.Cosmos.net10.0.cs` (regenerated with `eng/scripts/Export-API.ps1`) and, after the first GA, enforced by ApiCompat through `ApiCompatVersion` in the csproj.
 - **Migration guide:** Authored alongside V4 GA as `MigrationGuide.md` at the package root (as `Azure.Data.Tables` does). Highlights breaking changes vs V3 and the gateway-only constraint.
+
+**Long-term maintenance:**
+
+| Topic | Plan |
+|---|---|
+| Target frameworks | `net10.0` at GA. Then the two most recent .NET LTS releases: add each new LTS when it ships, drop the oldest, and publish the schedule up front (C-1). |
+| Rust release intake | Rust ships every 1–2 months (about every 3 months once stable). Each intake: bump `native-versions.props`, re-vendor and diff `azurecosmosdriver.h`, update the bindings, run the full test suite. Security fixes are taken out of band. |
+| Prerelease versions | `-beta.N` (repository convention), starting at `1.0.0-beta.1`. |
+| Release cadence | Set by the service team, independent of V3 and of the standard Azure SDK cadence; any release that adds public API needs API review first (C-6). A native intake normally ships in the next V4 release. |
+| V3 | Continues on its own cadence (replacing V3 is a non-goal); the migration guide ships with V4 GA. |
 
 ---
 
@@ -495,11 +527,11 @@ A new project, `tests/Azure.Data.Cosmos.Interop.Tests`, hosts a tiny `cosmos_nat
 
 | Risk | Impact | Mitigation |
 |---|---|---|
-| Rust driver feature gaps vs V3 (e.g. specific query features, telemetry fields). | API parity hole; can block GA. | Build a parity matrix early. Track gaps as work items in the Rust repo. Use **preview status** until matrix is green. |
+| Rust driver feature gaps vs V3 (e.g. specific query features, telemetry fields). | API parity hole; can block GA. | Build a parity matrix early. Track gaps as work items in `azure-sdk-for-rust`. Use **preview status** until matrix is green. |
 | Native crash brings down the .NET process. | Severe — hard to diagnose. | All native code wrapped in `catch_unwind` in Rust; ABI returns error code instead of unwinding. Crash-dump tests in CI. |
 | Marshalling overhead dominates small-payload latency. | Perf regression vs V3. | Use UTF-8 spans and pooled buffers. Benchmark V4 in `perf/Azure.Data.Cosmos.Perf` against V3 baselines from [Microsoft.Azure.Cosmos.Performance.Tests](https://github.com/Azure/azure-cosmos-dotnet-v3/tree/main/Microsoft.Azure.Cosmos/tests/Microsoft.Azure.Cosmos.Performance.Tests). |
-| GCHandle leaks on cancelled operations. | Slow memory leak in long-running services. | Use a single `CompletionRegistry` keyed by request id; ensure the registry frees on **every** terminal callback (success, error, cancel). Add leak tests. |
-| Native binary distribution / signing complexity. | Ship blocker per OS/arch. | Establish RID matrix and signing workflow in pipeline templates **before** writing the managed code. |
+| GCHandle leaks on cancelled operations. | Slow memory leak in long-running services. | Follow the POC: the `GCHandle` passed as `user_data` is freed exactly once, by the pump after settling the task, or by the submitter when submit is rejected; no central registry. Add leak tests. |
+| Native binary distribution / signing complexity. | Ship blocker per OS/arch. | Settle the RID matrix and signing workflow (Q9) in parallel with the internal interop work; native packaging (PR 3) lands before the first public API (PR 5). |
 | AOT/trim incompatibility. | Loss of a key V4 selling point. | `LibraryImport` source generators + no reflection in the interop layer; AOT smoke test in CI. |
 | Diagnostics shape divergence between V3 and V4. | Customer telemetry breakage. | Define diagnostics JSON schema in the ABI doc; contract-test against V3 outputs. |
 | Gateway-only constraint surprises customers. | Adoption friction. | Up-front documentation, package description, and `CosmosClientOptions.ConnectionMode` only accepts `Gateway`; throw with a clear message otherwise. |
@@ -508,7 +540,7 @@ A new project, `tests/Azure.Data.Cosmos.Interop.Tests`, hosts a tiny `cosmos_nat
 
 ## 11. Phased Development Plan
 
-The plan is broken into **eight phases**. Each phase has clear exit criteria, no time estimates per project convention.
+The plan is broken into **nine phases (0–8)**. Each phase has clear exit criteria, no time estimates per project convention.
 
 ### Phase 0 — Foundations & Alignment
 
@@ -517,24 +549,26 @@ The plan is broken into **eight phases**. Each phase has clear exit criteria, no
 - [ ] V4 vs V3 public API delta proposal drafted; API review scheduled.
 - [ ] RID matrix locked: `win-x64`, `win-arm64`, `linux-x64`, `linux-arm64`, `osx-x64`, `osx-arm64`.
 - [ ] Native binary distribution & signing pipeline owned and prototyped (round-trip a hello-world Rust `.dll`/`.so`/`.dylib` into a NuGet package).
+- [ ] Security/compliance approval for shipping the native (FFI) dependency in the NuGet package (C-4).
 
 ### Phase 1 — Native ABI Specification
 
 **Exit criteria:**
-- [ ] `cosmos_native.h` v0.1 committed under `sdk/cosmosdb/Azure.Data.Cosmos/native/` (with a mirror in this design doc) covering: lifecycle, client create/release, item CRUD, query, change feed, batch, response, error, diagnostics, log callback, cancellation, ABI version probe.
+- [ ] `azurecosmosdriver.h` from the pinned native release vendored under `sdk/cosmosdb/Azure.Data.Cosmos/native/`, and its coverage checked against: runtime lifecycle; account, database, driver, and container handles; operation submit (item CRUD, query, change feed, batch); completion queue; errors; diagnostics; version string; cancellation.
 - [ ] Async/cancellation/error model documented with examples.
 - [ ] Diagnostics JSON schema versioned and committed.
-- [ ] Rust shim crate skeleton exists and produces the header via `cbindgen`, validated against the committed copy.
+- [x] Rust native crate (`azure_data_cosmos_driver_native`) exists and generates `azurecosmosdriver.h` via `cbindgen` (checked in upstream).
+- [ ] Vendored header validated against the pinned release tag.
 
 ### Phase 2 — Managed Skeleton & Interop Plumbing
 
 **Exit criteria:**
 - [x] New project `Azure.Data.Cosmos.csproj` builds for `net10.0`.
 - [ ] `LibraryImport` declarations for the Phase 1 ABI compile and pass source-generator validation.
-- [ ] `NativeLibrary.SetDllImportResolver` correctly loads the binary from `runtimes/<rid>/native/` in dev and packed scenarios.
-- [ ] `cosmos_native_abi_version()` probe runs on first use; mismatched version throws a clean `CosmosInteropException`.
+- [ ] The native library loads from `runtimes/<rid>/native/` when packed, and through the `SetDllImportResolver` override in dev and test.
+- [ ] `cosmos_version()` checked against the pinned release on first use; a mismatch throws a clean `CosmosInteropException` (pending Q8).
 - [ ] All `SafeHandle` types implemented with finalizer tests.
-- [ ] `CosmosCompletion` async bridge round-trips a no-op call with a test-only native shim.
+- [ ] `CompletionQueueLoop` round-trips an operation against a test build of the native library.
 
 ### Phase 3 — Item CRUD End-to-End
 
@@ -542,17 +576,17 @@ The plan is broken into **eight phases**. Each phase has clear exit criteria, no
 - [ ] `CosmosClient`, `Database`, `Container` types implemented with constructors/factory methods.
 - [ ] Item Create / Read / Replace / Upsert / Patch / Delete fully functional against the emulator.
 - [ ] `CosmosException` translation complete (status, sub-status, activity id, retry-after, diagnostics).
-- [ ] `CancellationToken` flows native-side and aborts in-flight requests.
+- [ ] `CancellationToken` flows native-side and aborts in-flight requests (needs upstream cancellation support; see 5.4).
 - [ ] Diagnostics object populated from native diagnostics JSON; `ToString()` parity-tested vs V3 for the same operations.
 - [ ] Emulator test suite covers item CRUD with green CI.
 
 ### Phase 4 — Query & Change Feed
 
 **Exit criteria:**
-- [ ] `AsyncPageable<T>` implementation backed by `cosmos_query_*` ABI.
+- [ ] `AsyncPageable<T>` implementation backed by feed operations (`cosmos_submit_operation`, or cursors on upstream `main`; see 6.12).
 - [ ] Continuation tokens round-trip correctly (string-typed; opaque to managed).
 - [ ] LINQ provider produces a `QueryDefinition` understood by Rust query pipeline.
-- [ ] Change feed (latest-version + all-versions-and-deletes) functional via `cosmos_changefeed_*`.
+- [ ] Change feed (latest-version + all-versions-and-deletes) functional via feed operations or cursors.
 - [ ] Emulator parity tests for queries from V3's [Microsoft.Azure.Cosmos.Samples/Usage/Queries](https://github.com/Azure/azure-cosmos-dotnet-v3/tree/main/Microsoft.Azure.Cosmos.Samples/Usage/Queries).
 
 ### Phase 5 — Batch, Bulk, Auth Modes
@@ -560,13 +594,13 @@ The plan is broken into **eight phases**. Each phase has clear exit criteria, no
 **Exit criteria:**
 - [ ] `TransactionalBatch` builder + execute fully functional.
 - [ ] Bulk execution path implemented (managed-side batching feeds into the Rust driver bulk pipeline).
-- [ ] Auth: account key, resource token, AAD (`TokenCredential`) all wired through `cosmos_credential_t`.
-- [ ] Account-management surface (create database, create container, throughput) implemented.
+- [ ] Auth: account key (`cosmos_account_ref_with_master_key`) and AAD (`TokenCredential` via `cosmos_account_ref_with_credential`; see 6.9); resource tokens once supported upstream.
+- [ ] Account-management surface (create database, create container, throughput) implemented (Part 5).
 
 ### Phase 6 — Diagnostics, Telemetry, OTel
 
 **Exit criteria:**
-- [ ] Native log pump → `EventSource` and OpenTelemetry-friendly traces.
+- [ ] Managed `EventSource` and OpenTelemetry traces built from completion and diagnostics data (the ABI has no logging callback).
 - [ ] Activity propagation: `System.Diagnostics.Activity` correlation IDs flow into native and surface on responses.
 - [ ] Metrics surface (request charge, latency, region) reachable from `CosmosDiagnostics` and from `Meter` instrumentation.
 - [ ] OTel sample added under `sdk/cosmosdb/Azure.Data.Cosmos/samples/`.
@@ -582,10 +616,10 @@ The plan is broken into **eight phases**. Each phase has clear exit criteria, no
 ### Phase 8 — Preview, Feedback, GA
 
 **Exit criteria:**
-- [ ] Preview NuGet (`-preview.N`) published; migration guide drafted.
+- [ ] Beta NuGet (`-beta.N`) published; migration guide drafted.
 - [ ] Customer / internal partner adoption signed off (≥ 2 design partners).
 - [ ] Parity matrix vs V3 fully green (or each gap explicitly waived in the migration guide).
-- [ ] Security review and threat-model review completed for the FFI boundary.
+- [ ] Security review and threat-model review completed for the FFI boundary (C-4).
 - [ ] GA release published; V4 public docs live.
 
 ---
@@ -594,14 +628,42 @@ The plan is broken into **eight phases**. Each phase has clear exit criteria, no
 
 This section converts the phased plan in Section 11 into concrete, ordered implementation parts. Each part lists **what will be built**, the **files / projects touched**, and **how it will be verified**. Parts are sequential where dependencies require it; independent work within a part can be parallelized.
 
+### Phase ↔ Part Map
+
+| Phase | Parts |
+|---|---|
+| 0 — Foundations | 1 |
+| 1 — Native ABI | 2 |
+| 2 — Interop plumbing | 3, 4 |
+| 3 — Item CRUD | 5, 6 |
+| 4 — Query & change feed | 7, 8 |
+| 5 — Batch, bulk, auth | 9 (batch, bulk); 5 (auth, account management) |
+| 6 — Diagnostics | 10 |
+| 7 — Hardening | 11, 12 |
+| 8 — Preview & GA | 13, 14, 15 |
+
+### Delivery Sequence (PRs)
+
+| PR | Scope | Parts | Blocked by |
+|---|---|---|---|
+| 1 | Skeleton + CI wiring ([#64393](https://github.com/Azure/azure-sdk-for-net/pull/64393)) | 1 (items 1–2) | Architect OK for `net10.0`-only (D-9) |
+| 2 | Internal interop plumbing, no real binary | 3 | PR 1 |
+| 3 | Native binary download + packaging | 1 (items 3–6) | Q9 |
+| 4 | Interop test harness | 4 | PR 2 |
+| 5 | `CosmosClient`, auth, account management (first public API) | 5 | PRs 2–3, API review |
+| 6 | Item CRUD | 6 | PR 5 |
+| 7 | Query, change feed, batch/bulk, diagnostics (parallel PRs) | 7–10 | PR 6 |
+| 8 | Hardening, parity suite | 11, 12 | PR 7 |
+| 9 | Docs and samples, beta, GA | 13–15 | PR 8 |
+
 ### Part 1 — Repo & Pipeline Foundations
 
 **What will be built:**
 1. **Done.** New package directory `sdk/cosmosdb/Azure.Data.Cosmos/` in the [`azure-sdk-for-net`](https://github.com/Azure/azure-sdk-for-net) monorepo, registered in `sdk/cosmosdb/ci.yml` (`SDKType: client`, net10.0-only test matrix in `sdk/cosmosdb/platform-matrix.json`) with `sdk/cosmosdb/service.projects` filtering the build to `Azure.Data.Cosmos*` projects and keeping them out of non-`net10.0` legs.
 2. **Done.** Standard Azure SDK package skeleton: `src/Azure.Data.Cosmos.csproj`, `Azure.Data.Cosmos.slnx`, `Directory.Build.props` (`net10.0` only), `README.md`, `CHANGELOG.md`, `api/`, `src/`, `tests/Azure.Data.Cosmos.Tests/`. `samples/` and `perf/` are added with the first sample and benchmark.
-3. New `sdk/cosmosdb/Azure.Data.Cosmos/native-versions.props` pinning the consumed `cosmos_native` build version (single source of truth for native ↔ managed pairing).
+3. New `sdk/cosmosdb/Azure.Data.Cosmos/native-versions.props` pinning the consumed `azure_data_cosmos_driver_native` release (single source of truth for native ↔ managed pairing).
 4. CI scaffolding on top of the standard `eng/` pipelines:
-   - New pre-build step (not in the standard templates today) that downloads pinned native artifacts (per RID) from the internal feed into `sdk/cosmosdb/Azure.Data.Cosmos/runtimes/<rid>/native/`.
+   - New pre-build step (not in the standard templates today) that downloads the pinned native release artifacts (per RID) into `sdk/cosmosdb/Azure.Data.Cosmos/runtimes/<rid>/native/`.
    - `sdk/cosmosdb/tests.yml` for live/emulator test runs.
    - Standard release pipeline used as-is.
 5. `.github/CODEOWNERS` entry for `/sdk/cosmosdb/Azure.Data.Cosmos/`.
@@ -616,24 +678,23 @@ This section converts the phased plan in Section 11 into concrete, ordered imple
 ### Part 2 — Native ABI Specification (Header First)
 
 **What will be built:**
-1. `sdk/cosmosdb/Azure.Data.Cosmos/native/cosmos_native.h` — committed C header. Initial scope:
-   - ABI version probe.
-   - Runtime lifecycle + log callback.
-   - Client create / release.
-   - Item CRUD (create, read, replace, upsert, patch, delete).
-   - Query create / next page / release.
-   - Change feed create / next page / release.
-   - Batch create / add op / execute / release.
-   - Response inspection (status, body, header, diagnostics JSON).
-   - Error inspection / release.
-   - Cancellation.
-2. `sdk/cosmosdb/Azure.Data.Cosmos/design/V4-NativeAbi.md` describing: calling conventions, threading, lifetime rules, error model, async/cancellation contract, diagnostics JSON schema, log event schema.
-3. Coordination with the Rust team to produce `cbindgen` output that exactly matches the committed header (CI gate compares them).
+1. `sdk/cosmosdb/Azure.Data.Cosmos/native/azurecosmosdriver.h` — vendored from the pinned `azure_data_cosmos_driver_native` release. Required coverage:
+   - Version string (`cosmos_version`) and string release.
+   - Runtime lifecycle.
+   - Account, database, driver, container, partition key, and feed range handles.
+   - Flat operation request and options; singleton and feed submit.
+   - Item CRUD and patch, batch, query, read-feed, and change feed (operation kinds and cursors).
+   - Completion queue: create, wait, free completions, shutdown, state.
+   - Completion fields (status, body, headers, diagnostics).
+   - Error codes and rich errors.
+   - Operation handle state and cancellation.
+2. `sdk/cosmosdb/Azure.Data.Cosmos/design/V4-NativeAbi.md` describing: calling conventions, threading, lifetime rules, error model, completion-queue and cancellation contract, diagnostics JSON schema.
+3. CI gate that compares the vendored header with the one at the pinned upstream release tag (upstream already regenerates it with `cbindgen` on every build).
 
 **Verification:**
 - Header compiles cleanly under MSVC, Clang, GCC.
-- `cbindgen`-generated header diff is empty against the committed copy.
-- Doc reviewed and signed off by both .NET and Rust leads.
+- Vendored header diff is empty against the pinned upstream release tag.
+- Doc reviewed and signed off by both .NET and Rust leads; the native contract gets general approval from the central team (API review covers only the public C# API; C-5).
 
 ---
 
@@ -641,27 +702,27 @@ This section converts the phased plan in Section 11 into concrete, ordered imple
 
 **What will be built:**
 1. `src/Azure.Data.Cosmos.csproj` (exists) gains the interop code below under `src/Interop/`.
-2. `Interop/NativeMethods.cs` — `LibraryImport` declarations for every entry point from Part 2. Marked `partial`; source-generated marshallers.
-3. `Interop/NativeLibraryLoader.cs` — installs `NativeLibrary.SetDllImportResolver` to probe `runtimes/<RID>/native/` and validates `cosmos_native_abi_version()` on first load.
-4. `Interop/Handles/*` — one `SafeHandle` subclass per native opaque type (`CosmosRuntimeHandle`, `CosmosClientHandle`, `CosmosResponseHandle`, `CosmosErrorHandle`, `CosmosQueryHandle`, `CosmosChangeFeedHandle`, `CosmosBatchHandle`).
-5. `Interop/CosmosCompletion.cs` — async bridge:
-   - Holds a `TaskCompletionSource<ResponseHandle>`.
-   - Allocates a `GCHandle` for the native callback `ctx`.
-   - `[UnmanagedCallersOnly]` static callback signature.
-6. `Interop/NativeError.cs` — translates `cosmos_error_t*` → `CosmosException` (status, sub-status, activity id, retry-after, diagnostics).
-7. `Interop/Marshalling/Utf8.cs` — pooled UTF-8 buffer writer helpers; zero-copy span conversions.
-8. `Interop/NativeLogPump.cs` — registers a single `cosmos_log_callback` and forwards events to an `EventSource` (`Azure-Cosmos-V4`).
+2. `Interop/NativeMethods.cs` — `LibraryImport` declarations for every entry point from Part 2, ported from the POC's `NativeMethods.cs` (which uses `DllImport`). Marked `partial`; source-generated marshallers.
+3. `Interop/NativeLibraryLoader.cs` — dev/test override via `NativeLibrary.SetDllImportResolver` (packaged binaries resolve from `runtimes/<RID>/native/`), and the `cosmos_version()` check on first load.
+4. `Interop/Handles/*` — one `SafeHandle` subclass per native opaque type (`CosmosRuntimeHandle`, `CosmosAccountRefHandle`, `CosmosDatabaseRefHandle`, `CosmosDriverHandle`, `CosmosContainerRefHandle`, `CosmosPartitionKeyHandle`, `CosmosFeedRangeHandle`, `CosmosCompletionQueueHandle`, `CosmosOperationHandle`).
+5. `Interop/CompletionQueueLoop.cs` and `Interop/NativeAsyncOperation.cs` — the POC's completion-queue pump:
+   - One background thread per completion queue draining `cosmos_completion_queue_wait`.
+   - `user_data` = `GCHandle` to a `NativeAsyncOperation` holding a `TaskCompletionSource` (`RunContinuationsAsynchronously`).
+   - Polite shutdown: `cosmos_completion_queue_shutdown`, then drain until the queue is terminal.
+6. `Interop/CosmosOperationRequestBuilder.cs` — builds the flat `CosmosOperationRequest` and keeps borrowed UTF-8 strings and body bytes alive for the submit call.
+7. `Interop/NativeError.cs` — translates `CosmosErrorCode` and completion error fields → `CosmosException` (status, sub-status, activity id, session token, etag, retry-after).
+8. `Interop/Marshalling/Utf8.cs` — pooled UTF-8 buffer helpers.
 
 **Verification:**
-- Unit tests in `Azure.Data.Cosmos.Tests` exercise loader version-mismatch, `SafeHandle` finalization, GCHandle lifetime, and error translation.
-- A test-only native shim (Part 4) round-trips a no-op completion call asynchronously.
+- Unit tests in `Azure.Data.Cosmos.Tests` exercise loader version-mismatch, `SafeHandle` finalization, `GCHandle` lifetime (including pre-flight rollback), and error translation.
+- A test build of the native library (Part 4) round-trips an operation through the completion queue.
 
 ---
 
 ### Part 4 — Test-Only Native Shim & Interop Test Harness
 
 **What will be built:**
-1. New project `tests/Azure.Data.Cosmos.Interop.Tests/` with a `native_shim/` sub-folder — a tiny C (or Rust) library that implements the same `cosmos_native.h` ABI deterministically for tests:
+1. New project `tests/Azure.Data.Cosmos.Interop.Tests/` with a `native_shim/` sub-folder — a tiny C (or Rust) library that implements the same `azurecosmosdriver.h` ABI deterministically for tests (or the upstream crate built with its `test-abi` feature):
    - Configurable per-call latency.
    - Programmable success / error / cancellation outcomes.
    - Counters for handle leaks (created vs released).
@@ -669,7 +730,7 @@ This section converts the phased plan in Section 11 into concrete, ordered imple
 2. CMake / cargo build wired into the test pipeline; outputs placed where the loader will find them.
 3. NUnit project `Azure.Data.Cosmos.Interop.Tests` exercising:
    - 100k concurrent completions to validate the async bridge under load.
-   - Cancellation timing (token cancelled before / during / after the call).
+   - Cancellation timing (token cancelled before / during / after the call; needs upstream cancellation, see 5.4).
    - Forced "panic" path (shim returns a fatal status) → `CosmosInteropException`.
    - Long-running soak (handle / GCHandle counts stable).
 
@@ -687,14 +748,16 @@ This section converts the phased plan in Section 11 into concrete, ordered imple
    - `CosmosClient(string connectionString, CosmosClientOptions?)`.
    - `CosmosClient(string accountEndpoint, TokenCredential, CosmosClientOptions?)`.
    - `CosmosClient(string accountEndpoint, AzureKeyCredential, CosmosClientOptions?)`.
-3. Internally: each constructor parses options, builds a `cosmos_credential_t`, calls `cosmos_client_create`, stores a `CosmosClientHandle`.
+3. Internally, as in the POC: each constructor parses options, builds the runtime (`cosmos_runtime_build`) and account reference (`cosmos_account_ref_with_master_key`; AAD uses `cosmos_account_ref_with_credential` upstream), gets or creates the driver (`cosmos_driver_get_or_create_*`), creates the completion queue, and stores the handles.
 4. `IAsyncDisposable` semantics — releases the handle and the runtime ref-count.
 5. `ConnectionMode` validated to `Gateway` only; throw `NotSupportedException` otherwise with a clear message.
-6. Account / database management surface: create/read/delete database, list databases, throughput operations.
+6. Account management surface: create/read/delete/list databases and containers, throughput operations.
+7. Authentication (6.9): key and connection string via `cosmos_account_ref_with_master_key`; `TokenCredential` via the token-provider bridge; resource tokens once supported upstream.
+8. Client options mapped onto runtime, driver, and operation options (6.10).
 
 **Verification:**
 - Unit tests with mocked native API (`INativeApi` seam).
-- Emulator integration test in `Azure.Data.Cosmos.Emulator.Tests` creates/reads/deletes databases.
+- Emulator integration test in `Azure.Data.Cosmos.Emulator.Tests` creates/reads/deletes databases and containers.
 
 ---
 
@@ -709,15 +772,15 @@ This section converts the phased plan in Section 11 into concrete, ordered imple
    - Default `System.Text.Json`-backed `ICosmosSerializer` writing to a pooled `ArrayBufferWriter<byte>` (UTF-8).
    - Pluggable via `CosmosClientOptions.Serializer`.
 4. Response decoding:
-   - Read body span from `cosmos_response_body`, deserialize, copy headers needed for `ItemResponse<T>`.
+   - Copy status, body, and the headers needed for `ItemResponse<T>` out of the completion before its slot is released, then deserialize.
 5. Diagnostics:
-   - Read `cosmos_response_diagnostics_json`, parse into a typed `CosmosDiagnostics` object.
+   - Build a typed `CosmosDiagnostics` object from completion fields (and from `cosmos_diagnostics_*` once the pinned release has them).
 6. Exception translation wired in for non-success responses.
 
 **Verification:**
 - Emulator parity tests for each CRUD verb against the same scenarios used by V3's [Microsoft.Azure.Cosmos.Samples/Usage/ItemManagement](https://github.com/Azure/azure-cosmos-dotnet-v3/tree/main/Microsoft.Azure.Cosmos.Samples/Usage/ItemManagement).
 - Diagnostics `ToString()` parity test vs V3 (golden-file based; fields tolerant of timing).
-- Cancellation test: cancellation token cancels in-flight request and surfaces `OperationCanceledException`.
+- Cancellation test: cancellation token cancels in-flight request and surfaces `OperationCanceledException` (native abort needs upstream cancellation, see 5.4).
 
 ---
 
@@ -726,9 +789,8 @@ This section converts the phased plan in Section 11 into concrete, ordered imple
 **What will be built:**
 1. `QueryDefinition` (parameter binding), `QueryRequestOptions`.
 2. `AsyncPageable<T>` and `Page<T>` types (matches Azure SDK convention).
-3. Backing implementation:
-   - `cosmos_query_create` once per `GetItemQueryIterator` call.
-   - `cosmos_query_next_page` per `IAsyncEnumerator<T>` move.
+3. Backing implementation (6.12):
+   - As in the POC, each page is a feed submit (`cosmos_submit_operation`, kind `QueryItems`); on upstream `main`, a cursor (`cosmos_cursor_open_submit` / `cosmos_cursor_next_submit`) per iterator.
    - Continuation tokens are opaque `string`s round-tripped to/from native.
 4. LINQ provider:
    - Reuse the existing V3 LINQ-to-SQL translator if cleanly extractable (lives in V3's [Microsoft.Azure.Cosmos/src/Linq](https://github.com/Azure/azure-cosmos-dotnet-v3/tree/main/Microsoft.Azure.Cosmos/src/Linq)); otherwise fork into the V4 namespace.
@@ -745,7 +807,7 @@ This section converts the phased plan in Section 11 into concrete, ordered imple
 
 **What will be built:**
 1. `ChangeFeedStartFrom`, `ChangeFeedMode` (LatestVersion, AllVersionsAndDeletes), `ChangeFeedRequestOptions`, `ChangeFeedIterator<T>`.
-2. Backing implementation over `cosmos_changefeed_*`.
+2. Backing implementation over feed operations or cursors (6.12).
 3. Continuation token handling (string).
 4. Change feed processor (`ChangeFeedProcessorBuilder`) — managed-side orchestration of partitioned iterators, lease store reads via the same V4 `Container` APIs.
 
@@ -759,11 +821,11 @@ This section converts the phased plan in Section 11 into concrete, ordered imple
 
 **What will be built:**
 1. `TransactionalBatch` builder and `TransactionalBatchResponse`.
-2. Backing via `cosmos_batch_create` / `cosmos_batch_add_operation` / `cosmos_batch_execute`.
+2. Backing via the `Batch` operation kind (one submit per batch).
 3. Bulk execution path:
    - `CosmosClientOptions.AllowBulkExecution = true` opt-in.
    - Managed-side batcher groups operations and feeds into the Rust driver bulk pipeline (or, if the Rust driver exposes bulk natively, just routes through it).
-   - Per-item `Task<ItemResponse<T>>` completions resolved as native callbacks fire.
+   - Per-item `Task<ItemResponse<T>>` completions resolved as their completions are drained.
 
 **Verification:**
 - Emulator parity tests for batch (mixed CRUD, partial failure, ETag conflicts).
@@ -775,7 +837,7 @@ This section converts the phased plan in Section 11 into concrete, ordered imple
 
 **What will be built:**
 1. Finalized `CosmosDiagnostics` type with parity fields vs V3.
-2. `EventSource` (`Azure-Cosmos-V4`) emits structured events for: request start/stop, retry, region failover, native log entries.
+2. `EventSource` (`Azure-Data-Cosmos`) emits structured events for: request start/stop, retry, region failover, and driver diagnostics.
 3. `System.Diagnostics.Activity` integration:
    - Outgoing requests carry the current `Activity` id; native echoes it back into diagnostics.
 4. `Meter` instruments for: request charge, latency, retry count, region.
@@ -829,7 +891,7 @@ This section converts the phased plan in Section 11 into concrete, ordered imple
 
 **What will be built:**
 1. `sdk/cosmosdb/Azure.Data.Cosmos/MigrationGuide.md` — every breaking change vs V3, mapped to the new V4 API.
-2. `sdk/cosmosdb/Azure.Data.Cosmos/design/V4-NativeAbi.md` — finalized, tagged with the released ABI version.
+2. `sdk/cosmosdb/Azure.Data.Cosmos/design/V4-NativeAbi.md` — finalized, tagged with the pinned native release version.
 3. Public API listing under `sdk/cosmosdb/Azure.Data.Cosmos/api/` (generated via the standard `azure-sdk-for-net` API tooling — `eng/scripts/Export-API.ps1`).
 4. Samples under `sdk/cosmosdb/Azure.Data.Cosmos/samples/` covering: getting started, CRUD, query, change feed, batch, AAD auth, OTel. Snippet code lives in `tests/Azure.Data.Cosmos.Tests/Samples/` and is synced into the markdown with `eng/scripts/Update-Snippets.ps1`.
 5. README updates linking to V3 vs V4 guidance.
@@ -843,7 +905,7 @@ This section converts the phased plan in Section 11 into concrete, ordered imple
 ### Part 14 — Preview Release & Feedback
 
 **What will be built:**
-1. Publish `Azure.Data.Cosmos <x.y.z>-preview.1` to NuGet via the standard `azure-sdk-for-net` release pipeline.
+1. Publish `Azure.Data.Cosmos <x.y.z>-beta.1` to NuGet via the standard `azure-sdk-for-net` release pipeline.
 2. Internal partner onboarding: pair with ≥ 2 design partners, capture feedback in tracked issues.
 3. Iterate on API surface (preview window allows breaking changes) until partner sign-off.
 
@@ -859,10 +921,10 @@ This section converts the phased plan in Section 11 into concrete, ordered imple
 1. GA release of V4.
 2. Lock public API surface (contract files become immutable per SemVer).
 3. Define and document:
-   - Native ↔ managed ABI version compatibility policy.
+   - Native ↔ managed version compatibility policy (which native releases each managed release supports).
    - V3 vs V4 support matrix.
    - SLA for Rust driver fixes flowing into V4 patch releases.
-4. Move V4 official pipeline to the same release cadence as V3.
+4. Set the V4 release cadence (see Long-term maintenance in Section 9).
 
 **Verification:**
 - GA release published.
@@ -892,36 +954,69 @@ Parts 6–10 can run in parallel once Part 5 is done; Parts 11–13 can begin as
 
 ---
 
-## 13. Open Questions
+## 13. Clarifications from Central Team
 
-1. **Package naming:** the scaffold uses `Azure.Data.Cosmos` for both the package id and root namespace (see D-8); still needs API review board confirmation.
-2. **Single shared runtime vs per-client runtime** in Rust? Recommend single shared, but expose advanced opt-out.
-3. **JSON serializer default:** lock to `System.Text.Json` only, or keep Newtonsoft compatibility shim in core?
-4. **Encryption packages:** can their providers wrap the V4 client surface, or do they need a separate plumbing path through Rust?
-5. **Per-Partition-Automatic-Failover (PPAF) parity:** confirm Rust driver supports the same gateway-mode PPAF/circuit-breaker semantics described in [PerPartitionAutomaticFailoverDesign.md](https://github.com/Azure/azure-cosmos-dotnet-v3/blob/main/docs/PerPartitionAutomaticFailoverDesign.md). Track gaps.
-6. **Cross-region request hedging:** confirm parity with [Cross Region Request Hedging.md](https://github.com/Azure/azure-cosmos-dotnet-v3/blob/main/docs/Cross%20Region%20Request%20Hedging.md). Surface options in `CosmosClientOptions`.
-7. **Rust source location & release cadence:** confirm publishing pipeline and version-pinning strategy.
+| # | Question | Answer | Applied in |
+|---|---|---|---|
+| C-1 | Which .NET versions must V4 support? | `net10.0` only at GA. Afterwards, support the two most recent LTS releases (N and N−2, N even): add each new LTS when it ships, drop the oldest, and document the policy up front. Assumes a three-year deprecation period from V4 GA. | Goal 3, Section 9, D-9 |
+| C-2 | Can V4 bypass Azure.Core's `HttpPipeline`? The Rust driver sends all HTTP requests. | Yes. | 6.10, D-13 |
+| C-3 | Which Azure.Core version do we pin to? | The centrally managed version (`eng/centralpackagemanagement/Directory.Packages.props`). | Already the case in `Azure.Data.Cosmos.csproj` |
+| C-4 | Does a security/compliance review apply to the Rust dependency? | Probably; details TBD. Approval is needed for the FFI NuGet dependency. | Phase 0, Phase 8 |
+| C-5 | Does API review cover the C#↔Rust contract, or only the public C# API? | Only the public C# API; the native contract needs general approval. | Part 2 |
+| C-6 | Does V4 follow the standard Azure SDK release cadence? | No; the service team sets its own cadence. Any release that exposes new public API needs API review. | Section 9 |
+| C-7 | Are we doing AOT because Azure.Identity credential types use reflection that Native AOT can't handle? | Not answered yet. | Q11 |
+
+**.NET support timeline (C-1).** LTS releases ship in November of odd years and are supported for three years.
+
+| When | New .NET LTS | V4 supports | Dropped |
+|---|---|---|---|
+| V4 GA | — | .NET 10 | — |
+| Nov 2027 | .NET 12 | .NET 12, .NET 10 | — |
+| Nov 2029 | .NET 14 | .NET 14, .NET 12 | .NET 10 |
+| Nov 2031 | .NET 16 | .NET 16, .NET 14 | .NET 12 |
+
+The original answer listed November 2028, 2030, and 2032; the dates above follow the .NET release schedule (.NET 10 shipped in November 2025). Under this window a version stays targeted for about a year after its end of support (.NET 10 ends in November 2028 but is dropped in November 2029), which conflicts with "actively drop unsupported targets" (Q12).
 
 ---
 
-## 14. Appendix — Decision Log
+## 14. Open Questions
+
+1. **Package naming:** the scaffold uses `Azure.Data.Cosmos` for both the package id and root namespace (see D-8); still needs API review board confirmation.
+2. **Single shared runtime vs per-client runtime** in Rust? The POC builds one runtime and one completion queue per client. Recommend single shared runtime, but expose advanced opt-out.
+3. **JSON serializer default:** lock to `System.Text.Json` only, or keep Newtonsoft compatibility shim in core?
+4. **Encryption packages:** can their providers wrap the V4 client surface, or do they need a separate plumbing path through Rust?
+5. **Per-Partition-Automatic-Failover (PPAF) parity:** confirm Rust driver supports the same gateway-mode PPAF/circuit-breaker semantics described in [PerPartitionAutomaticFailoverDesign.md](https://github.com/Azure/azure-cosmos-dotnet-v3/blob/main/docs/PerPartitionAutomaticFailoverDesign.md); compare with Rust [spec 0008](https://github.com/Azure/azure-sdk-for-rust/blob/main/sdk/cosmos/docs/specs/0008-partition-level-failover.md). Track gaps.
+6. **Cross-region request hedging:** confirm parity with [Cross Region Request Hedging.md](https://github.com/Azure/azure-cosmos-dotnet-v3/blob/main/docs/Cross%20Region%20Request%20Hedging.md) and Rust [spec 0009](https://github.com/Azure/azure-sdk-for-rust/blob/main/sdk/cosmos/docs/specs/0009-cross-region-hedging.md). Surface options in `CosmosClientOptions`.
+7. **Resolved — Rust source location & release cadence:** source is [`azure-sdk-for-rust/sdk/cosmos`](https://github.com/Azure/azure-sdk-for-rust/tree/main/sdk/cosmos); releases every 1–2 months, about every 3 months once stable (see D-11).
+8. **Version check and upstream drift:** this doc follows the POC's binding model (Section 5, D-12). Remaining: whether to check `cosmos_version()` against the pinned release at load, and how to absorb the upstream changes in 5.4 (notably the removal of on-demand cancellation).
+9. **Native binaries for .NET:** who builds, signs (Authenticode, notarization), and publishes `azurecosmosdriver` shared libraries for all six RIDs, and where `azure-sdk-for-net` downloads them from. The current native release pipeline only produces Go-oriented static libraries and defers Windows.
+10. **Mockability:** the Section 4 sketch uses `sealed` classes, but Azure SDK guidelines expect mockable clients (non-sealed, protected constructor, virtual methods). Decide at API review.
+11. **AOT motivation (C-7):** is AOT support driven by Azure.Identity reflection concerns? For reference: V4 takes the `TokenCredential` abstraction and doesn't reference Azure.Identity; in this repository Azure.Identity doesn't opt out of the AOT compatibility check and has no `RequiresUnreferencedCode` / `RequiresDynamicCode` annotations.
+12. **Dropping out-of-support .NET versions (C-1):** drop a version when it reaches end of support, or keep the N/N−2 window (about a year past end of support)?
+
+---
+
+## 15. Appendix — Decision Log
 
 | # | Decision | Why |
 |---|---|---|
 | D-1 | Gateway mode only | Matches Rust driver capability; avoids reimplementing direct mode in Rust on day 1. |
 | D-2 | C ABI (not COM, not C++/CLI) | Portable, no Windows-only dependency, easy to maintain. |
 | D-3 | `LibraryImport` source generators | AOT/trim friendly; no runtime reflection in hot path. |
-| D-4 | UTF-8 byte spans across the boundary | Eliminates UTF-16 conversions; matches Rust string model. |
+| D-4 | UTF-8 across the boundary (NUL-terminated strings for names/ids, byte views for bodies) | Eliminates UTF-16 conversions; matches Rust string model and the POC. |
 | D-5 | Native does retry/partition routing | Single source of truth for resiliency policy across SDKs. |
 | D-6 | Managed owns serialization & LINQ | Idiomatic .NET DX; type-system features (`IAsyncEnumerable`, `Span<T>`, JSON source generation). |
 | D-7 | Public API close to V3 | Lower migration cost. Cleanups limited to deprecated/legacy surface. |
 | D-8 | Package and root namespace `Azure.Data.Cosmos`, at `sdk/cosmosdb/Azure.Data.Cosmos/` | Namespace matches package id (Azure SDK convention); `sdk/cosmosdb/` is the existing Cosmos DB service directory. |
-| D-9 | Target the two latest .NET releases (`net10.0` to start); no .NET Framework or .NET Standard | Native interop, `LibraryImport`, and AOT need modern .NET. Pending Azure SDK architect approval for dropping `netstandard2.0`. |
+| D-9 | Target `net10.0` at GA, then the two most recent .NET LTS releases (N and N−2); no .NET Framework or .NET Standard | Native interop, `LibraryImport`, and AOT need modern .NET; LTS-only keeps the support window predictable (C-1). Pending Azure SDK architect approval for dropping `netstandard2.0`. |
 | D-10 | NUnit for all test projects | Repository standard; xUnit isn't in central package management. |
+| D-11 | Native layer is `azure_data_cosmos_driver_native` (library `azurecosmosdriver`) from `azure-sdk-for-rust/sdk/cosmos`; `Azure.Data.Cosmos` pins one native release at a time | Single Rust source of truth shared with other language SDKs. Rust releases every 1–2 months (about every 3 months once stable). |
+| D-12 | Follow the POC's binding model: completion queue drained by one pump thread per queue, `GCHandle` as `user_data`, flat request struct with two submit functions | Callback-free and proven end to end in the POC; the same model as the upstream native crate. |
+| D-13 | Bypass Azure.Core's `HttpPipeline`; the Rust driver owns HTTP | Confirmed by the central team (C-2). Azure.Core is still used for shared types (`TokenCredential`, `AzureKeyCredential`, `AsyncPageable<T>`). |
 
 ---
 
-## 15. References
+## 16. References
 
 - [SdkDesign.md](https://github.com/Azure/azure-cosmos-dotnet-v3/blob/main/docs/SdkDesign.md) — current V3 architecture overview.
 - [PerPartitionAutomaticFailoverDesign.md](https://github.com/Azure/azure-cosmos-dotnet-v3/blob/main/docs/PerPartitionAutomaticFailoverDesign.md) — gateway-mode failover semantics V4 must preserve.
@@ -929,5 +1024,9 @@ Parts 6–10 can run in parallel once Part 5 is done; Parts 11–13 can begin as
 - [observability.md](https://github.com/Azure/azure-cosmos-dotnet-v3/blob/main/docs/observability.md) — diagnostics conventions to mirror.
 - [versioning.md](https://github.com/Azure/azure-cosmos-dotnet-v3/blob/main/docs/versioning.md) — V3 versioning rules.
 - [Native driver POC](https://github.com/Azure/azure-cosmos-dotnet-v3/tree/users/ananth/poc-native-async-spike/tools/Microsoft.Azure.Cosmos.NativeDriverPoc) — .NET host over the Rust `azure_data_cosmos_driver_native` crate.
+- [Rust Cosmos SDK](https://github.com/Azure/azure-sdk-for-rust/tree/main/sdk/cosmos) — SDK, driver, and native wrapper source.
+- Rust native wrapper design: [spec 0019](https://github.com/Azure/azure-sdk-for-rust/blob/main/sdk/cosmos/docs/specs/0019-native-wrapper.md), [spec 0020](https://github.com/Azure/azure-sdk-for-rust/blob/main/sdk/cosmos/docs/specs/0020-native-async-invocation.md), [spec 0029](https://github.com/Azure/azure-sdk-for-rust/blob/main/sdk/cosmos/docs/specs/0029-native-feed-cursor.md), [ADR 0001](https://github.com/Azure/azure-sdk-for-rust/blob/main/sdk/cosmos/docs/adrs/0001-sdk-driver-native-layering.md), [ADR 0005](https://github.com/Azure/azure-sdk-for-rust/blob/main/sdk/cosmos/docs/adrs/0005-flat-native-abi-data-model.md).
+- [Rust diagnostics contract (spec 0018)](https://github.com/Azure/azure-sdk-for-rust/blob/main/sdk/cosmos/docs/specs/0018-diagnostics-contract.md) — source for the diagnostics JSON schema.
+- [Native driver versioning and releases](https://github.com/Azure/azure-sdk-for-rust/blob/main/sdk/cosmos/azure_data_cosmos_driver_native/docs/NATIVE_VERSIONING_AND_RELEASES.md) and [release guide](https://github.com/Azure/azure-sdk-for-rust/blob/main/sdk/cosmos/azure_data_cosmos_driver_native/docs/RELEASE_GUIDE.md).
 - [Directory.Build.props](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/cosmosdb/Azure.Data.Cosmos/Directory.Build.props) — package-level MSBuild settings (target frameworks).
 - [ci.yml](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/cosmosdb/ci.yml) and [service.projects](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/cosmosdb/service.projects) — data-plane pipeline registration and project filter.
