@@ -360,12 +360,15 @@ test("one checkbox gates trusted-run egress; owner configuration additionally ga
     const evaluate = (expression, variables, enabled = true, succeeds = true) => runInNewContext(expression.replace(/\bin\(/g, "oneOf("), {
         variables, parameters: { publishDashboardResults: enabled }, succeeded: () => succeeds,
         and: (...values) => values.every(Boolean), eq: (a, b) => String(a ?? "").toLowerCase() === String(b ?? "").toLowerCase(),
+        not: value => !value,
+        startsWith: (value, prefix) => String(value ?? "").toLowerCase().startsWith(String(prefix).toLowerCase()),
+        endsWith: (value, suffix) => String(value ?? "").toLowerCase().endsWith(String(suffix).toLowerCase()),
         ne: (a, b) => String(a ?? "").toLowerCase() !== String(b ?? "").toLowerCase(),
         oneOf: (value, ...items) => items.some(item => String(value ?? "").toLowerCase() === String(item).toLowerCase()),
     });
     const base = { "System.CollectionUri": "https://dev.azure.com/azure-sdk/", "System.TeamProject": "internal", "Build.Repository.Name": "Azure/azure-sdk-tools",
         "Build.SourceBranch": "refs/heads/main", "Build.Reason": "Manual", "EvalSummaryComplete": "true", "EvalStorageAccountName": "evaltestsummary" };
-    for (const repository of ["Azure/azure-sdk-tools", "Azure/azure-rest-api-specs"]) {
+    for (const repository of ["Azure/azure-sdk-tools", "Azure/azure-rest-api-specs", "Azure/azure-sdk-for-python", "Azure/new-sdk-repository"]) {
         const trusted = { ...base, "Build.Repository.Name": repository };
         for (const reason of ["Manual", "Schedule", "IndividualCI", "BatchedCI"]) {
             const variables = { ...trusted, "Build.Reason": reason };
@@ -378,7 +381,8 @@ test("one checkbox gates trusted-run egress; owner configuration additionally ga
         for (const complete of [undefined, "", "false"]) assert.equal(evaluate(runtime, { ...trusted, EvalSummaryComplete: complete }), false);
         for (const [key, value] of [["System.CollectionUri", "https://dev.azure.com/other/"], ["System.TeamProject", "public"],
             ["Build.Repository.Name", "helen229/azure-rest-api-specs"], ["Build.Repository.Name", "Azure/azure-rest-api-specs-pr"],
-            ["Build.Repository.Name", "Azure/azure-sdk-for-python"], ["Build.Reason", "PullRequest"], ["Build.Reason", "ResourceTrigger"],
+            ["Build.Repository.Name", "Azure/azure-sdk-for-python-pr"], ["Build.Repository.Name", "helen229/new-sdk-repository"],
+            ["Build.Reason", "PullRequest"], ["Build.Reason", "ResourceTrigger"],
             ...["refs/pull/1/merge", "refs/heads/feature", "refs/heads/feature/main", "refs/tags/main", ""].map(branch => ["Build.SourceBranch", branch])]) {
             const variables = { ...trusted, [key]: value };
             assert.equal(evaluate(networkGate, variables), false); assert.equal(evaluate(runtime, variables), false);
