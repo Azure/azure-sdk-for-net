@@ -60,6 +60,9 @@ namespace Azure.ResourceManager.AIInfraOptimization.Models
         /// <summary> The source the price was resolved from. </summary>
         public RecommendVmSkuCostSource Source { get; }
 
+        /// <summary> The date and time the price was observed. </summary>
+        public DateTimeOffset? PriceObservedOn { get; }
+
         /// <summary> The error that prevented subscription-scoped pricing from being resolved, if any. </summary>
         public RecommendVmSkuStageError Error { get; }
     }

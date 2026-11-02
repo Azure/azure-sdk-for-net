@@ -33,5 +33,14 @@ namespace Azure.ResourceManager.AIInfraOptimization.Models
             ShouldIncludePricing = shouldIncludePricing;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+
+        /// <summary> Whether to evaluate subscription quota for candidate virtual machine sizes. </summary>
+        public bool? ShouldIncludeQuota { get; set; }
+
+        /// <summary> Whether to query placement scores for candidate virtual machine sizes with available quota. </summary>
+        public bool? ShouldIncludePlacement { get; set; }
+
+        /// <summary> Whether to fetch subscription-scoped virtual machine pricing. </summary>
+        public bool? ShouldIncludePricing { get; set; }
     }
 }

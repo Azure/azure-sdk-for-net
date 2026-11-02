@@ -81,6 +81,9 @@ namespace Azure.ResourceManager.AIInfraOptimization.Models
         /// <summary> The capacity placement evidence for this option. Returned only when `subscriptionOptions.includePlacement` is set. </summary>
         public RecommendVmSkuPlacement Placement { get; }
 
+        /// <summary> Whether the Azure Machine Learning model catalog recommends this virtual machine size for the model. </summary>
+        public bool? IsAzureMlRecommended { get; }
+
         /// <summary> The external benchmark evidence selected for this option. </summary>
         public RecommendVmSkuBenchmark Benchmark { get; }
 
