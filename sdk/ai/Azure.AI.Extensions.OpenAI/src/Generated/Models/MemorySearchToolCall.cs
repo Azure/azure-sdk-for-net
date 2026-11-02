@@ -2,7 +2,6 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using OpenAI.Responses;
@@ -13,9 +12,6 @@ namespace Azure.AI.Extensions.OpenAI
     [Experimental("AAIP001")]
     public partial class MemorySearchToolCall : ResponseItem
     {
-        [Experimental("SCME0001")]
-        private JsonPatch _patch;
-
         /// <summary> Initializes a new instance of <see cref="MemorySearchToolCall"/>. </summary>
         /// <param name="status"> The status of the tool call. </param>
         public MemorySearchToolCall(ToolCallStatus status) : base("memory_search_call")

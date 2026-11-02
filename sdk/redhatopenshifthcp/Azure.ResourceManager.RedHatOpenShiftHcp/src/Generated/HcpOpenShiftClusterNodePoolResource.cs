@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp
         {
             TryGetApiVersion(ResourceType, out string hcpOpenShiftClusterNodePoolApiVersion);
             _hcpOpenShiftClusterNodePoolsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RedHatOpenShiftHcp", ResourceType.Namespace, Diagnostics);
-            _hcpOpenShiftClusterNodePoolsRestClient = new HcpOpenShiftClusterNodePools(_hcpOpenShiftClusterNodePoolsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, hcpOpenShiftClusterNodePoolApiVersion ?? "2026-09-01-preview");
+            _hcpOpenShiftClusterNodePoolsRestClient = new HcpOpenShiftClusterNodePools(_hcpOpenShiftClusterNodePoolsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, hcpOpenShiftClusterNodePoolApiVersion ?? "2026-10-01");
             ValidateResourceId(id);
         }
 
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-09-01-preview. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-09-01-preview. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-09-01-preview. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-09-01-preview. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-09-01-preview. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -370,7 +370,7 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-09-01-preview. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>

@@ -9,6 +9,7 @@ using OpenAI.Responses;
 namespace Azure.AI.Extensions.OpenAI;
 
 [CodeGenSuppress("Patch")]
+[CodeGenSuppress("_patch")]
 public partial class SharePointGroundingToolCall
 {
     /// <summary> Initializes a new instance of <see cref="SharePointGroundingToolCall"/> for deserialization. </summary>
@@ -30,7 +31,7 @@ public partial class SharePointGroundingToolCall
     /// <param name="patch"></param>
     internal SharePointGroundingToolCall(ResponseItemKind @type, string id, AgentReference agentReference, string responseId, string callId, string arguments, ToolCallStatus status, in JsonPatch patch) : base(@type)
     {
-        _patch = patch;
+        Patch = patch;
         this.ApplyAgentAttribution(agentReference, responseId, null);
         Id = id;
         CallId = callId;

@@ -20,6 +20,13 @@ namespace Azure.ResourceManager.Network.Models
     [CodeGenSuppress("VirtualNetworkApplianceData", typeof(ResourceIdentifier), typeof(string), typeof(ResourceType?), typeof(AzureLocation?), typeof(IDictionary<string, string>), typeof(ETag?), typeof(string), typeof(IEnumerable<VirtualNetworkApplianceIPConfiguration>), typeof(NetworkProvisioningState?), typeof(Guid?), typeof(SubnetData))]
     // Preserve this overload and store its values only in the independent Rules collection.
     [CodeGenSuppress("ManagedRuleSetRuleGroup", typeof(string), typeof(IEnumerable<string>))]
+    // The generated factory drops the packet-rate argument when reconstructing the two nested UDP wrappers.
+    [CodeGenSuppress("DdosMitigationRulePropertiesFormat", typeof(NetworkProvisioningState?), typeof(DdosMitigationTrafficScope), typeof(DdosTcpDefaultMitigations), typeof(int?), typeof(IEnumerable<DdosSourcePolicyOverride>))]
+    // Historical adapters pass null for collections added after their signatures; use the primary factory's normalization.
+    [CodeGenSuppress("DdosCustomPolicyData", typeof(ResourceIdentifier), typeof(string), typeof(ResourceType?), typeof(AzureLocation?), typeof(IDictionary<string, string>), typeof(ETag?), typeof(Guid?), typeof(NetworkProvisioningState?), typeof(IEnumerable<DdosDetectionRule>), typeof(IEnumerable<WritableSubResource>))]
+    [CodeGenSuppress("DdosCustomPolicyData", typeof(ResourceIdentifier), typeof(string), typeof(ResourceType?), typeof(AzureLocation?), typeof(IDictionary<string, string>), typeof(ETag?), typeof(Guid?), typeof(NetworkProvisioningState?))]
+    // Custom historical overloads otherwise make generation strip optional defaults from the primary factory.
+    [CodeGenSuppress("DdosCustomPolicyData", typeof(ResourceIdentifier), typeof(string), typeof(ResourceType?), typeof(AzureLocation?), typeof(IDictionary<string, string>), typeof(Guid?), typeof(NetworkProvisioningState?), typeof(IEnumerable<DdosDetectionRule>), typeof(IEnumerable<DdosMitigationRule>), typeof(IEnumerable<WritableSubResource>), typeof(IEnumerable<WritableSubResource>), typeof(ETag?))]
     // The compatibility generator otherwise drops the released active argument after the IsActive rename.
     [CodeGenSuppress("VirtualNetworkGatewayData", typeof(ResourceIdentifier), typeof(string), typeof(ResourceType?), typeof(AzureLocation?), typeof(IDictionary<string, string>), typeof(ExtendedLocation), typeof(ETag?), typeof(IEnumerable<VirtualNetworkGatewayIPConfiguration>), typeof(VirtualNetworkGatewayType?), typeof(VpnType?), typeof(VpnGatewayGeneration?), typeof(bool?), typeof(bool?), typeof(bool?), typeof(bool?), typeof(ResourceIdentifier), typeof(VirtualNetworkGatewaySku), typeof(VpnClientConfiguration), typeof(IEnumerable<VirtualNetworkGatewayPolicyGroup>), typeof(BgpSettings), typeof(IEnumerable<string>), typeof(Guid?), typeof(NetworkProvisioningState?), typeof(bool?), typeof(string), typeof(ResourceIdentifier), typeof(IEnumerable<VirtualNetworkGatewayNatRuleData>), typeof(bool?), typeof(bool?), typeof(bool?), typeof(ExpressRouteGatewayAdminState?))]
     [CodeGenSuppress("VirtualNetworkGatewayData", typeof(ResourceIdentifier), typeof(string), typeof(ResourceType?), typeof(AzureLocation?), typeof(IDictionary<string, string>), typeof(ExtendedLocation), typeof(ETag?), typeof(ManagedServiceIdentity), typeof(VirtualNetworkGatewayAutoScaleBounds), typeof(IEnumerable<VirtualNetworkGatewayIPConfiguration>), typeof(VirtualNetworkGatewayType?), typeof(VpnType?), typeof(VpnGatewayGeneration?), typeof(bool?), typeof(bool?), typeof(bool?), typeof(bool?), typeof(ResourceIdentifier), typeof(VirtualNetworkGatewaySku), typeof(VpnClientConfiguration), typeof(IEnumerable<VirtualNetworkGatewayPolicyGroup>), typeof(BgpSettings), typeof(IEnumerable<string>), typeof(Guid?), typeof(NetworkProvisioningState?), typeof(bool?), typeof(string), typeof(ResourceIdentifier), typeof(IEnumerable<VirtualNetworkGatewayNatRuleData>), typeof(bool?), typeof(bool?), typeof(bool?), typeof(ExpressRouteGatewayAdminState?), typeof(ExpressRouteGatewayResiliencyModel?))]
@@ -28,6 +35,108 @@ namespace Azure.ResourceManager.Network.Models
     [CodeGenSuppress("VirtualNetworkGatewayData", typeof(ResourceIdentifier), typeof(string), typeof(ResourceType?), typeof(AzureLocation?), typeof(IDictionary<string, string>), typeof(ExtendedLocation), typeof(ETag?), typeof(ManagedServiceIdentity), typeof(VirtualNetworkGatewayAutoScaleBounds), typeof(IEnumerable<VirtualNetworkGatewayIPConfiguration>), typeof(VirtualNetworkGatewayType?), typeof(VpnType?), typeof(VpnGatewayGeneration?), typeof(bool?), typeof(bool?), typeof(bool?), typeof(bool?), typeof(ResourceIdentifier), typeof(VirtualNetworkGatewaySku), typeof(VpnClientConfiguration), typeof(IEnumerable<VirtualNetworkGatewayPolicyGroup>), typeof(BgpSettings), typeof(VirtualNetworkAddressSpace), typeof(Guid?), typeof(NetworkProvisioningState?), typeof(bool?), typeof(string), typeof(ResourceIdentifier), typeof(IEnumerable<VirtualNetworkGatewayNatRuleData>), typeof(bool?), typeof(bool?), typeof(bool?), typeof(ExpressRouteGatewayAdminState?), typeof(ExpressRouteGatewayResiliencyModel?))]
     public static partial class ArmNetworkModelFactory
     {
+        /// <summary> Initializes DDoS mitigation rule properties for mocking. </summary>
+        /// <param name="provisioningState"> The provisioning state of the DDoS mitigation rule. </param>
+        /// <param name="trafficScope"> The traffic scope of the mitigation rule. </param>
+        /// <param name="tcpDefaultMitigations"> The default TCP mitigations. </param>
+        /// <param name="udpDefaultMitigationsPacketsPerSecond"> The maximum number of UDP packets allowed per second from a source IP. </param>
+        /// <param name="sourcePolicyOverrides"> Source-specific actions that override the default mitigations. </param>
+        /// <returns> A new <see cref="Models.DdosMitigationRulePropertiesFormat"/> instance for mocking. </returns>
+        public static DdosMitigationRulePropertiesFormat DdosMitigationRulePropertiesFormat(NetworkProvisioningState? provisioningState = default, DdosMitigationTrafficScope trafficScope = default, DdosTcpDefaultMitigations tcpDefaultMitigations = default, int? udpDefaultMitigationsPacketsPerSecond = default, IEnumerable<DdosSourcePolicyOverride> sourcePolicyOverrides = default)
+        {
+            return new DdosMitigationRulePropertiesFormat(
+                provisioningState,
+                trafficScope,
+                tcpDefaultMitigations,
+                udpDefaultMitigationsPacketsPerSecond.HasValue
+                    ? new DdosUdpDefaultMitigations(new DdosUdpPerSourceRateLimitPolicy(udpDefaultMitigationsPacketsPerSecond.Value), default)
+                    : default,
+                (sourcePolicyOverrides ?? new ChangeTrackingList<DdosSourcePolicyOverride>()).ToList(),
+                default);
+        }
+
+        /// <summary> Initializes a DDoS custom policy for mocking. </summary>
+        /// <param name="id"> Resource ID. </param>
+        /// <param name="name"> Resource name. </param>
+        /// <param name="resourceType"> Resource type. </param>
+        /// <param name="location"> Resource location. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="resourceGuid"> The resource GUID of the DDoS custom policy. </param>
+        /// <param name="provisioningState"> The provisioning state of the DDoS custom policy. </param>
+        /// <param name="detectionRules"> The DDoS detection rules associated with the custom policy. </param>
+        /// <param name="mitigationRules"> The DDoS mitigation rules associated with the custom policy. </param>
+        /// <param name="frontEndIPConfiguration"> The frontend IP configurations associated with the custom policy. </param>
+        /// <param name="publicIPAddresses"> The public IP addresses associated with the custom policy. </param>
+        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
+        /// <returns> A new <see cref="Network.DdosCustomPolicyData"/> instance for mocking. </returns>
+        public static DdosCustomPolicyData DdosCustomPolicyData(ResourceIdentifier id = default, string name = default, ResourceType? resourceType = default, AzureLocation? location = default, IDictionary<string, string> tags = default, Guid? resourceGuid = default, NetworkProvisioningState? provisioningState = default, IEnumerable<DdosDetectionRule> detectionRules = default, IEnumerable<DdosMitigationRule> mitigationRules = default, IEnumerable<WritableSubResource> frontEndIPConfiguration = default, IEnumerable<WritableSubResource> publicIPAddresses = default, ETag? eTag = default)
+        {
+            return new DdosCustomPolicyData(
+                id,
+                name,
+                resourceType,
+                location,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                default,
+                resourceGuid is null && provisioningState is null && detectionRules is null && mitigationRules is null && frontEndIPConfiguration is null && publicIPAddresses is null ? default : new DdosCustomPolicyPropertiesFormat(
+                    resourceGuid,
+                    provisioningState,
+                    (detectionRules ?? new ChangeTrackingList<DdosDetectionRule>()).ToList(),
+                    (mitigationRules ?? new ChangeTrackingList<DdosMitigationRule>()).ToList(),
+                    (frontEndIPConfiguration ?? new ChangeTrackingList<WritableSubResource>()).ToList(),
+                    (publicIPAddresses ?? new ChangeTrackingList<WritableSubResource>()).ToList(),
+                    default),
+                eTag);
+        }
+
+        /// <summary> Initializes a DDoS custom policy using the released collection factory signature. </summary>
+        /// <param name="id"> Resource ID. </param>
+        /// <param name="name"> Resource name. </param>
+        /// <param name="resourceType"> Resource type. </param>
+        /// <param name="location"> Resource location. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
+        /// <param name="resourceGuid"> The resource GUID of the DDoS custom policy. </param>
+        /// <param name="provisioningState"> The provisioning state of the DDoS custom policy. </param>
+        /// <param name="detectionRules"> The DDoS detection rules associated with the custom policy. </param>
+        /// <param name="frontEndIPConfiguration"> The frontend IP configurations associated with the custom policy. </param>
+        /// <returns> A new <see cref="Network.DdosCustomPolicyData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static DdosCustomPolicyData DdosCustomPolicyData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, ETag? etag, Guid? resourceGuid, NetworkProvisioningState? provisioningState, IEnumerable<DdosDetectionRule> detectionRules, IEnumerable<WritableSubResource> frontEndIPConfiguration)
+            => DdosCustomPolicyData(
+                id: id,
+                name: name,
+                resourceType: resourceType,
+                location: location,
+                tags: tags,
+                resourceGuid: resourceGuid,
+                provisioningState: provisioningState,
+                detectionRules: detectionRules,
+                frontEndIPConfiguration: frontEndIPConfiguration,
+                eTag: etag);
+
+        /// <summary> Initializes a DDoS custom policy using the released factory signature. </summary>
+        /// <param name="id"> Resource ID. </param>
+        /// <param name="name"> Resource name. </param>
+        /// <param name="resourceType"> Resource type. </param>
+        /// <param name="location"> Resource location. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
+        /// <param name="resourceGuid"> The resource GUID of the DDoS custom policy. </param>
+        /// <param name="provisioningState"> The provisioning state of the DDoS custom policy. </param>
+        /// <returns> A new <see cref="Network.DdosCustomPolicyData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static DdosCustomPolicyData DdosCustomPolicyData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, ETag? etag, Guid? resourceGuid, NetworkProvisioningState? provisioningState)
+            => DdosCustomPolicyData(
+                id: id,
+                name: name,
+                resourceType: resourceType,
+                location: location,
+                tags: tags,
+                resourceGuid: resourceGuid,
+                provisioningState: provisioningState,
+                eTag: etag);
+
         /// <summary> Initializes a new instance of <see cref="Network.NetworkPrivateEndpointConnectionData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
@@ -101,6 +210,7 @@ namespace Azure.ResourceManager.Network.Models
                 provisioningState: provisioningState,
                 resourceGuid: resourceGuid,
                 subnet: subnet,
+                capacityProviderId: default,
                 eTag: etag);
             model.BandwidthInGbps = bandwidthInGbps;
             return model;

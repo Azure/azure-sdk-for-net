@@ -9,6 +9,7 @@ using OpenAI.Responses;
 namespace Azure.AI.Extensions.OpenAI;
 
 [CodeGenSuppress("Patch")]
+[CodeGenSuppress("_patch")]
 public partial class AzureFunctionToolCall
 {
     /// <summary> Initializes a new instance of <see cref="AzureFunctionToolCall"/>. </summary>
@@ -44,7 +45,7 @@ public partial class AzureFunctionToolCall
     /// <param name="patch"></param>
     internal AzureFunctionToolCall(ResponseItemKind @type, string id, AgentReference agentReference, string responseId, string callId, string name, string arguments, ToolCallStatus status, in JsonPatch patch) : base(@type)
     {
-        _patch = patch;
+        Patch = patch;
         this.ApplyAgentAttribution(agentReference, responseId, null);
         Id = id;
         CallId = callId;

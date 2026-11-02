@@ -16,6 +16,7 @@ namespace Azure.AI.AgentServer.Core.Tasks.Engine;
 internal sealed class TaskEngineAccessor
 {
     private static readonly AsyncLocal<RecoveryHandlerScope?> s_recoveryHandlerScope = new();
+    private static readonly AsyncLocal<ProtocolScope?> s_protocolScope = new();
     private readonly ResilientTaskEnablementState _enablement;
     private TaskEngine? _engine;
 
@@ -23,6 +24,20 @@ internal sealed class TaskEngineAccessor
     {
         // Direct internal test hosts construct an accessor without DI and already own an engine.
         _enablement = enablement ?? new ResilientTaskEnablementState(enabled: true, ready: true);
+        if (enablement is null)
+        {
+            _enablement.SetExplicitlyEnabled(true);
+        }
+    }
+
+    internal bool IsCoreExplicitlyEnabled => _enablement.IsExplicitlyEnabled;
+
+    internal static string? ActiveProtocol(ResilientTaskEnablementState? enablement)
+    {
+        ProtocolScope? scope = s_protocolScope.Value;
+        return scope is not null && scope.Enabled && ReferenceEquals(scope.Enablement, enablement)
+            ? scope.Protocol
+            : null;
     }
 
     /// <summary>Binds the process task engine exactly once.</summary>
@@ -41,7 +56,16 @@ internal sealed class TaskEngineAccessor
     /// <summary>Returns the engine, or throws if it has not been populated yet.</summary>
     public TaskEngine Require()
     {
-        if (!_enablement.IsConfigured)
+        ProtocolScope? scope = s_protocolScope.Value;
+        if (scope is not null
+            && (!scope.Enabled || !ReferenceEquals(scope.Enablement, _enablement)))
+        {
+            throw new ResilientTaskException(
+                ResilientTaskErrorCode.NotEnabled,
+                "Resilient tasks are disabled for this protocol.");
+        }
+
+        if (!_enablement.IsConfigured || (scope is null && !_enablement.IsExplicitlyEnabled))
         {
             throw new ResilientTaskException(
                 ResilientTaskErrorCode.NotEnabled,
@@ -67,6 +91,35 @@ internal sealed class TaskEngineAccessor
         var scope = new RecoveryHandlerScope(engine, s_recoveryHandlerScope.Value);
         s_recoveryHandlerScope.Value = scope;
         return scope;
+    }
+
+    internal static IDisposable EnterProtocolScope(
+        ResilientTaskEnablementState? enablement, string protocol, bool enabled)
+    {
+        var scope = new ProtocolScope(enablement, protocol, enabled, s_protocolScope.Value);
+        s_protocolScope.Value = scope;
+        return scope;
+    }
+
+    private sealed class ProtocolScope(
+        ResilientTaskEnablementState? enablement,
+        string protocol,
+        bool enabled,
+        ProtocolScope? priorScope) : IDisposable
+    {
+        public ResilientTaskEnablementState? Enablement { get; } = enablement;
+
+        public string Protocol { get; } = protocol;
+
+        public bool Enabled { get; } = enabled;
+
+        public void Dispose()
+        {
+            if (ReferenceEquals(s_protocolScope.Value, this))
+            {
+                s_protocolScope.Value = priorScope;
+            }
+        }
     }
 
     private sealed class RecoveryHandlerScope(

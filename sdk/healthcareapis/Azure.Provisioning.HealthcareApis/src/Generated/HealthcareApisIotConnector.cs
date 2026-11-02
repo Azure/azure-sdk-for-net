@@ -220,7 +220,7 @@ namespace Azure.Provisioning.HealthcareApis
             _properties = DefineModelProperty<HealthcareApisIotConnectorProperties>(nameof(Properties), new string[] { "properties" });
             _eTag = DefineProperty<ETag>(nameof(ETag), new string[] { "etag" });
             _identity = DefineModelProperty<ManagedServiceIdentity>(nameof(Identity), new string[] { "identity" });
-            _parent = DefineResource<HealthcareApisWorkspace>(nameof(Parent), new string[] { "parent" }, isRequired: true);
+            _parent = DefineResource<HealthcareApisWorkspace>(nameof(Parent), new string[] { "parent" });
             DefineAdditionalProperties();
         }
 

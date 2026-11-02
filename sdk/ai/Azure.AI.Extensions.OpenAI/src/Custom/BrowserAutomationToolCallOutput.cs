@@ -10,6 +10,7 @@ using OpenAI.Responses;
 namespace Azure.AI.Extensions.OpenAI;
 
 [CodeGenSuppress("Patch")]
+[CodeGenSuppress("_patch")]
 public partial class BrowserAutomationToolCallOutput
 {
     /// <summary> Initializes a new instance of <see cref="BrowserAutomationToolCallOutput"/>. </summary>
@@ -40,7 +41,7 @@ public partial class BrowserAutomationToolCallOutput
     /// <param name="patch"></param>
     internal BrowserAutomationToolCallOutput(ResponseItemKind @type, string id, AgentReference agentReference, string responseId, string callId, BinaryData output, ToolCallStatus status, in JsonPatch patch) : base(@type)
     {
-        _patch = patch;
+        Patch = patch;
         this.ApplyAgentAttribution(agentReference, responseId, null);
         Id = id;
         CallId = callId;

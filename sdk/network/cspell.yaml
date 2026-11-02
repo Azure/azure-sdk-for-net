@@ -8,6 +8,7 @@ overrides:
       - gbps
       - ipam
       - lacp
+      - PLIP
       - snat
       - vnets
       - vxlan
@@ -16,6 +17,7 @@ overrides:
     words:
       - gbps
       - lacp
+      - PLIP
       - TLSDHEDSSWITH
       - TLSDHEDSSWITHAES
       - TLSDHERSAWITHAES

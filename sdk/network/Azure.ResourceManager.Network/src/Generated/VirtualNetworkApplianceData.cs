@@ -131,5 +131,23 @@ namespace Azure.ResourceManager.Network
                 Properties.Subnet = value;
             }
         }
+
+        /// <summary> Resource ID. </summary>
+        [WirePath("properties.capacityProvider.id")]
+        public ResourceIdentifier CapacityProviderId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CapacityProviderId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VirtualNetworkAppliancePropertiesFormat();
+                }
+                Properties.CapacityProviderId = value;
+            }
+        }
     }
 }
