@@ -438,6 +438,7 @@ namespace Azure.Messaging.ServiceBus
         ///   <list type="bullet">
         ///     <listheader><description>The following types are supported:</description></listheader>
         ///     <item><description>string</description></item>
+        ///     <item><description><see cref="AmqpUtf8String"/> (UTF-8 bytes encoded as an AMQP string)</description></item>
         ///     <item><description>bool</description></item>
         ///     <item><description>byte</description></item>
         ///     <item><description>sbyte</description></item>
@@ -458,6 +459,9 @@ namespace Azure.Messaging.ServiceBus
         ///     <item><description>Uri</description></item>
         ///     <item><description>TimeSpan</description></item>
         ///   </list>
+        ///   <para>An <see cref="AmqpUtf8String"/> borrows its bytes. Keep them valid and unchanged
+        ///   until the send or scheduling operation completes, including retries, or until a message
+        ///   batch containing the value is disposed. Receivers see an ordinary string.</para>
         /// </remarks>
         /// <exception cref="System.Runtime.Serialization.SerializationException">
         ///   Occurs when the <see cref="ServiceBusMessage" /> is serialized for transport when an unsupported type is used as a property.

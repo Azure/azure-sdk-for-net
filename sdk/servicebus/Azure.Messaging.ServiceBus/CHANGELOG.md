@@ -4,6 +4,8 @@
 
 ### Features Added
 
+- Added support for `AmqpUtf8String` application properties, allowing borrowed UTF-8 bytes to be sent as AMQP strings without intermediate managed strings.
+
 - Added `DeleteMessagesAsync` and `PurgeMessagesAsync` to `ServiceBusReceiver`. Both methods return result objects containing the number of deleted messages, and purge handles smaller batches caused by large messages.
 
 ### Breaking Changes

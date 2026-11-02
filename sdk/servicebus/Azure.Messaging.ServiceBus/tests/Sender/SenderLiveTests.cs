@@ -5,14 +5,60 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core.Amqp;
 using NUnit.Framework;
 
 namespace Azure.Messaging.ServiceBus.Tests.Sender
 {
     public class SenderLiveTests : ServiceBusLiveTestBase
     {
+        [TestCase("send")]
+        [TestCase("batch")]
+        [TestCase("schedule")]
+        public async Task Utf8ApplicationPropertiesRoundTrip(string sendMode)
+        {
+            await using var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false);
+            await using var client = CreateClient();
+            await using var sender = client.CreateSender(scope.QueueName);
+            await using var receiver = client.CreateReceiver(scope.QueueName);
+            using var timeout = new CancellationTokenSource(TimeSpan.FromMinutes(2));
+            string[] text = { "ascii", "caf\u00e9-\u6771\u4eac", "", "\0\U0001F680", new string('\u00e9', 128) };
+            var message = new ServiceBusMessage("utf8-properties") { ContentType = "application/json" };
+            for (int field = 0; field < text.Length; field++)
+            {
+                message.ApplicationProperties[$"value{field}"] = AmqpUtf8String.FromBytes(Encoding.UTF8.GetBytes(text[field]));
+            }
+
+            if (sendMode == "batch")
+            {
+                using var batch = await sender.CreateMessageBatchAsync(timeout.Token);
+                Assert.True(batch.TryAddMessage(message));
+                message.ApplicationProperties["value0"] = "replaced-after-admission";
+                await sender.SendMessagesAsync(batch, timeout.Token);
+            }
+            else if (sendMode == "schedule")
+            {
+                await sender.ScheduleMessageAsync(message, DateTimeOffset.UtcNow, timeout.Token);
+            }
+            else
+            {
+                await sender.SendMessageAsync(message, timeout.Token);
+            }
+
+            ServiceBusReceivedMessage received = await receiver.ReceiveMessageAsync(TimeSpan.FromSeconds(30), timeout.Token);
+            Assert.NotNull(received);
+            Assert.AreEqual(message.ContentType, received.ContentType);
+            Assert.AreEqual(message.Body.ToArray(), received.Body.ToArray());
+            for (int field = 0; field < text.Length; field++)
+            {
+                Assert.AreEqual(text[field], received.ApplicationProperties[$"value{field}"]);
+            }
+            await receiver.CompleteMessageAsync(received, timeout.Token);
+        }
+
         [Test]
         public async Task SendConnStringWithSharedKey()
         {

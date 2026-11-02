@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
 using Azure.Core;
 using Azure.Core.Amqp;
@@ -17,6 +18,100 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
 {
     public class AmqpConverterTests
     {
+        [TestCase("")]
+        [TestCase("ascii")]
+        [TestCase("caf\u00e9-\u6771\u4eac")]
+        [TestCase("\0\U0001F680")]
+        public void Utf8ApplicationPropertyUsesStringWireEncoding(string text)
+        {
+            var converter = new AmqpMessageConverter();
+            var source = new ServiceBusMessage();
+            source.ApplicationProperties["value"] = AmqpUtf8String.FromBytes(Encoding.UTF8.GetBytes(text));
+            using var native = converter.SBMessageToAmqpMessage(source);
+            using var stream = native.ToStream();
+            var received = AmqpAnnotatedMessage.FromBytes(BinaryData.FromStream(stream));
+            Assert.AreEqual(text, received.ApplicationProperties["value"]);
+        }
+
+#if NETCOREAPP
+        [Test]
+        public void Utf8ApplicationPropertyDoesNotAddConversionAllocations()
+        {
+            var value = AmqpUtf8String.FromBytes(Encoding.UTF8.GetBytes("message-identifier"));
+            for (int warmup = 0; warmup < 100; warmup++)
+            {
+                AmqpAnnotatedMessageConverter.TryCreateAmqpPropertyValueFromNetProperty(value, out _);
+            }
+
+            long before = GC.GetAllocatedBytesForCurrentThread();
+            for (int iteration = 0; iteration < 1_000; iteration++)
+            {
+                AmqpAnnotatedMessageConverter.TryCreateAmqpPropertyValueFromNetProperty(value, out _);
+            }
+            long allocated = GC.GetAllocatedBytesForCurrentThread() - before;
+            Assert.AreEqual(0, allocated);
+        }
+
+        [Test]
+        public void Utf8ApplicationPropertiesReduceSerializationAllocations()
+        {
+            string[] keys = { "id", "time", "type", "source", "version" };
+            string[] text = {
+                "019a3c1b-97c0-7000-8000-000000000001",
+                "2026-11-02T00:00:00.0000000Z",
+                "example.order.created", "example", "1.0"
+            };
+            var bytes = new byte[text.Length][];
+            var values = new AmqpUtf8String[text.Length];
+            var source = new ServiceBusMessage(new byte[256]);
+            var converter = new AmqpMessageConverter();
+            for (int field = 0; field < text.Length; field++)
+            {
+                bytes[field] = Encoding.UTF8.GetBytes(text[field]);
+                values[field] = AmqpUtf8String.FromBytes(bytes[field]);
+            }
+
+            long original = Measure(0);
+            long decoded = Measure(1);
+            long fresh = Measure(2);
+            long reused = Measure(3);
+            TestContext.Progress.WriteLine($"Serialization bytes/op: strings={original}, decoded={decoded}, fresh wrappers={fresh}, reused wrappers={reused}");
+            Assert.Less(fresh, decoded);
+            Assert.Less(reused, fresh);
+
+            long Measure(int mode)
+            {
+                for (int warmup = 0; warmup < 100; warmup++)
+                {
+                    Serialize(mode);
+                }
+                long before = GC.GetAllocatedBytesForCurrentThread();
+                for (int iteration = 0; iteration < 1_000; iteration++)
+                {
+                    Serialize(mode);
+                }
+                return (GC.GetAllocatedBytesForCurrentThread() - before) / 1_000;
+            }
+
+            void Serialize(int mode)
+            {
+                for (int field = 0; field < text.Length; field++)
+                {
+                    source.ApplicationProperties[keys[field]] = mode switch
+                    {
+                        0 => text[field],
+                        1 => Encoding.UTF8.GetString(bytes[field]),
+                        2 => AmqpUtf8String.FromBytes(bytes[field]),
+                        _ => values[field]
+                    };
+                }
+                using var native = converter.SBMessageToAmqpMessage(source);
+                using var stream = native.ToStream();
+                stream.CopyTo(Stream.Null);
+            }
+        }
+#endif
+
         [Test]
         public void ConvertAmqpMessageToSBMessage()
         {
