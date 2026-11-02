@@ -105,8 +105,9 @@ namespace Azure.Core.Tests.Identity
                     options.ManagedIdentityClientId = identityId;
                 }
                 var fallback = new Mock<TokenCredential>(MockBehavior.Strict);
-                var credential = new DefaultAzureCredential(options);
-                credential._sources = new[] { credential._sources.Single(), fallback.Object };
+                var factory = new DefaultAzureCredentialFactory(options);
+                var credential = new DefaultAzureCredential(factory);
+                credential._sources = new[] { factory.CreateManagedIdentityCredential(isChained: true), fallback.Object };
                 var instrumented = InstrumentClient(credential);
 
                 var ex = Assert.ThrowsAsync<AuthenticationFailedException>(async () =>
