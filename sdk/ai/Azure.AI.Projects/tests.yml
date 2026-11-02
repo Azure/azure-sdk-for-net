@@ -66,7 +66,7 @@ extends:
     Location: 'East US'
     MaxParallel: ${{ parameters.testQueueCount }}
     TestResourceDirectories:
-      - ai/tests/samples/ci/infra
+      - ai/Azure.AI.Projects/tests/Samples/ci/infra
     MatrixFilters:
       - AdditionalTestArguments=^(?!.*UseProjectReferenceToAzureClients=true)
     PreSteps:
