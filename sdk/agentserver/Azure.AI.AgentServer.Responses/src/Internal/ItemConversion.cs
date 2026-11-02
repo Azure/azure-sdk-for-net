@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System.ClientModel.Primitives;
+using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using System.Text.Json.Nodes;
 using Azure.AI.AgentServer.Responses.Internal.Resilience;
@@ -19,6 +20,7 @@ namespace Azure.AI.AgentServer.Responses.Internal;
 /// so conversion no longer maps between two parallel hierarchies. What remains is assigning a
 /// type-prefixed ID and stripping server-internal metadata on egress.
 /// </remarks>
+[Experimental("OPENAI001")]
 internal static class ItemConversion
 {
     /// <summary>

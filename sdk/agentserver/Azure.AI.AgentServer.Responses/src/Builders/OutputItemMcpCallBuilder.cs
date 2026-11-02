@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Diagnostics.CodeAnalysis;
 using System.Text;
 using Azure.AI.AgentServer.Responses.Models;
 
@@ -10,6 +11,7 @@ namespace Azure.AI.AgentServer.Responses;
 /// Scoped builder for an MCP tool call output item. Provides methods
 /// for lifecycle events and streaming arguments.
 /// </summary>
+[Experimental("OPENAI001")]
 public class OutputItemMcpCallBuilder : OutputItemBuilder<OutputItemMcpToolCall>
 {
     private readonly string _serverLabel;

@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.AI.AgentServer.Responses.Models;
 
 namespace Azure.AI.AgentServer.Responses.Internal;
@@ -21,6 +22,7 @@ namespace Azure.AI.AgentServer.Responses.Internal;
 /// TTL-based eviction) for modes where the events will never be replayed.
 /// </para>
 /// </remarks>
+[Experimental("OPENAI001")]
 internal sealed class NullPublisher : IAsyncObserver<ResponseStreamEvent>
 {
     private long _nextSequenceNumber;

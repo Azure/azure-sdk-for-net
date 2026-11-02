@@ -64,7 +64,9 @@ namespace Azure.AI.AgentServer.Responses
         /// <summary> Initializes a new instance of <see cref="CreateResponseRequest"/>. </summary>
         internal CreateResponseRequest()
         {
+#pragma warning disable OPENAI001 // This generated code depends on experimental functionality.
             Tools = new ChangeTrackingList<Tool>();
+#pragma warning restore OPENAI001 // This generated code depends on experimental functionality.
             Include = new ChangeTrackingList<IncludeEnum>();
             ContextManagement = new ChangeTrackingList<ContextManagementParam>();
             StructuredInputs = new ChangeTrackingDictionary<string, BinaryData>();
@@ -124,6 +126,7 @@ namespace Azure.AI.AgentServer.Responses
         /// Returns a 400 (Bad Request) error when the target is not a Model Router endpoint.
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+#pragma warning disable OPENAI001 // This generated code depends on experimental functionality.
         internal CreateResponseRequest(Metadata metadata, long? topLogprobs, double? temperature, double? topP, string user, string safetyIdentifier, string promptCacheKey, CreateResponseRequestPromptCacheRetention? promptCacheRetention, string previousResponseId, string model, bool? background, long? maxToolCalls, ResponseTextParam text, IList<Tool> tools, BinaryData toolChoice, Prompt prompt, ResponsePromptCacheOptionsParam promptCacheOptions, CreateResponseRequestServiceTier? serviceTier, CreateResponseRequestTruncation? truncation, Reasoning reasoning, BinaryData input, IList<IncludeEnum> include, bool? parallelToolCalls, bool? store, string instructions, ModerationParam moderation, bool? stream, ResponseStreamOptions streamOptions, ResponseConversationOptions conversation, IList<ContextManagementParam> contextManagement, long? maxOutputTokens, AgentReference agent, string agentSessionId, AgentReference agentReference, IDictionary<string, BinaryData> structuredInputs, AzureUserSecurityContext userSecurityContext, RoutingConfiguration routingConfig, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             _metadata = metadata;
@@ -165,6 +168,7 @@ namespace Azure.AI.AgentServer.Responses
             RoutingConfig = routingConfig;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+#pragma warning restore OPENAI001 // This generated code depends on experimental functionality.
 
         /// <summary> Gets the Metadata. </summary>
         public Metadata Metadata
@@ -269,8 +273,10 @@ namespace Azure.AI.AgentServer.Responses
         /// <summary> Gets the Text. </summary>
         public ResponseTextParam Text { get; }
 
+#pragma warning disable OPENAI001 // This generated code depends on experimental functionality.
         /// <summary> Gets the Tools. </summary>
         public IList<Tool> Tools { get; }
+#pragma warning restore OPENAI001 // This generated code depends on experimental functionality.
 
         /// <summary>
         /// Gets the ToolChoice.
@@ -346,6 +352,7 @@ namespace Azure.AI.AgentServer.Responses
             }
         }
 
+#pragma warning disable OPENAI001 // This generated code depends on experimental functionality.
         /// <summary>
         /// Gets the Input.
         /// <para> To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
@@ -386,6 +393,7 @@ namespace Azure.AI.AgentServer.Responses
         /// </para>
         /// </summary>
         public BinaryData Input { get; }
+#pragma warning restore OPENAI001 // This generated code depends on experimental functionality.
 
         /// <summary> Gets the Include. </summary>
         public IList<IncludeEnum> Include { get; }
@@ -444,6 +452,7 @@ namespace Azure.AI.AgentServer.Responses
             }
         }
 
+#pragma warning disable OPENAI001 // This generated code depends on experimental functionality.
         /// <summary> Gets the Conversation. </summary>
         public ResponseConversationOptions Conversation
         {
@@ -452,6 +461,7 @@ namespace Azure.AI.AgentServer.Responses
                 return _conversation;
             }
         }
+#pragma warning restore OPENAI001 // This generated code depends on experimental functionality.
 
         /// <summary> Context management configuration for this request. </summary>
         public IList<ContextManagementParam> ContextManagement { get; }

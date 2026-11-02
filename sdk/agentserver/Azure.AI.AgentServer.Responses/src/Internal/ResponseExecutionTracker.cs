@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System.Collections.Concurrent;
+using System.Diagnostics.CodeAnalysis;
 using Azure.AI.AgentServer.Core;
 using Azure.AI.AgentServer.Responses.Models;
 using Microsoft.Extensions.Hosting;
@@ -15,6 +16,7 @@ namespace Azure.AI.AgentServer.Responses.Internal;
 /// State persistence and eviction are delegated to <see cref="ResponsesProvider"/>.
 /// Implements <see cref="IHostedService"/> for graceful shutdown.
 /// </summary>
+[Experimental("OPENAI001")]
 internal sealed class ResponseExecutionTracker : IHostedService, IDisposable
 {
     private readonly ConcurrentDictionary<(ResponseStorePartition Partition, string ResponseId), ResponseExecution> _executions = new();

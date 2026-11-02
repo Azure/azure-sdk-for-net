@@ -4,6 +4,7 @@
 #nullable enable
 
 using System.Collections;
+using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using System.Text.Json.Nodes;
 using Azure.AI.AgentServer.Responses.Models;
@@ -72,6 +73,8 @@ internal static class FunctionCallOutputParts
     /// <param name="flattened">The locations and parts returned by <see cref="Flatten"/>.</param>
     public static void Restore(object? model, List<(object[] Path, JsonArray Parts)> flattened)
     {
+        // Patches parts back onto any OpenAI model; the model is passed as object, so nothing experimental is exposed.
+#pragma warning disable OPENAI001
         foreach (var (path, parts) in flattened)
         {
             object? target = model;
@@ -85,6 +88,7 @@ internal static class FunctionCallOutputParts
                 SetParts(item, parts);
             }
         }
+#pragma warning restore OPENAI001
     }
 
     /// <summary>
@@ -93,6 +97,7 @@ internal static class FunctionCallOutputParts
     /// </summary>
     /// <param name="item">The function call output item.</param>
     /// <param name="parts">The content parts to emit.</param>
+    [Experimental("OPENAI001")]
     public static void SetParts(FunctionCallOutputResponseItem item, JsonArray parts)
         => item.Patch.Set(OutputPath, BinaryData.FromString(parts.ToJsonString()).ToMemory().Span);
 
@@ -181,6 +186,7 @@ internal static class FunctionCallOutputParts
         }
     }
 
+    [Experimental("OPENAI001")]
     private static object? Step(object? current, object segment) => (current, segment) switch
     {
         (IList list, int index) => index < list.Count ? list[index] : null,

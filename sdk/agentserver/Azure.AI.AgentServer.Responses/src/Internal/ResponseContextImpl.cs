@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.AI.AgentServer.Core;
 using Azure.AI.AgentServer.Responses.Internal.Resilience;
 using Azure.AI.AgentServer.Responses.Models;
@@ -16,6 +17,7 @@ namespace Azure.AI.AgentServer.Responses.Internal;
 /// item references are resolved via <see cref="ResponsesProvider.GetItemsAsync"/>
 /// and converted back to <see cref="Item"/>.
 /// </summary>
+[Experimental("OPENAI001")]
 internal sealed class ResponseContextImpl : ResponseContext
 {
     private readonly ResponsesProvider _provider;

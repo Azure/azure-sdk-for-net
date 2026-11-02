@@ -22,6 +22,7 @@ namespace Azure.AI.AgentServer.Responses.Internal;
 /// implementation has to produce them, so they are round-tripped through the public model-reader
 /// instead. The error and incomplete-details helpers use the same path.
 /// </remarks>
+[Experimental("OPENAI001")]
 internal static class OpenAIModelFactory
 {
     /// <summary>

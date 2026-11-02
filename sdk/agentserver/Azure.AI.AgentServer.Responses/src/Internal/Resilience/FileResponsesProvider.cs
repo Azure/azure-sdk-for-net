@@ -3,6 +3,7 @@
 
 using System.ClientModel.Primitives;
 using System.Collections.Concurrent;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Text;
 using System.Text.Json;
@@ -27,6 +28,7 @@ namespace Azure.AI.AgentServer.Responses.Internal.Resilience;
 /// reads are fast and post-restart recovery sees the pre-crash envelopes. Writes are write-through
 /// and use an atomic temp-file + rename so a crash mid-write never corrupts a committed record.
 /// </remarks>
+[Experimental("OPENAI001")]
 internal sealed class FileResponsesProvider : ResponsesProvider
 {
     private readonly string _root;
@@ -125,6 +127,7 @@ internal sealed class FileResponsesProvider : ResponsesProvider
 }
 
 // All operations complete synchronously under the owning provider's per-partition lock.
+[Experimental("OPENAI001")]
 internal sealed class FileResponseStore : ResponsesProvider
 {
     private const string EnvelopesDirName = "envelopes";

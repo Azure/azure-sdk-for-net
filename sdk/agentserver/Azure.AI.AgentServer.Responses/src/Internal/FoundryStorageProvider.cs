@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.AI.AgentServer.Core;
 using Azure.AI.AgentServer.Responses.Models;
 using Azure.Core;
@@ -13,6 +14,7 @@ namespace Azure.AI.AgentServer.Responses.Internal;
 /// state to the Azure AI Foundry storage API using an Azure.Core
 /// <see cref="HttpPipeline"/> for retry, authentication, telemetry, and tracing.
 /// </summary>
+[Experimental("OPENAI001")]
 internal sealed class FoundryStorageProvider : ResponsesProvider
 {
     private const string ApiVersion = "v1";

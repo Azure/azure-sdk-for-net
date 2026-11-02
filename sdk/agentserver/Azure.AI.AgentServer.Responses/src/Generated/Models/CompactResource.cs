@@ -6,12 +6,14 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using OpenAI.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
     /// <summary> The compacted response object. </summary>
+    [Experimental("OPENAI001")]
     public partial class CompactResource
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

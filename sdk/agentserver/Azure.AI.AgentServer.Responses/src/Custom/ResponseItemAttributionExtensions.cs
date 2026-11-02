@@ -40,6 +40,7 @@ namespace Azure.AI.AgentServer.Responses;
 /// alias or its fully qualified name instead of importing <c>Azure.AI.Extensions.OpenAI</c>.
 /// </para>
 /// </remarks>
+[Experimental("OPENAI001")]
 public static class ResponseItemAttributionExtensions
 {
     private static readonly ReadOnlyMemory<byte> ResponseIdPath = "$.response_id"u8.ToArray();

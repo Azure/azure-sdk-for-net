@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.AgentServer.Responses.Models;
 
@@ -16,6 +17,7 @@ namespace Azure.AI.AgentServer.Responses.Models;
 /// constructed directly. This factory is primarily useful for types where
 /// all-defaults construction is convenient for tests.
 /// </remarks>
+[Experimental("OPENAI001")]
 public static class ResponsesModelFactory
 {
     /// <summary>Creates a <see cref="ResponseObject"/> instance for mocking.</summary>

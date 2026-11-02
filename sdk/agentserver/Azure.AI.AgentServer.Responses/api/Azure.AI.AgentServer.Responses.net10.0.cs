@@ -15,6 +15,7 @@ namespace Azure.AI.AgentServer.Responses
         public string? Code { get { throw null; } }
         public string? ParamName { get { throw null; } }
     }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("OPENAI001")]
     public sealed partial class CreateResponsePersistRequest
     {
         public CreateResponsePersistRequest(OpenAI.Responses.ResponseResult response, System.Collections.Generic.IEnumerable<OpenAI.Responses.ResponseItem>? inputItems, System.Collections.Generic.IEnumerable<string>? historyItemIds) { }
@@ -93,6 +94,7 @@ namespace Azure.AI.AgentServer.Responses
         public InMemoryProviderOptions() { }
         public System.TimeSpan EventStreamTtl { get { throw null; } set { } }
     }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("OPENAI001")]
     public partial class OutputItemBuilder<T> where T : OpenAI.Responses.ResponseItem
     {
         protected OutputItemBuilder() { }
@@ -101,6 +103,7 @@ namespace Azure.AI.AgentServer.Responses
         public virtual OpenAI.Responses.StreamingResponseOutputItemAddedUpdate EmitAdded(T item) { throw null; }
         public virtual OpenAI.Responses.StreamingResponseOutputItemDoneUpdate EmitDone(T item) { throw null; }
     }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("OPENAI001")]
     public partial class OutputItemCodeInterpreterCallBuilder : Azure.AI.AgentServer.Responses.OutputItemBuilder<OpenAI.Responses.CodeInterpreterCallResponseItem>
     {
         protected OutputItemCodeInterpreterCallBuilder() { }
@@ -114,6 +117,7 @@ namespace Azure.AI.AgentServer.Responses
         public virtual OpenAI.Responses.StreamingResponseCodeInterpreterCallInProgressUpdate EmitInProgress() { throw null; }
         public virtual OpenAI.Responses.StreamingResponseCodeInterpreterCallInterpretingUpdate EmitInterpreting() { throw null; }
     }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("OPENAI001")]
     public partial class OutputItemCustomToolCallBuilder : Azure.AI.AgentServer.Responses.OutputItemBuilder<Azure.AI.AgentServer.Responses.Models.OutputItemCustomToolCall>
     {
         protected OutputItemCustomToolCallBuilder() { }
@@ -126,6 +130,7 @@ namespace Azure.AI.AgentServer.Responses
         public System.Collections.Generic.IAsyncEnumerable<OpenAI.Responses.StreamingResponseUpdate> Input(System.Collections.Generic.IAsyncEnumerable<string> chunks, [System.Runtime.CompilerServices.EnumeratorCancellationAttribute] System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public System.Collections.Generic.IEnumerable<OpenAI.Responses.StreamingResponseUpdate> Input(string input) { throw null; }
     }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("OPENAI001")]
     public partial class OutputItemFileSearchCallBuilder : Azure.AI.AgentServer.Responses.OutputItemBuilder<OpenAI.Responses.FileSearchCallResponseItem>
     {
         protected OutputItemFileSearchCallBuilder() { }
@@ -135,6 +140,7 @@ namespace Azure.AI.AgentServer.Responses
         public virtual OpenAI.Responses.StreamingResponseFileSearchCallInProgressUpdate EmitInProgress() { throw null; }
         public virtual OpenAI.Responses.StreamingResponseFileSearchCallSearchingUpdate EmitSearching() { throw null; }
     }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("OPENAI001")]
     public partial class OutputItemFunctionCallBuilder : Azure.AI.AgentServer.Responses.OutputItemBuilder<OpenAI.Responses.FunctionCallResponseItem>
     {
         protected OutputItemFunctionCallBuilder() { }
@@ -147,6 +153,7 @@ namespace Azure.AI.AgentServer.Responses
         public virtual OpenAI.Responses.StreamingResponseFunctionCallArgumentsDoneUpdate EmitArgumentsDone(string arguments) { throw null; }
         public virtual OpenAI.Responses.StreamingResponseOutputItemDoneUpdate EmitDone() { throw null; }
     }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("OPENAI001")]
     public partial class OutputItemImageGenCallBuilder : Azure.AI.AgentServer.Responses.OutputItemBuilder<OpenAI.Responses.ImageGenerationCallResponseItem>
     {
         protected OutputItemImageGenCallBuilder() { }
@@ -157,6 +164,7 @@ namespace Azure.AI.AgentServer.Responses
         public virtual OpenAI.Responses.StreamingResponseImageGenerationCallInProgressUpdate EmitInProgress() { throw null; }
         public virtual OpenAI.Responses.StreamingResponseImageGenerationCallPartialImageUpdate EmitPartialImage(string partialImageB64) { throw null; }
     }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("OPENAI001")]
     public partial class OutputItemMcpCallBuilder : Azure.AI.AgentServer.Responses.OutputItemBuilder<OpenAI.Responses.McpToolCallItem>
     {
         protected OutputItemMcpCallBuilder() { }
@@ -172,6 +180,7 @@ namespace Azure.AI.AgentServer.Responses
         public virtual OpenAI.Responses.StreamingResponseMcpCallFailedUpdate EmitFailed() { throw null; }
         public virtual OpenAI.Responses.StreamingResponseMcpCallInProgressUpdate EmitInProgress() { throw null; }
     }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("OPENAI001")]
     public partial class OutputItemMcpListToolsBuilder : Azure.AI.AgentServer.Responses.OutputItemBuilder<OpenAI.Responses.McpToolDefinitionListItem>
     {
         protected OutputItemMcpListToolsBuilder() { }
@@ -182,6 +191,7 @@ namespace Azure.AI.AgentServer.Responses
         public virtual OpenAI.Responses.StreamingResponseMcpListToolsFailedUpdate EmitFailed() { throw null; }
         public virtual OpenAI.Responses.StreamingResponseMcpListToolsInProgressUpdate EmitInProgress() { throw null; }
     }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("OPENAI001")]
     public partial class OutputItemMessageBuilder : Azure.AI.AgentServer.Responses.OutputItemBuilder<OpenAI.Responses.MessageResponseItem>
     {
         protected OutputItemMessageBuilder() { }
@@ -195,6 +205,7 @@ namespace Azure.AI.AgentServer.Responses
         public virtual System.Collections.Generic.IEnumerable<OpenAI.Responses.StreamingResponseUpdate> TextContent(string text) { throw null; }
         public virtual System.Collections.Generic.IEnumerable<OpenAI.Responses.StreamingResponseUpdate> TextContent(string text, System.Collections.Generic.IEnumerable<OpenAI.Responses.ResponseMessageAnnotation> annotations) { throw null; }
     }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("OPENAI001")]
     public partial class OutputItemReasoningItemBuilder : Azure.AI.AgentServer.Responses.OutputItemBuilder<OpenAI.Responses.ReasoningResponseItem>
     {
         protected OutputItemReasoningItemBuilder() { }
@@ -204,6 +215,7 @@ namespace Azure.AI.AgentServer.Responses
         public virtual System.Collections.Generic.IAsyncEnumerable<OpenAI.Responses.StreamingResponseUpdate> SummaryPart(System.Collections.Generic.IAsyncEnumerable<string> chunks, [System.Runtime.CompilerServices.EnumeratorCancellationAttribute] System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Collections.Generic.IEnumerable<OpenAI.Responses.StreamingResponseUpdate> SummaryPart(string text) { throw null; }
     }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("OPENAI001")]
     public partial class OutputItemWebSearchCallBuilder : Azure.AI.AgentServer.Responses.OutputItemBuilder<OpenAI.Responses.WebSearchCallResponseItem>
     {
         protected OutputItemWebSearchCallBuilder() { }
@@ -218,6 +230,7 @@ namespace Azure.AI.AgentServer.Responses
         public PayloadValidationException(System.Collections.Generic.IReadOnlyList<Azure.AI.AgentServer.Responses.ValidationError> errors) : base (default(string)) { }
         public System.Collections.Generic.IReadOnlyList<Azure.AI.AgentServer.Responses.ValidationError> Errors { get { throw null; } }
     }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("OPENAI001")]
     public partial class ReasoningSummaryPartBuilder
     {
         protected ReasoningSummaryPartBuilder() { }
@@ -228,6 +241,7 @@ namespace Azure.AI.AgentServer.Responses
         public virtual OpenAI.Responses.StreamingResponseReasoningSummaryTextDeltaUpdate EmitTextDelta(string text) { throw null; }
         public virtual OpenAI.Responses.StreamingResponseReasoningSummaryTextDoneUpdate EmitTextDone(string finalText) { throw null; }
     }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("OPENAI001")]
     public partial class RefusalContentBuilder
     {
         protected RefusalContentBuilder() { }
@@ -257,6 +271,7 @@ namespace Azure.AI.AgentServer.Responses
         public virtual bool IsShutdownRequested { get { throw null; } }
         public virtual bool IsSteeredTurn { get { throw null; } }
         public virtual int PendingInputCount { get { throw null; } }
+        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("OPENAI001")]
         public virtual OpenAI.Responses.ResponseResult? PersistedResponse { get { throw null; } }
         public virtual Azure.AI.AgentServer.Core.PlatformContext PlatformContext { get { throw null; } }
         public virtual System.Collections.Generic.IReadOnlyDictionary<string, Microsoft.Extensions.Primitives.StringValues> QueryParameters { get { throw null; } }
@@ -264,7 +279,9 @@ namespace Azure.AI.AgentServer.Responses
         public string ResponseId { get { throw null; } }
         public virtual System.Threading.CancellationToken Shutdown { get { throw null; } }
         public virtual System.Threading.Tasks.Task ExitForRecoveryAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("OPENAI001")]
         public virtual System.Threading.Tasks.Task<System.Collections.Generic.IReadOnlyList<OpenAI.Responses.ResponseItem>> GetHistoryAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("OPENAI001")]
         public virtual System.Threading.Tasks.Task<System.Collections.Generic.IReadOnlyList<OpenAI.Responses.ResponseItem>> GetInputItemsAsync(bool resolveReferences = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<string> GetInputTextAsync(bool resolveReferences = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -298,6 +315,7 @@ namespace Azure.AI.AgentServer.Responses
         public static string NewWebSearchCallItemId(this Azure.AI.AgentServer.Responses.ResponseContext context) { throw null; }
         public static string NewWorkflowActionItemId(this Azure.AI.AgentServer.Responses.ResponseContext context) { throw null; }
     }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("OPENAI001")]
     public partial class ResponseEventStream
     {
         protected ResponseEventStream() { }
@@ -354,8 +372,10 @@ namespace Azure.AI.AgentServer.Responses
     public abstract partial class ResponseHandler
     {
         protected ResponseHandler() { }
+        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("OPENAI001")]
         public abstract System.Collections.Generic.IAsyncEnumerable<OpenAI.Responses.StreamingResponseUpdate> CreateAsync(OpenAI.Responses.CreateResponseOptions request, Azure.AI.AgentServer.Responses.ResponseContext context, System.Threading.CancellationToken cancellationToken);
     }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("OPENAI001")]
     public static partial class ResponseItemAttributionExtensions
     {
         public static Azure.AI.Extensions.OpenAI.AgentReference? get_AgentReference(OpenAI.Responses.CreateResponseOptions options) { throw null; }
@@ -471,8 +491,11 @@ namespace Azure.AI.AgentServer.Responses
     }
     public partial class ResponsesApiException : System.Exception
     {
+        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("OPENAI001")]
         public ResponsesApiException(OpenAI.Responses.ResponseError error, int statusCode) { }
+        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("OPENAI001")]
         public ResponsesApiException(OpenAI.Responses.ResponseError error, int statusCode, System.Exception innerException) { }
+        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("OPENAI001")]
         public OpenAI.Responses.ResponseError Error { get { throw null; } }
         public int StatusCode { get { throw null; } }
     }
@@ -491,12 +514,16 @@ namespace Azure.AI.AgentServer.Responses
     public abstract partial class ResponsesProvider
     {
         protected ResponsesProvider() { }
+        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("OPENAI001")]
         public abstract System.Threading.Tasks.Task CreateResponseAsync(Azure.AI.AgentServer.Responses.CreateResponsePersistRequest request, Azure.AI.AgentServer.Core.PlatformContext context, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         public abstract System.Threading.Tasks.Task DeleteResponseAsync(string responseId, Azure.AI.AgentServer.Core.PlatformContext context, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         public abstract System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<string>> GetHistoryItemIdsAsync(string? previousResponseId, string? conversationId, int limit, Azure.AI.AgentServer.Core.PlatformContext context, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         public abstract System.Threading.Tasks.Task<Azure.AI.AgentServer.Responses.Models.AgentsPagedResultOutputItem> GetInputItemsAsync(string responseId, Azure.AI.AgentServer.Core.PlatformContext context, int limit = 20, bool ascending = false, string? after = null, string? before = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("OPENAI001")]
         public abstract System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<OpenAI.Responses.ResponseItem?>> GetItemsAsync(System.Collections.Generic.IEnumerable<string> itemIds, Azure.AI.AgentServer.Core.PlatformContext context, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("OPENAI001")]
         public abstract System.Threading.Tasks.Task<OpenAI.Responses.ResponseResult> GetResponseAsync(string responseId, Azure.AI.AgentServer.Core.PlatformContext context, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("OPENAI001")]
         public abstract System.Threading.Tasks.Task UpdateResponseAsync(OpenAI.Responses.ResponseResult response, Azure.AI.AgentServer.Core.PlatformContext context, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
     }
     public static partial class ResponsesServer
@@ -520,6 +547,7 @@ namespace Azure.AI.AgentServer.Responses
         public int DefaultFetchHistoryCount { get { throw null; } set { } }
         public string? DefaultModel { get { throw null; } set { } }
         public bool ResilientBackground { get { throw null; } set { } }
+        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("OPENAI001")]
         public System.Func<OpenAI.Responses.CreateResponseOptions, Azure.AI.AgentServer.Responses.ResponseContext, OpenAI.Responses.ResponseResult>? ResponseAcceptor { get { throw null; } set { } }
         public bool SteerableConversations { get { throw null; } set { } }
     }
@@ -539,6 +567,7 @@ namespace Azure.AI.AgentServer.Responses
         public bool SteerableConversations { get { throw null; } set { } }
         protected override void BindCore(Microsoft.Extensions.Configuration.IConfigurationSection section) { }
     }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("OPENAI001")]
     public partial class TextContentBuilder
     {
         protected TextContentBuilder() { }
@@ -551,6 +580,7 @@ namespace Azure.AI.AgentServer.Responses
         public virtual OpenAI.Responses.StreamingResponseContentPartDoneUpdate EmitDone() { throw null; }
         public virtual OpenAI.Responses.StreamingResponseOutputTextDoneUpdate EmitTextDone(string? finalText = null) { throw null; }
     }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("OPENAI001")]
     public partial class TextResponse : System.Collections.Generic.IAsyncEnumerable<OpenAI.Responses.StreamingResponseUpdate>
     {
         public TextResponse(Azure.AI.AgentServer.Responses.ResponseContext context, OpenAI.Responses.CreateResponseOptions request, System.Func<System.Threading.CancellationToken, System.Collections.Generic.IAsyncEnumerable<string>> createTextStream, System.Action<OpenAI.Responses.ResponseResult>? configure = null) { }
@@ -1003,6 +1033,7 @@ namespace Azure.AI.AgentServer.Responses.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.AgentServer.Responses.Models.CodeInterpreterOutputLogs>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.AgentServer.Responses.Models.CodeInterpreterOutputLogs>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("OPENAI001")]
     public partial class CompactResource : System.ClientModel.Primitives.IJsonModel<Azure.AI.AgentServer.Responses.Models.CompactResource>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.AgentServer.Responses.Models.CompactResource>
     {
         internal CompactResource() { }
@@ -1131,6 +1162,7 @@ namespace Azure.AI.AgentServer.Responses.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.AgentServer.Responses.Models.ConversationParam>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.AgentServer.Responses.Models.ConversationParam>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("OPENAI001")]
     public static partial class CreateResponseExtensions
     {
         public static Azure.AI.AgentServer.Responses.Models.ConversationParam? GetConversationExpanded(this OpenAI.Responses.CreateResponseOptions request) { throw null; }
@@ -1492,6 +1524,7 @@ namespace Azure.AI.AgentServer.Responses.Models
         Completed = 1,
         Incomplete = 2,
     }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("OPENAI001")]
     public static partial class ItemExtensions
     {
         public static string GetInputText(this System.Collections.Generic.IEnumerable<OpenAI.Responses.ResponseItem> items) { throw null; }
@@ -1509,6 +1542,7 @@ namespace Azure.AI.AgentServer.Responses.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.AgentServer.Responses.Models.ItemField>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.AgentServer.Responses.Models.ItemField>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("OPENAI001")]
     public partial class ItemFieldAdditionalTools : Azure.AI.AgentServer.Responses.Models.ItemField, System.ClientModel.Primitives.IJsonModel<Azure.AI.AgentServer.Responses.Models.ItemFieldAdditionalTools>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.AgentServer.Responses.Models.ItemFieldAdditionalTools>
     {
         internal ItemFieldAdditionalTools() { }
@@ -1597,6 +1631,7 @@ namespace Azure.AI.AgentServer.Responses.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.AgentServer.Responses.Models.ItemFieldCompactionBody>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.AgentServer.Responses.Models.ItemFieldCompactionBody>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("OPENAI001")]
     public partial class ItemFieldComputerToolCall : Azure.AI.AgentServer.Responses.Models.ItemField, System.ClientModel.Primitives.IJsonModel<Azure.AI.AgentServer.Responses.Models.ItemFieldComputerToolCall>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.AgentServer.Responses.Models.ItemFieldComputerToolCall>
     {
         internal ItemFieldComputerToolCall() { }
@@ -1985,6 +2020,7 @@ namespace Azure.AI.AgentServer.Responses.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.AgentServer.Responses.Models.ItemFieldToolSearchCall>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.AgentServer.Responses.Models.ItemFieldToolSearchCall>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("OPENAI001")]
     public partial class ItemFieldToolSearchOutput : Azure.AI.AgentServer.Responses.Models.ItemField, System.ClientModel.Primitives.IJsonModel<Azure.AI.AgentServer.Responses.Models.ItemFieldToolSearchOutput>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.AgentServer.Responses.Models.ItemFieldToolSearchOutput>
     {
         internal ItemFieldToolSearchOutput() { }
@@ -2080,6 +2116,7 @@ namespace Azure.AI.AgentServer.Responses.Models
         Completed = 1,
         Incomplete = 2,
     }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("OPENAI001")]
     public static partial class ItemMessageExtensions
     {
         public static System.Collections.Generic.List<Azure.AI.AgentServer.Responses.Models.MessageContent> GetContentExpanded(this OpenAI.Responses.MessageResponseItem message) { throw null; }
@@ -2254,6 +2291,7 @@ namespace Azure.AI.AgentServer.Responses.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.AgentServer.Responses.Models.MessageContentInputTextContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.AgentServer.Responses.Models.MessageContentInputTextContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("OPENAI001")]
     public partial class MessageContentOutputTextContent : Azure.AI.AgentServer.Responses.Models.MessageContent, System.ClientModel.Primitives.IJsonModel<Azure.AI.AgentServer.Responses.Models.MessageContentOutputTextContent>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.AgentServer.Responses.Models.MessageContentOutputTextContent>
     {
         public MessageContentOutputTextContent(string text) { }
@@ -2598,6 +2636,7 @@ namespace Azure.AI.AgentServer.Responses.Models
         Completed = 1,
         Incomplete = 2,
     }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("OPENAI001")]
     public partial class OutputItemCustomToolCall : OpenAI.Responses.ResponseItem, System.ClientModel.Primitives.IJsonModel<Azure.AI.AgentServer.Responses.Models.OutputItemCustomToolCall>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.AgentServer.Responses.Models.OutputItemCustomToolCall>
     {
         public OutputItemCustomToolCall(string callId, string name, string input, Azure.AI.AgentServer.Responses.Models.FunctionCallStatus status) : base (default(OpenAI.Responses.ResponseItemKind)) { }
@@ -2618,6 +2657,7 @@ namespace Azure.AI.AgentServer.Responses.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.AgentServer.Responses.Models.OutputItemCustomToolCall>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.AgentServer.Responses.Models.OutputItemCustomToolCall>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("OPENAI001")]
     public partial class OutputItemCustomToolCallOutput : OpenAI.Responses.ResponseItem, System.ClientModel.Primitives.IJsonModel<Azure.AI.AgentServer.Responses.Models.OutputItemCustomToolCallOutput>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.AgentServer.Responses.Models.OutputItemCustomToolCallOutput>
     {
         public OutputItemCustomToolCallOutput(string callId, System.BinaryData output, Azure.AI.AgentServer.Responses.Models.FunctionCallOutputStatusEnum status) : base (default(OpenAI.Responses.ResponseItemKind)) { }
@@ -2635,6 +2675,7 @@ namespace Azure.AI.AgentServer.Responses.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.AgentServer.Responses.Models.OutputItemCustomToolCallOutput>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.AgentServer.Responses.Models.OutputItemCustomToolCallOutput>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("OPENAI001")]
     public static partial class OutputItemExtensions
     {
         public static string GetId(this OpenAI.Responses.ResponseItem item) { throw null; }
@@ -2969,6 +3010,7 @@ namespace Azure.AI.AgentServer.Responses.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.AgentServer.Responses.Models.ResponseConversation>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.AgentServer.Responses.Models.ResponseConversation>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("OPENAI001")]
     public static partial class ResponseExtensions
     {
         public static System.Collections.Generic.List<OpenAI.Responses.ResponseItem> GetInstructionItems(this OpenAI.Responses.ResponseResult response) { throw null; }
@@ -3038,6 +3080,7 @@ namespace Azure.AI.AgentServer.Responses.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.AgentServer.Responses.Models.ResponsePromptVariables>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.AgentServer.Responses.Models.ResponsePromptVariables>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("OPENAI001")]
     public static partial class ResponsesModelFactory
     {
         public static Azure.AI.AgentServer.Responses.Models.AgentsPagedResultOutputItem AgentsPagedResultOutputItem(System.Collections.Generic.IEnumerable<OpenAI.Responses.ResponseItem> data = null, string firstId = null, string lastId = null, bool hasMore = false) { throw null; }
@@ -3046,6 +3089,7 @@ namespace Azure.AI.AgentServer.Responses.Models
         public static OpenAI.Responses.ResponseError ResponseErrorInfo(OpenAI.Responses.ResponseErrorCode code = default(OpenAI.Responses.ResponseErrorCode), string message = null) { throw null; }
         public static OpenAI.Responses.ResponseResult ResponseObject(string id = null, string model = null, OpenAI.Responses.ResponseStatus? status = default(OpenAI.Responses.ResponseStatus?), System.DateTimeOffset createdAt = default(System.DateTimeOffset), OpenAI.Responses.ResponseError error = null, System.Collections.Generic.IEnumerable<OpenAI.Responses.ResponseItem> output = null) { throw null; }
     }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("OPENAI001")]
     public static partial class ResponseSnapshotExtensions
     {
         public static OpenAI.Responses.ResponseResult Snapshot(this OpenAI.Responses.ResponseResult response) { throw null; }

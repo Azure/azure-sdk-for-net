@@ -18,6 +18,7 @@ namespace Azure.AI.AgentServer.Responses.Internal;
 /// state transitions — logic previously duplicated across
 /// <see cref="ResponseEndpointHandler"/> and <see cref="SseResult"/>.
 /// </summary>
+[Experimental("OPENAI001")]
 internal sealed class ResponseOrchestrator
 {
     private readonly ResponseHandler _handler;

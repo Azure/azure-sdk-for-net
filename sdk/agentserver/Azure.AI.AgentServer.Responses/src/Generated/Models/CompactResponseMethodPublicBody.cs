@@ -48,6 +48,7 @@ namespace Azure.AI.AgentServer.Responses.Models
         /// <param name="promptCacheOptions"></param>
         /// <param name="serviceTier"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+#pragma warning disable OPENAI001 // This generated code depends on experimental functionality.
         internal CompactResponseMethodPublicBody(string model, BinaryData input, string previousResponseId, string instructions, string promptCacheKey, PromptCacheRetentionEnum? promptCacheRetention, PromptCacheOptionsParam promptCacheOptions, ServiceTierEnum? serviceTier, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Model = model;
@@ -60,10 +61,12 @@ namespace Azure.AI.AgentServer.Responses.Models
             _serviceTier = serviceTier;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+#pragma warning restore OPENAI001 // This generated code depends on experimental functionality.
 
         /// <summary> The model deployment to use for the compaction of this response. </summary>
         public string Model { get; }
 
+#pragma warning disable OPENAI001 // This generated code depends on experimental functionality.
         /// <summary>
         /// Gets the Input.
         /// <para> To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
@@ -110,6 +113,7 @@ namespace Azure.AI.AgentServer.Responses.Models
                 return _input;
             }
         }
+#pragma warning restore OPENAI001 // This generated code depends on experimental functionality.
 
         /// <summary> Gets the PreviousResponseId. </summary>
         public string PreviousResponseId

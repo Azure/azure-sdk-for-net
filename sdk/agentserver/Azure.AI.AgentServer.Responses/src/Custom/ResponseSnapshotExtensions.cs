@@ -2,12 +2,14 @@
 // Licensed under the MIT License.
 
 using System.ClientModel.Primitives;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.AgentServer.Responses.Models;
 
 /// <summary>
 /// Extension methods for creating immutable snapshots of <see cref="ResponseObject"/> objects.
 /// </summary>
+[Experimental("OPENAI001")]
 public static class ResponseSnapshotExtensions
 {
     /// <summary>

@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.AI.AgentServer.Responses.Models;
 
 namespace Azure.AI.AgentServer.Responses.Internal;
@@ -10,6 +11,7 @@ namespace Azure.AI.AgentServer.Responses.Internal;
 /// Either a synchronous result wrapping a completed <see cref="ResponseObject"/>,
 /// or a streaming result wrapping a processed event stream.
 /// </summary>
+[Experimental("OPENAI001")]
 internal sealed class OrchestratorResult
 {
     private OrchestratorResult(ResponseObject? response, IAsyncEnumerable<ResponseStreamEvent>? events, bool isStreaming)

@@ -20,6 +20,7 @@ public partial class AgentsPagedResultOutputItem
 {
     /// <param name="writer"> The JSON writer. </param>
     /// <param name="options"> The client options for reading and writing models. </param>
+#pragma warning disable OPENAI001 // OutputItem (OpenAI.Responses.ResponseItem) is experimental; matches the generated serializer.
     protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
     {
         string format = options.Format == "W" ? ((IPersistableModel<AgentsPagedResultOutputItem>)this).GetFormatFromOptions(options) : options.Format;
@@ -66,4 +67,5 @@ public partial class AgentsPagedResultOutputItem
             }
         }
     }
+#pragma warning restore OPENAI001
 }

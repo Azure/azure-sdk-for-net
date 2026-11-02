@@ -4,6 +4,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Text.Json;
 using OpenAI.Responses;
@@ -21,6 +22,7 @@ namespace Azure.AI.AgentServer.Responses.Models;
 /// serialized and re-read as the Azure union so that both representations stay available
 /// without duplicating the union logic.
 /// </remarks>
+[Experimental("OPENAI001")]
 internal static class BinaryDataExpansionHelpers
 {
     /// <summary>

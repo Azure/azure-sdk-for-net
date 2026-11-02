@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Azure.AI.AgentServer.Responses.Models;
 
@@ -16,6 +17,7 @@ namespace Azure.AI.AgentServer.Responses;
 /// Only methods actively used by this library are included.
 /// </para>
 /// </summary>
+[Experimental("OPENAI001")]
 internal static partial class AgentServerResponsesModelFactory
 {
     /// <summary>Creates an <see cref="ApiError"/> instance for mocking.</summary>

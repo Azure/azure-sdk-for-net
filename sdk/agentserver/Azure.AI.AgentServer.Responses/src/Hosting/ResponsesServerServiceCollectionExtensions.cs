@@ -71,6 +71,8 @@ public static class ResponsesServerServiceCollectionExtensions
         Action<ResponsesServerOptions>? configure,
         ResponsesHostedStorage? hostedStorage)
     {
+        // Wires up internal implementation types that use OpenAI experimental types; nothing experimental is exposed to the caller.
+#pragma warning disable OPENAI001
         if (configure is not null)
         {
             services.Configure(configure);
@@ -238,6 +240,7 @@ public static class ResponsesServerServiceCollectionExtensions
         services.AddHostedService<ResponsesStartupLogger>();
 
         return services;
+#pragma warning restore OPENAI001
     }
 
     /// <summary>

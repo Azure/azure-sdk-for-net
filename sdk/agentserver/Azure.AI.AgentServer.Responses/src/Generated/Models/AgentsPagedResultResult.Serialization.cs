@@ -88,6 +88,7 @@ namespace Azure.AI.AgentServer.Responses.Models
             {
                 throw new FormatException($"The model {nameof(AgentsPagedResultResult)} does not support writing '{format}' format.");
             }
+#pragma warning disable OPENAI001 // This generated code depends on experimental functionality.
             writer.WritePropertyName("data"u8);
             writer.WriteStartArray();
             foreach (ResponseObject item in Data)
@@ -100,6 +101,7 @@ namespace Azure.AI.AgentServer.Responses.Models
                 writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
+#pragma warning restore OPENAI001 // This generated code depends on experimental functionality.
             if (Optional.IsDefined(FirstId))
             {
                 writer.WritePropertyName("first_id"u8);
@@ -148,6 +150,7 @@ namespace Azure.AI.AgentServer.Responses.Models
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
+#pragma warning disable OPENAI001 // This generated code depends on experimental functionality.
         internal static AgentsPagedResultResult DeserializeAgentsPagedResultResult(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
@@ -200,5 +203,6 @@ namespace Azure.AI.AgentServer.Responses.Models
             }
             return new AgentsPagedResultResult(data ?? new ChangeTrackingList<ResponseObject>(), firstId, lastId, hasMore, additionalBinaryDataProperties);
         }
+#pragma warning restore OPENAI001 // This generated code depends on experimental functionality.
     }
 }

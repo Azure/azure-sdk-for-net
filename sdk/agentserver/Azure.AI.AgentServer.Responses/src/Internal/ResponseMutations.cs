@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System.ClientModel.Primitives;
+using System.Diagnostics.CodeAnalysis;
 using Azure.AI.AgentServer.Responses.Models;
 
 // Mutates OpenAI response models through the experimental System.ClientModel Patch surface; no stable alternative.
@@ -13,6 +14,7 @@ namespace Azure.AI.AgentServer.Responses.Internal;
 /// Extension methods that centralize all mutations to the <see cref="Response"/> object,
 /// ensuring consistent terminal state regardless of delivery mode.
 /// </summary>
+[Experimental("OPENAI001")]
 internal static class ResponseMutations
 {
     /// <summary>

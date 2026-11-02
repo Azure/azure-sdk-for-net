@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using Azure.AI.AgentServer.Responses.Internal;
 using Azure.AI.AgentServer.Responses.Internal.Resilience;
@@ -14,6 +15,7 @@ namespace Azure.AI.AgentServer.Responses;
 /// factory methods for creating child scopes (message builders, function call builders).
 /// Owns a private <see cref="Response"/> object that is embedded in emitted events.
 /// </summary>
+[Experimental("OPENAI001")]
 public class ResponseEventStream
 {
     private readonly ResponseContext _context;

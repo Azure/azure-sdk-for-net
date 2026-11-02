@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Text.Json;
 using OpenAI.Responses;
@@ -12,6 +13,7 @@ namespace Azure.AI.AgentServer.Responses.Models;
 /// <summary>
 /// Extension methods for <see cref="CreateResponse"/>.
 /// </summary>
+[Experimental("OPENAI001")]
 public static class CreateResponseExtensions
 {
     /// <summary>

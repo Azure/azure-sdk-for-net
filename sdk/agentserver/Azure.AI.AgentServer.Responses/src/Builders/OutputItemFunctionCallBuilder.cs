@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Diagnostics.CodeAnalysis;
 using System.Text;
 using Azure.AI.AgentServer.Responses.Internal;
 using Azure.AI.AgentServer.Responses.Models;
@@ -11,6 +12,7 @@ namespace Azure.AI.AgentServer.Responses;
 /// Scoped builder for a function call output item. Provides methods
 /// for the function call event lifecycle: added, arguments delta/done, and done events.
 /// </summary>
+[Experimental("OPENAI001")]
 public class OutputItemFunctionCallBuilder : OutputItemBuilder<OutputItemFunctionToolCall>
 {
     private readonly string _name;

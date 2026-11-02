@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.AI.AgentServer.Responses.Models;
 
 namespace Azure.AI.AgentServer.Responses;
@@ -13,6 +14,7 @@ namespace Azure.AI.AgentServer.Responses;
 /// sub-events (no deltas, no status transitions).
 /// </summary>
 /// <typeparam name="T">The concrete <see cref="OutputItem"/> subtype this builder handles.</typeparam>
+[Experimental("OPENAI001")]
 public class OutputItemBuilder<T> where T : OutputItem
 {
     private protected readonly ResponseEventStream _stream;

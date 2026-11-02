@@ -91,6 +91,7 @@ namespace Azure.AI.AgentServer.Responses.Models
             }
             writer.WritePropertyName("model"u8);
             writer.WriteStringValue(Model);
+#pragma warning disable OPENAI001 // This generated code depends on experimental functionality.
             if (Optional.IsDefined(Input, _inputIsDefined))
             {
                 if (Input != null)
@@ -110,6 +111,7 @@ namespace Azure.AI.AgentServer.Responses.Models
                     writer.WriteNull("input"u8);
                 }
             }
+#pragma warning restore OPENAI001 // This generated code depends on experimental functionality.
             if (Optional.IsDefined(PreviousResponseId, _previousResponseIdIsDefined))
             {
                 if (PreviousResponseId != null)
@@ -218,6 +220,7 @@ namespace Azure.AI.AgentServer.Responses.Models
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
+#pragma warning disable OPENAI001 // This generated code depends on experimental functionality.
         internal static CompactResponseMethodPublicBody DeserializeCompactResponseMethodPublicBody(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
@@ -349,5 +352,6 @@ namespace Azure.AI.AgentServer.Responses.Models
                 _serviceTierIsDefined = serviceTierIsDefined
             };
         }
+#pragma warning restore OPENAI001 // This generated code depends on experimental functionality.
     }
 }

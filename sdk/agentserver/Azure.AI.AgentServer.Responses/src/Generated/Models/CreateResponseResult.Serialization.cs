@@ -224,6 +224,7 @@ namespace Azure.AI.AgentServer.Responses
                 writer.WritePropertyName("text"u8);
                 writer.WriteObjectValue(Text, options);
             }
+#pragma warning disable OPENAI001 // This generated code depends on experimental functionality.
             if (Optional.IsCollectionDefined(Tools))
             {
                 writer.WritePropertyName("tools"u8);
@@ -239,6 +240,7 @@ namespace Azure.AI.AgentServer.Responses
                 }
                 writer.WriteEndArray();
             }
+#pragma warning restore OPENAI001 // This generated code depends on experimental functionality.
             if (Optional.IsDefined(ToolChoice))
             {
                 writer.WritePropertyName("tool_choice"u8);
@@ -303,6 +305,7 @@ namespace Azure.AI.AgentServer.Responses
                     writer.WriteNull("completed_at"u8);
                 }
             }
+#pragma warning disable OPENAI001 // This generated code depends on experimental functionality.
             if (Optional.IsDefined(Error))
             {
                 writer.WritePropertyName("error"u8);
@@ -312,6 +315,7 @@ namespace Azure.AI.AgentServer.Responses
             {
                 writer.WriteNull("error"u8);
             }
+#pragma warning restore OPENAI001 // This generated code depends on experimental functionality.
             if (Optional.IsDefined(IncompleteDetails))
             {
                 writer.WritePropertyName("incomplete_details"u8);
@@ -321,6 +325,7 @@ namespace Azure.AI.AgentServer.Responses
             {
                 writer.WriteNull("incomplete_details"u8);
             }
+#pragma warning disable OPENAI001 // This generated code depends on experimental functionality.
             writer.WritePropertyName("output"u8);
             writer.WriteStartArray();
             foreach (ResponseItem item in Output)
@@ -333,6 +338,7 @@ namespace Azure.AI.AgentServer.Responses
                 writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
+#pragma warning restore OPENAI001 // This generated code depends on experimental functionality.
             if (Optional.IsDefined(Reasoning, _reasoningIsDefined))
             {
                 if (Reasoning != null)
@@ -345,6 +351,7 @@ namespace Azure.AI.AgentServer.Responses
                     writer.WriteNull("reasoning"u8);
                 }
             }
+#pragma warning disable OPENAI001 // This generated code depends on experimental functionality.
             if (Optional.IsDefined(Instructions))
             {
                 writer.WritePropertyName("instructions"u8);
@@ -361,6 +368,7 @@ namespace Azure.AI.AgentServer.Responses
             {
                 writer.WriteNull("instructions"u8);
             }
+#pragma warning restore OPENAI001 // This generated code depends on experimental functionality.
             if (Optional.IsDefined(OutputText, _outputTextIsDefined))
             {
                 if (OutputText != null)
@@ -373,11 +381,13 @@ namespace Azure.AI.AgentServer.Responses
                     writer.WriteNull("output_text"u8);
                 }
             }
+#pragma warning disable OPENAI001 // This generated code depends on experimental functionality.
             if (Optional.IsDefined(Usage))
             {
                 writer.WritePropertyName("usage"u8);
                 writer.WriteObjectValue(Usage, options);
             }
+#pragma warning restore OPENAI001 // This generated code depends on experimental functionality.
             if (Optional.IsDefined(PromptCacheOptions))
             {
                 writer.WritePropertyName("prompt_cache_options"u8);
@@ -496,6 +506,7 @@ namespace Azure.AI.AgentServer.Responses
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
+#pragma warning disable OPENAI001 // This generated code depends on experimental functionality.
         internal static CreateResponseResult DeserializeCreateResponseResult(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
@@ -1039,5 +1050,6 @@ namespace Azure.AI.AgentServer.Responses
                 _maxOutputTokensIsDefined = maxOutputTokensIsDefined
             };
         }
+#pragma warning restore OPENAI001 // This generated code depends on experimental functionality.
     }
 }

@@ -20,11 +20,13 @@ namespace Azure.AI.AgentServer.Responses.Models
         /// <summary> Initializes a new instance of <see cref="AgentsPagedResultOutputItem"/>. </summary>
         /// <param name="data"> The requested list of items. </param>
         /// <param name="hasMore"> A value indicating whether there are additional values available not captured in this list. </param>
+#pragma warning disable OPENAI001 // This generated code depends on experimental functionality.
         internal AgentsPagedResultOutputItem(IEnumerable<ResponseItem> data, bool hasMore)
         {
             Data = data.ToList();
             HasMore = hasMore;
         }
+#pragma warning restore OPENAI001 // This generated code depends on experimental functionality.
 
         /// <summary> Initializes a new instance of <see cref="AgentsPagedResultOutputItem"/>. </summary>
         /// <param name="data"> The requested list of items. </param>
@@ -32,6 +34,7 @@ namespace Azure.AI.AgentServer.Responses.Models
         /// <param name="lastId"> The last ID represented in this list. </param>
         /// <param name="hasMore"> A value indicating whether there are additional values available not captured in this list. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+#pragma warning disable OPENAI001 // This generated code depends on experimental functionality.
         internal AgentsPagedResultOutputItem(IList<ResponseItem> data, string firstId, string lastId, bool hasMore, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Data = data;
@@ -40,9 +43,12 @@ namespace Azure.AI.AgentServer.Responses.Models
             HasMore = hasMore;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+#pragma warning restore OPENAI001 // This generated code depends on experimental functionality.
 
+#pragma warning disable OPENAI001 // This generated code depends on experimental functionality.
         /// <summary> The requested list of items. </summary>
         public IList<ResponseItem> Data { get; }
+#pragma warning restore OPENAI001 // This generated code depends on experimental functionality.
 
         /// <summary> The first ID represented in this list. </summary>
         public string FirstId { get; }

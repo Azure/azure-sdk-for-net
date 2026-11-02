@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Diagnostics.CodeAnalysis;
 using System.Text;
 using Azure.AI.AgentServer.Responses.Models;
 
@@ -10,6 +11,7 @@ namespace Azure.AI.AgentServer.Responses;
 /// Scoped builder for a code interpreter tool call output item. Provides methods
 /// for the lifecycle events and streaming code deltas.
 /// </summary>
+[Experimental("OPENAI001")]
 public class OutputItemCodeInterpreterCallBuilder : OutputItemBuilder<OutputItemCodeInterpreterToolCall>
 {
     private string? _finalCode;

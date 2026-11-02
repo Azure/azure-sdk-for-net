@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System.ClientModel.Primitives;
+using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using Azure.AI.AgentServer.Responses.Models;
 
@@ -10,6 +11,7 @@ namespace Azure.AI.AgentServer.Responses.Internal;
 /// <summary>
 /// Static helpers for serializing and deserializing Foundry storage request/response envelopes.
 /// </summary>
+[Experimental("OPENAI001")]
 internal static class StorageEnvelopeSerializer
 {
     private static readonly ModelReaderWriterOptions JsonOptions = ModelReaderWriterOptions.Json;

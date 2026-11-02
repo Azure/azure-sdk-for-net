@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.AI.AgentServer.Responses.Models;
 
 namespace Azure.AI.AgentServer.Responses;
@@ -9,6 +10,7 @@ namespace Azure.AI.AgentServer.Responses;
 /// Scoped builder for a file search tool call output item. Provides methods
 /// for the file search lifecycle: added, in-progress, searching, completed, done.
 /// </summary>
+[Experimental("OPENAI001")]
 public class OutputItemFileSearchCallBuilder : OutputItemBuilder<OutputItemFileSearchToolCall>
 {
     /// <summary>

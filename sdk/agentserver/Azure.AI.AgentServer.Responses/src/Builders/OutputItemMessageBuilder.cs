@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Diagnostics.CodeAnalysis;
 using System.Text;
 using Azure.AI.AgentServer.Responses.Internal;
 using Azure.AI.AgentServer.Responses.Models;
@@ -13,6 +14,7 @@ namespace Azure.AI.AgentServer.Responses;
 /// Child content builders are auto-tracked so <see cref="EmitDone"/> can build
 /// the final message from their accumulated state.
 /// </summary>
+[Experimental("OPENAI001")]
 public class OutputItemMessageBuilder : OutputItemBuilder<OutputItemMessage>
 {
     private long _contentIndex;

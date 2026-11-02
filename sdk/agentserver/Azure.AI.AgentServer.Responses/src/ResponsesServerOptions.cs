@@ -1,6 +1,8 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.AI.AgentServer.Responses;
 
 /// <summary>
@@ -93,5 +95,6 @@ public class ResponsesServerOptions
     /// back to the default envelope and logs a warning. The returned object's status is normalized
     /// to <see cref="ResponseStatus.Queued"/> when unset.
     /// </summary>
+    [Experimental("OPENAI001")]
     public Func<CreateResponse, ResponseContext, ResponseObject>? ResponseAcceptor { get; set; }
 }

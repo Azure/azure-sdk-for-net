@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.AI.AgentServer.Core;
 using Azure.AI.AgentServer.Responses.Models;
 
@@ -36,6 +37,7 @@ public abstract class ResponsesProvider
     /// <param name="request">The create-response request containing the response snapshot, input items, and history item IDs.</param>
     /// <param name="context">The platform context. Use <see cref="PlatformContext.Empty"/> when not applicable.</param>
     /// <param name="cancellationToken">A token to cancel the operation.</param>
+    [Experimental("OPENAI001")]
     public abstract Task CreateResponseAsync(
         CreateResponsePersistRequest request,
         PlatformContext context,
@@ -49,6 +51,7 @@ public abstract class ResponsesProvider
     /// <param name="cancellationToken">A token to cancel the operation.</param>
     /// <returns>The response.</returns>
     /// <exception cref="ResourceNotFoundException">Thrown when the response does not exist.</exception>
+    [Experimental("OPENAI001")]
     public abstract Task<ResponseObject> GetResponseAsync(string responseId, PlatformContext context, CancellationToken cancellationToken = default);
 
     /// <summary>
@@ -58,6 +61,7 @@ public abstract class ResponsesProvider
     /// <param name="response">The updated response snapshot.</param>
     /// <param name="context">The platform context. Use <see cref="PlatformContext.Empty"/> when not applicable.</param>
     /// <param name="cancellationToken">A token to cancel the operation.</param>
+    [Experimental("OPENAI001")]
     public abstract Task UpdateResponseAsync(ResponseObject response, PlatformContext context, CancellationToken cancellationToken = default);
 
     /// <summary>
@@ -101,6 +105,7 @@ public abstract class ResponsesProvider
     /// <param name="context">The platform context. Use <see cref="PlatformContext.Empty"/> when not applicable.</param>
     /// <param name="cancellationToken">A token to cancel the operation.</param>
     /// <returns>Output items matching the requested IDs (null for missing).</returns>
+    [Experimental("OPENAI001")]
     public abstract Task<IEnumerable<OutputItem?>> GetItemsAsync(
         IEnumerable<string> itemIds,
         PlatformContext context,

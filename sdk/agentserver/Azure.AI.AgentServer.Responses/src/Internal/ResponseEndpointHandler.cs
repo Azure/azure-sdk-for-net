@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Diagnostics.CodeAnalysis;
 using System.Net.ServerSentEvents;
 using System.Runtime.CompilerServices;
 using System.Runtime.ExceptionServices;
@@ -23,6 +24,7 @@ namespace Azure.AI.AgentServer.Responses.Internal;
 /// <summary>
 /// Contains the endpoint handler methods for the Responses API.
 /// </summary>
+[Experimental("OPENAI001")]
 internal sealed class ResponseEndpointHandler
 {
     /// <summary>

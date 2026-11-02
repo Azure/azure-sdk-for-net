@@ -6,12 +6,14 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using Azure.AI.AgentServer.Responses;
 using OpenAI.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
     /// <summary> Output text. </summary>
+    [Experimental("OPENAI001")]
     public partial class MessageContentOutputTextContent : MessageContent
     {
         /// <summary> Initializes a new instance of <see cref="MessageContentOutputTextContent"/>. </summary>

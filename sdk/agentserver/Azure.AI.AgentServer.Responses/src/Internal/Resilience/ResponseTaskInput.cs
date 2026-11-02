@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
@@ -21,6 +22,7 @@ namespace Azure.AI.AgentServer.Responses.Internal.Resilience;
 /// </para>
 /// </summary>
 [JsonConverter(typeof(ResponseTaskInputJsonConverter))]
+[Experimental("OPENAI001")]
 internal sealed class ResponseTaskInput
 {
     /// <summary>Initializes a new instance of the <see cref="ResponseTaskInput"/> class.</summary>
@@ -39,6 +41,7 @@ internal sealed class ResponseTaskInput
 /// 9-field wire schema, delegating to <see cref="ResponseRecoveryPayload"/>'s fail-closed
 /// serialization so the Core task input is byte-identical to Python's <c>ResilientResponseInput</c>.
 /// </summary>
+[Experimental("OPENAI001")]
 internal sealed class ResponseTaskInputJsonConverter : JsonConverter<ResponseTaskInput>
 {
     /// <inheritdoc/>

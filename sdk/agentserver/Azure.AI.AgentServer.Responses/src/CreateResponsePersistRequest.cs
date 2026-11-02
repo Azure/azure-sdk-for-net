@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.AI.AgentServer.Responses.Models;
 
 namespace Azure.AI.AgentServer.Responses;
@@ -16,6 +17,7 @@ namespace Azure.AI.AgentServer.Responses;
 /// without null checks.
 /// </para>
 /// </remarks>
+[Experimental("OPENAI001")]
 public sealed class CreateResponsePersistRequest
 {
     /// <summary>

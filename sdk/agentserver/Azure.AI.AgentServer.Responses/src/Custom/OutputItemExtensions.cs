@@ -3,6 +3,7 @@
 
 using System;
 using System.ClientModel.Primitives;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Text.Json;
 
@@ -15,6 +16,7 @@ namespace Azure.AI.AgentServer.Responses.Models;
 /// Extension methods for <see cref="OutputItem"/> that provide efficient
 /// access to the <c>Id</c> property without reflection.
 /// </summary>
+[Experimental("OPENAI001")]
 public static class OutputItemExtensions
 {
     /// <summary>

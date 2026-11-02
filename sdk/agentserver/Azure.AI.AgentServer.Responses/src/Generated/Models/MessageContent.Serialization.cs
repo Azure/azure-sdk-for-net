@@ -119,6 +119,7 @@ namespace Azure.AI.AgentServer.Responses.Models
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
+#pragma warning disable OPENAI001 // This generated code depends on experimental functionality.
         internal static MessageContent DeserializeMessageContent(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
@@ -151,5 +152,6 @@ namespace Azure.AI.AgentServer.Responses.Models
             }
             return UnknownMessageContent.DeserializeUnknownMessageContent(element, options);
         }
+#pragma warning restore OPENAI001 // This generated code depends on experimental functionality.
     }
 }

@@ -1,9 +1,9 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.AI.AgentServer.Responses.Models;
 using Microsoft.AspNetCore.Http;
-
 using ModelFactory = Azure.AI.AgentServer.Responses.AgentServerResponsesModelFactory;
 
 // Reads System.ClientModel experimental patch/JSON surface of OpenAI error models; no stable alternative.
@@ -20,6 +20,7 @@ namespace Azure.AI.AgentServer.Responses.Internal;
 /// </list>
 /// All user-facing error messages are sanitized here. Internal details are never exposed.
 /// </summary>
+[Experimental("OPENAI001")]
 internal static class ApiErrorFactory
 {
     // --- Constants ---

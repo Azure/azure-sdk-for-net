@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using Azure.AI.AgentServer.Responses.Models;
 
@@ -9,6 +10,7 @@ namespace Azure.AI.AgentServer.Responses.Internal;
 /// <summary>
 /// Maps HTTP error responses from the Foundry storage API to SDK exceptions.
 /// </summary>
+[Experimental("OPENAI001")]
 internal static class StorageErrorMapper
 {
     /// <summary>

@@ -4,6 +4,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Text.Json;
 
@@ -14,6 +15,7 @@ namespace Azure.AI.AgentServer.Responses.Models;
 /// to BinaryData properties like <see cref="ResponseObject.ToolChoice"/> and
 /// <see cref="ResponseObject.Instructions"/>.
 /// </summary>
+[Experimental("OPENAI001")]
 public static class ResponseExtensions
 {
     /// <summary>

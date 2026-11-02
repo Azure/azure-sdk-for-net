@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Diagnostics.CodeAnalysis;
 using System.Security.Cryptography;
 using System.Text.Json;
 using Azure.AI.AgentServer.Responses.Internal;
@@ -243,6 +244,7 @@ internal static class IdGenerator
     /// <param name="item">The input item whose type determines the ID prefix.</param>
     /// <param name="partitionKeyHint">Optional existing ID for partition key propagation.</param>
     /// <returns>A new ID with the appropriate type-specific prefix, or <c>null</c> for non-convertible items.</returns>
+    [Experimental("OPENAI001")]
     public static string? NewItemId(Item item, string? partitionKeyHint = "")
     {
         return item switch
@@ -279,6 +281,7 @@ internal static class IdGenerator
     // message items; they deserialize to internal catch-all item types that the switch above
     // cannot match. Recognize them by their wire type so they keep their type-prefixed IDs and
     // stay persisted with the other input items. Any other unrecognized item is not convertible.
+    [Experimental("OPENAI001")]
     private static string? NewUntypedItemId(Item item, string? partitionKeyHint)
         => ReadWireType(item) switch
         {
@@ -291,6 +294,7 @@ internal static class IdGenerator
             _ => null,
         };
 
+    [Experimental("OPENAI001")]
     private static string? ReadWireType(Item item)
     {
         try

@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.AI.AgentServer.Core;
 using Azure.AI.AgentServer.Core.Tasks;
 using Azure.AI.AgentServer.Responses.Models;
@@ -18,6 +19,7 @@ namespace Azure.AI.AgentServer.Responses.Internal;
 /// State persistence is delegated to <see cref="ResponsesProvider"/>; event streaming and
 /// sequence numbering are delegated to the Core event-stream primitive.
 /// </summary>
+[Experimental("OPENAI001")]
 internal sealed class ResponseExecution : IDisposable
 {
     public ResponseExecution(string responseId,

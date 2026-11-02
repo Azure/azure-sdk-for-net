@@ -25,8 +25,9 @@
   `ItemMessage` / `OutputItemMessage` → `MessageResponseItem`,
   `FunctionCallOutputItemParam` → `FunctionCallOutputResponseItem`,
   `ConversationReference` → `ResponseConversationOptions`, and
-  `StructuredOutputsOutputItem` → `AgentStructuredOutputsResponseItem`. Consumers must also
-  suppress or acknowledge the OpenAI package's `OPENAI001` experimental diagnostic.
+  `StructuredOutputsOutputItem` → `AgentStructuredOutputsResponseItem`. Public APIs that expose
+  experimental OpenAI types are now marked `[Experimental("OPENAI001")]`, forwarding the OpenAI
+  package's diagnostic ID, so consumers must suppress or acknowledge `OPENAI001` to use them.
 - Several properties that carried JSON as a `string` are now `BinaryData` on the OpenAI types:
   the arguments of function calls and MCP tool calls (`FunctionCallResponseItem.FunctionArguments`,
   `McpToolCallItem.ToolArguments`, `McpToolCallApprovalRequestItem.ToolArguments`) together with

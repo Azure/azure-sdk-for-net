@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.AI.AgentServer.Responses.Models;
 
 namespace Azure.AI.AgentServer.Responses;
@@ -18,6 +19,7 @@ public class ResponsesApiException : Exception
     /// </summary>
     /// <param name="error">The structured error to return in the API response body.</param>
     /// <param name="statusCode">The HTTP status code to return.</param>
+    [Experimental("OPENAI001")]
     public ResponsesApiException(Error error, int statusCode)
         : base(error.Message)
     {
@@ -32,6 +34,7 @@ public class ResponsesApiException : Exception
     /// <param name="error">The structured error to return in the API response body.</param>
     /// <param name="statusCode">The HTTP status code to return.</param>
     /// <param name="innerException">The exception that caused this error.</param>
+    [Experimental("OPENAI001")]
     public ResponsesApiException(Error error, int statusCode, Exception innerException)
         : base(error.Message, innerException)
     {
@@ -42,6 +45,7 @@ public class ResponsesApiException : Exception
     /// <summary>
     /// Gets the structured error model to serialize in the API response body.
     /// </summary>
+    [Experimental("OPENAI001")]
     public Error Error { get; }
 
     /// <summary>

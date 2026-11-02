@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System.Collections.Concurrent;
+using System.Diagnostics.CodeAnalysis;
 using Azure.AI.AgentServer.Core;
 using Azure.AI.AgentServer.Responses.Models;
 using Microsoft.Extensions.Options;
@@ -27,6 +28,7 @@ namespace Azure.AI.AgentServer.Responses.Internal;
 /// window fully elapses since the last event was emitted.
 /// </para>
 /// </remarks>
+[Experimental("OPENAI001")]
 internal sealed class InMemoryResponsesProvider : ResponsesProvider, IDisposable
 {
     private readonly ConcurrentDictionary<ResponseStorePartition, Store> _partitions = new();

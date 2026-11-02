@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Azure.AI.AgentServer.Responses.Models;
 
 namespace Azure.AI.AgentServer.Responses;
@@ -17,6 +18,7 @@ namespace Azure.AI.AgentServer.Responses;
 /// base64-encoded image result.
 /// </para>
 /// </summary>
+[Experimental("OPENAI001")]
 public class OutputItemImageGenCallBuilder : OutputItemBuilder<OutputItemImageGenToolCall>
 {
     private long _partialImageIndex;
