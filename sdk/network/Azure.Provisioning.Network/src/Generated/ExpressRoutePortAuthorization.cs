@@ -20,7 +20,7 @@ namespace Azure.Provisioning.Network
         private BicepValue<string> _name;
         private ExpressRoutePortAuthorizationPropertiesFormat _properties;
         private BicepValue<ETag> _eTag;
-        private ResourceReference<ExpressRoutePort> _parent;
+        private ProvisioningResourceReference<ExpressRoutePort> _parent;
 
         /// <summary> Creates a new ExpressRoutePortAuthorization. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -154,7 +154,7 @@ namespace Azure.Provisioning.Network
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _properties = DefineModelProperty<ExpressRoutePortAuthorizationPropertiesFormat>(nameof(Properties), new string[] { "properties" });
             _eTag = DefineProperty<ETag>(nameof(ETag), new string[] { "etag" }, isOutput: true);
-            _parent = DefineResource<ExpressRoutePort>(nameof(Parent), new string[] { "parent" });
+            _parent = new ProvisioningResourceReference<ExpressRoutePort>(DefineProperty<string>(nameof(Parent), new string[] { "parent" }));
             DefineAdditionalProperties();
         }
 

@@ -20,7 +20,7 @@ namespace Azure.Provisioning.Network
         private BicepValue<string> _name;
         private VpnSiteLinkConnectionProperties _properties;
         private BicepValue<ETag> _eTag;
-        private ResourceReference<VpnConnection> _parent;
+        private ProvisioningResourceReference<VpnConnection> _parent;
 
         /// <summary> Creates a new VpnSiteLinkConnection. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -409,7 +409,7 @@ namespace Azure.Provisioning.Network
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _properties = DefineModelProperty<VpnSiteLinkConnectionProperties>(nameof(Properties), new string[] { "properties" });
             _eTag = DefineProperty<ETag>(nameof(ETag), new string[] { "etag" }, isOutput: true);
-            _parent = DefineResource<VpnConnection>(nameof(Parent), new string[] { "parent" });
+            _parent = new ProvisioningResourceReference<VpnConnection>(DefineProperty<string>(nameof(Parent), new string[] { "parent" }));
             DefineAdditionalProperties();
         }
 
