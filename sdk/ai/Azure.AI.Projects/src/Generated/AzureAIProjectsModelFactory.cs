@@ -1297,20 +1297,20 @@ namespace Azure.AI.Projects
         /// <param name="reference"> Reference to the single Foundry Dataset (one combined JSONL file, version-aligned to `EvaluatorVersion.version`) holding all artifacts produced by the generation pipeline. Each row in the JSONL carries a `kind` field discriminating its content (e.g. `spec`, `tools`, `context`). </param>
         /// <param name="datasetRowKinds"> The kinds of rows present in `dataset`. Always contains `"spec"` (the generated evaluation specification, a Markdown document describing what the evaluator measures). May additionally contain `"tools"` (when the generation pipeline produced or inferred OpenAI tool schemas) and/or `"context"` (when supplementary materials such as file uploads or trace samples were used during generation). </param>
         /// <returns> A new <see cref="Evaluation.EvaluatorGenerationArtifacts"/> instance for mocking. </returns>
-        public static EvaluatorGenerationArtifacts EvaluatorGenerationArtifacts(DatasetReference reference = default, IEnumerable<string> datasetRowKinds = default)
+        public static EvaluatorGenerationArtifacts EvaluatorGenerationArtifacts(VersionedDatasetReference reference = default, IEnumerable<string> datasetRowKinds = default)
         {
             datasetRowKinds ??= new ChangeTrackingList<string>();
 
             return new EvaluatorGenerationArtifacts(reference, datasetRowKinds.ToList(), additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Reference to a versioned Foundry Dataset. </summary>
+        /// <summary> Reference to a Dataset whose concrete version has already been resolved. </summary>
         /// <param name="name"> Dataset name. </param>
-        /// <param name="version"> Dataset version. </param>
-        /// <returns> A new <see cref="Projects.DatasetReference"/> instance for mocking. </returns>
-        public static DatasetReference DatasetReference(string name = default, string version = default)
+        /// <param name="version"> Concrete Dataset version. </param>
+        /// <returns> A new <see cref="Projects.VersionedDatasetReference"/> instance for mocking. </returns>
+        public static VersionedDatasetReference VersionedDatasetReference(string name = default, string version = default)
         {
-            return new DatasetReference(name, version, additionalBinaryDataProperties: null);
+            return new VersionedDatasetReference(name, version, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Request body for getting evaluator credentials. </summary>
@@ -1438,7 +1438,6 @@ namespace Azure.AI.Projects
         /// <param name="request"> Request for the insights analysis. </param>
         /// <param name="result"> The result of the insights report. </param>
         /// <returns> A new <see cref="Evaluation.ProjectsInsight"/> instance for mocking. </returns>
-        [Experimental("AAIP001")]
         public static ProjectsInsight ProjectsInsight(string id = default, InsightsMetadata metadata = default, OperationStatus state = default, string displayName = default, InsightRequest request = default, InsightResult result = default)
         {
             return new ProjectsInsight(
@@ -1455,7 +1454,6 @@ namespace Azure.AI.Projects
         /// <param name="createdAt"> The timestamp when the insights were created. </param>
         /// <param name="completedAt"> The timestamp when the insights were completed. </param>
         /// <returns> A new <see cref="Evaluation.InsightsMetadata"/> instance for mocking. </returns>
-        [Experimental("AAIP001")]
         public static InsightsMetadata InsightsMetadata(DateTimeOffset createdAt = default, DateTimeOffset? completedAt = default)
         {
             return new InsightsMetadata(createdAt, completedAt, additionalBinaryDataProperties: null);
@@ -1467,7 +1465,6 @@ namespace Azure.AI.Projects
         /// </summary>
         /// <param name="type"> The type of request. </param>
         /// <returns> A new <see cref="Evaluation.InsightRequest"/> instance for mocking. </returns>
-        [Experimental("AAIP001")]
         public static InsightRequest InsightRequest(string @type = default)
         {
             return new UnknownInsightRequest(new InsightType(@type), additionalBinaryDataProperties: null);
@@ -1478,7 +1475,6 @@ namespace Azure.AI.Projects
         /// <param name="runIds"> List of evaluation run IDs for the insights. </param>
         /// <param name="modelConfiguration"> Configuration of the model used in the insight generation. </param>
         /// <returns> A new <see cref="Evaluation.EvaluationRunClusterInsightRequest"/> instance for mocking. </returns>
-        [Experimental("AAIP001")]
         public static EvaluationRunClusterInsightRequest EvaluationRunClusterInsightRequest(string evalId = default, IEnumerable<string> runIds = default, InsightModelConfiguration modelConfiguration = default)
         {
             runIds ??= new ChangeTrackingList<string>();
@@ -1489,7 +1485,6 @@ namespace Azure.AI.Projects
         /// <summary> Configuration of the model used in the insight generation. </summary>
         /// <param name="modelDeploymentName"> The model deployment to be evaluated. Accepts either the deployment name alone or with the connection name as '{connectionName}/&lt;modelDeploymentName&gt;'. </param>
         /// <returns> A new <see cref="Evaluation.InsightModelConfiguration"/> instance for mocking. </returns>
-        [Experimental("AAIP001")]
         public static InsightModelConfiguration InsightModelConfiguration(string modelDeploymentName = default)
         {
             return new InsightModelConfiguration(modelDeploymentName, additionalBinaryDataProperties: null);
@@ -1499,7 +1494,6 @@ namespace Azure.AI.Projects
         /// <param name="agentName"> Identifier for the agent. </param>
         /// <param name="modelConfiguration"> Configuration of the model used in the insight generation. </param>
         /// <returns> A new <see cref="Evaluation.AgentClusterInsightRequest"/> instance for mocking. </returns>
-        [Experimental("AAIP001")]
         public static AgentClusterInsightRequest AgentClusterInsightRequest(string agentName = default, InsightModelConfiguration modelConfiguration = default)
         {
             return new AgentClusterInsightRequest(InsightType.AgentClusterInsight, additionalBinaryDataProperties: null, agentName, modelConfiguration);
@@ -1510,7 +1504,6 @@ namespace Azure.AI.Projects
         /// <param name="baselineRunId"> The baseline run ID for comparison. </param>
         /// <param name="treatmentRunIds"> List of treatment run IDs for comparison. </param>
         /// <returns> A new <see cref="Evaluation.EvaluationComparisonInsightRequest"/> instance for mocking. </returns>
-        [Experimental("AAIP001")]
         public static EvaluationComparisonInsightRequest EvaluationComparisonInsightRequest(string evalId = default, string baselineRunId = default, IEnumerable<string> treatmentRunIds = default)
         {
             treatmentRunIds ??= new ChangeTrackingList<string>();
@@ -1524,7 +1517,6 @@ namespace Azure.AI.Projects
         /// </summary>
         /// <param name="type"> The type of insights result. </param>
         /// <returns> A new <see cref="Evaluation.InsightResult"/> instance for mocking. </returns>
-        [Experimental("AAIP001")]
         public static InsightResult InsightResult(string @type = default)
         {
             return new UnknownInsightResult(new InsightType(@type), additionalBinaryDataProperties: null);
@@ -1534,7 +1526,6 @@ namespace Azure.AI.Projects
         /// <param name="comparisons"> Comparison results for each treatment run against the baseline. </param>
         /// <param name="method"> The statistical method used for comparison. </param>
         /// <returns> A new <see cref="Evaluation.EvaluationComparisonInsightResult"/> instance for mocking. </returns>
-        [Experimental("AAIP001")]
         public static EvaluationComparisonInsightResult EvaluationComparisonInsightResult(IEnumerable<EvalRunResultComparison> comparisons = default, string @method = default)
         {
             comparisons ??= new ChangeTrackingList<EvalRunResultComparison>();
@@ -1549,7 +1540,6 @@ namespace Azure.AI.Projects
         /// <param name="baselineRunSummary"> Summary statistics of the baseline run. </param>
         /// <param name="compareItems"> List of comparison results for each treatment run. </param>
         /// <returns> A new <see cref="Evaluation.EvalRunResultComparison"/> instance for mocking. </returns>
-        [Experimental("AAIP001")]
         public static EvalRunResultComparison EvalRunResultComparison(string testingCriteria = default, string metricName = default, string evaluatorName = default, EvalRunResultSummary baselineRunSummary = default, IEnumerable<EvalRunResultCompareItem> compareItems = default)
         {
             compareItems ??= new ChangeTrackingList<EvalRunResultCompareItem>();
@@ -1569,7 +1559,6 @@ namespace Azure.AI.Projects
         /// <param name="average"> Average value of the metric in the evaluation run. </param>
         /// <param name="standardDeviation"> Standard deviation of the metric in the evaluation run. </param>
         /// <returns> A new <see cref="Evaluation.EvalRunResultSummary"/> instance for mocking. </returns>
-        [Experimental("AAIP001")]
         public static EvalRunResultSummary EvalRunResultSummary(string runId = default, int sampleCount = default, float average = default, float standardDeviation = default)
         {
             return new EvalRunResultSummary(runId, sampleCount, average, standardDeviation, additionalBinaryDataProperties: null);
@@ -1582,7 +1571,6 @@ namespace Azure.AI.Projects
         /// <param name="pValue"> P-value for the treatment effect. </param>
         /// <param name="treatmentEffect"> Type of treatment effect. </param>
         /// <returns> A new <see cref="Evaluation.EvalRunResultCompareItem"/> instance for mocking. </returns>
-        [Experimental("AAIP001")]
         public static EvalRunResultCompareItem EvalRunResultCompareItem(string treatmentRunId = default, EvalRunResultSummary treatmentRunSummary = default, float deltaEstimate = default, float pValue = default, TreatmentEffectType treatmentEffect = default)
         {
             return new EvalRunResultCompareItem(
@@ -1597,7 +1585,6 @@ namespace Azure.AI.Projects
         /// <summary> Insights from the evaluation run cluster analysis. </summary>
         /// <param name="clusterInsight"></param>
         /// <returns> A new <see cref="Evaluation.EvaluationRunClusterInsightResult"/> instance for mocking. </returns>
-        [Experimental("AAIP001")]
         public static EvaluationRunClusterInsightResult EvaluationRunClusterInsightResult(ClusterInsightResult clusterInsight = default)
         {
             return new EvaluationRunClusterInsightResult(InsightType.EvaluationRunClusterInsight, additionalBinaryDataProperties: null, clusterInsight);
@@ -1623,7 +1610,6 @@ namespace Azure.AI.Projects
         ///   modify the canonical insights results.
         /// </param>
         /// <returns> A new <see cref="Evaluation.ClusterInsightResult"/> instance for mocking. </returns>
-        [Experimental("AAIP001")]
         public static ClusterInsightResult ClusterInsightResult(InsightSummary summary = default, IEnumerable<InsightCluster> clusters = default, IDictionary<string, ChartCoordinate> coordinates = default)
         {
             clusters ??= new ChangeTrackingList<InsightCluster>();
@@ -1639,7 +1625,6 @@ namespace Azure.AI.Projects
         /// <param name="methodName"> Method used for clustering. </param>
         /// <param name="usage"> Token usage while performing clustering analysis. </param>
         /// <returns> A new <see cref="Evaluation.InsightSummary"/> instance for mocking. </returns>
-        [Experimental("AAIP001")]
         public static InsightSummary InsightSummary(int sampleCount = default, int uniqueSubclusterCount = default, int uniqueClusterCount = default, string methodName = default, ClusterTokenUsage usage = default)
         {
             return new InsightSummary(
@@ -1656,7 +1641,6 @@ namespace Azure.AI.Projects
         /// <param name="outputTokenUsage"> output token usage. </param>
         /// <param name="totalTokenUsage"> total token usage. </param>
         /// <returns> A new <see cref="Evaluation.ClusterTokenUsage"/> instance for mocking. </returns>
-        [Experimental("AAIP001")]
         public static ClusterTokenUsage ClusterTokenUsage(int inputTokenUsage = default, int outputTokenUsage = default, int totalTokenUsage = default)
         {
             return new ClusterTokenUsage(inputTokenUsage, outputTokenUsage, totalTokenUsage, additionalBinaryDataProperties: null);
@@ -1672,7 +1656,6 @@ namespace Azure.AI.Projects
         /// <param name="subClusters"> List of subclusters within this cluster. Empty if no subclusters exist. </param>
         /// <param name="samples"> List of samples that belong to this cluster. Empty if samples are part of subclusters. </param>
         /// <returns> A new <see cref="Evaluation.InsightCluster"/> instance for mocking. </returns>
-        [Experimental("AAIP001")]
         public static InsightCluster InsightCluster(string id = default, string label = default, string suggestion = default, string suggestionTitle = default, string description = default, int weight = default, IEnumerable<InsightCluster> subClusters = default, IEnumerable<InsightSample> samples = default)
         {
             subClusters ??= new ChangeTrackingList<InsightCluster>();
@@ -1699,7 +1682,6 @@ namespace Azure.AI.Projects
         /// <param name="features"> Features to help with additional filtering of data in UX. </param>
         /// <param name="correlationInfo"> Info about the correlation for the analysis sample. </param>
         /// <returns> A new <see cref="Evaluation.InsightSample"/> instance for mocking. </returns>
-        [Experimental("AAIP001")]
         public static InsightSample InsightSample(string id = default, string @type = default, IDictionary<string, BinaryData> features = default, IDictionary<string, BinaryData> correlationInfo = default)
         {
             features ??= new ChangeTrackingDictionary<string, BinaryData>();
@@ -1714,7 +1696,6 @@ namespace Azure.AI.Projects
         /// <param name="correlationInfo"> Info about the correlation for the analysis sample. </param>
         /// <param name="evaluationResult"> Evaluation result for the analysis sample. </param>
         /// <returns> A new <see cref="Evaluation.EvaluationResultSample"/> instance for mocking. </returns>
-        [Experimental("AAIP001")]
         public static EvaluationResultSample EvaluationResultSample(string id = default, IDictionary<string, BinaryData> features = default, IDictionary<string, BinaryData> correlationInfo = default, EvalResult evaluationResult = default)
         {
             features ??= new ChangeTrackingDictionary<string, BinaryData>();
@@ -1735,7 +1716,6 @@ namespace Azure.AI.Projects
         /// <param name="score"> score. </param>
         /// <param name="isPassed"> indicates if the check passed or failed. </param>
         /// <returns> A new <see cref="Evaluation.EvalResult"/> instance for mocking. </returns>
-        [Experimental("AAIP001")]
         public static EvalResult EvalResult(string name = default, string @type = default, float score = default, bool isPassed = default)
         {
             return new EvalResult(name, @type, score, isPassed, additionalBinaryDataProperties: null);
@@ -1746,7 +1726,6 @@ namespace Azure.AI.Projects
         /// <param name="y"> Y-axis coordinate. </param>
         /// <param name="size"> Size of the chart element. </param>
         /// <returns> A new <see cref="Evaluation.ChartCoordinate"/> instance for mocking. </returns>
-        [Experimental("AAIP001")]
         public static ChartCoordinate ChartCoordinate(int x = default, int y = default, int size = default)
         {
             return new ChartCoordinate(x, y, size, additionalBinaryDataProperties: null);
@@ -1755,7 +1734,6 @@ namespace Azure.AI.Projects
         /// <summary> Insights from the agent cluster analysis. </summary>
         /// <param name="clusterInsight"></param>
         /// <returns> A new <see cref="Evaluation.AgentClusterInsightResult"/> instance for mocking. </returns>
-        [Experimental("AAIP001")]
         public static AgentClusterInsightResult AgentClusterInsightResult(ClusterInsightResult clusterInsight = default)
         {
             return new AgentClusterInsightResult(InsightType.AgentClusterInsight, additionalBinaryDataProperties: null, clusterInsight);
@@ -2249,7 +2227,6 @@ namespace Azure.AI.Projects
         /// </summary>
         /// <param name="type"> The trigger type. </param>
         /// <returns> A new <see cref="Projects.RoutineTrigger"/> instance for mocking. </returns>
-        [Experimental("AAIP001")]
         public static RoutineTrigger RoutineTrigger(string @type = default)
         {
             return new UnknownRoutineTrigger(new RoutineTriggerKind(@type), additionalBinaryDataProperties: null);
@@ -2259,7 +2236,6 @@ namespace Azure.AI.Projects
         /// <param name="cronExpression"> A 5-field cron expression. The service enforces a minimum interval of five minutes by default. </param>
         /// <param name="timeZone"> An IANA or Windows time zone identifier for the schedule. </param>
         /// <returns> A new <see cref="Projects.ScheduleRoutineTrigger"/> instance for mocking. </returns>
-        [Experimental("AAIP001")]
         public static ScheduleRoutineTrigger ScheduleRoutineTrigger(string cronExpression = default, string timeZone = default)
         {
             return new ScheduleRoutineTrigger(RoutineTriggerKind.Schedule, additionalBinaryDataProperties: null, cronExpression, timeZone);
@@ -2268,7 +2244,6 @@ namespace Azure.AI.Projects
         /// <summary> A one-shot timer routine trigger. </summary>
         /// <param name="at"> The UTC date and time at which the timer fires. </param>
         /// <returns> A new <see cref="Projects.TimerRoutineTrigger"/> instance for mocking. </returns>
-        [Experimental("AAIP001")]
         public static TimerRoutineTrigger TimerRoutineTrigger(DateTimeOffset? at = default)
         {
             return new TimerRoutineTrigger(RoutineTriggerKind.Timer, additionalBinaryDataProperties: null, at);
@@ -2280,7 +2255,6 @@ namespace Azure.AI.Projects
         /// <param name="repository"> The GitHub repository filter that scopes which issues can fire the trigger. </param>
         /// <param name="issueEvent"> The GitHub issue event that fires the routine. </param>
         /// <returns> A new <see cref="Projects.GitHubIssueRoutineTrigger"/> instance for mocking. </returns>
-        [Experimental("AAIP001")]
         public static GitHubIssueRoutineTrigger GitHubIssueRoutineTrigger(string connectionId = default, string owner = default, string repository = default, GitHubIssueEvent issueEvent = default)
         {
             return new GitHubIssueRoutineTrigger(
@@ -2297,7 +2271,6 @@ namespace Azure.AI.Projects
         /// <param name="eventName"> The provider-specific event name that fires the routine. </param>
         /// <param name="parameters"> Provider-specific trigger parameters. </param>
         /// <returns> A new <see cref="Projects.CustomRoutineTrigger"/> instance for mocking. </returns>
-        [Experimental("AAIP001")]
         public static CustomRoutineTrigger CustomRoutineTrigger(string provider = default, string eventName = default, IDictionary<string, BinaryData> parameters = default)
         {
             parameters ??= new ChangeTrackingDictionary<string, BinaryData>();
@@ -2311,7 +2284,6 @@ namespace Azure.AI.Projects
         /// </summary>
         /// <param name="type"> The action type. </param>
         /// <returns> A new <see cref="Projects.RoutineAction"/> instance for mocking. </returns>
-        [Experimental("AAIP001")]
         public static RoutineAction RoutineAction(string @type = default)
         {
             return new UnknownRoutineAction(new RoutineActionKind(@type), additionalBinaryDataProperties: null);
@@ -2323,7 +2295,6 @@ namespace Azure.AI.Projects
         /// <param name="input"> Static JSON value sent as the complete downstream input when the routine fires. The value is passed through as-is; no templating is applied. </param>
         /// <param name="conversation"> An optional existing conversation identifier to continue during the downstream dispatch. </param>
         /// <returns> A new <see cref="Projects.AgentResponsesApiRoutineAction"/> instance for mocking. </returns>
-        [Experimental("AAIP001")]
         public static AgentResponsesApiRoutineAction AgentResponsesApiRoutineAction(string agentName = default, string agentEndpointId = default, BinaryData input = default, string conversation = default)
         {
             return new AgentResponsesApiRoutineAction(
@@ -2341,7 +2312,6 @@ namespace Azure.AI.Projects
         /// <param name="input"> Static JSON value sent as the complete downstream input when the routine fires. The value is passed through as-is; no templating is applied. </param>
         /// <param name="sessionId"> An optional existing hosted-agent session identifier to continue during the downstream dispatch. </param>
         /// <returns> A new <see cref="Projects.AgentInvocationsApiRoutineAction"/> instance for mocking. </returns>
-        [Experimental("AAIP001")]
         public static AgentInvocationsApiRoutineAction AgentInvocationsApiRoutineAction(string agentName = default, string agentEndpointId = default, BinaryData input = default, string sessionId = default)
         {
             return new AgentInvocationsApiRoutineAction(
@@ -2362,7 +2332,6 @@ namespace Azure.AI.Projects
         /// <param name="createdOn"> The time when the routine was created. </param>
         /// <param name="updatedOn"> The time when the routine was last updated. </param>
         /// <returns> A new <see cref="Projects.ProjectsRoutine"/> instance for mocking. </returns>
-        [Experimental("AAIP001")]
         public static ProjectsRoutine ProjectsRoutine(string name = default, string description = default, bool isEnabled = default, IDictionary<string, RoutineTrigger> triggers = default, RoutineAction action = default, DateTimeOffset? createdOn = default, DateTimeOffset? updatedOn = default)
         {
             triggers ??= new ChangeTrackingDictionary<string, RoutineTrigger>();
@@ -2403,7 +2372,6 @@ namespace Azure.AI.Projects
         /// <param name="errorType"> The fully qualified error type captured for a failed attempt, when available. </param>
         /// <param name="errorMessage"> The truncated failure message captured for a failed attempt, when available. </param>
         /// <returns> A new <see cref="Projects.RoutineRun"/> instance for mocking. </returns>
-        [Experimental("AAIP001")]
         public static RoutineRun RoutineRun(string id = default, BinaryData statusInternal = default, RoutineRunPhase? phase = default, RoutineTriggerKind? triggerType = default, string triggerName = default, IDictionary<string, BinaryData> triggerEventPayload = default, RoutineAttemptSource? attemptSource = default, RoutineActionKind? actionType = default, string agentId = default, string agentEndpointId = default, string conversationId = default, string sessionId = default, DateTimeOffset? triggeredOn = default, DateTimeOffset? scheduledFireOn = default, DateTimeOffset? startedOn = default, DateTimeOffset? endedOn = default, string dispatchId = default, string actionCorrelationId = default, string responseId = default, string taskId = default, int? errorStatusCode = default, string errorType = default, string errorMessage = default)
         {
             triggerEventPayload ??= new ChangeTrackingDictionary<string, BinaryData>();
@@ -2441,7 +2409,6 @@ namespace Azure.AI.Projects
         /// </summary>
         /// <param name="type"> The manual dispatch payload type. </param>
         /// <returns> A new <see cref="Projects.RoutineDispatchPayload"/> instance for mocking. </returns>
-        [Experimental("AAIP001")]
         public static RoutineDispatchPayload RoutineDispatchPayload(string @type = default)
         {
             return new UnknownRoutineDispatchPayload(new RoutineDispatchPayloadType(@type), additionalBinaryDataProperties: null);
@@ -2450,7 +2417,6 @@ namespace Azure.AI.Projects
         /// <summary> A manual payload used to test a responses API routine dispatch. </summary>
         /// <param name="input"> The JSON value sent as the complete downstream responses input. The value is passed through as-is and can be an object, string, number, boolean, array, or null. </param>
         /// <returns> A new <see cref="Projects.AgentResponsesApiDispatchPayload"/> instance for mocking. </returns>
-        [Experimental("AAIP001")]
         public static AgentResponsesApiDispatchPayload AgentResponsesApiDispatchPayload(BinaryData input = default)
         {
             return new AgentResponsesApiDispatchPayload(RoutineDispatchPayloadType.InvokeAgentResponsesApi, additionalBinaryDataProperties: null, input);
@@ -2459,7 +2425,6 @@ namespace Azure.AI.Projects
         /// <summary> A manual payload used to test an invocations API routine dispatch. </summary>
         /// <param name="input"> The JSON value sent as the complete downstream invocations input. The value is passed through as-is and can be an object, string, number, boolean, array, or null. </param>
         /// <returns> A new <see cref="Projects.AgentInvocationsApiDispatchPayload"/> instance for mocking. </returns>
-        [Experimental("AAIP001")]
         public static AgentInvocationsApiDispatchPayload AgentInvocationsApiDispatchPayload(BinaryData input = default)
         {
             return new AgentInvocationsApiDispatchPayload(RoutineDispatchPayloadType.InvokeAgentInvocationsApi, additionalBinaryDataProperties: null, input);
@@ -2470,7 +2435,6 @@ namespace Azure.AI.Projects
         /// <param name="actionCorrelationId"> A downstream action correlation identifier, when available. </param>
         /// <param name="taskId"> A workspace task identifier created for the dispatch, when available. </param>
         /// <returns> A new <see cref="Projects.DispatchRoutineResult"/> instance for mocking. </returns>
-        [Experimental("AAIP001")]
         public static DispatchRoutineResult DispatchRoutineResult(string dispatchId = default, string actionCorrelationId = default, string taskId = default)
         {
             return new DispatchRoutineResult(dispatchId, actionCorrelationId, taskId, additionalBinaryDataProperties: null);
@@ -2503,7 +2467,6 @@ namespace Azure.AI.Projects
         /// <param name="id"> The id of the output Azure OpenAI file. </param>
         /// <param name="filename"> The filename of the output Azure OpenAI file. </param>
         /// <returns> A new <see cref="Projects.FileDataGenerationJobOutput"/> instance for mocking. </returns>
-        [Experimental("AAIP001")]
         public static FileDataGenerationJobOutput FileDataGenerationJobOutput(string id = default, string filename = default)
         {
             return new FileDataGenerationJobOutput(DataGenerationJobOutputType.File, additionalBinaryDataProperties: null, id, filename);
@@ -2632,7 +2595,6 @@ namespace Azure.AI.Projects
         /// <param name="maxSamples"> Maximum number of samples to generate, up to service-defined limits. </param>
         /// <param name="questionTypes"> The question types to generate. Used only for fine-tuning scenarios. </param>
         /// <returns> A new <see cref="Projects.SimpleQnADataGenerationJobConfiguration"/> instance for mocking. </returns>
-        [Experimental("AAIP001")]
         public static SimpleQnADataGenerationJobConfiguration SimpleQnADataGenerationJobConfiguration(float? trainSplit = default, DataGenerationModelOptions modelOptions = default, int maxSamples = default, IEnumerable<SimpleQnAFineTuningQuestionType> questionTypes = default)
         {
             questionTypes ??= new ChangeTrackingList<SimpleQnAFineTuningQuestionType>();
@@ -2666,10 +2628,11 @@ namespace Azure.AI.Projects
         /// <summary> The configuration for a task generation data generation job. Use with multiturn evaluation scenarios and with prompt, file, or agent sources. Generated dataset rows include fields such as `id`, `category`, `test_case_description`, and `desired_num_turns`. </summary>
         /// <param name="trainSplit"> The proportion of the generated data to be used for training when the data is used for fine-tuning. The rest will be used for validation. Value should be between 0 and 1. </param>
         /// <param name="modelOptions"> The LLM model options. </param>
+        /// <param name="maxSamples"> Maximum number of samples to generate, up to service-defined limits. </param>
         /// <returns> A new <see cref="Projects.SimulationSeedDataGenerationJobConfiguration"/> instance for mocking. </returns>
-        public static SimulationSeedDataGenerationJobConfiguration SimulationSeedDataGenerationJobConfiguration(float? trainSplit = default, DataGenerationModelOptions modelOptions = default)
+        public static SimulationSeedDataGenerationJobConfiguration SimulationSeedDataGenerationJobConfiguration(float? trainSplit = default, DataGenerationModelOptions modelOptions = default, int maxSamples = default)
         {
-            return new SimulationSeedDataGenerationJobConfiguration(DataGenerationJobKind.SimulationSeed, trainSplit, modelOptions, additionalBinaryDataProperties: null);
+            return new SimulationSeedDataGenerationJobConfiguration(DataGenerationJobKind.SimulationSeed, trainSplit, modelOptions, additionalBinaryDataProperties: null, maxSamples);
         }
 
         /// <summary> The configuration for a data generation job with ToolUse type. This is a preview feature used only for fine-tuning scenarios. </summary>
@@ -2677,7 +2640,6 @@ namespace Azure.AI.Projects
         /// <param name="modelOptions"> The LLM model options. </param>
         /// <param name="maxSamples"> Maximum number of samples to generate, up to service-defined limits. </param>
         /// <returns> A new <see cref="Projects.ToolUseFineTuningDataGenerationJobConfiguration"/> instance for mocking. </returns>
-        [Experimental("AAIP001")]
         public static ToolUseFineTuningDataGenerationJobConfiguration ToolUseFineTuningDataGenerationJobConfiguration(float? trainSplit = default, DataGenerationModelOptions modelOptions = default, int maxSamples = default)
         {
             return new ToolUseFineTuningDataGenerationJobConfiguration(DataGenerationJobKind.ToolUse, trainSplit, modelOptions, additionalBinaryDataProperties: null, maxSamples);
@@ -2701,7 +2663,6 @@ namespace Azure.AI.Projects
         /// <param name="writeMode"> Controls how file outputs are written. If omitted, defaults to `overwrite` and writes only the newly generated fine-tuning file content. </param>
         /// <param name="mergeFileId"> File ID to merge into when `write_mode` is `merge`. </param>
         /// <returns> A new <see cref="Projects.SupervisedFineTuningDataGenerationJobOutputConfiguration"/> instance for mocking. </returns>
-        [Experimental("AAIP001")]
         public static SupervisedFineTuningDataGenerationJobOutputConfiguration SupervisedFineTuningDataGenerationJobOutputConfiguration(string name = default, DataGenerationJobOutputWriteMode? writeMode = default, string mergeFileId = default)
         {
             return new SupervisedFineTuningDataGenerationJobOutputConfiguration(name, writeMode, mergeFileId, additionalBinaryDataProperties: null);
@@ -2712,7 +2673,6 @@ namespace Azure.AI.Projects
         /// <param name="writeMode"> Controls how file outputs are written. If omitted, defaults to `overwrite` and writes only the newly generated fine-tuning file content. </param>
         /// <param name="mergeFileId"> File ID to merge into when `write_mode` is `merge`. </param>
         /// <returns> A new <see cref="Projects.ReinforcementFineTuningDataGenerationJobOutputConfiguration"/> instance for mocking. </returns>
-        [Experimental("AAIP001")]
         public static ReinforcementFineTuningDataGenerationJobOutputConfiguration ReinforcementFineTuningDataGenerationJobOutputConfiguration(string name = default, DataGenerationJobOutputWriteMode? writeMode = default, string mergeFileId = default)
         {
             return new ReinforcementFineTuningDataGenerationJobOutputConfiguration(name, writeMode, mergeFileId, additionalBinaryDataProperties: null);
@@ -2759,7 +2719,6 @@ namespace Azure.AI.Projects
         /// <param name="generationConfiguration"> The generation configuration for the data generation job. </param>
         /// <param name="outputConfiguration"> Optional file output configuration for the generated supervised fine-tuning data. </param>
         /// <returns> A new <see cref="Projects.SupervisedFineTuningDataGenerationJobInputs"/> instance for mocking. </returns>
-        [Experimental("AAIP001")]
         public static SupervisedFineTuningDataGenerationJobInputs SupervisedFineTuningDataGenerationJobInputs(string name = default, IEnumerable<DataGenerationJobSource> sources = default, DataGenerationJobConfiguration generationConfiguration = default, SupervisedFineTuningDataGenerationJobOutputConfiguration outputConfiguration = default)
         {
             sources ??= new ChangeTrackingList<DataGenerationJobSource>();
@@ -2779,7 +2738,6 @@ namespace Azure.AI.Projects
         /// <param name="generationConfiguration"> The generation configuration for the data generation job. </param>
         /// <param name="outputConfiguration"> Optional file output configuration for the generated reinforcement fine-tuning data. </param>
         /// <returns> A new <see cref="Projects.ReinforcementFineTuningDataGenerationJobInputs"/> instance for mocking. </returns>
-        [Experimental("AAIP001")]
         public static ReinforcementFineTuningDataGenerationJobInputs ReinforcementFineTuningDataGenerationJobInputs(string name = default, IEnumerable<DataGenerationJobSource> sources = default, DataGenerationJobConfiguration generationConfiguration = default, ReinforcementFineTuningDataGenerationJobOutputConfiguration outputConfiguration = default)
         {
             sources ??= new ChangeTrackingList<DataGenerationJobSource>();

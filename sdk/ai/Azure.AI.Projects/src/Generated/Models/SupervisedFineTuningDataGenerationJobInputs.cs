@@ -4,12 +4,10 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects
 {
     /// <summary> Caller-supplied inputs for a supervised fine-tuning data generation job. This is a preview feature. </summary>
-    [Experimental("AAIP001")]
     public partial class SupervisedFineTuningDataGenerationJobInputs : DataGenerationJobInputs
     {
         /// <summary> Initializes a new instance of <see cref="SupervisedFineTuningDataGenerationJobInputs"/>. </summary>

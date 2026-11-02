@@ -24,6 +24,8 @@ namespace Azure.AI.Projects.Agents
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ProjectsAgentDefinition PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
+#pragma warning disable AAIP001 // Implementation preserves preview variants of GA models.
+#pragma warning disable AAIP002 // Implementation accesses OpenAI-dependent members.
             string format = options.Format == "W" ? ((IPersistableModel<ProjectsAgentDefinition>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
@@ -35,11 +37,15 @@ namespace Azure.AI.Projects.Agents
                 default:
                     throw new FormatException($"The model {nameof(ProjectsAgentDefinition)} does not support reading '{options.Format}' format.");
             }
+#pragma warning restore AAIP002 // Implementation accesses OpenAI-dependent members.
+#pragma warning restore AAIP001 // Implementation preserves preview variants of GA models.
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
+#pragma warning disable AAIP001 // Implementation preserves preview variants of GA models.
+#pragma warning disable AAIP002 // Implementation accesses OpenAI-dependent members.
             string format = options.Format == "W" ? ((IPersistableModel<ProjectsAgentDefinition>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
@@ -48,6 +54,8 @@ namespace Azure.AI.Projects.Agents
                 default:
                     throw new FormatException($"The model {nameof(ProjectsAgentDefinition)} does not support writing '{options.Format}' format.");
             }
+#pragma warning restore AAIP002 // Implementation accesses OpenAI-dependent members.
+#pragma warning restore AAIP001 // Implementation preserves preview variants of GA models.
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -64,15 +72,21 @@ namespace Azure.AI.Projects.Agents
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ProjectsAgentDefinition>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+#pragma warning disable AAIP001 // Implementation preserves preview variants of GA models.
+#pragma warning disable AAIP002 // Implementation accesses OpenAI-dependent members.
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
+#pragma warning restore AAIP002 // Implementation accesses OpenAI-dependent members.
+#pragma warning restore AAIP001 // Implementation preserves preview variants of GA models.
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+#pragma warning disable AAIP001 // Implementation preserves preview variants of GA models.
+#pragma warning disable AAIP002 // Implementation accesses OpenAI-dependent members.
             string format = options.Format == "W" ? ((IPersistableModel<ProjectsAgentDefinition>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
@@ -100,6 +114,8 @@ namespace Azure.AI.Projects.Agents
 #endif
                 }
             }
+#pragma warning restore AAIP002 // Implementation accesses OpenAI-dependent members.
+#pragma warning restore AAIP001 // Implementation preserves preview variants of GA models.
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -110,6 +126,8 @@ namespace Azure.AI.Projects.Agents
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ProjectsAgentDefinition JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+#pragma warning disable AAIP001 // Implementation preserves preview variants of GA models.
+#pragma warning disable AAIP002 // Implementation accesses OpenAI-dependent members.
             string format = options.Format == "W" ? ((IPersistableModel<ProjectsAgentDefinition>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
@@ -117,6 +135,8 @@ namespace Azure.AI.Projects.Agents
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeProjectsAgentDefinition(document.RootElement, options);
+#pragma warning restore AAIP002 // Implementation accesses OpenAI-dependent members.
+#pragma warning restore AAIP001 // Implementation preserves preview variants of GA models.
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
@@ -125,6 +145,8 @@ namespace Azure.AI.Projects.Agents
 #pragma warning disable CS0618 // This generated code references obsolete functionality.
         internal static ProjectsAgentDefinition DeserializeProjectsAgentDefinition(JsonElement element, ModelReaderWriterOptions options)
         {
+#pragma warning disable AAIP001 // Implementation preserves preview variants of GA models.
+#pragma warning disable AAIP002 // Implementation accesses OpenAI-dependent members.
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -146,6 +168,8 @@ namespace Azure.AI.Projects.Agents
                 }
             }
             return UnknownAgentDefinition.DeserializeUnknownAgentDefinition(element, options);
+#pragma warning restore AAIP002 // Implementation accesses OpenAI-dependent members.
+#pragma warning restore AAIP001 // Implementation preserves preview variants of GA models.
         }
 #pragma warning restore CS0612 // This generated code references obsolete functionality.
 #pragma warning restore CS0618 // This generated code references obsolete functionality.

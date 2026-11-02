@@ -11,7 +11,6 @@ using OpenAI.Realtime;
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> The response data for a requested list of items. </summary>
-    [Experimental("AAIP001")]
     internal partial class AgentsPagedResultRealtimeConversationItem
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
@@ -20,6 +19,7 @@ namespace Azure.AI.Projects.Agents
         /// <summary> Initializes a new instance of <see cref="AgentsPagedResultRealtimeConversationItem"/>. </summary>
         /// <param name="data"> The requested list of items. </param>
         /// <param name="hasMore"> A value indicating whether there are additional values available not captured in this list. </param>
+        [Experimental("AAIP002")]
         internal AgentsPagedResultRealtimeConversationItem(IEnumerable<RealtimeItem> data, bool hasMore)
         {
             Data = data.ToList();
@@ -32,6 +32,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="lastId"> The last ID represented in this list. </param>
         /// <param name="hasMore"> A value indicating whether there are additional values available not captured in this list. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        [Experimental("AAIP002")]
         internal AgentsPagedResultRealtimeConversationItem(IList<RealtimeItem> data, string firstId, string lastId, bool hasMore, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Data = data;
@@ -42,6 +43,7 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <summary> The requested list of items. </summary>
+        [Experimental("AAIP002")]
         public IList<RealtimeItem> Data { get; }
 
         /// <summary> The first ID represented in this list. </summary>

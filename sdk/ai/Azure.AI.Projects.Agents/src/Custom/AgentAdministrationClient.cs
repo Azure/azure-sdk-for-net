@@ -1169,6 +1169,23 @@ public partial class AgentAdministrationClient
             cancellationToken: cancellationToken
         ).ConfigureAwait(false);
     }
+
+    /// <summary> Generates a voice agent from JSON using the request options. </summary>
+    /// <param name="content"> The voice-agent generation request body. </param>
+    /// <param name="options"> The request options. </param>
+    /// <returns> The service response. </returns>
+    [Experimental("AAIP001")]
+    public virtual ClientResult GenerateAgent(BinaryContent content, RequestOptions options)
+        => GenerateAgent(content, foundryFeatures: default, options: options);
+
+    /// <summary> Generates a voice agent from JSON using the request options. </summary>
+    /// <param name="content"> The voice-agent generation request body. </param>
+    /// <param name="options"> The request options. </param>
+    /// <returns> The service response. </returns>
+    [Experimental("AAIP001")]
+    public virtual Task<ClientResult> GenerateAgentAsync(BinaryContent content, RequestOptions options)
+        => GenerateAgentAsync(content, foundryFeatures: default, options: options);
+
     /// <summary> Initializes a new instance of AgentOptimizationJobCandidates. </summary>
     public virtual AgentOptimizationJobCandidates GetAgentOptimizationJobCandidatesClient()
     {

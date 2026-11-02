@@ -4,22 +4,21 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> A Twilio binding owned by a voice agent. </summary>
-    [Experimental("AAIP001")]
     public partial class TwilioTelephonyBinding : TelephonyBinding
     {
         /// <summary> Initializes a new instance of <see cref="TwilioTelephonyBinding"/>. </summary>
-        /// <param name="id"> The service-generated binding identifier. </param>
         /// <param name="connectionName"> The Foundry connection name for the telephony provider. </param>
-        /// <param name="status"> The lifecycle status. </param>
-        /// <param name="incomingCallUrl"> The service-generated webhook URL to configure with the telephony provider. </param>
         /// <param name="phoneNumber"> The Twilio E.164 phone number. </param>
-        internal TwilioTelephonyBinding(string id, string connectionName, TelephonyBindingStatus status, Uri incomingCallUrl, string phoneNumber) : base(id, TelephonyProvider.Twilio, connectionName, status, incomingCallUrl)
+        /// <exception cref="ArgumentNullException"> <paramref name="connectionName"/> or <paramref name="phoneNumber"/> is null. </exception>
+        public TwilioTelephonyBinding(string connectionName, string phoneNumber) : base(TelephonyProvider.Twilio, connectionName)
         {
+            Argument.AssertNotNull(connectionName, nameof(connectionName));
+            Argument.AssertNotNull(phoneNumber, nameof(phoneNumber));
+
             PhoneNumber = phoneNumber;
         }
 
@@ -28,16 +27,15 @@ namespace Azure.AI.Projects.Agents
         /// <param name="provider"> The telephony provider. </param>
         /// <param name="connectionName"> The Foundry connection name for the telephony provider. </param>
         /// <param name="label"> The optional display label for the binding. </param>
-        /// <param name="status"> The lifecycle status. </param>
-        /// <param name="incomingCallUrl"> The service-generated webhook URL to configure with the telephony provider. </param>
+        /// <param name="incomingCallUrl"> The service-generated incoming address: an HTTPS webhook for webhook-based providers or a SIP/SIPS ingress URI for SIP. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="phoneNumber"> The Twilio E.164 phone number. </param>
-        internal TwilioTelephonyBinding(string id, TelephonyProvider provider, string connectionName, string label, TelephonyBindingStatus status, Uri incomingCallUrl, IDictionary<string, BinaryData> additionalBinaryDataProperties, string phoneNumber) : base(id, provider, connectionName, label, status, incomingCallUrl, additionalBinaryDataProperties)
+        internal TwilioTelephonyBinding(string id, TelephonyProvider provider, string connectionName, string label, Uri incomingCallUrl, IDictionary<string, BinaryData> additionalBinaryDataProperties, string phoneNumber) : base(id, provider, connectionName, label, incomingCallUrl, additionalBinaryDataProperties)
         {
             PhoneNumber = phoneNumber;
         }
 
         /// <summary> The Twilio E.164 phone number. </summary>
-        public string PhoneNumber { get; }
+        public string PhoneNumber { get; set; }
     }
 }

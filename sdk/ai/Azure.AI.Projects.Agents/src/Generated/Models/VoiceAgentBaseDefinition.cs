@@ -4,7 +4,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects.Agents
 {
@@ -12,7 +11,6 @@ namespace Azure.AI.Projects.Agents
     /// Shared voice-agent settings; protocol-specific fields remain flat on each subtype.
     /// Creates and updates produce immutable versions. An agent's protocol cannot change across versions.
     /// </summary>
-    [Experimental("AAIP001")]
     public partial class VoiceAgentBaseDefinition : ProjectsAgentDefinition
     {
         /// <summary> Initializes a new instance of <see cref="VoiceAgentBaseDefinition"/>. </summary>

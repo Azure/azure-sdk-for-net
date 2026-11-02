@@ -26,6 +26,8 @@ namespace Azure.AI.Projects.Evaluation
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override EvaluationTarget PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
+#pragma warning disable AAIP001 // Implementation preserves preview variants of GA models.
+#pragma warning disable AAIP002 // Implementation accesses OpenAI-dependent members.
             string format = options.Format == "W" ? ((IPersistableModel<AzureAIAgentTarget>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
@@ -37,11 +39,15 @@ namespace Azure.AI.Projects.Evaluation
                 default:
                     throw new FormatException($"The model {nameof(AzureAIAgentTarget)} does not support reading '{options.Format}' format.");
             }
+#pragma warning restore AAIP002 // Implementation accesses OpenAI-dependent members.
+#pragma warning restore AAIP001 // Implementation preserves preview variants of GA models.
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
+#pragma warning disable AAIP001 // Implementation preserves preview variants of GA models.
+#pragma warning disable AAIP002 // Implementation accesses OpenAI-dependent members.
             string format = options.Format == "W" ? ((IPersistableModel<AzureAIAgentTarget>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
@@ -50,6 +56,8 @@ namespace Azure.AI.Projects.Evaluation
                 default:
                     throw new FormatException($"The model {nameof(AzureAIAgentTarget)} does not support writing '{options.Format}' format.");
             }
+#pragma warning restore AAIP002 // Implementation accesses OpenAI-dependent members.
+#pragma warning restore AAIP001 // Implementation preserves preview variants of GA models.
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -66,15 +74,21 @@ namespace Azure.AI.Projects.Evaluation
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<AzureAIAgentTarget>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+#pragma warning disable AAIP001 // Implementation preserves preview variants of GA models.
+#pragma warning disable AAIP002 // Implementation accesses OpenAI-dependent members.
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
+#pragma warning restore AAIP002 // Implementation accesses OpenAI-dependent members.
+#pragma warning restore AAIP001 // Implementation preserves preview variants of GA models.
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+#pragma warning disable AAIP001 // Implementation preserves preview variants of GA models.
+#pragma warning disable AAIP002 // Implementation accesses OpenAI-dependent members.
             string format = options.Format == "W" ? ((IPersistableModel<AzureAIAgentTarget>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
@@ -113,6 +127,8 @@ namespace Azure.AI.Projects.Evaluation
                 }
                 writer.WriteEndArray();
             }
+#pragma warning restore AAIP002 // Implementation accesses OpenAI-dependent members.
+#pragma warning restore AAIP001 // Implementation preserves preview variants of GA models.
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -123,6 +139,8 @@ namespace Azure.AI.Projects.Evaluation
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override EvaluationTarget JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+#pragma warning disable AAIP001 // Implementation preserves preview variants of GA models.
+#pragma warning disable AAIP002 // Implementation accesses OpenAI-dependent members.
             string format = options.Format == "W" ? ((IPersistableModel<AzureAIAgentTarget>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
@@ -130,12 +148,16 @@ namespace Azure.AI.Projects.Evaluation
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeAzureAIAgentTarget(document.RootElement, options);
+#pragma warning restore AAIP002 // Implementation accesses OpenAI-dependent members.
+#pragma warning restore AAIP001 // Implementation preserves preview variants of GA models.
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static AzureAIAgentTarget DeserializeAzureAIAgentTarget(JsonElement element, ModelReaderWriterOptions options)
         {
+#pragma warning disable AAIP001 // Implementation preserves preview variants of GA models.
+#pragma warning disable AAIP002 // Implementation accesses OpenAI-dependent members.
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -194,6 +216,8 @@ namespace Azure.AI.Projects.Evaluation
                 version,
                 toolDescriptions ?? new ChangeTrackingList<ToolDescription>(),
                 tools ?? new ChangeTrackingList<ResponseTool>());
+#pragma warning restore AAIP002 // Implementation accesses OpenAI-dependent members.
+#pragma warning restore AAIP001 // Implementation preserves preview variants of GA models.
         }
     }
 }

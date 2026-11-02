@@ -4,7 +4,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects.Agents
 {
@@ -12,7 +11,6 @@ namespace Azure.AI.Projects.Agents
     /// A managed runtime and agent loop used to execute a prompt agent.
     /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="GitHubCopilotHarness"/> and <see cref="MicrosoftCopilotHarness"/>.
     /// </summary>
-    [Experimental("AAIP001")]
     public abstract partial class AgentHarness
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

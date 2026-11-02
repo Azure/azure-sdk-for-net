@@ -4,12 +4,10 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> Azure semantic voice activity detection. </summary>
-    [Experimental("AAIP001")]
     public partial class VoiceAgentAzureSemanticVadTurnDetection : VoiceAgentTurnDetectionConfig
     {
         private VoiceAgentEndOfUtteranceDetection _endOfUtteranceDetection;

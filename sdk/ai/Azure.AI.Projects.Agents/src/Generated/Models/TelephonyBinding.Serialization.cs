@@ -11,7 +11,7 @@ namespace Azure.AI.Projects.Agents
 {
     /// <summary>
     /// A telephony binding owned by a voice agent.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="TeamsPhoneExtensibilityTelephonyBinding"/> and <see cref="TwilioTelephonyBinding"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="SipTelephonyBinding"/>, <see cref="TeamsPhoneExtensibilityTelephonyBinding"/>, and <see cref="TwilioTelephonyBinding"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownTelephonyBinding))]
     public abstract partial class TelephonyBinding : IJsonModel<TelephonyBinding>
@@ -25,6 +25,8 @@ namespace Azure.AI.Projects.Agents
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual TelephonyBinding PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
+#pragma warning disable AAIP001 // Implementation preserves preview variants of GA models.
+#pragma warning disable AAIP002 // Implementation accesses OpenAI-dependent members.
             string format = options.Format == "W" ? ((IPersistableModel<TelephonyBinding>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
@@ -36,11 +38,15 @@ namespace Azure.AI.Projects.Agents
                 default:
                     throw new FormatException($"The model {nameof(TelephonyBinding)} does not support reading '{options.Format}' format.");
             }
+#pragma warning restore AAIP002 // Implementation accesses OpenAI-dependent members.
+#pragma warning restore AAIP001 // Implementation preserves preview variants of GA models.
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
+#pragma warning disable AAIP001 // Implementation preserves preview variants of GA models.
+#pragma warning disable AAIP002 // Implementation accesses OpenAI-dependent members.
             string format = options.Format == "W" ? ((IPersistableModel<TelephonyBinding>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
@@ -49,6 +55,8 @@ namespace Azure.AI.Projects.Agents
                 default:
                     throw new FormatException($"The model {nameof(TelephonyBinding)} does not support writing '{options.Format}' format.");
             }
+#pragma warning restore AAIP002 // Implementation accesses OpenAI-dependent members.
+#pragma warning restore AAIP001 // Implementation preserves preview variants of GA models.
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -61,34 +69,61 @@ namespace Azure.AI.Projects.Agents
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<TelephonyBinding>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
+        /// <param name="telephonyBinding"> The <see cref="TelephonyBinding"/> to serialize into <see cref="BinaryContent"/>. </param>
+        public static implicit operator BinaryContent(TelephonyBinding telephonyBinding)
+        {
+#pragma warning disable AAIP001 // Implementation preserves preview variants of GA models.
+#pragma warning disable AAIP002 // Implementation accesses OpenAI-dependent members.
+            if (telephonyBinding == null)
+            {
+                return null;
+            }
+            return BinaryContent.Create(telephonyBinding, ModelSerializationExtensions.WireOptions);
+#pragma warning restore AAIP002 // Implementation accesses OpenAI-dependent members.
+#pragma warning restore AAIP001 // Implementation preserves preview variants of GA models.
+        }
+
         /// <param name="result"> The <see cref="ClientResult"/> to deserialize the <see cref="TelephonyBinding"/> from. </param>
         public static explicit operator TelephonyBinding(ClientResult result)
         {
+#pragma warning disable AAIP001 // Implementation preserves preview variants of GA models.
+#pragma warning disable AAIP002 // Implementation accesses OpenAI-dependent members.
             PipelineResponse response = result.GetRawResponse();
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeTelephonyBinding(document.RootElement, ModelSerializationExtensions.WireOptions);
+#pragma warning restore AAIP002 // Implementation accesses OpenAI-dependent members.
+#pragma warning restore AAIP001 // Implementation preserves preview variants of GA models.
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<TelephonyBinding>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+#pragma warning disable AAIP001 // Implementation preserves preview variants of GA models.
+#pragma warning disable AAIP002 // Implementation accesses OpenAI-dependent members.
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
+#pragma warning restore AAIP002 // Implementation accesses OpenAI-dependent members.
+#pragma warning restore AAIP001 // Implementation preserves preview variants of GA models.
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+#pragma warning disable AAIP001 // Implementation preserves preview variants of GA models.
+#pragma warning disable AAIP002 // Implementation accesses OpenAI-dependent members.
             string format = options.Format == "W" ? ((IPersistableModel<TelephonyBinding>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(TelephonyBinding)} does not support writing '{format}' format.");
             }
-            writer.WritePropertyName("id"u8);
-            writer.WriteStringValue(Id);
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
             writer.WritePropertyName("provider"u8);
             writer.WriteStringValue(Provider.ToString());
             writer.WritePropertyName("connection_name"u8);
@@ -98,10 +133,11 @@ namespace Azure.AI.Projects.Agents
                 writer.WritePropertyName("label"u8);
                 writer.WriteStringValue(Label);
             }
-            writer.WritePropertyName("status"u8);
-            writer.WriteStringValue(Status.ToString());
-            writer.WritePropertyName("incoming_call_url"u8);
-            writer.WriteStringValue(IncomingCallUrl.AbsoluteUri);
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("incoming_call_url"u8);
+                writer.WriteStringValue(IncomingCallUrl.AbsoluteUri);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -117,6 +153,8 @@ namespace Azure.AI.Projects.Agents
 #endif
                 }
             }
+#pragma warning restore AAIP002 // Implementation accesses OpenAI-dependent members.
+#pragma warning restore AAIP001 // Implementation preserves preview variants of GA models.
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -127,6 +165,8 @@ namespace Azure.AI.Projects.Agents
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual TelephonyBinding JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+#pragma warning disable AAIP001 // Implementation preserves preview variants of GA models.
+#pragma warning disable AAIP002 // Implementation accesses OpenAI-dependent members.
             string format = options.Format == "W" ? ((IPersistableModel<TelephonyBinding>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
@@ -134,12 +174,16 @@ namespace Azure.AI.Projects.Agents
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeTelephonyBinding(document.RootElement, options);
+#pragma warning restore AAIP002 // Implementation accesses OpenAI-dependent members.
+#pragma warning restore AAIP001 // Implementation preserves preview variants of GA models.
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static TelephonyBinding DeserializeTelephonyBinding(JsonElement element, ModelReaderWriterOptions options)
         {
+#pragma warning disable AAIP001 // Implementation preserves preview variants of GA models.
+#pragma warning disable AAIP002 // Implementation accesses OpenAI-dependent members.
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -148,6 +192,8 @@ namespace Azure.AI.Projects.Agents
             {
                 switch (discriminator.GetString())
                 {
+                    case "sip":
+                        return SipTelephonyBinding.DeserializeSipTelephonyBinding(element, options);
                     case "teams_phone_extensibility":
                         return TeamsPhoneExtensibilityTelephonyBinding.DeserializeTeamsPhoneExtensibilityTelephonyBinding(element, options);
                     case "twilio":
@@ -155,6 +201,8 @@ namespace Azure.AI.Projects.Agents
                 }
             }
             return UnknownTelephonyBinding.DeserializeUnknownTelephonyBinding(element, options);
+#pragma warning restore AAIP002 // Implementation accesses OpenAI-dependent members.
+#pragma warning restore AAIP001 // Implementation preserves preview variants of GA models.
         }
     }
 }

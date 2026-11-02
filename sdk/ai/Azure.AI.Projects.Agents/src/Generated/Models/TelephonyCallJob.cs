@@ -4,13 +4,11 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> A durable direct or campaign-created outbound call intent. </summary>
-    [Experimental("AAIP001")]
     public partial class TelephonyCallJob
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
@@ -18,62 +16,69 @@ namespace Azure.AI.Projects.Agents
 
         /// <summary> Initializes a new instance of <see cref="TelephonyCallJob"/>. </summary>
         /// <param name="destination"> The phone destination to call. </param>
-        /// <param name="connectionName"> The Foundry connection name in the current project used to originate the call. Its category selects Twilio or Azure Communication Services / Teams Phone extensibility. No inbound telephony binding is required. </param>
-        /// <param name="source"> The caller identity used to originate the call. For a Twilio connection, provide an authorized E.164 phone number. For an Azure Communication Services / Teams Phone extensibility connection, provide the Teams Resource Account object ID. The identity type is inferred from the connection category; originating does not change inbound routing. </param>
-        /// <param name="id"> The service-generated call-job identifier. </param>
-        /// <param name="agentName"> The name of the voice agent used at execution time. </param>
-        /// <param name="status"> The current call-job lifecycle status. </param>
-        /// <param name="retryPolicy"> The frozen provider-attempt retry policy. </param>
-        /// <param name="attemptCount"> The number of provider attempts created so far. </param>
-        /// <param name="revision"> The monotonically increasing optimistic-concurrency revision. </param>
-        /// <param name="createdOn"> The Unix timestamp in seconds when the call job was created. </param>
-        /// <param name="updatedOn"> The Unix timestamp in seconds when the call job was last updated. </param>
-        internal TelephonyCallJob(TelephonyOutboundDestination destination, string connectionName, string source, string id, string agentName, TelephonyCallJobStatus status, TelephonyOutboundRetryPolicy retryPolicy, int attemptCount, long revision, DateTimeOffset createdOn, DateTimeOffset updatedOn)
+        /// <param name="connectionName">
+        /// Same-project connection; its category selects Twilio, ACS/Teams Phone extensibility or SipOutbound.
+        /// No inbound binding is needed. SIP uses authType=CustomKeys. Trimmed, case-insensitive metadata.sip_auth_type
+        /// selects digest or ip_acl; absent/null/blank/{} defaults to digest, and other non-string values are invalid.
+        /// Digest requires nonblank username/password. IP ACL requires non-null comma-separated credentials.keys.source_cidrs:
+        /// at most 4096 raw characters and 64 entries before deduplication. Empty string allows all source IPs;
+        /// whitespace-only values and empty entries fail. Native IPv4/IPv6 addresses and CIDRs are accepted;
+        /// scoped/IPv4-mapped IPv6 and metadata/binding CIDR fallbacks are not.
+        /// SipOutbound requires a DNS target with optional port 1-65535, not an IP literal, URI, path or SIP parameter.
+        /// The target is revalidated before origination; saving does not prove connectivity.
+        /// </param>
+        /// <param name="source"> The shared typed caller address. Use phone_number for Twilio or SipOutbound, or teams with a nonempty resource-account GUID for ACS/Teams Phone extensibility. Transfer-only identity formats and sip source addresses are rejected. Outbound origination is independent of inbound bindings. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="destination"/>, <paramref name="connectionName"/> or <paramref name="source"/> is null. </exception>
+        public TelephonyCallJob(TelephonyAddress destination, string connectionName, TelephonyAddress source)
         {
+            Argument.AssertNotNull(destination, nameof(destination));
+            Argument.AssertNotNull(connectionName, nameof(connectionName));
+            Argument.AssertNotNull(source, nameof(source));
+
             Destination = destination;
             ConnectionName = connectionName;
-            Source = source;
             StructuredInputs = new ChangeTrackingDictionary<string, BinaryData>();
-            Id = id;
-            AgentName = agentName;
-            Status = status;
-            RetryPolicy = retryPolicy;
-            AttemptCount = attemptCount;
-            Revision = revision;
-            CreatedOn = createdOn;
-            UpdatedOn = updatedOn;
+            Source = source;
         }
 
         /// <summary> Initializes a new instance of <see cref="TelephonyCallJob"/>. </summary>
         /// <param name="destination"> The phone destination to call. </param>
-        /// <param name="connectionName"> The Foundry connection name in the current project used to originate the call. Its category selects Twilio or Azure Communication Services / Teams Phone extensibility. No inbound telephony binding is required. </param>
-        /// <param name="source"> The caller identity used to originate the call. For a Twilio connection, provide an authorized E.164 phone number. For an Azure Communication Services / Teams Phone extensibility connection, provide the Teams Resource Account object ID. The identity type is inferred from the connection category; originating does not change inbound routing. </param>
+        /// <param name="connectionName">
+        /// Same-project connection; its category selects Twilio, ACS/Teams Phone extensibility or SipOutbound.
+        /// No inbound binding is needed. SIP uses authType=CustomKeys. Trimmed, case-insensitive metadata.sip_auth_type
+        /// selects digest or ip_acl; absent/null/blank/{} defaults to digest, and other non-string values are invalid.
+        /// Digest requires nonblank username/password. IP ACL requires non-null comma-separated credentials.keys.source_cidrs:
+        /// at most 4096 raw characters and 64 entries before deduplication. Empty string allows all source IPs;
+        /// whitespace-only values and empty entries fail. Native IPv4/IPv6 addresses and CIDRs are accepted;
+        /// scoped/IPv4-mapped IPv6 and metadata/binding CIDR fallbacks are not.
+        /// SipOutbound requires a DNS target with optional port 1-65535, not an IP literal, URI, path or SIP parameter.
+        /// The target is revalidated before origination; saving does not prove connectivity.
+        /// </param>
         /// <param name="purpose"> An optional customer-declared purpose for placing the call. </param>
-        /// <param name="structuredInputs"> Structured input values available to the agent and greeting for this call. Agent-declared inputs are validated against their schemas; omitted optional inputs may use their Agent-defined default values, while omitted required inputs are rejected. Additional inputs remain available as dynamic template variables. </param>
+        /// <param name="structuredInputs"> Inputs for the Agent and greeting, including nested JSON objects, arrays and null. Input names and values must satisfy the Agent's input definitions and schemas. Missing required inputs fail validation; omitted optional inputs may use defaults. </param>
         /// <param name="schedule"> The optional execution window. </param>
         /// <param name="id"> The service-generated call-job identifier. </param>
-        /// <param name="object"> The object type. Always `telephony.call_job`. </param>
         /// <param name="agentName"> The name of the voice agent used at execution time. </param>
         /// <param name="status"> The current call-job lifecycle status. </param>
         /// <param name="cancellation"> The recorded cancellation request, when cancellation was requested. </param>
-        /// <param name="retryPolicy"> The frozen provider-attempt retry policy. </param>
+        /// <param name="retryPolicy"> The frozen provider-attempt retry policy. When omitted on direct CallJob or Campaign creation, this is fixed_interval with max_attempts=1 and interval=0 seconds: only the initial attempt is made, with no retry. </param>
         /// <param name="attemptCount"> The number of provider attempts created so far. </param>
         /// <param name="nextAttemptOn"> The Unix timestamp in seconds at which the next retry becomes eligible. </param>
         /// <param name="terminalReason"> The stable service-generated reason for the overall outbound call job, which can span multiple provider attempts, when available. Interpret this with `status`: a queued job can retain a temporary dispatch-deferral reason. Additional string codes may be returned. </param>
         /// <param name="revision"> The monotonically increasing optimistic-concurrency revision. </param>
         /// <param name="createdOn"> The Unix timestamp in seconds when the call job was created. </param>
         /// <param name="updatedOn"> The Unix timestamp in seconds when the call job was last updated. </param>
+        /// <param name="source"> The shared typed caller address. Use phone_number for Twilio or SipOutbound, or teams with a nonempty resource-account GUID for ACS/Teams Phone extensibility. Transfer-only identity formats and sip source addresses are rejected. Outbound origination is independent of inbound bindings. </param>
+        /// <param name="campaignName"> Owning Campaign name under this Agent; absent for direct calls. Cascade deletion hides owned CallJobs on acceptance and deletes them during cleanup. Ownership follows the immutable Campaign instance, so name reuse cannot attach old jobs. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TelephonyCallJob(TelephonyOutboundDestination destination, string connectionName, string source, string purpose, IDictionary<string, BinaryData> structuredInputs, TelephonyCallJobSchedule schedule, string id, string @object, string agentName, TelephonyCallJobStatus status, TelephonyCallJobCancellation cancellation, TelephonyOutboundRetryPolicy retryPolicy, int attemptCount, DateTimeOffset? nextAttemptOn, TelephonyCallJobTerminalReason? terminalReason, long revision, DateTimeOffset createdOn, DateTimeOffset updatedOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal TelephonyCallJob(TelephonyAddress destination, string connectionName, string purpose, IDictionary<string, BinaryData> structuredInputs, TelephonyCallJobSchedule schedule, string id, string agentName, TelephonyCallJobStatus status, TelephonyCallJobCancellation cancellation, TelephonyOutboundRetryPolicy retryPolicy, int attemptCount, DateTimeOffset? nextAttemptOn, TelephonyCallJobTerminalReason? terminalReason, long revision, DateTimeOffset createdOn, DateTimeOffset updatedOn, TelephonyAddress source, string campaignName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Destination = destination;
             ConnectionName = connectionName;
-            Source = source;
             Purpose = purpose;
             StructuredInputs = structuredInputs;
             Schedule = schedule;
             Id = id;
-            Object = @object;
             AgentName = agentName;
             Status = status;
             Cancellation = cancellation;
@@ -84,23 +89,32 @@ namespace Azure.AI.Projects.Agents
             Revision = revision;
             CreatedOn = createdOn;
             UpdatedOn = updatedOn;
+            Source = source;
+            CampaignName = campaignName;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The phone destination to call. </summary>
-        public TelephonyOutboundDestination Destination { get; }
-
-        /// <summary> The Foundry connection name in the current project used to originate the call. Its category selects Twilio or Azure Communication Services / Teams Phone extensibility. No inbound telephony binding is required. </summary>
-        public string ConnectionName { get; }
-
-        /// <summary> The caller identity used to originate the call. For a Twilio connection, provide an authorized E.164 phone number. For an Azure Communication Services / Teams Phone extensibility connection, provide the Teams Resource Account object ID. The identity type is inferred from the connection category; originating does not change inbound routing. </summary>
-        public string Source { get; }
-
-        /// <summary> An optional customer-declared purpose for placing the call. </summary>
-        public string Purpose { get; }
+        public TelephonyAddress Destination { get; set; }
 
         /// <summary>
-        /// Structured input values available to the agent and greeting for this call. Agent-declared inputs are validated against their schemas; omitted optional inputs may use their Agent-defined default values, while omitted required inputs are rejected. Additional inputs remain available as dynamic template variables.
+        /// Same-project connection; its category selects Twilio, ACS/Teams Phone extensibility or SipOutbound.
+        /// No inbound binding is needed. SIP uses authType=CustomKeys. Trimmed, case-insensitive metadata.sip_auth_type
+        /// selects digest or ip_acl; absent/null/blank/{} defaults to digest, and other non-string values are invalid.
+        /// Digest requires nonblank username/password. IP ACL requires non-null comma-separated credentials.keys.source_cidrs:
+        /// at most 4096 raw characters and 64 entries before deduplication. Empty string allows all source IPs;
+        /// whitespace-only values and empty entries fail. Native IPv4/IPv6 addresses and CIDRs are accepted;
+        /// scoped/IPv4-mapped IPv6 and metadata/binding CIDR fallbacks are not.
+        /// SipOutbound requires a DNS target with optional port 1-65535, not an IP literal, URI, path or SIP parameter.
+        /// The target is revalidated before origination; saving does not prove connectivity.
+        /// </summary>
+        public string ConnectionName { get; set; }
+
+        /// <summary> An optional customer-declared purpose for placing the call. </summary>
+        public string Purpose { get; set; }
+
+        /// <summary>
+        /// Inputs for the Agent and greeting, including nested JSON objects, arrays and null. Input names and values must satisfy the Agent's input definitions and schemas. Missing required inputs fail validation; omitted optional inputs may use defaults.
         /// <para> To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
         /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
         /// <para>
@@ -128,13 +142,10 @@ namespace Azure.AI.Projects.Agents
         public IDictionary<string, BinaryData> StructuredInputs { get; }
 
         /// <summary> The optional execution window. </summary>
-        public TelephonyCallJobSchedule Schedule { get; }
+        public TelephonyCallJobSchedule Schedule { get; set; }
 
         /// <summary> The service-generated call-job identifier. </summary>
         public string Id { get; }
-
-        /// <summary> The object type. Always `telephony.call_job`. </summary>
-        public string Object { get; } = "telephony.call_job";
 
         /// <summary> The name of the voice agent used at execution time. </summary>
         public string AgentName { get; }
@@ -145,8 +156,8 @@ namespace Azure.AI.Projects.Agents
         /// <summary> The recorded cancellation request, when cancellation was requested. </summary>
         public TelephonyCallJobCancellation Cancellation { get; }
 
-        /// <summary> The frozen provider-attempt retry policy. </summary>
-        public TelephonyOutboundRetryPolicy RetryPolicy { get; }
+        /// <summary> The frozen provider-attempt retry policy. When omitted on direct CallJob or Campaign creation, this is fixed_interval with max_attempts=1 and interval=0 seconds: only the initial attempt is made, with no retry. </summary>
+        public TelephonyOutboundRetryPolicy RetryPolicy { get; set; }
 
         /// <summary> The number of provider attempts created so far. </summary>
         public int AttemptCount { get; }
@@ -165,5 +176,11 @@ namespace Azure.AI.Projects.Agents
 
         /// <summary> The Unix timestamp in seconds when the call job was last updated. </summary>
         public DateTimeOffset UpdatedOn { get; }
+
+        /// <summary> The shared typed caller address. Use phone_number for Twilio or SipOutbound, or teams with a nonempty resource-account GUID for ACS/Teams Phone extensibility. Transfer-only identity formats and sip source addresses are rejected. Outbound origination is independent of inbound bindings. </summary>
+        public TelephonyAddress Source { get; set; }
+
+        /// <summary> Owning Campaign name under this Agent; absent for direct calls. Cascade deletion hides owned CallJobs on acceptance and deletes them during cleanup. Ownership follows the immutable Campaign instance, so name reuse cannot attach old jobs. </summary>
+        public string CampaignName { get; }
     }
 }

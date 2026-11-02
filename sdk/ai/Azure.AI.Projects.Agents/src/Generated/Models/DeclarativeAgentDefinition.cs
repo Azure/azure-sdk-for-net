@@ -26,12 +26,16 @@ namespace Azure.AI.Projects.Agents
         /// <exception cref="ArgumentNullException"> <paramref name="model"/> is null. </exception>
         public DeclarativeAgentDefinition(string model) : base(ProjectsAgentKind.Prompt)
         {
+#pragma warning disable AAIP001 // Implementation preserves preview variants of GA models.
+#pragma warning disable AAIP002 // Implementation accesses OpenAI-dependent members.
             Argument.AssertNotNull(model, nameof(model));
 
             Model = model;
             Skills = new ChangeTrackingList<SkillReference>();
             Tools = new ChangeTrackingList<ResponseTool>();
             StructuredInputs = new ChangeTrackingDictionary<string, StructuredInputDefinition>();
+#pragma warning restore AAIP002 // Implementation accesses OpenAI-dependent members.
+#pragma warning restore AAIP001 // Implementation preserves preview variants of GA models.
         }
 
         /// <summary> Initializes a new instance of <see cref="DeclarativeAgentDefinition"/>. </summary>
@@ -81,7 +85,6 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <summary> The managed runtime and agent loop used to execute this prompt agent. </summary>
-        [Experimental("AAIP001")]
         public AgentHarness Harness { get; set; }
 
         /// <summary> The model deployment to use for this agent. </summary>

@@ -4,12 +4,10 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> A deterministic greeting rendered with the voice agent's structured inputs and synthesized without model-authored generation. </summary>
-    [Experimental("AAIP001")]
     public partial class VoiceAgentTemplateGreetingConfig : VoiceAgentGreetingConfig
     {
         /// <summary> Initializes a new instance of <see cref="VoiceAgentTemplateGreetingConfig"/>. </summary>

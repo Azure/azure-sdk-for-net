@@ -11,9 +11,9 @@ using OpenAI.Responses;
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> An MCP tool available to a voice agent. Server endpoints use `server_url`; connector and tunnel identifiers are not supported. </summary>
-    [Experimental("AAIP001")]
     public partial class VoiceAgentMcpTool : VoiceAgentTool
     {
+        [Experimental("AAIP002")]
         private McpToolFilter _allowedTools;
         private bool _allowedToolsIsDefined;
 
@@ -22,12 +22,16 @@ namespace Azure.AI.Projects.Agents
         /// <exception cref="ArgumentNullException"> <paramref name="serverLabel"/> is null. </exception>
         public VoiceAgentMcpTool(string serverLabel) : base("mcp")
         {
+#pragma warning disable AAIP001 // Implementation preserves preview variants of GA models.
+#pragma warning disable AAIP002 // Implementation accesses OpenAI-dependent members.
             Argument.AssertNotNull(serverLabel, nameof(serverLabel));
 
             ServerLabel = serverLabel;
             Headers = new ChangeTrackingDictionary<string, string>();
             AllowedCallers = new ChangeTrackingList<CallableToolAllowedCaller>();
             ToolConfigs = new ChangeTrackingDictionary<string, ToolConfig>();
+#pragma warning restore AAIP002 // Implementation accesses OpenAI-dependent members.
+#pragma warning restore AAIP001 // Implementation preserves preview variants of GA models.
         }
 
         /// <summary> Initializes a new instance of <see cref="VoiceAgentMcpTool"/>. </summary>
@@ -52,6 +56,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="projectConnectionId"> The connection ID in the project for the MCP server. The connection stores authentication and other connection details needed to connect to the MCP server. </param>
         /// <param name="toolConfigs"> Deprecated. This property is deprecated and will be removed in a future version. </param>
         /// <param name="responseScheduling"> When the MCP invocation creates a follow-up response. Defaults to `when_idle`. </param>
+        [Experimental("AAIP002")]
         internal VoiceAgentMcpTool(string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string serverLabel, Uri serverUrl, string authorization, string serverDescription, IDictionary<string, string> headers, McpToolFilter allowedTools, IList<CallableToolAllowedCaller> allowedCallers, BinaryData requireApprovalInternal, bool? deferLoading, string projectConnectionId, IDictionary<string, ToolConfig> toolConfigs, VoiceAgentToolResponseScheduling? responseScheduling) : base(@type, additionalBinaryDataProperties)
         {
             ServerLabel = serverLabel;
@@ -91,6 +96,7 @@ namespace Azure.AI.Projects.Agents
         public IDictionary<string, string> Headers { get; set; }
 
         /// <summary> Gets or sets the AllowedTools. </summary>
+        [Experimental("AAIP002")]
         public McpToolFilter AllowedTools
         {
             get

@@ -4,12 +4,10 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> A packaged sound selected from the service-managed catalogue. The service rejects unknown source fields and discriminator values. </summary>
-    [Experimental("AAIP001")]
     public partial class VoiceAgentSoundscapeSourceConfig
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

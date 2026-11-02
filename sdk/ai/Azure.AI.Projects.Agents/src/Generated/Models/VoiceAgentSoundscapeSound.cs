@@ -2,12 +2,9 @@
 
 #nullable disable
 
-using System.Diagnostics.CodeAnalysis;
-
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> The packaged sounds accepted by a built-in soundscape source. </summary>
-    [Experimental("AAIP001")]
     public enum VoiceAgentSoundscapeSound
     {
         /// <summary> Quiet office ambience. </summary>

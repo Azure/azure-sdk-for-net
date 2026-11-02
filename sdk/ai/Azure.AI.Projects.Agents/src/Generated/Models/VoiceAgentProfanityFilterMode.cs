@@ -4,12 +4,10 @@
 
 using System;
 using System.ComponentModel;
-using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> The supported input-transcript profanity filtering modes. </summary>
-    [Experimental("AAIP001")]
     public readonly partial struct VoiceAgentProfanityFilterMode : IEquatable<VoiceAgentProfanityFilterMode>
     {
         private readonly string _value;
