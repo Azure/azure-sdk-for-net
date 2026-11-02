@@ -160,6 +160,7 @@ namespace Azure.Storage.Blobs.Tests
             await client.DownloadToAsync(downloadedData, new BlobDownloadToOptions
             {
                 ProgressHandler = progress,
+                LayoutAwareRouting = LayoutAwareRouting.Disabled,
                 TransferOptions = new StorageTransferOptions
                 {
                     InitialTransferSize = partitionSize,

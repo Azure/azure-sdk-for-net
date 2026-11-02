@@ -105,6 +105,11 @@ namespace Azure.AI.Projects.Agents
                 writer.WritePropertyName("audio"u8);
                 writer.WriteObjectValue(Audio, options);
             }
+            if (Optional.IsDefined(Soundscape))
+            {
+                writer.WritePropertyName("soundscape"u8);
+                writer.WriteObjectValue(Soundscape, options);
+            }
             if (Optional.IsCollectionDefined(OutputModalities))
             {
                 writer.WritePropertyName("output_modalities"u8);
@@ -190,6 +195,11 @@ namespace Azure.AI.Projects.Agents
                 writer.WritePropertyName("subagent_config"u8);
                 writer.WriteObjectValue(SubagentConfig, options);
             }
+            if (Optional.IsDefined(PostCall))
+            {
+                writer.WritePropertyName("post_call"u8);
+                writer.WriteObjectValue(PostCall, options);
+            }
             if (Optional.IsDefined(Store))
             {
                 writer.WritePropertyName("store"u8);
@@ -231,6 +241,7 @@ namespace Azure.AI.Projects.Agents
             string instructions = default;
             VoiceAgentGreetingConfig greeting = default;
             VoiceAgentAudioConfig audio = default;
+            VoiceAgentSoundscapeConfig soundscape = default;
             IList<VoiceOutputModality> outputModalities = default;
             BinaryData internalMaxOutputTokens = default;
             IList<VoiceAgentSessionIncludeOption> include = default;
@@ -241,6 +252,7 @@ namespace Azure.AI.Projects.Agents
             bool? parallelToolCalls = default;
             IDictionary<string, StructuredInputDefinition> structuredInputs = default;
             VoiceAgentSubagentConfig subagentConfig = default;
+            VoiceAgentPostCallConfig postCall = default;
             bool? store = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -302,6 +314,15 @@ namespace Azure.AI.Projects.Agents
                         continue;
                     }
                     audio = VoiceAgentAudioConfig.DeserializeVoiceAgentAudioConfig(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("soundscape"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    soundscape = VoiceAgentSoundscapeConfig.DeserializeVoiceAgentSoundscapeConfig(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("output_modalities"u8))
@@ -414,6 +435,15 @@ namespace Azure.AI.Projects.Agents
                     subagentConfig = VoiceAgentSubagentConfig.DeserializeVoiceAgentSubagentConfig(prop.Value, options);
                     continue;
                 }
+                if (prop.NameEquals("post_call"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    postCall = VoiceAgentPostCallConfig.DeserializeVoiceAgentPostCallConfig(prop.Value, options);
+                    continue;
+                }
                 if (prop.NameEquals("store"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -438,6 +468,7 @@ namespace Azure.AI.Projects.Agents
                 instructions,
                 greeting,
                 audio,
+                soundscape,
                 outputModalities ?? new ChangeTrackingList<VoiceOutputModality>(),
                 internalMaxOutputTokens,
                 include ?? new ChangeTrackingList<VoiceAgentSessionIncludeOption>(),
@@ -448,6 +479,7 @@ namespace Azure.AI.Projects.Agents
                 parallelToolCalls,
                 structuredInputs ?? new ChangeTrackingDictionary<string, StructuredInputDefinition>(),
                 subagentConfig,
+                postCall,
                 store);
         }
     }

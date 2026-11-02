@@ -28,7 +28,7 @@ namespace Azure.Provisioning.Network
         /// <summary> Creates a new FlowLog. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
         /// <param name="resourceVersion"> The resource API version. </param>
-        public FlowLog(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.Network/networkWatchers/flowLogs", resourceVersion ?? "2026-01-01")
+        public FlowLog(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.Network/networkWatchers/flowLogs", resourceVersion ?? "2026-03-01")
         {
         }
 
@@ -277,12 +277,12 @@ namespace Azure.Provisioning.Network
             }
         }
 
-        /// <summary> Gets or sets the NetworkWatcherFlowAnalyticsConfiguration. </summary>
-        public TrafficAnalyticsConfigurationProperties NetworkWatcherFlowAnalyticsConfiguration
+        /// <summary> Gets or sets the TrafficAnalyticsConfiguration. </summary>
+        public TrafficAnalyticsConfigurationProperties TrafficAnalyticsConfiguration
         {
             get
             {
-                return Properties is null ? default : Properties.NetworkWatcherFlowAnalyticsConfiguration;
+                return Properties is null ? default : Properties.TrafficAnalyticsConfiguration;
             }
             set
             {
@@ -290,7 +290,7 @@ namespace Azure.Provisioning.Network
                 {
                     Properties = new FlowLogPropertiesFormat();
                 }
-                Properties.NetworkWatcherFlowAnalyticsConfiguration = value;
+                Properties.TrafficAnalyticsConfiguration = value;
             }
         }
 
@@ -324,6 +324,8 @@ namespace Azure.Provisioning.Network
         /// <summary></summary>
         public static partial class ResourceVersions
         {
+            /// <summary> API version "2026-03-01". </summary>
+            public static readonly string V2026_03_01 = "2026-03-01";
             /// <summary> API version "2026-01-01". </summary>
             public static readonly string V2026_01_01 = "2026-01-01";
             /// <summary> API version "2025-09-01". </summary>

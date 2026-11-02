@@ -2053,6 +2053,7 @@
                   "scopeResourceType": "Microsoft.Resources/resourceGroups"
                 },
                 "resourceName": "VirtualMachine",
+                "resourceNameIsExplicit": false,
                 "nameConstraints": {},
                 "apiVersions": [
                   "2025-05-01"
@@ -2096,6 +2097,7 @@
                   "scopeResourceType": "Microsoft.Resources/resourceGroups"
                 },
                 "resourceName": "StorageAccount",
+                "resourceNameIsExplicit": false,
                 "nameConstraints": {},
                 "apiVersions": [
                   "2025-02-01"

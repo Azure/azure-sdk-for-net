@@ -22,7 +22,7 @@ namespace Azure.Provisioning.Network
         /// <summary> Creates a new NetworkVirtualApplianceConnection. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
         /// <param name="resourceVersion"> The resource API version. </param>
-        public NetworkVirtualApplianceConnection(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.Network/networkVirtualAppliances/networkVirtualApplianceConnections", resourceVersion ?? "2026-01-01")
+        public NetworkVirtualApplianceConnection(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.Network/networkVirtualAppliances/networkVirtualApplianceConnections", resourceVersion ?? "2026-03-01")
         {
         }
 
@@ -179,12 +179,12 @@ namespace Azure.Provisioning.Network
             }
         }
 
-        /// <summary> Gets or sets the RoutingConfiguration. </summary>
-        public RoutingConfiguration RoutingConfiguration
+        /// <summary> Gets or sets the ConnectionRoutingConfiguration. </summary>
+        public RoutingConfiguration ConnectionRoutingConfiguration
         {
             get
             {
-                return Properties is null ? default : Properties.RoutingConfiguration;
+                return Properties is null ? default : Properties.ConnectionRoutingConfiguration;
             }
             set
             {
@@ -192,7 +192,7 @@ namespace Azure.Provisioning.Network
                 {
                     Properties = new NetworkVirtualApplianceConnectionProperties();
                 }
-                Properties.RoutingConfiguration = value;
+                Properties.ConnectionRoutingConfiguration = value;
             }
         }
 
@@ -223,6 +223,8 @@ namespace Azure.Provisioning.Network
         /// <summary></summary>
         public static partial class ResourceVersions
         {
+            /// <summary> API version "2026-03-01". </summary>
+            public static readonly string V2026_03_01 = "2026-03-01";
             /// <summary> API version "2026-01-01". </summary>
             public static readonly string V2026_01_01 = "2026-01-01";
             /// <summary> API version "2025-09-01". </summary>
