@@ -14,10 +14,9 @@ namespace Azure.Analytics.PlanetaryComputer
     public partial class ManagedIdentityIngestionSource : IngestionSource
     {
         /// <summary> Initializes a new instance of <see cref="ManagedIdentityIngestionSource"/>. </summary>
-        /// <param name="id"> Ingestion source id. </param>
         /// <param name="connectionInfo"> Managed identity connection information. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionInfo"/> is null. </exception>
-        public ManagedIdentityIngestionSource(Guid id, ManagedIdentityConnection connectionInfo) : base(id, IngestionSourceKind.BlobManagedIdentity)
+        public ManagedIdentityIngestionSource(ManagedIdentityConnection connectionInfo) : base(IngestionSourceKind.BlobManagedIdentity)
         {
             Argument.AssertNotNull(connectionInfo, nameof(connectionInfo));
 

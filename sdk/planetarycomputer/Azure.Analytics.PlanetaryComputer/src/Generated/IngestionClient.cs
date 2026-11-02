@@ -740,7 +740,9 @@ namespace Azure.Analytics.PlanetaryComputer
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
             Argument.AssertNotNull(body, nameof(body));
 
-            Response result = Create(collectionId, body, cancellationToken.ToRequestContext());
+            using Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(body, new LifecycleModelReaderWriterOptions(LifecycleVisibility.Create, "W"));
+            Response result = Create(collectionId, content, cancellationToken.ToRequestContext());
             return Response.FromValue((IngestionInformation)result, result);
         }
 
@@ -756,7 +758,9 @@ namespace Azure.Analytics.PlanetaryComputer
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
             Argument.AssertNotNull(body, nameof(body));
 
-            Response result = await CreateAsync(collectionId, body, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            using Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(body, new LifecycleModelReaderWriterOptions(LifecycleVisibility.Create, "W"));
+            Response result = await CreateAsync(collectionId, content, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((IngestionInformation)result, result);
         }
 
@@ -1177,7 +1181,9 @@ namespace Azure.Analytics.PlanetaryComputer
         {
             Argument.AssertNotNull(body, nameof(body));
 
-            Response result = CreateSource(body, cancellationToken.ToRequestContext());
+            using Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(body, new LifecycleModelReaderWriterOptions(LifecycleVisibility.Create, "W"));
+            Response result = CreateSource(content, cancellationToken.ToRequestContext());
             return Response.FromValue((IngestionSource)result, result);
         }
 
@@ -1190,7 +1196,9 @@ namespace Azure.Analytics.PlanetaryComputer
         {
             Argument.AssertNotNull(body, nameof(body));
 
-            Response result = await CreateSourceAsync(body, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            using Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(body, new LifecycleModelReaderWriterOptions(LifecycleVisibility.Create, "W"));
+            Response result = await CreateSourceAsync(content, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((IngestionSource)result, result);
         }
 
@@ -1268,7 +1276,9 @@ namespace Azure.Analytics.PlanetaryComputer
         {
             Argument.AssertNotNull(body, nameof(body));
 
-            Response result = ReplaceSource(sourceId, body, cancellationToken.ToRequestContext());
+            using Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(body, new LifecycleModelReaderWriterOptions(LifecycleVisibility.Create | LifecycleVisibility.Update, "W"));
+            Response result = ReplaceSource(sourceId, content, cancellationToken.ToRequestContext());
             return Response.FromValue((IngestionSource)result, result);
         }
 
@@ -1282,7 +1292,9 @@ namespace Azure.Analytics.PlanetaryComputer
         {
             Argument.AssertNotNull(body, nameof(body));
 
-            Response result = await ReplaceSourceAsync(sourceId, body, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            using Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(body, new LifecycleModelReaderWriterOptions(LifecycleVisibility.Create | LifecycleVisibility.Update, "W"));
+            Response result = await ReplaceSourceAsync(sourceId, content, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((IngestionSource)result, result);
         }
 

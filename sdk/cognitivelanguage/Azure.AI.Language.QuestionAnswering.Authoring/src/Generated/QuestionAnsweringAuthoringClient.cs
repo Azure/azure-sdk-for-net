@@ -755,7 +755,12 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
-            return Import(waitUntil, projectName, body, format?.ToString(), assetKind?.ToString(), cancellationToken.ToRequestContext());
+            using Utf8JsonRequestContent content = body == null ? null : new Utf8JsonRequestContent();
+            if (content != null)
+            {
+                content.JsonWriter.WriteObjectValue(body, new LifecycleModelReaderWriterOptions(LifecycleVisibility.Create, "W"));
+            }
+            return Import(waitUntil, projectName, content, format?.ToString(), assetKind?.ToString(), cancellationToken.ToRequestContext());
         }
 
         /// <summary> Import project assets. </summary>
@@ -771,7 +776,12 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
-            return await ImportAsync(waitUntil, projectName, body, format?.ToString(), assetKind?.ToString(), cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            using Utf8JsonRequestContent content = body == null ? null : new Utf8JsonRequestContent();
+            if (content != null)
+            {
+                content.JsonWriter.WriteObjectValue(body, new LifecycleModelReaderWriterOptions(LifecycleVisibility.Create, "W"));
+            }
+            return await ImportAsync(waitUntil, projectName, content, format?.ToString(), assetKind?.ToString(), cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
 
         /// <summary> Import project assets from file. </summary>
@@ -1460,7 +1470,9 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNull(body, nameof(body));
 
-            return UpdateSynonyms(projectName, body, cancellationToken.ToRequestContext());
+            using Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(body, new LifecycleModelReaderWriterOptions(LifecycleVisibility.Create | LifecycleVisibility.Update, "W"));
+            return UpdateSynonyms(projectName, content, cancellationToken.ToRequestContext());
         }
 
         /// <summary> Updates all the synonyms of a project. </summary>
@@ -1475,7 +1487,9 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNull(body, nameof(body));
 
-            return await UpdateSynonymsAsync(projectName, body, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            using Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(body, new LifecycleModelReaderWriterOptions(LifecycleVisibility.Create | LifecycleVisibility.Update, "W"));
+            return await UpdateSynonymsAsync(projectName, content, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
 
         /// <summary>

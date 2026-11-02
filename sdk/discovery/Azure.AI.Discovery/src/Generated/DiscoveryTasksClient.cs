@@ -342,7 +342,9 @@ namespace Azure.AI.Discovery
             Argument.AssertNotNullOrEmpty(investigationName, nameof(investigationName));
             Argument.AssertNotNull(body, nameof(body));
 
-            Response result = Create(projectName, investigationName, body, cancellationToken.ToRequestContext());
+            using Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(body, new LifecycleModelReaderWriterOptions(LifecycleVisibility.Create, "W"));
+            Response result = Create(projectName, investigationName, content, cancellationToken.ToRequestContext());
             return Response.FromValue((DiscoveryTask)result, result);
         }
 
@@ -360,7 +362,9 @@ namespace Azure.AI.Discovery
             Argument.AssertNotNullOrEmpty(investigationName, nameof(investigationName));
             Argument.AssertNotNull(body, nameof(body));
 
-            Response result = await CreateAsync(projectName, investigationName, body, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            using Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(body, new LifecycleModelReaderWriterOptions(LifecycleVisibility.Create, "W"));
+            Response result = await CreateAsync(projectName, investigationName, content, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((DiscoveryTask)result, result);
         }
 

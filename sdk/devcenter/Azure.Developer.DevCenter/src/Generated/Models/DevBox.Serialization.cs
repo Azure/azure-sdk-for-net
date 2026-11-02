@@ -99,8 +99,11 @@ namespace Azure.Developer.DevCenter.Models
                 writer.WritePropertyName("projectName"u8);
                 writer.WriteStringValue(ProjectName);
             }
-            writer.WritePropertyName("poolName"u8);
-            writer.WriteStringValue(PoolName);
+            if (LifecycleModelReaderWriterOptions.IsVisible(options, LifecycleVisibility.Read | LifecycleVisibility.Create))
+            {
+                writer.WritePropertyName("poolName"u8);
+                writer.WriteStringValue(PoolName);
+            }
             if (options.Format != "W" && Optional.IsDefined(HibernateSupport))
             {
                 writer.WritePropertyName("hibernateSupport"u8);

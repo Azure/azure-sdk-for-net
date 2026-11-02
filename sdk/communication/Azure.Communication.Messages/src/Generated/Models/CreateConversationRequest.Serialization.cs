@@ -89,8 +89,11 @@ namespace Azure.Communication.Messages
             {
                 throw new FormatException($"The model {nameof(CreateConversationRequest)} does not support writing '{format}' format.");
             }
-            writer.WritePropertyName("conversation"u8);
-            writer.WriteObjectValue(Conversation, options);
+            if (LifecycleModelReaderWriterOptions.IsVisible(options, LifecycleVisibility.Create))
+            {
+                writer.WritePropertyName("conversation"u8);
+                writer.WriteObjectValue(Conversation, options);
+            }
             if (Optional.IsDefined(InitialMessage))
             {
                 writer.WritePropertyName("initialMessage"u8);

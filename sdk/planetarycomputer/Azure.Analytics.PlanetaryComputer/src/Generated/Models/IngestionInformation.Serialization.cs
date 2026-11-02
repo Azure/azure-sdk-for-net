@@ -102,8 +102,11 @@ namespace Azure.Analytics.PlanetaryComputer
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            writer.WritePropertyName("importType"u8);
-            writer.WriteStringValue(ImportKind.ToString());
+            if (LifecycleModelReaderWriterOptions.IsVisible(options, LifecycleVisibility.Read | LifecycleVisibility.Create | LifecycleVisibility.Update))
+            {
+                writer.WritePropertyName("importType"u8);
+                writer.WriteStringValue(ImportKind.ToString());
+            }
             if (Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
