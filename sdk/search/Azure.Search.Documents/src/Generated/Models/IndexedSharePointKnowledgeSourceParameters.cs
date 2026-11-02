@@ -18,9 +18,9 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
         private string _query;
-        internal bool _queryIsDefined;
+        private bool _queryIsDefined;
         private KnowledgeSourceIngestionParameters _ingestionParameters;
-        internal bool _ingestionParametersIsDefined;
+        private bool _ingestionParametersIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="IndexedSharePointKnowledgeSourceParameters"/>. </summary>
         /// <param name="connectionString"> SharePoint connection string with format: SharePointOnlineEndpoint=[SharePoint site url];ApplicationId=[Azure AD App ID];ApplicationSecret=[Azure AD App client secret];TenantId=[SharePoint site tenant id]. </param>

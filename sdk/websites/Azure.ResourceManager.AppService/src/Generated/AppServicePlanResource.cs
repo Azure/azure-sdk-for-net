@@ -50,9 +50,8 @@ namespace Azure.ResourceManager.AppService
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal AppServicePlanResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string appServicePlanApiVersion);
             _appServicePlansClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, Diagnostics);
-            _appServicePlansRestClient = new AppServicePlans(_appServicePlansClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, appServicePlanApiVersion ?? "2026-03-15");
+            _appServicePlansRestClient = new AppServicePlans(_appServicePlansClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.Web/serverfarms", out string appServicePlansApiVersionOverride) ? appServicePlansApiVersionOverride : "2026-03-15");
             ValidateResourceId(id);
         }
 

@@ -74,7 +74,7 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 throw new FormatException($"The model {nameof(DocumentIntelligenceLayoutSkillChunkingProperties)} does not support writing '{format}' format.");
             }
-            if (_unitIsDefined || Optional.IsDefined(Unit))
+            if (Optional.IsDefined(Unit, _unitIsDefined))
             {
                 if (Unit != null)
                 {
@@ -86,7 +86,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("unit"u8);
                 }
             }
-            if (_maximumLengthIsDefined || Optional.IsDefined(MaximumLength))
+            if (Optional.IsDefined(MaximumLength, _maximumLengthIsDefined))
             {
                 if (MaximumLength != null)
                 {
@@ -98,7 +98,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("maximumLength"u8);
                 }
             }
-            if (_overlapLengthIsDefined || Optional.IsDefined(OverlapLength))
+            if (Optional.IsDefined(OverlapLength, _overlapLengthIsDefined))
             {
                 if (OverlapLength != null)
                 {

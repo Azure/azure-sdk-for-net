@@ -39,9 +39,8 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ServiceFabricManagedClusterCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ServiceFabricManagedClusterResource.ResourceType, out string serviceFabricManagedClusterApiVersion);
             _managedClustersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ServiceFabricManagedClusters", ServiceFabricManagedClusterResource.ResourceType.Namespace, Diagnostics);
-            _managedClustersRestClient = new ManagedClusters(_managedClustersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, serviceFabricManagedClusterApiVersion ?? "2026-05-01-preview");
+            _managedClustersRestClient = new ManagedClusters(_managedClustersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.ServiceFabric/managedClusters", out string managedClustersApiVersionOverride) ? managedClustersApiVersionOverride : "2026-05-01-preview");
             ValidateResourceId(id);
         }
 

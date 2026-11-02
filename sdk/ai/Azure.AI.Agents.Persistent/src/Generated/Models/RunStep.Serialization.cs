@@ -149,7 +149,7 @@ namespace Azure.AI.Agents.Persistent
             {
                 writer.WriteNull("failed_at"u8);
             }
-            if (_usageIsDefined || Optional.IsDefined(Usage))
+            if (Optional.IsDefined(Usage, _usageIsDefined))
             {
                 if (Usage != null)
                 {

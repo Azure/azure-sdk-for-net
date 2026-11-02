@@ -52,9 +52,8 @@ namespace Azure.ResourceManager.PureStorageBlock
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal PureStoragePoolResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string pureStoragePoolApiVersion);
             _storagePoolsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.PureStorageBlock", ResourceType.Namespace, Diagnostics);
-            _storagePoolsRestClient = new StoragePools(_storagePoolsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, pureStoragePoolApiVersion ?? "2024-11-01");
+            _storagePoolsRestClient = new StoragePools(_storagePoolsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("PureStorage.Block/storagePools", out string storagePoolsApiVersionOverride) ? storagePoolsApiVersionOverride : "2024-11-01");
             ValidateResourceId(id);
         }
 

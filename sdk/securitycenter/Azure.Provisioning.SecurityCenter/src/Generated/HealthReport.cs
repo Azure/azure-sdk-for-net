@@ -21,6 +21,7 @@ namespace Azure.Provisioning.SecurityCenter
         private BicepValue<string> _name;
         private SystemData _systemData;
         private HealthReportProperties _properties;
+        private ResourceReference<ProvisionableResource> _scope;
 
         /// <summary> Creates a new HealthReport. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -71,6 +72,21 @@ namespace Azure.Provisioning.SecurityCenter
             {
                 Initialize();
                 return _properties;
+            }
+        }
+
+        /// <summary> Gets or sets the Scope. </summary>
+        public ProvisionableResource Scope
+        {
+            get
+            {
+                Initialize();
+                return _scope.Value;
+            }
+            set
+            {
+                Initialize();
+                _scope.Value = value;
             }
         }
 
@@ -154,6 +170,7 @@ namespace Azure.Provisioning.SecurityCenter
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _properties = DefineModelProperty<HealthReportProperties>(nameof(Properties), new string[] { "properties" });
+            _scope = DefineResource<ProvisionableResource>(nameof(Scope), new string[] { "scope" });
             DefineAdditionalProperties();
         }
 

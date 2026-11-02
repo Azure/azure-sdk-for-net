@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.StandbyPool.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new StandbyVirtualMachinePoolRuntimeViewResourceListResult(value, nextLink, additionalBinaryDataProperties);
+            return new StandbyVirtualMachinePoolRuntimeViewResourceListResult(value ?? new ChangeTrackingList<StandbyVirtualMachinePoolRuntimeViewData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

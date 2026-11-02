@@ -16,7 +16,7 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
         private long? _quota;
-        internal bool _quotaIsDefined;
+        private bool _quotaIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="SearchResourceCounter"/>. </summary>
         /// <param name="usage"> The resource usage amount. </param>

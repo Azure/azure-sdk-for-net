@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new RedistributeThroughputPropertiesResource(throughputPolicy, targetPhysicalPartitionThroughputInfo, sourcePhysicalPartitionThroughputInfo, additionalBinaryDataProperties);
+            return new RedistributeThroughputPropertiesResource(throughputPolicy, targetPhysicalPartitionThroughputInfo ?? new ChangeTrackingList<CosmosDBPhysicalPartitionThroughputInfo>(), sourcePhysicalPartitionThroughputInfo ?? new ChangeTrackingList<CosmosDBPhysicalPartitionThroughputInfo>(), additionalBinaryDataProperties);
         }
     }
 }

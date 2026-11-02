@@ -52,9 +52,8 @@ namespace Azure.ResourceManager.DeviceRegistry
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal DeviceRegistryAssetEndpointProfileResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string deviceRegistryAssetEndpointProfileApiVersion);
             _assetEndpointProfilesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DeviceRegistry", ResourceType.Namespace, Diagnostics);
-            _assetEndpointProfilesRestClient = new AssetEndpointProfiles(_assetEndpointProfilesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, deviceRegistryAssetEndpointProfileApiVersion ?? "2026-03-01-preview");
+            _assetEndpointProfilesRestClient = new AssetEndpointProfiles(_assetEndpointProfilesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.DeviceRegistry/assetEndpointProfiles", out string assetEndpointProfilesApiVersionOverride) ? assetEndpointProfilesApiVersionOverride : "2026-03-01-preview");
             ValidateResourceId(id);
         }
 

@@ -19,9 +19,9 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
         private RescoringOptions _rescoringOptions;
-        internal bool _rescoringOptionsIsDefined;
+        private protected bool _rescoringOptionsIsDefined;
         private int? _truncationDimension;
-        internal bool _truncationDimensionIsDefined;
+        private protected bool _truncationDimensionIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="VectorSearchCompression"/>. </summary>
         /// <param name="compressionName"> The name to associate with this particular configuration. </param>

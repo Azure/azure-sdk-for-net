@@ -52,9 +52,8 @@ namespace Azure.ResourceManager.HealthcareApis
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal HealthcareApisWorkspaceResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string healthcareApisWorkspaceApiVersion);
             _healthcareApisWorkspacesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HealthcareApis", ResourceType.Namespace, Diagnostics);
-            _healthcareApisWorkspacesRestClient = new HealthcareApisWorkspaces(_healthcareApisWorkspacesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, healthcareApisWorkspaceApiVersion ?? "2025-04-01-preview");
+            _healthcareApisWorkspacesRestClient = new HealthcareApisWorkspaces(_healthcareApisWorkspacesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.HealthcareApis/workspaces", out string healthcareApisWorkspacesApiVersionOverride) ? healthcareApisWorkspacesApiVersionOverride : "2025-04-01-preview");
             ValidateResourceId(id);
         }
 

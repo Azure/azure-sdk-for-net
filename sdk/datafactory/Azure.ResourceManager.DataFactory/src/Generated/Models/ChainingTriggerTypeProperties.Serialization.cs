@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ChainingTriggerTypeProperties(dependsOn, runDimension, additionalBinaryDataProperties);
+            return new ChainingTriggerTypeProperties(dependsOn ?? new ChangeTrackingList<DataFactoryPipelineReference>(), runDimension, additionalBinaryDataProperties);
         }
     }
 }

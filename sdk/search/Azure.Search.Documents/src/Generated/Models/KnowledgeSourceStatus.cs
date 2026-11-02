@@ -17,13 +17,13 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
         private string _synchronizationInterval;
-        internal bool _synchronizationIntervalIsDefined;
+        private bool _synchronizationIntervalIsDefined;
         private SynchronizationState _currentSynchronizationState;
-        internal bool _currentSynchronizationStateIsDefined;
+        private bool _currentSynchronizationStateIsDefined;
         private CompletedSynchronizationState _lastSynchronizationState;
-        internal bool _lastSynchronizationStateIsDefined;
+        private bool _lastSynchronizationStateIsDefined;
         private KnowledgeSourceStatistics _statistics;
-        internal bool _statisticsIsDefined;
+        private bool _statisticsIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="KnowledgeSourceStatus"/>. </summary>
         /// <param name="synchronizationStatus"> The current synchronization status. </param>

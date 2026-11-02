@@ -52,9 +52,8 @@ namespace Azure.ResourceManager.PowerPlatform
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal PowerPlatformAccountResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string powerPlatformAccountApiVersion);
             _accountsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.PowerPlatform", ResourceType.Namespace, Diagnostics);
-            _accountsRestClient = new Accounts(_accountsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, powerPlatformAccountApiVersion ?? "2020-10-30-preview");
+            _accountsRestClient = new Accounts(_accountsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.PowerPlatform/accounts", out string accountsApiVersionOverride) ? accountsApiVersionOverride : "2020-10-30-preview");
             ValidateResourceId(id);
         }
 

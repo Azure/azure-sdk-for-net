@@ -41,11 +41,11 @@ namespace Azure.ResourceManager.AppService.SreAgent.Mocking
 
         private ClientDiagnostics AgentsClientDiagnostics => _agentsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.AppService.SreAgent.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Agents AgentsRestClient => _agentsRestClient ??= new Agents(AgentsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-01-01");
+        private Agents AgentsRestClient => _agentsRestClient ??= new Agents(AgentsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.App/agents", out string apiVersion) ? apiVersion : "2026-01-01");
 
         private ClientDiagnostics AgentSpacesClientDiagnostics => _agentSpacesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.AppService.SreAgent.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private AgentSpaces AgentSpacesRestClient => _agentSpacesRestClient ??= new AgentSpaces(AgentSpacesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-01-01");
+        private AgentSpaces AgentSpacesRestClient => _agentSpacesRestClient ??= new AgentSpaces(AgentSpacesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.App/agentSpaces", out string apiVersion0) ? apiVersion0 : "2026-01-01");
 
         private ClientDiagnostics SupportedAgentModelsClientDiagnostics => _supportedAgentModelsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.AppService.SreAgent.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 

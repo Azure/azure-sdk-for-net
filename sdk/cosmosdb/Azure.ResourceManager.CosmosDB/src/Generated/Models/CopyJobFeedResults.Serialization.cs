@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new CopyJobFeedResults(value, nextLink, additionalBinaryDataProperties);
+            return new CopyJobFeedResults(value ?? new ChangeTrackingList<CosmosDBCopyJobData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

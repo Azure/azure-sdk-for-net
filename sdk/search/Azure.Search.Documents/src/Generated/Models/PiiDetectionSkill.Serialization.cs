@@ -100,7 +100,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WritePropertyName("maskingCharacter"u8);
                 writer.WriteStringValue(Mask);
             }
-            if (_modelVersionIsDefined || Optional.IsDefined(ModelVersion))
+            if (Optional.IsDefined(ModelVersion, _modelVersionIsDefined))
             {
                 if (ModelVersion != null)
                 {
@@ -127,7 +127,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 writer.WriteEndArray();
             }
-            if (_domainIsDefined || Optional.IsDefined(Domain))
+            if (Optional.IsDefined(Domain, _domainIsDefined))
             {
                 if (Domain != null)
                 {

@@ -15,15 +15,24 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public static MachineLearningConnectionCategory AdlsGen2 => ADLSGen2;
 
         /// <summary> Gets the AzureMySqlDB. </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static MachineLearningConnectionCategory AzureMySqlDB => AzureMySqlDb;
+        public static MachineLearningConnectionCategory AzureMySqlDB { get; } = new MachineLearningConnectionCategory("AzureMySqlDb");
 
         /// <summary> Gets the AzurePostgresDB. </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static MachineLearningConnectionCategory AzurePostgresDB => AzurePostgresDb;
+        public static MachineLearningConnectionCategory AzurePostgresDB { get; } = new MachineLearningConnectionCategory("AzurePostgresDb");
 
         /// <summary> Gets the AzureSqlDB. </summary>
+        public static MachineLearningConnectionCategory AzureSqlDB { get; } = new MachineLearningConnectionCategory("AzureSqlDb");
+
+        /// <summary> Gets the AzureMySqlDb. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static MachineLearningConnectionCategory AzureSqlDB => AzureSqlDb;
+        public static MachineLearningConnectionCategory AzureMySqlDb => AzureMySqlDB;
+
+        /// <summary> Gets the AzurePostgresDb. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static MachineLearningConnectionCategory AzurePostgresDb => AzurePostgresDB;
+
+        /// <summary> Gets the AzureSqlDb. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static MachineLearningConnectionCategory AzureSqlDb => AzureSqlDB;
     }
 }

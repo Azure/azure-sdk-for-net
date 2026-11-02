@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.AppContainers
         /// <returns> The pages of SandboxGroupDataCollectionResultOfT as an enumerable collection. </returns>
         public override IEnumerable<Page<SandboxGroupData>> AsPages(string continuationToken, int? pageSizeHint)
         {
-            Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
+            Uri nextPage = continuationToken != null ? new Uri(continuationToken, UriKind.RelativeOrAbsolute) : null;
             while (true)
             {
                 Response response = GetNextResponse(pageSizeHint, nextPage);

@@ -39,9 +39,8 @@ namespace Azure.ResourceManager.ContainerInstance
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ContainerGroupSandboxCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ContainerGroupSandboxResource.ResourceType, out string containerGroupSandboxApiVersion);
             _sandboxGroupsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ContainerInstance", ContainerGroupSandboxResource.ResourceType.Namespace, Diagnostics);
-            _sandboxGroupsRestClient = new SandboxGroups(_sandboxGroupsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, containerGroupSandboxApiVersion ?? "2026-07-01");
+            _sandboxGroupsRestClient = new SandboxGroups(_sandboxGroupsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.ContainerInstance/sandboxGroups", out string sandboxGroupsApiVersionOverride) ? sandboxGroupsApiVersionOverride : "2026-07-01");
             ValidateResourceId(id);
         }
 

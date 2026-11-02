@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Communication.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new EmailServiceResourceList(value, nextLink, additionalBinaryDataProperties);
+            return new EmailServiceResourceList(value ?? new ChangeTrackingList<EmailServiceResourceData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

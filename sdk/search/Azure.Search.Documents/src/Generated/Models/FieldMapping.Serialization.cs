@@ -86,7 +86,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WritePropertyName("targetFieldName"u8);
                 writer.WriteStringValue(TargetFieldName);
             }
-            if (_mappingFunctionIsDefined || Optional.IsDefined(MappingFunction))
+            if (Optional.IsDefined(MappingFunction, _mappingFunctionIsDefined))
             {
                 if (MappingFunction != null)
                 {

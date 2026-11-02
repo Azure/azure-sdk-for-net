@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.Network.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new VngClientConnectionConfigurationProperties(vpnClientAddressPool, virtualNetworkGatewayPolicyGroups, provisioningState, additionalBinaryDataProperties);
+            return new VngClientConnectionConfigurationProperties(vpnClientAddressPool, virtualNetworkGatewayPolicyGroups ?? new ChangeTrackingList<WritableSubResource>(), provisioningState, additionalBinaryDataProperties);
         }
     }
 }

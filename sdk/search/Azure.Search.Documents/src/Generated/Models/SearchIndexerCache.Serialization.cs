@@ -84,7 +84,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WritePropertyName("storageConnectionString"u8);
                 writer.WriteStringValue(StorageConnectionString);
             }
-            if (_enableReprocessingIsDefined || Optional.IsDefined(EnableReprocessing))
+            if (Optional.IsDefined(EnableReprocessing, _enableReprocessingIsDefined))
             {
                 if (EnableReprocessing != null)
                 {
@@ -96,7 +96,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("enableReprocessing"u8);
                 }
             }
-            if (_identityIsDefined || Optional.IsDefined(Identity))
+            if (Optional.IsDefined(Identity, _identityIsDefined))
             {
                 if (Identity != null)
                 {

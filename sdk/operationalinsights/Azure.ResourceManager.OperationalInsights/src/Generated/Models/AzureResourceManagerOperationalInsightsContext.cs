@@ -25,7 +25,6 @@ namespace Azure.ResourceManager.OperationalInsights
     [ModelReaderWriterBuildable(typeof(DataSourceListResult))]
     [ModelReaderWriterBuildable(typeof(Destination))]
     [ModelReaderWriterBuildable(typeof(DestinationMetaData))]
-    [ModelReaderWriterBuildable(typeof(ErrorResponse))]
     [ModelReaderWriterBuildable(typeof(LinkedServiceListResult))]
     [ModelReaderWriterBuildable(typeof(LinkedServiceProperties))]
     [ModelReaderWriterBuildable(typeof(LinkedStorageAccountsListResult))]

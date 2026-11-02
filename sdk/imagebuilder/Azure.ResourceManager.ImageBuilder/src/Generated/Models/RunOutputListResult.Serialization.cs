@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.ImageBuilder.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new RunOutputListResult(value, nextLink, additionalBinaryDataProperties);
+            return new RunOutputListResult(value ?? new ChangeTrackingList<ImageTemplateRunOutputData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

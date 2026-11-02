@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.AppService.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new StaticSiteBuildListResult(value, nextLink, additionalBinaryDataProperties);
+            return new StaticSiteBuildListResult(value ?? new ChangeTrackingList<StaticSiteBuildData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

@@ -39,9 +39,8 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal CosmosDBFleetCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(CosmosDBFleetResource.ResourceType, out string cosmosDBFleetApiVersion);
             _fleetClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", CosmosDBFleetResource.ResourceType.Namespace, Diagnostics);
-            _fleetRestClient = new Fleet(_fleetClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, cosmosDBFleetApiVersion ?? "2026-04-01-preview");
+            _fleetRestClient = new Fleet(_fleetClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.DocumentDB/fleets", out string fleetApiVersionOverride) ? fleetApiVersionOverride : "2026-04-01-preview");
             ValidateResourceId(id);
         }
 

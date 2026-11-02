@@ -45,7 +45,13 @@ namespace Azure.ResourceManager.SecurityCenter
             TryGetApiVersion(JitNetworkAccessPolicyResource.ResourceType, out string jitNetworkAccessPolicyApiVersion);
             _ascLocation = ascLocation;
             _jitNetworkAccessPoliciesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", JitNetworkAccessPolicyResource.ResourceType.Namespace, Diagnostics);
-            _jitNetworkAccessPoliciesRestClient = new JitNetworkAccessPolicies(_jitNetworkAccessPoliciesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, jitNetworkAccessPolicyApiVersion ?? "2020-01-01");
+            _jitNetworkAccessPoliciesRestClient = new JitNetworkAccessPolicies(
+                _jitNetworkAccessPoliciesClientDiagnostics,
+                Pipeline,
+                Diagnostics.ApplicationId,
+                Endpoint,
+                jitNetworkAccessPolicyApiVersion ?? "2020-01-01",
+                resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 

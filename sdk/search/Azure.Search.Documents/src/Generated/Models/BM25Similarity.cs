@@ -14,9 +14,9 @@ namespace Azure.Search.Documents.Indexes.Models
     public partial class BM25Similarity : SimilarityAlgorithm
     {
         private double? _k1;
-        internal bool _k1IsDefined;
+        private bool _k1IsDefined;
         private double? _b;
-        internal bool _bIsDefined;
+        private bool _bIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="BM25Similarity"/>. </summary>
         public BM25Similarity() : base("#Microsoft.Azure.Search.BM25Similarity")

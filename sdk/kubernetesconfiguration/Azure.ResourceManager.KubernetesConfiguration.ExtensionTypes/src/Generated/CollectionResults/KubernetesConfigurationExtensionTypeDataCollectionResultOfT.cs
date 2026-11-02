@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.ExtensionTypes
         /// <returns> The pages of KubernetesConfigurationExtensionTypeDataCollectionResultOfT as an enumerable collection. </returns>
         public override IEnumerable<Page<KubernetesConfigurationExtensionTypeData>> AsPages(string continuationToken, int? pageSizeHint)
         {
-            Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
+            Uri nextPage = continuationToken != null ? new Uri(continuationToken, UriKind.RelativeOrAbsolute) : null;
             while (true)
             {
                 Response response = GetNextResponse(pageSizeHint, nextPage);

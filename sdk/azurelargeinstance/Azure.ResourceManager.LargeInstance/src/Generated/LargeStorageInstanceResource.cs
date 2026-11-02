@@ -52,9 +52,8 @@ namespace Azure.ResourceManager.LargeInstance
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal LargeStorageInstanceResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string largeStorageInstanceApiVersion);
             _azureLargeStorageInstanceClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.LargeInstance", ResourceType.Namespace, Diagnostics);
-            _azureLargeStorageInstanceRestClient = new AzureLargeStorageInstance(_azureLargeStorageInstanceClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, largeStorageInstanceApiVersion ?? "2024-08-01-preview");
+            _azureLargeStorageInstanceRestClient = new AzureLargeStorageInstance(_azureLargeStorageInstanceClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.AzureLargeInstance/azureLargeStorageInstances", out string azureLargeStorageInstanceApiVersionOverride) ? azureLargeStorageInstanceApiVersionOverride : "2024-08-01-preview");
             ValidateResourceId(id);
         }
 

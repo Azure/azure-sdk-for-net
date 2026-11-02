@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 scopeMapType,
                 createdOn,
                 provisioningState,
-                actions,
+                actions ?? new ChangeTrackingList<string>(),
                 additionalBinaryDataProperties);
         }
     }

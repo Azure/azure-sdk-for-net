@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.Monitor.Slis.Models
                 category,
                 evaluationType,
                 executionState,
-                destinationAmwAccounts,
+                destinationAmwAccounts ?? new ChangeTrackingList<SliAmwAccount>(),
                 destinationMetrics ?? new ChangeTrackingList<SliMetric>(),
                 baselineProperties,
                 streamingRuleId,

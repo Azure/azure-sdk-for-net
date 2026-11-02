@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ReservationListResult(value, nextLink, additionalBinaryDataProperties);
+            return new ReservationListResult(value ?? new ChangeTrackingList<PureStorageReservationData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

@@ -54,7 +54,13 @@ namespace Azure.ResourceManager.ArtifactSigning
         {
             TryGetApiVersion(ResourceType, out string artifactSigningAccountApiVersion);
             _codeSigningAccountsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ArtifactSigning", ResourceType.Namespace, Diagnostics);
-            _codeSigningAccountsRestClient = new CodeSigningAccounts(_codeSigningAccountsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, artifactSigningAccountApiVersion ?? "2026-05-15-preview");
+            _codeSigningAccountsRestClient = new CodeSigningAccounts(
+                _codeSigningAccountsClientDiagnostics,
+                Pipeline,
+                Diagnostics.ApplicationId,
+                Endpoint,
+                artifactSigningAccountApiVersion ?? "2026-05-15-preview",
+                resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 

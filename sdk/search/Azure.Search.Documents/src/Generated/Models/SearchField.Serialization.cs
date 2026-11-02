@@ -118,7 +118,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WritePropertyName("facetable"u8);
                 writer.WriteBooleanValue(IsFacetable.Value);
             }
-            if (_permissionFilterIsDefined || Optional.IsDefined(PermissionFilter))
+            if (Optional.IsDefined(PermissionFilter, _permissionFilterIsDefined))
             {
                 if (PermissionFilter != null)
                 {
@@ -175,7 +175,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WritePropertyName("dimensions"u8);
                 writer.WriteNumberValue(VectorSearchDimensions.Value);
             }
-            if (_vectorSearchProfileNameIsDefined || Optional.IsDefined(VectorSearchProfileName))
+            if (Optional.IsDefined(VectorSearchProfileName, _vectorSearchProfileNameIsDefined))
             {
                 if (VectorSearchProfileName != null)
                 {
@@ -187,7 +187,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("vectorSearchProfile"u8);
                 }
             }
-            if (_vectorEncodingFormatIsDefined || Optional.IsDefined(VectorEncodingFormat))
+            if (Optional.IsDefined(VectorEncodingFormat, _vectorEncodingFormatIsDefined))
             {
                 if (VectorEncodingFormat != null)
                 {

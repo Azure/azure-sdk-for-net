@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Automation.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new DscNodeReportListResult(value, nextLink, additionalBinaryDataProperties);
+            return new DscNodeReportListResult(value ?? new ChangeTrackingList<DscNodeReport>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

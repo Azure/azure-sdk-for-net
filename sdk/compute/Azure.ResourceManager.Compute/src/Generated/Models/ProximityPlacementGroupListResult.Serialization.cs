@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Compute.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ProximityPlacementGroupListResult(value, nextLink, additionalBinaryDataProperties);
+            return new ProximityPlacementGroupListResult(value ?? new ChangeTrackingList<ProximityPlacementGroupData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Storage.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new EncryptionScopeListResult(value, nextLink, additionalBinaryDataProperties);
+            return new EncryptionScopeListResult(value ?? new ChangeTrackingList<EncryptionScopeData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

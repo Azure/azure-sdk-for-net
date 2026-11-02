@@ -16,9 +16,9 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
         private bool? _enableReprocessing;
-        internal bool _enableReprocessingIsDefined;
+        private bool _enableReprocessingIsDefined;
         private SearchIndexerDataIdentity _identity;
-        internal bool _identityIsDefined;
+        private bool _identityIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="SearchIndexerCache"/>. </summary>
         public SearchIndexerCache()

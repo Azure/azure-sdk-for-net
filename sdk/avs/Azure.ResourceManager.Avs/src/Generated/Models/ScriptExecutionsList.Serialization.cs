@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Avs.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ScriptExecutionsList(value, nextLink, additionalBinaryDataProperties);
+            return new ScriptExecutionsList(value ?? new ChangeTrackingList<ScriptExecutionData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

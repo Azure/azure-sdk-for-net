@@ -94,7 +94,7 @@ namespace Azure.AI.Agents.Persistent
                 }
                 writer.WriteEndArray();
             }
-            if (_toolResourcesIsDefined || Optional.IsDefined(ToolResources))
+            if (Optional.IsDefined(ToolResources, _toolResourcesIsDefined))
             {
                 if (ToolResources != null)
                 {

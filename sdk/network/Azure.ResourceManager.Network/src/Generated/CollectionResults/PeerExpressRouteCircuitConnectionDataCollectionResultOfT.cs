@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> The pages of PeerExpressRouteCircuitConnectionDataCollectionResultOfT as an enumerable collection. </returns>
         public override IEnumerable<Page<PeerExpressRouteCircuitConnectionData>> AsPages(string continuationToken, int? pageSizeHint)
         {
-            Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
+            Uri nextPage = continuationToken != null ? new Uri(continuationToken, UriKind.RelativeOrAbsolute) : null;
             while (true)
             {
                 Response response = GetNextResponse(pageSizeHint, nextPage);

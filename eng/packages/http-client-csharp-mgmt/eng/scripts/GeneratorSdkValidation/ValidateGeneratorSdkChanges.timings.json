@@ -1,0 +1,107 @@
+[
+  {
+    "Package": "Azure.ResourceManager.AppService",
+    "Success": true,
+    "Seconds": 328.5
+  },
+  {
+    "Package": "Azure.ResourceManager.Authorization",
+    "Success": true,
+    "Seconds": 129.12
+  },
+  {
+    "Package": "Azure.ResourceManager.Compute",
+    "Success": true,
+    "Seconds": 243.45
+  },
+  {
+    "Package": "Azure.ResourceManager.ContainerRegistry",
+    "Success": true,
+    "Seconds": 125.42
+  },
+  {
+    "Package": "Azure.ResourceManager.ContainerService",
+    "Success": true,
+    "Seconds": 148.98
+  },
+  {
+    "Package": "Azure.ResourceManager.CosmosDB",
+    "Success": true,
+    "Seconds": 230.67
+  },
+  {
+    "Package": "Azure.ResourceManager.Dns",
+    "Success": true,
+    "Seconds": 84.8
+  },
+  {
+    "Package": "Azure.ResourceManager.EventHubs",
+    "Success": true,
+    "Seconds": 113.14
+  },
+  {
+    "Package": "Azure.ResourceManager.KeyVault",
+    "Success": true,
+    "Seconds": 91.77
+  },
+  {
+    "Package": "Azure.ResourceManager.ManagedServiceIdentities",
+    "Success": true,
+    "Seconds": 70.19
+  },
+  {
+    "Package": "Azure.ResourceManager.Monitor",
+    "Success": true,
+    "Seconds": 150.27
+  },
+  {
+    "Package": "Azure.ResourceManager.MySql",
+    "Success": true,
+    "Seconds": 113.64
+  },
+  {
+    "Package": "Azure.ResourceManager.Network",
+    "Success": true,
+    "Seconds": 777.27
+  },
+  {
+    "Package": "Azure.ResourceManager.OperationalInsights",
+    "Success": true,
+    "Seconds": 120.22
+  },
+  {
+    "Package": "Azure.ResourceManager.PostgreSql",
+    "Success": true,
+    "Seconds": 127.94
+  },
+  {
+    "Package": "Azure.ResourceManager.PrivateDns",
+    "Success": true,
+    "Seconds": 86.9
+  },
+  {
+    "Package": "Azure.ResourceManager.Redis",
+    "Success": true,
+    "Seconds": 87.42
+  },
+  {
+    "Package": "Azure.ResourceManager.ServiceBus",
+    "Success": true,
+    "Seconds": 95.68
+  },
+  {
+    "Package": "Azure.ResourceManager.Sql",
+    "Success": true,
+    "Seconds": 310.58
+  },
+  {
+    "Package": "Azure.ResourceManager.Storage",
+    "Success": true,
+    "Seconds": 145.21
+  },
+  {
+    "Package": "Azure.ResourceManager.TrafficManager",
+    "Success": true,
+    "Seconds": 79.59
+  }
+]

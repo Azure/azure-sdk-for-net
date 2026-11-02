@@ -159,7 +159,6 @@
             "$id": "14",
             "name": "list",
             "isExactName": false,
-            "resourceName": "Overload",
             "accessibility": "public",
             "parameters": [
               {
@@ -263,7 +262,6 @@
             "$id": "19",
             "name": "list",
             "isExactName": false,
-            "resourceName": "Overload",
             "accessibility": "public",
             "parameters": [
               {

@@ -18,7 +18,7 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
         private long? _maxAgeInSeconds;
-        internal bool _maxAgeInSecondsIsDefined;
+        private bool _maxAgeInSecondsIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="CorsOptions"/>. </summary>
         /// <param name="allowedOrigins"> The list of origins from which JavaScript code will be granted access to your index. Can contain a list of hosts of the form {protocol}://{fully-qualified-domain-name}[:{port#}], or a single '*' to allow all origins (not recommended). </param>

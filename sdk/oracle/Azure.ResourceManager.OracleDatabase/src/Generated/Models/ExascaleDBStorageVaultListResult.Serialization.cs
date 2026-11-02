@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ExascaleDBStorageVaultListResult(value, nextLink, additionalBinaryDataProperties);
+            return new ExascaleDBStorageVaultListResult(value ?? new ChangeTrackingList<ExascaleDBStorageVaultData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

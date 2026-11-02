@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new WebPubSubResourceList(value, nextLink, additionalBinaryDataProperties);
+            return new WebPubSubResourceList(value ?? new ChangeTrackingList<WebPubSubData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

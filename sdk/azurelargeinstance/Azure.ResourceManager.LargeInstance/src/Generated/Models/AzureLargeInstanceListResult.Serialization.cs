@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.LargeInstance.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new AzureLargeInstanceListResult(value, nextLink, additionalBinaryDataProperties);
+            return new AzureLargeInstanceListResult(value ?? new ChangeTrackingList<LargeInstanceData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

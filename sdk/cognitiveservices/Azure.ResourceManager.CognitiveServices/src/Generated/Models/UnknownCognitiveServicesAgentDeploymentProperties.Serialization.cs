@@ -112,20 +112,25 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             {
                 return null;
             }
+            bool descriptionIsDefined = false;
             string description = default;
-            IDictionary<string, string> tags = default;
+            IDictionary<string, string> tags = new ChangeTrackingDictionary<string, string>();
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            bool displayNameIsDefined = false;
             string displayName = default;
+            bool deploymentIdIsDefined = false;
             string deploymentId = default;
+            bool stateIsDefined = false;
             CognitiveServicesAgentDeploymentState? state = default;
-            IList<CognitiveServicesAgentProtocolVersion> protocols = default;
-            IList<CognitiveServicesVersionedAgentReference> agents = default;
+            IList<CognitiveServicesAgentProtocolVersion> protocols = new ChangeTrackingList<CognitiveServicesAgentProtocolVersion>();
+            IList<CognitiveServicesVersionedAgentReference> agents = new ChangeTrackingList<CognitiveServicesVersionedAgentReference>();
             AgentDeploymentType deploymentType = default;
             CognitiveServicesAgentDeploymentProvisioningState? provisioningState = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("description"u8))
                 {
+                    descriptionIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         description = null;
@@ -138,6 +143,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
+                        tags = null;
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -157,6 +163,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 }
                 if (prop.NameEquals("displayName"u8))
                 {
+                    displayNameIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         displayName = null;
@@ -167,6 +174,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 }
                 if (prop.NameEquals("deploymentId"u8))
                 {
+                    deploymentIdIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         deploymentId = null;
@@ -177,6 +185,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 }
                 if (prop.NameEquals("state"u8))
                 {
+                    stateIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         state = null;
@@ -189,6 +198,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
+                        protocols = null;
                         continue;
                     }
                     List<CognitiveServicesAgentProtocolVersion> array = new List<CognitiveServicesAgentProtocolVersion>();
@@ -203,6 +213,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
+                        agents = null;
                         continue;
                     }
                     List<CognitiveServicesVersionedAgentReference> array = new List<CognitiveServicesVersionedAgentReference>();
@@ -234,15 +245,21 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             }
             return new UnknownCognitiveServicesAgentDeploymentProperties(
                 description,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
+                tags,
                 additionalBinaryDataProperties,
                 displayName,
                 deploymentId,
                 state,
-                protocols ?? new ChangeTrackingList<CognitiveServicesAgentProtocolVersion>(),
-                agents ?? new ChangeTrackingList<CognitiveServicesVersionedAgentReference>(),
+                protocols,
+                agents,
                 deploymentType,
-                provisioningState);
+                provisioningState)
+            {
+                _descriptionIsDefined = descriptionIsDefined,
+                _displayNameIsDefined = displayNameIsDefined,
+                _deploymentIdIsDefined = deploymentIdIsDefined,
+                _stateIsDefined = stateIsDefined
+            };
         }
     }
 }

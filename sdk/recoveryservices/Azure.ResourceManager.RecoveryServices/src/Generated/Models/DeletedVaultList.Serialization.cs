@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new DeletedVaultList(value, nextLink, additionalBinaryDataProperties);
+            return new DeletedVaultList(value ?? new ChangeTrackingList<RecoveryServicesDeletedVaultData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

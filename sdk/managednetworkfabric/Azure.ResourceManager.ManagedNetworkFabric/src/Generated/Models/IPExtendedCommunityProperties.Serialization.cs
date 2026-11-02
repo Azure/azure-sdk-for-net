@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             }
             return new IPExtendedCommunityProperties(
                 annotation,
-                ipExtendedCommunityRules,
+                ipExtendedCommunityRules ?? new ChangeTrackingList<IPExtendedCommunityRule>(),
                 networkFabricId,
                 lastOperation,
                 configurationState,

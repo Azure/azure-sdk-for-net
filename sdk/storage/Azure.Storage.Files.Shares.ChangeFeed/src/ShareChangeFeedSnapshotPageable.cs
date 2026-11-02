@@ -151,7 +151,7 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
                 {
                     if (SnapshotEventFilter.IsInRange(evt, iter.BeginCvId, iter.EndCvId))
                     {
-                        if (!resetEmitted && resetToEmit != null && evt.EventTime >= resetTime)
+                        if (!resetEmitted && resetToEmit != null && evt.EventOccurredOn >= resetTime)
                         {
                             filtered.Add(resetToEmit);
                             resetEmitted = true;

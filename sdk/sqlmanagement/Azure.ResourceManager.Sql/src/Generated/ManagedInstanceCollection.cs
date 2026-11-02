@@ -39,9 +39,8 @@ namespace Azure.ResourceManager.Sql
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ManagedInstanceCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ManagedInstanceResource.ResourceType, out string managedInstanceApiVersion);
             _managedInstancesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ManagedInstanceResource.ResourceType.Namespace, Diagnostics);
-            _managedInstancesRestClient = new ManagedInstances(_managedInstancesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, managedInstanceApiVersion ?? "2025-08-01-preview");
+            _managedInstancesRestClient = new ManagedInstances(_managedInstancesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 

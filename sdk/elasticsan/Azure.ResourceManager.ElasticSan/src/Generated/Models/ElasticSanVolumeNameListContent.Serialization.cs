@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ElasticSanVolumeNameListContent(volumeNames, additionalBinaryDataProperties);
+            return new ElasticSanVolumeNameListContent(volumeNames ?? new ChangeTrackingList<string>(), additionalBinaryDataProperties);
         }
     }
 }

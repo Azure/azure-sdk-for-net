@@ -91,7 +91,7 @@ namespace Azure.AI.Agents.Persistent
             }
             writer.WritePropertyName("model"u8);
             writer.WriteStringValue(Model);
-            if (_nameIsDefined || Optional.IsDefined(Name))
+            if (Optional.IsDefined(Name, _nameIsDefined))
             {
                 if (Name != null)
                 {
@@ -103,7 +103,7 @@ namespace Azure.AI.Agents.Persistent
                     writer.WriteNull("name"u8);
                 }
             }
-            if (_descriptionIsDefined || Optional.IsDefined(Description))
+            if (Optional.IsDefined(Description, _descriptionIsDefined))
             {
                 if (Description != null)
                 {
@@ -115,7 +115,7 @@ namespace Azure.AI.Agents.Persistent
                     writer.WriteNull("description"u8);
                 }
             }
-            if (_instructionsIsDefined || Optional.IsDefined(Instructions))
+            if (Optional.IsDefined(Instructions, _instructionsIsDefined))
             {
                 if (Instructions != null)
                 {
@@ -137,7 +137,7 @@ namespace Azure.AI.Agents.Persistent
                 }
                 writer.WriteEndArray();
             }
-            if (_toolResourcesIsDefined || Optional.IsDefined(ToolResources))
+            if (Optional.IsDefined(ToolResources, _toolResourcesIsDefined))
             {
                 if (ToolResources != null)
                 {
@@ -149,7 +149,7 @@ namespace Azure.AI.Agents.Persistent
                     writer.WriteNull("tool_resources"u8);
                 }
             }
-            if (_temperatureIsDefined || Optional.IsDefined(Temperature))
+            if (Optional.IsDefined(Temperature, _temperatureIsDefined))
             {
                 if (Temperature != null)
                 {
@@ -161,7 +161,7 @@ namespace Azure.AI.Agents.Persistent
                     writer.WriteNull("temperature"u8);
                 }
             }
-            if (_topPIsDefined || Optional.IsDefined(TopP))
+            if (Optional.IsDefined(TopP, _topPIsDefined))
             {
                 if (TopP != null)
                 {
@@ -173,7 +173,7 @@ namespace Azure.AI.Agents.Persistent
                     writer.WriteNull("top_p"u8);
                 }
             }
-            if (_responseFormatIsDefined || Optional.IsDefined(ResponseFormat))
+            if (Optional.IsDefined(ResponseFormat, _responseFormatIsDefined))
             {
                 if (ResponseFormat != null)
                 {

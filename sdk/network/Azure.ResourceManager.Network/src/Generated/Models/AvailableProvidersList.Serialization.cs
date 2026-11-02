@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.Network.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new AvailableProvidersList(countries, additionalBinaryDataProperties);
+            return new AvailableProvidersList(countries ?? new ChangeTrackingList<AvailableProvidersListCountry>(), additionalBinaryDataProperties);
         }
     }
 }

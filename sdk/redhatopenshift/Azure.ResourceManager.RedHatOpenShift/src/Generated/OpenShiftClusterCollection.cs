@@ -39,9 +39,8 @@ namespace Azure.ResourceManager.RedHatOpenShift
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal OpenShiftClusterCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(OpenShiftClusterResource.ResourceType, out string openShiftClusterApiVersion);
             _openShiftClustersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RedHatOpenShift", OpenShiftClusterResource.ResourceType.Namespace, Diagnostics);
-            _openShiftClustersRestClient = new OpenShiftClusters(_openShiftClustersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, openShiftClusterApiVersion ?? "2025-07-25");
+            _openShiftClustersRestClient = new OpenShiftClusters(_openShiftClustersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.RedHatOpenShift/openShiftClusters", out string openShiftClustersApiVersionOverride) ? openShiftClustersApiVersionOverride : "2025-07-25");
             ValidateResourceId(id);
         }
 

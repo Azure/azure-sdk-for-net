@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Advisor
         /// <returns> The pages of AdvisorSuppressionContractDataCollectionResultOfT as an enumerable collection. </returns>
         public override IEnumerable<Page<AdvisorSuppressionContractData>> AsPages(string continuationToken, int? pageSizeHint)
         {
-            Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
+            Uri nextPage = continuationToken != null ? new Uri(continuationToken, UriKind.RelativeOrAbsolute) : null;
             while (true)
             {
                 Response response = GetNextResponse(pageSizeHint, nextPage);

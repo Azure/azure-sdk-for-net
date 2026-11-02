@@ -84,6 +84,20 @@ namespace Azure.AI.AgentServer.Responses.Tests.Snippets
 
         [Test]
         [Explicit("Starts a blocking host; compiled as a snippet guard only.")]
+        public void StartServer_SteeringWithoutRecovery()
+        {
+            #region Snippet:Responses_Sample20_SteeringOnly_StartServer
+
+            AgentHost.CreateBuilder()
+                .AddResponses<ResilientSteeringHandler>(o => o.SteerableConversations = true)
+                .Build()
+                .Run();
+
+            #endregion
+        }
+
+        [Test]
+        [Explicit("Starts a blocking host; compiled as a snippet guard only.")]
         public void StartServer_SerialMultiTurn()
         {
             #region Snippet:Responses_Sample22_StartServer

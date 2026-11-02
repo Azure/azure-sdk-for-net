@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new AgentPoolList(value, nextLink, additionalBinaryDataProperties);
+            return new AgentPoolList(value ?? new ChangeTrackingList<NetworkCloudAgentPoolData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new GetUserTablesSqlTaskInput(connectionInfo, selectedDatabases, encryptedKeyForSecureFields, additionalBinaryDataProperties);
+            return new GetUserTablesSqlTaskInput(connectionInfo, selectedDatabases ?? new ChangeTrackingList<string>(), encryptedKeyForSecureFields, additionalBinaryDataProperties);
         }
     }
 }

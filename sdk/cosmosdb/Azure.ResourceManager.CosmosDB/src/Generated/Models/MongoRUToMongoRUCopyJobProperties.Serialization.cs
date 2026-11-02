@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new MongoRUToMongoRUCopyJobProperties(jobType, additionalBinaryDataProperties, sourceDetails, destinationDetails, tasks);
+            return new MongoRUToMongoRUCopyJobProperties(jobType, additionalBinaryDataProperties, sourceDetails, destinationDetails, tasks ?? new ChangeTrackingList<MongoRUToMongoRUCopyJobTask>());
         }
     }
 }

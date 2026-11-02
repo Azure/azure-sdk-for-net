@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new IPPrefixesListResult(value, nextLink, additionalBinaryDataProperties);
+            return new IPPrefixesListResult(value ?? new ChangeTrackingList<NetworkFabricIPPrefixData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new MonitorResourceListResult(value, nextLink, additionalBinaryDataProperties);
+            return new MonitorResourceListResult(value ?? new ChangeTrackingList<DynatraceMonitorData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

@@ -52,9 +52,8 @@ namespace Azure.ResourceManager.DeviceRegistry
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal DeviceRegistrySchemaRegistryResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string deviceRegistrySchemaRegistryApiVersion);
             _schemaRegistriesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DeviceRegistry", ResourceType.Namespace, Diagnostics);
-            _schemaRegistriesRestClient = new SchemaRegistries(_schemaRegistriesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, deviceRegistrySchemaRegistryApiVersion ?? "2026-03-01-preview");
+            _schemaRegistriesRestClient = new SchemaRegistries(_schemaRegistriesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.DeviceRegistry/schemaRegistries", out string schemaRegistriesApiVersionOverride) ? schemaRegistriesApiVersionOverride : "2026-03-01-preview");
             ValidateResourceId(id);
         }
 

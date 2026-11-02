@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new AutoScaleVCoreListResult(value, nextLink, additionalBinaryDataProperties);
+            return new AutoScaleVCoreListResult(value ?? new ChangeTrackingList<AutoScaleVCoreData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

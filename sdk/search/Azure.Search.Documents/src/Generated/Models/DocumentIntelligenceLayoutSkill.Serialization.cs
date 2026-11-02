@@ -80,7 +80,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 throw new FormatException($"The model {nameof(DocumentIntelligenceLayoutSkill)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            if (_outputFormatIsDefined || Optional.IsDefined(OutputFormat))
+            if (Optional.IsDefined(OutputFormat, _outputFormatIsDefined))
             {
                 if (OutputFormat != null)
                 {
@@ -92,7 +92,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("outputFormat"u8);
                 }
             }
-            if (_outputModeIsDefined || Optional.IsDefined(OutputMode))
+            if (Optional.IsDefined(OutputMode, _outputModeIsDefined))
             {
                 if (OutputMode != null)
                 {
@@ -104,7 +104,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("outputMode"u8);
                 }
             }
-            if (_markdownHeaderDepthIsDefined || Optional.IsDefined(MarkdownHeaderDepth))
+            if (Optional.IsDefined(MarkdownHeaderDepth, _markdownHeaderDepthIsDefined))
             {
                 if (MarkdownHeaderDepth != null)
                 {
@@ -133,7 +133,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("extractionOptions"u8);
                 }
             }
-            if (_chunkingPropertiesIsDefined || Optional.IsDefined(ChunkingProperties))
+            if (Optional.IsDefined(ChunkingProperties, _chunkingPropertiesIsDefined))
             {
                 if (ChunkingProperties != null)
                 {

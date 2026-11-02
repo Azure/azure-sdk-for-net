@@ -52,9 +52,8 @@ namespace Azure.ResourceManager.StorageMover
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal StorageMoverResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string storageMoverApiVersion);
             _storageMoversClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.StorageMover", ResourceType.Namespace, Diagnostics);
-            _storageMoversRestClient = new StorageMovers(_storageMoversClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, storageMoverApiVersion ?? "2026-05-01");
+            _storageMoversRestClient = new StorageMovers(_storageMoversClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.StorageMover/storageMovers", out string storageMoversApiVersionOverride) ? storageMoversApiVersionOverride : "2026-05-01");
             ValidateResourceId(id);
         }
 

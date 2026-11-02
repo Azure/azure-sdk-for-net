@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 customHeaders ?? new ChangeTrackingDictionary<string, string>(),
                 status,
                 scope,
-                actions,
+                actions ?? new ChangeTrackingList<ContainerRegistryWebhookAction>(),
                 additionalBinaryDataProperties);
         }
     }

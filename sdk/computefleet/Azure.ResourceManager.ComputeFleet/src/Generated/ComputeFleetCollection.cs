@@ -39,9 +39,8 @@ namespace Azure.ResourceManager.ComputeFleet
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ComputeFleetCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ComputeFleetResource.ResourceType, out string computeFleetApiVersion);
             _fleetsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ComputeFleet", ComputeFleetResource.ResourceType.Namespace, Diagnostics);
-            _fleetsRestClient = new Fleets(_fleetsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, computeFleetApiVersion ?? "2026-08-01");
+            _fleetsRestClient = new Fleets(_fleetsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.AzureFleet/fleets", out string fleetsApiVersionOverride) ? fleetsApiVersionOverride : "2026-08-01");
             ValidateResourceId(id);
         }
 

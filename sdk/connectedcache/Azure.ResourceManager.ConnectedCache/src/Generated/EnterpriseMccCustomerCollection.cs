@@ -39,9 +39,8 @@ namespace Azure.ResourceManager.ConnectedCache
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal EnterpriseMccCustomerCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(EnterpriseMccCustomerResource.ResourceType, out string enterpriseMccCustomerApiVersion);
             _enterpriseMccCustomersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ConnectedCache", EnterpriseMccCustomerResource.ResourceType.Namespace, Diagnostics);
-            _enterpriseMccCustomersRestClient = new EnterpriseMccCustomers(_enterpriseMccCustomersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, enterpriseMccCustomerApiVersion ?? "2026-06-01");
+            _enterpriseMccCustomersRestClient = new EnterpriseMccCustomers(_enterpriseMccCustomersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.ConnectedCache/enterpriseMccCustomers", out string enterpriseMccCustomersApiVersionOverride) ? enterpriseMccCustomersApiVersionOverride : "2026-06-01");
             ValidateResourceId(id);
         }
 

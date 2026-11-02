@@ -40,7 +40,13 @@ namespace Azure.ResourceManager.AppConfiguration.Mocking
 
         private ClientDiagnostics ConfigurationStoresClientDiagnostics => _configurationStoresClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.AppConfiguration.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ConfigurationStores ConfigurationStoresRestClient => _configurationStoresRestClient ??= new ConfigurationStores(ConfigurationStoresClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-08-01-preview");
+        private ConfigurationStores ConfigurationStoresRestClient => _configurationStoresRestClient ??= new ConfigurationStores(
+            ConfigurationStoresClientDiagnostics,
+            Pipeline,
+            Diagnostics.ApplicationId,
+            Endpoint,
+            "2025-08-01-preview",
+            resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
 
         private ClientDiagnostics OperationsClientDiagnostics => _operationsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.AppConfiguration.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 

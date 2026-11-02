@@ -374,8 +374,8 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             return new TrunkedNetworkProperties(
                 hybridAksPluginType,
                 interfaceName,
-                isolationDomainIds,
-                vlans,
+                isolationDomainIds ?? new ChangeTrackingList<ResourceIdentifier>(),
+                vlans ?? new ChangeTrackingList<long>(),
                 associatedResourceIds ?? new ChangeTrackingList<string>(),
                 clusterId,
                 detailedStatus,

@@ -3,8 +3,6 @@
 
 #nullable disable
 
-using System;
-using System.ComponentModel;
 using Azure.Core;
 
 namespace Azure.Provisioning.Network;
@@ -25,16 +23,6 @@ public partial class NetworkPrivateEndpointConnection
     partial void DefineAdditionalProperties()
     {
         _id = DefineProperty<ResourceIdentifier>(nameof(Id), new string[] { "id" });
-    }
-
-    // Preserve the pre-TypeSpec property name because it maps to the same Bicep property as the generated member.
-    /// <inheritdoc cref="PrivateLinkServiceConnectionState"/>
-    [EditorBrowsable(EditorBrowsableState.Never)]
-    [Obsolete("This property is deprecated and it will be removed in a future version. Please use PrivateLinkServiceConnectionState instead.")]
-    public NetworkPrivateLinkServiceConnectionState ConnectionState
-    {
-        get => PrivateLinkServiceConnectionState;
-        set => PrivateLinkServiceConnectionState = value;
     }
 
     /// <summary> Supported API versions retained for compatibility. </summary>

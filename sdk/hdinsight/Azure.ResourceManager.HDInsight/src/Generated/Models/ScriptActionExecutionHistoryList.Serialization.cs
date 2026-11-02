@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ScriptActionExecutionHistoryList(value, nextLink, additionalBinaryDataProperties);
+            return new ScriptActionExecutionHistoryList(value ?? new ChangeTrackingList<RuntimeScriptActionDetail>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

@@ -7,7 +7,6 @@ using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using OpenAI;
 using OpenAI.Realtime;
 
 namespace Azure.AI.Projects.Agents
@@ -19,16 +18,11 @@ namespace Azure.AI.Projects.Agents
     /// (`GET .../responses/{response_id}/items`) for its output items. `created_at`/`completed_at` are Foundry
     /// durable ordering extensions.
     /// </summary>
-    public partial class VoiceResult : VoiceResponseBase, IJsonModel<VoiceResult>
+    public partial class VoiceResult : IJsonModel<VoiceResult>
     {
-        /// <summary> Initializes a new instance of <see cref="VoiceResult"/> for deserialization. </summary>
-        internal VoiceResult()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override VoiceResponseBase PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual VoiceResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<VoiceResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -44,7 +38,7 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<VoiceResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -61,7 +55,7 @@ namespace Azure.AI.Projects.Agents
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        VoiceResult IPersistableModel<VoiceResult>.Create(BinaryData data, ModelReaderWriterOptions options) => (VoiceResult)PersistableModelCreateCore(data, options);
+        VoiceResult IPersistableModel<VoiceResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<VoiceResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
@@ -85,16 +79,33 @@ namespace Azure.AI.Projects.Agents
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<VoiceResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(VoiceResult)} does not support writing '{format}' format.");
             }
-            base.JsonModelWriteCore(writer, options);
-            writer.WritePropertyName("id"u8);
-            writer.WriteStringValue(Id);
+            if (Optional.IsDefined(Id))
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (Optional.IsDefined(Object))
+            {
+                writer.WritePropertyName("object"u8);
+                writer.WriteStringValue(Object.Value.ToString());
+            }
+            if (Optional.IsDefined(Status))
+            {
+                writer.WritePropertyName("status"u8);
+                writer.WriteObjectValue<RealtimeResponseStatus?>(Status.Value, options);
+            }
+            if (Optional.IsDefined(StatusDetails))
+            {
+                writer.WritePropertyName("status_details"u8);
+                writer.WriteObjectValue(StatusDetails, options);
+            }
             if (Optional.IsCollectionDefined(Output))
             {
                 writer.WritePropertyName("output"u8);
@@ -110,13 +121,6 @@ namespace Azure.AI.Projects.Agents
                 }
                 writer.WriteEndArray();
             }
-            writer.WritePropertyName("conversation_id"u8);
-            writer.WriteStringValue(ConversationId);
-            if (Optional.IsDefined(Audio))
-            {
-                writer.WritePropertyName("audio"u8);
-                writer.WriteObjectValue(Audio, options);
-            }
             if (Optional.IsCollectionDefined(Metadata))
             {
                 writer.WritePropertyName("metadata"u8);
@@ -129,9 +133,53 @@ namespace Azure.AI.Projects.Agents
                         writer.WriteNullValue();
                         continue;
                     }
-                    writer.WriteStringValue(item.Value);
+#if NET6_0_OR_GREATER
+                    writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
                 }
                 writer.WriteEndObject();
+            }
+            if (Optional.IsDefined(Usage))
+            {
+                writer.WritePropertyName("usage"u8);
+                writer.WriteObjectValue(Usage, options);
+            }
+            if (Optional.IsDefined(ConversationId))
+            {
+                writer.WritePropertyName("conversation_id"u8);
+                writer.WriteStringValue(ConversationId);
+            }
+            if (Optional.IsCollectionDefined(OutputModalities))
+            {
+                writer.WritePropertyName("output_modalities"u8);
+                writer.WriteStartArray();
+                foreach (RealtimeOutputModality item in OutputModalities)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(MaxOutputTokens))
+            {
+                writer.WritePropertyName("max_output_tokens"u8);
+#if NET6_0_OR_GREATER
+                writer.WriteRawValue(MaxOutputTokens);
+#else
+                using (JsonDocument document = JsonDocument.Parse(MaxOutputTokens))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
+            }
+            if (Optional.IsDefined(Audio))
+            {
+                writer.WritePropertyName("audio"u8);
+                writer.WriteObjectValue(Audio, options);
             }
             if (Optional.IsDefined(Temperature))
             {
@@ -148,15 +196,30 @@ namespace Azure.AI.Projects.Agents
                 writer.WritePropertyName("completed_at"u8);
                 writer.WriteNumberValue(CompletedOn.Value, "U");
             }
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            {
+                foreach (var item in _additionalBinaryDataProperties)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+                    writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        VoiceResult IJsonModel<VoiceResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (VoiceResult)JsonModelCreateCore(ref reader, options);
+        VoiceResult IJsonModel<VoiceResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override VoiceResponseBase JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual VoiceResult JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<VoiceResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -175,30 +238,35 @@ namespace Azure.AI.Projects.Agents
             {
                 return null;
             }
-            VoiceResponseBaseObject? @object = default;
-            VoiceResponseBaseStatus? status = default;
-            RealtimeResponseStatusDetails statusDetails = default;
-            RealtimeResponseUsage usage = default;
-            IList<VoiceResponseBaseOutputModality> outputModalities = default;
-            BinaryData maxOutputTokens = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string id = default;
+            VoiceResponseObject? @object = default;
+            RealtimeResponseStatus? status = default;
+            RealtimeResponseStatusDetails statusDetails = default;
             IList<RealtimeItem> output = default;
+            IDictionary<string, BinaryData> metadata = default;
+            RealtimeResponseUsage usage = default;
             string conversationId = default;
+            IList<RealtimeOutputModality> outputModalities = default;
+            BinaryData maxOutputTokens = default;
             VoiceResponseAudio audio = default;
-            IDictionary<string, string> metadata = default;
             float? temperature = default;
             DateTimeOffset? createdOn = default;
             DateTimeOffset? completedOn = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
+                if (prop.NameEquals("id"u8))
+                {
+                    id = prop.Value.GetString();
+                    continue;
+                }
                 if (prop.NameEquals("object"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    @object = new VoiceResponseBaseObject(prop.Value.GetString());
+                    @object = new VoiceResponseObject(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("status"u8))
@@ -207,7 +275,7 @@ namespace Azure.AI.Projects.Agents
                     {
                         continue;
                     }
-                    status = prop.Value.GetString().ToVoiceResponseBaseStatus();
+                    status = ModelReaderWriter.Read<RealtimeResponseStatus?>(prop.Value.GetUtf8Bytes(), options, AzureAIProjectsAgentsContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("status_details"u8))
@@ -217,43 +285,6 @@ namespace Azure.AI.Projects.Agents
                         continue;
                     }
                     statusDetails = ModelReaderWriter.Read<RealtimeResponseStatusDetails>(prop.Value.GetUtf8Bytes(), options, AzureAIProjectsAgentsContext.Default);
-                    continue;
-                }
-                if (prop.NameEquals("usage"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    usage = ModelReaderWriter.Read<RealtimeResponseUsage>(prop.Value.GetUtf8Bytes(), options, AzureAIProjectsAgentsContext.Default);
-                    continue;
-                }
-                if (prop.NameEquals("output_modalities"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    List<VoiceResponseBaseOutputModality> array = new List<VoiceResponseBaseOutputModality>();
-                    foreach (var item in prop.Value.EnumerateArray())
-                    {
-                        array.Add(item.GetString().ToVoiceResponseBaseOutputModality());
-                    }
-                    outputModalities = array;
-                    continue;
-                }
-                if (prop.NameEquals("max_output_tokens"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    maxOutputTokens = prop.Value.GetUtf8Bytes();
-                    continue;
-                }
-                if (prop.NameEquals("id"u8))
-                {
-                    id = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("output"u8))
@@ -277,9 +308,62 @@ namespace Azure.AI.Projects.Agents
                     output = array;
                     continue;
                 }
+                if (prop.NameEquals("metadata"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    Dictionary<string, BinaryData> dictionary = new Dictionary<string, BinaryData>();
+                    foreach (var prop0 in prop.Value.EnumerateObject())
+                    {
+                        if (prop0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(prop0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(prop0.Name, prop0.Value.GetUtf8Bytes());
+                        }
+                    }
+                    metadata = dictionary;
+                    continue;
+                }
+                if (prop.NameEquals("usage"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    usage = ModelReaderWriter.Read<RealtimeResponseUsage>(prop.Value.GetUtf8Bytes(), options, AzureAIProjectsAgentsContext.Default);
+                    continue;
+                }
                 if (prop.NameEquals("conversation_id"u8))
                 {
                     conversationId = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("output_modalities"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<RealtimeOutputModality> array = new List<RealtimeOutputModality>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        array.Add(ModelReaderWriter.Read<RealtimeOutputModality>(item.GetUtf8Bytes(), options, AzureAIProjectsAgentsContext.Default));
+                    }
+                    outputModalities = array;
+                    continue;
+                }
+                if (prop.NameEquals("max_output_tokens"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    maxOutputTokens = prop.Value.GetUtf8Bytes();
                     continue;
                 }
                 if (prop.NameEquals("audio"u8))
@@ -289,27 +373,6 @@ namespace Azure.AI.Projects.Agents
                         continue;
                     }
                     audio = VoiceResponseAudio.DeserializeVoiceResponseAudio(prop.Value, options);
-                    continue;
-                }
-                if (prop.NameEquals("metadata"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
-                    foreach (var prop0 in prop.Value.EnumerateObject())
-                    {
-                        if (prop0.Value.ValueKind == JsonValueKind.Null)
-                        {
-                            dictionary.Add(prop0.Name, null);
-                        }
-                        else
-                        {
-                            dictionary.Add(prop0.Name, prop0.Value.GetString());
-                        }
-                    }
-                    metadata = dictionary;
                     continue;
                 }
                 if (prop.NameEquals("temperature"u8))
@@ -345,21 +408,21 @@ namespace Azure.AI.Projects.Agents
                 }
             }
             return new VoiceResult(
+                id,
                 @object,
                 status,
                 statusDetails,
-                usage,
-                outputModalities ?? new ChangeTrackingList<VoiceResponseBaseOutputModality>(),
-                maxOutputTokens,
-                additionalBinaryDataProperties,
-                id,
                 output ?? new ChangeTrackingList<RealtimeItem>(),
+                metadata ?? new ChangeTrackingDictionary<string, BinaryData>(),
+                usage,
                 conversationId,
+                outputModalities ?? new ChangeTrackingList<RealtimeOutputModality>(),
+                maxOutputTokens,
                 audio,
-                metadata ?? new ChangeTrackingDictionary<string, string>(),
                 temperature,
                 createdOn,
-                completedOn);
+                completedOn,
+                additionalBinaryDataProperties);
         }
     }
 }

@@ -39,9 +39,8 @@ namespace Azure.ResourceManager.PlanetaryComputer
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal PlanetaryComputerGeoCatalogCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(PlanetaryComputerGeoCatalogResource.ResourceType, out string planetaryComputerGeoCatalogApiVersion);
             _geoCatalogsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.PlanetaryComputer", PlanetaryComputerGeoCatalogResource.ResourceType.Namespace, Diagnostics);
-            _geoCatalogsRestClient = new GeoCatalogs(_geoCatalogsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, planetaryComputerGeoCatalogApiVersion ?? "2026-04-15");
+            _geoCatalogsRestClient = new GeoCatalogs(_geoCatalogsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.Orbital/geoCatalogs", out string geoCatalogsApiVersionOverride) ? geoCatalogsApiVersionOverride : "2026-04-15");
             ValidateResourceId(id);
         }
 

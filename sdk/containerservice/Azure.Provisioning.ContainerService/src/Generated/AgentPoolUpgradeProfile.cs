@@ -24,7 +24,7 @@ namespace Azure.Provisioning.ContainerService
         /// <summary> Creates a new AgentPoolUpgradeProfile. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
         /// <param name="resourceVersion"> The resource API version. </param>
-        internal AgentPoolUpgradeProfile(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.ContainerService/managedClusters/agentPools/upgradeProfiles", resourceVersion ?? "2026-01-01")
+        internal AgentPoolUpgradeProfile(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.ContainerService/managedClusters/agentPools/upgradeProfiles", resourceVersion ?? "2026-07-01")
         {
         }
 
@@ -38,13 +38,18 @@ namespace Azure.Provisioning.ContainerService
             }
         }
 
-        /// <summary> Gets the Name. </summary>
+        /// <summary> Gets or sets the Name. </summary>
         public BicepValue<string> Name
         {
             get
             {
                 Initialize();
                 return _name;
+            }
+            set
+            {
+                Initialize();
+                _name.Assign(value);
             }
         }
 
@@ -110,6 +115,15 @@ namespace Azure.Provisioning.ContainerService
             }
         }
 
+        /// <summary> Gets the RecentlyUsedVersions. </summary>
+        public BicepList<AgentPoolRecentlyUsedVersion> RecentlyUsedVersions
+        {
+            get
+            {
+                return Properties.RecentlyUsedVersions;
+            }
+        }
+
         /// <summary> Gets the LatestNodeImageVersion. </summary>
         public BicepValue<string> LatestNodeImageVersion
         {
@@ -127,7 +141,7 @@ namespace Azure.Provisioning.ContainerService
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true, defaultValue: "default");
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _properties = DefineModelProperty<AgentPoolUpgradeProfileProperties>(nameof(Properties), new string[] { "properties" });
-            _parent = DefineResource<ContainerServiceAgentPool>(nameof(Parent), new string[] { "parent" }, isRequired: true);
+            _parent = DefineResource<ContainerServiceAgentPool>(nameof(Parent), new string[] { "parent" });
             DefineAdditionalProperties();
         }
 
@@ -147,6 +161,18 @@ namespace Azure.Provisioning.ContainerService
         /// <summary></summary>
         public static partial class ResourceVersions
         {
+            /// <summary> API version "2026-07-01". </summary>
+            public static readonly string V2026_07_01 = "2026-07-01";
+            /// <summary> API version "2026-06-01". </summary>
+            public static readonly string V2026_06_01 = "2026-06-01";
+            /// <summary> API version "2026-05-01". </summary>
+            public static readonly string V2026_05_01 = "2026-05-01";
+            /// <summary> API version "2026-04-01". </summary>
+            public static readonly string V2026_04_01 = "2026-04-01";
+            /// <summary> API version "2026-03-01". </summary>
+            public static readonly string V2026_03_01 = "2026-03-01";
+            /// <summary> API version "2026-02-01". </summary>
+            public static readonly string V2026_02_01 = "2026-02-01";
             /// <summary> API version "2026-01-01". </summary>
             public static readonly string V2026_01_01 = "2026-01-01";
             /// <summary> API version "2025-10-01". </summary>

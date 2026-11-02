@@ -39,9 +39,8 @@ namespace Azure.ResourceManager.Elastic
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ElasticMonitorCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ElasticMonitorResource.ResourceType, out string elasticMonitorApiVersion);
             _elasticMonitorResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Elastic", ElasticMonitorResource.ResourceType.Namespace, Diagnostics);
-            _elasticMonitorResourcesRestClient = new ElasticMonitorResources(_elasticMonitorResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, elasticMonitorApiVersion ?? "2025-06-01");
+            _elasticMonitorResourcesRestClient = new ElasticMonitorResources(_elasticMonitorResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.Elastic/monitors", out string elasticMonitorResourcesApiVersionOverride) ? elasticMonitorResourcesApiVersionOverride : "2025-06-01");
             ValidateResourceId(id);
         }
 

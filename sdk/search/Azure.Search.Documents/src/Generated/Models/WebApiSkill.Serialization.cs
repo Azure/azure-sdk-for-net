@@ -109,7 +109,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WritePropertyName("timeout"u8);
                 writer.WriteStringValue(Timeout.Value, "P");
             }
-            if (_batchSizeIsDefined || Optional.IsDefined(BatchSize))
+            if (Optional.IsDefined(BatchSize, _batchSizeIsDefined))
             {
                 if (BatchSize != null)
                 {
@@ -121,7 +121,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("batchSize"u8);
                 }
             }
-            if (_degreeOfParallelismIsDefined || Optional.IsDefined(DegreeOfParallelism))
+            if (Optional.IsDefined(DegreeOfParallelism, _degreeOfParallelismIsDefined))
             {
                 if (DegreeOfParallelism != null)
                 {
@@ -138,7 +138,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WritePropertyName("authResourceId"u8);
                 writer.WriteStringValue(AuthResourceId);
             }
-            if (_authIdentityIsDefined || Optional.IsDefined(AuthIdentity))
+            if (Optional.IsDefined(AuthIdentity, _authIdentityIsDefined))
             {
                 if (AuthIdentity != null)
                 {

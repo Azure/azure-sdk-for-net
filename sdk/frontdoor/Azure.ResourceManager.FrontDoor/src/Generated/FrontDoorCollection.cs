@@ -39,9 +39,8 @@ namespace Azure.ResourceManager.FrontDoor
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal FrontDoorCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(FrontDoorResource.ResourceType, out string frontDoorApiVersion);
             _frontDoorsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.FrontDoor", FrontDoorResource.ResourceType.Namespace, Diagnostics);
-            _frontDoorsRestClient = new FrontDoors(_frontDoorsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, frontDoorApiVersion ?? "2025-11-01");
+            _frontDoorsRestClient = new FrontDoors(_frontDoorsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.Network/frontDoors", out string frontDoorsApiVersionOverride) ? frontDoorsApiVersionOverride : "2025-11-01");
             ValidateResourceId(id);
         }
 

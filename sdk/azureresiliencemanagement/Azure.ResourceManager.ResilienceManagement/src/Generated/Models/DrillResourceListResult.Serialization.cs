@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new DrillResourceListResult(value, nextLink, additionalBinaryDataProperties);
+            return new DrillResourceListResult(value ?? new ChangeTrackingList<DrillTargetData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

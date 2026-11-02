@@ -37,11 +37,11 @@ namespace Azure.ResourceManager.DevTestLabs.Mocking
 
         private ClientDiagnostics LabsClientDiagnostics => _labsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DevTestLabs.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Labs LabsRestClient => _labsRestClient ??= new Labs(LabsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2018-09-15");
+        private Labs LabsRestClient => _labsRestClient ??= new Labs(LabsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.DevTestLab/labs", out string apiVersion) ? apiVersion : "2018-09-15");
 
         private ClientDiagnostics DevTestLabGlobalSchedulesClientDiagnostics => _devTestLabGlobalSchedulesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DevTestLabs.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private DevTestLabGlobalSchedules DevTestLabGlobalSchedulesRestClient => _devTestLabGlobalSchedulesRestClient ??= new DevTestLabGlobalSchedules(DevTestLabGlobalSchedulesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2018-09-15");
+        private DevTestLabGlobalSchedules DevTestLabGlobalSchedulesRestClient => _devTestLabGlobalSchedulesRestClient ??= new DevTestLabGlobalSchedules(DevTestLabGlobalSchedulesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.DevTestLab/schedules", out string apiVersion0) ? apiVersion0 : "2018-09-15");
 
         /// <summary>
         /// List labs in a subscription.

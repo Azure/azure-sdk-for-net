@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <param name="dataCenterAddressResponse"> Datacenter address for given sku in a region. </param>
         /// <param name="deviceCapabilityResponse"> Device capabilities available for a given sku in a region. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RegionConfigurationResult(ScheduleAvailabilityResponse scheduleAvailabilityResponse, TransportAvailabilityResponse transportAvailabilityResponse, DataCenterAddressResult dataCenterAddressResponse, DeviceCapabilityResponse deviceCapabilityResponse, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RegionConfigurationResult(ScheduleAvailabilityResult scheduleAvailabilityResponse, TransportAvailabilityResult transportAvailabilityResponse, DataCenterAddressResult dataCenterAddressResponse, DeviceCapabilityResult deviceCapabilityResponse, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ScheduleAvailabilityResponse = scheduleAvailabilityResponse;
             TransportAvailabilityResponse = transportAvailabilityResponse;
@@ -37,16 +37,16 @@ namespace Azure.ResourceManager.DataBox.Models
         }
 
         /// <summary> Schedule availability for given sku in a region. </summary>
-        internal ScheduleAvailabilityResponse ScheduleAvailabilityResponse { get; }
+        internal ScheduleAvailabilityResult ScheduleAvailabilityResponse { get; }
 
         /// <summary> Transport options available for given sku in a region. </summary>
-        internal TransportAvailabilityResponse TransportAvailabilityResponse { get; }
+        internal TransportAvailabilityResult TransportAvailabilityResponse { get; }
 
         /// <summary> Datacenter address for given sku in a region. </summary>
         public DataCenterAddressResult DataCenterAddressResponse { get; }
 
         /// <summary> Device capabilities available for a given sku in a region. </summary>
-        internal DeviceCapabilityResponse DeviceCapabilityResponse { get; }
+        internal DeviceCapabilityResult DeviceCapabilityResponse { get; }
 
         /// <summary> List of dates available to schedule. </summary>
         public IReadOnlyList<DateTimeOffset> ScheduleAvailabilityResponseAvailableDates

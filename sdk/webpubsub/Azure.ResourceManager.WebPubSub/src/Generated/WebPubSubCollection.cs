@@ -39,9 +39,8 @@ namespace Azure.ResourceManager.WebPubSub
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal WebPubSubCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(WebPubSubResource.ResourceType, out string webPubSubApiVersion);
             _webPubSubResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.WebPubSub", WebPubSubResource.ResourceType.Namespace, Diagnostics);
-            _webPubSubResourcesRestClient = new WebPubSubResources(_webPubSubResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, webPubSubApiVersion ?? "2025-08-01-preview");
+            _webPubSubResourcesRestClient = new WebPubSubResources(_webPubSubResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.SignalRService/webPubSub", out string webPubSubResourcesApiVersionOverride) ? webPubSubResourcesApiVersionOverride : "2025-08-01-preview");
             ValidateResourceId(id);
         }
 

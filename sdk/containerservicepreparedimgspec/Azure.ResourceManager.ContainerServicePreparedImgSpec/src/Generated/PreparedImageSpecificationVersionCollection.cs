@@ -38,9 +38,8 @@ namespace Azure.ResourceManager.ContainerServicePreparedImgSpec
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal PreparedImageSpecificationVersionCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(PreparedImageSpecificationVersionResource.ResourceType, out string preparedImageSpecificationVersionApiVersion);
             _preparedImageSpecificationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ContainerServicePreparedImgSpec", PreparedImageSpecificationVersionResource.ResourceType.Namespace, Diagnostics);
-            _preparedImageSpecificationsRestClient = new PreparedImageSpecifications(_preparedImageSpecificationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, preparedImageSpecificationVersionApiVersion ?? "2026-05-02-preview");
+            _preparedImageSpecificationsRestClient = new PreparedImageSpecifications(_preparedImageSpecificationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 

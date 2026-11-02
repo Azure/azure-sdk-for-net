@@ -264,10 +264,10 @@ namespace Azure.ResourceManager.Avs.Models
                 tier,
                 size,
                 family,
-                locations,
-                locationInfo,
+                locations ?? new ChangeTrackingList<AzureLocation>(),
+                locationInfo ?? new ChangeTrackingList<AvsResourceSkuLocationInfo>(),
                 capabilities ?? new ChangeTrackingList<AvsResourceSkuCapabilities>(),
-                restrictions,
+                restrictions ?? new ChangeTrackingList<AvsResourceSkuRestrictions>(),
                 additionalBinaryDataProperties);
         }
     }

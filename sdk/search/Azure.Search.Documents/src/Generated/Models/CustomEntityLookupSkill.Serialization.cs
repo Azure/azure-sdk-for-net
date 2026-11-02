@@ -80,7 +80,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 throw new FormatException($"The model {nameof(CustomEntityLookupSkill)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            if (_defaultLanguageCodeIsDefined || Optional.IsDefined(DefaultLanguageCode))
+            if (Optional.IsDefined(DefaultLanguageCode, _defaultLanguageCodeIsDefined))
             {
                 if (DefaultLanguageCode != null)
                 {
@@ -114,7 +114,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("inlineEntitiesDefinition"u8);
                 }
             }
-            if (_globalDefaultCaseSensitiveIsDefined || Optional.IsDefined(GlobalDefaultCaseSensitive))
+            if (Optional.IsDefined(GlobalDefaultCaseSensitive, _globalDefaultCaseSensitiveIsDefined))
             {
                 if (GlobalDefaultCaseSensitive != null)
                 {
@@ -126,7 +126,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("globalDefaultCaseSensitive"u8);
                 }
             }
-            if (_globalDefaultAccentSensitiveIsDefined || Optional.IsDefined(GlobalDefaultAccentSensitive))
+            if (Optional.IsDefined(GlobalDefaultAccentSensitive, _globalDefaultAccentSensitiveIsDefined))
             {
                 if (GlobalDefaultAccentSensitive != null)
                 {
@@ -138,7 +138,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("globalDefaultAccentSensitive"u8);
                 }
             }
-            if (_globalDefaultFuzzyEditDistanceIsDefined || Optional.IsDefined(GlobalDefaultFuzzyEditDistance))
+            if (Optional.IsDefined(GlobalDefaultFuzzyEditDistance, _globalDefaultFuzzyEditDistanceIsDefined))
             {
                 if (GlobalDefaultFuzzyEditDistance != null)
                 {

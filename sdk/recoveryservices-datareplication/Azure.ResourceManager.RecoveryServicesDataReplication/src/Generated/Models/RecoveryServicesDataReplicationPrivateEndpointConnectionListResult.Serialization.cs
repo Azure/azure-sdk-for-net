@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new RecoveryServicesDataReplicationPrivateEndpointConnectionListResult(value, nextLink, additionalBinaryDataProperties);
+            return new RecoveryServicesDataReplicationPrivateEndpointConnectionListResult(value ?? new ChangeTrackingList<DataReplicationPrivateEndpointConnectionData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

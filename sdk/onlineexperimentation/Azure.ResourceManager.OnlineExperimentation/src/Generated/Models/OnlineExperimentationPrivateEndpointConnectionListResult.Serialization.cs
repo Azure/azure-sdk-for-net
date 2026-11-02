@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.OnlineExperimentation.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new OnlineExperimentationPrivateEndpointConnectionListResult(value, nextLink, additionalBinaryDataProperties);
+            return new OnlineExperimentationPrivateEndpointConnectionListResult(value ?? new ChangeTrackingList<OnlineExperimentationPrivateEndpointConnectionData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

@@ -39,9 +39,8 @@ namespace Azure.ResourceManager.ResourceGraph
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ResourceGraphQueryCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceGraphQueryResource.ResourceType, out string resourceGraphQueryApiVersion);
             _graphQueryClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ResourceGraph", ResourceGraphQueryResource.ResourceType.Namespace, Diagnostics);
-            _graphQueryRestClient = new GraphQuery(_graphQueryClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceGraphQueryApiVersion ?? "2024-04-01");
+            _graphQueryRestClient = new GraphQuery(_graphQueryClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 

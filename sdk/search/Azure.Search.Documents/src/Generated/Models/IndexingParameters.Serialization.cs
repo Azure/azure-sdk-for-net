@@ -74,7 +74,7 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 throw new FormatException($"The model {nameof(IndexingParameters)} does not support writing '{format}' format.");
             }
-            if (_batchSizeIsDefined || Optional.IsDefined(BatchSize))
+            if (Optional.IsDefined(BatchSize, _batchSizeIsDefined))
             {
                 if (BatchSize != null)
                 {
@@ -86,7 +86,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("batchSize"u8);
                 }
             }
-            if (_maxFailedItemsIsDefined || Optional.IsDefined(MaxFailedItems))
+            if (Optional.IsDefined(MaxFailedItems, _maxFailedItemsIsDefined))
             {
                 if (MaxFailedItems != null)
                 {
@@ -98,7 +98,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("maxFailedItems"u8);
                 }
             }
-            if (_maxFailedItemsPerBatchIsDefined || Optional.IsDefined(MaxFailedItemsPerBatch))
+            if (Optional.IsDefined(MaxFailedItemsPerBatch, _maxFailedItemsPerBatchIsDefined))
             {
                 if (MaxFailedItemsPerBatch != null)
                 {

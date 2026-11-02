@@ -96,7 +96,7 @@ namespace Azure.AI.Agents.Persistent
                 writer.WritePropertyName("thread"u8);
                 writer.WriteObjectValue(Thread, options);
             }
-            if (_overrideModelNameIsDefined || Optional.IsDefined(OverrideModelName))
+            if (Optional.IsDefined(OverrideModelName, _overrideModelNameIsDefined))
             {
                 if (OverrideModelName != null)
                 {
@@ -108,7 +108,7 @@ namespace Azure.AI.Agents.Persistent
                     writer.WriteNull("model"u8);
                 }
             }
-            if (_overrideInstructionsIsDefined || Optional.IsDefined(OverrideInstructions))
+            if (Optional.IsDefined(OverrideInstructions, _overrideInstructionsIsDefined))
             {
                 if (OverrideInstructions != null)
                 {
@@ -137,7 +137,7 @@ namespace Azure.AI.Agents.Persistent
                     writer.WriteNull("tools"u8);
                 }
             }
-            if (_toolResourcesIsDefined || Optional.IsDefined(ToolResources))
+            if (Optional.IsDefined(ToolResources, _toolResourcesIsDefined))
             {
                 if (ToolResources != null)
                 {
@@ -154,7 +154,7 @@ namespace Azure.AI.Agents.Persistent
                 writer.WritePropertyName("stream"u8);
                 writer.WriteBooleanValue(Stream.Value);
             }
-            if (_temperatureIsDefined || Optional.IsDefined(Temperature))
+            if (Optional.IsDefined(Temperature, _temperatureIsDefined))
             {
                 if (Temperature != null)
                 {
@@ -166,7 +166,7 @@ namespace Azure.AI.Agents.Persistent
                     writer.WriteNull("temperature"u8);
                 }
             }
-            if (_topPIsDefined || Optional.IsDefined(TopP))
+            if (Optional.IsDefined(TopP, _topPIsDefined))
             {
                 if (TopP != null)
                 {
@@ -178,7 +178,7 @@ namespace Azure.AI.Agents.Persistent
                     writer.WriteNull("top_p"u8);
                 }
             }
-            if (_maxPromptTokensIsDefined || Optional.IsDefined(MaxPromptTokens))
+            if (Optional.IsDefined(MaxPromptTokens, _maxPromptTokensIsDefined))
             {
                 if (MaxPromptTokens != null)
                 {
@@ -190,7 +190,7 @@ namespace Azure.AI.Agents.Persistent
                     writer.WriteNull("max_prompt_tokens"u8);
                 }
             }
-            if (_maxCompletionTokensIsDefined || Optional.IsDefined(MaxCompletionTokens))
+            if (Optional.IsDefined(MaxCompletionTokens, _maxCompletionTokensIsDefined))
             {
                 if (MaxCompletionTokens != null)
                 {
@@ -202,7 +202,7 @@ namespace Azure.AI.Agents.Persistent
                     writer.WriteNull("max_completion_tokens"u8);
                 }
             }
-            if (_truncationStrategyIsDefined || Optional.IsDefined(TruncationStrategy))
+            if (Optional.IsDefined(TruncationStrategy, _truncationStrategyIsDefined))
             {
                 if (TruncationStrategy != null)
                 {
@@ -214,7 +214,7 @@ namespace Azure.AI.Agents.Persistent
                     writer.WriteNull("truncation_strategy"u8);
                 }
             }
-            if (_toolChoiceIsDefined || Optional.IsDefined(ToolChoice))
+            if (Optional.IsDefined(ToolChoice, _toolChoiceIsDefined))
             {
                 if (ToolChoice != null)
                 {
@@ -233,7 +233,7 @@ namespace Azure.AI.Agents.Persistent
                     writer.WriteNull("tool_choice"u8);
                 }
             }
-            if (_responseFormatIsDefined || Optional.IsDefined(ResponseFormat))
+            if (Optional.IsDefined(ResponseFormat, _responseFormatIsDefined))
             {
                 if (ResponseFormat != null)
                 {

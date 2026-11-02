@@ -27,7 +27,11 @@ namespace Azure.Provisioning.ContainerService
         Windows2022 = 5,
         /// <summary> Use Ubuntu2204 as the OS for node images, however, Ubuntu 22.04 may not be supported for all nodepools. For limitations and supported kubernetes versions, see https://aka.ms/aks/supported-ubuntu-versions. </summary>
         Ubuntu2204 = 6,
+        /// <summary> Use Windows2025 as the OS for node images. Unsupported for system node pools. Windows2025 supports Windows2022 and Windows 2025 containers; it cannot run Windows2019 containers and vice versa. </summary>
+        Windows2025 = 7,
         /// <summary> Use Ubuntu2404 as the OS for node images, however, Ubuntu 24.04 may not be supported for all nodepools. For limitations and supported kubernetes versions, see see https://aka.ms/aks/supported-ubuntu-versions. </summary>
-        Ubuntu2404 = 7
+        Ubuntu2404 = 8,
+        /// <summary> Use Azure Container Linux as the OS for node images. Azure Container Linux is a container-optimized, security-focused Linux OS built on Azure Linux, with an immutable filesystem. ACL is derived from the Flatcar Container Linux project, building on Flatcar's proven container-first, immutable design, while adding Azure Linux packages, servicing, and deep integration with the Azure and AKS lifecycle. For more information, see https://aka.ms/azurecontainerlinux. </summary>
+        AzureContainerLinux = 9
     }
 }

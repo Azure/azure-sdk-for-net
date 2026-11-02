@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.OracleDatabase
 {
     internal partial class OracleDBServerDataCollectionResultOfT : Pageable<OracleDBServerData>
     {
-        private readonly DbServers _client;
+        private readonly DBServers _client;
         private readonly Guid _subscriptionId;
         private readonly string _resourceGroupName;
         private readonly string _cloudexadatainfrastructurename;
@@ -24,13 +24,13 @@ namespace Azure.ResourceManager.OracleDatabase
         private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of OracleDBServerDataCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
-        /// <param name="client"> The DbServers client used to send requests. </param>
+        /// <param name="client"> The DBServers client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="cloudexadatainfrastructurename"> CloudExadataInfrastructure name. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public OracleDBServerDataCollectionResultOfT(DbServers client, Guid subscriptionId, string resourceGroupName, string cloudexadatainfrastructurename, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public OracleDBServerDataCollectionResultOfT(DBServers client, Guid subscriptionId, string resourceGroupName, string cloudexadatainfrastructurename, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.OracleDatabase
         /// <returns> The pages of OracleDBServerDataCollectionResultOfT as an enumerable collection. </returns>
         public override IEnumerable<Page<OracleDBServerData>> AsPages(string continuationToken, int? pageSizeHint)
         {
-            Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
+            Uri nextPage = continuationToken != null ? new Uri(continuationToken, UriKind.RelativeOrAbsolute) : null;
             while (true)
             {
                 Response response = GetNextResponse(pageSizeHint, nextPage);

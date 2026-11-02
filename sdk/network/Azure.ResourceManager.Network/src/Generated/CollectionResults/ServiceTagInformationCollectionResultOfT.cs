@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Network
     {
         private readonly ServiceTagInformation _client;
         private readonly Guid _subscriptionId;
-        private readonly string _location;
+        private readonly AzureLocation _location;
         private readonly bool? _noAddressPrefixes;
         private readonly string _tagName;
         private readonly RequestContext _context;
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="tagName"> Return tag information for a particular tag. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public ServiceTagInformationCollectionResultOfT(ServiceTagInformation client, Guid subscriptionId, string location, bool? noAddressPrefixes, string tagName, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public ServiceTagInformationCollectionResultOfT(ServiceTagInformation client, Guid subscriptionId, AzureLocation location, bool? noAddressPrefixes, string tagName, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> The pages of ServiceTagInformationCollectionResultOfT as an enumerable collection. </returns>
         public override IEnumerable<Page<Models.ServiceTagInformation>> AsPages(string continuationToken, int? pageSizeHint)
         {
-            Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
+            Uri nextPage = continuationToken != null ? new Uri(continuationToken, UriKind.RelativeOrAbsolute) : null;
             while (true)
             {
                 Response response = GetNextResponse(pageSizeHint, nextPage);

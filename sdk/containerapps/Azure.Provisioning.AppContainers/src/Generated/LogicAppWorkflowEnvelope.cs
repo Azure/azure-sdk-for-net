@@ -109,7 +109,7 @@ namespace Azure.Provisioning.AppContainers
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _properties = DefineModelProperty<LogicAppWorkflowEnvelopeProperties>(nameof(Properties), new string[] { "properties" });
             _kind = DefineProperty<LogicAppWorkflowKind>(nameof(Kind), new string[] { "kind" });
-            _parent = DefineResource<LogicApp>(nameof(Parent), new string[] { "parent" }, isRequired: true);
+            _parent = DefineResource<LogicApp>(nameof(Parent), new string[] { "parent" });
             DefineAdditionalProperties();
         }
 

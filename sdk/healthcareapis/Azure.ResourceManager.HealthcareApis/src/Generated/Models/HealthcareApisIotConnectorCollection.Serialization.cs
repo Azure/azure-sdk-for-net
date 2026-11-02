@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new HealthcareApisIotConnectorCollection(value, nextLink, additionalBinaryDataProperties);
+            return new HealthcareApisIotConnectorCollection(value ?? new ChangeTrackingList<HealthcareApisIotConnectorData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

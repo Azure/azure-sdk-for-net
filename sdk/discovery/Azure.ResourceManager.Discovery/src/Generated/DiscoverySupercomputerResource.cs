@@ -51,9 +51,8 @@ namespace Azure.ResourceManager.Discovery
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal DiscoverySupercomputerResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string discoverySupercomputerApiVersion);
             _supercomputersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Discovery", ResourceType.Namespace, Diagnostics);
-            _supercomputersRestClient = new Supercomputers(_supercomputersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, discoverySupercomputerApiVersion ?? "2026-06-01");
+            _supercomputersRestClient = new Supercomputers(_supercomputersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.Discovery/supercomputers", out string supercomputersApiVersionOverride) ? supercomputersApiVersionOverride : "2026-06-01");
             ValidateResourceId(id);
         }
 

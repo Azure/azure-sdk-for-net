@@ -52,9 +52,8 @@ namespace Azure.ResourceManager.DatabaseWatcher
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal DatabaseWatcherResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string databaseWatcherApiVersion);
             _watchersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DatabaseWatcher", ResourceType.Namespace, Diagnostics);
-            _watchersRestClient = new Watchers(_watchersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, databaseWatcherApiVersion ?? "2025-01-02");
+            _watchersRestClient = new Watchers(_watchersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.DatabaseWatcher/watchers", out string watchersApiVersionOverride) ? watchersApiVersionOverride : "2025-01-02");
             ValidateResourceId(id);
         }
 

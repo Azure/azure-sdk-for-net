@@ -78,7 +78,7 @@ namespace Azure.Search.Documents.Models
                 writer.WritePropertyName("@search.score"u8);
                 writer.WriteNumberValue(Score);
             }
-            if (options.Format != "W" && (_rerankerScoreIsDefined || Optional.IsDefined(RerankerScore)))
+            if (options.Format != "W" && Optional.IsDefined(RerankerScore, _rerankerScoreIsDefined))
             {
                 if (RerankerScore != null)
                 {
@@ -90,7 +90,7 @@ namespace Azure.Search.Documents.Models
                     writer.WriteNull("@search.rerankerScore"u8);
                 }
             }
-            if (options.Format != "W" && (_rerankerBoostedScoreIsDefined || Optional.IsDefined(RerankerBoostedScore)))
+            if (options.Format != "W" && Optional.IsDefined(RerankerBoostedScore, _rerankerBoostedScoreIsDefined))
             {
                 if (RerankerBoostedScore != null)
                 {
@@ -145,7 +145,7 @@ namespace Azure.Search.Documents.Models
                     writer.WriteNull("@search.captions"u8);
                 }
             }
-            if (options.Format != "W" && (_documentDebugInfoIsDefined || Optional.IsDefined(DocumentDebugInfo)))
+            if (options.Format != "W" && Optional.IsDefined(DocumentDebugInfo, _documentDebugInfoIsDefined))
             {
                 if (DocumentDebugInfo != null)
                 {

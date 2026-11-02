@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new FederatedIdentityCredentialsListResult(value, nextLink, additionalBinaryDataProperties);
+            return new FederatedIdentityCredentialsListResult(value ?? new ChangeTrackingList<FederatedIdentityCredentialData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

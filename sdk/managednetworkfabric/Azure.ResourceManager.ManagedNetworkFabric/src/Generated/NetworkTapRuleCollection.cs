@@ -39,9 +39,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal NetworkTapRuleCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(NetworkTapRuleResource.ResourceType, out string networkTapRuleApiVersion);
             _networkTapRulesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ManagedNetworkFabric", NetworkTapRuleResource.ResourceType.Namespace, Diagnostics);
-            _networkTapRulesRestClient = new NetworkTapRules(_networkTapRulesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, networkTapRuleApiVersion ?? "2025-07-15");
+            _networkTapRulesRestClient = new NetworkTapRules(_networkTapRulesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.ManagedNetworkFabric/networkTapRules", out string networkTapRulesApiVersionOverride) ? networkTapRulesApiVersionOverride : "2025-07-15");
             ValidateResourceId(id);
         }
 

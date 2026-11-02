@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.HealthDataAIServices.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new DeidServiceListResult(value, nextLink, additionalBinaryDataProperties);
+            return new DeidServiceListResult(value ?? new ChangeTrackingList<DeidServiceData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

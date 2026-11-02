@@ -16,13 +16,13 @@ namespace Azure.Search.Documents.Indexes.Models
     public partial class AzureMachineLearningSkill : SearchIndexerSkill
     {
         private Uri _scoringUri;
-        internal bool _scoringUriIsDefined;
+        private bool _scoringUriIsDefined;
         private string _authenticationKey;
-        internal bool _authenticationKeyIsDefined;
+        private bool _authenticationKeyIsDefined;
         private TimeSpan? _timeout;
-        internal bool _timeoutIsDefined;
+        private bool _timeoutIsDefined;
         private int? _degreeOfParallelism;
-        internal bool _degreeOfParallelismIsDefined;
+        private bool _degreeOfParallelismIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="AzureMachineLearningSkill"/>. </summary>
         /// <param name="inputs"> Inputs of the skills could be a column in the source data set, or the output of an upstream skill. </param>

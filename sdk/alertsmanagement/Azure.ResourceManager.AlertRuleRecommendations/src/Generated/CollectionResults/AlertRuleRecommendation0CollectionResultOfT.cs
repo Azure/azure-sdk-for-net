@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.AlertRuleRecommendations
         /// <returns> The pages of AlertRuleRecommendation0CollectionResultOfT as an enumerable collection. </returns>
         public override IEnumerable<Page<AlertRuleRecommendation>> AsPages(string continuationToken, int? pageSizeHint)
         {
-            Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
+            Uri nextPage = continuationToken != null ? new Uri(continuationToken, UriKind.RelativeOrAbsolute) : null;
             while (true)
             {
                 Response response = GetNextResponse(pageSizeHint, nextPage);
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.AlertRuleRecommendations
                 {
                     yield break;
                 }
-                AlertRuleRecommendationsListResponse result = AlertRuleRecommendationsListResponse.FromResponse(response);
+                AlertRuleRecommendationsListResult result = AlertRuleRecommendationsListResult.FromResponse(response);
                 nextPage = result.NextLink;
                 yield return Page<AlertRuleRecommendation>.FromValues((IReadOnlyList<AlertRuleRecommendation>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)

@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ServiceBusPrivateEndpointConnectionListResult(value, nextLink, additionalBinaryDataProperties);
+            return new ServiceBusPrivateEndpointConnectionListResult(value ?? new ChangeTrackingList<ServiceBusPrivateEndpointConnectionData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.ServiceFabric
         /// <returns> The pages of ServiceFabricClusterData0CollectionResultOfT as an enumerable collection. </returns>
         public override IEnumerable<Page<ServiceFabricClusterData>> AsPages(string continuationToken, int? pageSizeHint)
         {
-            Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
+            Uri nextPage = continuationToken != null ? new Uri(continuationToken, UriKind.RelativeOrAbsolute) : null;
             while (true)
             {
                 Response response = GetNextResponse(pageSizeHint, nextPage);

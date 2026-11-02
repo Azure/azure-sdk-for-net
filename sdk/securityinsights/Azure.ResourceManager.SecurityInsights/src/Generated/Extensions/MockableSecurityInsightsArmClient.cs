@@ -1944,12 +1944,12 @@ namespace Azure.ResourceManager.SecurityInsights.Mocking
         /// <param name="content"> IP address (v4 or v6) to be enriched. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<EnrichmentIPGeodata>> GetGeodataByIpAsync(ResourceIdentifier scope, EnrichmentType enrichmentType, EnrichmentIPAddressContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<EnrichmentIPGeodata>> GetGeodataByIPAsync(ResourceIdentifier scope, EnrichmentType enrichmentType, EnrichmentIPAddressContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope0 = SecurityInsightsClientClientDiagnostics.CreateScope("MockableSecurityInsightsArmClient.GetGeodataByIp");
+            using DiagnosticScope scope0 = SecurityInsightsClientClientDiagnostics.CreateScope("MockableSecurityInsightsArmClient.GetGeodataByIP");
             scope0.Start();
             try
             {
@@ -1995,12 +1995,12 @@ namespace Azure.ResourceManager.SecurityInsights.Mocking
         /// <param name="content"> IP address (v4 or v6) to be enriched. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="content"/> is null. </exception>
-        public virtual Response<EnrichmentIPGeodata> GetGeodataByIp(ResourceIdentifier scope, EnrichmentType enrichmentType, EnrichmentIPAddressContent content, CancellationToken cancellationToken = default)
+        public virtual Response<EnrichmentIPGeodata> GetGeodataByIP(ResourceIdentifier scope, EnrichmentType enrichmentType, EnrichmentIPAddressContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope0 = SecurityInsightsClientClientDiagnostics.CreateScope("MockableSecurityInsightsArmClient.GetGeodataByIp");
+            using DiagnosticScope scope0 = SecurityInsightsClientClientDiagnostics.CreateScope("MockableSecurityInsightsArmClient.GetGeodataByIP");
             scope0.Start();
             try
             {

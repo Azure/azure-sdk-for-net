@@ -16,6 +16,8 @@ namespace Azure.Generator.MgmtApiVersionOverride.Tests
     /// </summary>
     [ModelReaderWriterBuildable(typeof(EscapedWireVersionTestData))]
     [ModelReaderWriterBuildable(typeof(EscapedWireVersionTestResource))]
+    [ModelReaderWriterBuildable(typeof(OrdinaryWireVersionTestData))]
+    [ModelReaderWriterBuildable(typeof(OrdinaryWireVersionTestResource))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(WireVersionTestData))]
     [ModelReaderWriterBuildable(typeof(WireVersionTestResource))]

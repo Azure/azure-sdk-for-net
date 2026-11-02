@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> The pages of NetworkInterfaceData1CollectionResultOfT as an enumerable collection. </returns>
         public override IEnumerable<Page<NetworkInterfaceData>> AsPages(string continuationToken, int? pageSizeHint)
         {
-            Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
+            Uri nextPage = continuationToken != null ? new Uri(continuationToken, UriKind.RelativeOrAbsolute) : null;
             while (true)
             {
                 Response response = GetNextResponse(pageSizeHint, nextPage);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetAllRequest(nextLink, _subscriptionId, _resourceGroupName, _loadBalancerName, _context) : _client.CreateGetAllRequest(_subscriptionId, _resourceGroupName, _loadBalancerName, _context);
+            HttpMessage message = nextLink != null ? _client.CreateNextGetNetworkInterfacesRequest(nextLink, _subscriptionId, _resourceGroupName, _loadBalancerName, _context) : _client.CreateGetNetworkInterfacesRequest(_subscriptionId, _resourceGroupName, _loadBalancerName, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try

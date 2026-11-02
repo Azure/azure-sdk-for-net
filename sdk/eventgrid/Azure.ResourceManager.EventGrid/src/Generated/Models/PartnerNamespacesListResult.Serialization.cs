@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new PartnerNamespacesListResult(value, nextLink, additionalBinaryDataProperties);
+            return new PartnerNamespacesListResult(value ?? new ChangeTrackingList<PartnerNamespaceData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

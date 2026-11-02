@@ -84,7 +84,7 @@ namespace Azure.AI.Agents.Persistent
             {
                 throw new FormatException($"The model {nameof(UpdateThreadRequest)} does not support writing '{format}' format.");
             }
-            if (_toolResourcesIsDefined || Optional.IsDefined(ToolResources))
+            if (Optional.IsDefined(ToolResources, _toolResourcesIsDefined))
             {
                 if (ToolResources != null)
                 {

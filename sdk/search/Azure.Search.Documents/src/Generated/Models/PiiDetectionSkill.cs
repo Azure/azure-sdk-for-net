@@ -15,9 +15,9 @@ namespace Azure.Search.Documents.Indexes.Models
     public partial class PiiDetectionSkill : SearchIndexerSkill
     {
         private string _modelVersion;
-        internal bool _modelVersionIsDefined;
+        private bool _modelVersionIsDefined;
         private string _domain;
-        internal bool _domainIsDefined;
+        private bool _domainIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="PiiDetectionSkill"/>. </summary>
         /// <param name="inputs"> Inputs of the skills could be a column in the source data set, or the output of an upstream skill. </param>

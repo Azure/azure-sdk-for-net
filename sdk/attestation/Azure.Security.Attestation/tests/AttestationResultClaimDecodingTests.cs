@@ -5,6 +5,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text.Json;
 using Azure.Core;
 using NUnit.Framework;
@@ -152,6 +153,71 @@ namespace Azure.Security.Attestation.Tests
 
             Assert.AreEqual("id-1", written.RootElement.GetProperty("jti").GetString());
             Assert.IsFalse(written.RootElement.TryGetProperty("cnf", out _));
+        }
+
+        private const string ConfidentialVmClaims =
+            @"{""nonce"":""n1"",""tdx_mrtd"":""abc"",""tdx_td_attributes_debug"":false,""x-ms-sevsnpvm-guestsvn"":7,""x-ms-isolation-tee"":{""x-ms-attestation-type"":""sevsnpvm""}}";
+
+        [Test]
+        public void AdditionalClaimsHoldClaimsWithoutAProperty()
+        {
+            AttestationResult result = Parse(ConfidentialVmClaims);
+
+            Assert.AreEqual("abc", result.AdditionalClaims["tdx_mrtd"].ToObjectFromJson<string>());
+            Assert.AreEqual(false, result.AdditionalClaims["tdx_td_attributes_debug"].ToObjectFromJson<bool>());
+            Assert.AreEqual(7, result.AdditionalClaims["x-ms-sevsnpvm-guestsvn"].ToObjectFromJson<int>());
+            using JsonDocument tee = JsonDocument.Parse(result.AdditionalClaims["x-ms-isolation-tee"]);
+            Assert.AreEqual("sevsnpvm", tee.RootElement.GetProperty("x-ms-attestation-type").GetString());
+            Assert.AreEqual("n1", result.Nonce);
+            Assert.IsFalse(result.AdditionalClaims.ContainsKey("nonce"), "claims with a dedicated property are not repeated");
+            Assert.AreEqual(4, result.AdditionalClaims.Count);
+        }
+
+        [Test]
+        public void AdditionalClaimsAreWrittenBack()
+        {
+            using JsonDocument expected = JsonDocument.Parse(ConfidentialVmClaims);
+            using JsonDocument written = JsonDocument.Parse(ModelReaderWriter.Write(Parse(ConfidentialVmClaims)));
+            using JsonDocument writtenBySystemTextJson = JsonDocument.Parse(JsonSerializer.Serialize(Parse(ConfidentialVmClaims)));
+
+            foreach (JsonProperty claim in expected.RootElement.EnumerateObject())
+            {
+                Assert.AreEqual(claim.Value.GetRawText(), written.RootElement.GetProperty(claim.Name).GetRawText(), claim.Name);
+                Assert.AreEqual(claim.Value.GetRawText(), writtenBySystemTextJson.RootElement.GetProperty(claim.Name).GetRawText(), claim.Name);
+            }
+        }
+
+        [Test]
+        public void AdditionalClaimsAreEmptyWhenAllClaimsHaveProperties()
+        {
+            Assert.IsEmpty(Parse(AllClaims).AdditionalClaims);
+            Assert.IsEmpty(AttestationModelFactory.AttestationResult(jti: "id-1").AdditionalClaims);
+        }
+
+        [Test]
+        public void ModelFactorySetsAdditionalClaims()
+        {
+            AttestationResult result = AttestationModelFactory.AttestationResult(
+                verifierType: "tdxvm",
+                additionalClaims: new Dictionary<string, BinaryData> { ["tdx_mrtd"] = BinaryData.FromObjectAsJson("abc") });
+
+            Assert.AreEqual("tdxvm", result.VerifierType);
+            Assert.AreEqual("abc", result.AdditionalClaims["tdx_mrtd"].ToObjectFromJson<string>());
+        }
+
+        [Test]
+        public void ModelFactoryKeepsTheVersion1Signature()
+        {
+            // Code compiled against 1.0.0 binds to the 34-parameter overload.
+            MethodInfo version1 = typeof(AttestationModelFactory).GetMethods()
+                .Single(m => m.Name == nameof(AttestationModelFactory.AttestationResult) && m.GetParameters().Length == 34);
+            object[] arguments = version1.GetParameters().Select(p => p.ParameterType.IsValueType ? Activator.CreateInstance(p.ParameterType) : null).ToArray();
+            arguments[0] = "id-1";
+
+            var result = (AttestationResult)version1.Invoke(null, arguments);
+
+            Assert.AreEqual("id-1", result.UniqueIdentifier);
+            Assert.IsEmpty(result.AdditionalClaims);
         }
 
         [Test]

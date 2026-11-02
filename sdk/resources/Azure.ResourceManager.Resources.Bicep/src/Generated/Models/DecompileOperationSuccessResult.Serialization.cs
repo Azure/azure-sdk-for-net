@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.Resources.Bicep.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new DecompileOperationSuccessResult(files, entryPoint, additionalBinaryDataProperties);
+            return new DecompileOperationSuccessResult(files ?? new ChangeTrackingList<DecompiledFileDefinition>(), entryPoint, additionalBinaryDataProperties);
         }
     }
 }

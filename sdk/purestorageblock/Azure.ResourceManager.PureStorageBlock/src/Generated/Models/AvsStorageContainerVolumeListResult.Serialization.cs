@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new AvsStorageContainerVolumeListResult(value, nextLink, additionalBinaryDataProperties);
+            return new AvsStorageContainerVolumeListResult(value ?? new ChangeTrackingList<PureStorageAvsStorageContainerVolumeData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

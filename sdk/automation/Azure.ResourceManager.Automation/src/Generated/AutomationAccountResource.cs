@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Automation
         {
             TryGetApiVersion(ResourceType, out string automationAccountApiVersion);
             _automationAccountClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Automation", ResourceType.Namespace, Diagnostics);
-            _automationAccountRestClient = new AutomationAccount(_automationAccountClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, automationAccountApiVersion ?? "2024-10-23");
+            _automationAccountRestClient = new AutomationAccount(_automationAccountClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.Automation/automationAccounts", out string automationAccountApiVersionOverride) ? automationAccountApiVersionOverride : "2024-10-23");
             _agentRegistrationInformationClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Automation", ResourceType.Namespace, Diagnostics);
             _agentRegistrationInformationRestClient = new AgentRegistrationInformation(_agentRegistrationInformationClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, automationAccountApiVersion ?? "2024-10-23");
             _privateLinkResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Automation", ResourceType.Namespace, Diagnostics);

@@ -90,7 +90,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 writer.WriteEndArray();
             }
-            if (_defaultLanguageCodeIsDefined || Optional.IsDefined(DefaultLanguageCode))
+            if (Optional.IsDefined(DefaultLanguageCode, _defaultLanguageCodeIsDefined))
             {
                 if (DefaultLanguageCode != null)
                 {
@@ -107,7 +107,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WritePropertyName("minimumPrecision"u8);
                 writer.WriteNumberValue(MinimumPrecision.Value);
             }
-            if (_modelVersionIsDefined || Optional.IsDefined(ModelVersion))
+            if (Optional.IsDefined(ModelVersion, _modelVersionIsDefined))
             {
                 if (ModelVersion != null)
                 {

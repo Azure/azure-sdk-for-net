@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     public partial class SqlAvailabilityGroupWorkloadProtectionContainer : WorkloadContainer
     {
         /// <summary> Initializes a new instance of <see cref="SqlAvailabilityGroupWorkloadProtectionContainer"/>. </summary>
-        public SqlAvailabilityGroupWorkloadProtectionContainer()
+        public SqlAvailabilityGroupWorkloadProtectionContainer() : base("SQLAGWorkLoadContainer")
         {
         }
 

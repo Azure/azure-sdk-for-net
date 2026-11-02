@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.Relay.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new AuthorizationRuleProperties(rights, additionalBinaryDataProperties);
+            return new AuthorizationRuleProperties(rights ?? new ChangeTrackingList<RelayAccessRight>(), additionalBinaryDataProperties);
         }
     }
 }

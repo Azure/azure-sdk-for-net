@@ -129,7 +129,7 @@ namespace Azure.Search.Documents.Models
                     writer.WriteNull("@search.answers"u8);
                 }
             }
-            if (options.Format != "W" && (_debugInfoIsDefined || Optional.IsDefined(DebugInfo)))
+            if (options.Format != "W" && Optional.IsDefined(DebugInfo, _debugInfoIsDefined))
             {
                 if (DebugInfo != null)
                 {

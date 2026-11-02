@@ -40,15 +40,15 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Mocking
 
         private ClientDiagnostics CloudHsmClustersClientDiagnostics => _cloudHsmClustersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.HardwareSecurityModules.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private CloudHsmClusters CloudHsmClustersRestClient => _cloudHsmClustersRestClient ??= new CloudHsmClusters(CloudHsmClustersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-12-01-preview");
+        private CloudHsmClusters CloudHsmClustersRestClient => _cloudHsmClustersRestClient ??= new CloudHsmClusters(CloudHsmClustersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.HardwareSecurityModules/cloudHsmClusters", out string apiVersion) ? apiVersion : "2025-12-01-preview");
 
         private ClientDiagnostics DedicatedHsmsClientDiagnostics => _dedicatedHsmsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.HardwareSecurityModules.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private DedicatedHsms DedicatedHsmsRestClient => _dedicatedHsmsRestClient ??= new DedicatedHsms(DedicatedHsmsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-12-01-preview");
+        private DedicatedHsms DedicatedHsmsRestClient => _dedicatedHsmsRestClient ??= new DedicatedHsms(DedicatedHsmsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.HardwareSecurityModules/dedicatedHSMs", out string apiVersion0) ? apiVersion0 : "2025-12-01-preview");
 
         private ClientDiagnostics PaymentHsmClustersClientDiagnostics => _paymentHsmClustersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.HardwareSecurityModules.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private PaymentHsmClusters PaymentHsmClustersRestClient => _paymentHsmClustersRestClient ??= new PaymentHsmClusters(PaymentHsmClustersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-12-01-preview");
+        private PaymentHsmClusters PaymentHsmClustersRestClient => _paymentHsmClustersRestClient ??= new PaymentHsmClusters(PaymentHsmClustersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.HardwareSecurityModules/paymentHsmClusters", out string apiVersion1) ? apiVersion1 : "2025-12-01-preview");
 
         /// <summary>
         /// The List operation gets information about the Cloud HSM Clusters associated with the subscription.

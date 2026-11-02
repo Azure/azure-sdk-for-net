@@ -84,7 +84,7 @@ namespace Azure.Search.Documents.Indexes.Models
             writer.WriteStringValue(ConnectionString);
             writer.WritePropertyName("containerName"u8);
             writer.WriteStringValue(ContainerName.ToString());
-            if (_queryIsDefined || Optional.IsDefined(Query))
+            if (Optional.IsDefined(Query, _queryIsDefined))
             {
                 if (Query != null)
                 {
@@ -96,7 +96,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("query"u8);
                 }
             }
-            if (_ingestionParametersIsDefined || Optional.IsDefined(IngestionParameters))
+            if (Optional.IsDefined(IngestionParameters, _ingestionParametersIsDefined))
             {
                 if (IngestionParameters != null)
                 {

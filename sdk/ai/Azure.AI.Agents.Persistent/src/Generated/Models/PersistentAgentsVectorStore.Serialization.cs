@@ -105,7 +105,7 @@ namespace Azure.AI.Agents.Persistent
                 writer.WritePropertyName("expires_after"u8);
                 writer.WriteObjectValue(ExpiresAfter, options);
             }
-            if (_expiresAtIsDefined || Optional.IsDefined(ExpiresAt))
+            if (Optional.IsDefined(ExpiresAt, _expiresAtIsDefined))
             {
                 if (ExpiresAt != null)
                 {

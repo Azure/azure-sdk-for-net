@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Datadog
         /// <returns> The pages of DatadogMonitoredResourceResultCollectionResultOfT as an enumerable collection. </returns>
         public override IEnumerable<Page<DatadogMonitoredResourceResult>> AsPages(string continuationToken, int? pageSizeHint)
         {
-            Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
+            Uri nextPage = continuationToken != null ? new Uri(continuationToken, UriKind.RelativeOrAbsolute) : null;
             while (true)
             {
                 Response response = GetNextResponse(pageSizeHint, nextPage);
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Datadog
                 {
                     yield break;
                 }
-                MonitoredResourceListResponse result = MonitoredResourceListResponse.FromResponse(response);
+                MonitoredResourceListResult result = MonitoredResourceListResult.FromResponse(response);
                 nextPage = result.NextLink;
                 yield return Page<DatadogMonitoredResourceResult>.FromValues((IReadOnlyList<DatadogMonitoredResourceResult>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)

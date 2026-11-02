@@ -81,7 +81,7 @@ namespace Azure.Search.Documents.Indexes.Models
             }
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            if (_textWeightsIsDefined || Optional.IsDefined(TextWeights))
+            if (Optional.IsDefined(TextWeights, _textWeightsIsDefined))
             {
                 if (TextWeights != null)
                 {

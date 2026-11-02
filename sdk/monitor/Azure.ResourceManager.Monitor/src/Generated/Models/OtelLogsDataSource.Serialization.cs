@@ -237,7 +237,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
             }
             return new OtelLogsDataSource(
-                streams,
+                streams ?? new ChangeTrackingList<KnownOtelLogsDataSourceStreams>(),
                 resourceAttributeRouting,
                 enrichWithResourceAttributes ?? new ChangeTrackingList<string>(),
                 enrichWithReference,

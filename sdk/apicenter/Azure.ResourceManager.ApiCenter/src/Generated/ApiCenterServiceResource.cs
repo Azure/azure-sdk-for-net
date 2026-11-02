@@ -52,9 +52,8 @@ namespace Azure.ResourceManager.ApiCenter
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ApiCenterServiceResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string apiCenterServiceApiVersion);
             _servicesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiCenter", ResourceType.Namespace, Diagnostics);
-            _servicesRestClient = new Services(_servicesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, apiCenterServiceApiVersion ?? "2024-06-01-preview");
+            _servicesRestClient = new Services(_servicesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.ApiCenter/services", out string servicesApiVersionOverride) ? servicesApiVersionOverride : "2024-06-01-preview");
             ValidateResourceId(id);
         }
 

@@ -107,7 +107,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WritePropertyName("lastUpdatedAt"u8);
                 writer.WriteStringValue(LastUpdatedOn.Value, "O");
             }
-            if (options.Format != "W" && (_errorMessageIsDefined || Optional.IsDefined(ErrorMessage)))
+            if (options.Format != "W" && Optional.IsDefined(ErrorMessage, _errorMessageIsDefined))
             {
                 if (ErrorMessage != null)
                 {

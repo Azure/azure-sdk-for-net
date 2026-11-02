@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.ArtifactSigning.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new CertificateProfileListResult(value, nextLink, additionalBinaryDataProperties);
+            return new CertificateProfileListResult(value ?? new ChangeTrackingList<ArtifactSigningCertificateProfileData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

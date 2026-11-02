@@ -88,7 +88,7 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 writer.WriteNull("uri"u8);
             }
-            if (_authenticationKeyIsDefined || Optional.IsDefined(AuthenticationKey))
+            if (Optional.IsDefined(AuthenticationKey, _authenticationKeyIsDefined))
             {
                 if (AuthenticationKey != null)
                 {
@@ -100,7 +100,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("key"u8);
                 }
             }
-            if (_resourceIdIsDefined || Optional.IsDefined(ResourceId))
+            if (Optional.IsDefined(ResourceId, _resourceIdIsDefined))
             {
                 if (ResourceId != null)
                 {
@@ -112,7 +112,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("resourceId"u8);
                 }
             }
-            if (_timeoutIsDefined || Optional.IsDefined(Timeout))
+            if (Optional.IsDefined(Timeout, _timeoutIsDefined))
             {
                 if (Timeout != null)
                 {
@@ -124,7 +124,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("timeout"u8);
                 }
             }
-            if (_regionIsDefined || Optional.IsDefined(Region))
+            if (Optional.IsDefined(Region, _regionIsDefined))
             {
                 if (Region != null)
                 {

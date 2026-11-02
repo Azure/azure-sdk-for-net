@@ -226,8 +226,8 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                 questionId,
                 superiorQuestionId,
                 inputType,
-                optionIds,
-                rules,
+                optionIds ?? new ChangeTrackingList<string>(),
+                rules ?? new ChangeTrackingList<QuestionRuleItem>(),
                 showSubQuestionsValue,
                 additionalBinaryDataProperties);
         }

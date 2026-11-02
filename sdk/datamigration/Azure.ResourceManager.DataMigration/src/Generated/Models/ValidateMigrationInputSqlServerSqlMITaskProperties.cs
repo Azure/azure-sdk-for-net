@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataMigration.Models
     public partial class ValidateMigrationInputSqlServerSqlMITaskProperties : DataMigrationProjectTaskProperties
     {
         /// <summary> Initializes a new instance of <see cref="ValidateMigrationInputSqlServerSqlMITaskProperties"/>. </summary>
-        public ValidateMigrationInputSqlServerSqlMITaskProperties() : base(DataMigrationTaskType.ValidateMigrationInputSqlServerAzureSqlDbMI)
+        public ValidateMigrationInputSqlServerSqlMITaskProperties() : base(DataMigrationTaskType.ValidateMigrationInputSqlServerAzureSqlDBMI)
         {
             Output = new ChangeTrackingList<ValidateMigrationInputSqlServerSqlMITaskOutput>();
         }

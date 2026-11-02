@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.DomainServices
         /// <returns> The pages of OuContainerDataCollectionResultOfT as an enumerable collection. </returns>
         public override IEnumerable<Page<OuContainerData>> AsPages(string continuationToken, int? pageSizeHint)
         {
-            Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
+            Uri nextPage = continuationToken != null ? new Uri(continuationToken, UriKind.RelativeOrAbsolute) : null;
             while (true)
             {
                 Response response = GetNextResponse(pageSizeHint, nextPage);

@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new SubResourceListResult(value, nextLink, additionalBinaryDataProperties);
+            return new SubResourceListResult(value ?? new ChangeTrackingList<WritableSubResource>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

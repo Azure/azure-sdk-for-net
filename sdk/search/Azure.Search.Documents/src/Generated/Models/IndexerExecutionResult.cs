@@ -17,7 +17,7 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
         private DateTimeOffset? _endTime;
-        internal bool _endTimeIsDefined;
+        private bool _endTimeIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="IndexerExecutionResult"/>. </summary>
         internal IndexerExecutionResult()

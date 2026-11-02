@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.AppNetwork.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new AppLinkVersionInfo(version, upgrades, additionalBinaryDataProperties);
+            return new AppLinkVersionInfo(version, upgrades ?? new ChangeTrackingList<string>(), additionalBinaryDataProperties);
         }
     }
 }

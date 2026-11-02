@@ -39,9 +39,8 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal SecurityCenterAssignmentCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(SecurityCenterAssignmentResource.ResourceType, out string securityCenterAssignmentApiVersion);
             _assignmentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", SecurityCenterAssignmentResource.ResourceType.Namespace, Diagnostics);
-            _assignmentsRestClient = new Assignments(_assignmentsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, securityCenterAssignmentApiVersion ?? "2021-08-01-preview");
+            _assignmentsRestClient = new Assignments(_assignmentsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 

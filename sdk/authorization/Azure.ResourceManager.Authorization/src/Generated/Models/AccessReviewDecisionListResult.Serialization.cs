@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Authorization.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new AccessReviewDecisionListResult(value, nextLink, additionalBinaryDataProperties);
+            return new AccessReviewDecisionListResult(value ?? new ChangeTrackingList<AccessReviewDecisionData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

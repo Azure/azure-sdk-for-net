@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.Billing.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new BillingRequestListResult(value, nextLink, additionalBinaryDataProperties);
+            return new BillingRequestListResult(value ?? new ChangeTrackingList<BillingRequestData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }
