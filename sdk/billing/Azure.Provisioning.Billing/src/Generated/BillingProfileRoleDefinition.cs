@@ -109,7 +109,7 @@ namespace Azure.Provisioning.Billing
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _properties = DefineModelProperty<BillingRoleDefinitionProperties>(nameof(Properties), new string[] { "properties" });
             _tags = DefineDictionaryProperty<string>(nameof(Tags), new string[] { "tags" });
-            _parent = DefineResource<BillingProfile>(nameof(Parent), new string[] { "parent" }, isRequired: true);
+            _parent = DefineResource<BillingProfile>(nameof(Parent), new string[] { "parent" });
             DefineAdditionalProperties();
         }
 

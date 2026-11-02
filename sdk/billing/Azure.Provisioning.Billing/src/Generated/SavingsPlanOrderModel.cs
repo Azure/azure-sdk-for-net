@@ -256,7 +256,7 @@ namespace Azure.Provisioning.Billing
             _properties = DefineModelProperty<SavingsPlanOrderModelProperties>(nameof(Properties), new string[] { "properties" });
             _tags = DefineDictionaryProperty<string>(nameof(Tags), new string[] { "tags" });
             _sku = DefineModelProperty<BillingSku>(nameof(Sku), new string[] { "sku" });
-            _parent = DefineResource<BillingAccount>(nameof(Parent), new string[] { "parent" }, isRequired: true);
+            _parent = DefineResource<BillingAccount>(nameof(Parent), new string[] { "parent" });
             DefineAdditionalProperties();
         }
 

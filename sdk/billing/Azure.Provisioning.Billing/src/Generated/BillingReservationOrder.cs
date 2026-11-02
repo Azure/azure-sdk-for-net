@@ -292,7 +292,7 @@ namespace Azure.Provisioning.Billing
             _properties = DefineModelProperty<ReservationOrderProperty>(nameof(Properties), new string[] { "properties" });
             _eTag = DefineProperty<int>(nameof(ETag), new string[] { "etag" });
             _tags = DefineDictionaryProperty<string>(nameof(Tags), new string[] { "tags" });
-            _parent = DefineResource<BillingAccount>(nameof(Parent), new string[] { "parent" }, isRequired: true);
+            _parent = DefineResource<BillingAccount>(nameof(Parent), new string[] { "parent" });
             DefineAdditionalProperties();
         }
 

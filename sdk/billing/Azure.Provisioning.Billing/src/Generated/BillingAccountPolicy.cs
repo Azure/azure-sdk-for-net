@@ -39,13 +39,18 @@ namespace Azure.Provisioning.Billing
             }
         }
 
-        /// <summary> Gets the Name. </summary>
+        /// <summary> Gets or sets the Name. </summary>
         public BicepValue<string> Name
         {
             get
             {
                 Initialize();
                 return _name;
+            }
+            set
+            {
+                Initialize();
+                _name.Assign(value);
             }
         }
 
@@ -113,7 +118,7 @@ namespace Azure.Provisioning.Billing
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _properties = DefineModelProperty<BillingAccountPolicyProperties>(nameof(Properties), new string[] { "properties" });
             _tags = DefineDictionaryProperty<string>(nameof(Tags), new string[] { "tags" });
-            _parent = DefineResource<BillingAccount>(nameof(Parent), new string[] { "parent" }, isRequired: true);
+            _parent = DefineResource<BillingAccount>(nameof(Parent), new string[] { "parent" });
             DefineAdditionalProperties();
         }
 
