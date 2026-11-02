@@ -572,7 +572,7 @@ op headAsBoolean(@path id: string): void;
 @doc("List things with nextlink")
 @convenientAPI(true)
 @list
-op ListWithNextLink(): {
+op ListWithNextLink(@query @continuationToken resumeFrom?: string): {
   @pageItems
   things: ThingModel[];
 
@@ -594,7 +594,7 @@ op ListWithStringNextLink(): {
 @doc("List things with nextlink")
 @convenientAPI(true)
 @list
-op ListWithHeaderNextLink(): {
+op ListWithHeaderNextLink(@header("x-continuation-token") @continuationToken resumeFrom?: string): {
   @pageItems
   things: ThingModel[];
 
