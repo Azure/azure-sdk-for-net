@@ -46,17 +46,31 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <returns> The pages of DesktopVirtualizationRegistrationTokenMinimalCollectionResultOfT as an enumerable collection. </returns>
         public override IEnumerable<Page<DesktopVirtualizationRegistrationTokenMinimal>> AsPages(string continuationToken, int? pageSizeHint)
         {
-            Response response = GetNextResponse(pageSizeHint, null);
-            DesktopVirtualizationRegistrationTokenList result = DesktopVirtualizationRegistrationTokenList.FromResponse(response);
-            yield return Page<DesktopVirtualizationRegistrationTokenMinimal>.FromValues((IReadOnlyList<DesktopVirtualizationRegistrationTokenMinimal>)result.Value, null, response);
+            Uri nextPage = continuationToken != null ? new Uri(continuationToken, UriKind.RelativeOrAbsolute) : null;
+            while (true)
+            {
+                Response response = GetNextResponse(pageSizeHint, nextPage);
+                if (response is null)
+                {
+                    yield break;
+                }
+                DesktopVirtualizationRegistrationTokenList result = DesktopVirtualizationRegistrationTokenList.FromResponse(response);
+                string nextPageString = result.NextLink;
+                nextPage = string.IsNullOrEmpty(nextPageString) ? null : new Uri(nextPageString, UriKind.RelativeOrAbsolute);
+                yield return Page<DesktopVirtualizationRegistrationTokenMinimal>.FromValues((IReadOnlyList<DesktopVirtualizationRegistrationTokenMinimal>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                if (nextPage == null)
+                {
+                    yield break;
+                }
+            }
         }
 
         /// <summary> Get next page. </summary>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
-        private Response GetNextResponse(int? pageSizeHint, string continuationToken)
+        /// <param name="nextLink"> The next link to use for the next page of results. </param>
+        private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = _client.CreateGetRegistrationTokensRequest(_subscriptionId, _resourceGroupName, _hostPoolName, _context);
+            HttpMessage message = nextLink != null ? _client.CreateNextGetRegistrationTokensRequest(nextLink, _subscriptionId, _resourceGroupName, _hostPoolName, _context) : _client.CreateGetRegistrationTokensRequest(_subscriptionId, _resourceGroupName, _hostPoolName, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try

@@ -16,6 +16,14 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private int? _rampUpMaximumHostPoolSize;
+        private bool _rampUpMaximumHostPoolSizeIsDefined;
+        private int? _rampUpMinimumHostPoolSize;
+        private bool _rampUpMinimumHostPoolSizeIsDefined;
+        private int? _rampDownMaximumHostPoolSize;
+        private bool _rampDownMaximumHostPoolSizeIsDefined;
+        private int? _rampDownMinimumHostPoolSize;
+        private bool _rampDownMinimumHostPoolSizeIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="DesktopVirtualizationCreateDeleteProperties"/>. </summary>
         public DesktopVirtualizationCreateDeleteProperties()
@@ -30,27 +38,71 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal DesktopVirtualizationCreateDeleteProperties(int? rampUpMaximumHostPoolSize, int? rampUpMinimumHostPoolSize, int? rampDownMaximumHostPoolSize, int? rampDownMinimumHostPoolSize, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            RampUpMaximumHostPoolSize = rampUpMaximumHostPoolSize;
-            RampUpMinimumHostPoolSize = rampUpMinimumHostPoolSize;
-            RampDownMaximumHostPoolSize = rampDownMaximumHostPoolSize;
-            RampDownMinimumHostPoolSize = rampDownMinimumHostPoolSize;
+            _rampUpMaximumHostPoolSize = rampUpMaximumHostPoolSize;
+            _rampUpMinimumHostPoolSize = rampUpMinimumHostPoolSize;
+            _rampDownMaximumHostPoolSize = rampDownMaximumHostPoolSize;
+            _rampDownMinimumHostPoolSize = rampDownMinimumHostPoolSize;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Maximum number of session hosts that may be created by the Scaling Service. This requires the assigned hostpool to have a session host config property. </summary>
         [WirePath("rampUpMaximumHostPoolSize")]
-        public int? RampUpMaximumHostPoolSize { get; set; }
+        public int? RampUpMaximumHostPoolSize
+        {
+            get
+            {
+                return _rampUpMaximumHostPoolSize;
+            }
+            set
+            {
+                _rampUpMaximumHostPoolSize = value;
+                _rampUpMaximumHostPoolSizeIsDefined = true;
+            }
+        }
 
         /// <summary> Minimum number of session hosts that will be be created by the Scaling Service. Scaling will not delete any hosts when this limit is met. This requires the assigned hostpool to have a session host config property. </summary>
         [WirePath("rampUpMinimumHostPoolSize")]
-        public int? RampUpMinimumHostPoolSize { get; set; }
+        public int? RampUpMinimumHostPoolSize
+        {
+            get
+            {
+                return _rampUpMinimumHostPoolSize;
+            }
+            set
+            {
+                _rampUpMinimumHostPoolSize = value;
+                _rampUpMinimumHostPoolSizeIsDefined = true;
+            }
+        }
 
         /// <summary> Maximum number of session hosts that may be created by the Scaling Service. This requires the assigned hostpool to have a session host config property. </summary>
         [WirePath("rampDownMaximumHostPoolSize")]
-        public int? RampDownMaximumHostPoolSize { get; set; }
+        public int? RampDownMaximumHostPoolSize
+        {
+            get
+            {
+                return _rampDownMaximumHostPoolSize;
+            }
+            set
+            {
+                _rampDownMaximumHostPoolSize = value;
+                _rampDownMaximumHostPoolSizeIsDefined = true;
+            }
+        }
 
         /// <summary> Minimum number of session hosts that will be be created by the Scaling Service. Scaling will not delete any hosts when this limit is met. This requires the assigned hostpool to have a session host config property. </summary>
         [WirePath("rampDownMinimumHostPoolSize")]
-        public int? RampDownMinimumHostPoolSize { get; set; }
+        public int? RampDownMinimumHostPoolSize
+        {
+            get
+            {
+                return _rampDownMinimumHostPoolSize;
+            }
+            set
+            {
+                _rampDownMinimumHostPoolSize = value;
+                _rampDownMinimumHostPoolSizeIsDefined = true;
+            }
+        }
     }
 }

@@ -129,6 +129,11 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 writer.WritePropertyName("applicationType"u8);
                 writer.WriteStringValue(ApplicationType.Value.ToString());
             }
+            if (Optional.IsDefined(ShortcutsExtension))
+            {
+                writer.WritePropertyName("shortcutsExtension"u8);
+                writer.WriteObjectValue(ShortcutsExtension, options);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -182,6 +187,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             string msixPackageFamilyName = default;
             string msixPackageApplicationId = default;
             RemoteApplicationType? applicationType = default;
+            ShortcutsExtension shortcutsExtension = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -256,6 +262,15 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     applicationType = new RemoteApplicationType(prop.Value.GetString());
                     continue;
                 }
+                if (prop.NameEquals("shortcutsExtension"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    shortcutsExtension = ShortcutsExtension.DeserializeShortcutsExtension(prop.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
@@ -273,6 +288,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 msixPackageFamilyName,
                 msixPackageApplicationId,
                 applicationType,
+                shortcutsExtension,
                 additionalBinaryDataProperties);
         }
     }
