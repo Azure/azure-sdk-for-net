@@ -8,7 +8,7 @@
 
 ### Bugs Fixed
 
-- Fixed a regression in `ServiceBusSessionProcessor` where losing a session link between receive calls caused repeated `ObjectDisposedException` errors and stopped further message receipt. The processor now retires the lost session receiver and accepts the session again. ([#63538](https://github.com/Azure/azure-sdk-for-net/issues/63538))
+- Fixed a regression in `ServiceBusSessionProcessor` where losing a session link between receive calls caused repeated `ObjectDisposedException` errors and stopped further message receipt. The processor now retires the lost session receiver and accepts the session again. Automatic session lock renewal also stops after link loss, including while message handlers are still active. ([#63538](https://github.com/Azure/azure-sdk-for-net/issues/63538))
 
 ### Other Changes
 

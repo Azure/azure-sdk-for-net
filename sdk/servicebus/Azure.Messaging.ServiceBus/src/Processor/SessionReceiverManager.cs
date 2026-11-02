@@ -408,7 +408,9 @@ namespace Azure.Messaging.ServiceBus
                 catch (Exception ex) when (ex is not TaskCanceledException)
                 {
                     var serviceBusException = ex as ServiceBusException;
-                    if (serviceBusException?.Reason == ServiceBusFailureReason.SessionLockLost)
+                    bool sessionLockLost = serviceBusException?.Reason == ServiceBusFailureReason.SessionLockLost ||
+                        (ex is ObjectDisposedException && _receiver.InnerReceiver.IsSessionLinkClosed);
+                    if (sessionLockLost)
                     {
                         SessionLockLostException = ex;
                         _sessionLockCancellationTokenSource.Cancel();
@@ -418,7 +420,7 @@ namespace Azure.Messaging.ServiceBus
                     await HandleRenewLockException(ex, sessionLockRenewalCancellationToken).ConfigureAwait(false);
 
                     // if the error was not transient, break out of the loop
-                    if (!(ex as ServiceBusException)?.IsTransient == true)
+                    if (sessionLockLost || serviceBusException?.IsTransient == false)
                     {
                         break;
                     }

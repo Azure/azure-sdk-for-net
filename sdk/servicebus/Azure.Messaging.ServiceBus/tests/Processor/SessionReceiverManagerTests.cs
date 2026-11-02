@@ -3,9 +3,16 @@
 
 using System;
 using System.Collections.Concurrent;
+using System.Collections.Generic;
+using System.Diagnostics.Tracing;
+using System.Linq;
+using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core.Shared;
+using Azure.Core.TestFramework;
 using Azure.Messaging.ServiceBus.Core;
+using Azure.Messaging.ServiceBus.Diagnostics;
 using Moq;
 using NUnit.Framework;
 
@@ -13,6 +20,133 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
 {
     public class SessionReceiverManagerTests
     {
+        [TestCase(true, true, true)]
+        [TestCase(true, false, true)]
+        [TestCase(false, true, true)]
+        [TestCase(false, false, true)]
+        [TestCase(true, true, false)]
+        [TestCase(false, false, false)]
+        public async Task ClosedSessionRenewalStopsOnlyAfterLinkLossWhileMessageHandlerIsActive(
+            bool fixedSession, bool infiniteRenewal, bool linkLost)
+        {
+            var closed = 0;
+            var receiveCount = 0;
+            var lockReadCount = 0;
+            var handlerEntered = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
+            var releaseHandler = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
+            var linkClosed = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
+            var errors = new ConcurrentQueue<ProcessErrorEventArgs>();
+            var receiver = new Mock<TransportReceiver>();
+            receiver.SetupGet(receiver => receiver.IsClosed).Returns(() => Volatile.Read(ref closed) != 0);
+            receiver.SetupGet(receiver => receiver.IsSessionLinkClosed).Returns(() => linkLost && Volatile.Read(ref closed) != 0);
+            receiver.SetupGet(receiver => receiver.SessionId).Returns("session");
+            receiver.SetupGet(receiver => receiver.SessionLockedUntil).Returns(() =>
+                DateTimeOffset.UtcNow.Add(Interlocked.Increment(ref lockReadCount) == 1 ? TimeSpan.FromMinutes(5) : TimeSpan.FromMilliseconds(200)));
+            receiver.Setup(receiver => receiver.OpenLinkAsync(It.IsAny<CancellationToken>())).Returns(Task.CompletedTask);
+            receiver.Setup(receiver => receiver.RenewSessionLockAsync(It.IsAny<CancellationToken>()))
+                .Returns(async () =>
+                {
+                    await linkClosed.Task;
+                    throw new ObjectDisposedException(nameof(TransportReceiver));
+                });
+            receiver.Setup(receiver => receiver.CloseAsync(It.IsAny<CancellationToken>())).Returns(Task.CompletedTask);
+            receiver.Setup(receiver => receiver.ReceiveMessagesAsync(It.IsAny<int>(), It.IsAny<TimeSpan?>(), It.IsAny<CancellationToken>()))
+                .Returns(() =>
+                {
+                    Interlocked.Increment(ref receiveCount);
+                    return Task.FromResult<IReadOnlyList<ServiceBusReceivedMessage>>(
+                        new[] { ServiceBusModelFactory.ServiceBusReceivedMessage(sessionId: "session") });
+                });
+            var options = new ServiceBusSessionProcessorOptions
+            {
+                AutoCompleteMessages = false,
+                MaxAutoLockRenewalDuration = infiniteRenewal ? Timeout.InfiniteTimeSpan : TimeSpan.FromMinutes(5),
+                MaxConcurrentSessions = 1,
+                MaxConcurrentCallsPerSession = 1
+            };
+            if (fixedSession)
+            {
+                options.SessionIds.Add("session");
+            }
+
+            await using var processor = new ServiceBusSessionProcessor(
+                ServiceBusTestUtilities.GetMockedReceiverConnection(receiver), "queue", options);
+            using var acceptSemaphore = new SemaphoreSlim(1, 1);
+            using var shutdown = new CancellationTokenSource();
+            using var listener = new TestEventListener();
+            listener.EnableEvents(ServiceBusEventSource.Log, EventLevel.Verbose);
+            var diagnostics = new MessagingClientDiagnostics(
+                DiagnosticProperty.DiagnosticNamespace,
+                DiagnosticProperty.ResourceProviderNamespace,
+                DiagnosticProperty.ServiceBusServiceContext,
+                processor.FullyQualifiedNamespace,
+                processor.EntityPath);
+            var manager = new SessionReceiverManager(processor, fixedSession ? "session" : null, acceptSemaphore, diagnostics, fixedSession);
+            Task processing = null;
+            try
+            {
+                processor.ProcessMessageAsync += OnMessage;
+                processor.ProcessErrorAsync += OnError;
+                processing = manager.ReceiveAndProcessMessagesAsync(shutdown.Token);
+                Assert.That(await Task.WhenAny(handlerEntered.Task, Task.Delay(TimeSpan.FromSeconds(10))), Is.SameAs(handlerEntered.Task));
+                var renewal = (Task)typeof(SessionReceiverManager)
+                    .GetField("_sessionLockRenewalTask", BindingFlags.Instance | BindingFlags.NonPublic)
+                    .GetValue(manager);
+
+                Assert.That(manager.SessionLockCancellationToken.IsCancellationRequested, Is.False);
+                Interlocked.Exchange(ref closed, 1);
+                linkClosed.TrySetResult(true);
+                var completed = await Task.WhenAny(renewal, Task.Delay(TimeSpan.FromSeconds(1)));
+                Assert.That(completed == renewal, Is.EqualTo(linkLost),
+                    $"Only session link loss must terminate renewal. Events: {listener.EventsById(ServiceBusEventSource.ProcessorRenewSessionLockExceptionEvent).Count(e => e.Payload.Contains(processor.Identifier))}.");
+                if (linkLost)
+                {
+                    await renewal;
+                }
+                Assert.That(receiveCount, Is.EqualTo(1), "The handler must still occupy the only receive slot.");
+                Assert.That(processing.IsCompleted, Is.False);
+                Assert.That(errors, Is.Empty, "Disposed renewal errors are not sent to ProcessErrorAsync.");
+                Assert.That(manager.SessionLockCancellationToken.IsCancellationRequested, Is.EqualTo(linkLost));
+                if (linkLost)
+                {
+                    Assert.That(manager.SessionLockLostException, Is.TypeOf<ObjectDisposedException>());
+                    Assert.That(listener.EventsById(ServiceBusEventSource.ProcessorRenewSessionLockExceptionEvent)
+                        .Count(e => e.Payload.Contains(processor.Identifier)), Is.EqualTo(1));
+                }
+                else
+                {
+                    Assert.That(manager.SessionLockLostException, Is.Null);
+                }
+                receiver.Verify(receiver => receiver.CloseAsync(It.IsAny<CancellationToken>()), Times.Never);
+            }
+            finally
+            {
+                shutdown.Cancel();
+                linkClosed.TrySetResult(true);
+                releaseHandler.TrySetResult(true);
+                await manager.CancelAsync();
+                if (processing != null)
+                {
+                    await processing;
+                }
+                await manager.CloseReceiverIfNeeded(CancellationToken.None);
+                processor.ProcessMessageAsync -= OnMessage;
+                processor.ProcessErrorAsync -= OnError;
+            }
+
+            async Task OnMessage(ProcessSessionMessageEventArgs args)
+            {
+                handlerEntered.TrySetResult(true);
+                await releaseHandler.Task;
+            }
+
+            Task OnError(ProcessErrorEventArgs args)
+            {
+                errors.Enqueue(args);
+                return Task.CompletedTask;
+            }
+        }
+
         [TestCase(true, ServiceBusReceiveMode.ReceiveAndDelete)]
         [TestCase(true, ServiceBusReceiveMode.PeekLock)]
         [TestCase(false, ServiceBusReceiveMode.ReceiveAndDelete)]
