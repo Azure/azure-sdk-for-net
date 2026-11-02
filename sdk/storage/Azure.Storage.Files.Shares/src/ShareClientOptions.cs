@@ -200,7 +200,12 @@ namespace Azure.Storage.Files.Shares
             /// <summary>
             /// The 2027-03-07 service version.
             /// </summary>
-            V2027_03_07 = 34
+            V2027_03_07 = 34,
+
+            /// <summary>
+            /// The 2027-05-07 service version.
+            /// </summary>
+            V2027_05_07 = 35
 #pragma warning restore CA1707 // Identifiers should not contain underscores
         }
 
@@ -487,6 +492,9 @@ namespace Azure.Storage.Files.Shares
                     return true;
                 case "2027-03-07":
                     serviceVersion = ServiceVersion.V2027_03_07;
+                    return true;
+                case "2027-05-07":
+                    serviceVersion = ServiceVersion.V2027_05_07;
                     return true;
                 default:
                     return false;
