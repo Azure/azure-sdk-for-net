@@ -10,7 +10,6 @@ using OpenAI.Realtime;
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> The flat response audio-output projection, with optional `voice`, `voice_type`, `voice_locale`, and `format` fields. </summary>
-    [Experimental("AAIP001")]
     public partial class VoiceResponseAudioOutput
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
@@ -19,6 +18,10 @@ namespace Azure.AI.Projects.Agents
         /// <summary> Initializes a new instance of <see cref="VoiceResponseAudioOutput"/>. </summary>
         public VoiceResponseAudioOutput()
         {
+#pragma warning disable AAIP001 // Implementation preserves preview variants of GA models.
+#pragma warning disable AAIP002 // Implementation accesses OpenAI-dependent members.
+#pragma warning restore AAIP002 // Implementation accesses OpenAI-dependent members.
+#pragma warning restore AAIP001 // Implementation preserves preview variants of GA models.
         }
 
         /// <summary> Initializes a new instance of <see cref="VoiceResponseAudioOutput"/>. </summary>
@@ -27,6 +30,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="voiceLocale"> The BCP-47 locale of the voice used for the response's audio output. </param>
         /// <param name="format"> The audio format used for the response's audio output. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        [Experimental("AAIP002")]
         internal VoiceResponseAudioOutput(string voice, VoiceType? voiceType, string voiceLocale, RealtimeAudioFormat format, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Voice = voice;
@@ -46,6 +50,7 @@ namespace Azure.AI.Projects.Agents
         public string VoiceLocale { get; set; }
 
         /// <summary> The audio format used for the response's audio output. </summary>
+        [Experimental("AAIP002")]
         public RealtimeAudioFormat Format { get; set; }
     }
 }

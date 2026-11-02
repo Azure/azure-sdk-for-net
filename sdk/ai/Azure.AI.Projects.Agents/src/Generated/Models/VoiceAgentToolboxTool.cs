@@ -4,12 +4,10 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> A reference to a Foundry toolbox, which is a versioned bundle of tools executed through its MCP endpoint. </summary>
-    [Experimental("AAIP001")]
     public partial class VoiceAgentToolboxTool : VoiceAgentTool
     {
         /// <summary> Initializes a new instance of <see cref="VoiceAgentToolboxTool"/>. </summary>

@@ -23,6 +23,8 @@ namespace Azure.AI.Projects.Agents
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual AgentsPagedResultRealtimeConversationItem PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
+#pragma warning disable AAIP001 // Implementation preserves preview variants of GA models.
+#pragma warning disable AAIP002 // Implementation accesses OpenAI-dependent members.
             string format = options.Format == "W" ? ((IPersistableModel<AgentsPagedResultRealtimeConversationItem>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
@@ -34,11 +36,15 @@ namespace Azure.AI.Projects.Agents
                 default:
                     throw new FormatException($"The model {nameof(AgentsPagedResultRealtimeConversationItem)} does not support reading '{options.Format}' format.");
             }
+#pragma warning restore AAIP002 // Implementation accesses OpenAI-dependent members.
+#pragma warning restore AAIP001 // Implementation preserves preview variants of GA models.
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
+#pragma warning disable AAIP001 // Implementation preserves preview variants of GA models.
+#pragma warning disable AAIP002 // Implementation accesses OpenAI-dependent members.
             string format = options.Format == "W" ? ((IPersistableModel<AgentsPagedResultRealtimeConversationItem>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
@@ -47,6 +53,8 @@ namespace Azure.AI.Projects.Agents
                 default:
                     throw new FormatException($"The model {nameof(AgentsPagedResultRealtimeConversationItem)} does not support writing '{options.Format}' format.");
             }
+#pragma warning restore AAIP002 // Implementation accesses OpenAI-dependent members.
+#pragma warning restore AAIP001 // Implementation preserves preview variants of GA models.
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -62,24 +70,34 @@ namespace Azure.AI.Projects.Agents
         /// <param name="result"> The <see cref="ClientResult"/> to deserialize the <see cref="AgentsPagedResultRealtimeConversationItem"/> from. </param>
         public static explicit operator AgentsPagedResultRealtimeConversationItem(ClientResult result)
         {
+#pragma warning disable AAIP001 // Implementation preserves preview variants of GA models.
+#pragma warning disable AAIP002 // Implementation accesses OpenAI-dependent members.
             PipelineResponse response = result.GetRawResponse();
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeAgentsPagedResultRealtimeConversationItem(document.RootElement, ModelSerializationExtensions.WireOptions);
+#pragma warning restore AAIP002 // Implementation accesses OpenAI-dependent members.
+#pragma warning restore AAIP001 // Implementation preserves preview variants of GA models.
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<AgentsPagedResultRealtimeConversationItem>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+#pragma warning disable AAIP001 // Implementation preserves preview variants of GA models.
+#pragma warning disable AAIP002 // Implementation accesses OpenAI-dependent members.
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
+#pragma warning restore AAIP002 // Implementation accesses OpenAI-dependent members.
+#pragma warning restore AAIP001 // Implementation preserves preview variants of GA models.
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+#pragma warning disable AAIP001 // Implementation preserves preview variants of GA models.
+#pragma warning disable AAIP002 // Implementation accesses OpenAI-dependent members.
             string format = options.Format == "W" ? ((IPersistableModel<AgentsPagedResultRealtimeConversationItem>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
@@ -124,6 +142,8 @@ namespace Azure.AI.Projects.Agents
 #endif
                 }
             }
+#pragma warning restore AAIP002 // Implementation accesses OpenAI-dependent members.
+#pragma warning restore AAIP001 // Implementation preserves preview variants of GA models.
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -134,6 +154,8 @@ namespace Azure.AI.Projects.Agents
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual AgentsPagedResultRealtimeConversationItem JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+#pragma warning disable AAIP001 // Implementation preserves preview variants of GA models.
+#pragma warning disable AAIP002 // Implementation accesses OpenAI-dependent members.
             string format = options.Format == "W" ? ((IPersistableModel<AgentsPagedResultRealtimeConversationItem>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
@@ -141,12 +163,16 @@ namespace Azure.AI.Projects.Agents
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeAgentsPagedResultRealtimeConversationItem(document.RootElement, options);
+#pragma warning restore AAIP002 // Implementation accesses OpenAI-dependent members.
+#pragma warning restore AAIP001 // Implementation preserves preview variants of GA models.
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static AgentsPagedResultRealtimeConversationItem DeserializeAgentsPagedResultRealtimeConversationItem(JsonElement element, ModelReaderWriterOptions options)
         {
+#pragma warning disable AAIP001 // Implementation preserves preview variants of GA models.
+#pragma warning disable AAIP002 // Implementation accesses OpenAI-dependent members.
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -196,6 +222,8 @@ namespace Azure.AI.Projects.Agents
                 }
             }
             return new AgentsPagedResultRealtimeConversationItem(data ?? new ChangeTrackingList<RealtimeItem>(), firstId, lastId, hasMore, additionalBinaryDataProperties);
+#pragma warning restore AAIP002 // Implementation accesses OpenAI-dependent members.
+#pragma warning restore AAIP001 // Implementation preserves preview variants of GA models.
         }
     }
 }

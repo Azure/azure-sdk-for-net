@@ -4,7 +4,6 @@
 
 using System;
 using System.ComponentModel;
-using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects.Agents
 {
@@ -12,7 +11,6 @@ namespace Azure.AI.Projects.Agents
     /// How the model backing a voice agent is served. This is independent of the architecture (realtime or cascaded),
     /// which the service derives from the selected model.
     /// </summary>
-    [Experimental("AAIP001")]
     public readonly partial struct VoiceModelType : IEquatable<VoiceModelType>
     {
         private readonly string _value;

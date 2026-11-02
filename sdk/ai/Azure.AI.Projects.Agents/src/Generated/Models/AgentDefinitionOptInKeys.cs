@@ -5,7 +5,7 @@
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> Feature opt-in keys for agent definition operations supporting conditional preview features. </summary>
-    internal enum AgentDefinitionOptInKeys
+    public enum AgentDefinitionOptInKeys
     {
         /// <summary> WorkflowAgentsV1Preview. </summary>
         WorkflowAgentsV1Preview,

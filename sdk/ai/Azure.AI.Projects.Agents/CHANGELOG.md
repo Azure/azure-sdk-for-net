@@ -3,6 +3,8 @@
 ## 3.0.0-beta.6 (Unreleased)
 
 ### Features Added
+- Added inline voice-subagent handoff, telephony campaign, SIP binding, and service-managed system-tool models and operations from the consolidated Voice Agents contract. Inline handoff, SIP, and GPT Live retain their required preview opt-ins.
+- Added public Foundry service error details for campaign failures and validation errors.
 - Added experimental Live voice agent definitions, native client/server event models, and `BetaVoiceAgentsLiveConversations` for stored Live history and recordings.
 - Added Foundry-aware Live session snapshots and delegation trigger metadata, including `foundry_managed_agent` ownership with the pinned agent name and resolved version.
 - Live definitions preserve typed Realtime/Live dispatch and existing Realtime model-factory parameter order. Stored Live history pagination honors `has_more` even when a terminal page retains `last_id`.
@@ -17,6 +19,8 @@
 - `VoiceAgentAzureSemanticVadMultilingualTurnDetection.IdleTimeoutMs` was renamed to `VoiceAgentAzureSemanticVadMultilingualTurnDetection.IdleTimeout`.
 - `VoiceAgentAzureSemanticVadTurnDetection.IdleTimeoutMs` was renamed to `VoiceAgentAzureSemanticVadTurnDetection.IdleTimeout`.
 - `VoiceAgentSubagent.InvokeTimeoutSeconds` was renamed to `VoiceAgentSubagent.InvokeTimeout`.
+- `VoiceAgentDefinition.SubagentConfig` and its model-factory parameter now use `BinaryData` for the delegate-or-inline configuration union. Use `VoiceAgentDelegateSubagentConfig` for referenced text agents or `VoiceAgentInlineSubagentConfig` for inline voice handoff.
+- Telephony creation methods now accept `TelephonyBinding` and `TelephonyCallJob` instead of separate create-request models. Call-job sources and destinations use `TelephonyAddress` variants such as `PhoneNumber`, `TeamsAddress`, and `SipAddress`. Telephony binding lists no longer accept a `status` filter.
 - `OtlpTelemetryEndpoint.Endpoint` type was changed from `string` to `System.Uri`.
 - `VoiceAgentMcpTool.AllowedTools` and `MCPToolboxTool.AllowedTools`, along with their model-factory parameters, now use `OpenAI.Responses.McpToolFilter` instead of `BinaryData`. `MCPToolboxTool.AllowedTools` now requires the `AAIP002` experimental opt-in.
 - `VoiceResult.Metadata` now uses `IDictionary<string, BinaryData>` instead of `OpenAI.InternalMetadataContainer`. The public `OpenAI.InternalMetadataContainer` type was removed.
@@ -25,11 +29,13 @@
 ### Bugs Fixed
 - Fixed typed persisted Realtime response status and output-modality serialization to use the external OpenAI enum values rather than treating them as ModelReaderWriter models.
 - Fixed semantic VAD eagerness serialization and deserialization to preserve the external OpenAI string values.
+- Shared GA Voice Agent and telephony types no longer require `AAIP001` merely because some values support conditional previews. Members and variants with required preview metadata remain experimental.
+- Preserved the shared string-valued telephony address contract for SIP serialization and kept internal error helpers out of the public API.
 - Fixed the Realtime model factory to preserve newly added fields, including `Soundscape`, without changing the order of its existing parameters.
 - Kept Live-only decision helper models and their model-factory methods behind the `AAIP001` experimental opt-in without changing shared stable models.
 
 ### Other Changes
-- Regenerated from the latest Foundry definitions in [Azure/azure-rest-api-specs#47196](https://github.com/Azure/azure-rest-api-specs/pull/47196), using OpenAI TypeSpec 1.32.0.
+- Regenerated from [Azure/azure-rest-api-specs#47806](https://github.com/Azure/azure-rest-api-specs/pull/47806) at `94c78273b7207a159a3eb3699be150bed59e4868`, using OpenAI TypeSpec 1.32.0.
 
 ## 3.0.0-beta.5 (2026-10-16)
 

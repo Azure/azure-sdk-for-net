@@ -4,12 +4,10 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> A named destination to which the voice agent may transfer a call. </summary>
-    [Experimental("AAIP001")]
     public partial class TelephonyTransferTarget
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
@@ -18,9 +16,9 @@ namespace Azure.AI.Projects.Agents
         /// <summary> Initializes a new instance of <see cref="TelephonyTransferTarget"/>. </summary>
         /// <param name="name"> The unique name exposed to the voice agent for this transfer target. </param>
         /// <param name="description"> A description that helps the voice agent decide when to use this target. </param>
-        /// <param name="destination"> The provider-specific transfer destination. </param>
+        /// <param name="destination"> The shared typed address to transfer to. The selected provider validates supported destination types. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="description"/> or <paramref name="destination"/> is null. </exception>
-        public TelephonyTransferTarget(string name, string description, TelephonyTransferDestination destination)
+        public TelephonyTransferTarget(string name, string description, TelephonyAddress destination)
         {
             Argument.AssertNotNull(name, nameof(name));
             Argument.AssertNotNull(description, nameof(description));
@@ -34,9 +32,9 @@ namespace Azure.AI.Projects.Agents
         /// <summary> Initializes a new instance of <see cref="TelephonyTransferTarget"/>. </summary>
         /// <param name="name"> The unique name exposed to the voice agent for this transfer target. </param>
         /// <param name="description"> A description that helps the voice agent decide when to use this target. </param>
-        /// <param name="destination"> The provider-specific transfer destination. </param>
+        /// <param name="destination"> The shared typed address to transfer to. The selected provider validates supported destination types. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TelephonyTransferTarget(string name, string description, TelephonyTransferDestination destination, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal TelephonyTransferTarget(string name, string description, TelephonyAddress destination, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Description = description;
@@ -50,7 +48,7 @@ namespace Azure.AI.Projects.Agents
         /// <summary> A description that helps the voice agent decide when to use this target. </summary>
         public string Description { get; set; }
 
-        /// <summary> The provider-specific transfer destination. </summary>
-        public TelephonyTransferDestination Destination { get; set; }
+        /// <summary> The shared typed address to transfer to. The selected provider validates supported destination types. </summary>
+        public TelephonyAddress Destination { get; set; }
     }
 }

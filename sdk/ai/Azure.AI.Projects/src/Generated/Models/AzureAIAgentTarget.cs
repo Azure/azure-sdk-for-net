@@ -21,11 +21,15 @@ namespace Azure.AI.Projects.Evaluation
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public AzureAIAgentTarget(string name) : base("azure_ai_agent")
         {
+#pragma warning disable AAIP001 // Implementation preserves preview variants of GA models.
+#pragma warning disable AAIP002 // Implementation accesses OpenAI-dependent members.
             Argument.AssertNotNull(name, nameof(name));
 
             Name = name;
             ToolDescriptions = new ChangeTrackingList<ToolDescription>();
             Tools = new ChangeTrackingList<ResponseTool>();
+#pragma warning restore AAIP002 // Implementation accesses OpenAI-dependent members.
+#pragma warning restore AAIP001 // Implementation preserves preview variants of GA models.
         }
 
         /// <summary> Initializes a new instance of <see cref="AzureAIAgentTarget"/>. </summary>

@@ -44,6 +44,12 @@ public class VoiceAgentLiveVisitor : ScmLibraryVisitor
 
     protected internal static void Configure(InputNamespace input)
     {
+        foreach (InputModelType model in input.Models.Where(model =>
+            model.CrossLanguageDefinitionId == "Azure.AI.Projects.SipAddress"))
+        {
+            // C# cannot narrow an inherited string property to Uri. Keep the shared address contract.
+            model.Update(properties: model.Properties.Where(property => property.Name != "value").ToArray());
+        }
         foreach (InputClient client in input.Clients.Where(client => client.Name == "AgentEndpointLiveConversations"))
         {
             client.Update(name: LiveClientName);

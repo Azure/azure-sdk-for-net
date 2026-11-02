@@ -15,7 +15,6 @@ namespace Azure.AI.Projects.Agents
     /// deleting it cascades to its responses, items, metrics, and audio. When finalization fails, any partial persisted
     /// responses, items, and item audio remain readable.
     /// </summary>
-    [Experimental("AAIP001")]
     public partial class VoiceConversation
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
@@ -27,10 +26,14 @@ namespace Azure.AI.Projects.Agents
         /// <param name="createdOn"> The Unix timestamp (in seconds) for when the conversation was created. </param>
         internal VoiceConversation(string id, VoiceConversationStatus status, DateTimeOffset createdOn)
         {
+#pragma warning disable AAIP001 // Implementation preserves preview variants of GA models.
+#pragma warning disable AAIP002 // Implementation accesses OpenAI-dependent members.
             Id = id;
             Status = status;
             CreatedOn = createdOn;
             Metadata = new ChangeTrackingDictionary<string, string>();
+#pragma warning restore AAIP002 // Implementation accesses OpenAI-dependent members.
+#pragma warning restore AAIP001 // Implementation preserves preview variants of GA models.
         }
 
         /// <summary> Initializes a new instance of <see cref="VoiceConversation"/>. </summary>
@@ -43,6 +46,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="usage"> Final aggregate token usage across all responses in this conversation. Absent while `status` is `in_progress` and populated after successful `completed` finalization; it may be absent when `status` is `failed`, and values are not guaranteed to be reported incrementally. </param>
         /// <param name="lastError"> The terminal error that prevented persistence finalization. Present only when `status` is `failed`. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        [Experimental("AAIP002")]
         internal VoiceConversation(string id, string @object, VoiceConversationStatus status, DateTimeOffset createdOn, DateTimeOffset? completedOn, IDictionary<string, string> metadata, RealtimeResponseUsage usage, FoundryOpenAIError lastError, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
@@ -75,6 +79,7 @@ namespace Azure.AI.Projects.Agents
         public IDictionary<string, string> Metadata { get; }
 
         /// <summary> Final aggregate token usage across all responses in this conversation. Absent while `status` is `in_progress` and populated after successful `completed` finalization; it may be absent when `status` is `failed`, and values are not guaranteed to be reported incrementally. </summary>
+        [Experimental("AAIP002")]
         public RealtimeResponseUsage Usage { get; }
     }
 }

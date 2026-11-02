@@ -4,12 +4,10 @@
 
 using System;
 using System.ComponentModel;
-using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> The source of a telephony lifecycle timestamp. </summary>
-    [Experimental("AAIP001")]
     public readonly partial struct TelephonyCallTimestampSource : IEquatable<TelephonyCallTimestampSource>
     {
         private readonly string _value;

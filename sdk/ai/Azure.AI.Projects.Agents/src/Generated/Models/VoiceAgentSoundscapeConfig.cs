@@ -4,12 +4,10 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> Agent-owned background ambience and event cues. Each omitted track is disabled. The service rejects unknown fields; custom uploads, URLs, and inline audio are not supported. </summary>
-    [Experimental("AAIP001")]
     public partial class VoiceAgentSoundscapeConfig
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
