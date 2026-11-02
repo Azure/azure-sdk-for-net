@@ -91,7 +91,7 @@ namespace Azure.Security.KeyVault.Administration.Models
                 writer.WritePropertyName("statusDetails"u8);
                 writer.WriteStringValue(StatusDetails);
             }
-            if (_errorIsDefined || Optional.IsDefined(Error))
+            if (Optional.IsDefined(Error, _errorIsDefined))
             {
                 if (Error != null)
                 {
@@ -108,7 +108,7 @@ namespace Azure.Security.KeyVault.Administration.Models
                 writer.WritePropertyName("startTime"u8);
                 writer.WriteNumberValue(StartsOn.Value, "U");
             }
-            if (_endsOnIsDefined || Optional.IsDefined(EndsOn))
+            if (Optional.IsDefined(EndsOn, _endsOnIsDefined))
             {
                 if (EndsOn != null)
                 {

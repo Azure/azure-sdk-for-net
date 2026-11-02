@@ -39,9 +39,8 @@ namespace Azure.ResourceManager.CertificateRegistration
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal AppServiceCertificateOrderCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(AppServiceCertificateOrderResource.ResourceType, out string appServiceCertificateOrderApiVersion);
             _appServiceCertificateOrdersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CertificateRegistration", AppServiceCertificateOrderResource.ResourceType.Namespace, Diagnostics);
-            _appServiceCertificateOrdersRestClient = new AppServiceCertificateOrders(_appServiceCertificateOrdersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, appServiceCertificateOrderApiVersion ?? "2024-11-01");
+            _appServiceCertificateOrdersRestClient = new AppServiceCertificateOrders(_appServiceCertificateOrdersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.CertificateRegistration/certificateOrders", out string appServiceCertificateOrdersApiVersionOverride) ? appServiceCertificateOrdersApiVersionOverride : "2024-11-01");
             ValidateResourceId(id);
         }
 

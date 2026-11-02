@@ -77,15 +77,29 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 throw new FormatException($"The model {nameof(MachineLearningTriggerBase)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(EndTime))
+            if (Optional.IsDefined(EndTime, _endTimeIsDefined))
             {
-                writer.WritePropertyName("endTime"u8);
-                writer.WriteStringValue(EndTime);
+                if (EndTime != null)
+                {
+                    writer.WritePropertyName("endTime"u8);
+                    writer.WriteStringValue(EndTime);
+                }
+                else
+                {
+                    writer.WriteNull("endTime"u8);
+                }
             }
-            if (Optional.IsDefined(StartTime))
+            if (Optional.IsDefined(StartTime, _startTimeIsDefined))
             {
-                writer.WritePropertyName("startTime"u8);
-                writer.WriteStringValue(StartTime);
+                if (StartTime != null)
+                {
+                    writer.WritePropertyName("startTime"u8);
+                    writer.WriteStringValue(StartTime);
+                }
+                else
+                {
+                    writer.WriteNull("startTime"u8);
+                }
             }
             if (Optional.IsDefined(TimeZone))
             {

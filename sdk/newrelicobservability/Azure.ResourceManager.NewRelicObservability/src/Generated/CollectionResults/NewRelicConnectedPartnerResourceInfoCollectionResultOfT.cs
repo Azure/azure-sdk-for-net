@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// <returns> The pages of NewRelicConnectedPartnerResourceInfoCollectionResultOfT as an enumerable collection. </returns>
         public override IEnumerable<Page<NewRelicConnectedPartnerResourceInfo>> AsPages(string continuationToken, int? pageSizeHint)
         {
-            Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
+            Uri nextPage = continuationToken != null ? new Uri(continuationToken, UriKind.RelativeOrAbsolute) : null;
             while (true)
             {
                 Response response = GetNextResponse(pageSizeHint, nextPage);
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.NewRelicObservability
                 {
                     yield break;
                 }
-                ConnectedPartnerResourcesListResponse result = ConnectedPartnerResourcesListResponse.FromResponse(response);
+                ConnectedPartnerResourcesListResult result = ConnectedPartnerResourcesListResult.FromResponse(response);
                 nextPage = result.NextLink;
                 yield return Page<NewRelicConnectedPartnerResourceInfo>.FromValues((IReadOnlyList<NewRelicConnectedPartnerResourceInfo>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)

@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ReservationList(reservations, nextLink, additionalBinaryDataProperties);
+            return new ReservationList(reservations ?? new ChangeTrackingList<ReservationDetailData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

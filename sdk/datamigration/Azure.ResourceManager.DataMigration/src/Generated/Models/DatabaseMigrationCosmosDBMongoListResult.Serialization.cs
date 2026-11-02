@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new DatabaseMigrationCosmosDBMongoListResult(value, nextLink, additionalBinaryDataProperties);
+            return new DatabaseMigrationCosmosDBMongoListResult(value ?? new ChangeTrackingList<DatabaseMigrationCosmosDBMongoData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

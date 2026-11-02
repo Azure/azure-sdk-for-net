@@ -44,23 +44,23 @@ namespace Azure.ResourceManager.ScVmm.Mocking
 
         private ClientDiagnostics VmmServersClientDiagnostics => _vmmServersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ScVmm.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private VmmServers VmmServersRestClient => _vmmServersRestClient ??= new VmmServers(VmmServersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-03-13");
+        private VmmServers VmmServersRestClient => _vmmServersRestClient ??= new VmmServers(VmmServersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.ScVmm/vmmServers", out string apiVersion) ? apiVersion : "2025-03-13");
 
         private ClientDiagnostics CloudsClientDiagnostics => _cloudsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ScVmm.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Clouds CloudsRestClient => _cloudsRestClient ??= new Clouds(CloudsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-03-13");
+        private Clouds CloudsRestClient => _cloudsRestClient ??= new Clouds(CloudsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.ScVmm/clouds", out string apiVersion0) ? apiVersion0 : "2025-03-13");
 
         private ClientDiagnostics VirtualNetworksClientDiagnostics => _virtualNetworksClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ScVmm.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private VirtualNetworks VirtualNetworksRestClient => _virtualNetworksRestClient ??= new VirtualNetworks(VirtualNetworksClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-03-13");
+        private VirtualNetworks VirtualNetworksRestClient => _virtualNetworksRestClient ??= new VirtualNetworks(VirtualNetworksClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.ScVmm/virtualNetworks", out string apiVersion1) ? apiVersion1 : "2025-03-13");
 
         private ClientDiagnostics VirtualMachineTemplatesClientDiagnostics => _virtualMachineTemplatesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ScVmm.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private VirtualMachineTemplates VirtualMachineTemplatesRestClient => _virtualMachineTemplatesRestClient ??= new VirtualMachineTemplates(VirtualMachineTemplatesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-03-13");
+        private VirtualMachineTemplates VirtualMachineTemplatesRestClient => _virtualMachineTemplatesRestClient ??= new VirtualMachineTemplates(VirtualMachineTemplatesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.ScVmm/virtualMachineTemplates", out string apiVersion2) ? apiVersion2 : "2025-03-13");
 
         private ClientDiagnostics AvailabilitySetsClientDiagnostics => _availabilitySetsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ScVmm.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private AvailabilitySets AvailabilitySetsRestClient => _availabilitySetsRestClient ??= new AvailabilitySets(AvailabilitySetsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-03-13");
+        private AvailabilitySets AvailabilitySetsRestClient => _availabilitySetsRestClient ??= new AvailabilitySets(AvailabilitySetsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.ScVmm/availabilitySets", out string apiVersion3) ? apiVersion3 : "2025-03-13");
 
         /// <summary>
         /// List of VmmServers in a subscription.

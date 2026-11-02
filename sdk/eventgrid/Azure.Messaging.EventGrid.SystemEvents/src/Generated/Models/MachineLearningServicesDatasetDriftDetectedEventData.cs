@@ -16,9 +16,9 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
         private DateTimeOffset? _startTime;
-        internal bool _startTimeIsDefined;
+        private bool _startTimeIsDefined;
         private DateTimeOffset? _endTime;
-        internal bool _endTimeIsDefined;
+        private bool _endTimeIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="MachineLearningServicesDatasetDriftDetectedEventData"/>. </summary>
         /// <param name="dataDriftId"> The ID of the data drift monitor that triggered the event. </param>

@@ -1,14 +1,24 @@
 # Release History
 
-## 1.0.0-beta.2 (Unreleased)
+## 1.0.0 (2026-10-19)
+
+This is the first stable release of the Relationships management client library.
 
 ### Features Added
 
+- Updated the service API version to `2026-08-01`.
+- Added APIs for listing `Contains` relationships at resource group and subscription scopes.
+- Added resource and collection APIs for managing `DependencyOf` relationships scoped to a service group.
+- Added pageable enumeration for `DependencyOf` and service group member relationship collections.
+
 ### Breaking Changes
+
+- Corrected the source and target semantics of `ServiceGroupMemberRelationshipProperties`. The constructor now accepts `sourceId`, `SourceId` is settable, `TargetId` is read-only, and `SourceTenant` replaces `TargetTenant`.
 
 ### Bugs Fixed
 
-### Other Changes
+- Fixed relationship collection paging to handle relative continuation tokens and propagate cancellation tokens during async enumeration.
+- Fixed `Contains` relationship operations to honor configured API version overrides.
 
 ## 1.0.0-beta.1 (2026-04-03)
 

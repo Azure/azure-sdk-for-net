@@ -39,9 +39,8 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal PublisherCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(PublisherResource.ResourceType, out string publisherApiVersion);
             _publishersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HybridNetwork", PublisherResource.ResourceType.Namespace, Diagnostics);
-            _publishersRestClient = new Publishers(_publishersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, publisherApiVersion ?? "2025-03-30");
+            _publishersRestClient = new Publishers(_publishersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.HybridNetwork/publishers", out string publishersApiVersionOverride) ? publishersApiVersionOverride : "2025-03-30");
             ValidateResourceId(id);
         }
 

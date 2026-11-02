@@ -84,7 +84,7 @@ namespace Azure.Security.KeyVault.Certificates.Models
                 writer.WritePropertyName("message"u8);
                 writer.WriteStringValue(Message);
             }
-            if (options.Format != "W" && (_innerErrorIsDefined || Optional.IsDefined(InnerError)))
+            if (options.Format != "W" && Optional.IsDefined(InnerError, _innerErrorIsDefined))
             {
                 if (InnerError != null)
                 {

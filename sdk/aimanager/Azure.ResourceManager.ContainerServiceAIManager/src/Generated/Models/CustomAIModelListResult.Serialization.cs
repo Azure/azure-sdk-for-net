@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.ContainerServiceAIManager.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new CustomAIModelListResult(value, nextLink, additionalBinaryDataProperties);
+            return new CustomAIModelListResult(value ?? new ChangeTrackingList<CustomAIModelData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

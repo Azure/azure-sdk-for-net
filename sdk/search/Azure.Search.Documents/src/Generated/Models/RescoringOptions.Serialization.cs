@@ -74,7 +74,7 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 throw new FormatException($"The model {nameof(RescoringOptions)} does not support writing '{format}' format.");
             }
-            if (_enableRescoringIsDefined || Optional.IsDefined(EnableRescoring))
+            if (Optional.IsDefined(EnableRescoring, _enableRescoringIsDefined))
             {
                 if (EnableRescoring != null)
                 {
@@ -86,7 +86,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("enableRescoring"u8);
                 }
             }
-            if (_defaultOversamplingIsDefined || Optional.IsDefined(DefaultOversampling))
+            if (Optional.IsDefined(DefaultOversampling, _defaultOversamplingIsDefined))
             {
                 if (DefaultOversampling != null)
                 {
@@ -98,7 +98,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("defaultOversampling"u8);
                 }
             }
-            if (_rescoreStorageMethodIsDefined || Optional.IsDefined(RescoreStorageMethod))
+            if (Optional.IsDefined(RescoreStorageMethod, _rescoreStorageMethodIsDefined))
             {
                 if (RescoreStorageMethod != null)
                 {

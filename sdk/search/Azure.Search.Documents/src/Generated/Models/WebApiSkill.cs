@@ -16,11 +16,11 @@ namespace Azure.Search.Documents.Indexes.Models
     public partial class WebApiSkill : SearchIndexerSkill
     {
         private int? _batchSize;
-        internal bool _batchSizeIsDefined;
+        private bool _batchSizeIsDefined;
         private int? _degreeOfParallelism;
-        internal bool _degreeOfParallelismIsDefined;
+        private bool _degreeOfParallelismIsDefined;
         private SearchIndexerDataIdentity _authIdentity;
-        internal bool _authIdentityIsDefined;
+        private bool _authIdentityIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="WebApiSkill"/>. </summary>
         /// <param name="inputs"> Inputs of the skills could be a column in the source data set, or the output of an upstream skill. </param>

@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.Sql.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new SyncDatabaseIdListResult(value, nextLink, additionalBinaryDataProperties);
+            return new SyncDatabaseIdListResult(value ?? new ChangeTrackingList<SubResource>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

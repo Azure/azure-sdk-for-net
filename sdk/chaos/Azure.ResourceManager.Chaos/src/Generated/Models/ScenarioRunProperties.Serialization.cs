@@ -360,7 +360,7 @@ namespace Azure.ResourceManager.Chaos.Models
                 managedIdentityPrincipalId,
                 resourceSnapshotId,
                 status,
-                resources,
+                resources ?? new ChangeTrackingList<ScenarioRunResource>(),
                 excludedResources ?? new ChangeTrackingList<ScenarioRunResource>(),
                 errors ?? new ChangeTrackingList<ChaosOperationError>(),
                 executionErrors,

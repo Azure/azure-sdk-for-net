@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.DatabaseWatcher.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new HealthValidationListResult(value, nextLink, additionalBinaryDataProperties);
+            return new HealthValidationListResult(value ?? new ChangeTrackingList<DatabaseWatcherHealthValidationData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

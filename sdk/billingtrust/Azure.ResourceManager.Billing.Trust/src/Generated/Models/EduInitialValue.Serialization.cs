@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Billing.Trust.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new EduInitialValue(kind, additionalBinaryDataProperties, domains);
+            return new EduInitialValue(kind, additionalBinaryDataProperties, domains ?? new ChangeTrackingList<BillingTrustDomainEntry>());
         }
     }
 }

@@ -95,7 +95,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WritePropertyName("apiKey"u8);
                 writer.WriteStringValue(ApiKey);
             }
-            if (_authIdentityIsDefined || Optional.IsDefined(AuthIdentity))
+            if (Optional.IsDefined(AuthIdentity, _authIdentityIsDefined))
             {
                 if (AuthIdentity != null)
                 {

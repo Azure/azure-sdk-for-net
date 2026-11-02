@@ -40,9 +40,8 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal EdgeOrderItemCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(EdgeOrderItemResource.ResourceType, out string edgeOrderItemApiVersion);
             _orderItemResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.EdgeOrder", EdgeOrderItemResource.ResourceType.Namespace, Diagnostics);
-            _orderItemResourcesRestClient = new OrderItemResources(_orderItemResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, edgeOrderItemApiVersion ?? "2024-02-01");
+            _orderItemResourcesRestClient = new OrderItemResources(_orderItemResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.EdgeOrder/orderItems", out string orderItemResourcesApiVersionOverride) ? orderItemResourcesApiVersionOverride : "2024-02-01");
             ValidateResourceId(id);
         }
 

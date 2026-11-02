@@ -39,9 +39,8 @@ namespace Azure.ResourceManager.NapsterOmniagentApi
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal NapsterOrganizationCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(NapsterOrganizationResource.ResourceType, out string napsterOrganizationApiVersion);
             _organizationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.NapsterOmniagentApi", NapsterOrganizationResource.ResourceType.Namespace, Diagnostics);
-            _organizationsRestClient = new Organizations(_organizationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, napsterOrganizationApiVersion ?? "2026-08-11");
+            _organizationsRestClient = new Organizations(_organizationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Napster.CompanionAPI/organizations", out string organizationsApiVersionOverride) ? organizationsApiVersionOverride : "2026-08-11");
             ValidateResourceId(id);
         }
 

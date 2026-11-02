@@ -224,7 +224,7 @@ internal sealed class ResponseEndpointHandler
         // once a chain exists). AddResponsesServer composes the Core task subsystem in both local and
         // hosted environments (hosted selects the hosted task store), so ANY conversation routes
         // multi-turn — a plain conversation_id chain gets concurrency protection (concurrent overlap
-        // → 409 conversation_locked) even with default options.
+        // → 409 conversation_locked) when Responses enables task execution.
         var steerable = _options.Value.SteerableConversations;
         bool multiTurnAvailable = true;
         bool pickMultiTurn = multiTurnAvailable
@@ -239,12 +239,12 @@ internal sealed class ResponseEndpointHandler
 
         // Multi-turn (conversation / steerable) is NOT background-gated (parity with Python
         // `_pick_primitive`, which routes any conversation_id or steerable turn through the multi-turn
-        // primitive REGARDLESS of background) — a foreground conversation turn must still get
+        // primitive REGARDLESS of background) — an enabled foreground conversation turn gets
         // concurrency arbitration (concurrent overlap → 409 conversation_locked) and fork rejection
         // (409 conversation_fork_not_supported), which are FR-051/FR-052 requirements that are not
         // background-gated.
         //
-        // When the Core task runtime is enabled, every store=true request is task-tracked —
+        // When Responses activates the Core task runtime, every store=true request is task-tracked —
         // including background AND foreground streaming.
         // The streaming task path does NOT await response.created: the SSE result subscribes to the
         // task-bound stream and relays immediately (parity with Python `_live_stream`), so a
@@ -256,7 +256,7 @@ internal sealed class ResponseEndpointHandler
         // background-streaming / Row-3 foreground crash-recovery gap: both are now task-tracked, so the
         // next-lifetime recovery scan observes and marks-failed a crashed turn (Path C).
         //
-        // Task-routing gate (Python parity): when the Core resilient-task runtime is enabled, the
+        // Task-routing gate (Python parity): when Responses enables the Core runtime, the
         // handler runs INSIDE a task for every store=true request — background OR foreground,
         // streaming OR non-streaming, one-shot OR multi-turn. When the runtime is disabled, stored
         // work falls back to in-process execution: response persistence remains active, but crash
@@ -275,7 +275,8 @@ internal sealed class ResponseEndpointHandler
         // x-platform-error-source (see ResilientStartFailureProtocolTests) — .NET returns a clean HTTP
         // error rather than a 200 + error event because, unlike Starlette, the SSE headers are not yet
         // committed when StartResilientTurnAsync runs.
-        bool useResilientTask = _resilientTaskOptions.Value.Enabled
+        bool useResilientTask = (_options.Value.ResilientBackground || _options.Value.SteerableConversations)
+            && _resilientTaskOptions.Value.Enabled
             && (store || (pickMultiTurn && (isBackground || !isStreaming)));
 
         var execution = _tracker.Create(responseId, platformContext, isBackground, isStreaming, store);
@@ -621,9 +622,9 @@ internal sealed class ResponseEndpointHandler
         }
 
         // Derive the recovery disposition from the row classification rather than hard-coding it.
-        // This call site now also serves Row 2 (store + background, non-resilient): ResilientBackground
-        // resolves to re-invoke (Row 1) while a stored non-resilient background response resolves to
-        // mark-failed (Row 2), so the recovery scan marks it failed instead of re-invoking. Deriving it
+        // This call site also serves Row 2 when steering alone enables task execution:
+        // resilient background resolves to re-invoke (Row 1) while stored non-resilient
+        // background work resolves to mark-failed (Row 2). Deriving it
         // keeps every entry correct and matches the dispatch truth table exactly.
         var disposition = ResponseResilienceDispatch.DecideDisposition(
             store: request.Store != false,

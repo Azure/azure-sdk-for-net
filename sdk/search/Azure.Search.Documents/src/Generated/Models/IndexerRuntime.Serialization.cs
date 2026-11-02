@@ -81,7 +81,7 @@ namespace Azure.Search.Documents.Indexes.Models
             }
             writer.WritePropertyName("usedSeconds"u8);
             writer.WriteNumberValue(UsedSeconds);
-            if (_remainingSecondsIsDefined || Optional.IsDefined(RemainingSeconds))
+            if (Optional.IsDefined(RemainingSeconds, _remainingSecondsIsDefined))
             {
                 if (RemainingSeconds != null)
                 {

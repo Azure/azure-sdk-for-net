@@ -17,7 +17,7 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
         private RankingOrder? _rankingOrder;
-        internal bool _rankingOrderIsDefined;
+        private bool _rankingOrderIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="SemanticConfiguration"/>. </summary>
         /// <param name="name"> The name of the semantic configuration. </param>

@@ -20,7 +20,7 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
         private SearchResourceEncryptionKey _encryptionKey;
-        internal bool _encryptionKeyIsDefined;
+        private bool _encryptionKeyIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="KnowledgeBase"/>. </summary>
         /// <param name="name"> The name of the knowledge base. </param>

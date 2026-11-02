@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Dell.Storage.Mocking
 
         private ClientDiagnostics FileSystemsClientDiagnostics => _fileSystemsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Dell.Storage.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private FileSystems FileSystemsRestClient => _fileSystemsRestClient ??= new FileSystems(FileSystemsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-03-21");
+        private FileSystems FileSystemsRestClient => _fileSystemsRestClient ??= new FileSystems(FileSystemsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Dell.Storage/filesystems", out string apiVersion) ? apiVersion : "2025-03-21");
 
         /// <summary>
         /// List FileSystemResource resources by subscription ID

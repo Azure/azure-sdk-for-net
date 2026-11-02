@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ContainerList(value, nextLink, additionalBinaryDataProperties);
+            return new ContainerList(value ?? new ChangeTrackingList<DataBoxEdgeStorageContainerData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

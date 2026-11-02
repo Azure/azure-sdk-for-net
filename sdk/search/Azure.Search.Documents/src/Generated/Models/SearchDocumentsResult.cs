@@ -16,7 +16,7 @@ namespace Azure.Search.Documents.Models
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
         private DebugInfo _debugInfo;
-        internal bool _debugInfoIsDefined;
+        private bool _debugInfoIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="SearchDocumentsResult"/>. </summary>
         public SearchDocumentsResult()

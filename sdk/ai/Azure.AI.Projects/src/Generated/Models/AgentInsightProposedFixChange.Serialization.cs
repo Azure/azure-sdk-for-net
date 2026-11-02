@@ -95,7 +95,7 @@ namespace Azure.AI.Projects
                 writer.WritePropertyName("target"u8);
                 writer.WriteStringValue(Target);
             }
-            if (_oldValueIsDefined || Optional.IsDefined(OldValue))
+            if (Optional.IsDefined(OldValue, _oldValueIsDefined))
             {
                 if (OldValue != null)
                 {
@@ -114,7 +114,7 @@ namespace Azure.AI.Projects
                     writer.WriteNull("old_value"u8);
                 }
             }
-            if (_newValueIsDefined || Optional.IsDefined(NewValue))
+            if (Optional.IsDefined(NewValue, _newValueIsDefined))
             {
                 if (NewValue != null)
                 {

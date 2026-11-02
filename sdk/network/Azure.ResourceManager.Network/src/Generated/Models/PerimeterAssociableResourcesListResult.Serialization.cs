@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Network.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new PerimeterAssociableResourcesListResult(value, nextLink, additionalBinaryDataProperties);
+            return new PerimeterAssociableResourcesListResult(value ?? new ChangeTrackingList<NetworkSecurityPerimeterAssociableResourceType>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

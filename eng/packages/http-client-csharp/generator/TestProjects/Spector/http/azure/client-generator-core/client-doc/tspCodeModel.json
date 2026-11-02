@@ -181,7 +181,6 @@
                 "$id": "16",
                 "name": "harvest",
                 "isExactName": false,
-                "resourceName": "Documentation",
                 "doc": "Retrieves a plant from the garden by submitting its name.",
                 "accessibility": "public",
                 "parameters": [

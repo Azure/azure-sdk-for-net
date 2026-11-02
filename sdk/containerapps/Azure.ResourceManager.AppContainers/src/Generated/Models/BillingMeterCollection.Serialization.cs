@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new BillingMeterCollection(value, additionalBinaryDataProperties);
+            return new BillingMeterCollection(value ?? new ChangeTrackingList<ContainerAppBillingMeter>(), additionalBinaryDataProperties);
         }
     }
 }

@@ -52,9 +52,8 @@ namespace Azure.ResourceManager.Grafana
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ManagedDashboardResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string managedDashboardApiVersion);
             _managedDashboardsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Grafana", ResourceType.Namespace, Diagnostics);
-            _managedDashboardsRestClient = new ManagedDashboards(_managedDashboardsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, managedDashboardApiVersion ?? "2025-09-01-preview");
+            _managedDashboardsRestClient = new ManagedDashboards(_managedDashboardsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.Dashboard/dashboards", out string managedDashboardsApiVersionOverride) ? managedDashboardsApiVersionOverride : "2025-09-01-preview");
             ValidateResourceId(id);
         }
 

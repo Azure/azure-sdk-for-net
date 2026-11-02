@@ -311,7 +311,6 @@
                 "$id": "28",
                 "name": "safeintAsString",
                 "isExactName": false,
-                "resourceName": "Property",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -501,7 +500,6 @@
                 "$id": "36",
                 "name": "uint32AsStringOptional",
                 "isExactName": false,
-                "resourceName": "Property",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -691,7 +689,6 @@
                 "$id": "44",
                 "name": "uint8AsString",
                 "isExactName": false,
-                "resourceName": "Property",
                 "accessibility": "public",
                 "parameters": [
                   {

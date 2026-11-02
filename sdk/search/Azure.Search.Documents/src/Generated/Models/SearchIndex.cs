@@ -16,17 +16,17 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
         private CorsOptions _corsOptions;
-        internal bool _corsOptionsIsDefined;
+        private bool _corsOptionsIsDefined;
         private SearchResourceEncryptionKey _encryptionKey;
-        internal bool _encryptionKeyIsDefined;
+        private bool _encryptionKeyIsDefined;
         private SemanticSearch _semanticSearch;
-        internal bool _semanticSearchIsDefined;
+        private bool _semanticSearchIsDefined;
         private VectorSearch _vectorSearch;
-        internal bool _vectorSearchIsDefined;
+        private bool _vectorSearchIsDefined;
         private SearchIndexPermissionFilterOption? _permissionFilterOption;
-        internal bool _permissionFilterOptionIsDefined;
+        private bool _permissionFilterOptionIsDefined;
         private bool? _purviewEnabled;
-        internal bool _purviewEnabledIsDefined;
+        private bool _purviewEnabledIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="SearchIndex"/>. </summary>
         /// <param name="name"> The name of the index. </param>

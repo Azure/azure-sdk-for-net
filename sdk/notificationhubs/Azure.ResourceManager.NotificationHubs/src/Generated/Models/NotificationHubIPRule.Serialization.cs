@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new NotificationHubIPRule(ipMask, accessRights, additionalBinaryDataProperties);
+            return new NotificationHubIPRule(ipMask, accessRights ?? new ChangeTrackingList<AuthorizationRuleAccessRightExt>(), additionalBinaryDataProperties);
         }
     }
 }

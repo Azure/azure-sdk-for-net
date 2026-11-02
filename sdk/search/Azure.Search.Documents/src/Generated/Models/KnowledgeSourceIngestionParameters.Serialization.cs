@@ -75,7 +75,7 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
             {
                 throw new FormatException($"The model {nameof(KnowledgeSourceIngestionParameters)} does not support writing '{format}' format.");
             }
-            if (_identityIsDefined || Optional.IsDefined(Identity))
+            if (Optional.IsDefined(Identity, _identityIsDefined))
             {
                 if (Identity != null)
                 {
@@ -87,7 +87,7 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
                     writer.WriteNull("identity"u8);
                 }
             }
-            if (_embeddingModelIsDefined || Optional.IsDefined(EmbeddingModel))
+            if (Optional.IsDefined(EmbeddingModel, _embeddingModelIsDefined))
             {
                 if (EmbeddingModel != null)
                 {
@@ -99,7 +99,7 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
                     writer.WriteNull("embeddingModel"u8);
                 }
             }
-            if (_chatCompletionModelIsDefined || Optional.IsDefined(ChatCompletionModel))
+            if (Optional.IsDefined(ChatCompletionModel, _chatCompletionModelIsDefined))
             {
                 if (ChatCompletionModel != null)
                 {
@@ -116,7 +116,7 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
                 writer.WritePropertyName("disableImageVerbalization"u8);
                 writer.WriteBooleanValue(DisableImageVerbalization.Value);
             }
-            if (_ingestionScheduleIsDefined || Optional.IsDefined(IngestionSchedule))
+            if (Optional.IsDefined(IngestionSchedule, _ingestionScheduleIsDefined))
             {
                 if (IngestionSchedule != null)
                 {
@@ -145,7 +145,7 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
                     writer.WriteNull("ingestionPermissionOptions"u8);
                 }
             }
-            if (_contentExtractionModeIsDefined || Optional.IsDefined(ContentExtractionMode))
+            if (Optional.IsDefined(ContentExtractionMode, _contentExtractionModeIsDefined))
             {
                 if (ContentExtractionMode != null)
                 {
@@ -157,7 +157,7 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
                     writer.WriteNull("contentExtractionMode"u8);
                 }
             }
-            if (_aiServicesIsDefined || Optional.IsDefined(AiServices))
+            if (Optional.IsDefined(AiServices, _aiServicesIsDefined))
             {
                 if (AiServices != null)
                 {

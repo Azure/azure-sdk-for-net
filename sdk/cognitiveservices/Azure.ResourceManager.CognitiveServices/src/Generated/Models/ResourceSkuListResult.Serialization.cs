@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ResourceSkuListResult(value, nextLink, additionalBinaryDataProperties);
+            return new ResourceSkuListResult(value ?? new ChangeTrackingList<AvailableCognitiveServicesSku>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

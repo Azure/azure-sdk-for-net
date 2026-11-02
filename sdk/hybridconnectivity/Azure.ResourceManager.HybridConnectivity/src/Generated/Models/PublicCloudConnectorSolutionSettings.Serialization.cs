@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
                 switch (prop.Value.ValueKind)
                 {
                     case JsonValueKind.String:
-                        additionalProperties.Add(prop.Name, prop.Value.GetString());
+                        additionalProperties[prop.Name] = prop.Value.GetString();
                         continue;
                 }
                 if (options.Format != "W")

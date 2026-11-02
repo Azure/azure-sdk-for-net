@@ -250,5 +250,59 @@ namespace Azure.ResourceManager.OracleDatabase.Mocking
             OracleDBVersionResource.ValidateResourceId(id);
             return new OracleDBVersionResource(Client, id);
         }
+
+        /// <summary> Gets an object representing a <see cref="DatabaseEditionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="DatabaseEditionResource"/> object. </returns>
+        public virtual DatabaseEditionResource GetDatabaseEditionResource(ResourceIdentifier id)
+        {
+            DatabaseEditionResource.ValidateResourceId(id);
+            return new DatabaseEditionResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="DatabaseSystemShapeResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="DatabaseSystemShapeResource"/> object. </returns>
+        public virtual DatabaseSystemShapeResource GetDatabaseSystemShapeResource(ResourceIdentifier id)
+        {
+            DatabaseSystemShapeResource.ValidateResourceId(id);
+            return new DatabaseSystemShapeResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="GoldenGateConnectionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="GoldenGateConnectionResource"/> object. </returns>
+        public virtual GoldenGateConnectionResource GetGoldenGateConnectionResource(ResourceIdentifier id)
+        {
+            GoldenGateConnectionResource.ValidateResourceId(id);
+            return new GoldenGateConnectionResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="AssignedDeploymentResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="AssignedDeploymentResource"/> object. </returns>
+        public virtual AssignedDeploymentResource GetAssignedDeploymentResource(ResourceIdentifier id)
+        {
+            AssignedDeploymentResource.ValidateResourceId(id);
+            return new AssignedDeploymentResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="GoldenGateDeploymentResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="GoldenGateDeploymentResource"/> object. </returns>
+        public virtual GoldenGateDeploymentResource GetGoldenGateDeploymentResource(ResourceIdentifier id)
+        {
+            GoldenGateDeploymentResource.ValidateResourceId(id);
+            return new GoldenGateDeploymentResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="AssignedConnectionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="AssignedConnectionResource"/> object. </returns>
+        public virtual AssignedConnectionResource GetAssignedConnectionResource(ResourceIdentifier id)
+        {
+            AssignedConnectionResource.ValidateResourceId(id);
+            return new AssignedConnectionResource(Client, id);
+        }
     }
 }

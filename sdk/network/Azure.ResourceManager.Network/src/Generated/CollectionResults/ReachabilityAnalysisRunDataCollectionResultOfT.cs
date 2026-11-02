@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Network
         private readonly string _workspaceName;
         private readonly string _skipToken;
         private readonly int? _skip;
-        private readonly int? _maxCount;
+        private readonly int? _top;
         private readonly string _sortKey;
         private readonly string _sortValue;
         private readonly RequestContext _context;
@@ -37,12 +37,12 @@ namespace Azure.ResourceManager.Network
         /// <param name="workspaceName"> The name of the resource. </param>
         /// <param name="skipToken"> Optional skip token. </param>
         /// <param name="skip"> Optional num entries to skip. </param>
-        /// <param name="maxCount"> Optional num entries to show. </param>
+        /// <param name="top"> Optional num entries to show. </param>
         /// <param name="sortKey"> Optional key by which to sort. </param>
         /// <param name="sortValue"> Optional sort value for pagination. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public ReachabilityAnalysisRunDataCollectionResultOfT(ReachabilityAnalysisRuns client, Guid subscriptionId, string resourceGroupName, string networkManagerName, string workspaceName, string skipToken, int? skip, int? maxCount, string sortKey, string sortValue, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public ReachabilityAnalysisRunDataCollectionResultOfT(ReachabilityAnalysisRuns client, Guid subscriptionId, string resourceGroupName, string networkManagerName, string workspaceName, string skipToken, int? skip, int? top, string sortKey, string sortValue, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Network
             _workspaceName = workspaceName;
             _skipToken = skipToken;
             _skip = skip;
-            _maxCount = maxCount;
+            _top = top;
             _sortKey = sortKey;
             _sortValue = sortValue;
             _context = context;
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> The pages of ReachabilityAnalysisRunDataCollectionResultOfT as an enumerable collection. </returns>
         public override IEnumerable<Page<ReachabilityAnalysisRunData>> AsPages(string continuationToken, int? pageSizeHint)
         {
-            Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
+            Uri nextPage = continuationToken != null ? new Uri(continuationToken, UriKind.RelativeOrAbsolute) : null;
             while (true)
             {
                 Response response = GetNextResponse(pageSizeHint, nextPage);
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetAllRequest(nextLink, _subscriptionId, _resourceGroupName, _networkManagerName, _workspaceName, _skipToken, _skip, _maxCount, _sortKey, _sortValue, _context) : _client.CreateGetAllRequest(_subscriptionId, _resourceGroupName, _networkManagerName, _workspaceName, _skipToken, _skip, _maxCount, _sortKey, _sortValue, _context);
+            HttpMessage message = nextLink != null ? _client.CreateNextGetAllRequest(nextLink, _subscriptionId, _resourceGroupName, _networkManagerName, _workspaceName, _skipToken, _skip, _top, _sortKey, _sortValue, _context) : _client.CreateGetAllRequest(_subscriptionId, _resourceGroupName, _networkManagerName, _workspaceName, _skipToken, _skip, _top, _sortKey, _sortValue, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try

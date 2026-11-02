@@ -822,3 +822,28 @@ op getOptionalResponse(): {
 } | {
   @statusCode statusCode: 204;
 };
+
+scalar sandboxResourceIdentifier extends armResourceIdentifier<[{ type: "Microsoft.App/sandboxes" }]>;
+
+model ResourceIdentifierModel {
+  id: armResourceIdentifier;
+  optionalId?: sandboxResourceIdentifier;
+  nullableId: armResourceIdentifier | null;
+  ids: armResourceIdentifier[];
+}
+
+@post
+@route("/resource-identifiers/{resourceId}")
+op roundTripResourceIdentifiers(
+  @path resourceId: armResourceIdentifier,
+  @query queryId: armResourceIdentifier,
+  @header("x-resource-id") headerId: armResourceIdentifier,
+  @body body: ResourceIdentifierModel,
+): ResourceIdentifierModel;
+
+@get
+@route("/resource-identifiers/xml")
+op getResourceIdentifiersXml(): {
+  @header contentType: "application/xml";
+  @body body: ResourceIdentifierModel;
+};

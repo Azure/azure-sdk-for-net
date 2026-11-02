@@ -79,7 +79,7 @@ namespace Azure.Search.Documents.Models
                 writer.WritePropertyName("text"u8);
                 writer.WriteStringValue(Text);
             }
-            if (options.Format != "W" && (_highlightsIsDefined || Optional.IsDefined(Highlights)))
+            if (options.Format != "W" && Optional.IsDefined(Highlights, _highlightsIsDefined))
             {
                 if (Highlights != null)
                 {

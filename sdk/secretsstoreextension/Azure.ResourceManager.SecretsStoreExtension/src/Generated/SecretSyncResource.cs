@@ -52,9 +52,8 @@ namespace Azure.ResourceManager.SecretsStoreExtension
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal SecretSyncResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string secretSyncApiVersion);
             _secretSyncsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecretsStoreExtension", ResourceType.Namespace, Diagnostics);
-            _secretSyncsRestClient = new SecretSyncs(_secretSyncsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, secretSyncApiVersion ?? "2026-09-25-preview");
+            _secretSyncsRestClient = new SecretSyncs(_secretSyncsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.SecretSyncController/secretSyncs", out string secretSyncsApiVersionOverride) ? secretSyncsApiVersionOverride : "2026-09-25-preview");
             ValidateResourceId(id);
         }
 

@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new AvailableDataBoxEdgeSkuList(value, nextLink, additionalBinaryDataProperties);
+            return new AvailableDataBoxEdgeSkuList(value ?? new ChangeTrackingList<AvailableDataBoxEdgeSku>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

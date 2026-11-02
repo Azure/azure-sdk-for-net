@@ -123,13 +123,13 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
             {
                 return null;
             }
-            UserConsent userConsent = default;
+            RecoveryActionUserConsent userConsent = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("userConsent"u8))
                 {
-                    userConsent = new UserConsent(prop.Value.GetString());
+                    userConsent = new RecoveryActionUserConsent(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

@@ -381,7 +381,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             return new AppComplianceReportProperties(
                 triggerOn,
                 timeZone,
-                resources,
+                resources ?? new ChangeTrackingList<ReportResourceMetadata>(),
                 status,
                 errors ?? new ChangeTrackingList<string>(),
                 tenantId,

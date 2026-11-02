@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.AppNetwork.Mocking
 
         private ClientDiagnostics AppLinksClientDiagnostics => _appLinksClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.AppNetwork.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private AppLinks AppLinksRestClient => _appLinksRestClient ??= new AppLinks(AppLinksClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-08-01-preview");
+        private AppLinks AppLinksRestClient => _appLinksRestClient ??= new AppLinks(AppLinksClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.AppLink/appLinks", out string apiVersion) ? apiVersion : "2026-08-01-preview");
 
         private ClientDiagnostics AvailableVersionsClientDiagnostics => _availableVersionsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.AppNetwork.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 

@@ -42,7 +42,13 @@ namespace Azure.ResourceManager.Attestation
         {
             TryGetApiVersion(AttestationProviderResource.ResourceType, out string attestationProviderApiVersion);
             _attestationProvidersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Attestation", AttestationProviderResource.ResourceType.Namespace, Diagnostics);
-            _attestationProvidersRestClient = new AttestationProviders(_attestationProvidersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, attestationProviderApiVersion ?? "2021-06-01");
+            _attestationProvidersRestClient = new AttestationProviders(
+                _attestationProvidersClientDiagnostics,
+                Pipeline,
+                Diagnostics.ApplicationId,
+                Endpoint,
+                attestationProviderApiVersion ?? "2021-06-01",
+                resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 

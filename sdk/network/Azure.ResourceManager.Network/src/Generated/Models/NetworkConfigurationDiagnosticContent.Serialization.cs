@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.Network.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new NetworkConfigurationDiagnosticContent(targetResourceId, verbosityLevel, profiles, additionalBinaryDataProperties);
+            return new NetworkConfigurationDiagnosticContent(targetResourceId, verbosityLevel, profiles ?? new ChangeTrackingList<NetworkConfigurationDiagnosticProfile>(), additionalBinaryDataProperties);
         }
     }
 }

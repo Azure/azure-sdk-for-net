@@ -16,7 +16,7 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
         private ChatCompletionSchemaProperties _jsonSchemaProperties;
-        internal bool _jsonSchemaPropertiesIsDefined;
+        private bool _jsonSchemaPropertiesIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="ChatCompletionResponseFormat"/>. </summary>
         public ChatCompletionResponseFormat()

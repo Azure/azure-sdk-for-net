@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new NodeTypeVaultSecretGroup(sourceVault, vaultCertificates, additionalBinaryDataProperties);
+            return new NodeTypeVaultSecretGroup(sourceVault, vaultCertificates ?? new ChangeTrackingList<NodeTypeVaultCertificate>(), additionalBinaryDataProperties);
         }
     }
 }

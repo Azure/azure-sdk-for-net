@@ -52,15 +52,15 @@ namespace Azure.ResourceManager.DevCenter.Mocking
 
         private ClientDiagnostics DevCentersClientDiagnostics => _devCentersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DevCenter.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private DevCenters DevCentersRestClient => _devCentersRestClient ??= new DevCenters(DevCentersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-01-01-preview");
+        private DevCenters DevCentersRestClient => _devCentersRestClient ??= new DevCenters(DevCentersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.DevCenter/devcenters", out string apiVersion) ? apiVersion : "2026-01-01-preview");
 
         private ClientDiagnostics ProjectsClientDiagnostics => _projectsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DevCenter.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Projects ProjectsRestClient => _projectsRestClient ??= new Projects(ProjectsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-01-01-preview");
+        private Projects ProjectsRestClient => _projectsRestClient ??= new Projects(ProjectsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.DevCenter/projects", out string apiVersion0) ? apiVersion0 : "2026-01-01-preview");
 
         private ClientDiagnostics NetworkConnectionsClientDiagnostics => _networkConnectionsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DevCenter.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private NetworkConnections NetworkConnectionsRestClient => _networkConnectionsRestClient ??= new NetworkConnections(NetworkConnectionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-01-01-preview");
+        private NetworkConnections NetworkConnectionsRestClient => _networkConnectionsRestClient ??= new NetworkConnections(NetworkConnectionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceType => TryGetApiVersion(resourceType, out string apiVersion1) ? apiVersion1 : null);
 
         private ClientDiagnostics SkusClientDiagnostics => _skusClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DevCenter.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 

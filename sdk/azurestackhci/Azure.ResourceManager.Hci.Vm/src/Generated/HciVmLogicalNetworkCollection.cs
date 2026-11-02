@@ -39,9 +39,8 @@ namespace Azure.ResourceManager.Hci.Vm
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal HciVmLogicalNetworkCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(HciVmLogicalNetworkResource.ResourceType, out string hciVmLogicalNetworkApiVersion);
             _logicalNetworksClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Hci.Vm", HciVmLogicalNetworkResource.ResourceType.Namespace, Diagnostics);
-            _logicalNetworksRestClient = new LogicalNetworks(_logicalNetworksClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, hciVmLogicalNetworkApiVersion ?? "2025-09-01-preview");
+            _logicalNetworksRestClient = new LogicalNetworks(_logicalNetworksClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.AzureStackHCI/logicalNetworks", out string logicalNetworksApiVersionOverride) ? logicalNetworksApiVersionOverride : "2025-09-01-preview");
             ValidateResourceId(id);
         }
 

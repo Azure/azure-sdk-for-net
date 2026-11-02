@@ -196,7 +196,7 @@ namespace Azure.Provisioning.AppService
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _properties = DefineModelProperty<WorkflowRunActionProperties>(nameof(Properties), new string[] { "properties" });
-            _parent = DefineResource<WorkflowRun>(nameof(Parent), new string[] { "parent" }, isRequired: true);
+            _parent = DefineResource<WorkflowRun>(nameof(Parent), new string[] { "parent" });
             DefineAdditionalProperties();
         }
 

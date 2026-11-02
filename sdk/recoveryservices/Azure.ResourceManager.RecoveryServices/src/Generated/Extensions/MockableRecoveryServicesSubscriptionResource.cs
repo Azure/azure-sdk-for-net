@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.RecoveryServices.Mocking
 
         private ClientDiagnostics VaultsClientDiagnostics => _vaultsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.RecoveryServices.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Vaults VaultsRestClient => _vaultsRestClient ??= new Vaults(VaultsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-07-01");
+        private Vaults VaultsRestClient => _vaultsRestClient ??= new Vaults(VaultsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.RecoveryServices/vaults", out string apiVersion) ? apiVersion : "2026-07-01");
 
         private ClientDiagnostics RecoveryServicesOperationGroupClientDiagnostics => _recoveryServicesOperationGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.RecoveryServices.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.RecoveryServices.Mocking
         /// <returns> An object representing collection of RecoveryServicesDeletedVaults and their operations over a RecoveryServicesDeletedVaultResource. </returns>
         public virtual RecoveryServicesDeletedVaultCollection GetRecoveryServicesDeletedVaults(AzureLocation location)
         {
-            return GetCachedClient(client => new RecoveryServicesDeletedVaultCollection(client, Id, location));
+            return new RecoveryServicesDeletedVaultCollection(Client, Id, location);
         }
 
         /// <summary>

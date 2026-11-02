@@ -17,25 +17,25 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
         private string _description;
-        internal bool _descriptionIsDefined;
+        private bool _descriptionIsDefined;
         private string _type;
-        internal bool _typeIsDefined;
+        private bool _typeIsDefined;
         private string _subtype;
-        internal bool _subtypeIsDefined;
+        private bool _subtypeIsDefined;
         private string _id;
-        internal bool _idIsDefined;
+        private bool _idIsDefined;
         private bool? _caseSensitive;
-        internal bool _caseSensitiveIsDefined;
+        private bool _caseSensitiveIsDefined;
         private bool? _accentSensitive;
-        internal bool _accentSensitiveIsDefined;
+        private bool _accentSensitiveIsDefined;
         private int? _fuzzyEditDistance;
-        internal bool _fuzzyEditDistanceIsDefined;
+        private bool _fuzzyEditDistanceIsDefined;
         private bool? _defaultCaseSensitive;
-        internal bool _defaultCaseSensitiveIsDefined;
+        private bool _defaultCaseSensitiveIsDefined;
         private bool? _defaultAccentSensitive;
-        internal bool _defaultAccentSensitiveIsDefined;
+        private bool _defaultAccentSensitiveIsDefined;
         private int? _defaultFuzzyEditDistance;
-        internal bool _defaultFuzzyEditDistanceIsDefined;
+        private bool _defaultFuzzyEditDistanceIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="CustomEntity"/>. </summary>
         /// <param name="name"> The top-level entity descriptor. Matches in the skill output will be grouped by this name, and it should represent the "normalized" form of the text being found. </param>

@@ -79,7 +79,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WritePropertyName("method"u8);
                 writer.WriteStringValue(Method.Value.ToString());
             }
-            if (_unitIsDefined || Optional.IsDefined(Unit))
+            if (Optional.IsDefined(Unit, _unitIsDefined))
             {
                 if (Unit != null)
                 {
@@ -91,7 +91,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("unit"u8);
                 }
             }
-            if (_maximumLengthIsDefined || Optional.IsDefined(MaximumLength))
+            if (Optional.IsDefined(MaximumLength, _maximumLengthIsDefined))
             {
                 if (MaximumLength != null)
                 {
@@ -103,7 +103,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("maximumLength"u8);
                 }
             }
-            if (_overlapLengthIsDefined || Optional.IsDefined(OverlapLength))
+            if (Optional.IsDefined(OverlapLength, _overlapLengthIsDefined))
             {
                 if (OverlapLength != null)
                 {

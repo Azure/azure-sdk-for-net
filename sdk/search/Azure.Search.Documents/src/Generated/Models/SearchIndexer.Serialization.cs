@@ -114,7 +114,7 @@ namespace Azure.Search.Documents.Indexes.Models
             }
             writer.WritePropertyName("targetIndexName"u8);
             writer.WriteStringValue(TargetIndexName);
-            if (_scheduleIsDefined || Optional.IsDefined(Schedule))
+            if (Optional.IsDefined(Schedule, _scheduleIsDefined))
             {
                 if (Schedule != null)
                 {
@@ -126,7 +126,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("schedule"u8);
                 }
             }
-            if (_parametersIsDefined || Optional.IsDefined(Parameters))
+            if (Optional.IsDefined(Parameters, _parametersIsDefined))
             {
                 if (Parameters != null)
                 {
@@ -158,7 +158,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 writer.WriteEndArray();
             }
-            if (_isDisabledIsDefined || Optional.IsDefined(IsDisabled))
+            if (Optional.IsDefined(IsDisabled, _isDisabledIsDefined))
             {
                 if (IsDisabled != null)
                 {
@@ -175,7 +175,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WritePropertyName("@odata.etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (_encryptionKeyIsDefined || Optional.IsDefined(EncryptionKey))
+            if (Optional.IsDefined(EncryptionKey, _encryptionKeyIsDefined))
             {
                 if (EncryptionKey != null)
                 {
@@ -187,7 +187,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("encryptionKey"u8);
                 }
             }
-            if (_cacheIsDefined || Optional.IsDefined(Cache))
+            if (Optional.IsDefined(Cache, _cacheIsDefined))
             {
                 if (Cache != null)
                 {

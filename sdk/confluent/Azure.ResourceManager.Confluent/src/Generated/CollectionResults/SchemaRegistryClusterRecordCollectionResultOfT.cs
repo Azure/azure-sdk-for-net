@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Confluent
         /// <returns> The pages of SchemaRegistryClusterRecordCollectionResultOfT as an enumerable collection. </returns>
         public override IEnumerable<Page<SchemaRegistryClusterRecord>> AsPages(string continuationToken, int? pageSizeHint)
         {
-            Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
+            Uri nextPage = continuationToken != null ? new Uri(continuationToken, UriKind.RelativeOrAbsolute) : null;
             while (true)
             {
                 Response response = GetNextResponse(pageSizeHint, nextPage);
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Confluent
                 {
                     yield break;
                 }
-                ListSchemaRegistryClustersResponse result = ListSchemaRegistryClustersResponse.FromResponse(response);
+                ListSchemaRegistryClustersResult result = ListSchemaRegistryClustersResult.FromResponse(response);
                 nextPage = result.NextLink;
                 yield return Page<SchemaRegistryClusterRecord>.FromValues((IReadOnlyList<SchemaRegistryClusterRecord>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)

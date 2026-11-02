@@ -40,9 +40,25 @@ namespace Azure.AI.Projects
             return value != null;
         }
 
+        public static bool IsDefined<T>(T? value, bool isDefined)
+            where T : struct
+        {
+            return isDefined || IsDefined(value);
+        }
+
+        public static bool IsDefined(object value, bool isDefined)
+        {
+            return isDefined || IsDefined(value);
+        }
+
         public static bool IsDefined(JsonElement value)
         {
             return value.ValueKind != JsonValueKind.Undefined;
+        }
+
+        public static bool IsDefined(JsonElement value, bool isDefined)
+        {
+            return isDefined || IsDefined(value);
         }
     }
 }

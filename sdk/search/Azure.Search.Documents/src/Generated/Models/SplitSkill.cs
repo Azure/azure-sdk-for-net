@@ -15,15 +15,15 @@ namespace Azure.Search.Documents.Indexes.Models
     public partial class SplitSkill : SearchIndexerSkill
     {
         private int? _maximumPageLength;
-        internal bool _maximumPageLengthIsDefined;
+        private bool _maximumPageLengthIsDefined;
         private int? _pageOverlapLength;
-        internal bool _pageOverlapLengthIsDefined;
+        private bool _pageOverlapLengthIsDefined;
         private int? _maximumPagesToTake;
-        internal bool _maximumPagesToTakeIsDefined;
+        private bool _maximumPagesToTakeIsDefined;
         private SplitSkillUnit? _unit;
-        internal bool _unitIsDefined;
+        private bool _unitIsDefined;
         private AzureOpenAITokenizerParameters _azureOpenAITokenizerParameters;
-        internal bool _azureOpenAITokenizerParametersIsDefined;
+        private bool _azureOpenAITokenizerParametersIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="SplitSkill"/>. </summary>
         /// <param name="inputs"> Inputs of the skills could be a column in the source data set, or the output of an upstream skill. </param>

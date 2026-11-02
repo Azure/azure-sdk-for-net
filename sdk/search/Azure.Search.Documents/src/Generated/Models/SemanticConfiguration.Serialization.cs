@@ -83,7 +83,7 @@ namespace Azure.Search.Documents.Indexes.Models
             writer.WriteStringValue(Name);
             writer.WritePropertyName("prioritizedFields"u8);
             writer.WriteObjectValue(PrioritizedFields, options);
-            if (_rankingOrderIsDefined || Optional.IsDefined(RankingOrder))
+            if (Optional.IsDefined(RankingOrder, _rankingOrderIsDefined))
             {
                 if (RankingOrder != null)
                 {

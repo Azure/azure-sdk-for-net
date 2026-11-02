@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new GoalAssignmentListResult(value, nextLink, additionalBinaryDataProperties);
+            return new GoalAssignmentListResult(value ?? new ChangeTrackingList<GoalAssignmentData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

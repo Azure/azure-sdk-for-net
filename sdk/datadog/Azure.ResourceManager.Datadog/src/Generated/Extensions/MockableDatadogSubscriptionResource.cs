@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Datadog.Mocking
 
         private ClientDiagnostics DatadogMonitorResourcesClientDiagnostics => _datadogMonitorResourcesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Datadog.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private DatadogMonitorResources DatadogMonitorResourcesRestClient => _datadogMonitorResourcesRestClient ??= new DatadogMonitorResources(DatadogMonitorResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-12-26-preview");
+        private DatadogMonitorResources DatadogMonitorResourcesRestClient => _datadogMonitorResourcesRestClient ??= new DatadogMonitorResources(DatadogMonitorResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.Datadog/monitors", out string apiVersion) ? apiVersion : "2025-12-26-preview");
 
         private ClientDiagnostics SaaSOperationGroupClientDiagnostics => _saaSOperationGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Datadog.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 

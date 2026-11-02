@@ -5,7 +5,9 @@ This sample shows how to create rooms, users, and room members, and how to gener
 ## Create the client
 
 ```C# Snippet:WebPubSubChatAuthenticateWithConnectionString
+// <ChatDotNet_AuthenticateWithConnectionString>
 var client = new WebPubSubChatServiceClient("<connection-string>", "chat");
+// </ChatDotNet_AuthenticateWithConnectionString>
 ```
 
 ## Generate a client access URI
@@ -13,11 +15,13 @@ var client = new WebPubSubChatServiceClient("<connection-string>", "chat");
 Before a client can connect over WebSocket, generate a client access URI for the user:
 
 ```C# Snippet:WebPubSubChatGenerateClientAccessUri
+// <ChatDotNet_GenerateClientAccessUri>
 Uri clientAccessUri = client.GetClientAccessUri(new ClientAccessUriOptions
 {
     UserId = "user1",
     ExpiresAfter = TimeSpan.FromHours(1),
 });
+// </ChatDotNet_GenerateClientAccessUri>
 ```
 
 ## Create a user

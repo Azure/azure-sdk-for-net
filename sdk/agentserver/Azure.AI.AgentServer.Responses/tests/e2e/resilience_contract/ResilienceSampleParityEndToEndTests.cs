@@ -146,8 +146,9 @@ public sealed class ResilienceSampleParityEndToEndTests
     // ==========================================================================================
     // Sample 20 — resilient steering: enqueue-then-drain a steered re-entry.
     // ==========================================================================================
-    [Test]
-    public async Task Sample20_ResilientSteering_EnqueuesThenDrainsSteeredTurn()
+    [TestCase(true)]
+    [TestCase(false)]
+    public async Task Sample20_Steering_EnqueuesThenDrainsSteeredTurn(bool resilientBackground)
     {
         var root = NewRoot("sample20");
         var releaseTurn1 = new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
@@ -167,7 +168,7 @@ public sealed class ResilienceSampleParityEndToEndTests
                 handler,
                 o =>
                 {
-                    o.ResilientBackground = true;
+                    o.ResilientBackground = resilientBackground;
                     o.SteerableConversations = true;
                 });
             using var client = factory.CreateClient();

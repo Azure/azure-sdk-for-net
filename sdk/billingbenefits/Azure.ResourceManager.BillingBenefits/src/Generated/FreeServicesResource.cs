@@ -52,9 +52,8 @@ namespace Azure.ResourceManager.BillingBenefits
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal FreeServicesResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string freeServicesApiVersion);
             _freeServicesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.BillingBenefits", ResourceType.Namespace, Diagnostics);
-            _freeServicesRestClient = new FreeServices(_freeServicesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, freeServicesApiVersion ?? "2025-12-01-preview");
+            _freeServicesRestClient = new FreeServices(_freeServicesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.BillingBenefits/freeServices", out string freeServicesApiVersionOverride) ? freeServicesApiVersionOverride : "2025-12-01-preview");
             ValidateResourceId(id);
         }
 

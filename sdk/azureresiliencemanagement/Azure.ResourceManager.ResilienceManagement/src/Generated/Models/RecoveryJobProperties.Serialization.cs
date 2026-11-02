@@ -15,11 +15,11 @@ using Azure.ResourceManager.ResilienceManagement;
 namespace Azure.ResourceManager.ResilienceManagement.Models
 {
     /// <summary> Definition of recovery job associated with Recovery Orchestration Plan. </summary>
-    public partial class RecoveryJobProperties : JobProperties, IJsonModel<RecoveryJobProperties>
+    public partial class RecoveryJobProperties : ResilienceManagementJobProperties, IJsonModel<RecoveryJobProperties>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override JobProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override ResilienceManagementJobProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<RecoveryJobProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override JobProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override ResilienceManagementJobProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<RecoveryJobProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -112,15 +112,15 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
             DateTimeOffset? startsOn = default;
             DateTimeOffset? endsOn = default;
             TimeSpan? duration = default;
-            JobErrorInfo errorDetails = default;
+            ResilienceManagementJobErrorInfo errorDetails = default;
             ResourceIdentifier resourceId = default;
             string operation = default;
-            IList<JobRetryDetails> retryDetails = default;
-            JobExtendedInfo jobExtendedInfo = default;
-            IReadOnlyList<JobUserComment> userComments = default;
+            IList<ResilienceManagementJobRetryDetails> retryDetails = default;
+            ResilienceManagementJobExtendedInfo jobExtendedInfo = default;
+            IReadOnlyList<ResilienceManagementJobUserComment> userComments = default;
             JobType? jobType = default;
             ExecutionConfigurations executionConfigurations = default;
-            JobTriggeredBy? triggeredBy = default;
+            ResilienceManagementJobTriggeredBy? triggeredBy = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             ResilienceManagementProvisioningState? provisioningState = default;
             foreach (var prop in element.EnumerateObject())
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                     {
                         continue;
                     }
-                    errorDetails = JobErrorInfo.DeserializeJobErrorInfo(prop.Value, options);
+                    errorDetails = ResilienceManagementJobErrorInfo.DeserializeResilienceManagementJobErrorInfo(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("resourceId"u8))
@@ -190,10 +190,10 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                     {
                         continue;
                     }
-                    List<JobRetryDetails> array = new List<JobRetryDetails>();
+                    List<ResilienceManagementJobRetryDetails> array = new List<ResilienceManagementJobRetryDetails>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(JobRetryDetails.DeserializeJobRetryDetails(item, options));
+                        array.Add(ResilienceManagementJobRetryDetails.DeserializeResilienceManagementJobRetryDetails(item, options));
                     }
                     retryDetails = array;
                     continue;
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                     {
                         continue;
                     }
-                    jobExtendedInfo = JobExtendedInfo.DeserializeJobExtendedInfo(prop.Value, options);
+                    jobExtendedInfo = ResilienceManagementJobExtendedInfo.DeserializeResilienceManagementJobExtendedInfo(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("userComments"u8))
@@ -213,10 +213,10 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                     {
                         continue;
                     }
-                    List<JobUserComment> array = new List<JobUserComment>();
+                    List<ResilienceManagementJobUserComment> array = new List<ResilienceManagementJobUserComment>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(JobUserComment.DeserializeJobUserComment(item, options));
+                        array.Add(ResilienceManagementJobUserComment.DeserializeResilienceManagementJobUserComment(item, options));
                     }
                     userComments = array;
                     continue;
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                     {
                         continue;
                     }
-                    triggeredBy = new JobTriggeredBy(prop.Value.GetString());
+                    triggeredBy = new ResilienceManagementJobTriggeredBy(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("provisioningState"u8))
@@ -270,9 +270,9 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                 errorDetails,
                 resourceId,
                 operation,
-                retryDetails ?? new ChangeTrackingList<JobRetryDetails>(),
+                retryDetails ?? new ChangeTrackingList<ResilienceManagementJobRetryDetails>(),
                 jobExtendedInfo,
-                userComments ?? new ChangeTrackingList<JobUserComment>(),
+                userComments ?? new ChangeTrackingList<ResilienceManagementJobUserComment>(),
                 jobType,
                 executionConfigurations,
                 triggeredBy,

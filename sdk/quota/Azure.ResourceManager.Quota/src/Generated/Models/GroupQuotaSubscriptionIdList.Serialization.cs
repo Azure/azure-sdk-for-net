@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Quota.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new GroupQuotaSubscriptionIdList(value, nextLink, additionalBinaryDataProperties);
+            return new GroupQuotaSubscriptionIdList(value ?? new ChangeTrackingList<GroupQuotaSubscriptionData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

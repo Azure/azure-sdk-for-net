@@ -38,11 +38,11 @@ namespace Azure.ResourceManager.StandbyPool.Mocking
 
         private ClientDiagnostics StandbyVirtualMachinePoolsClientDiagnostics => _standbyVirtualMachinePoolsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.StandbyPool.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private StandbyVirtualMachinePools StandbyVirtualMachinePoolsRestClient => _standbyVirtualMachinePoolsRestClient ??= new StandbyVirtualMachinePools(StandbyVirtualMachinePoolsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-10-01");
+        private StandbyVirtualMachinePools StandbyVirtualMachinePoolsRestClient => _standbyVirtualMachinePoolsRestClient ??= new StandbyVirtualMachinePools(StandbyVirtualMachinePoolsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.StandbyPool/standbyVirtualMachinePools", out string apiVersion) ? apiVersion : "2025-10-01");
 
         private ClientDiagnostics StandbyContainerGroupPoolsClientDiagnostics => _standbyContainerGroupPoolsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.StandbyPool.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private StandbyContainerGroupPools StandbyContainerGroupPoolsRestClient => _standbyContainerGroupPoolsRestClient ??= new StandbyContainerGroupPools(StandbyContainerGroupPoolsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-10-01");
+        private StandbyContainerGroupPools StandbyContainerGroupPoolsRestClient => _standbyContainerGroupPoolsRestClient ??= new StandbyContainerGroupPools(StandbyContainerGroupPoolsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.StandbyPool/standbyContainerGroupPools", out string apiVersion0) ? apiVersion0 : "2025-10-01");
 
         /// <summary>
         /// List StandbyVirtualMachinePoolResource resources by subscription ID

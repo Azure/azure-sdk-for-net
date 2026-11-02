@@ -74,7 +74,7 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 throw new FormatException($"The model {nameof(ExhaustiveKnnParameters)} does not support writing '{format}' format.");
             }
-            if (_metricIsDefined || Optional.IsDefined(Metric))
+            if (Optional.IsDefined(Metric, _metricIsDefined))
             {
                 if (Metric != null)
                 {

@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new GetTdeCertificatesSqlTaskInput(connectionInfo, backupFileShare, selectedCertificates, additionalBinaryDataProperties);
+            return new GetTdeCertificatesSqlTaskInput(connectionInfo, backupFileShare, selectedCertificates ?? new ChangeTrackingList<SelectedCertificateInput>(), additionalBinaryDataProperties);
         }
     }
 }

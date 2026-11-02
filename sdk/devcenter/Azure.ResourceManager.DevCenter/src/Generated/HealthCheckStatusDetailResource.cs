@@ -48,9 +48,8 @@ namespace Azure.ResourceManager.DevCenter
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal HealthCheckStatusDetailResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string healthCheckStatusDetailApiVersion);
             _networkConnectionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DevCenter", ResourceType.Namespace, Diagnostics);
-            _networkConnectionsRestClient = new NetworkConnections(_networkConnectionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, healthCheckStatusDetailApiVersion ?? "2026-01-01-preview");
+            _networkConnectionsRestClient = new NetworkConnections(_networkConnectionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 

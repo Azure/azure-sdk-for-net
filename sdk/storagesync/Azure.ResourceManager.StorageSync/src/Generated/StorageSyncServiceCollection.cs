@@ -40,9 +40,8 @@ namespace Azure.ResourceManager.StorageSync
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal StorageSyncServiceCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(StorageSyncServiceResource.ResourceType, out string storageSyncServiceApiVersion);
             _storageSyncServicesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.StorageSync", StorageSyncServiceResource.ResourceType.Namespace, Diagnostics);
-            _storageSyncServicesRestClient = new StorageSyncServices(_storageSyncServicesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, storageSyncServiceApiVersion ?? "2025-12-01");
+            _storageSyncServicesRestClient = new StorageSyncServices(_storageSyncServicesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.StorageSync/storageSyncServices", out string storageSyncServicesApiVersionOverride) ? storageSyncServicesApiVersionOverride : "2025-12-01");
             ValidateResourceId(id);
         }
 

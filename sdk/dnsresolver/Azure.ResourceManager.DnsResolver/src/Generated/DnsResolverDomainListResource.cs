@@ -53,9 +53,8 @@ namespace Azure.ResourceManager.DnsResolver
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal DnsResolverDomainListResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string dnsResolverDomainListApiVersion);
             _dnsResolverDomainListsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DnsResolver", ResourceType.Namespace, Diagnostics);
-            _dnsResolverDomainListsRestClient = new DnsResolverDomainLists(_dnsResolverDomainListsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, dnsResolverDomainListApiVersion ?? "2025-10-01-preview");
+            _dnsResolverDomainListsRestClient = new DnsResolverDomainLists(_dnsResolverDomainListsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.Network/dnsResolverDomainLists", out string dnsResolverDomainListsApiVersionOverride) ? dnsResolverDomainListsApiVersionOverride : "2025-10-01-preview");
             ValidateResourceId(id);
         }
 

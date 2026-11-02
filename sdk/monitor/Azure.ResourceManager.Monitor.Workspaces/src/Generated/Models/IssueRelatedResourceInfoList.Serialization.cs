@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.Monitor.Workspaces.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new IssueRelatedResourceInfoList(value, additionalBinaryDataProperties);
+            return new IssueRelatedResourceInfoList(value ?? new ChangeTrackingList<IssueRelatedResourceInfo>(), additionalBinaryDataProperties);
         }
     }
 }

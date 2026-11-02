@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.SecurityInsights
         public override IEnumerable<Page<EntityInsightItem>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Response response = GetNextResponse(pageSizeHint, null);
-            EntityGetInsightsResponse result = EntityGetInsightsResponse.FromResponse(response);
+            EntityGetInsightsResult result = EntityGetInsightsResult.FromResponse(response);
             yield return Page<EntityInsightItem>.FromValues((IReadOnlyList<EntityInsightItem>)result.Value, null, response);
         }
 

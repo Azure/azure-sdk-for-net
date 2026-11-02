@@ -12,7 +12,7 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
 {
     /// <summary>
     /// The request parameters for scheduling a run.
-    /// Please note this is the base class. The derived classes available for instantiation are: <see cref="ContainerRegistryDockerBuildContent"/>, <see cref="ContainerRegistryFileTaskRunContent"/>, <see cref="ContainerRegistryTaskRunContent"/>, and <see cref="ContainerRegistryEncodedTaskRunContent"/>.
+    /// Please note this is the base class. The derived classes available for instantiation are: <see cref="ContainerRegistryDockerBuildContent"/>, <see cref="ContainerRegistryEncodedTaskRunContent"/>, <see cref="ContainerRegistryFileTaskRunContent"/>, and <see cref="ContainerRegistryTaskRunContent"/>.
     /// </summary>
     public partial class ContainerRegistryRunContent : ProvisionableConstruct
     {

@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new MarketplaceSubscriptionResourceArmPaginatedResult(value, nextLink, additionalBinaryDataProperties);
+            return new MarketplaceSubscriptionResourceArmPaginatedResult(value ?? new ChangeTrackingList<MachineLearningMarketplaceSubscriptionData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

@@ -17,7 +17,7 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
         private string _errorMessage;
-        internal bool _errorMessageIsDefined;
+        private bool _errorMessageIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="KnowledgeSourceFile"/>. </summary>
         internal KnowledgeSourceFile()

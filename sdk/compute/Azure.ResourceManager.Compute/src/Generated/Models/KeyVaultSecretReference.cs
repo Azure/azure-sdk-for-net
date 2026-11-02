@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Compute.Models
         internal ComputeWriteableSubResourceData SourceVault { get; set; }
 
         /// <summary> Resource Id. </summary>
-        public ResourceIdentifier SourceVaultId
+        public virtual ResourceIdentifier SourceVaultId
         {
             get
             {

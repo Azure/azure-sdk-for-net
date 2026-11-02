@@ -84,7 +84,7 @@ namespace Azure.Search.Documents.Indexes.Models
             writer.WriteStringValue(FabricWorkspaceId);
             writer.WritePropertyName("lakehouseId"u8);
             writer.WriteStringValue(LakehouseId);
-            if (_targetPathIsDefined || Optional.IsDefined(TargetPath))
+            if (Optional.IsDefined(TargetPath, _targetPathIsDefined))
             {
                 if (TargetPath != null)
                 {

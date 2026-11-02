@@ -15,7 +15,7 @@ namespace Azure.Security.KeyVault.Administration.Models
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
         private KeyVaultServiceError _innerError;
-        internal bool _innerErrorIsDefined;
+        private bool _innerErrorIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="KeyVaultServiceError"/>. </summary>
         internal KeyVaultServiceError()

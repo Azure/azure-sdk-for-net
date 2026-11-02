@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new AlertsList(value, nextLink, additionalBinaryDataProperties);
+            return new AlertsList(value ?? new ChangeTrackingList<ServiceAlertData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

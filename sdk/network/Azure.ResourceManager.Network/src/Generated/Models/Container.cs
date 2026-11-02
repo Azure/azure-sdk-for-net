@@ -12,10 +12,10 @@ using Azure.Core;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Reference to container resource in remote resource provider. </summary>
-    public partial class Container : NetworkSubResource
+    internal partial class Container : NetworkSubResource
     {
         /// <summary> Initializes a new instance of <see cref="Container"/>. </summary>
-        internal Container()
+        public Container()
         {
         }
 

@@ -15,8 +15,6 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
     public readonly partial struct UsagePlanType : IEquatable<UsagePlanType>
     {
         private readonly string _value;
-        /// <summary> Basic usage plan with restricted functionality without any charges. </summary>
-        private const string BasicValue = "Basic";
         /// <summary> Standard usage plan with comprehensive functionality and usage based charges. </summary>
         private const string StandardValue = "Standard";
 
@@ -29,9 +27,6 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
 
             _value = value;
         }
-
-        /// <summary> Basic usage plan with restricted functionality without any charges. </summary>
-        public static UsagePlanType Basic { get; } = new UsagePlanType(BasicValue);
 
         /// <summary> Standard usage plan with comprehensive functionality and usage based charges. </summary>
         public static UsagePlanType Standard { get; } = new UsagePlanType(StandardValue);

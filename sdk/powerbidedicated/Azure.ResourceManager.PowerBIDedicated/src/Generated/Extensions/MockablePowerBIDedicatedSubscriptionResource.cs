@@ -40,11 +40,17 @@ namespace Azure.ResourceManager.PowerBIDedicated.Mocking
 
         private ClientDiagnostics CapacitiesClientDiagnostics => _capacitiesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.PowerBIDedicated.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Capacities CapacitiesRestClient => _capacitiesRestClient ??= new Capacities(CapacitiesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2021-01-01");
+        private Capacities CapacitiesRestClient => _capacitiesRestClient ??= new Capacities(
+            CapacitiesClientDiagnostics,
+            Pipeline,
+            Diagnostics.ApplicationId,
+            Endpoint,
+            "2021-01-01",
+            resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
 
         private ClientDiagnostics AutoScaleVCoresClientDiagnostics => _autoScaleVCoresClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.PowerBIDedicated.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private AutoScaleVCores AutoScaleVCoresRestClient => _autoScaleVCoresRestClient ??= new AutoScaleVCores(AutoScaleVCoresClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2021-01-01");
+        private AutoScaleVCores AutoScaleVCoresRestClient => _autoScaleVCoresRestClient ??= new AutoScaleVCores(AutoScaleVCoresClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.PowerBIDedicated/autoScaleVCores", out string apiVersion0) ? apiVersion0 : "2021-01-01");
 
         /// <summary>
         /// Lists all the Dedicated capacities for the given subscription.

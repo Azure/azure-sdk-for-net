@@ -1,5 +1,11 @@
 # Release History
 
+## 4.10.0 (2026-10-27)
+
+### Other Changes
+
+- Regenerated the library for stable Key Vault API version `2026-04-01`.
+
 ## 4.10.0-beta.4 (2026-10-08)
 
 ### Bugs Fixed

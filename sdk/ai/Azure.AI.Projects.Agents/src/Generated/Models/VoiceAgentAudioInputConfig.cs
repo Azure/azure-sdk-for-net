@@ -16,13 +16,13 @@ namespace Azure.AI.Projects.Agents
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
         private VoiceAgentNoiseReduction _noiseReduction;
-        internal bool _noiseReductionIsDefined;
+        private bool _noiseReductionIsDefined;
         private VoiceAgentTurnDetectionConfig _turnDetection;
-        internal bool _turnDetectionIsDefined;
+        private bool _turnDetectionIsDefined;
         private VoiceAgentEchoCancellation _echoCancellation;
-        internal bool _echoCancellationIsDefined;
+        private bool _echoCancellationIsDefined;
         private VoiceAgentInputTranscription _transcription;
-        internal bool _transcriptionIsDefined;
+        private bool _transcriptionIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="VoiceAgentAudioInputConfig"/>. </summary>
         public VoiceAgentAudioInputConfig()

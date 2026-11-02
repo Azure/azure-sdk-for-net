@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new PoolListResult(value, nextLink, additionalBinaryDataProperties);
+            return new PoolListResult(value ?? new ChangeTrackingList<DevOpsPoolData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.StandbyPool.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new StandbyContainerGroupPoolRuntimeViewProperties(instanceCountSummary, status, provisioningState, prediction, additionalBinaryDataProperties);
+            return new StandbyContainerGroupPoolRuntimeViewProperties(instanceCountSummary ?? new ChangeTrackingList<ContainerGroupInstanceCountSummary>(), status, provisioningState, prediction, additionalBinaryDataProperties);
         }
     }
 }

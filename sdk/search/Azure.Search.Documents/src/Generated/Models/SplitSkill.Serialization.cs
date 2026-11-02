@@ -90,7 +90,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WritePropertyName("textSplitMode"u8);
                 writer.WriteStringValue(TextSplitMode.Value.ToString());
             }
-            if (_maximumPageLengthIsDefined || Optional.IsDefined(MaximumPageLength))
+            if (Optional.IsDefined(MaximumPageLength, _maximumPageLengthIsDefined))
             {
                 if (MaximumPageLength != null)
                 {
@@ -102,7 +102,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("maximumPageLength"u8);
                 }
             }
-            if (_pageOverlapLengthIsDefined || Optional.IsDefined(PageOverlapLength))
+            if (Optional.IsDefined(PageOverlapLength, _pageOverlapLengthIsDefined))
             {
                 if (PageOverlapLength != null)
                 {
@@ -114,7 +114,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("pageOverlapLength"u8);
                 }
             }
-            if (_maximumPagesToTakeIsDefined || Optional.IsDefined(MaximumPagesToTake))
+            if (Optional.IsDefined(MaximumPagesToTake, _maximumPagesToTakeIsDefined))
             {
                 if (MaximumPagesToTake != null)
                 {
@@ -126,7 +126,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("maximumPagesToTake"u8);
                 }
             }
-            if (_unitIsDefined || Optional.IsDefined(Unit))
+            if (Optional.IsDefined(Unit, _unitIsDefined))
             {
                 if (Unit != null)
                 {
@@ -138,7 +138,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("unit"u8);
                 }
             }
-            if (_azureOpenAITokenizerParametersIsDefined || Optional.IsDefined(AzureOpenAITokenizerParameters))
+            if (Optional.IsDefined(AzureOpenAITokenizerParameters, _azureOpenAITokenizerParametersIsDefined))
             {
                 if (AzureOpenAITokenizerParameters != null)
                 {

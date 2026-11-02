@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.SecretsStoreExtension.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new SecretSyncListResult(value, nextLink, additionalBinaryDataProperties);
+            return new SecretSyncListResult(value ?? new ChangeTrackingList<SecretSyncData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

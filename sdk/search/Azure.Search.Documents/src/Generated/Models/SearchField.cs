@@ -16,11 +16,11 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
         private PermissionFilter? _permissionFilter;
-        internal bool _permissionFilterIsDefined;
+        private bool _permissionFilterIsDefined;
         private string _vectorSearchProfileName;
-        internal bool _vectorSearchProfileNameIsDefined;
+        private bool _vectorSearchProfileNameIsDefined;
         private VectorEncodingFormat? _vectorEncodingFormat;
-        internal bool _vectorEncodingFormatIsDefined;
+        private bool _vectorEncodingFormatIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="SearchField"/>. </summary>
         /// <param name="name"> The name of the field, which must be unique within the fields collection of the index or parent field. </param>

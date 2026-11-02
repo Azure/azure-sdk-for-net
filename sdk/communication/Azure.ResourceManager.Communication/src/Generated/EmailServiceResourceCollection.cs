@@ -41,7 +41,13 @@ namespace Azure.ResourceManager.Communication
         {
             TryGetApiVersion(EmailServiceResource.ResourceType, out string emailServiceResourceApiVersion);
             _emailServicesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Communication", EmailServiceResource.ResourceType.Namespace, Diagnostics);
-            _emailServicesRestClient = new EmailServices(_emailServicesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, emailServiceResourceApiVersion ?? "2026-03-18");
+            _emailServicesRestClient = new EmailServices(
+                _emailServicesClientDiagnostics,
+                Pipeline,
+                Diagnostics.ApplicationId,
+                Endpoint,
+                emailServiceResourceApiVersion ?? "2026-03-18",
+                resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 

@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new PrefixListGlobalRulestackResourceListResult(value, nextLink, additionalBinaryDataProperties);
+            return new PrefixListGlobalRulestackResourceListResult(value ?? new ChangeTrackingList<GlobalRulestackPrefixData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

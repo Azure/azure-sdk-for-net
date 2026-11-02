@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Confluent
         /// <returns> The pages of SCClusterRecordDataCollectionResultOfT as an enumerable collection. </returns>
         public override IEnumerable<Page<SCClusterRecordData>> AsPages(string continuationToken, int? pageSizeHint)
         {
-            Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
+            Uri nextPage = continuationToken != null ? new Uri(continuationToken, UriKind.RelativeOrAbsolute) : null;
             while (true)
             {
                 Response response = GetNextResponse(pageSizeHint, nextPage);
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Confluent
                 {
                     yield break;
                 }
-                ListClustersSuccessResponse result = ListClustersSuccessResponse.FromResponse(response);
+                ListClustersSuccessResult result = ListClustersSuccessResult.FromResponse(response);
                 nextPage = result.NextLink;
                 yield return Page<SCClusterRecordData>.FromValues((IReadOnlyList<SCClusterRecordData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)

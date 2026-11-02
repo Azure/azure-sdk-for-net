@@ -58,6 +58,33 @@ internal class RealtimeClientHelper
         query.Append(Uri.EscapeDataString(value));
     }
 
+    internal static string WithTransportQuery(string queryString, string transport)
+    {
+        Argument.AssertNotNullOrEmpty(transport, nameof(transport));
+
+        StringBuilder query = new();
+        if (!string.IsNullOrEmpty(queryString))
+        {
+            foreach (string parameter in queryString.TrimStart('?').Split('&'))
+            {
+                int separator = parameter.IndexOf('=');
+                string name = separator < 0 ? parameter : parameter.Substring(0, separator);
+                if (string.Equals(Uri.UnescapeDataString(name), "transport", StringComparison.Ordinal))
+                {
+                    continue;
+                }
+
+                if (query.Length > 0)
+                {
+                    query.Append('&');
+                }
+                query.Append(parameter);
+            }
+        }
+        AppendQueryParameter(query, "transport", transport);
+        return query.ToString();
+    }
+
     internal static ClientPipeline CreatePipeline(Uri endpoint, AuthenticationTokenProvider tokenProvider, string experimentalHeaders, string authorizationScope, RealtimeClientOptions options = null)
     {
         options ??= new RealtimeClientOptions();

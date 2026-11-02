@@ -18,15 +18,15 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
         private IndexingSchedule _schedule;
-        internal bool _scheduleIsDefined;
+        private bool _scheduleIsDefined;
         private IndexingParameters _parameters;
-        internal bool _parametersIsDefined;
+        private bool _parametersIsDefined;
         private bool? _isDisabled;
-        internal bool _isDisabledIsDefined;
+        private bool _isDisabledIsDefined;
         private SearchResourceEncryptionKey _encryptionKey;
-        internal bool _encryptionKeyIsDefined;
+        private bool _encryptionKeyIsDefined;
         private SearchIndexerCache _cache;
-        internal bool _cacheIsDefined;
+        private bool _cacheIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="SearchIndexer"/>. </summary>
         /// <param name="name"> The name of the indexer. </param>

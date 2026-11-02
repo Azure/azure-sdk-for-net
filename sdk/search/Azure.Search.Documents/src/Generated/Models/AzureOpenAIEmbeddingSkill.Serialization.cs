@@ -105,7 +105,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WritePropertyName("modelName"u8);
                 writer.WriteStringValue(ModelName.Value.ToString());
             }
-            if (_dimensionsIsDefined || Optional.IsDefined(Dimensions))
+            if (Optional.IsDefined(Dimensions, _dimensionsIsDefined))
             {
                 if (Dimensions != null)
                 {

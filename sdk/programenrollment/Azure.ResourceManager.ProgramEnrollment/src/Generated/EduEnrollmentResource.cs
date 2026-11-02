@@ -52,9 +52,8 @@ namespace Azure.ResourceManager.ProgramEnrollment
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal EduEnrollmentResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string eduEnrollmentApiVersion);
             _eduEnrollmentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ProgramEnrollment", ResourceType.Namespace, Diagnostics);
-            _eduEnrollmentsRestClient = new EduEnrollments(_eduEnrollmentsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, eduEnrollmentApiVersion ?? "2026-03-01-preview");
+            _eduEnrollmentsRestClient = new EduEnrollments(_eduEnrollmentsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.ProgramEnrollment/eduEnrollments", out string eduEnrollmentsApiVersionOverride) ? eduEnrollmentsApiVersionOverride : "2026-03-01-preview");
             ValidateResourceId(id);
         }
 

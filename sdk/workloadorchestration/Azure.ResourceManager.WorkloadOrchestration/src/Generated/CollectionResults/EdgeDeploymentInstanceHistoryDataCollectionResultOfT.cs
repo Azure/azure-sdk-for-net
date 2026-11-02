@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// <returns> The pages of EdgeDeploymentInstanceHistoryDataCollectionResultOfT as an enumerable collection. </returns>
         public override IEnumerable<Page<EdgeDeploymentInstanceHistoryData>> AsPages(string continuationToken, int? pageSizeHint)
         {
-            Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
+            Uri nextPage = continuationToken != null ? new Uri(continuationToken, UriKind.RelativeOrAbsolute) : null;
             while (true)
             {
                 Response response = GetNextResponse(pageSizeHint, nextPage);

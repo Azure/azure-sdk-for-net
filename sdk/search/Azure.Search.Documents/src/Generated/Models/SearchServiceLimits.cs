@@ -16,19 +16,19 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
         private int? _maxFieldsPerIndex;
-        internal bool _maxFieldsPerIndexIsDefined;
+        private bool _maxFieldsPerIndexIsDefined;
         private int? _maxFieldNestingDepthPerIndex;
-        internal bool _maxFieldNestingDepthPerIndexIsDefined;
+        private bool _maxFieldNestingDepthPerIndexIsDefined;
         private int? _maxComplexCollectionFieldsPerIndex;
-        internal bool _maxComplexCollectionFieldsPerIndexIsDefined;
+        private bool _maxComplexCollectionFieldsPerIndexIsDefined;
         private int? _maxComplexObjectsInCollectionsPerDocument;
-        internal bool _maxComplexObjectsInCollectionsPerDocumentIsDefined;
+        private bool _maxComplexObjectsInCollectionsPerDocumentIsDefined;
         private long? _maxStoragePerIndexInBytes;
-        internal bool _maxStoragePerIndexInBytesIsDefined;
+        private bool _maxStoragePerIndexInBytesIsDefined;
         private long? _maxCumulativeIndexerRuntimeSeconds;
-        internal bool _maxCumulativeIndexerRuntimeSecondsIsDefined;
+        private bool _maxCumulativeIndexerRuntimeSecondsIsDefined;
         private long? _maxVectorIndexSizePerIndexInBytes;
-        internal bool _maxVectorIndexSizePerIndexInBytesIsDefined;
+        private bool _maxVectorIndexSizePerIndexInBytesIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="SearchServiceLimits"/>. </summary>
         internal SearchServiceLimits()

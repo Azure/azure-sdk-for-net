@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new RaiToolLabelPropertiesProjectScopesItem(project, labelValues, additionalBinaryDataProperties);
+            return new RaiToolLabelPropertiesProjectScopesItem(project, labelValues ?? new ChangeTrackingDictionary<string, string>(), additionalBinaryDataProperties);
         }
     }
 }

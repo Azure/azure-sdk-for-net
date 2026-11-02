@@ -75,7 +75,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 throw new FormatException($"The model {nameof(BM25Similarity)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            if (_k1IsDefined || Optional.IsDefined(K1))
+            if (Optional.IsDefined(K1, _k1IsDefined))
             {
                 if (K1 != null)
                 {
@@ -87,7 +87,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("k1"u8);
                 }
             }
-            if (_bIsDefined || Optional.IsDefined(B))
+            if (Optional.IsDefined(B, _bIsDefined))
             {
                 if (B != null)
                 {

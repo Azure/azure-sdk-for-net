@@ -15,11 +15,11 @@ namespace Azure.AI.Projects.Agents
     public partial class DeclarativeAgentDefinition : ProjectsAgentDefinition
     {
         private string _instructions;
-        internal bool _instructionsIsDefined;
+        private bool _instructionsIsDefined;
         private float? _temperature;
-        internal bool _temperatureIsDefined;
+        private bool _temperatureIsDefined;
         private float? _topP;
-        internal bool _topPIsDefined;
+        private bool _topPIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="DeclarativeAgentDefinition"/>. </summary>
         /// <param name="model"> The model deployment to use for this agent. </param>

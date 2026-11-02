@@ -15,9 +15,9 @@ namespace Azure.Search.Documents.Indexes.Models
     public partial class LanguageDetectionSkill : SearchIndexerSkill
     {
         private string _defaultCountryHint;
-        internal bool _defaultCountryHintIsDefined;
+        private bool _defaultCountryHintIsDefined;
         private string _modelVersion;
-        internal bool _modelVersionIsDefined;
+        private bool _modelVersionIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="LanguageDetectionSkill"/>. </summary>
         /// <param name="inputs"> Inputs of the skills could be a column in the source data set, or the output of an upstream skill. </param>

@@ -329,7 +329,7 @@ namespace Azure.Provisioning.Sql
             _properties = DefineModelProperty<SyncGroupProperties>(nameof(Properties), new string[] { "properties" });
             _sku = DefineModelProperty<SqlSku>(nameof(Sku), new string[] { "sku" });
             _identity = DefineModelProperty<DataSyncParticipantIdentity>(nameof(Identity), new string[] { "identity" });
-            _parent = DefineResource<SqlDatabase>(nameof(Parent), new string[] { "parent" }, isRequired: true);
+            _parent = DefineResource<SqlDatabase>(nameof(Parent), new string[] { "parent" });
             DefineAdditionalProperties();
         }
 

@@ -15,6 +15,11 @@
       "commandName": "Executable",
       "executablePath": "dotnet"
     },
+    "http-azure-resource-manager-method-subscription-id": {
+      "commandLineArgs": "$(SolutionDir)/../dist/generator/Microsoft.TypeSpec.Generator.dll $(SolutionDir)/TestProjects/Spector/http/azure/resource-manager/method-subscription-id -g ManagementClientGenerator",
+      "commandName": "Executable",
+      "executablePath": "dotnet"
+    },
     "http-azure-resource-manager-multi-service": {
       "commandLineArgs": "$(SolutionDir)/../dist/generator/Microsoft.TypeSpec.Generator.dll $(SolutionDir)/TestProjects/Spector/http/azure/resource-manager/multi-service -g ManagementClientGenerator",
       "commandName": "Executable",
@@ -32,6 +37,11 @@
     },
     "http-azure-resource-manager-operation-templates": {
       "commandLineArgs": "$(SolutionDir)/../dist/generator/Microsoft.TypeSpec.Generator.dll $(SolutionDir)/TestProjects/Spector/http/azure/resource-manager/operation-templates -g ManagementClientGenerator",
+      "commandName": "Executable",
+      "executablePath": "dotnet"
+    },
+    "http-azure-resource-manager-resources": {
+      "commandLineArgs": "$(SolutionDir)/../dist/generator/Microsoft.TypeSpec.Generator.dll $(SolutionDir)/TestProjects/Spector/http/azure/resource-manager/resources -g ManagementClientGenerator",
       "commandName": "Executable",
       "executablePath": "dotnet"
     },

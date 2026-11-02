@@ -39,9 +39,8 @@ namespace Azure.ResourceManager.WorkloadsSapMonitor
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal SapMonitorCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(SapMonitorResource.ResourceType, out string sapMonitorApiVersion);
             _monitorsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.WorkloadsSapMonitor", SapMonitorResource.ResourceType.Namespace, Diagnostics);
-            _monitorsRestClient = new Monitors(_monitorsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, sapMonitorApiVersion ?? "2024-02-01-preview");
+            _monitorsRestClient = new Monitors(_monitorsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.Workloads/monitors", out string monitorsApiVersionOverride) ? monitorsApiVersionOverride : "2024-02-01-preview");
             ValidateResourceId(id);
         }
 

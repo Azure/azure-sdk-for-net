@@ -1,9 +1,33 @@
 # Release History
 
-## 1.0.0-beta.30 (Unreleased)
+## 1.0.0-beta.31 (Unreleased)
 
 ### Features Added
 
+- Added protocol-scoped task access for composed hosts and per-task activation
+  checks, stamping the owning protocol on new task records so a disabled
+  protocol cannot start or recover its tasks merely because another protocol
+  enabled the shared runtime. Legacy unmarked application tasks require the
+  explicit Core switch for recovery; existing Invocations chains continue under
+  that opt-in. The new public protocol-scoping helpers and per-task activation
+  option are experimental (`AAAS003`).
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 1.0.0-beta.30 (2026-10-15)
+
+### Features Added
+
+- Added the private `POST /_agent/before-snapshot` and `POST /_agent/after-restore`
+  lifecycle endpoints for memory snapshot capture and restoration, with
+  `POST /_before_snapshot` and `POST /_after_restore` as aliases. Applications can register
+  an `IAgentSnapshotLifecycle` singleton to release and rebuild process state; Core applies
+  session environment overrides first and provides serialized, idempotent retry handling.
+  Consumers acknowledge this experimental contract with the `AAAS002` diagnostic.
 - Added `FoundryEnvironment.SessionInstanceId`, sourced from `FOUNDRY_AGENT_SESSION_GUID`, and
   validation of the hosted platform's 32-character lowercase hexadecimal session-incarnation ID.
 - Added `TaskDefinition<TInput, TOutput>.GetStatusAsync()` for task-ID migration and compatibility
@@ -30,7 +54,6 @@
 - Added `ResilientTaskSettings : ClientSettings` and configuration-bound
   `IHostApplicationBuilder.AddResilientTasks(sectionName)` overloads. Hosted task storage
   now accepts its credential and project endpoint from one settings object.
-
 ### Breaking Changes
 
 - Resilient tasks now default to disabled. Applications that start Core tasks directly must call

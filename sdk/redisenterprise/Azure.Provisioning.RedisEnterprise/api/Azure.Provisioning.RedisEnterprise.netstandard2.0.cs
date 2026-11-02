@@ -296,7 +296,7 @@ namespace Azure.Provisioning.RedisEnterprise
     {
         public RedisEnterpriseMigration(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
-        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.RedisEnterprise.RedisEnterpriseCluster Parent { get { throw null; } set { } }
         public Azure.Provisioning.RedisEnterprise.RedisEnterpriseMigrationProperties Properties { get { throw null; } set { } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }

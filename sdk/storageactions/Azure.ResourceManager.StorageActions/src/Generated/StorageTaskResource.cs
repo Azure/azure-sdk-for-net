@@ -58,7 +58,13 @@ namespace Azure.ResourceManager.StorageActions
         {
             TryGetApiVersion(ResourceType, out string storageTaskApiVersion);
             _storageTasksClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.StorageActions", ResourceType.Namespace, Diagnostics);
-            _storageTasksRestClient = new StorageTasks(_storageTasksClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, storageTaskApiVersion ?? "2023-01-01");
+            _storageTasksRestClient = new StorageTasks(
+                _storageTasksClientDiagnostics,
+                Pipeline,
+                Diagnostics.ApplicationId,
+                Endpoint,
+                storageTaskApiVersion ?? "2023-01-01",
+                resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             _storageTasksReportClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.StorageActions", ResourceType.Namespace, Diagnostics);
             _storageTasksReportRestClient = new StorageTasksReport(_storageTasksReportClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, storageTaskApiVersion ?? "2023-01-01");
             _storageTaskAssignmentClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.StorageActions", ResourceType.Namespace, Diagnostics);

@@ -16,13 +16,13 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
         private string _authenticationKey;
-        internal bool _authenticationKeyIsDefined;
+        private bool _authenticationKeyIsDefined;
         private string _resourceId;
-        internal bool _resourceIdIsDefined;
+        private bool _resourceIdIsDefined;
         private TimeSpan? _timeout;
-        internal bool _timeoutIsDefined;
+        private bool _timeoutIsDefined;
         private string _region;
-        internal bool _regionIsDefined;
+        private bool _regionIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="AzureMachineLearningParameters"/>. </summary>
         /// <param name="scoringUri"> (Required for no authentication or key authentication) The scoring URI of the AML service to which the JSON payload will be sent. Only the https URI scheme is allowed. </param>

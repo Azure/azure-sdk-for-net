@@ -11,7 +11,7 @@ using Azure.ResourceManager.Compute.BulkActions;
 
 namespace Azure.ResourceManager.Compute.BulkActions.Models
 {
-    /// <summary> Settings for notifications about upcoming scheduled action operations. </summary>
+    /// <summary> Settings for notifications about upcoming recurring bulk action operations. </summary>
     public partial class NotificationProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

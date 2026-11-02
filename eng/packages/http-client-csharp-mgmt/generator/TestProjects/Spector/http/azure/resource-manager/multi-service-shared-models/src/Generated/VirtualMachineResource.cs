@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.MultiServiceSharedModels.Combined
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualMachinesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                HttpMessage message = _virtualMachinesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<VirtualMachineData> response = Response.FromValue(VirtualMachineData.FromResponse(result), result);
                 if (response.Value == null)
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.MultiServiceSharedModels.Combined
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualMachinesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                HttpMessage message = _virtualMachinesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<VirtualMachineData> response = Response.FromValue(VirtualMachineData.FromResponse(result), result);
                 if (response.Value == null)
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.MultiServiceSharedModels.Combined
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualMachinesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, VirtualMachineData.ToRequestContent(data), context);
+                HttpMessage message = _virtualMachinesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, VirtualMachineData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 CombinedArmOperation<VirtualMachineResource> operation = new CombinedArmOperation<VirtualMachineResource>(
                     new VirtualMachineResourceOperationSource(Client),
@@ -286,7 +286,7 @@ namespace Azure.ResourceManager.MultiServiceSharedModels.Combined
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualMachinesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, VirtualMachineData.ToRequestContent(data), context);
+                HttpMessage message = _virtualMachinesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, VirtualMachineData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 CombinedArmOperation<VirtualMachineResource> operation = new CombinedArmOperation<VirtualMachineResource>(
                     new VirtualMachineResourceOperationSource(Client),
@@ -331,7 +331,7 @@ namespace Azure.ResourceManager.MultiServiceSharedModels.Combined
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _virtualMachinesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                    HttpMessage message = _virtualMachinesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<VirtualMachineData> response = Response.FromValue(VirtualMachineData.FromResponse(result), result);
                     return Response.FromValue(new VirtualMachineResource(Client, response.Value), response.GetRawResponse());
@@ -374,7 +374,7 @@ namespace Azure.ResourceManager.MultiServiceSharedModels.Combined
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _virtualMachinesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                    HttpMessage message = _virtualMachinesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<VirtualMachineData> response = Response.FromValue(VirtualMachineData.FromResponse(result), result);
                     return Response.FromValue(new VirtualMachineResource(Client, response.Value), response.GetRawResponse());
@@ -415,7 +415,7 @@ namespace Azure.ResourceManager.MultiServiceSharedModels.Combined
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _virtualMachinesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                    HttpMessage message = _virtualMachinesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<VirtualMachineData> response = Response.FromValue(VirtualMachineData.FromResponse(result), result);
                     return Response.FromValue(new VirtualMachineResource(Client, response.Value), response.GetRawResponse());
@@ -456,7 +456,7 @@ namespace Azure.ResourceManager.MultiServiceSharedModels.Combined
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _virtualMachinesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                    HttpMessage message = _virtualMachinesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<VirtualMachineData> response = Response.FromValue(VirtualMachineData.FromResponse(result), result);
                     return Response.FromValue(new VirtualMachineResource(Client, response.Value), response.GetRawResponse());
@@ -497,7 +497,7 @@ namespace Azure.ResourceManager.MultiServiceSharedModels.Combined
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _virtualMachinesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                    HttpMessage message = _virtualMachinesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<VirtualMachineData> response = Response.FromValue(VirtualMachineData.FromResponse(result), result);
                     return Response.FromValue(new VirtualMachineResource(Client, response.Value), response.GetRawResponse());
@@ -538,7 +538,7 @@ namespace Azure.ResourceManager.MultiServiceSharedModels.Combined
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _virtualMachinesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                    HttpMessage message = _virtualMachinesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<VirtualMachineData> response = Response.FromValue(VirtualMachineData.FromResponse(result), result);
                     return Response.FromValue(new VirtualMachineResource(Client, response.Value), response.GetRawResponse());

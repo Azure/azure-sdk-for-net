@@ -74,6 +74,24 @@ namespace Azure.Generator.MgmtApiVersionOverride.Tests
         }
 
         /// <summary>
+        /// Gets an object representing a <see cref="OrdinaryWireVersionTestResource"/> along with the instance operations that can be performed on it but with no data.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtApiVersionOverrideTestsArmClient.GetOrdinaryWireVersionTestResource(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="OrdinaryWireVersionTestResource"/> object. </returns>
+        public static OrdinaryWireVersionTestResource GetOrdinaryWireVersionTestResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableAzureGeneratorMgmtApiVersionOverrideTestsArmClient(client).GetOrdinaryWireVersionTestResource(id);
+        }
+
+        /// <summary>
         /// Gets a collection of EscapedWireVersionTests in the <see cref="ResourceGroupResource"/>
         /// <item>
         /// <term> Mocking. </term>
@@ -184,6 +202,61 @@ namespace Azure.Generator.MgmtApiVersionOverride.Tests
         }
 
         /// <summary>
+        /// Gets a collection of OrdinaryWireVersionTests in the <see cref="ResourceGroupResource"/>
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtApiVersionOverrideTestsResourceGroupResource.GetOrdinaryWireVersionTests()"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        /// <returns> An object representing collection of OrdinaryWireVersionTests and their operations over a OrdinaryWireVersionTestResource. </returns>
+        public static OrdinaryWireVersionTestCollection GetOrdinaryWireVersionTests(this ResourceGroupResource resourceGroupResource)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableAzureGeneratorMgmtApiVersionOverrideTestsResourceGroupResource(resourceGroupResource).GetOrdinaryWireVersionTests();
+        }
+
+        /// <summary>
+        /// Get a OrdinaryWireVersionTest
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtApiVersionOverrideTestsResourceGroupResource.GetOrdinaryWireVersionTestAsync(string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="ordinaryWireVersionTestName"> The name of the OrdinaryWireVersionTest. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<OrdinaryWireVersionTestResource>> GetOrdinaryWireVersionTestAsync(this ResourceGroupResource resourceGroupResource, string ordinaryWireVersionTestName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableAzureGeneratorMgmtApiVersionOverrideTestsResourceGroupResource(resourceGroupResource).GetOrdinaryWireVersionTestAsync(ordinaryWireVersionTestName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get a OrdinaryWireVersionTest
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtApiVersionOverrideTestsResourceGroupResource.GetOrdinaryWireVersionTest(string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="ordinaryWireVersionTestName"> The name of the OrdinaryWireVersionTest. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<OrdinaryWireVersionTestResource> GetOrdinaryWireVersionTest(this ResourceGroupResource resourceGroupResource, string ordinaryWireVersionTestName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableAzureGeneratorMgmtApiVersionOverrideTestsResourceGroupResource(resourceGroupResource).GetOrdinaryWireVersionTest(ordinaryWireVersionTestName, cancellationToken);
+        }
+
+        /// <summary>
         /// List EscapedWireVersionTest resources by subscription ID
         /// <item>
         /// <term> Mocking. </term>
@@ -256,6 +329,42 @@ namespace Azure.Generator.MgmtApiVersionOverride.Tests
         }
 
         /// <summary>
+        /// List OrdinaryWireVersionTest resources by subscription ID
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtApiVersionOverrideTestsSubscriptionResource.GetOrdinaryWireVersionTestsAsync(CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="OrdinaryWireVersionTestResource"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<OrdinaryWireVersionTestResource> GetOrdinaryWireVersionTestsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableAzureGeneratorMgmtApiVersionOverrideTestsSubscriptionResource(subscriptionResource).GetOrdinaryWireVersionTestsAsync(cancellationToken);
+        }
+
+        /// <summary>
+        /// List OrdinaryWireVersionTest resources by subscription ID
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtApiVersionOverrideTestsSubscriptionResource.GetOrdinaryWireVersionTests(CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="OrdinaryWireVersionTestResource"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<OrdinaryWireVersionTestResource> GetOrdinaryWireVersionTests(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableAzureGeneratorMgmtApiVersionOverrideTestsSubscriptionResource(subscriptionResource).GetOrdinaryWireVersionTests(cancellationToken);
+        }
+
+        /// <summary>
         /// CheckWireVersion
         /// <item>
         /// <term> Mocking. </term>
@@ -287,6 +396,40 @@ namespace Azure.Generator.MgmtApiVersionOverride.Tests
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableAzureGeneratorMgmtApiVersionOverrideTestsSubscriptionResource(subscriptionResource).CheckWireVersion(cancellationToken);
+        }
+
+        /// <summary>
+        /// CheckOrdinaryWireVersion
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtApiVersionOverrideTestsSubscriptionResource.CheckOrdinaryWireVersionAsync(CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        public static async Task<Response<string>> CheckOrdinaryWireVersionAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return await GetMockableAzureGeneratorMgmtApiVersionOverrideTestsSubscriptionResource(subscriptionResource).CheckOrdinaryWireVersionAsync(cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// CheckOrdinaryWireVersion
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtApiVersionOverrideTestsSubscriptionResource.CheckOrdinaryWireVersion(CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        public static Response<string> CheckOrdinaryWireVersion(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableAzureGeneratorMgmtApiVersionOverrideTestsSubscriptionResource(subscriptionResource).CheckOrdinaryWireVersion(cancellationToken);
         }
     }
 }

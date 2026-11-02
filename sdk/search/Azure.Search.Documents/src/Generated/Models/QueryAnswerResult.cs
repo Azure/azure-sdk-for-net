@@ -16,7 +16,7 @@ namespace Azure.Search.Documents.Models
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, object> _additionalBinaryDataProperties;
         private string _highlights;
-        internal bool _highlightsIsDefined;
+        private bool _highlightsIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="QueryAnswerResult"/>. </summary>
         public QueryAnswerResult()

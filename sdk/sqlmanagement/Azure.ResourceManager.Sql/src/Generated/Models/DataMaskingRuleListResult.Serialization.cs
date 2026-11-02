@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Sql.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new DataMaskingRuleListResult(value, nextLink, additionalBinaryDataProperties);
+            return new DataMaskingRuleListResult(value ?? new ChangeTrackingList<DataMaskingRule>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

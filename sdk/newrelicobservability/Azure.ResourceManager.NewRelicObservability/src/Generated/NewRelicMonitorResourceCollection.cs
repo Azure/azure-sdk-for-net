@@ -39,9 +39,8 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal NewRelicMonitorResourceCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(NewRelicMonitorResource.ResourceType, out string newRelicMonitorResourceApiVersion);
             _monitorsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.NewRelicObservability", NewRelicMonitorResource.ResourceType.Namespace, Diagnostics);
-            _monitorsRestClient = new Monitors(_monitorsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, newRelicMonitorResourceApiVersion ?? "2026-06-01");
+            _monitorsRestClient = new Monitors(_monitorsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("NewRelic.Observability/monitors", out string monitorsApiVersionOverride) ? monitorsApiVersionOverride : "2026-06-01");
             ValidateResourceId(id);
         }
 

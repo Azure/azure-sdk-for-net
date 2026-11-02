@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.Redis.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new RedisPatchScheduleSettings(scheduleEntries, additionalBinaryDataProperties);
+            return new RedisPatchScheduleSettings(scheduleEntries ?? new ChangeTrackingList<RedisPatchScheduleSetting>(), additionalBinaryDataProperties);
         }
     }
 }

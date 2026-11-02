@@ -5,13 +5,16 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using OpenAI;
 
 namespace Azure.AI.Projects.Agents
 {
     /// <summary>
-    /// Asynchronous input-audio transcription configuration. Extends the OpenAI Realtime transcription
-    /// options with the Azure and MAI transcription models, custom speech models, and phrase hints.
+    /// Settings for transcribing input audio, including the transcription model, Custom Speech deployments,
+    /// and phrase hints.
+    /// When `model` is `azure-speech-streaming`, transcription is supported for cascaded text-model
+    /// conversations only (not realtime speech-to-speech models), requires a nonempty `language` such as
+    /// `en-US` (comma-separated locales are supported), and supports `custom_speech`, `phrase_list`, and
+    /// `profanity_filter`.
     /// </summary>
     [Experimental("AAIP001")]
     public partial class VoiceAgentInputTranscription
@@ -20,9 +23,11 @@ namespace Azure.AI.Projects.Agents
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="VoiceAgentInputTranscription"/>. </summary>
-        /// <param name="model"> The transcription model identifier. Configure customer custom speech deployments in `custom_speech`. </param>
+        /// <param name="model"> The transcription model identifier. Configure customer custom speech deployments in `custom_speech`. `azure-speech-streaming` is for cascaded text-model conversations only (not realtime speech-to-speech models), requires a nonempty `language` such as `en-US` (comma-separated locales are supported), and supports `custom_speech`, `phrase_list`, and `profanity_filter`. </param>
         public VoiceAgentInputTranscription(VoiceAgentInputTranscriptionModel model)
         {
+            Languages = new ChangeTrackingList<string>();
+            Keywords = new ChangeTrackingList<string>();
             Model = model;
             CustomSpeech = new ChangeTrackingDictionary<string, string>();
             PhraseList = new ChangeTrackingList<string>();
@@ -31,13 +36,17 @@ namespace Azure.AI.Projects.Agents
         /// <summary> Initializes a new instance of <see cref="VoiceAgentInputTranscription"/>. </summary>
         /// <param name="language">
         /// The language of the input audio. Supplying the input language in
-        ///   [ISO-639-1](https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes) (e.g. `en`) format
-        ///   will improve accuracy and latency.
+        /// [ISO-639-1](https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes) (e.g. `en`) format
+        /// will improve accuracy and latency. Optional for other transcription models; required and must be
+        /// nonempty when `model` is `azure-speech-streaming` (such as `en-US`; comma-separated locales are
+        /// supported).
         /// </param>
+        /// <param name="languages"> Possible languages of the input audio, in [ISO-639-1](https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes) format. Supported by `gpt-transcribe` and `gpt-live-transcribe`. </param>
+        /// <param name="keywords"> Words or phrases to guide transcription of the input audio. Supported by `gpt-transcribe` and `gpt-live-transcribe`. </param>
         /// <param name="prompt">
         /// An optional text to guide the model's style or continue a previous audio
         ///   segment.
-        ///   For `whisper-1`, the [prompt is a list of keywords](/docs/guides/speech-to-text#prompting).
+        ///   For `whisper-1`, the [prompt is a list of keywords](https://developers.openai.com/api/docs/guides/speech-to-text#prompting).
         ///   For `gpt-4o-transcribe` models (excluding `gpt-4o-transcribe-diarize`), the prompt is a free text string, for example "expect words related to technology".
         ///   Prompt is not supported with `gpt-realtime-whisper` in GA Realtime sessions.
         /// </param>
@@ -46,32 +55,52 @@ namespace Azure.AI.Projects.Agents
         ///   Higher values can improve transcription accuracy at the cost of latency.
         ///   Only supported with `gpt-realtime-whisper` in GA Realtime sessions.
         /// </param>
-        /// <param name="model"> The transcription model identifier. Configure customer custom speech deployments in `custom_speech`. </param>
+        /// <param name="model"> The transcription model identifier. Configure customer custom speech deployments in `custom_speech`. `azure-speech-streaming` is for cascaded text-model conversations only (not realtime speech-to-speech models), requires a nonempty `language` such as `en-US` (comma-separated locales are supported), and supports `custom_speech`, `phrase_list`, and `profanity_filter`. </param>
         /// <param name="customSpeech"> Optional customer custom speech deployment configuration, keyed by locale. </param>
         /// <param name="phraseList"> Optional phrase hints that bias recognition toward domain terms. </param>
+        /// <param name="profanityFilter">
+        /// Controls how profanity is handled in input transcripts. Supported only with managed Azure Speech
+        /// (`azure-speech` and `azure-speech-streaming`), including Custom Speech.
+        /// Set this property before the session starts. If omitted, the transcription provider's default applies.
+        /// You cannot change the mode during a session.
+        /// Filtering affects transcript events and the text sent to cascaded models. It does not change input
+        /// audio, voice activity detection, or assistant speech; audio-native models still receive the original
+        /// audio. Mandatory service masking policies apply even when you select `unfiltered`.
+        /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VoiceAgentInputTranscription(string language, string prompt, VoiceAgentAudioInputConfigTranscriptionDelay? delay, VoiceAgentInputTranscriptionModel model, IDictionary<string, string> customSpeech, IList<string> phraseList, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VoiceAgentInputTranscription(string language, IList<string> languages, IList<string> keywords, string prompt, VoiceAgentAudioInputConfigTranscriptionDelay? delay, VoiceAgentInputTranscriptionModel model, IDictionary<string, string> customSpeech, IList<string> phraseList, VoiceAgentProfanityFilterMode? profanityFilter, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Language = language;
+            Languages = languages;
+            Keywords = keywords;
             Prompt = prompt;
             Delay = delay;
             Model = model;
             CustomSpeech = customSpeech;
             PhraseList = phraseList;
+            ProfanityFilter = profanityFilter;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary>
         /// The language of the input audio. Supplying the input language in
-        ///   [ISO-639-1](https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes) (e.g. `en`) format
-        ///   will improve accuracy and latency.
+        /// [ISO-639-1](https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes) (e.g. `en`) format
+        /// will improve accuracy and latency. Optional for other transcription models; required and must be
+        /// nonempty when `model` is `azure-speech-streaming` (such as `en-US`; comma-separated locales are
+        /// supported).
         /// </summary>
         public string Language { get; set; }
+
+        /// <summary> Possible languages of the input audio, in [ISO-639-1](https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes) format. Supported by `gpt-transcribe` and `gpt-live-transcribe`. </summary>
+        public IList<string> Languages { get; }
+
+        /// <summary> Words or phrases to guide transcription of the input audio. Supported by `gpt-transcribe` and `gpt-live-transcribe`. </summary>
+        public IList<string> Keywords { get; }
 
         /// <summary>
         /// An optional text to guide the model's style or continue a previous audio
         ///   segment.
-        ///   For `whisper-1`, the [prompt is a list of keywords](/docs/guides/speech-to-text#prompting).
+        ///   For `whisper-1`, the [prompt is a list of keywords](https://developers.openai.com/api/docs/guides/speech-to-text#prompting).
         ///   For `gpt-4o-transcribe` models (excluding `gpt-4o-transcribe-diarize`), the prompt is a free text string, for example "expect words related to technology".
         ///   Prompt is not supported with `gpt-realtime-whisper` in GA Realtime sessions.
         /// </summary>
@@ -84,7 +113,7 @@ namespace Azure.AI.Projects.Agents
         /// </summary>
         public VoiceAgentAudioInputConfigTranscriptionDelay? Delay { get; set; }
 
-        /// <summary> The transcription model identifier. Configure customer custom speech deployments in `custom_speech`. </summary>
+        /// <summary> The transcription model identifier. Configure customer custom speech deployments in `custom_speech`. `azure-speech-streaming` is for cascaded text-model conversations only (not realtime speech-to-speech models), requires a nonempty `language` such as `en-US` (comma-separated locales are supported), and supports `custom_speech`, `phrase_list`, and `profanity_filter`. </summary>
         public VoiceAgentInputTranscriptionModel Model { get; set; }
 
         /// <summary> Optional customer custom speech deployment configuration, keyed by locale. </summary>
@@ -92,5 +121,16 @@ namespace Azure.AI.Projects.Agents
 
         /// <summary> Optional phrase hints that bias recognition toward domain terms. </summary>
         public IList<string> PhraseList { get; }
+
+        /// <summary>
+        /// Controls how profanity is handled in input transcripts. Supported only with managed Azure Speech
+        /// (`azure-speech` and `azure-speech-streaming`), including Custom Speech.
+        /// Set this property before the session starts. If omitted, the transcription provider's default applies.
+        /// You cannot change the mode during a session.
+        /// Filtering affects transcript events and the text sent to cascaded models. It does not change input
+        /// audio, voice activity detection, or assistant speech; audio-native models still receive the original
+        /// audio. Mandatory service masking policies apply even when you select `unfiltered`.
+        /// </summary>
+        public VoiceAgentProfanityFilterMode? ProfanityFilter { get; set; }
     }
 }

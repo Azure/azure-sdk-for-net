@@ -80,7 +80,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 throw new FormatException($"The model {nameof(LanguageDetectionSkill)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            if (_defaultCountryHintIsDefined || Optional.IsDefined(DefaultCountryHint))
+            if (Optional.IsDefined(DefaultCountryHint, _defaultCountryHintIsDefined))
             {
                 if (DefaultCountryHint != null)
                 {
@@ -92,7 +92,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("defaultCountryHint"u8);
                 }
             }
-            if (_modelVersionIsDefined || Optional.IsDefined(ModelVersion))
+            if (Optional.IsDefined(ModelVersion, _modelVersionIsDefined))
             {
                 if (ModelVersion != null)
                 {

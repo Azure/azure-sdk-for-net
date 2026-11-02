@@ -181,71 +181,123 @@ namespace Azure.Security.Attestation
                 writer.WritePropertyName("x-ms-sgx-collateral"u8);
                 writer.WriteObjectValue<object>(SgxCollateral, options);
             }
+#pragma warning disable CS0612 // This generated code references obsolete functionality.
+#pragma warning disable CS0618 // This generated code references obsolete functionality.
             if (Optional.IsDefined(DeprecatedVersion))
             {
                 writer.WritePropertyName("ver"u8);
                 writer.WriteStringValue(DeprecatedVersion);
             }
+#pragma warning restore CS0618 // This generated code references obsolete functionality.
+#pragma warning restore CS0612 // This generated code references obsolete functionality.
+#pragma warning disable CS0612 // This generated code references obsolete functionality.
+#pragma warning disable CS0618 // This generated code references obsolete functionality.
             if (Optional.IsDefined(DeprecatedIsDebuggable))
             {
                 writer.WritePropertyName("is-debuggable"u8);
                 writer.WriteBooleanValue(DeprecatedIsDebuggable.Value);
             }
+#pragma warning restore CS0618 // This generated code references obsolete functionality.
+#pragma warning restore CS0612 // This generated code references obsolete functionality.
+#pragma warning disable CS0612 // This generated code references obsolete functionality.
+#pragma warning disable CS0618 // This generated code references obsolete functionality.
             if (Optional.IsDefined(DeprecatedSgxCollateral))
             {
                 writer.WritePropertyName("maa-attestationcollateral"u8);
                 writer.WriteObjectValue<object>(DeprecatedSgxCollateral, options);
             }
+#pragma warning restore CS0618 // This generated code references obsolete functionality.
+#pragma warning restore CS0612 // This generated code references obsolete functionality.
+#pragma warning disable CS0612 // This generated code references obsolete functionality.
+#pragma warning disable CS0618 // This generated code references obsolete functionality.
             if (Optional.IsDefined(DeprecatedEnclaveHeldData))
             {
                 writer.WritePropertyName("aas-ehd"u8);
                 writer.WriteBase64StringValue(DeprecatedEnclaveHeldData, "U");
             }
+#pragma warning restore CS0618 // This generated code references obsolete functionality.
+#pragma warning restore CS0612 // This generated code references obsolete functionality.
+#pragma warning disable CS0612 // This generated code references obsolete functionality.
+#pragma warning disable CS0618 // This generated code references obsolete functionality.
             if (Optional.IsDefined(DeprecatedEnclaveHeldData2))
             {
                 writer.WritePropertyName("maa-ehd"u8);
                 writer.WriteBase64StringValue(DeprecatedEnclaveHeldData2, "U");
             }
+#pragma warning restore CS0618 // This generated code references obsolete functionality.
+#pragma warning restore CS0612 // This generated code references obsolete functionality.
+#pragma warning disable CS0612 // This generated code references obsolete functionality.
+#pragma warning disable CS0618 // This generated code references obsolete functionality.
             if (Optional.IsDefined(DeprecatedProductId))
             {
                 writer.WritePropertyName("product-id"u8);
                 writer.WriteNumberValue(DeprecatedProductId.Value);
             }
+#pragma warning restore CS0618 // This generated code references obsolete functionality.
+#pragma warning restore CS0612 // This generated code references obsolete functionality.
+#pragma warning disable CS0612 // This generated code references obsolete functionality.
+#pragma warning disable CS0618 // This generated code references obsolete functionality.
             if (Optional.IsDefined(DeprecatedMrEnclave))
             {
                 writer.WritePropertyName("sgx-mrenclave"u8);
                 writer.WriteStringValue(DeprecatedMrEnclave);
             }
+#pragma warning restore CS0618 // This generated code references obsolete functionality.
+#pragma warning restore CS0612 // This generated code references obsolete functionality.
+#pragma warning disable CS0612 // This generated code references obsolete functionality.
+#pragma warning disable CS0618 // This generated code references obsolete functionality.
             if (Optional.IsDefined(DeprecatedMrSigner))
             {
                 writer.WritePropertyName("sgx-mrsigner"u8);
                 writer.WriteStringValue(DeprecatedMrSigner);
             }
+#pragma warning restore CS0618 // This generated code references obsolete functionality.
+#pragma warning restore CS0612 // This generated code references obsolete functionality.
+#pragma warning disable CS0612 // This generated code references obsolete functionality.
+#pragma warning disable CS0618 // This generated code references obsolete functionality.
             if (Optional.IsDefined(DeprecatedSvn))
             {
                 writer.WritePropertyName("svn"u8);
                 writer.WriteNumberValue(DeprecatedSvn.Value);
             }
+#pragma warning restore CS0618 // This generated code references obsolete functionality.
+#pragma warning restore CS0612 // This generated code references obsolete functionality.
+#pragma warning disable CS0612 // This generated code references obsolete functionality.
+#pragma warning disable CS0618 // This generated code references obsolete functionality.
             if (Optional.IsDefined(DeprecatedTee))
             {
                 writer.WritePropertyName("tee"u8);
                 writer.WriteStringValue(DeprecatedTee);
             }
+#pragma warning restore CS0618 // This generated code references obsolete functionality.
+#pragma warning restore CS0612 // This generated code references obsolete functionality.
+#pragma warning disable CS0612 // This generated code references obsolete functionality.
+#pragma warning disable CS0618 // This generated code references obsolete functionality.
             if (Optional.IsDefined(DeprecatedPolicySigner))
             {
                 writer.WritePropertyName("policy_signer"u8);
                 writer.WriteObjectValue(DeprecatedPolicySigner, options);
             }
+#pragma warning restore CS0618 // This generated code references obsolete functionality.
+#pragma warning restore CS0612 // This generated code references obsolete functionality.
+#pragma warning disable CS0612 // This generated code references obsolete functionality.
+#pragma warning disable CS0618 // This generated code references obsolete functionality.
             if (Optional.IsDefined(DeprecatedPolicyHash))
             {
                 writer.WritePropertyName("policy_hash"u8);
                 SerializeDeprecatedPolicyHash(writer, options);
             }
+#pragma warning restore CS0618 // This generated code references obsolete functionality.
+#pragma warning restore CS0612 // This generated code references obsolete functionality.
+#pragma warning disable CS0612 // This generated code references obsolete functionality.
+#pragma warning disable CS0618 // This generated code references obsolete functionality.
             if (Optional.IsDefined(DeprecatedRpData))
             {
                 writer.WritePropertyName("rp_data"u8);
                 writer.WriteStringValue(DeprecatedRpData);
             }
+#pragma warning restore CS0618 // This generated code references obsolete functionality.
+#pragma warning restore CS0612 // This generated code references obsolete functionality.
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)

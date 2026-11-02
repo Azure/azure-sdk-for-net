@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.HealthBot.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new BotResponseList(value, nextLink, additionalBinaryDataProperties);
+            return new BotResponseList(value ?? new ChangeTrackingList<HealthBotData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

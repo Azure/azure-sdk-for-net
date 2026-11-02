@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.Chaos.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ExperimentProperties(provisioningState, steps, selectors, customerDataStorage, additionalBinaryDataProperties);
+            return new ExperimentProperties(provisioningState, steps ?? new ChangeTrackingList<ChaosExperimentStep>(), selectors ?? new ChangeTrackingList<ChaosTargetSelector>(), customerDataStorage, additionalBinaryDataProperties);
         }
     }
 }

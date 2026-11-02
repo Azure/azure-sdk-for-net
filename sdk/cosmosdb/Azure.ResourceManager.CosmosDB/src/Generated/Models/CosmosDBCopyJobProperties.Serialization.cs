@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             long? totalCount = default;
             DateTimeOffset? lastUpdatedUtcOn = default;
             int? workerCount = default;
-            ErrorResponse errorResponse = default;
+            ErrorResult errorResponse = default;
             string duration = default;
             CopyJobMode? mode = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     {
                         continue;
                     }
-                    errorResponse = ErrorResponse.DeserializeErrorResponse(prop.Value, options);
+                    errorResponse = ErrorResult.DeserializeErrorResult(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("duration"u8))

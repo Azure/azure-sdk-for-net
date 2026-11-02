@@ -16,7 +16,7 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
         private VectorSearchAlgorithmMetric? _metric;
-        internal bool _metricIsDefined;
+        private bool _metricIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="ExhaustiveKnnParameters"/>. </summary>
         public ExhaustiveKnnParameters()

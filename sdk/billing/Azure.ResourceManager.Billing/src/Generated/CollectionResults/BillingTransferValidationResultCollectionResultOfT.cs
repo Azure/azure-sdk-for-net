@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Billing
         public override IEnumerable<Page<BillingTransferValidationResult>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Response response = GetNextResponse(pageSizeHint, null);
-            ValidateTransferListResponse result = ValidateTransferListResponse.FromResponse(response);
+            ValidateTransferListResult result = ValidateTransferListResult.FromResponse(response);
             yield return Page<BillingTransferValidationResult>.FromValues(result.Value, null, response);
         }
 

@@ -4,10 +4,12 @@ $supportedSpecs = @(
     "http/azure/resource-manager/common-properties"
     "http/azure/resource-manager/large-header"
     "http/azure/resource-manager/management-group"
+    "http/azure/resource-manager/method-subscription-id"
     "http/azure/resource-manager/multi-service"
     "http/azure/resource-manager/multi-service-shared-models"
     "http/azure/resource-manager/non-resource"
     "http/azure/resource-manager/operation-templates"
+    "http/azure/resource-manager/resources"
     "http/azure/resource-manager/service-group"
 )
 

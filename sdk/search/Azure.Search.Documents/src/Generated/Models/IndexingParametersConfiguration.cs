@@ -17,9 +17,9 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
         private MarkdownParsingSubmode? _markdownParsingSubmode;
-        internal bool _markdownParsingSubmodeIsDefined;
+        private bool _markdownParsingSubmodeIsDefined;
         private MarkdownHeaderDepth? _markdownHeaderDepth;
-        internal bool _markdownHeaderDepthIsDefined;
+        private bool _markdownHeaderDepthIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="IndexingParametersConfiguration"/>. </summary>
         public IndexingParametersConfiguration()

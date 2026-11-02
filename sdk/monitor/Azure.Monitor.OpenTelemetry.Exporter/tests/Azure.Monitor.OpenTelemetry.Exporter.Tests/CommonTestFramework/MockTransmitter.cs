@@ -19,11 +19,14 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.CommonTestFramework
     {
         public readonly IList<TelemetryItem> TelemetryItems;
 
-        public string InstrumentationKey => "00000000-0000-0000-0000-000000000000";
+        public string InstrumentationKey { get; }
+        public ExportResult Result { get; set; } = ExportResult.Success;
+        public int DisposeCallCount { get; private set; }
 
-        public MockTransmitter(IList<TelemetryItem> telemetryItems)
+        public MockTransmitter(IList<TelemetryItem> telemetryItems, string instrumentationKey = "00000000-0000-0000-0000-000000000000")
         {
             this.TelemetryItems = telemetryItems;
+            InstrumentationKey = instrumentationKey;
         }
 
         public ValueTask<ExportResult> TrackAsync(IEnumerable<TelemetryItem> telemetryItems, TelemetrySchemaTypeCounter telemetrySchemaTypeCounter, TelemetryItemOrigin origin, bool async, CancellationToken cancellationToken)
@@ -38,7 +41,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.CommonTestFramework
                 }
             }
 
-            return new ValueTask<ExportResult>(Task.FromResult(ExportResult.Success));
+            return new ValueTask<ExportResult>(Task.FromResult(Result));
         }
 
         public int TrackAsyncCallCount { get; private set; }
@@ -62,6 +65,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.CommonTestFramework
 
         public void Dispose()
         {
+            DisposeCallCount++;
         }
 
         private sealed class NoopScope : IDisposable

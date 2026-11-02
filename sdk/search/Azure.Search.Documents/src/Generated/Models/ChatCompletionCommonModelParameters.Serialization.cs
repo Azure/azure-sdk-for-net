@@ -74,7 +74,7 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 throw new FormatException($"The model {nameof(ChatCompletionCommonModelParameters)} does not support writing '{format}' format.");
             }
-            if (_modelNameIsDefined || Optional.IsDefined(ModelName))
+            if (Optional.IsDefined(ModelName, _modelNameIsDefined))
             {
                 if (ModelName != null)
                 {
@@ -86,7 +86,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("model"u8);
                 }
             }
-            if (_frequencyPenaltyIsDefined || Optional.IsDefined(FrequencyPenalty))
+            if (Optional.IsDefined(FrequencyPenalty, _frequencyPenaltyIsDefined))
             {
                 if (FrequencyPenalty != null)
                 {
@@ -98,7 +98,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("frequencyPenalty"u8);
                 }
             }
-            if (_presencePenaltyIsDefined || Optional.IsDefined(PresencePenalty))
+            if (Optional.IsDefined(PresencePenalty, _presencePenaltyIsDefined))
             {
                 if (PresencePenalty != null)
                 {
@@ -110,7 +110,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("presencePenalty"u8);
                 }
             }
-            if (_maxTokensIsDefined || Optional.IsDefined(MaxTokens))
+            if (Optional.IsDefined(MaxTokens, _maxTokensIsDefined))
             {
                 if (MaxTokens != null)
                 {
@@ -122,7 +122,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("maxTokens"u8);
                 }
             }
-            if (_temperatureIsDefined || Optional.IsDefined(Temperature))
+            if (Optional.IsDefined(Temperature, _temperatureIsDefined))
             {
                 if (Temperature != null)
                 {
@@ -134,7 +134,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("temperature"u8);
                 }
             }
-            if (_seedIsDefined || Optional.IsDefined(Seed))
+            if (Optional.IsDefined(Seed, _seedIsDefined))
             {
                 if (Seed != null)
                 {

@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new GroupConnectivityInformation(groupId, requiredMembers, requiredZoneNames, redirectMapId, additionalBinaryDataProperties);
+            return new GroupConnectivityInformation(groupId, requiredMembers ?? new ChangeTrackingList<string>(), requiredZoneNames ?? new ChangeTrackingList<string>(), redirectMapId, additionalBinaryDataProperties);
         }
     }
 }

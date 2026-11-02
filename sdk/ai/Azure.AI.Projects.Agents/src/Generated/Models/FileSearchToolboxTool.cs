@@ -13,7 +13,7 @@ namespace Azure.AI.Projects.Agents
     public partial class FileSearchToolboxTool : ToolboxTool
     {
         private BinaryData _filters;
-        internal bool _filtersIsDefined;
+        private bool _filtersIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="FileSearchToolboxTool"/>. </summary>
         public FileSearchToolboxTool() : base(ToolboxToolType.FileSearch)

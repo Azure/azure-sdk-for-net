@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new KeyEncryption(customerManagedKeyEncryption, additionalBinaryDataProperties);
+            return new KeyEncryption(customerManagedKeyEncryption ?? new ChangeTrackingList<EventGridCustomerManagedKeyEncryption>(), additionalBinaryDataProperties);
         }
     }
 }

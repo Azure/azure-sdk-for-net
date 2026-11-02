@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new DiscoveredOutboundEndpoints(assigned, additionalBinaryDataProperties);
+            return new DiscoveredOutboundEndpoints(assigned ?? new ChangeTrackingDictionary<string, DeviceMessagingEndpoint>(), additionalBinaryDataProperties);
         }
     }
 }

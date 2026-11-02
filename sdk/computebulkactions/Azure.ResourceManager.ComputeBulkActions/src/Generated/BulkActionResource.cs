@@ -54,7 +54,13 @@ namespace Azure.ResourceManager.ComputeBulkActions
         {
             TryGetApiVersion(ResourceType, out string bulkActionApiVersion);
             _bulkActionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ComputeBulkActions", ResourceType.Namespace, Diagnostics);
-            _bulkActionsRestClient = new BulkActions(_bulkActionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, bulkActionApiVersion ?? "2026-02-01-preview");
+            _bulkActionsRestClient = new BulkActions(
+                _bulkActionsClientDiagnostics,
+                Pipeline,
+                Diagnostics.ApplicationId,
+                Endpoint,
+                bulkActionApiVersion ?? "2026-02-01-preview",
+                resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 

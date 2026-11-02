@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Grafana
         /// <returns> The pages of ManagedDashboardDataCollectionResultOfT as an enumerable collection. </returns>
         public override IEnumerable<Page<ManagedDashboardData>> AsPages(string continuationToken, int? pageSizeHint)
         {
-            Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
+            Uri nextPage = continuationToken != null ? new Uri(continuationToken, UriKind.RelativeOrAbsolute) : null;
             while (true)
             {
                 Response response = GetNextResponse(pageSizeHint, nextPage);
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Grafana
                 {
                     yield break;
                 }
-                ManagedDashboardListResponse result = ManagedDashboardListResponse.FromResponse(response);
+                ManagedDashboardListResult result = ManagedDashboardListResult.FromResponse(response);
                 nextPage = result.NextLink;
                 yield return Page<ManagedDashboardData>.FromValues((IReadOnlyList<ManagedDashboardData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)

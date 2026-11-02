@@ -52,9 +52,8 @@ namespace Azure.ResourceManager.EventGrid
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal SystemTopicResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string systemTopicApiVersion);
             _systemTopicsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.EventGrid", ResourceType.Namespace, Diagnostics);
-            _systemTopicsRestClient = new SystemTopics(_systemTopicsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, systemTopicApiVersion ?? "2025-07-15-preview");
+            _systemTopicsRestClient = new SystemTopics(_systemTopicsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.EventGrid/systemTopics", out string systemTopicsApiVersionOverride) ? systemTopicsApiVersionOverride : "2025-07-15-preview");
             ValidateResourceId(id);
         }
 

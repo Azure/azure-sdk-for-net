@@ -20,6 +20,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         private readonly Guid _subscriptionId;
         private readonly string _resourceGroupName;
         private readonly string _resourceName;
+        private readonly string _fabricName;
+        private readonly string _storageClassificationName;
         private readonly RequestContext _context;
         private readonly string _diagnosticScope;
 
@@ -27,15 +29,19 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <param name="client"> The ReplicationStorageClassificationMappings client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="resourceName"> The name of the recovery services vault. </param>
+        /// <param name="resourceName"> The name of the Vault. </param>
+        /// <param name="fabricName"> Fabric name. </param>
+        /// <param name="storageClassificationName"> Storage classification name. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public StorageClassificationMappingDataCollectionResultOfT(ReplicationStorageClassificationMappings client, Guid subscriptionId, string resourceGroupName, string resourceName, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public StorageClassificationMappingDataCollectionResultOfT(ReplicationStorageClassificationMappings client, Guid subscriptionId, string resourceGroupName, string resourceName, string fabricName, string storageClassificationName, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
             _resourceGroupName = resourceGroupName;
             _resourceName = resourceName;
+            _fabricName = fabricName;
+            _storageClassificationName = storageClassificationName;
             _context = context;
             _diagnosticScope = diagnosticScope;
         }
@@ -46,7 +52,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <returns> The pages of StorageClassificationMappingDataCollectionResultOfT as an enumerable collection. </returns>
         public override IEnumerable<Page<StorageClassificationMappingData>> AsPages(string continuationToken, int? pageSizeHint)
         {
-            Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
+            Uri nextPage = continuationToken != null ? new Uri(continuationToken, UriKind.RelativeOrAbsolute) : null;
             while (true)
             {
                 Response response = GetNextResponse(pageSizeHint, nextPage);
@@ -69,7 +75,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetStorageClassificationMappingsRequest(nextLink, _subscriptionId, _resourceGroupName, _resourceName, _context) : _client.CreateGetStorageClassificationMappingsRequest(_subscriptionId, _resourceGroupName, _resourceName, _context);
+            HttpMessage message = nextLink != null ? _client.CreateNextGetByReplicationStorageClassificationsRequest(nextLink, _subscriptionId, _resourceGroupName, _resourceName, _fabricName, _storageClassificationName, _context) : _client.CreateGetByReplicationStorageClassificationsRequest(_subscriptionId, _resourceGroupName, _resourceName, _fabricName, _storageClassificationName, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try

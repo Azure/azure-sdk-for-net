@@ -70,7 +70,13 @@ namespace Azure.ResourceManager.OperationalInsights
         {
             TryGetApiVersion(ResourceType, out string operationalInsightsWorkspaceApiVersion);
             _workspacesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.OperationalInsights", ResourceType.Namespace, Diagnostics);
-            _workspacesRestClient = new Workspaces(_workspacesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, operationalInsightsWorkspaceApiVersion ?? "2026-03-01");
+            _workspacesRestClient = new Workspaces(
+                _workspacesClientDiagnostics,
+                Pipeline,
+                Diagnostics.ApplicationId,
+                Endpoint,
+                operationalInsightsWorkspaceApiVersion ?? "2026-03-01",
+                resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             _intelligencePacksClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.OperationalInsights", ResourceType.Namespace, Diagnostics);
             _intelligencePacksRestClient = new IntelligencePacks(_intelligencePacksClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, operationalInsightsWorkspaceApiVersion ?? "2026-03-01");
             _gatewaysClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.OperationalInsights", ResourceType.Namespace, Diagnostics);

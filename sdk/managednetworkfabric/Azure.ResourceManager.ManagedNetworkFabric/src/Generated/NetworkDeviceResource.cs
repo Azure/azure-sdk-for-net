@@ -52,9 +52,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal NetworkDeviceResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string networkDeviceApiVersion);
             _networkDevicesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ManagedNetworkFabric", ResourceType.Namespace, Diagnostics);
-            _networkDevicesRestClient = new NetworkDevices(_networkDevicesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, networkDeviceApiVersion ?? "2025-07-15");
+            _networkDevicesRestClient = new NetworkDevices(_networkDevicesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.ManagedNetworkFabric/networkDevices", out string networkDevicesApiVersionOverride) ? networkDevicesApiVersionOverride : "2025-07-15");
             ValidateResourceId(id);
         }
 

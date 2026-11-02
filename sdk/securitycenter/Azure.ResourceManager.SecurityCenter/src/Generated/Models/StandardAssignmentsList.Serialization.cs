@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new StandardAssignmentsList(value, nextLink, additionalBinaryDataProperties);
+            return new StandardAssignmentsList(value ?? new ChangeTrackingList<StandardAssignmentData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

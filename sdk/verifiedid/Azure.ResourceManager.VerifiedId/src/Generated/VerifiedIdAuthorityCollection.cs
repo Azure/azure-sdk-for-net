@@ -39,9 +39,8 @@ namespace Azure.ResourceManager.VerifiedId
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal VerifiedIdAuthorityCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(VerifiedIdAuthorityResource.ResourceType, out string verifiedIdAuthorityApiVersion);
             _authoritiesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.VerifiedId", VerifiedIdAuthorityResource.ResourceType.Namespace, Diagnostics);
-            _authoritiesRestClient = new Authorities(_authoritiesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, verifiedIdAuthorityApiVersion ?? "2024-01-26-preview");
+            _authoritiesRestClient = new Authorities(_authoritiesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.VerifiedId/authorities", out string authoritiesApiVersionOverride) ? authoritiesApiVersionOverride : "2024-01-26-preview");
             ValidateResourceId(id);
         }
 

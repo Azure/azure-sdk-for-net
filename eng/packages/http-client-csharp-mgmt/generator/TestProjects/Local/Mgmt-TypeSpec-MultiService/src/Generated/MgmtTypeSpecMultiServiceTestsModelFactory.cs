@@ -24,13 +24,13 @@ namespace Azure.Generator.MgmtTypeSpec.MultiService.Tests.Models
             return new CheckAvailabilityRequest(name, default);
         }
 
-        /// <summary> The CheckAvailabilityResponse. </summary>
+        /// <summary> The CheckAvailabilityResult. </summary>
         /// <param name="isAvailable"> Whether the name is available. </param>
         /// <param name="reason"> Reason the name is not available. </param>
-        /// <returns> A new <see cref="Models.CheckAvailabilityResponse"/> instance for mocking. </returns>
-        public static CheckAvailabilityResponse CheckAvailabilityResponse(bool isAvailable = default, string reason = default)
+        /// <returns> A new <see cref="Models.CheckAvailabilityResult"/> instance for mocking. </returns>
+        public static CheckAvailabilityResult CheckAvailabilityResult(bool isAvailable = default, string reason = default)
         {
-            return new CheckAvailabilityResponse(isAvailable, reason, default);
+            return new CheckAvailabilityResult(isAvailable, reason, default);
         }
 
         /// <summary> Concrete tracked resource types can be created by aliasing this type using a specific property type. </summary>

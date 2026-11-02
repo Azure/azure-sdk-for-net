@@ -4,6 +4,8 @@
 
 ### Features Added
 
+- Added `ClientPipeline.Send` and `SendAsync` overloads accepting a `CancellationToken` to override cancellation for a send while preserving applied request options.
+
 ### Breaking Changes
 
 ### Bugs Fixed

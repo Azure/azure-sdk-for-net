@@ -38,11 +38,11 @@ namespace Azure.ResourceManager.PureStorageBlock.Mocking
 
         private ClientDiagnostics ReservationsClientDiagnostics => _reservationsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.PureStorageBlock.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Reservations ReservationsRestClient => _reservationsRestClient ??= new Reservations(ReservationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2024-11-01");
+        private Reservations ReservationsRestClient => _reservationsRestClient ??= new Reservations(ReservationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("PureStorage.Block/reservations", out string apiVersion) ? apiVersion : "2024-11-01");
 
         private ClientDiagnostics StoragePoolsClientDiagnostics => _storagePoolsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.PureStorageBlock.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private StoragePools StoragePoolsRestClient => _storagePoolsRestClient ??= new StoragePools(StoragePoolsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2024-11-01");
+        private StoragePools StoragePoolsRestClient => _storagePoolsRestClient ??= new StoragePools(StoragePoolsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("PureStorage.Block/storagePools", out string apiVersion0) ? apiVersion0 : "2024-11-01");
 
         /// <summary>
         /// List reservations by Azure subscription ID

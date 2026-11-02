@@ -39,9 +39,8 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal NetworkCloudClusterManagerCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(NetworkCloudClusterManagerResource.ResourceType, out string networkCloudClusterManagerApiVersion);
             _clusterManagersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.NetworkCloud", NetworkCloudClusterManagerResource.ResourceType.Namespace, Diagnostics);
-            _clusterManagersRestClient = new ClusterManagers(_clusterManagersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, networkCloudClusterManagerApiVersion ?? "2026-07-01");
+            _clusterManagersRestClient = new ClusterManagers(_clusterManagersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.NetworkCloud/clusterManagers", out string clusterManagersApiVersionOverride) ? clusterManagersApiVersionOverride : "2026-07-01");
             ValidateResourceId(id);
         }
 

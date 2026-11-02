@@ -17,27 +17,27 @@ namespace Azure.AI.Agents.Persistent
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
         private string _overrideModelName;
-        internal bool _overrideModelNameIsDefined;
+        private bool _overrideModelNameIsDefined;
         private string _overrideInstructions;
-        internal bool _overrideInstructionsIsDefined;
+        private bool _overrideInstructionsIsDefined;
         private string _additionalInstructions;
-        internal bool _additionalInstructionsIsDefined;
+        private bool _additionalInstructionsIsDefined;
         private ToolResources _toolResources;
-        internal bool _toolResourcesIsDefined;
+        private bool _toolResourcesIsDefined;
         private float? _temperature;
-        internal bool _temperatureIsDefined;
+        private bool _temperatureIsDefined;
         private float? _topP;
-        internal bool _topPIsDefined;
+        private bool _topPIsDefined;
         private int? _maxPromptTokens;
-        internal bool _maxPromptTokensIsDefined;
+        private bool _maxPromptTokensIsDefined;
         private int? _maxCompletionTokens;
-        internal bool _maxCompletionTokensIsDefined;
+        private bool _maxCompletionTokensIsDefined;
         private Truncation _truncationStrategy;
-        internal bool _truncationStrategyIsDefined;
+        private bool _truncationStrategyIsDefined;
         private BinaryData _toolChoice;
-        internal bool _toolChoiceIsDefined;
+        private bool _toolChoiceIsDefined;
         private BinaryData _responseFormat;
-        internal bool _responseFormatIsDefined;
+        private bool _responseFormatIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="CreateRunRequest"/>. </summary>
         /// <param name="assistantId"> The ID of the agent that should run the thread. </param>

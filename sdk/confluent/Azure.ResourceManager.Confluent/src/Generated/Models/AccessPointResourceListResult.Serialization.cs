@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Confluent.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new AccessPointResourceListResult(value, nextLink, additionalBinaryDataProperties);
+            return new AccessPointResourceListResult(value ?? new ChangeTrackingList<ConfluentAccessPointData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

@@ -151,6 +151,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         private static bool IsRoutingSlot(SemanticSlot slot)
             => slot == SemanticSlot.MicrosoftInstrumentationKey
                 || slot == SemanticSlot.MicrosoftIngestionEndpoint
+                || slot == SemanticSlot.MicrosoftIngestionAuth
                 || slot == SemanticSlot.MicrosoftMultiEndpointCloudRole;
     }
 }

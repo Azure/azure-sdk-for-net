@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.WorkloadsSapMonitor.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ProviderInstanceListResult(value, nextLink, additionalBinaryDataProperties);
+            return new ProviderInstanceListResult(value ?? new ChangeTrackingList<SapProviderInstanceData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

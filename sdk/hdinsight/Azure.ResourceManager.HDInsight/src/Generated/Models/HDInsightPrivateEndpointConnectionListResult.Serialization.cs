@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new HDInsightPrivateEndpointConnectionListResult(value, nextLink, additionalBinaryDataProperties);
+            return new HDInsightPrivateEndpointConnectionListResult(value ?? new ChangeTrackingList<HDInsightPrivateEndpointConnectionData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }
