@@ -77,17 +77,17 @@ namespace Azure.Generator.Visitors
                         // Forwarders must not call the tokenless overload, which would discard a saved bare token.
                         result.Add(CreateForwarder(method, parameters));
                         bool hasFullSignature = false;
+                        AttributeStatement[] attributes =
+                        [
+                            .. method.Signature.Attributes,
+                            new(typeof(EditorBrowsableAttribute), FrameworkEnumValue(EditorBrowsableState.Never))
+                        ];
                         foreach (var previous in previousMethods)
                         {
                             var legacyParameters = previous.Signature.Parameters.Select(p =>
                                 method.Signature.Parameters.Single(current => current.Name == p.Name)).ToArray();
                             int lastToken = System.Array.FindLastIndex(legacyParameters, p => removed.Any(t => t.Name == p.Name));
                             legacyParameters = legacyParameters.Select((p, i) => i <= lastToken ? RequiredParameter(p) : p).ToArray();
-                            AttributeStatement[] attributes =
-                            [
-                                .. method.Signature.Attributes,
-                                new(typeof(EditorBrowsableAttribute), FrameworkEnumValue(EditorBrowsableState.Never))
-                            ];
                             if (legacyParameters.Length == method.Signature.Parameters.Count && !hasFullSignature)
                             {
                                 method.Signature.Update(parameters: legacyParameters, attributes: attributes);
@@ -95,7 +95,12 @@ namespace Azure.Generator.Visitors
                             }
                             else
                             {
-                                result.Add(CreateForwarder(method, legacyParameters, attributes));
+                                var overload = CreateForwarder(method, legacyParameters, attributes);
+                                for (int i = lastToken + 1; i < legacyParameters.Length; i++)
+                                {
+                                    overload.Signature.Parameters[i].DefaultValue = previous.Signature.Parameters[i].DefaultValue;
+                                }
+                                result.Add(overload);
                             }
                         }
                         if (!hasFullSignature)

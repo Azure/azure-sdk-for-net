@@ -86,6 +86,36 @@ namespace Azure.Generator.Tests.Visitors
         }
 
         [Test]
+        public void PreservesMultipleLastContractTokenOverloads([Values] bool fullSignatureFirst)
+        {
+            var signatures = new[]
+            {
+                "public virtual Azure.Pageable<Cat> GetCats(string resumeFrom = default, int? filter = default, System.Threading.CancellationToken cancellationToken = default) => default;",
+                "public virtual Azure.Pageable<Cat> GetCats(string resumeFrom, System.Threading.CancellationToken cancellationToken) => default;"
+            };
+            if (!fullSignatureFirst)
+            {
+                Array.Reverse(signatures);
+            }
+            var client = CreateClient(true, true, InputRequestLocation.Query,
+            [
+                $"namespace Samples {{ public class CatClient {{ {string.Join(Environment.NewLine, signatures)} }} }}"
+            ]);
+            ProcessBackCompatibility(client);
+
+            var legacyMethods = client.Methods.Where(m => m.Signature.Name == "GetCats"
+                && m.Signature.Parameters.Any(p => p.Name == "resumeFrom")
+                && m.Signature.ReturnType!.Arguments[0].Name == "Cat").ToArray();
+            Assert.AreEqual(2, legacyMethods.Length);
+            foreach (var method in legacyMethods)
+            {
+                Assert.AreEqual(1, method.Signature.Attributes.Count(
+                    a => a.Type.Equals(typeof(System.ComponentModel.EditorBrowsableAttribute))));
+            }
+            AssertMethodsCompile(client, """GetCats(); GetCats("saved-token"); GetCats("saved-token", System.Threading.CancellationToken.None);""");
+        }
+
+        [Test]
         public void PreservesExistingOptionalParameterCompatibility()
         {
             var client = CreateClient(true, true, InputRequestLocation.Query,
@@ -138,7 +168,7 @@ namespace Azure.Generator.Tests.Visitors
             => typeof(TypeProvider).GetMethod("ProcessTypeForBackCompatibility", BindingFlags.Instance | BindingFlags.NonPublic)!
                 .Invoke(client, null);
 
-        private static void AssertMethodsCompile(ClientProvider client)
+        private static void AssertMethodsCompile(ClientProvider client, string callerStatements = "")
         {
             var source = CSharpSyntaxTree.ParseText(new TypeProviderWriter(client).Write().Content).GetCompilationUnitRoot();
             var methods = source.DescendantNodes().OfType<MethodDeclarationSyntax>().Select(m =>
@@ -147,7 +177,8 @@ namespace Azure.Generator.Tests.Visitors
                     : m);
             var testClass = SyntaxFactory.ClassDeclaration("CatClient")
                 .AddModifiers(SyntaxFactory.Token(SyntaxKind.PublicKeyword))
-                .AddMembers([.. methods]);
+                .AddMembers([.. methods])
+                .AddMembers(SyntaxFactory.ParseMemberDeclaration($"public void Calls() {{ {callerStatements} }}")!);
             source = source.WithMembers(SyntaxFactory.SingletonList<MemberDeclarationSyntax>(
                 SyntaxFactory.NamespaceDeclaration(SyntaxFactory.ParseName("Samples"))
                     .AddMembers(SyntaxFactory.ClassDeclaration("Cat").AddModifiers(SyntaxFactory.Token(SyntaxKind.PublicKeyword)), testClass)));
