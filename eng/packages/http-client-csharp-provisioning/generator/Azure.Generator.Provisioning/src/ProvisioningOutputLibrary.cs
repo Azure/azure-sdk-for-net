@@ -24,6 +24,7 @@ namespace Azure.Generator.Provisioning
         private Dictionary<InputModelType, List<ProvisioningResourceProvider>>? _resourcesByModel;
         private BuiltInRoleProvider? _builtInRole;
         private CodeGenEnumValueAttributeDefinition? _codeGenEnumValueAttributeDefinition;
+        private ProvisioningResourceReferenceProvider? _resourceReference;
 
         /// <summary>
         /// Gets the BuiltInRole type provider if any resources define RBAC roles.
@@ -38,6 +39,8 @@ namespace Azure.Generator.Provisioning
         }
 
         internal CodeGenEnumValueAttributeDefinition CodeGenEnumValueAttributeDefinition => _codeGenEnumValueAttributeDefinition ??= new();
+
+        internal ProvisioningResourceReferenceProvider ResourceReference => _resourceReference ??= new();
 
         /// <summary>
         /// Gets all provisioning resource providers.
@@ -142,6 +145,10 @@ namespace Azure.Generator.Provisioning
             var providers = new List<TypeProvider>();
 
             providers.AddRange(Resources);
+            if (Resources.Any(resource => resource.HasResourceReference))
+            {
+                providers.Add(ResourceReference);
+            }
 
             // Add BuiltInRole struct if any resources have RBAC roles defined.
             if (BuiltInRole != null)
