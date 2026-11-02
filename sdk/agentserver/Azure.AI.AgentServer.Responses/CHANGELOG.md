@@ -85,7 +85,16 @@
   type `Code` is a `ResponseErrorCode` (was `string`), `Type` is now `Kind`, and `Details`,
   `AdditionalInfo`, and `DebugInfo` are no longer exposed.
 
+- Core's `SetResilientTasksEnabled()` no longer activates Responses when both
+  Responses feature flags are disabled. Configure `ResilientBackground` or
+  `SteerableConversations` to opt in to task-backed Responses execution.
+
 ### Bugs Fixed
+
+- Do not reclaim, delete, or dispatch Responses tasks during startup or inline
+  recovery when Responses task execution is disabled, even if Invocations
+  enables the shared Core runtime. Tasks started from a Responses request retain
+  Responses ownership across restart.
 
 ### Other Changes
 - The package now depends on `OpenAI` 2.14.0 or later and on `Azure.AI.Extensions.OpenAI`,

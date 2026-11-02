@@ -6,6 +6,7 @@ using System.Diagnostics;
 using System.Diagnostics.Metrics;
 using System.IO;
 using System.Linq;
+using System.Threading;
 
 using Azure.Core.TestFramework;
 
@@ -37,11 +38,24 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 
         /// <summary>
         /// Stands in for an endpoint that will not answer. Held on a thread pool thread, so it is
-        /// kept only long enough to outlast the drain budget rather than tying a thread up for the
-        /// tests that follow.
+        /// kept only long enough to outlast the drain budget, and released as soon as the test ends
+        /// rather than tying a thread up for the tests that follow.
         /// </summary>
         private static readonly TimeSpan UnresponsiveIngestion = TimeSpan.FromSeconds(5);
 
+        /// <summary>
+        /// The shutdown drain runs on the thread pool and Dispose waits on it for only a couple of
+        /// seconds. .NET Framework injects threads slowly once the minimum is in use, so on a small
+        /// CI agent the drain could otherwise sit in the queue past the budget and never transmit.
+        /// </summary>
+        private const int MinWorkerThreads = 32;
+
+        /// <summary>
+        /// The timeout OpenTelemetry's provider Dispose passes to Shutdown.
+        /// </summary>
+        private const int DisposeTimeoutMilliseconds = 5000;
+
+        private readonly ManualResetEventSlim _releaseIngestion = new ManualResetEventSlim(false);
         private readonly string _storageRoot;
         private readonly string _sourceName;
         private readonly ActivitySource _activitySource;
@@ -53,6 +67,12 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             Activity.ForceDefaultIdFormat = true;
 
             TransmitFromStorageHandler.DisableEagerDrainForTesting = true;
+
+            ThreadPool.GetMinThreads(out var workerThreads, out var completionPortThreads);
+            if (workerThreads < MinWorkerThreads)
+            {
+                ThreadPool.SetMinThreads(MinWorkerThreads, completionPortThreads);
+            }
         }
 
         public PersistOnShutdownProviderTests()
@@ -77,6 +97,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         public void Dispose()
         {
             TransmitFromStorageHandler.DisableShutdownDrainForTesting = false;
+
+            // Frees any drain still blocked on an unresponsive endpoint. Not disposed, because a
+            // drain may still be about to wait on it.
+            _releaseIngestion.Set();
 
             _listener.Dispose();
             _activitySource.Dispose();
@@ -201,7 +225,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
                 _ =>
                 {
                     // Stands in for an unreachable or wedged ingestion endpoint.
-                    System.Threading.Thread.Sleep(UnresponsiveIngestion);
+                    _releaseIngestion.Wait(UnresponsiveIngestion);
                     return new MockResponse(200);
                 });
 
@@ -230,7 +254,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
                     out _,
                     _ =>
                     {
-                        System.Threading.Thread.Sleep(UnresponsiveIngestion);
+                        _releaseIngestion.Wait(UnresponsiveIngestion);
                         return new MockResponse(200);
                     });
 
@@ -395,24 +419,35 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         {
             TransmitFromStorageHandler.DisableShutdownDrainForTesting = false;
 
-            var options = BuildOptions(out var transmitter, out var transport);
+            // Lets the drain use all of Dispose's window rather than the default share of it, so a
+            // slow CI agent scheduling the drain late does not make this look like nothing was sent.
+            SetDrainBudgetOverride(DisposeTimeoutMilliseconds);
 
-            var meterName = $"OTel.PersistProvider.{Guid.NewGuid():N}";
-            using var meter = new Meter(meterName);
+            try
+            {
+                var options = BuildOptions(out var transmitter, out var transport);
 
-            var meterProvider = Sdk.CreateMeterProviderBuilder()
-                .AddMeter(meterName)
-                .AddReader(new AzureMonitorPeriodicExportingMetricReader(new AzureMonitorMetricExporter(options)))
-                .Build()!;
+                var meterName = $"OTel.PersistProvider.{Guid.NewGuid():N}";
+                using var meter = new Meter(meterName);
 
-            meter.CreateCounter<long>("TestCounter").Add(1);
+                var meterProvider = Sdk.CreateMeterProviderBuilder()
+                    .AddMeter(meterName)
+                    .AddReader(new AzureMonitorPeriodicExportingMetricReader(new AzureMonitorMetricExporter(options)))
+                    .Build()!;
 
-            // Dispose passes a finite 5000 ms rather than Timeout.Infinite, so unlike Shutdown the
-            // drain gets a budget: the collection is persisted first and then uploaded from storage.
-            meterProvider.Dispose();
+                meter.CreateCounter<long>("TestCounter").Add(1);
 
-            Assert.Single(transport.Requests);
-            Assert.Empty(transmitter._fileBlobProvider!.GetBlobs());
+                // Dispose passes a finite 5000 ms rather than Timeout.Infinite, so unlike Shutdown the
+                // drain gets a budget: the collection is persisted first and then uploaded from storage.
+                meterProvider.Dispose();
+
+                Assert.Single(transport.Requests);
+                Assert.Empty(transmitter._fileBlobProvider!.GetBlobs());
+            }
+            finally
+            {
+                SetDrainBudgetOverride(null);
+            }
         }
 
         [Fact]
@@ -431,7 +466,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
                     out _,
                     _ =>
                     {
-                        System.Threading.Thread.Sleep(UnresponsiveIngestion);
+                        _releaseIngestion.Wait(UnresponsiveIngestion);
                         return new MockResponse(200);
                     });
 

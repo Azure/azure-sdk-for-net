@@ -3,6 +3,7 @@
 
 using System.ClientModel;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using OpenAI.Responses;
 
@@ -28,6 +29,7 @@ internal sealed class NormalizingStreamingCollectionResult : CollectionResult<St
         // SSE streaming responses have no continuation token.
         => null;
 
+    [EditorBrowsable(EditorBrowsableState.Never)]
     public override IEnumerable<ClientResult> GetRawPages()
     {
         // Yield a single sentinel page so GetValuesFromPage is invoked exactly once and the

@@ -23,6 +23,7 @@ public class Resource(Specification spec, Type armType)
     public NameRequirements? NameRequirements { get; set; }
     public bool GenerateRoleAssignment { get; set; } = false;
     public Resource? ParentResource { get; set; }
+    public bool HasScope { get; set; } = false;
     public SimpleModel? GetKeysType { get; set; }
     public bool GetKeysIsList { get; set; }
 
@@ -53,6 +54,7 @@ public class Resource(Specification spec, Type armType)
 
                 // Add the usings
                 HashSet<string> namespaces = CollectNamespaces();
+                if (ParentResource is not null || HasScope) { namespaces.Add(Spec!.LibraryNamespace); }
                 if (FromExpression || GenerateRoleAssignment || GetKeysType is not null) { namespaces.Add("Azure.Provisioning.Expressions"); }
                 if (FromExpression || NameRequirements is not null || GetKeysType is not null || HiddenResourceVersions is not null) { namespaces.Add("System.ComponentModel"); }
                 if (GenerateRoleAssignment) { namespaces.Add("Azure.Provisioning.Authorization"); namespaces.Add("Azure.Provisioning.Roles"); }
@@ -122,7 +124,22 @@ public class Resource(Specification spec, Type armType)
                             writer.WriteLine($"get {{ Initialize(); return _parent!.Value; }}");
                             writer.WriteLine($"set {{ Initialize(); _parent!.Value = value; }}");
                         }
-                        writer.WriteLine($"private ResourceReference<{ParentResource.Name}>? _parent;");
+                        writer.WriteLine($"private ProvisioningResourceReference<{ParentResource.Name}>? _parent;");
+                    }
+
+                    if (HasScope)
+                    {
+                        if (fence.RequiresSeparator) { writer.WriteLine(); }
+                        writer.WriteLine("/// <summary>");
+                        writer.WriteLine("/// Gets or sets the Scope.");
+                        writer.WriteLine("/// </summary>");
+                        writer.WriteLine("public ProvisionableResource? Scope");
+                        using (writer.Scope("{", "}"))
+                        {
+                            writer.WriteLine("get { Initialize(); return _scope!.Value; }");
+                            writer.WriteLine("set { Initialize(); _scope!.Value = value; }");
+                        }
+                        writer.WriteLine("private ProvisioningResourceReference<ProvisionableResource>? _scope;");
                     }
 
                     // Write the default value partial methods
@@ -212,7 +229,11 @@ public class Resource(Specification spec, Type armType)
                         }
                         if (ParentResource is not null)
                         {
-                            writer.WriteLine($"_parent = DefineResource<{ParentResource.Name}>(\"Parent\", [\"parent\"], isRequired: true);");
+                            writer.WriteLine("_parent = new(DefineProperty<string>(nameof(Parent), [\"parent\"], isRequired: true));");
+                        }
+                        if (HasScope)
+                        {
+                            writer.WriteLine("_scope = new(DefineProperty<string>(nameof(Scope), [\"scope\"]));");
                         }
                     }
 
@@ -397,4 +418,3 @@ public class Resource(Specification spec, Type armType)
             });
     }
 }
-

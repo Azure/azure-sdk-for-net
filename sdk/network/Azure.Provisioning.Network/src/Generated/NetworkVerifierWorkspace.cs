@@ -29,7 +29,7 @@ namespace Azure.Provisioning.Network
         /// <summary> Creates a new NetworkVerifierWorkspace. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
         /// <param name="resourceVersion"> The resource API version. </param>
-        public NetworkVerifierWorkspace(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.Network/networkManagers/verifierWorkspaces", resourceVersion ?? "2026-01-01")
+        public NetworkVerifierWorkspace(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.Network/networkManagers/verifierWorkspaces", resourceVersion ?? "2026-03-01")
         {
         }
 
@@ -149,7 +149,7 @@ namespace Azure.Provisioning.Network
             _location = DefineProperty<AzureLocation>(nameof(Location), new string[] { "location" }, isRequired: true);
             _properties = DefineModelProperty<NetworkVerifierWorkspaceProperties>(nameof(Properties), new string[] { "properties" });
             _eTag = DefineProperty<ETag>(nameof(ETag), new string[] { "etag" }, isOutput: true);
-            _parent = DefineResource<NetworkManager>(nameof(Parent), new string[] { "parent" }, isRequired: true);
+            _parent = DefineResource<NetworkManager>(nameof(Parent), new string[] { "parent" });
             DefineAdditionalProperties();
         }
 
@@ -174,6 +174,8 @@ namespace Azure.Provisioning.Network
         /// <summary></summary>
         public static partial class ResourceVersions
         {
+            /// <summary> API version "2026-03-01". </summary>
+            public static readonly string V2026_03_01 = "2026-03-01";
             /// <summary> API version "2026-01-01". </summary>
             public static readonly string V2026_01_01 = "2026-01-01";
             /// <summary> API version "2025-09-01". </summary>

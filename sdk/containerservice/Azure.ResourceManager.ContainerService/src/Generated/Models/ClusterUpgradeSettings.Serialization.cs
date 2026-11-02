@@ -14,7 +14,7 @@ using Azure.ResourceManager.ContainerService;
 namespace Azure.ResourceManager.ContainerService.Models
 {
     /// <summary> Settings for upgrading a cluster. </summary>
-    internal partial class ClusterUpgradeSettings : IJsonModel<ClusterUpgradeSettings>
+    public partial class ClusterUpgradeSettings : IJsonModel<ClusterUpgradeSettings>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -79,6 +79,11 @@ namespace Azure.ResourceManager.ContainerService.Models
                 writer.WritePropertyName("overrideSettings"u8);
                 writer.WriteObjectValue(OverrideSettings, options);
             }
+            if (Optional.IsDefined(UpgradeGateSettings))
+            {
+                writer.WritePropertyName("upgradeGateSettings"u8);
+                writer.WriteObjectValue(UpgradeGateSettings, options);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -122,6 +127,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 return null;
             }
             UpgradeOverrideSettings overrideSettings = default;
+            UpgradeGateSettings upgradeGateSettings = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -134,12 +140,21 @@ namespace Azure.ResourceManager.ContainerService.Models
                     overrideSettings = UpgradeOverrideSettings.DeserializeUpgradeOverrideSettings(prop.Value, options);
                     continue;
                 }
+                if (prop.NameEquals("upgradeGateSettings"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    upgradeGateSettings = UpgradeGateSettings.DeserializeUpgradeGateSettings(prop.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ClusterUpgradeSettings(overrideSettings, additionalBinaryDataProperties);
+            return new ClusterUpgradeSettings(overrideSettings, upgradeGateSettings, additionalBinaryDataProperties);
         }
     }
 }

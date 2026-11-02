@@ -101,7 +101,8 @@ namespace Azure.Storage.Files.DataLake.Tests
             await client.ReadToAsync(destination, new DataLakeFileReadToOptions
             {
                 TransferValidation = hashingOptions,
-                TransferOptions = transferOptions
+                TransferOptions = transferOptions,
+                LayoutAwareRouting = Blobs.Models.LayoutAwareRouting.Disabled
             });
         }
 
@@ -119,7 +120,8 @@ namespace Azure.Storage.Files.DataLake.Tests
             return await client.OpenReadAsync(new DataLakeOpenReadOptions(false)
             {
                 TransferValidation = hashingOptions,
-                BufferSize = internalBufferSize
+                BufferSize = internalBufferSize,
+                LayoutAwareRouting = Blobs.Models.LayoutAwareRouting.Disabled
             });
         }
 

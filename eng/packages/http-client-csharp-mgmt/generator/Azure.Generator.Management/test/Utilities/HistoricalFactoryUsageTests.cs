@@ -122,41 +122,48 @@ namespace Azure.Generator.Mgmt.Tests.Utilities
                 """)
             ]).WithAssemblyName("Samples");
             var source = contract;
-            using var file = new FileStream(Path.Combine(Path.GetTempPath(), $"factory-usage-{Guid.NewGuid():N}.dll"),
-                FileMode.CreateNew, FileAccess.ReadWrite, FileShare.Read | FileShare.Delete, 4096, FileOptions.DeleteOnClose);
-            if (metadataOnly)
+            var baselinePath = Path.Combine(Path.GetTempPath(), $"factory-usage-{Guid.NewGuid():N}.dll");
+            try
             {
-                var emit = contract.Emit(file);
-                Assert.That(emit.Success, Is.True, string.Join(Environment.NewLine, emit.Diagnostics));
-                file.Flush();
-                contract = contract.RemoveAllSyntaxTrees().WithAssemblyName("MetadataContract")
-                    .AddReferences(MetadataReference.CreateFromFile(file.Name));
-            }
-            if (replaceBaseline)
-            {
-                var reference = contract.References.OfType<PortableExecutableReference>().Single(r => r.FilePath == file.Name);
-                _ = ((AssemblyMetadata)reference.GetMetadata()).GetModules()[0].GetModuleVersionId();
-                _ = contract.GetTypeByMetadataName("Samples.SamplesModelFactory")!.ContainingAssembly.GetAttributes();
-                var replacementPath = file.Name + ".replacement";
-                try
+                if (metadataOnly)
                 {
-                    using (var replacement = File.Create(replacementPath))
+                    var emit = contract.Emit(baselinePath);
+                    Assert.That(emit.Success, Is.True, string.Join(Environment.NewLine, emit.Diagnostics));
+                    contract = contract.RemoveAllSyntaxTrees().WithAssemblyName("MetadataContract")
+                        .AddReferences(MetadataReference.CreateFromFile(baselinePath));
+                }
+                if (replaceBaseline)
+                {
+                    var reference = contract.References.OfType<PortableExecutableReference>().Single(r => r.FilePath == baselinePath);
+                    _ = ((AssemblyMetadata)reference.GetMetadata()).GetModules()[0].GetModuleVersionId();
+                    _ = contract.GetTypeByMetadataName("Samples.SamplesModelFactory")!.ContainingAssembly.GetAttributes();
+                    var replacementPath = baselinePath + ".replacement";
+                    try
                     {
-                        var replacementSource = source.ReplaceSyntaxTree(source.SyntaxTrees.Single(),
-                            Microsoft.CodeAnalysis.CSharp.CSharpSyntaxTree.ParseText(source.SyntaxTrees.Single().ToString()
-                                .Replace("Id = null", "Id = id", StringComparison.Ordinal)));
-                        Assert.That(replacementSource.Emit(replacement).Success, Is.True);
+                        using (var replacement = File.Create(replacementPath))
+                        {
+                            var replacementSource = source.ReplaceSyntaxTree(source.SyntaxTrees.Single(),
+                                Microsoft.CodeAnalysis.CSharp.CSharpSyntaxTree.ParseText(source.SyntaxTrees.Single().ToString()
+                                    .Replace("Id = null", "Id = id", StringComparison.Ordinal)));
+                            Assert.That(replacementSource.Emit(replacement).Success, Is.True);
+                        }
+                        File.Move(replacementPath, baselinePath, overwrite: true);
+                        return HistoricalFactoryUsage.Read(contract, factory.Type, selectedVersion, "Samples");
                     }
-                    File.Move(replacementPath, file.Name, overwrite: true);
-                    return HistoricalFactoryUsage.Read(contract, factory.Type, selectedVersion, "Samples");
+                    finally
+                    {
+                        File.Delete(replacementPath);
+                    }
                 }
-                finally
+                return HistoricalFactoryUsage.Read(contract, factory.Type, selectedVersion, "Samples");
+            }
+            finally
+            {
+                if (File.Exists(baselinePath))
                 {
-                    File.Delete(replacementPath);
-                    File.Delete(file.Name);
+                    File.Delete(baselinePath);
                 }
             }
-            return HistoricalFactoryUsage.Read(contract, factory.Type, selectedVersion, "Samples");
         }
     }
 }

@@ -2137,5 +2137,61 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
 
             return new SolutionsApplicationDefinitionPatch(tags ?? new ChangeTrackingDictionary<string, string>(), default);
         }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="ipAddress"> The address value. </param>
+        /// <returns> A new <see cref="Tests.IPAddressData"/> instance for mocking. </returns>
+        public static IPAddressData IPAddressData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string ipAddress = default)
+        {
+            return new IPAddressData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                ipAddress is null ? default : new IPAddressProperties(ipAddress, default),
+                default);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="acronymWidgetDescription"> Gets the Description. </param>
+        /// <returns> A new <see cref="Tests.AcronymWidgetData"/> instance for mocking. </returns>
+        public static AcronymWidgetData AcronymWidgetData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string acronymWidgetDescription = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new AcronymWidgetData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                acronymWidgetDescription is null ? default : new AcronymWidgetProperties(acronymWidgetDescription, default),
+                default);
+        }
+
+        /// <summary> An action body without a conventional ARM suffix. </summary>
+        /// <param name="address"></param>
+        /// <returns> A new <see cref="Models.IPAddress"/> instance for mocking. </returns>
+        public static IPAddress IPAddress(string address = default)
+        {
+            return new IPAddress(address, default);
+        }
+
+        /// <summary> An IPv4 action body without a conventional ARM suffix. </summary>
+        /// <param name="address"></param>
+        /// <returns> A new <see cref="Models.IPv4Address"/> instance for mocking. </returns>
+        public static IPv4Address IPv4Address(string address = default)
+        {
+            return new IPv4Address(address, default);
+        }
     }
 }

@@ -9,6 +9,7 @@ using OpenAI.Responses;
 
 namespace Azure.AI.Extensions.OpenAI
 {
+#pragma warning disable OPENAI001 // Obsolete + Experimental disables implicit suppression of experimental dependencies.
     [EditorBrowsable(EditorBrowsableState.Never)]
     public partial class BrowserAutomationPreviewTool : ResponseTool, IJsonModel<BrowserAutomationPreviewTool>
     {
@@ -20,5 +21,6 @@ namespace Azure.AI.Extensions.OpenAI
         internal BrowserAutomationPreviewTool() : base(ResponseToolKind.BrowserAutomationPreview)
         {
         }
+#pragma warning restore OPENAI001
     }
 }

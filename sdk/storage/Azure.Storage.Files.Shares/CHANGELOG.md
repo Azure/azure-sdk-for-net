@@ -3,6 +3,12 @@
 ## 12.29.0-beta.1 (Unreleased)
 
 ### Features Added
+- Added support for `ShareFileClient` and `ShareDirectoryClient` constructed using File Id-based URLs. `ShareFileClient` constructed via File Id-based URLs can only perform `GetProperties` and `GetFileLinks` operations currently. `ShareDirectoryClient` constructed via File Id-based URLs can only perform `GetProperties` operation currently.
+- Added support for `ShareFileClient.GetFileLinks` and `ShareFileClient.GetFileLinksAsync` operations. These operations are only supported for clients constructed using File Id-based URLs and not path-based URLs.
+- Added support for `ShareProperties.CreatedOn` for `ShareServiceClient.GetShare`, `ShareServiceClient.GetShareAsync`, `ShareClient.GetProperties`, and `ShareClient.GetPropertiesAsync` operations.
+- Added support for `ShareProperties.EnableChangeFeed`, `ShareProperties.ChangeFeedRetentionInDays`, and `ShareProperties.ChangeFeedBlobContainerName` for `ShareClient.GetProperties` and `ShareClient.GetPropertiesAsync` operations.
+- Added support for `ShareSetPropertiesOptions.EnableChangeFeed` and `ShareSetPropertiesOptions.ChangeFeedRetentionInDays` for `ShareClient.SetProperties` and `ShareClient.SetPropertiesAsync` operations.
+- Added support for `ShareCreateOptions.EnableChangeFeed` and `ShareCreateOptions.ChangeFeedRetentionInDays` for `ShareClient.Create` and `ShareClient.CreateAsync` operations.
 
 ### Breaking Changes
 
