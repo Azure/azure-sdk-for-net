@@ -563,6 +563,7 @@ namespace Azure.AI.AgentServer.Responses
         public string? DefaultModel { get { throw null; } set { } }
         public System.Uri? Endpoint { get { throw null; } set { } }
         public bool ResilientBackground { get { throw null; } set { } }
+        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("OPENAI001")]
         public System.Func<OpenAI.Responses.CreateResponseOptions, Azure.AI.AgentServer.Responses.ResponseContext, OpenAI.Responses.ResponseResult>? ResponseAcceptor { get { throw null; } set { } }
         public bool SteerableConversations { get { throw null; } set { } }
         protected override void BindCore(Microsoft.Extensions.Configuration.IConfigurationSection section) { }

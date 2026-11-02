@@ -64,6 +64,7 @@ public class ResponsesServerSettings : ClientSettings
     /// <see cref="ResponsesServerOptions.ResponseAcceptor"/>. Not configuration-bindable; set it
     /// via the <c>configureSettings</c> callback.
     /// </summary>
+    [Experimental("OPENAI001")]
     public Func<CreateResponse, ResponseContext, ResponseObject>? ResponseAcceptor { get; set; }
 
     /// <summary>
