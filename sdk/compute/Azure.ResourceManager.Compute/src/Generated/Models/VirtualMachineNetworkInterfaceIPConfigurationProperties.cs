@@ -31,16 +31,18 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="primary"> Specifies the primary network interface in case the virtual machine has more than 1 network interface. </param>
         /// <param name="publicIPAddressConfiguration"> The publicIPAddressConfiguration. </param>
         /// <param name="privateIPAddressVersion"> Available from Api-Version 2017-03-30 onwards, it represents whether the specific ipconfiguration is IPv4 or IPv6. Default is taken as IPv4.  Possible values are: 'IPv4' and 'IPv6'. </param>
+        /// <param name="privateIPAddressPrefixLength"> The private IP address prefix length. If specified and the allocation method is dynamic, the service will allocate a CIDR block instead of a single IP address. </param>
         /// <param name="applicationSecurityGroupResources"> Specifies an array of references to application security group. </param>
         /// <param name="applicationGatewayBackendAddressPoolResources"> Specifies an array of references to backend address pools of application gateways. A virtual machine can reference backend address pools of multiple application gateways. Multiple virtual machines cannot use the same application gateway. </param>
         /// <param name="loadBalancerBackendAddressPoolResources"> Specifies an array of references to backend address pools of load balancers. A virtual machine can reference backend address pools of one public and one internal load balancer. [Multiple virtual machines cannot use the same basic sku load balancer]. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualMachineNetworkInterfaceIPConfigurationProperties(ComputeWriteableSubResourceData subnet, bool? primary, VirtualMachinePublicIPAddressConfiguration publicIPAddressConfiguration, IPVersion? privateIPAddressVersion, IList<ComputeWriteableSubResourceData> applicationSecurityGroupResources, IList<ComputeWriteableSubResourceData> applicationGatewayBackendAddressPoolResources, IList<ComputeWriteableSubResourceData> loadBalancerBackendAddressPoolResources, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VirtualMachineNetworkInterfaceIPConfigurationProperties(ComputeWriteableSubResourceData subnet, bool? primary, VirtualMachinePublicIPAddressConfiguration publicIPAddressConfiguration, IPVersion? privateIPAddressVersion, int? privateIPAddressPrefixLength, IList<ComputeWriteableSubResourceData> applicationSecurityGroupResources, IList<ComputeWriteableSubResourceData> applicationGatewayBackendAddressPoolResources, IList<ComputeWriteableSubResourceData> loadBalancerBackendAddressPoolResources, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Subnet = subnet;
             Primary = primary;
             PublicIPAddressConfiguration = publicIPAddressConfiguration;
             PrivateIPAddressVersion = privateIPAddressVersion;
+            PrivateIPAddressPrefixLength = privateIPAddressPrefixLength;
             ApplicationSecurityGroupResources = applicationSecurityGroupResources;
             ApplicationGatewayBackendAddressPoolResources = applicationGatewayBackendAddressPoolResources;
             LoadBalancerBackendAddressPoolResources = loadBalancerBackendAddressPoolResources;
@@ -58,6 +60,9 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> Available from Api-Version 2017-03-30 onwards, it represents whether the specific ipconfiguration is IPv4 or IPv6. Default is taken as IPv4.  Possible values are: 'IPv4' and 'IPv6'. </summary>
         public IPVersion? PrivateIPAddressVersion { get; set; }
+
+        /// <summary> The private IP address prefix length. If specified and the allocation method is dynamic, the service will allocate a CIDR block instead of a single IP address. </summary>
+        public int? PrivateIPAddressPrefixLength { get; set; }
 
         /// <summary> Specifies an array of references to application security group. </summary>
         public IList<ComputeWriteableSubResourceData> ApplicationSecurityGroupResources { get; } = new ChangeTrackingList<ComputeWriteableSubResourceData>();

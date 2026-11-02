@@ -867,17 +867,6 @@ namespace Azure.ResourceManager.Storage.Models
             return new StorageAccountSharedKeyAccessProperties(blobEnabled is null ? default : new ServiceSharedKeyAccessProperties(blobEnabled, default), fileEnabled is null ? default : new ServiceSharedKeyAccessProperties(fileEnabled, default), tableEnabled is null ? default : new ServiceSharedKeyAccessProperties(tableEnabled, default), queueEnabled is null ? default : new ServiceSharedKeyAccessProperties(queueEnabled, default), default);
         }
 
-        /// <summary> Defines Data Collaboration Policy for a storage account. </summary>
-        /// <param name="allowStorageConnectors"> Indicates whether storage connectors are allowed to created or managed on the storage account. </param>
-        /// <param name="allowBlobAccessPoints"> Indicates whether Blob Access Point configurations are allowed to be created or managed on the storage account. </param>
-        /// <param name="allowStorageDataShares"> Indicates whether data shares are allowed to be created or managed on the storage account. </param>
-        /// <param name="allowCrossTenantDataSharing"> Indicates whether cross-entra tenant data sharing is allowed on the storage account. </param>
-        /// <returns> A new <see cref="Models.StorageDataCollaborationPolicyProperties"/> instance for mocking. </returns>
-        public static StorageDataCollaborationPolicyProperties StorageDataCollaborationPolicyProperties(bool? allowStorageConnectors = default, bool? allowBlobAccessPoints = default, bool? allowStorageDataShares = default, bool? allowCrossTenantDataSharing = default)
-        {
-            return new StorageDataCollaborationPolicyProperties(allowStorageConnectors, allowBlobAccessPoints, allowStorageDataShares, allowCrossTenantDataSharing, default);
-        }
-
         /// <summary> The response from the ListKeys operation. </summary>
         /// <param name="keys"> Gets the list of storage account keys and their properties for the specified storage account. </param>
         /// <returns> A new <see cref="Models.StorageAccountListKeysResult"/> instance for mocking. </returns>

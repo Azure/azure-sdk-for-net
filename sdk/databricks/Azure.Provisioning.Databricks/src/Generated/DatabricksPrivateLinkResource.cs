@@ -96,7 +96,7 @@ namespace Azure.Provisioning.Databricks
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _properties = DefineModelProperty<DatabricksGroupIdInformationProperties>(nameof(Properties), new string[] { "properties" });
-            _parent = DefineResource<DatabricksWorkspace>(nameof(Parent), new string[] { "parent" }, isRequired: true);
+            _parent = DefineResource<DatabricksWorkspace>(nameof(Parent), new string[] { "parent" });
             DefineAdditionalProperties();
         }
 

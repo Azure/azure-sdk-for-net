@@ -106,11 +106,11 @@ namespace Azure.ResourceManager.Network
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(Zones))
+            if (Optional.IsCollectionDefined(AvailabilityZones))
             {
                 writer.WritePropertyName("zones"u8);
                 writer.WriteStartArray();
-                foreach (string item in Zones)
+                foreach (string item in AvailabilityZones)
                 {
                     if (item == null)
                     {
@@ -155,13 +155,13 @@ namespace Azure.ResourceManager.Network
             }
             ResourceIdentifier id = default;
             string name = default;
-            string @type = default;
+            ResourceType? resourceType = default;
             AzureLocation? location = default;
             IDictionary<string, string> tags = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             ApplicationGatewayPropertiesFormat properties = default;
             ETag? eTag = default;
-            IList<string> zones = default;
+            IList<string> availabilityZones = default;
             ManagedServiceIdentity identity = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -181,7 +181,11 @@ namespace Azure.ResourceManager.Network
                 }
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    resourceType = new ResourceType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("location"u8))
@@ -250,7 +254,7 @@ namespace Azure.ResourceManager.Network
                             array.Add(item.GetString());
                         }
                     }
-                    zones = array;
+                    availabilityZones = array;
                     continue;
                 }
                 if (prop.NameEquals("identity"u8))
@@ -270,13 +274,13 @@ namespace Azure.ResourceManager.Network
             return new ApplicationGatewayData(
                 id,
                 name,
-                @type,
+                resourceType,
                 location,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 additionalBinaryDataProperties,
                 properties,
                 eTag,
-                zones ?? new ChangeTrackingList<string>(),
+                availabilityZones ?? new ChangeTrackingList<string>(),
                 identity);
         }
     }

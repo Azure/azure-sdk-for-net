@@ -1485,9 +1485,10 @@ public async IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
 | `ResponseAcceptor` | delegate | `null` | Optional hook for customizing the `queued` response returned to a POST that was queued behind an active steerable conversation |
 
 The Core resilient-task runtime is disabled by default. Either Responses feature flag
-enables it automatically. Without `ResilientBackground`, `SteerableConversations`, or an
-explicit `SetResilientTasksEnabled()` call, `store=true` requests run in-process and are not
-recovered after an ungraceful crash. Steering-only mode tracks stored requests durably
+enables it automatically. Without `ResilientBackground` or `SteerableConversations`,
+`store=true` Responses requests run in-process and are not recovered after an
+ungraceful crash, even if Invocations independently opts in to Core tasks.
+Steering-only mode tracks stored requests durably
 but does not re-invoke interrupted background handlers.
 
 **Platform environment variables** (read once at startup via `FoundryEnvironment`):

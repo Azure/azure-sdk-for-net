@@ -13,6 +13,121 @@ namespace Azure.ResourceManager.Storage.Tests
     public class StorageAccountModelFactoryTests
     {
         [Test]
+        public void DataCollaborationPolicyAcceptsZeroArguments()
+        {
+            var policy = ArmStorageModelFactory.StorageDataCollaborationPolicyProperties();
+
+            Assert.IsNull(policy.AllowStorageConnectors);
+            Assert.IsNull(policy.AllowStorageDataShares);
+            Assert.IsNull(policy.AllowCrossTenantDataSharing);
+            Assert.IsNull(policy.AllowBlobAccessPoints);
+        }
+
+        [Test]
+        public void DataCollaborationPolicyPreservesOnePositionalArgument([Values(null, false, true)] bool? allowStorageConnectors)
+        {
+            var policy = ArmStorageModelFactory.StorageDataCollaborationPolicyProperties(allowStorageConnectors);
+
+            Assert.AreEqual(allowStorageConnectors, policy.AllowStorageConnectors);
+            Assert.IsNull(policy.AllowStorageDataShares);
+            Assert.IsNull(policy.AllowCrossTenantDataSharing);
+            Assert.IsNull(policy.AllowBlobAccessPoints);
+        }
+
+        [Test]
+        public void DataCollaborationPolicyPreservesTwoPositionalArguments(
+            [Values(null, false, true)] bool? allowStorageConnectors,
+            [Values(null, false, true)] bool? allowStorageDataShares)
+        {
+            var policy = ArmStorageModelFactory.StorageDataCollaborationPolicyProperties(allowStorageConnectors, allowStorageDataShares);
+
+            Assert.AreEqual(allowStorageConnectors, policy.AllowStorageConnectors);
+            Assert.AreEqual(allowStorageDataShares, policy.AllowStorageDataShares);
+            Assert.IsNull(policy.AllowCrossTenantDataSharing);
+            Assert.IsNull(policy.AllowBlobAccessPoints);
+        }
+
+        [Test]
+        public void DataCollaborationPolicyPreservesThreePositionalArguments(
+            [Values(null, false, true)] bool? allowStorageConnectors,
+            [Values(null, false, true)] bool? allowStorageDataShares,
+            [Values(null, false, true)] bool? allowCrossTenantDataSharing)
+        {
+            var policy = ArmStorageModelFactory.StorageDataCollaborationPolicyProperties(
+                allowStorageConnectors, allowStorageDataShares, allowCrossTenantDataSharing);
+
+            Assert.AreEqual(allowStorageConnectors, policy.AllowStorageConnectors);
+            Assert.AreEqual(allowStorageDataShares, policy.AllowStorageDataShares);
+            Assert.AreEqual(allowCrossTenantDataSharing, policy.AllowCrossTenantDataSharing);
+            Assert.IsNull(policy.AllowBlobAccessPoints);
+        }
+
+        [Test]
+        public void DataCollaborationPolicyAppendsBlobAccessPoints(
+            [Values(null, false, true)] bool? allowStorageConnectors,
+            [Values(null, false, true)] bool? allowStorageDataShares,
+            [Values(null, false, true)] bool? allowCrossTenantDataSharing,
+            [Values(null, false, true)] bool? allowBlobAccessPoints)
+        {
+            var policy = ArmStorageModelFactory.StorageDataCollaborationPolicyProperties(
+                allowStorageConnectors, allowStorageDataShares, allowCrossTenantDataSharing, allowBlobAccessPoints);
+
+            Assert.AreEqual(allowStorageConnectors, policy.AllowStorageConnectors);
+            Assert.AreEqual(allowStorageDataShares, policy.AllowStorageDataShares);
+            Assert.AreEqual(allowCrossTenantDataSharing, policy.AllowCrossTenantDataSharing);
+            Assert.AreEqual(allowBlobAccessPoints, policy.AllowBlobAccessPoints);
+        }
+
+        [Test]
+        public void DataCollaborationPolicyAcceptsNamedAndMixedArguments()
+        {
+            var named = ArmStorageModelFactory.StorageDataCollaborationPolicyProperties(
+                allowStorageConnectors: true,
+                allowStorageDataShares: false,
+                allowCrossTenantDataSharing: null,
+                allowBlobAccessPoints: true);
+            var mixed = ArmStorageModelFactory.StorageDataCollaborationPolicyProperties(
+                default,
+                allowBlobAccessPoints: true,
+                allowStorageDataShares: false,
+                allowCrossTenantDataSharing: true);
+            var blobOnly = ArmStorageModelFactory.StorageDataCollaborationPolicyProperties(allowBlobAccessPoints: true);
+
+            Assert.IsTrue(named.AllowStorageConnectors);
+            Assert.IsFalse(named.AllowStorageDataShares);
+            Assert.IsNull(named.AllowCrossTenantDataSharing);
+            Assert.IsTrue(named.AllowBlobAccessPoints);
+            Assert.IsNull(mixed.AllowStorageConnectors);
+            Assert.IsFalse(mixed.AllowStorageDataShares);
+            Assert.IsTrue(mixed.AllowCrossTenantDataSharing);
+            Assert.IsTrue(mixed.AllowBlobAccessPoints);
+            Assert.IsNull(blobOnly.AllowStorageConnectors);
+            Assert.IsNull(blobOnly.AllowStorageDataShares);
+            Assert.IsNull(blobOnly.AllowCrossTenantDataSharing);
+            Assert.IsTrue(blobOnly.AllowBlobAccessPoints);
+        }
+
+        [Test]
+        public void DataCollaborationPolicyPreservesLegacySignatureAndOptionalSuccessor()
+        {
+            MethodInfo legacy = typeof(ArmStorageModelFactory).GetMethod(
+                nameof(ArmStorageModelFactory.StorageDataCollaborationPolicyProperties),
+                new[] { typeof(bool?), typeof(bool?), typeof(bool?) });
+            MethodInfo successor = typeof(ArmStorageModelFactory).GetMethod(
+                nameof(ArmStorageModelFactory.StorageDataCollaborationPolicyProperties),
+                new[] { typeof(bool?), typeof(bool?), typeof(bool?), typeof(bool?) });
+
+            Assert.IsNotNull(legacy);
+            Assert.IsNotNull(successor);
+            string[] gaNames = { "allowStorageConnectors", "allowStorageDataShares", "allowCrossTenantDataSharing" };
+            CollectionAssert.AreEqual(gaNames, legacy.GetParameters().Select(parameter => parameter.Name));
+            Assert.IsTrue(legacy.GetParameters().All(parameter => !parameter.IsOptional && !parameter.HasDefaultValue));
+            CollectionAssert.AreEqual(gaNames.Concat(new[] { "allowBlobAccessPoints" }),
+                successor.GetParameters().Select(parameter => parameter.Name));
+            Assert.IsTrue(successor.GetParameters().All(parameter => parameter.IsOptional && parameter.DefaultValue == null));
+        }
+
+        [Test]
         public void GaFactoriesAcceptZeroArguments()
         {
             Assert.IsNotNull(ArmStorageModelFactory.FileServiceData());

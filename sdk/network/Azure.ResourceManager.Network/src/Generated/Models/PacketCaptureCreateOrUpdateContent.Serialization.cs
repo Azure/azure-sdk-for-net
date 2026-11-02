@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
@@ -61,6 +62,16 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<PacketCaptureCreateOrUpdateContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
+        /// <param name="packetCaptureCreateOrUpdateContent"> The <see cref="PacketCaptureCreateOrUpdateContent"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(PacketCaptureCreateOrUpdateContent packetCaptureCreateOrUpdateContent)
+        {
+            if (packetCaptureCreateOrUpdateContent == null)
+            {
+                return null;
+            }
+            return RequestContent.Create(packetCaptureCreateOrUpdateContent, ModelSerializationExtensions.WireOptions);
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<PacketCaptureCreateOrUpdateContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -79,55 +90,8 @@ namespace Azure.ResourceManager.Network.Models
             {
                 throw new FormatException($"The model {nameof(PacketCaptureCreateOrUpdateContent)} does not support writing '{format}' format.");
             }
-            writer.WritePropertyName("target"u8);
-            writer.WriteStringValue(Target);
-            if (Optional.IsDefined(Scope))
-            {
-                writer.WritePropertyName("scope"u8);
-                writer.WriteObjectValue(Scope, options);
-            }
-            if (Optional.IsDefined(TargetType))
-            {
-                writer.WritePropertyName("targetType"u8);
-                writer.WriteStringValue(TargetType.Value.ToSerialString());
-            }
-            if (Optional.IsDefined(BytesToCapturePerPacket))
-            {
-                writer.WritePropertyName("bytesToCapturePerPacket"u8);
-                writer.WriteNumberValue(BytesToCapturePerPacket.Value);
-            }
-            if (Optional.IsDefined(TotalBytesPerSession))
-            {
-                writer.WritePropertyName("totalBytesPerSession"u8);
-                writer.WriteNumberValue(TotalBytesPerSession.Value);
-            }
-            if (Optional.IsDefined(TimeLimitInSeconds))
-            {
-                writer.WritePropertyName("timeLimitInSeconds"u8);
-                writer.WriteNumberValue(TimeLimitInSeconds.Value);
-            }
-            writer.WritePropertyName("storageLocation"u8);
-            writer.WriteObjectValue(StorageLocation, options);
-            if (Optional.IsCollectionDefined(Filters))
-            {
-                writer.WritePropertyName("filters"u8);
-                writer.WriteStartArray();
-                foreach (PacketCaptureFilter item in Filters)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsDefined(ContinuousCapture))
-            {
-                writer.WritePropertyName("continuousCapture"u8);
-                writer.WriteBooleanValue(ContinuousCapture.Value);
-            }
-            if (Optional.IsDefined(CaptureSettings))
-            {
-                writer.WritePropertyName("captureSettings"u8);
-                writer.WriteObjectValue(CaptureSettings, options);
-            }
+            writer.WritePropertyName("properties"u8);
+            writer.WriteObjectValue(Properties, options);
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -170,104 +134,13 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            string target = default;
-            PacketCaptureMachineScope scope = default;
-            PacketCaptureTargetType? targetType = default;
-            long? bytesToCapturePerPacket = default;
-            long? totalBytesPerSession = default;
-            int? timeLimitInSeconds = default;
-            PacketCaptureStorageLocation storageLocation = default;
-            IList<PacketCaptureFilter> filters = default;
-            bool? continuousCapture = default;
-            PacketCaptureSettings captureSettings = default;
+            PacketCaptureParameters properties = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("target"u8))
+                if (prop.NameEquals("properties"u8))
                 {
-                    target = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("scope"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    scope = PacketCaptureMachineScope.DeserializePacketCaptureMachineScope(prop.Value, options);
-                    continue;
-                }
-                if (prop.NameEquals("targetType"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    targetType = prop.Value.GetString().ToPacketCaptureTargetType();
-                    continue;
-                }
-                if (prop.NameEquals("bytesToCapturePerPacket"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    bytesToCapturePerPacket = prop.Value.GetInt64();
-                    continue;
-                }
-                if (prop.NameEquals("totalBytesPerSession"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    totalBytesPerSession = prop.Value.GetInt64();
-                    continue;
-                }
-                if (prop.NameEquals("timeLimitInSeconds"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    timeLimitInSeconds = prop.Value.GetInt32();
-                    continue;
-                }
-                if (prop.NameEquals("storageLocation"u8))
-                {
-                    storageLocation = PacketCaptureStorageLocation.DeserializePacketCaptureStorageLocation(prop.Value, options);
-                    continue;
-                }
-                if (prop.NameEquals("filters"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    List<PacketCaptureFilter> array = new List<PacketCaptureFilter>();
-                    foreach (var item in prop.Value.EnumerateArray())
-                    {
-                        array.Add(PacketCaptureFilter.DeserializePacketCaptureFilter(item, options));
-                    }
-                    filters = array;
-                    continue;
-                }
-                if (prop.NameEquals("continuousCapture"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    continuousCapture = prop.Value.GetBoolean();
-                    continue;
-                }
-                if (prop.NameEquals("captureSettings"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    captureSettings = PacketCaptureSettings.DeserializePacketCaptureSettings(prop.Value, options);
+                    properties = PacketCaptureParameters.DeserializePacketCaptureParameters(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -275,18 +148,7 @@ namespace Azure.ResourceManager.Network.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new PacketCaptureCreateOrUpdateContent(
-                target,
-                scope,
-                targetType,
-                bytesToCapturePerPacket,
-                totalBytesPerSession,
-                timeLimitInSeconds,
-                storageLocation,
-                filters ?? new ChangeTrackingList<PacketCaptureFilter>(),
-                continuousCapture,
-                captureSettings,
-                additionalBinaryDataProperties);
+            return new PacketCaptureCreateOrUpdateContent(properties, additionalBinaryDataProperties);
         }
     }
 }
