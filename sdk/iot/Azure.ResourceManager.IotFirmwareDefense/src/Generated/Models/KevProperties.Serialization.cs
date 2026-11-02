@@ -79,10 +79,10 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                 writer.WritePropertyName("knownRansomwareCampaignUse"u8);
                 writer.WriteStringValue(KnownRansomwareCampaignUse.Value.ToString());
             }
-            if (Optional.IsDefined(DateAdded))
+            if (Optional.IsDefined(AddedOn))
             {
                 writer.WritePropertyName("dateAdded"u8);
-                writer.WriteStringValue(DateAdded.Value, "O");
+                writer.WriteStringValue(AddedOn.Value, "O");
             }
             if (Optional.IsDefined(RemediationDueOn))
             {
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                 return null;
             }
             RansomwareCampaignUse? knownRansomwareCampaignUse = default;
-            DateTimeOffset? dateAdded = default;
+            DateTimeOffset? addedOn = default;
             DateTimeOffset? remediationDueOn = default;
             string requiredAction = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                     {
                         continue;
                     }
-                    dateAdded = prop.Value.GetDateTimeOffset("O");
+                    addedOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("remediationDueDate"u8))
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new KevProperties(knownRansomwareCampaignUse, dateAdded, remediationDueOn, requiredAction, additionalBinaryDataProperties);
+            return new KevProperties(knownRansomwareCampaignUse, addedOn, remediationDueOn, requiredAction, additionalBinaryDataProperties);
         }
     }
 }

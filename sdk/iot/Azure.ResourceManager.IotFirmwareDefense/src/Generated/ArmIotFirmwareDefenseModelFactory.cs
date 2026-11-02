@@ -444,13 +444,13 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
 
         /// <summary> KEV (Known Exploited Vulnerabilities) data related to a CVE, published by CISA. </summary>
         /// <param name="knownRansomwareCampaignUse"> Indication if the vulnerability is known to have been leveraged as part of a ransomware campaign. </param>
-        /// <param name="dateAdded"> The date the vulnerability was added to the KEV catalog. </param>
+        /// <param name="addedOn"> The date the vulnerability was added to the KEV catalog. </param>
         /// <param name="remediationDueOn"> The date the required action is due. </param>
         /// <param name="requiredAction"> The required action to address the vulnerability. </param>
         /// <returns> A new <see cref="Models.KevProperties"/> instance for mocking. </returns>
-        public static KevProperties KevProperties(RansomwareCampaignUse? knownRansomwareCampaignUse = default, DateTimeOffset? dateAdded = default, DateTimeOffset? remediationDueOn = default, string requiredAction = default)
+        public static KevProperties KevProperties(RansomwareCampaignUse? knownRansomwareCampaignUse = default, DateTimeOffset? addedOn = default, DateTimeOffset? remediationDueOn = default, string requiredAction = default)
         {
-            return new KevProperties(knownRansomwareCampaignUse, dateAdded, remediationDueOn, requiredAction, default);
+            return new KevProperties(knownRansomwareCampaignUse, addedOn, remediationDueOn, requiredAction, default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -710,9 +710,9 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         /// <param name="totalNetworkCallCount"> Total number of network calls found. </param>
         /// <param name="unsafeCallTotals"> Total unsafe function call counts per function across all binaries. </param>
         /// <returns> A new <see cref="Models.UnsafeFunctionCallsSummary"/> instance for mocking. </returns>
-        public static UnsafeFunctionCallsSummary UnsafeFunctionCallsSummary(FirmwareProvisioningState? provisioningState = default, long? totalFileCount = default, long? totalUnsafeCallCount = default, long? totalNetworkCallCount = default, IEnumerable<FunctionCall> unsafeCallTotals = default)
+        public static UnsafeFunctionCallsSummary UnsafeFunctionCallsSummary(FirmwareProvisioningState? provisioningState = default, long? totalFileCount = default, long? totalUnsafeCallCount = default, long? totalNetworkCallCount = default, IEnumerable<FirmwareFunctionCallCount> unsafeCallTotals = default)
         {
-            unsafeCallTotals ??= new ChangeTrackingList<FunctionCall>();
+            unsafeCallTotals ??= new ChangeTrackingList<FirmwareFunctionCallCount>();
 
             return new UnsafeFunctionCallsSummary(
                 FirmwareAnalysisSummaryType.UnsafeFunctionCalls,
@@ -721,16 +721,16 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                 totalFileCount,
                 totalUnsafeCallCount,
                 totalNetworkCallCount,
-                (unsafeCallTotals ?? new ChangeTrackingList<FunctionCall>()).ToList());
+                (unsafeCallTotals ?? new ChangeTrackingList<FirmwareFunctionCallCount>()).ToList());
         }
 
         /// <summary> Function call count for a specific function. </summary>
         /// <param name="functionName"> The name of the function. </param>
         /// <param name="count"> The number of calls to this function within a single binary. </param>
-        /// <returns> A new <see cref="Models.FunctionCall"/> instance for mocking. </returns>
-        public static FunctionCall FunctionCall(string functionName = default, long count = default)
+        /// <returns> A new <see cref="Models.FirmwareFunctionCallCount"/> instance for mocking. </returns>
+        public static FirmwareFunctionCallCount FirmwareFunctionCallCount(string functionName = default, long count = default)
         {
-            return new FunctionCall(functionName, count, default);
+            return new FirmwareFunctionCallCount(functionName, count, default);
         }
 
         /// <summary> The object representing how many firmwares the user has uploaded to the workspace. </summary>
@@ -772,7 +772,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         /// <param name="totalNetworkCallCount"> Total number of network-related function calls in the binary. </param>
         /// <param name="provisioningState"> The status of the last operation. </param>
         /// <returns> A new <see cref="Models.UnsafeFunctionCallsResult"/> instance for mocking. </returns>
-        public static UnsafeFunctionCallsResult UnsafeFunctionCallsResult(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string fileName = default, string filePath = default, IEnumerable<FunctionCall> unsafeFunctionCalls = default, long? totalUnsafeCallCount = default, long? totalNetworkCallCount = default, FirmwareProvisioningState? provisioningState = default)
+        public static UnsafeFunctionCallsResult UnsafeFunctionCallsResult(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string fileName = default, string filePath = default, IEnumerable<FirmwareFunctionCallCount> unsafeFunctionCalls = default, long? totalUnsafeCallCount = default, long? totalNetworkCallCount = default, FirmwareProvisioningState? provisioningState = default)
         {
             return new UnsafeFunctionCallsResult(
                 id,
@@ -782,7 +782,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                 fileName is null && filePath is null && unsafeFunctionCalls is null && totalUnsafeCallCount is null && totalNetworkCallCount is null && provisioningState is null ? default : new UnsafeFunctionCallsResultProperties(
                     fileName,
                     filePath,
-                    (unsafeFunctionCalls ?? new ChangeTrackingList<FunctionCall>()).ToList(),
+                    (unsafeFunctionCalls ?? new ChangeTrackingList<FirmwareFunctionCallCount>()).ToList(),
                     totalUnsafeCallCount,
                     totalNetworkCallCount,
                     provisioningState,

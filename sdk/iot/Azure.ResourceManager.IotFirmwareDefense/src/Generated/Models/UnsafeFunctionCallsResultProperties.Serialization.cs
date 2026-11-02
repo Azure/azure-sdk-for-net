@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             {
                 writer.WritePropertyName("unsafeFunctionCalls"u8);
                 writer.WriteStartArray();
-                foreach (FunctionCall item in UnsafeFunctionCalls)
+                foreach (FirmwareFunctionCallCount item in UnsafeFunctionCalls)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             }
             string fileName = default;
             string filePath = default;
-            IList<FunctionCall> unsafeFunctionCalls = default;
+            IList<FirmwareFunctionCallCount> unsafeFunctionCalls = default;
             long? totalUnsafeCallCount = default;
             long? totalNetworkCallCount = default;
             FirmwareProvisioningState? provisioningState = default;
@@ -176,10 +176,10 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                     {
                         continue;
                     }
-                    List<FunctionCall> array = new List<FunctionCall>();
+                    List<FirmwareFunctionCallCount> array = new List<FirmwareFunctionCallCount>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(FunctionCall.DeserializeFunctionCall(item, options));
+                        array.Add(FirmwareFunctionCallCount.DeserializeFirmwareFunctionCallCount(item, options));
                     }
                     unsafeFunctionCalls = array;
                     continue;
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             return new UnsafeFunctionCallsResultProperties(
                 fileName,
                 filePath,
-                unsafeFunctionCalls ?? new ChangeTrackingList<FunctionCall>(),
+                unsafeFunctionCalls ?? new ChangeTrackingList<FirmwareFunctionCallCount>(),
                 totalUnsafeCallCount,
                 totalNetworkCallCount,
                 provisioningState,

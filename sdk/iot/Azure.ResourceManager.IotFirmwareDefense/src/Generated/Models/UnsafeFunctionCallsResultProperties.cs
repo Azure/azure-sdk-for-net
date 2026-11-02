@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         /// <summary> Initializes a new instance of <see cref="UnsafeFunctionCallsResultProperties"/>. </summary>
         public UnsafeFunctionCallsResultProperties()
         {
-            UnsafeFunctionCalls = new ChangeTrackingList<FunctionCall>();
+            UnsafeFunctionCalls = new ChangeTrackingList<FirmwareFunctionCallCount>();
         }
 
         /// <summary> Initializes a new instance of <see cref="UnsafeFunctionCallsResultProperties"/>. </summary>
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         /// <param name="totalNetworkCallCount"> Total number of network-related function calls in the binary. </param>
         /// <param name="provisioningState"> The status of the last operation. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UnsafeFunctionCallsResultProperties(string fileName, string filePath, IList<FunctionCall> unsafeFunctionCalls, long? totalUnsafeCallCount, long? totalNetworkCallCount, FirmwareProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal UnsafeFunctionCallsResultProperties(string fileName, string filePath, IList<FirmwareFunctionCallCount> unsafeFunctionCalls, long? totalUnsafeCallCount, long? totalNetworkCallCount, FirmwareProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             FileName = fileName;
             FilePath = filePath;
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         public string FilePath { get; set; }
 
         /// <summary> List of unsafe function calls and their counts in the binary. </summary>
-        public IList<FunctionCall> UnsafeFunctionCalls { get; } = new ChangeTrackingList<FunctionCall>();
+        public IList<FirmwareFunctionCallCount> UnsafeFunctionCalls { get; } = new ChangeTrackingList<FirmwareFunctionCallCount>();
 
         /// <summary> Total unsafe function call count in the binary. </summary>
         public long? TotalUnsafeCallCount { get; set; }

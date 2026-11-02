@@ -14,56 +14,56 @@ using Azure.ResourceManager.IotFirmwareDefense;
 namespace Azure.ResourceManager.IotFirmwareDefense.Models
 {
     /// <summary> Function call count for a specific function. </summary>
-    public partial class FunctionCall : IJsonModel<FunctionCall>
+    public partial class FirmwareFunctionCallCount : IJsonModel<FirmwareFunctionCallCount>
     {
-        /// <summary> Initializes a new instance of <see cref="FunctionCall"/> for deserialization. </summary>
-        internal FunctionCall()
+        /// <summary> Initializes a new instance of <see cref="FirmwareFunctionCallCount"/> for deserialization. </summary>
+        internal FirmwareFunctionCallCount()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual FunctionCall PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual FirmwareFunctionCallCount PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<FunctionCall>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<FirmwareFunctionCallCount>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeFunctionCall(document.RootElement, options);
+                        return DeserializeFirmwareFunctionCallCount(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(FunctionCall)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FirmwareFunctionCallCount)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<FunctionCall>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<FirmwareFunctionCallCount>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerIotFirmwareDefenseContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(FunctionCall)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FirmwareFunctionCallCount)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<FunctionCall>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<FirmwareFunctionCallCount>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        FunctionCall IPersistableModel<FunctionCall>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        FirmwareFunctionCallCount IPersistableModel<FirmwareFunctionCallCount>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<FunctionCall>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<FirmwareFunctionCallCount>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<FunctionCall>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<FirmwareFunctionCallCount>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<FunctionCall>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<FirmwareFunctionCallCount>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FunctionCall)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(FirmwareFunctionCallCount)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("functionName"u8);
             writer.WriteStringValue(FunctionName);
@@ -102,24 +102,24 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        FunctionCall IJsonModel<FunctionCall>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        FirmwareFunctionCallCount IJsonModel<FirmwareFunctionCallCount>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual FunctionCall JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual FirmwareFunctionCallCount JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<FunctionCall>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<FirmwareFunctionCallCount>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FunctionCall)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(FirmwareFunctionCallCount)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeFunctionCall(document.RootElement, options);
+            return DeserializeFirmwareFunctionCallCount(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static FunctionCall DeserializeFunctionCall(JsonElement element, ModelReaderWriterOptions options)
+        internal static FirmwareFunctionCallCount DeserializeFirmwareFunctionCallCount(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new FunctionCall(functionName, count, additionalBinaryDataProperties);
+            return new FirmwareFunctionCallCount(functionName, count, additionalBinaryDataProperties);
         }
     }
 }

@@ -12,16 +12,16 @@ using Azure.ResourceManager.IotFirmwareDefense;
 namespace Azure.ResourceManager.IotFirmwareDefense.Models
 {
     /// <summary> Function call count for a specific function. </summary>
-    public partial class FunctionCall
+    public partial class FirmwareFunctionCallCount
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="FunctionCall"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="FirmwareFunctionCallCount"/>. </summary>
         /// <param name="functionName"> The name of the function. </param>
         /// <param name="count"> The number of calls to this function within a single binary. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="functionName"/> is null. </exception>
-        public FunctionCall(string functionName, long count)
+        public FirmwareFunctionCallCount(string functionName, long count)
         {
             Argument.AssertNotNull(functionName, nameof(functionName));
 
@@ -29,11 +29,11 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             Count = count;
         }
 
-        /// <summary> Initializes a new instance of <see cref="FunctionCall"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="FirmwareFunctionCallCount"/>. </summary>
         /// <param name="functionName"> The name of the function. </param>
         /// <param name="count"> The number of calls to this function within a single binary. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal FunctionCall(string functionName, long count, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal FirmwareFunctionCallCount(string functionName, long count, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             FunctionName = functionName;
             Count = count;

@@ -141,23 +141,6 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             }
         }
 
-        /// <summary> Legacy property for what is now componentName. </summary>
-        public CveComponent Component
-        {
-            get
-            {
-                return Properties is null ? default : Properties.Component;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new CveResultProperties();
-                }
-                Properties.Component = value;
-            }
-        }
-
         /// <summary> Legacy property for the effective CVE score (deprecated). </summary>
         public string CvssScore
         {

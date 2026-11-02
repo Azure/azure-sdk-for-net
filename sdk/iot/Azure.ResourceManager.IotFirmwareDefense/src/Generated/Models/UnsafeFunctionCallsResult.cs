@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         }
 
         /// <summary> List of unsafe function calls and their counts in the binary. </summary>
-        public IList<FunctionCall> UnsafeFunctionCalls
+        public IList<FirmwareFunctionCallCount> UnsafeFunctionCalls
         {
             get
             {

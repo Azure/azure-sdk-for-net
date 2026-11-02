@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             {
                 writer.WritePropertyName("unsafeCallTotals"u8);
                 writer.WriteStartArray();
-                foreach (FunctionCall item in UnsafeCallTotals)
+                foreach (FirmwareFunctionCallCount item in UnsafeCallTotals)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             long? totalFileCount = default;
             long? totalUnsafeCallCount = default;
             long? totalNetworkCallCount = default;
-            IList<FunctionCall> unsafeCallTotals = default;
+            IList<FirmwareFunctionCallCount> unsafeCallTotals = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("summaryType"u8))
@@ -183,10 +183,10 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                     {
                         continue;
                     }
-                    List<FunctionCall> array = new List<FunctionCall>();
+                    List<FirmwareFunctionCallCount> array = new List<FirmwareFunctionCallCount>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(FunctionCall.DeserializeFunctionCall(item, options));
+                        array.Add(FirmwareFunctionCallCount.DeserializeFirmwareFunctionCallCount(item, options));
                     }
                     unsafeCallTotals = array;
                     continue;
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                 totalFileCount,
                 totalUnsafeCallCount,
                 totalNetworkCallCount,
-                unsafeCallTotals ?? new ChangeTrackingList<FunctionCall>());
+                unsafeCallTotals ?? new ChangeTrackingList<FirmwareFunctionCallCount>());
         }
     }
 }

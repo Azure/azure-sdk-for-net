@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         /// <summary> Initializes a new instance of <see cref="UnsafeFunctionCallsSummary"/>. </summary>
         public UnsafeFunctionCallsSummary() : base(FirmwareAnalysisSummaryType.UnsafeFunctionCalls)
         {
-            UnsafeCallTotals = new ChangeTrackingList<FunctionCall>();
+            UnsafeCallTotals = new ChangeTrackingList<FirmwareFunctionCallCount>();
         }
 
         /// <summary> Initializes a new instance of <see cref="UnsafeFunctionCallsSummary"/>. </summary>
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         /// <param name="totalUnsafeCallCount"> Total number of unsafe function calls found. </param>
         /// <param name="totalNetworkCallCount"> Total number of network calls found. </param>
         /// <param name="unsafeCallTotals"> Total unsafe function call counts per function across all binaries. </param>
-        internal UnsafeFunctionCallsSummary(FirmwareAnalysisSummaryType summaryType, FirmwareProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties, long? totalFileCount, long? totalUnsafeCallCount, long? totalNetworkCallCount, IList<FunctionCall> unsafeCallTotals) : base(summaryType, provisioningState, additionalBinaryDataProperties)
+        internal UnsafeFunctionCallsSummary(FirmwareAnalysisSummaryType summaryType, FirmwareProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties, long? totalFileCount, long? totalUnsafeCallCount, long? totalNetworkCallCount, IList<FirmwareFunctionCallCount> unsafeCallTotals) : base(summaryType, provisioningState, additionalBinaryDataProperties)
         {
             TotalFileCount = totalFileCount;
             TotalUnsafeCallCount = totalUnsafeCallCount;
@@ -46,6 +46,6 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         public long? TotalNetworkCallCount { get; set; }
 
         /// <summary> Total unsafe function call counts per function across all binaries. </summary>
-        public IList<FunctionCall> UnsafeCallTotals { get; }
+        public IList<FirmwareFunctionCallCount> UnsafeCallTotals { get; }
     }
 }

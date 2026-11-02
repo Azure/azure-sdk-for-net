@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
 
         /// <summary> Initializes a new instance of <see cref="KevProperties"/>. </summary>
         /// <param name="knownRansomwareCampaignUse"> Indication if the vulnerability is known to have been leveraged as part of a ransomware campaign. </param>
-        /// <param name="dateAdded"> The date the vulnerability was added to the KEV catalog. </param>
+        /// <param name="addedOn"> The date the vulnerability was added to the KEV catalog. </param>
         /// <param name="remediationDueOn"> The date the required action is due. </param>
         /// <param name="requiredAction"> The required action to address the vulnerability. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal KevProperties(RansomwareCampaignUse? knownRansomwareCampaignUse, DateTimeOffset? dateAdded, DateTimeOffset? remediationDueOn, string requiredAction, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal KevProperties(RansomwareCampaignUse? knownRansomwareCampaignUse, DateTimeOffset? addedOn, DateTimeOffset? remediationDueOn, string requiredAction, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             KnownRansomwareCampaignUse = knownRansomwareCampaignUse;
-            DateAdded = dateAdded;
+            AddedOn = addedOn;
             RemediationDueOn = remediationDueOn;
             RequiredAction = requiredAction;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         public RansomwareCampaignUse? KnownRansomwareCampaignUse { get; set; }
 
         /// <summary> The date the vulnerability was added to the KEV catalog. </summary>
-        public DateTimeOffset? DateAdded { get; set; }
+        public DateTimeOffset? AddedOn { get; set; }
 
         /// <summary> The date the required action is due. </summary>
         public DateTimeOffset? RemediationDueOn { get; set; }
