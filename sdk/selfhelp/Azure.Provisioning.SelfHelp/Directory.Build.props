@@ -6,7 +6,7 @@
     <DefineConstants Condition="'$(ExperimentalProvisioning)' == 'true'">EXPERIMENTAL_PROVISIONING;$(DefineConstants)</DefineConstants>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <IsMgmtLibrary>true</IsMgmtLibrary>
-    <NoWarn>$(NoWarn);AZC0034;AZC0035</NoWarn>
+    <NoWarn>$(NoWarn);AZPROVISION001;AZC0034;AZC0035</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>
