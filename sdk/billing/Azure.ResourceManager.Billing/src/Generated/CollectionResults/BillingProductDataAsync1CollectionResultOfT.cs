@@ -17,12 +17,11 @@ using Azure.ResourceManager.Billing.Models;
 
 namespace Azure.ResourceManager.Billing
 {
-    internal partial class ProductsGetProductsAsyncCollectionResultOfT : AsyncPageable<BillingProductData>
+    internal partial class BillingProductDataAsync1CollectionResultOfT : AsyncPageable<BillingProductData>
     {
         private readonly Products _client;
         private readonly string _billingAccountName;
-        private readonly string _billingProfileName;
-        private readonly string _invoiceSectionName;
+        private readonly string _customerName;
         private readonly string _filter;
         private readonly string _orderBy;
         private readonly long? _maxCount;
@@ -32,11 +31,10 @@ namespace Azure.ResourceManager.Billing
         private readonly RequestContext _context;
         private readonly string _diagnosticScope;
 
-        /// <summary> Initializes a new instance of ProductsGetProductsAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <summary> Initializes a new instance of BillingProductDataAsync1CollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The Products client used to send requests. </param>
         /// <param name="billingAccountName"> The ID that uniquely identifies a billing account. </param>
-        /// <param name="billingProfileName"> The ID that uniquely identifies a billing profile. </param>
-        /// <param name="invoiceSectionName"> The ID that uniquely identifies an invoice section. </param>
+        /// <param name="customerName"> The ID that uniquely identifies a customer. </param>
         /// <param name="filter"> The filter query option allows clients to filter a collection of resources that are addressed by a request URL. </param>
         /// <param name="orderBy"> The orderby query option allows clients to request resources in a particular order. </param>
         /// <param name="maxCount"> The top query option requests the number of items in the queried collection to be included in the result. The maximum supported value for top is 50. </param>
@@ -45,12 +43,11 @@ namespace Azure.ResourceManager.Billing
         /// <param name="search"> The search query option allows clients to request items within a collection matching a free-text search expression. search is only supported for string fields. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public ProductsGetProductsAsyncCollectionResultOfT(Products client, string billingAccountName, string billingProfileName, string invoiceSectionName, string filter, string orderBy, long? maxCount, long? skip, bool? count, string search, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public BillingProductDataAsync1CollectionResultOfT(Products client, string billingAccountName, string customerName, string filter, string orderBy, long? maxCount, long? skip, bool? count, string search, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _billingAccountName = billingAccountName;
-            _billingProfileName = billingProfileName;
-            _invoiceSectionName = invoiceSectionName;
+            _customerName = customerName;
             _filter = filter;
             _orderBy = orderBy;
             _maxCount = maxCount;
@@ -61,13 +58,13 @@ namespace Azure.ResourceManager.Billing
             _diagnosticScope = diagnosticScope;
         }
 
-        /// <summary> Gets the pages of ProductsGetProductsAsyncCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of BillingProductDataAsync1CollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of ProductsGetProductsAsyncCollectionResultOfT as an enumerable collection. </returns>
+        /// <returns> The pages of BillingProductDataAsync1CollectionResultOfT as an enumerable collection. </returns>
         public override IAsyncEnumerable<Page<BillingProductData>> AsPages(string continuationToken, int? pageSizeHint)
         {
-            return this.AsPagesAsync(continuationToken, pageSizeHint, _context?.CancellationToken ?? default);
+            return AsPagesAsync(continuationToken, pageSizeHint, _context?.CancellationToken ?? default);
         }
 
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
@@ -78,7 +75,7 @@ namespace Azure.ResourceManager.Billing
             Uri nextPage = continuationToken != null ? new Uri(continuationToken, UriKind.RelativeOrAbsolute) : null;
             while (true)
             {
-                Response response = await this.GetNextResponseAsync(pageSizeHint, nextPage, cancellationToken).ConfigureAwait(false);
+                Response response = await GetNextResponseAsync(pageSizeHint, nextPage, cancellationToken).ConfigureAwait(false);
                 if (response is null)
                 {
                     yield break;
@@ -99,7 +96,7 @@ namespace Azure.ResourceManager.Billing
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink, CancellationToken cancellationToken)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetProductsRequest(nextLink, _billingAccountName, _billingProfileName, _invoiceSectionName, _filter, _orderBy, _maxCount, _skip, _count, _search, _context) : _client.CreateGetProductsRequest(_billingAccountName, _billingProfileName, _invoiceSectionName, _filter, _orderBy, _maxCount, _skip, _count, _search, _context);
+            HttpMessage message = nextLink != null ? _client.CreateNextGetByCustomerRequest(nextLink, _billingAccountName, _customerName, _filter, _orderBy, _maxCount, _skip, _count, _search, _context) : _client.CreateGetByCustomerRequest(_billingAccountName, _customerName, _filter, _orderBy, _maxCount, _skip, _count, _search, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
