@@ -1,0 +1,147 @@
+trigger: none
+pr: none
+
+parameters:
+  - name: selectionKind
+    displayName: 'Selection type'
+    type: string
+    default: sample-path
+    values:
+      - sample-path
+      - test-id
+  - name: selection
+    displayName: 'Selection value (; separated)'
+    type: string
+    default: 'Azure.AI.Projects/tests/Samples;Azure.AI.Projects.Agents/tests/Samples;Azure.AI.Extensions.OpenAI/tests/Samples'
+  - name: testQueueCount
+    displayName: 'Maximum parallel live test workers'
+    type: number
+    default: 4
+    values:
+      - 1
+      - 2
+      - 3
+      - 4
+  - name: identityResourceGroup
+    displayName: 'Resource group with shared identities (optional, kept for parity with Python pipeline)'
+    type: string
+    default: ''
+  - name: accountName
+    displayName: 'Existing Foundry account name'
+    type: string
+    default: ''
+  - name: projectName
+    displayName: 'Existing Foundry project name'
+    type: string
+    default: ''
+  - name: agentName
+    displayName: 'Agent name used by samples'
+    type: string
+    default: sample-agent
+  - name: modelName
+    displayName: 'Model deployment name'
+    type: string
+    default: gpt-5.5
+  - name: modelVersion
+    displayName: 'Model version'
+    type: string
+    default: '2026-04-24'
+  - name: modelSku
+    displayName: 'Model SKU'
+    type: string
+    default: GlobalStandard
+    values:
+      - GlobalStandard
+      - Standard
+  - name: modelCapacity
+    displayName: 'Model capacity (TPM units)'
+    type: number
+    default: 40
+
+extends:
+  template: /eng/pipelines/templates/stages/archetype-sdk-tests.yml
+  parameters:
+    ServiceDirectory: ai
+    SupportedClouds: 'Public'
+    Location: 'East US'
+    MaxParallel: ${{ parameters.testQueueCount }}
+    TestResourceDirectories:
+      - ai/tests/samples/ci/infra
+    MatrixFilters:
+      - AdditionalTestArguments=^(?!.*UseProjectReferenceToAzureClients=true)
+    PreSteps:
+      - pwsh: |
+          $selectionKind = '${{ parameters.selectionKind }}'
+          $selection = '${{ parameters.selection }}'
+
+          if ([string]::IsNullOrWhiteSpace($selection)) {
+            throw 'selection must not be empty.'
+          }
+
+          $items = @($selection -split ';' | ForEach-Object { $_.Trim() } | Where-Object { -not [string]::IsNullOrWhiteSpace($_) })
+          if ($items.Count -eq 0) {
+            throw 'selection did not produce any valid value.'
+          }
+
+          if ($selectionKind -eq 'sample-path') {
+            $filters = New-Object System.Collections.Generic.List[string]
+            foreach ($item in $items) {
+              if ($item -like 'Azure.AI.Projects/tests/Samples*') {
+                $filters.Add('FullyQualifiedName~Azure.AI.Projects.Tests.Samples')
+              }
+              elseif ($item -like 'Azure.AI.Projects.Agents/tests/Samples*') {
+                $filters.Add('FullyQualifiedName~Azure.AI.Projects.Agents.Tests.Samples')
+              }
+              elseif ($item -like 'Azure.AI.Extensions.OpenAI/tests/Samples*') {
+                $filters.Add('FullyQualifiedName~Azure.AI.Extensions.OpenAI.Tests.Samples')
+              }
+              else {
+                throw "Unsupported sample path selection: $item"
+              }
+            }
+
+            $uniqueFilters = @($filters | Select-Object -Unique)
+            $additionalTestFilters = '(' + ($uniqueFilters -join '|') + ')'
+          }
+          elseif ($selectionKind -eq 'test-id') {
+            $additionalTestFilters = $selection
+          }
+          else {
+            throw "Unsupported selectionKind: $selectionKind"
+          }
+
+          $accountName = '${{ parameters.accountName }}'.Trim()
+          $projectName = '${{ parameters.projectName }}'.Trim()
+          if ([string]::IsNullOrWhiteSpace($accountName) -or [string]::IsNullOrWhiteSpace($projectName)) {
+            throw 'accountName and projectName are required when using the copied sample-resources Bicep provisioning.'
+          }
+
+          Write-Host "Using AdditionalTestFilters: $additionalTestFilters"
+          Write-Host "##vso[task.setvariable variable=AdditionalTestFilters]$additionalTestFilters"
+
+          $armParameters = @{
+            accountName = $accountName
+            projectName = $projectName
+            agentName = '${{ parameters.agentName }}'
+            modelName = '${{ parameters.modelName }}'
+            modelVersion = '${{ parameters.modelVersion }}'
+            modelSku = '${{ parameters.modelSku }}'
+            modelCapacity = [int]${{ parameters.modelCapacity }}
+          }
+
+          $pairs = New-Object System.Collections.Generic.List[string]
+          foreach ($key in $armParameters.Keys) {
+            $value = $armParameters[$key]
+            if ($value -is [int] -or $value -is [long]) {
+              $pairs.Add("$key=$value")
+            }
+            else {
+              $escaped = "$value".Replace("'", "''")
+              $pairs.Add("$key='$escaped'")
+            }
+          }
+
+          $armTemplateParameters = '@{' + ($pairs -join '; ') + '}'
+          Write-Host "Using ArmTemplateParameters: $armTemplateParameters"
+          Write-Host "##vso[task.setvariable variable=ArmTemplateParameters]$armTemplateParameters"
+        displayName: 'Prepare sample test filter and deployment parameters'
