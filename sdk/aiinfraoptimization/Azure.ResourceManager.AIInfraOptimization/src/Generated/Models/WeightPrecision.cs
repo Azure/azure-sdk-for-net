@@ -24,9 +24,9 @@ namespace Azure.ResourceManager.AIInfraOptimization.Models
         /// <summary> 8-bit floating point. </summary>
         private const string FP8Value = "FP8";
         /// <summary> 8-bit integer. </summary>
-        private const string INT8Value = "INT8";
+        private const string Int8Value = "INT8";
         /// <summary> 4-bit integer. </summary>
-        private const string INT4Value = "INT4";
+        private const string Int4Value = "INT4";
         /// <summary> 4-bit floating point. </summary>
         private const string FP4Value = "FP4";
 
