@@ -34,14 +34,14 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="externalSafetyProviderName"> The registered external safety-provider name. </param>
         /// <param name="managedIdentityResourceId"> Optional managed identity used when invoking the external safety provider. </param>
         /// <param name="source"> The request stage at which the provider runs. </param>
-        /// <param name="isBlocking"> Whether a provider rejection blocks the request. </param>
+        /// <param name="blocking"> Whether a provider rejection blocks the request. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RaiPolicyCustomExternalSafetyProviderReference(string externalSafetyProviderName, ResourceIdentifier managedIdentityResourceId, RaiPolicyContentSource source, bool? isBlocking, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RaiPolicyCustomExternalSafetyProviderReference(string externalSafetyProviderName, ResourceIdentifier managedIdentityResourceId, RaiPolicyContentSource source, bool? blocking, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ExternalSafetyProviderName = externalSafetyProviderName;
             ManagedIdentityResourceId = managedIdentityResourceId;
             Source = source;
-            IsBlocking = isBlocking;
+            Blocking = blocking;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -59,6 +59,6 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 
         /// <summary> Whether a provider rejection blocks the request. </summary>
         [WirePath("blocking")]
-        public bool? IsBlocking { get; set; }
+        public bool? Blocking { get; set; }
     }
 }

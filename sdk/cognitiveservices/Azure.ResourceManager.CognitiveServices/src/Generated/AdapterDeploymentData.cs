@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.CognitiveServices.Models;
 using Azure.ResourceManager.Models;
@@ -33,7 +32,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <param name="properties"> Properties of the Cognitive Services adapter deployment. </param>
         /// <param name="eTag"> The concurrency token for this adapter deployment. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AdapterDeploymentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AdapterDeploymentProperties properties, ETag? eTag, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
+        internal AdapterDeploymentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AdapterDeploymentProperties properties, string eTag, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
             ETag = eTag;
@@ -46,6 +45,6 @@ namespace Azure.ResourceManager.CognitiveServices
 
         /// <summary> The concurrency token for this adapter deployment. </summary>
         [WirePath("etag")]
-        public ETag? ETag { get; }
+        public string ETag { get; }
     }
 }
