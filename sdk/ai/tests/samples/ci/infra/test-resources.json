@@ -1,0 +1,226 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "metadata": {
+    "_generator": {
+      "name": "bicep",
+      "version": "0.41.2.15936",
+      "templateHash": "3719120374258715207"
+    }
+  },
+  "parameters": {
+    "accountName": {
+      "type": "string",
+      "minLength": 2
+    },
+    "projectName": {
+      "type": "string",
+      "minLength": 2
+    },
+    "agentName": {
+      "type": "string",
+      "defaultValue": "sample-agent",
+      "minLength": 1
+    },
+    "modelName": {
+      "type": "string",
+      "defaultValue": "gpt-5.5",
+      "minLength": 1
+    },
+    "modelVersion": {
+      "type": "string",
+      "defaultValue": "2026-04-24",
+      "minLength": 1
+    },
+    "modelSku": {
+      "type": "string",
+      "defaultValue": "GlobalStandard",
+      "minLength": 1
+    },
+    "modelCapacity": {
+      "type": "int",
+      "defaultValue": 40,
+      "minValue": 1
+    },
+    "mcpPat": {
+      "type": "securestring",
+      "defaultValue": "",
+      "metadata": {
+        "description": "Complete GitHub PAT, including its prefix. Supplied only through an ADO secret variable when needed."
+      }
+    }
+  },
+  "resources": [
+    {
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2025-04-01",
+      "name": "sample-resources",
+      "properties": {
+        "expressionEvaluationOptions": {
+          "scope": "inner"
+        },
+        "mode": "Incremental",
+        "parameters": {
+          "accountName": {
+            "value": "[parameters('accountName')]"
+          },
+          "projectName": {
+            "value": "[parameters('projectName')]"
+          },
+          "agentName": {
+            "value": "[parameters('agentName')]"
+          },
+          "sampleModel": {
+            "value": {
+              "name": "[parameters('modelName')]",
+              "version": "[parameters('modelVersion')]",
+              "sku": "[parameters('modelSku')]",
+              "capacity": "[parameters('modelCapacity')]"
+            }
+          },
+          "mcpPat": {
+            "value": "[parameters('mcpPat')]"
+          }
+        },
+        "template": {
+          "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+          "languageVersion": "2.0",
+          "contentVersion": "1.0.0.0",
+          "metadata": {
+            "_generator": {
+              "name": "bicep",
+              "version": "0.41.2.15936",
+              "templateHash": "15014247861577879919"
+            }
+          },
+          "definitions": {
+            "ModelDeployment": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "version": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "sku": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "capacity": {
+                  "type": "int",
+                  "minValue": 1
+                }
+              }
+            }
+          },
+          "parameters": {
+            "accountName": {
+              "type": "string",
+              "minLength": 2
+            },
+            "projectName": {
+              "type": "string",
+              "minLength": 2
+            },
+            "agentName": {
+              "type": "string",
+              "minLength": 1
+            },
+            "sampleModel": {
+              "$ref": "#/definitions/ModelDeployment"
+            },
+            "mcpPat": {
+              "type": "securestring",
+              "defaultValue": "",
+              "metadata": {
+                "description": "Complete GitHub PAT, including its prefix. Supplied only through an ADO secret."
+              }
+            }
+          },
+          "resources": {
+            "account": {
+              "existing": true,
+              "type": "Microsoft.CognitiveServices/accounts",
+              "apiVersion": "2025-10-01-preview",
+              "name": "[parameters('accountName')]"
+            },
+            "project": {
+              "existing": true,
+              "type": "Microsoft.CognitiveServices/accounts/projects",
+              "apiVersion": "2025-10-01-preview",
+              "name": "[format('{0}/{1}', parameters('accountName'), parameters('projectName'))]"
+            },
+            "sampleDeployment": {
+              "type": "Microsoft.CognitiveServices/accounts/deployments",
+              "apiVersion": "2025-10-01-preview",
+              "name": "[format('{0}/{1}', parameters('accountName'), parameters('sampleModel').name)]",
+              "sku": {
+                "name": "[parameters('sampleModel').sku]",
+                "capacity": "[parameters('sampleModel').capacity]"
+              },
+              "properties": {
+                "model": {
+                  "format": "OpenAI",
+                  "name": "[parameters('sampleModel').name]",
+                  "version": "[parameters('sampleModel').version]"
+                },
+                "versionUpgradeOption": "NoAutoUpgrade"
+              }
+            },
+            "mcpConnection": {
+              "type": "Microsoft.CognitiveServices/accounts/projects/connections",
+              "apiVersion": "2025-10-01-preview",
+              "name": "[format('{0}/{1}/{2}', parameters('accountName'), parameters('projectName'), 'mcp')]",
+              "properties": {
+                "category": "RemoteTool",
+                "authType": "CustomKeys",
+                "target": "https://api.githubcopilot.com/mcp",
+                "isSharedToAll": false,
+                "credentials": {
+                  "keys": {
+                    "Authorization": "[format('Bearer {0}', parameters('mcpPat'))]"
+                  }
+                },
+                "metadata": {
+                  "type": "custom_MCP"
+                }
+              }
+            }
+          },
+          "outputs": {
+            "environment": {
+              "type": "object",
+              "value": {
+                "FOUNDRY_PROJECT_ENDPOINT": "[format('https://{0}.services.ai.azure.com/api/projects/{1}', parameters('accountName'), parameters('projectName'))]",
+                "FOUNDRY_MODEL_NAME": "[parameters('sampleModel').name]",
+                "FOUNDRY_AGENT_NAME": "[parameters('agentName')]",
+                "MCP_PROJECT_CONNECTION_ID": "[resourceId('Microsoft.CognitiveServices/accounts/projects/connections', parameters('accountName'), parameters('projectName'), 'mcp')]"
+              }
+            }
+          }
+        }
+      }
+    }
+  ],
+  "outputs": {
+    "FOUNDRY_PROJECT_ENDPOINT": {
+      "type": "string",
+      "value": "[reference(resourceId('Microsoft.Resources/deployments', 'sample-resources'), '2025-04-01').outputs.environment.value.FOUNDRY_PROJECT_ENDPOINT]"
+    },
+    "FOUNDRY_MODEL_NAME": {
+      "type": "string",
+      "value": "[reference(resourceId('Microsoft.Resources/deployments', 'sample-resources'), '2025-04-01').outputs.environment.value.FOUNDRY_MODEL_NAME]"
+    },
+    "FOUNDRY_AGENT_NAME": {
+      "type": "string",
+      "value": "[reference(resourceId('Microsoft.Resources/deployments', 'sample-resources'), '2025-04-01').outputs.environment.value.FOUNDRY_AGENT_NAME]"
+    },
+    "MCP_PROJECT_CONNECTION_ID": {
+      "type": "string",
+      "value": "[reference(resourceId('Microsoft.Resources/deployments', 'sample-resources'), '2025-04-01').outputs.environment.value.MCP_PROJECT_CONNECTION_ID]"
+    }
+  }
+}
