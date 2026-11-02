@@ -88,19 +88,21 @@ namespace Azure.Generator.Visitors
                                 method.Signature.Parameters.Single(current => current.Name == p.Name)).ToArray();
                             int lastToken = System.Array.FindLastIndex(legacyParameters, p => removed.Any(t => t.Name == p.Name));
                             legacyParameters = legacyParameters.Select((p, i) => i <= lastToken ? RequiredParameter(p) : p).ToArray();
+                            ScmMethodProvider overload;
                             if (legacyParameters.Length == method.Signature.Parameters.Count && !hasFullSignature)
                             {
                                 method.Signature.Update(parameters: legacyParameters, attributes: attributes);
                                 hasFullSignature = true;
+                                overload = method;
                             }
                             else
                             {
-                                var overload = CreateForwarder(method, legacyParameters, attributes);
-                                for (int i = lastToken + 1; i < legacyParameters.Length; i++)
-                                {
-                                    overload.Signature.Parameters[i].DefaultValue = previous.Signature.Parameters[i].DefaultValue;
-                                }
+                                overload = CreateForwarder(method, legacyParameters, attributes);
                                 result.Add(overload);
+                            }
+                            for (int i = lastToken + 1; i < legacyParameters.Length; i++)
+                            {
+                                overload.Signature.Parameters[i].DefaultValue = previous.Signature.Parameters[i].DefaultValue;
                             }
                         }
                         if (!hasFullSignature)

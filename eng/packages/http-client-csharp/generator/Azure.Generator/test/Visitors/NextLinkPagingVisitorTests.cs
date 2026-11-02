@@ -86,12 +86,16 @@ namespace Azure.Generator.Tests.Visitors
         }
 
         [Test]
-        public void PreservesMultipleLastContractTokenOverloads([Values] bool fullSignatureFirst)
+        public void PreservesMultipleLastContractTokenOverloads(
+            [Values] bool fullSignatureFirst,
+            [Values] bool fullSignatureHasDefaults)
         {
+            string fullDefaults = fullSignatureHasDefaults ? " = default" : "";
+            string shortDefaults = fullSignatureHasDefaults ? "" : " = default";
             var signatures = new[]
             {
-                "public virtual Azure.Pageable<Cat> GetCats(string resumeFrom = default, int? filter = default, System.Threading.CancellationToken cancellationToken = default) => default;",
-                "public virtual Azure.Pageable<Cat> GetCats(string resumeFrom, System.Threading.CancellationToken cancellationToken) => default;"
+                $"public virtual Azure.Pageable<Cat> GetCats(string resumeFrom, int? filter{fullDefaults}, System.Threading.CancellationToken cancellationToken{fullDefaults}) => default;",
+                $"public virtual Azure.Pageable<Cat> GetCats(string resumeFrom, System.Threading.CancellationToken cancellationToken{shortDefaults}) => default;"
             };
             if (!fullSignatureFirst)
             {
