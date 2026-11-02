@@ -39,9 +39,8 @@ namespace Azure.ResourceManager.MigrationDiscovery
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ServerSiteCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ServerSiteResource.ResourceType, out string serverSiteApiVersion);
             _serverSitesControllerClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MigrationDiscovery", ServerSiteResource.ResourceType.Namespace, Diagnostics);
-            _serverSitesControllerRestClient = new ServerSitesController(_serverSitesControllerClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, serverSiteApiVersion ?? "2024-12-01-preview");
+            _serverSitesControllerRestClient = new ServerSitesController(_serverSitesControllerClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.OffAzure/serverSites", out string serverSitesControllerApiVersionOverride) ? serverSitesControllerApiVersionOverride : "2024-12-01-preview");
             ValidateResourceId(id);
         }
 

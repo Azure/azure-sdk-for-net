@@ -652,7 +652,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
                 isDeleted,
                 createdTimestamp,
                 updatedTimestamp,
-                tags,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
                 provisioningState,
                 additionalBinaryDataProperties);
         }

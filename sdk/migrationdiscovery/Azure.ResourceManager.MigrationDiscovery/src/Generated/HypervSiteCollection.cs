@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.MigrationDiscovery
             _hypervSitesControllerClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MigrationDiscovery", HypervSiteResource.ResourceType.Namespace, Diagnostics);
             _hypervSitesControllerRestClient = new HypervSitesController(_hypervSitesControllerClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, hypervSiteApiVersion ?? "2024-12-01-preview");
             _hypervSitesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MigrationDiscovery", HypervSiteResource.ResourceType.Namespace, Diagnostics);
-            _hypervSitesRestClient = new HypervSites(_hypervSitesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, hypervSiteApiVersion ?? "2024-12-01-preview");
+            _hypervSitesRestClient = new HypervSites(_hypervSitesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.OffAzure/hypervSites", out string hypervSitesApiVersionOverride) ? hypervSitesApiVersionOverride : "2024-12-01-preview");
             ValidateResourceId(id);
         }
 

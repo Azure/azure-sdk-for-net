@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new TomcatWebServersListResult(value, nextLink, additionalBinaryDataProperties);
+            return new TomcatWebServersListResult(value ?? new ChangeTrackingList<TomcatWebServersData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

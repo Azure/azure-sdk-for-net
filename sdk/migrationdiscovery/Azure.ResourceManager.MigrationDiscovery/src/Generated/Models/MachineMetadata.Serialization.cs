@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new MachineMetadata(machineArmId, dependencyMapping, tags, additionalBinaryDataProperties);
+            return new MachineMetadata(machineArmId, dependencyMapping, tags ?? new ChangeTrackingDictionary<string, string>(), additionalBinaryDataProperties);
         }
     }
 }

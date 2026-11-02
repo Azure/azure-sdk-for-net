@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new HypervClusterListResult(value, nextLink, additionalBinaryDataProperties);
+            return new HypervClusterListResult(value ?? new ChangeTrackingList<HypervClusterData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

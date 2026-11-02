@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new MigrationDiscoveryMachineMetadataList(value, additionalBinaryDataProperties);
+            return new MigrationDiscoveryMachineMetadataList(value ?? new ChangeTrackingList<MachineMetadata>(), additionalBinaryDataProperties);
         }
     }
 }

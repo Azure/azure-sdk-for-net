@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new VcenterListResult(value, nextLink, additionalBinaryDataProperties);
+            return new VcenterListResult(value ?? new ChangeTrackingList<MigrationDiscoveryVcenterData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

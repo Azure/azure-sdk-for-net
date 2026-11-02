@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.MigrationDiscovery
         {
             TryGetApiVersion(ResourceType, out string serverSiteApiVersion);
             _serverSitesControllerClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MigrationDiscovery", ResourceType.Namespace, Diagnostics);
-            _serverSitesControllerRestClient = new ServerSitesController(_serverSitesControllerClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, serverSiteApiVersion ?? "2024-12-01-preview");
+            _serverSitesControllerRestClient = new ServerSitesController(_serverSitesControllerClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.OffAzure/serverSites", out string serverSitesControllerApiVersionOverride) ? serverSitesControllerApiVersionOverride : "2024-12-01-preview");
             _serverDependencyMapControllerClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MigrationDiscovery", ResourceType.Namespace, Diagnostics);
             _serverDependencyMapControllerRestClient = new ServerDependencyMapController(_serverDependencyMapControllerClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, serverSiteApiVersion ?? "2024-12-01-preview");
             _serverOperationsStatusControllerClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MigrationDiscovery", ResourceType.Namespace, Diagnostics);

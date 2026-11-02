@@ -43,23 +43,23 @@ namespace Azure.ResourceManager.MigrationDiscovery.Mocking
 
         private ClientDiagnostics ImportSitesControllerClientDiagnostics => _importSitesControllerClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.MigrationDiscovery.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ImportSitesController ImportSitesControllerRestClient => _importSitesControllerRestClient ??= new ImportSitesController(ImportSitesControllerClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2024-12-01-preview");
+        private ImportSitesController ImportSitesControllerRestClient => _importSitesControllerRestClient ??= new ImportSitesController(ImportSitesControllerClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.OffAzure/importSites", out string apiVersion) ? apiVersion : "2024-12-01-preview");
 
         private ClientDiagnostics MasterSitesControllerClientDiagnostics => _masterSitesControllerClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.MigrationDiscovery.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private MasterSitesController MasterSitesControllerRestClient => _masterSitesControllerRestClient ??= new MasterSitesController(MasterSitesControllerClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2024-12-01-preview");
+        private MasterSitesController MasterSitesControllerRestClient => _masterSitesControllerRestClient ??= new MasterSitesController(MasterSitesControllerClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.OffAzure/masterSites", out string apiVersion0) ? apiVersion0 : "2024-12-01-preview");
 
         private ClientDiagnostics ServerSitesControllerClientDiagnostics => _serverSitesControllerClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.MigrationDiscovery.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ServerSitesController ServerSitesControllerRestClient => _serverSitesControllerRestClient ??= new ServerSitesController(ServerSitesControllerClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2024-12-01-preview");
+        private ServerSitesController ServerSitesControllerRestClient => _serverSitesControllerRestClient ??= new ServerSitesController(ServerSitesControllerClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.OffAzure/serverSites", out string apiVersion1) ? apiVersion1 : "2024-12-01-preview");
 
         private ClientDiagnostics SitesControllerClientDiagnostics => _sitesControllerClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.MigrationDiscovery.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private SitesController SitesControllerRestClient => _sitesControllerRestClient ??= new SitesController(SitesControllerClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2024-12-01-preview");
+        private SitesController SitesControllerRestClient => _sitesControllerRestClient ??= new SitesController(SitesControllerClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.OffAzure/vmwareSites", out string apiVersion2) ? apiVersion2 : "2024-12-01-preview");
 
         private ClientDiagnostics HypervSitesClientDiagnostics => _hypervSitesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.MigrationDiscovery.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private HypervSites HypervSitesRestClient => _hypervSitesRestClient ??= new HypervSites(HypervSitesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2024-12-01-preview");
+        private HypervSites HypervSitesRestClient => _hypervSitesRestClient ??= new HypervSites(HypervSitesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.OffAzure/hypervSites", out string apiVersion3) ? apiVersion3 : "2024-12-01-preview");
 
         /// <summary>
         /// List ImportSite resources by subscription ID

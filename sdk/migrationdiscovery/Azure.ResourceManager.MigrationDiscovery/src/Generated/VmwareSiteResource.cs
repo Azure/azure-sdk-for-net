@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.MigrationDiscovery
         {
             TryGetApiVersion(ResourceType, out string vmwareSiteApiVersion);
             _sitesControllerClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MigrationDiscovery", ResourceType.Namespace, Diagnostics);
-            _sitesControllerRestClient = new SitesController(_sitesControllerClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, vmwareSiteApiVersion ?? "2024-12-01-preview");
+            _sitesControllerRestClient = new SitesController(_sitesControllerClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.OffAzure/vmwareSites", out string sitesControllerApiVersionOverride) ? sitesControllerApiVersionOverride : "2024-12-01-preview");
             _dependencyMapControllerClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MigrationDiscovery", ResourceType.Namespace, Diagnostics);
             _dependencyMapControllerRestClient = new DependencyMapController(_dependencyMapControllerClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, vmwareSiteApiVersion ?? "2024-12-01-preview");
             _vmwareOperationsStatusClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MigrationDiscovery", ResourceType.Namespace, Diagnostics);
