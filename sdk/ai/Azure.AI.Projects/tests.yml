@@ -26,18 +26,6 @@ parameters:
     displayName: 'Resource group with shared identities (optional, kept for parity with Python pipeline)'
     type: string
     default: ''
-  - name: accountName
-    displayName: 'Existing Foundry account name'
-    type: string
-    default: ''
-  - name: projectName
-    displayName: 'Existing Foundry project name'
-    type: string
-    default: ''
-  - name: agentName
-    displayName: 'Agent name used by samples'
-    type: string
-    default: sample-agent
   - name: modelName
     displayName: 'Model deployment name'
     type: string
@@ -110,11 +98,18 @@ extends:
             throw "Unsupported selectionKind: $selectionKind"
           }
 
-          $accountName = '${{ parameters.accountName }}'.Trim()
-          $projectName = '${{ parameters.projectName }}'.Trim()
-          if ([string]::IsNullOrWhiteSpace($accountName) -or [string]::IsNullOrWhiteSpace($projectName)) {
-            throw 'accountName and projectName are required when using the copied sample-resources Bicep provisioning.'
+          $validationEndpoint = $env:LLM_VALIDATION_PROJECT_ENDPOINT
+          if ([string]::IsNullOrWhiteSpace($validationEndpoint)) {
+            throw 'Set LLM_VALIDATION_PROJECT_ENDPOINT in the pipeline variables. accountName/projectName are derived from this endpoint and are no longer queue parameters.'
           }
+
+          $endpointUri = [Uri]$validationEndpoint
+          $accountName = $endpointUri.Host.Split('.')[0]
+          $projectMatch = [System.Text.RegularExpressions.Regex]::Match($endpointUri.AbsolutePath, '/api/projects/(?<project>[^/]+)')
+          if (-not $projectMatch.Success) {
+            throw "Unable to parse project name from endpoint: $validationEndpoint"
+          }
+          $projectName = $projectMatch.Groups['project'].Value
 
           Write-Host "Using AdditionalTestFilters: $additionalTestFilters"
           Write-Host "##vso[task.setvariable variable=AdditionalTestFilters]$additionalTestFilters"
@@ -122,7 +117,7 @@ extends:
           $armParameters = @{
             accountName = $accountName
             projectName = $projectName
-            agentName = '${{ parameters.agentName }}'
+            agentName = 'sample-agent'
             modelName = '${{ parameters.modelName }}'
             modelVersion = '${{ parameters.modelVersion }}'
             modelSku = '${{ parameters.modelSku }}'
