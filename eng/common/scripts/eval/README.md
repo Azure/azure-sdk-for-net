@@ -23,10 +23,9 @@ Repo-local adapters can customize it without copying that infrastructure:
 | Parameter | Contract |
 | --- | --- |
 | `matrixStageName` | Stage containing `generate_eval_matrix`; defaults to `Prepare`. The eval stage must depend on it. |
-| `artifactPrefix` | Optional literal prefix, e.g. `forced-`. Common adds no separator: `eval-result-forced-<shard>-<attempt>` / `eval-debug-forced-<shard>-<attempt>` / `eval-summary-forced-<attempt>`. Empty preserves existing names. Available through the stage and jobs; shard and summary prefixes must match. |
+| `artifactPrefix` | Optional literal prefix, e.g. `forced-`. Common adds no separator: `eval-result-forced-<shard>-<attempt>` / `eval-debug-forced-<shard>-<attempt>` / `eval-summary-forced-<attempt>`. Available only on the shard and summary job templates; their prefixes must match. The stage template uses unprefixed defaults. |
 | `preEvalTemplate` / `postEvalTemplate` | Existing parameter-free setup/teardown step templates. |
 | `evalInvokeTemplate` | Existing invocation template accepting `vallyRoot`, `UseAzSdkAuthentication` and `threshold`. |
-| `azureSubscription` | Caller-owned Azure service connection, forwarded by the stage/job to the common invoke template. Defaults to empty. Required when `UseAzSdkAuthentication: true`; unauthenticated runs need no connection. |
 | `vallyArguments` | Optional array of supplementary Vally option/value pairs. Strings are required except that trial/worker counts also accept numbers. Available through the stage, shard job and common invoke template. Defaults to `[]`. |
 
 Supported supplementary options are `--tag`, `--runs`, `--workers` and `--timeout`.
@@ -66,9 +65,17 @@ Zero-match evals are not treated as successful skips; a zero-trial shard still f
 the verdict/completeness checks even with `failOnFailedTests: false`.
 
 Use the existing pre/post-eval and MCP setup hooks for repository-specific work.
-Authenticated callers must explicitly configure `azureSubscription`; common has
-no deployment-specific connection fallback. An empty or whitespace-only value
-fails with a configuration error without creating an `AzureCLI@2` task.
+Authenticated callers define the pipeline variable `EvalAzureSubscription` in YAML
+or an existing variable template. The common invoke step reads it directly; there
+is no service-connection parameter to forward through stages and jobs, and no
+deployment-specific fallback. An absent, empty or whitespace-only value fails with
+a configuration error without creating an `AzureCLI@2` task. Unauthenticated runs
+do not need the variable.
+The value must be available during template expansion, not set by a task, output
+variable or queue-time/runtime setting. The shared `live-eval.yml` entrypoint imports
+the repo-owned `eng/pipelines/templates/variables/globals.yml`; this repo defines its
+live connection there. Benchmarks define the same variable in their own pipeline
+YAML. Other repos configure their own authorized connection in YAML.
 Do not replace authentication, result collection or retry/completeness checks.
 Supplementary reports must not rewrite JUnit thresholds or raw results.
 

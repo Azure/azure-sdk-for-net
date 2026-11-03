@@ -22,6 +22,8 @@ parameters:
 variables:
   # Managed-pool image selection (LINUXPOOL/LINUXVMIMAGE). Repo-local.
   - template: /eng/pipelines/templates/variables/image.yml
+  # EvalAzureSubscription is configured by the repo, not by synced templates.
+  - template: /eng/pipelines/templates/variables/globals.yml
 
 extends:
   template: /eng/common/pipelines/templates/stages/archetype-eval.yml
@@ -37,7 +39,6 @@ extends:
       - 'workflows/live/*.eval.yaml'
     # Run each shard under AzureCLI@2 so the real MCP's DevOps calls are authenticated.
     UseAzSdkAuthentication: true
-    azureSubscription: opensource-api-connection
     failOnFailedTests: true
     # Live scenarios are end-to-end, so give each shard more headroom than the report-only tiers.
     shardTimeoutInMinutes: 45

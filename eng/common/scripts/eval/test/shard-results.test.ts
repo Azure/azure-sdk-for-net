@@ -220,9 +220,9 @@ test("literal prefixes publish names selected by Summary without adding separato
     }
 });
 
-test("template source defaults to legacy names and forwards a single literal artifact prefix", () => {
+test("job templates retain literal prefixes while the stage template uses unprefixed defaults", () => {
     const load = name => fs.readFileSync(new URL(`../../../pipelines/templates/${name}.yml`, import.meta.url), "utf8");
-    for (const name of ["jobs/eval-shard", "jobs/eval-summarize", "stages/archetype-eval"]) {
+    for (const name of ["jobs/eval-shard", "jobs/eval-summarize"]) {
         const template = load(name);
         assert.match(template, /^  - name: artifactPrefix\r?\n(?:    #[^\r\n]*\r?\n)*    type: string\r?\n    default: ''\r?$/m);
         assert.doesNotMatch(template, /^  - name: artifactNamespace\r?$/m);
@@ -232,12 +232,7 @@ test("template source defaults to legacy names and forwards a single literal art
     assert.ok(render);
     assert.match(render, /^          EVAL_ARTIFACT_PREFIX: \$\{\{ parameters\.artifactPrefix \}\}\r?$/m);
     assert.match(summary, /^      - \$\{\{ if and\(ne\(parameters\.artifactPrefix, ''\), or\(parameters\.createDashboardBundle, parameters\.publishDashboardResults\)\) \}\}:\r?$/m);
-    const stage = load("stages/archetype-eval");
-    for (const name of ["Eval", "Summary"]) {
-        const section = stage.split(/^      - stage: /m).find(value => value.split(/\r?\n/, 1)[0] === name);
-        assert.ok(section);
-        assert.match(section, /^              artifactPrefix: \$\{\{ parameters\.artifactPrefix \}\}\r?$/m);
-    }
+    assert.doesNotMatch(load("stages/archetype-eval"), /\bartifactPrefix\b/);
 });
 
 test("Summary download source applies the literal prefix to all result-file patterns", () => {
