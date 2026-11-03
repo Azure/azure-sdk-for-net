@@ -1,0 +1,4 @@
+steps:
+  - template: /eng/common/pipelines/templates/steps/eval-live-cleanup.yml
+    parameters:
+      typeSpecProject: specification/contosowidgetmanager/Contoso.WidgetManager

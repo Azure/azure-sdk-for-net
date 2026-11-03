@@ -43,8 +43,5 @@ extends:
     # Pass-rate gate for `vally eval`. This tier gates (failOnFailedTests: true), so the threshold
     # is the real bar the nightly run must clear; raise it here as live coverage stabilizes.
     threshold: 0.8
-    # This repo needs no repo-specific setup (the live MCP is built by the common BuildMcp job).
-    # A spec/language repo that must start its own bot / server / MCP copies the example hook and
-    # points these at it — see eng/common/pipelines/templates/steps/eval-hook-example.yml.
-    # preEvalTemplate: /eng/pipelines/eval/start-my-bot.yml
-    # postEvalTemplate: /eng/pipelines/eval/stop-my-bot.yml
+    preEvalTemplate: /eng/common/pipelines/templates/steps/eval-live-prepare.yml
+    postEvalTemplate: /eng/common/pipelines/templates/steps/eval-live-cleanup.yml
