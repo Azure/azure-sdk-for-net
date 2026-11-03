@@ -4,11 +4,13 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 
 namespace Azure.AI.Projects
 {
     /// <summary> A page of items with a URL cursor to the next page. </summary>
+    [Experimental("AAIP001")]
     internal partial class PagedResultWithNextLinkRoutineRun
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

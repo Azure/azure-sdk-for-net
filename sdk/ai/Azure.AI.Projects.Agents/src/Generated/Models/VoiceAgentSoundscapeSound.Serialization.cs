@@ -3,12 +3,14 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects.Agents
 {
     internal static partial class VoiceAgentSoundscapeSoundExtensions
     {
         /// <param name="value"> The value to serialize. </param>
+        [Experimental("AAIP001")]
         public static string ToSerialString(this VoiceAgentSoundscapeSound value) => value switch
         {
             VoiceAgentSoundscapeSound.Office => "office",
@@ -22,6 +24,7 @@ namespace Azure.AI.Projects.Agents
         };
 
         /// <param name="value"> The value to deserialize. </param>
+        [Experimental("AAIP001")]
         public static VoiceAgentSoundscapeSound ToVoiceAgentSoundscapeSound(this string value)
         {
             if (StringComparer.OrdinalIgnoreCase.Equals(value, "office"))

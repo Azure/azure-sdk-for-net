@@ -4,6 +4,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects.Agents
 {
@@ -76,6 +77,7 @@ namespace Azure.AI.Projects.Agents
         public AgentEndpointConfiguration AgentEndpoint { get; }
 
         /// <summary> (Preview) The type of digital worker (previously known as `autopilot`). If omitted, it is not a digital worker. </summary>
+        [Experimental("AAIP001")]
         public DigitalWorkerType? DigitalWorkerType { get; }
 
         /// <summary> The instance identity of the agent. </summary>

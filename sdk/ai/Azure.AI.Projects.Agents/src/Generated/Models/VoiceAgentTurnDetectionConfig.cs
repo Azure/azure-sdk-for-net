@@ -4,6 +4,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects.Agents
 {
@@ -11,6 +12,7 @@ namespace Azure.AI.Projects.Agents
     /// Turn-detection configuration for a voice agent.
     /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="VoiceAgentAzureSemanticVadEnTurnDetection"/>, <see cref="VoiceAgentAzureSemanticVadMultilingualTurnDetection"/>, <see cref="VoiceAgentAzureSemanticVadTurnDetection"/>, <see cref="VoiceAgentSemanticVadTurnDetection"/>, and <see cref="VoiceAgentServerVadTurnDetection"/>.
     /// </summary>
+    [Experimental("AAIP001")]
     public abstract partial class VoiceAgentTurnDetectionConfig
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

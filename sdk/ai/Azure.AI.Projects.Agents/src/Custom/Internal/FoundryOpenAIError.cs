@@ -11,12 +11,10 @@ using System.Text.Json;
 
 namespace Azure.AI.Projects.Agents;
 
-/// <summary> Details of an error returned by the Foundry service. </summary>
+/// <summary> The ApiError. </summary>
 [CodeGenType("Error")]
-public partial class FoundryOpenAIError
+internal partial class FoundryOpenAIError
 {
-    internal MisalignmentErrorDetailsResource Misalignment { get; }
-
     internal static FoundryOpenAIError TryCreateFromResponse(PipelineResponse response)
     {
         try
@@ -44,7 +42,7 @@ public partial class FoundryOpenAIError
         }
     }
 
-    internal string ToExceptionMessage(int httpStatus)
+    public string ToExceptionMessage(int httpStatus)
     {
         StringBuilder messageBuilder = new();
         messageBuilder.Append("HTTP ").Append(httpStatus).Append(" (").Append(Code).AppendLine(")");
@@ -84,7 +82,7 @@ public partial class FoundryOpenAIError
     /// intended.
     /// </summary>
     /// <returns></returns>
-    internal BinaryData ToOpenAIError()
+    public BinaryData ToOpenAIError()
     {
         StringBuilder messageBuilder = new(Message);
         string parameterDetails = null;

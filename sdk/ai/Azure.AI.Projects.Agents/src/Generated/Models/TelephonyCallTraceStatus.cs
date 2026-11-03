@@ -4,10 +4,12 @@
 
 using System;
 using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> The availability status of a customer-facing telephony call trace. </summary>
+    [Experimental("AAIP001")]
     public readonly partial struct TelephonyCallTraceStatus : IEquatable<TelephonyCallTraceStatus>
     {
         private readonly string _value;

@@ -4,6 +4,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects.Agents
 {
@@ -12,6 +13,7 @@ namespace Azure.AI.Projects.Agents
     /// `azure_personal_noise_suppression` are modes for local voice activity detection that
     /// enhance detection audio without changing the audio used for recognition.
     /// </summary>
+    [Experimental("AAIP001")]
     public partial class VoiceAgentNoiseReduction
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

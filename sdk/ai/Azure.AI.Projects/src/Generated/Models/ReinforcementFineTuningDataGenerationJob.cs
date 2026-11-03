@@ -4,10 +4,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects
 {
     /// <summary> Reinforcement fine-tuning data generation job resource. This is a preview feature. </summary>
+    [Experimental("AAIP001")]
     public partial class ReinforcementFineTuningDataGenerationJob : DataGenerationJob
     {
         /// <summary> Initializes a new instance of <see cref="ReinforcementFineTuningDataGenerationJob"/>. </summary>

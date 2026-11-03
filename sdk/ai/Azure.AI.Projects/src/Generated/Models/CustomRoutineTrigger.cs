@@ -4,11 +4,13 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 
 namespace Azure.AI.Projects
 {
     /// <summary> A custom event routine trigger. </summary>
+    [Experimental("AAIP001")]
     public partial class CustomRoutineTrigger : RoutineTrigger
     {
         /// <summary> Initializes a new instance of <see cref="CustomRoutineTrigger"/>. </summary>

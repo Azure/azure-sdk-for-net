@@ -5,12 +5,6 @@ using Microsoft.TypeSpec.Generator.ClientModel;
 using Microsoft.TypeSpec.Generator.ClientModel.Providers;
 using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
-using Microsoft.TypeSpec.Generator.Statements;
-using Microsoft.TypeSpec.Generator.Input;
-using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
-using System.Linq;
-using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
 
 namespace Extensions.Plugin.Visitors
 {
@@ -18,8 +12,6 @@ namespace Extensions.Plugin.Visitors
     /// A visitor that fixes generated serialization methods that are declared as <c>virtual</c>
     /// even though the model's base type already declares the same method. In that case the method
     /// should be declared as <c>override</c> rather than re-declared as <c>virtual</c>.
-    /// Also acknowledges implementation references to preview members and variants inside GA
-    /// serialization and constructor bodies, without suppressing diagnostics on public signatures.
     /// </summary>
     /// <remarks>
     /// This situation occurs when a generated model derives from a base type that lives in another
@@ -47,17 +39,6 @@ namespace Extensions.Plugin.Visitors
     /// </remarks>
     public class SerializationOverrideVisitor : ScmLibraryVisitor
     {
-        private readonly Dictionary<string, ModelProvider> _models = new();
-
-        protected override ModelProvider PreVisitModel(InputModelType input, ModelProvider model)
-        {
-            if (model != null)
-            {
-                _models[model.Type.FullyQualifiedName] = model;
-            }
-            return base.PreVisitModel(input, model);
-        }
-
         /// <inheritdoc />
         protected override TypeProvider VisitType(TypeProvider type)
         {
@@ -71,44 +52,6 @@ namespace Extensions.Plugin.Visitors
 
             return base.VisitType(type);
         }
-
-        protected override MethodProvider VisitMethod(MethodProvider method)
-        {
-            if (method.EnclosingType is MrwSerializationTypeDefinition && method.BodyStatements != null &&
-                _models.TryGetValue(method.EnclosingType.Type.FullyQualifiedName, out ModelProvider model) &&
-                !HasExperimentalAttribute(model.Attributes) &&
-                (HasExperimentalMembers(model) || model.DerivedModels.Any(derived => HasExperimentalAttribute(derived.Attributes))))
-            {
-                // GA models can serialize preview members and variants without making their public API preview.
-                method.Update(bodyStatements: AcknowledgeImplementationReferences(method.BodyStatements));
-            }
-            return base.VisitMethod(method);
-        }
-
-        protected override ConstructorProvider VisitConstructor(ConstructorProvider constructor)
-        {
-            if (constructor.EnclosingType is ModelProvider model && constructor.BodyStatements != null &&
-                !HasExperimentalAttribute(model.Attributes) && !HasExperimentalAttribute(constructor.Signature.Attributes) &&
-                HasExperimentalMembers(model))
-            {
-                // Initializing optional preview-backed collections does not make a parameterless constructor preview.
-                constructor.Update(bodyStatements: AcknowledgeImplementationReferences(constructor.BodyStatements));
-            }
-            return base.VisitConstructor(constructor);
-        }
-
-        private static MethodBodyStatement AcknowledgeImplementationReferences(MethodBodyStatement body)
-            => new SuppressionStatement(
-                new SuppressionStatement(body, Literal("AAIP002"),
-                    "Implementation accesses OpenAI-dependent members."),
-                Literal("AAIP001"), "Implementation preserves preview variants of GA models.");
-
-        private static bool HasExperimentalAttribute(IEnumerable<AttributeStatement> attributes)
-            => attributes.Any(attribute => attribute.Type.Equals(typeof(ExperimentalAttribute)));
-
-        private static bool HasExperimentalMembers(ModelProvider model)
-            => model.Properties.Any(property => HasExperimentalAttribute(property.Attributes)) ||
-                model.Fields.Any(field => HasExperimentalAttribute(field.Attributes));
 
         private static bool HasSerializableBase(MrwSerializationTypeDefinition serialization)
         {

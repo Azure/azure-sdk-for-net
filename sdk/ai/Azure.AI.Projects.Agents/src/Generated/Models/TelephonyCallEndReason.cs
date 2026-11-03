@@ -4,10 +4,12 @@
 
 using System;
 using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> Known service-generated reasons that one telephony call ended, rather than reasons for an overall outbound call job. Additional string codes may be returned. </summary>
+    [Experimental("AAIP001")]
     public readonly partial struct TelephonyCallEndReason : IEquatable<TelephonyCallEndReason>
     {
         private readonly string _value;

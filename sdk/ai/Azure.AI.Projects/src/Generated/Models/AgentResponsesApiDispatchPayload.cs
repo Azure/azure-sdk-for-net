@@ -4,11 +4,13 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 
 namespace Azure.AI.Projects
 {
     /// <summary> A manual payload used to test a responses API routine dispatch. </summary>
+    [Experimental("AAIP001")]
     public partial class AgentResponsesApiDispatchPayload : RoutineDispatchPayload
     {
         /// <summary> Initializes a new instance of <see cref="AgentResponsesApiDispatchPayload"/>. </summary>

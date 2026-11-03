@@ -4,6 +4,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects.Agents
 {
@@ -11,6 +12,7 @@ namespace Azure.AI.Projects.Agents
     /// An engine that owns conversation handling for a voice agent.
     /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="VoiceHostedAgentConversationEngine"/>.
     /// </summary>
+    [Experimental("AAIP001")]
     public abstract partial class VoiceConversationEngine
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

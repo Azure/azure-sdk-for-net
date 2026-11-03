@@ -8,8 +8,7 @@ using System.Text.Json;
 
 namespace Azure.AI.Projects.Agents
 {
-    /// <summary> The FoundryOpenAIError. </summary>
-    public partial class FoundryOpenAIError
+    internal partial class FoundryOpenAIError
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
@@ -68,6 +67,9 @@ namespace Azure.AI.Projects.Agents
 
         /// <summary> Gets the Type. </summary>
         public string Type { get; }
+
+        /// <summary> Gets the Misalignment. </summary>
+        public MisalignmentErrorDetailsResource Misalignment { get; }
 
         /// <summary> Additional errors that contributed to this failure. </summary>
         public IList<FoundryOpenAIError> Details { get; }

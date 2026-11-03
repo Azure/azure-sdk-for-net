@@ -4,10 +4,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> A service-managed control that ends the active conversation. </summary>
+    [Experimental("AAIP001")]
     public partial class VoiceAgentEndConversationSystemTool : VoiceAgentSystemTool
     {
         /// <summary> Initializes a new instance of <see cref="VoiceAgentEndConversationSystemTool"/>. </summary>
@@ -20,8 +22,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="name"> The service-managed control action. Known values are stable; additional values may be added over time. </param>
         /// <param name="description"> An optional description of the system tool. </param>
-        /// <param name="timeoutSeconds"> Execution timeout, from 1 to 300 seconds. If omitted, the service defaults to 60 seconds. </param>
-        internal VoiceAgentEndConversationSystemTool(string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, VoiceAgentSystemToolName name, string description, TimeSpan? timeoutSeconds) : base(@type, additionalBinaryDataProperties, name, description, timeoutSeconds)
+        internal VoiceAgentEndConversationSystemTool(string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, VoiceAgentSystemToolName name, string description) : base(@type, additionalBinaryDataProperties, name, description)
         {
         }
     }

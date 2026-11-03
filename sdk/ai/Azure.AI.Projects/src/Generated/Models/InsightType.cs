@@ -4,11 +4,13 @@
 
 using System;
 using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 using Azure.AI.Projects;
 
 namespace Azure.AI.Projects.Evaluation
 {
     /// <summary> The request of the insights. </summary>
+    [Experimental("AAIP001")]
     public readonly partial struct InsightType : IEquatable<InsightType>
     {
         private readonly string _value;

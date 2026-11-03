@@ -53,7 +53,7 @@ namespace Azure.AI.Projects.Agents
             return message;
         }
 
-        internal PipelineMessage CreateGetTelephonyBindingsRequest(string agentName, string foundryFeatures, string provider, int? limit, string order, string after, string before, RequestOptions options)
+        internal PipelineMessage CreateGetTelephonyBindingsRequest(string agentName, string foundryFeatures, string provider, string status, int? limit, string order, string after, string before, RequestOptions options)
         {
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
@@ -63,6 +63,10 @@ namespace Azure.AI.Projects.Agents
             if (provider != null)
             {
                 uri.AppendQuery("provider", provider, true);
+            }
+            if (status != null)
+            {
+                uri.AppendQuery("status", status, true);
             }
             if (limit != null)
             {
@@ -362,70 +366,6 @@ namespace Azure.AI.Projects.Agents
             request.Headers.Set("Content-Type", "application/json");
             request.Headers.Set("Accept", "application/json");
             request.Content = content;
-            message.Apply(options);
-            return message;
-        }
-
-        internal PipelineMessage CreateGetTelephonyCallJobsRequest(string agentName, int? limit, string order, string after, string before, string status, string campaignName, RequestOptions options)
-        {
-            ClientUriBuilder uri = new ClientUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/agents/", false);
-            uri.AppendPath(agentName, true);
-            uri.AppendPath("/telephony/call_jobs", false);
-            if (limit != null)
-            {
-                uri.AppendQuery("limit", TypeFormatters.ConvertToString(limit), true);
-            }
-            if (order != null)
-            {
-                uri.AppendQuery("order", order, true);
-            }
-            if (after != null)
-            {
-                uri.AppendQuery("after", after, true);
-            }
-            if (before != null)
-            {
-                uri.AppendQuery("before", before, true);
-            }
-            if (status != null)
-            {
-                uri.AppendQuery("status", status, true);
-            }
-            if (campaignName != null)
-            {
-                uri.AppendQuery("campaign_name", campaignName, true);
-            }
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
-            PipelineMessage message = Pipeline.CreateMessage(uri.ToUri(), "GET", PipelineMessageClassifier200);
-            PipelineRequest request = message.Request;
-            request.Headers.Set("Accept", "application/json");
-            message.Apply(options);
-            return message;
-        }
-
-        internal PipelineMessage CreateDeleteTelephonyCallJobRequest(string agentName, string callJobId, string foundryFeatures, RequestOptions options)
-        {
-            ClientUriBuilder uri = new ClientUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/agents/", false);
-            uri.AppendPath(agentName, true);
-            uri.AppendPath("/telephony/call_jobs/", false);
-            uri.AppendPath(callJobId, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
-            PipelineMessage message = Pipeline.CreateMessage(uri.ToUri(), "DELETE", PipelineMessageClassifier204);
-            PipelineRequest request = message.Request;
-            if (foundryFeatures != null)
-            {
-                request.Headers.Set("Foundry-Features", foundryFeatures);
-            }
             message.Apply(options);
             return message;
         }

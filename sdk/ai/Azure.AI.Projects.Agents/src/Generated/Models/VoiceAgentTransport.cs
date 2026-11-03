@@ -4,10 +4,12 @@
 
 using System;
 using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> The transport used for a voice-agent connection. </summary>
+    [Experimental("AAIP001")]
     public readonly partial struct VoiceAgentTransport : IEquatable<VoiceAgentTransport>
     {
         private readonly string _value;

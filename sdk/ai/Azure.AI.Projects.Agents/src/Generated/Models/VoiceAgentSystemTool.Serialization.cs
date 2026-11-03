@@ -82,11 +82,6 @@ namespace Azure.AI.Projects.Agents
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(TimeoutSeconds))
-            {
-                writer.WritePropertyName("timeout_seconds"u8);
-                writer.WriteNumberValue(Convert.ToInt32(Math.Round(TimeoutSeconds.Value.TotalSeconds)));
-            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -118,22 +113,8 @@ namespace Azure.AI.Projects.Agents
             {
                 switch (discriminator.GetString())
                 {
-                    case "collect_dtmf":
-                        return VoiceAgentCollectDtmfSystemTool.DeserializeVoiceAgentCollectDtmfSystemTool(element, options);
-                    case "collect_sms":
-                        return VoiceAgentCollectSmsSystemTool.DeserializeVoiceAgentCollectSmsSystemTool(element, options);
-                    case "digit_recognition":
-                        return VoiceAgentDigitRecognitionSystemTool.DeserializeVoiceAgentDigitRecognitionSystemTool(element, options);
                     case "end_conversation":
                         return VoiceAgentEndConversationSystemTool.DeserializeVoiceAgentEndConversationSystemTool(element, options);
-                    case "language_detection":
-                        return VoiceAgentLanguageDetectionSystemTool.DeserializeVoiceAgentLanguageDetectionSystemTool(element, options);
-                    case "send_dtmf":
-                        return VoiceAgentSendDtmfSystemTool.DeserializeVoiceAgentSendDtmfSystemTool(element, options);
-                    case "send_sms":
-                        return VoiceAgentSendSmsSystemTool.DeserializeVoiceAgentSendSmsSystemTool(element, options);
-                    case "transfer":
-                        return VoiceAgentTransferSystemTool.DeserializeVoiceAgentTransferSystemTool(element, options);
                 }
             }
             return UnknownVoiceAgentSystemTool.DeserializeUnknownVoiceAgentSystemTool(element, options);

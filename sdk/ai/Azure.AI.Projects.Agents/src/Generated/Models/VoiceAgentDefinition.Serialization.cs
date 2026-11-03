@@ -182,19 +182,7 @@ namespace Azure.AI.Projects.Agents
             if (Optional.IsDefined(SubagentConfig))
             {
                 writer.WritePropertyName("subagent_config"u8);
-#if NET6_0_OR_GREATER
-                writer.WriteRawValue(SubagentConfig);
-#else
-                using (JsonDocument document = JsonDocument.Parse(SubagentConfig))
-                {
-                    JsonSerializer.Serialize(writer, document.RootElement);
-                }
-#endif
-            }
-            if (Optional.IsDefined(PostCall))
-            {
-                writer.WritePropertyName("post_call"u8);
-                writer.WriteObjectValue(PostCall, options);
+                writer.WriteObjectValue(SubagentConfig, options);
             }
         }
 
@@ -244,8 +232,7 @@ namespace Azure.AI.Projects.Agents
             IList<VoiceAgentTool> tools = default;
             BinaryData internalToolChoice = default;
             bool? parallelToolCalls = default;
-            BinaryData subagentConfig = default;
-            VoiceAgentPostCallConfig postCall = default;
+            VoiceAgentSubagentConfig subagentConfig = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("kind"u8))
@@ -442,16 +429,7 @@ namespace Azure.AI.Projects.Agents
                     {
                         continue;
                     }
-                    subagentConfig = prop.Value.GetUtf8Bytes();
-                    continue;
-                }
-                if (prop.NameEquals("post_call"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    postCall = VoiceAgentPostCallConfig.DeserializeVoiceAgentPostCallConfig(prop.Value, options);
+                    subagentConfig = VoiceAgentSubagentConfig.DeserializeVoiceAgentSubagentConfig(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -481,8 +459,7 @@ namespace Azure.AI.Projects.Agents
                 tools ?? new ChangeTrackingList<VoiceAgentTool>(),
                 internalToolChoice,
                 parallelToolCalls,
-                subagentConfig,
-                postCall);
+                subagentConfig);
         }
     }
 }

@@ -22,15 +22,11 @@ namespace Azure.AI.Projects.Agents
         /// <exception cref="ArgumentNullException"> <paramref name="serverLabel"/> is null. </exception>
         public MCPToolboxTool(string serverLabel) : base(ToolboxToolType.Mcp)
         {
-#pragma warning disable AAIP001 // Implementation preserves preview variants of GA models.
-#pragma warning disable AAIP002 // Implementation accesses OpenAI-dependent members.
             Argument.AssertNotNull(serverLabel, nameof(serverLabel));
 
             ServerLabel = serverLabel;
             Headers = new ChangeTrackingDictionary<string, string>();
             AllowedCallers = new ChangeTrackingList<CallableToolAllowedCaller>();
-#pragma warning restore AAIP002 // Implementation accesses OpenAI-dependent members.
-#pragma warning restore AAIP001 // Implementation preserves preview variants of GA models.
         }
 
         /// <summary> Initializes a new instance of <see cref="MCPToolboxTool"/>. </summary>

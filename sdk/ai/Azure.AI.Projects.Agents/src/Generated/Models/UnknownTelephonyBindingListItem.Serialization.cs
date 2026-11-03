@@ -106,6 +106,7 @@ namespace Azure.AI.Projects.Agents
             TelephonyProvider provider = default;
             string connectionName = default;
             string label = default;
+            TelephonyBindingStatus status = default;
             Uri incomingCallUrl = default;
             string etag = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -131,6 +132,11 @@ namespace Azure.AI.Projects.Agents
                     label = prop.Value.GetString();
                     continue;
                 }
+                if (prop.NameEquals("status"u8))
+                {
+                    status = new TelephonyBindingStatus(prop.Value.GetString());
+                    continue;
+                }
                 if (prop.NameEquals("incoming_call_url"u8))
                 {
                     incomingCallUrl = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
@@ -151,6 +157,7 @@ namespace Azure.AI.Projects.Agents
                 provider,
                 connectionName,
                 label,
+                status,
                 incomingCallUrl,
                 etag,
                 additionalBinaryDataProperties);

@@ -4,10 +4,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> A sibling Foundry text agent that a voice agent may consult as a background specialist. </summary>
+    [Experimental("AAIP001")]
     public partial class VoiceAgentSubagent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
