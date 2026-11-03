@@ -104,9 +104,14 @@ extends:
         variables:
           emitterNpmrcPath: $(Agent.TempDirectory)/${{ parameters.EmitterPackagePath }}/.npmrc
         steps:
-        - template: /eng/common/pipelines/templates/steps/sparse-checkout.yml
-          parameters:
-            Paths: ${{ parameters.SparseCheckoutPaths }}
+        - checkout: self
+          fetchFilter: tree:0
+          fetchTags: false
+          fetchDepth: 0
+          ${{ if ne(length(parameters.SparseCheckoutPaths), 0) }}:
+            sparseCheckoutPatterns: "/* !/*/ /eng /.config ${{ join(' ', parameters.SparseCheckoutPaths) }}"
+          ${{ else }}:
+            sparseCheckoutPatterns: '/* !/*/ /eng /.config'
 
         - ${{ parameters.InitializationSteps }}
 
@@ -309,6 +314,9 @@ extends:
           - checkout: self
             fetchDepth: 1
             fetchTags: false
+            ${{ if eq(parameters.OnlyGenerateTypespec, true) }}:
+              fetchFilter: tree:0
+              sparseCheckoutPatterns: "/* !/*/ /eng /.config /sdk/**/tsp-location.yaml ${{ join(' ', parameters.SparseCheckoutPaths) }}"
 
           - template: /eng/common/pipelines/templates/steps/login-to-github.yml
             parameters:
@@ -464,7 +472,11 @@ extends:
             emitterVersion: $[stageDependencies.Build.Build.outputs['initialize.emitterVersion']]
             emitterIdentifier: $[stageDependencies.Build.Build.outputs['set_branch_name.emitterIdentifier']]
           steps:
-          - template: /eng/common/pipelines/templates/steps/sparse-checkout.yml
+          - checkout: self
+            fetchFilter: tree:0
+            fetchTags: false
+            fetchDepth: 0
+            sparseCheckoutPatterns: '/* !/*/ /eng /.config'
 
           - template: /eng/common/pipelines/templates/steps/login-to-github.yml
             parameters:
@@ -586,9 +598,14 @@ extends:
             buildArtifactsPath: $(Pipeline.Workspace)/build_artifacts
             emitterNpmrcPath: $(Agent.TempDirectory)/${{ parameters.EmitterPackagePath }}/.npmrc
           steps:
-          - template: /eng/common/pipelines/templates/steps/sparse-checkout.yml
-            parameters:
-              Paths: ${{ parameters.SparseCheckoutPaths }}
+          - checkout: self
+            fetchFilter: tree:0
+            fetchTags: false
+            fetchDepth: 0
+            ${{ if ne(length(parameters.SparseCheckoutPaths), 0) }}:
+              sparseCheckoutPatterns: "/* !/*/ /eng /.config ${{ join(' ', parameters.SparseCheckoutPaths) }}"
+            ${{ else }}:
+              sparseCheckoutPatterns: '/* !/*/ /eng /.config'
 
           - download: current
             artifact: build_artifacts
