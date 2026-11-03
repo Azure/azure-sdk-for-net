@@ -34,12 +34,12 @@ namespace Azure.Generator.Provisioning.Tests
         }
 
         [Test]
-        public void LibraryWithoutResourceReferencesDoesNotEmitHelper()
+        public void LibraryWithoutResourceReferencesEmitsHelper()
         {
             ProvisioningMockHelpers.LoadMockPlugin(armProviderSchema: () => new ArmProviderSchema([], []));
 
             Assert.That(ProvisioningGenerator.Instance.OutputLibrary.TypeProviders
-                .OfType<ProvisioningResourceReferenceProvider>(), Is.Empty);
+                .OfType<ProvisioningResourceReferenceProvider>().Count(), Is.EqualTo(1));
         }
     }
 }

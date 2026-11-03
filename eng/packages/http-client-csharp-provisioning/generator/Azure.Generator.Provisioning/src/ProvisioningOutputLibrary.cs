@@ -145,10 +145,7 @@ namespace Azure.Generator.Provisioning
             var providers = new List<TypeProvider>();
 
             providers.AddRange(Resources);
-            if (Resources.Any(resource => resource.HasResourceReference))
-            {
-                providers.Add(ResourceReference);
-            }
+            providers.Add(ResourceReference);
 
             // Add BuiltInRole struct if any resources have RBAC roles defined.
             if (BuiltInRole != null)

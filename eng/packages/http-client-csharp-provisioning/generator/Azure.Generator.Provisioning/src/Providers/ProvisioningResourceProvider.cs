@@ -78,8 +78,6 @@ namespace Azure.Generator.Provisioning.Providers
         /// </summary>
         internal ProvisioningResourceProjection? ResourceProjection => _resourceProjection;
 
-        internal bool HasResourceReference => ImmediateParentResource is not null || _resourceProjection?.IsExtensionResource == true;
-
         /// <summary>
         /// Gets the resolved parent only when its resource type is the immediate structural parent type.
         /// </summary>

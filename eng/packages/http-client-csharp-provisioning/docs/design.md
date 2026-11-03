@@ -256,7 +256,7 @@ _scope = new ProvisioningResourceReference<ProvisionableResource>(DefineProperty
     new[] { "scope" }));
 ```
 
-Libraries with generated `Parent` or `Scope` properties emit one internal sealed
+All generated libraries emit one internal sealed
 `ProvisioningResourceReference<T>` helper in `Generated/Internal`, using the library's
 namespace. Each accessor calls `Initialize()` before reading or writing its private
 helper's `Value`. Assigning a resource caches it and sets the underlying Bicep value to
