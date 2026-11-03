@@ -52,6 +52,8 @@ You can also run tests via the command line using `dotnet test`, but that will r
 
 The recorded tests are run automatically on every pull request. Live tests are run nightly. Contributors with write access can ask Azure DevOps to run the live tests against a pull request by commenting `/azp run net - appconfiguration - tests` in the PR.
 
+`ConfigurationLiveTests` uses a 30-second timeout for each App Configuration network attempt, while retaining SDK retries. This is not a timeout for an entire test or snapshot operation, and does not change the separate authentication client's timeout. Use `SetConfigurationSettingAsync` for test data setup unless the test specifically validates Add semantics: retrying an Add after a successful write whose response was lost can return HTTP 412. Changes to setup requests or their order may require re-recording; see the test framework's [recording instructions](../core/Azure.Core.TestFramework/README.md#recording) and [CI recording instructions](../core/Azure.Core.TestFramework/README.md#recording-data-plane-tests-on-ci).
+
 ### Samples
 
 Our samples are structured as unit tests so we can easily verify they're up to date and working correctly. These tests aren't recorded and make minimal use of test infrastructure to keep them easy to read.
