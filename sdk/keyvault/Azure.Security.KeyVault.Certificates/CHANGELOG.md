@@ -6,6 +6,8 @@
 
 ### Breaking Changes
 
+- Removed `CertificateClientOptions.ServiceVersion.V2026_03_01_Preview`. Use `V2026_04_01` instead.
+
 ### Bugs Fixed
 
 - Preserved the service version value shipped for `2026-04-01` in version `4.10.0`.
