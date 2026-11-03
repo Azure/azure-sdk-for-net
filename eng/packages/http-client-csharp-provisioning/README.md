@@ -39,6 +39,16 @@ emit:
   - '@azure-typespec/http-client-csharp-provisioning'
 ```
 
+## New library scaffolding
+
+When the source project does not exist (or `new-project` is enabled), the
+generator uses `NewProvisioningProjectScaffolding` to create a source project
+referencing `Azure.Provisioning` and a solution. For packages under `sdk/`, it
+also creates a provisioning README, changelog, package build properties, and a
+test project wired to `ProvisioningTestShared` and the provisioning deployment
+libraries. Existing documentation, build properties, and test projects are
+preserved. Service CI registration is not part of generator scaffolding.
+
 ## Development
 
 Keep all three generator dependencies in `package.json` aligned with
