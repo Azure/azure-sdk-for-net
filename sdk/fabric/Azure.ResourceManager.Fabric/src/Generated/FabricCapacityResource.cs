@@ -16,6 +16,7 @@ using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Fabric.Models;
 using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Fabric
 {
@@ -53,7 +54,13 @@ namespace Azure.ResourceManager.Fabric
         {
             TryGetApiVersion(ResourceType, out string fabricCapacityApiVersion);
             _fabricCapacitiesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Fabric", ResourceType.Namespace, Diagnostics);
-            _fabricCapacitiesRestClient = new FabricCapacities(_fabricCapacitiesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, fabricCapacityApiVersion ?? "2026-09-01-preview");
+            _fabricCapacitiesRestClient = new FabricCapacities(
+                _fabricCapacitiesClientDiagnostics,
+                Pipeline,
+                Diagnostics.ApplicationId,
+                Endpoint,
+                fabricCapacityApiVersion ?? "2026-09-01-preview",
+                resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 
@@ -434,7 +441,7 @@ namespace Azure.ResourceManager.Fabric
             {
                 CancellationToken = cancellationToken
             };
-            return new FabricCapacitiesGetSkusForCapacityAsyncCollectionResultOfT(
+            return new FabricSkuDetailsForExistingCapacityAsyncCollectionResultOfT(
                 _fabricCapacitiesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -472,7 +479,7 @@ namespace Azure.ResourceManager.Fabric
             {
                 CancellationToken = cancellationToken
             };
-            return new FabricCapacitiesGetSkusForCapacityCollectionResultOfT(
+            return new FabricSkuDetailsForExistingCapacityCollectionResultOfT(
                 _fabricCapacitiesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -787,10 +794,9 @@ namespace Azure.ResourceManager.Fabric
             {
                 if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
                 {
-                    await GetTagResource().DeleteAsync(WaitUntil.Completed, cancellationToken).ConfigureAwait(false);
-                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
-                    originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
+                    TagResourceData tagData = new TagResourceData(new Tag());
+                    tagData.TagValues.ReplaceWith(tags);
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, tagData, cancellationToken).ConfigureAwait(false);
                     RequestContext context = new RequestContext
                     {
                         CancellationToken = cancellationToken
@@ -830,10 +836,9 @@ namespace Azure.ResourceManager.Fabric
             {
                 if (CanUseTagResource(cancellationToken))
                 {
-                    GetTagResource().Delete(WaitUntil.Completed, cancellationToken);
-                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
-                    originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
+                    TagResourceData tagData = new TagResourceData(new Tag());
+                    tagData.TagValues.ReplaceWith(tags);
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, tagData, cancellationToken);
                     RequestContext context = new RequestContext
                     {
                         CancellationToken = cancellationToken

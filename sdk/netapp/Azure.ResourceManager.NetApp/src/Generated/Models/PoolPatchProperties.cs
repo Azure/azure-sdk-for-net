@@ -15,6 +15,8 @@ namespace Azure.ResourceManager.NetApp.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private int? _customThroughputMibpsInt;
+        private bool _customThroughputMibpsIntIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="PoolPatchProperties"/>. </summary>
         public PoolPatchProperties()
@@ -22,7 +24,7 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="PoolPatchProperties"/>. </summary>
-        /// <param name="size"> Provisioned size of the pool (in bytes). Allowed values are 512GiB (549755813888 bytes) or in 1TiB chunks (value must be multiple of 1099511627776). </param>
+        /// <param name="size"> Provisioned size of the pool (in bytes). Allowed values are in 1TiB chunks (value must be multiple of 1099511627776). </param>
         /// <param name="qosType"> The qos type of the pool. </param>
         /// <param name="isCoolAccessEnabled"> If enabled (true) the pool can contain cool Access enabled volumes. </param>
         /// <param name="customThroughputMibpsInt"> Maximum throughput in MiB/s that can be achieved by this pool and this will be accepted as input only for manual qosType pool with Flexible service level. </param>
@@ -32,11 +34,11 @@ namespace Azure.ResourceManager.NetApp.Models
             Size = size;
             QosType = qosType;
             IsCoolAccessEnabled = isCoolAccessEnabled;
-            CustomThroughputMibpsInt = customThroughputMibpsInt;
+            _customThroughputMibpsInt = customThroughputMibpsInt;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Provisioned size of the pool (in bytes). Allowed values are 512GiB (549755813888 bytes) or in 1TiB chunks (value must be multiple of 1099511627776). </summary>
+        /// <summary> Provisioned size of the pool (in bytes). Allowed values are in 1TiB chunks (value must be multiple of 1099511627776). </summary>
         public long? Size { get; set; }
 
         /// <summary> The qos type of the pool. </summary>
@@ -46,6 +48,17 @@ namespace Azure.ResourceManager.NetApp.Models
         public bool? IsCoolAccessEnabled { get; set; }
 
         /// <summary> Maximum throughput in MiB/s that can be achieved by this pool and this will be accepted as input only for manual qosType pool with Flexible service level. </summary>
-        public int? CustomThroughputMibpsInt { get; set; }
+        public int? CustomThroughputMibpsInt
+        {
+            get
+            {
+                return _customThroughputMibpsInt;
+            }
+            set
+            {
+                _customThroughputMibpsInt = value;
+                _customThroughputMibpsIntIsDefined = true;
+            }
+        }
     }
 }

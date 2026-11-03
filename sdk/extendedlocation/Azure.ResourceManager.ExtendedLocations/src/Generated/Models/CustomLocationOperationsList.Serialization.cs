@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.ExtendedLocations.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new CustomLocationOperationsList(nextLink, value, additionalBinaryDataProperties);
+            return new CustomLocationOperationsList(nextLink, value ?? new ChangeTrackingList<CustomLocationOperationInfo>(), additionalBinaryDataProperties);
         }
     }
 }

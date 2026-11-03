@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> Resource Id. </summary>
-        public ResourceIdentifier PublicIPPrefixId
+        public virtual ResourceIdentifier PublicIPPrefixId
         {
             get
             {

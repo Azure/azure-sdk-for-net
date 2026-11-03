@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.Sql
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<LogicalDatabaseTransparentDataEncryptionData, LogicalDatabaseTransparentDataEncryptionResource>(new TransparentDataEncryptionsGetByDatabaseAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<LogicalDatabaseTransparentDataEncryptionData, LogicalDatabaseTransparentDataEncryptionResource>(new LogicalDatabaseTransparentDataEncryptionDataAsyncCollectionResultOfT(
                 _transparentDataEncryptionsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -317,7 +317,7 @@ namespace Azure.ResourceManager.Sql
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<LogicalDatabaseTransparentDataEncryptionData, LogicalDatabaseTransparentDataEncryptionResource>(new TransparentDataEncryptionsGetByDatabaseCollectionResultOfT(
+            return new PageableWrapper<LogicalDatabaseTransparentDataEncryptionData, LogicalDatabaseTransparentDataEncryptionResource>(new LogicalDatabaseTransparentDataEncryptionDataCollectionResultOfT(
                 _transparentDataEncryptionsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

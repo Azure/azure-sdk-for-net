@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new SecurityOperatorList(value, additionalBinaryDataProperties);
+            return new SecurityOperatorList(value ?? new ChangeTrackingList<SecurityOperatorData>(), additionalBinaryDataProperties);
         }
     }
 }

@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Network.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new AzureFirewallFqdnTagListResult(value, nextLink, additionalBinaryDataProperties);
+            return new AzureFirewallFqdnTagListResult(value ?? new ChangeTrackingList<AzureFirewallFqdnTag>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

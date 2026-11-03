@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.Network.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new RouteFilterRulePropertiesFormat(access, routeFilterRuleType, communities, provisioningState, additionalBinaryDataProperties);
+            return new RouteFilterRulePropertiesFormat(access, routeFilterRuleType, communities ?? new ChangeTrackingList<string>(), provisioningState, additionalBinaryDataProperties);
         }
     }
 }

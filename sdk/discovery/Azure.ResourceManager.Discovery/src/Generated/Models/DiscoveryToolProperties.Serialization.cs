@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.Discovery.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new DiscoveryToolProperties(provisioningState, version, environmentVariables ?? new ChangeTrackingDictionary<string, string>(), definitionContent, additionalBinaryDataProperties);
+            return new DiscoveryToolProperties(provisioningState, version, environmentVariables ?? new ChangeTrackingDictionary<string, string>(), definitionContent ?? new ChangeTrackingDictionary<string, BinaryData>(), additionalBinaryDataProperties);
         }
     }
 }

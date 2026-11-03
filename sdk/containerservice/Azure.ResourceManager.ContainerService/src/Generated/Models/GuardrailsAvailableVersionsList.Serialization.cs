@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new GuardrailsAvailableVersionsList(value, nextLink, additionalBinaryDataProperties);
+            return new GuardrailsAvailableVersionsList(value ?? new ChangeTrackingList<ContainerServiceGuardrailsAvailableVersionData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

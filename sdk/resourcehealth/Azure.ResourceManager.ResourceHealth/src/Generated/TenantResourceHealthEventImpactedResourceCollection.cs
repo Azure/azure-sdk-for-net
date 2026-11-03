@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.ResourceHealth
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ResourceHealthEventImpactedResourceData, TenantResourceHealthEventImpactedResource>(new ImpactedResourcesGetByTenantIdAndEventIdAsyncCollectionResultOfT(_impactedResourcesRestClient, Id.Name, filter, context, "TenantResourceHealthEventImpactedResourceCollection.GetAll"), data => new TenantResourceHealthEventImpactedResource(Client, data));
+            return new AsyncPageableWrapper<ResourceHealthEventImpactedResourceData, TenantResourceHealthEventImpactedResource>(new ResourceHealthEventImpactedResourceDataAsyncCollectionResultOfT(_impactedResourcesRestClient, Id.Name, filter, context, "TenantResourceHealthEventImpactedResourceCollection.GetAll"), data => new TenantResourceHealthEventImpactedResource(Client, data));
         }
 
         /// <summary>
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.ResourceHealth
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ResourceHealthEventImpactedResourceData, TenantResourceHealthEventImpactedResource>(new ImpactedResourcesGetByTenantIdAndEventIdCollectionResultOfT(_impactedResourcesRestClient, Id.Name, filter, context, "TenantResourceHealthEventImpactedResourceCollection.GetAll"), data => new TenantResourceHealthEventImpactedResource(Client, data));
+            return new PageableWrapper<ResourceHealthEventImpactedResourceData, TenantResourceHealthEventImpactedResource>(new ResourceHealthEventImpactedResourceDataCollectionResultOfT(_impactedResourcesRestClient, Id.Name, filter, context, "TenantResourceHealthEventImpactedResourceCollection.GetAll"), data => new TenantResourceHealthEventImpactedResource(Client, data));
         }
 
         /// <summary>

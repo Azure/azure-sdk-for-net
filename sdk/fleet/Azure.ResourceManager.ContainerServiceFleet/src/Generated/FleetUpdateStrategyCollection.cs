@@ -299,7 +299,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<FleetUpdateStrategyData, FleetUpdateStrategyResource>(new FleetUpdateStrategiesGetByFleetAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<FleetUpdateStrategyData, FleetUpdateStrategyResource>(new FleetUpdateStrategyDataAsyncCollectionResultOfT(
                 _fleetUpdateStrategiesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -337,7 +337,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<FleetUpdateStrategyData, FleetUpdateStrategyResource>(new FleetUpdateStrategiesGetByFleetCollectionResultOfT(
+            return new PageableWrapper<FleetUpdateStrategyData, FleetUpdateStrategyResource>(new FleetUpdateStrategyDataCollectionResultOfT(
                 _fleetUpdateStrategiesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

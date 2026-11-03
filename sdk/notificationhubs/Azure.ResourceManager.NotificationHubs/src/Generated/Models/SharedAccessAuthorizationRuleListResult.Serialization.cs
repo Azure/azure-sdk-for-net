@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new SharedAccessAuthorizationRuleListResult(value, nextLink, additionalBinaryDataProperties);
+            return new SharedAccessAuthorizationRuleListResult(value ?? new ChangeTrackingList<NotificationHubAuthorizationRuleData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

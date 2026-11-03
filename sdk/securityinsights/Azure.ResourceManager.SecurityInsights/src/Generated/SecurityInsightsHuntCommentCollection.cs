@@ -291,7 +291,7 @@ namespace Azure.ResourceManager.SecurityInsights
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<SecurityInsightsHuntCommentData, SecurityInsightsHuntCommentResource>(new HuntCommentsGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<SecurityInsightsHuntCommentData, SecurityInsightsHuntCommentResource>(new SecurityInsightsHuntCommentDataAsyncCollectionResultOfT(
                 _huntCommentsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -334,7 +334,7 @@ namespace Azure.ResourceManager.SecurityInsights
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<SecurityInsightsHuntCommentData, SecurityInsightsHuntCommentResource>(new HuntCommentsGetAllCollectionResultOfT(
+            return new PageableWrapper<SecurityInsightsHuntCommentData, SecurityInsightsHuntCommentResource>(new SecurityInsightsHuntCommentDataCollectionResultOfT(
                 _huntCommentsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

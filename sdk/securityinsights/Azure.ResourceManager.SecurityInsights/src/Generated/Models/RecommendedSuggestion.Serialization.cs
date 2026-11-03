@@ -89,19 +89,26 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             writer.WriteStringValue(Action);
             if (Optional.IsCollectionDefined(AdditionalProperties))
             {
-                writer.WritePropertyName("additionalProperties"u8);
-                writer.WriteStartObject();
-                foreach (var item in AdditionalProperties)
+                if (AdditionalProperties != null)
                 {
-                    writer.WritePropertyName(item.Key);
-                    if (item.Value == null)
+                    writer.WritePropertyName("additionalProperties"u8);
+                    writer.WriteStartObject();
+                    foreach (var item in AdditionalProperties)
                     {
-                        writer.WriteNullValue();
-                        continue;
+                        writer.WritePropertyName(item.Key);
+                        if (item.Value == null)
+                        {
+                            writer.WriteNullValue();
+                            continue;
+                        }
+                        writer.WriteStringValue(item.Value);
                     }
-                    writer.WriteStringValue(item.Value);
+                    writer.WriteEndObject();
                 }
-                writer.WriteEndObject();
+                else
+                {
+                    writer.WriteNull("additionalProperties"u8);
+                }
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -149,7 +156,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             string title = default;
             string description = default;
             string action = default;
-            IDictionary<string, string> additionalProperties = default;
+            IDictionary<string, string> additionalProperties = new ChangeTrackingDictionary<string, string>();
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -177,6 +184,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
+                        additionalProperties = null;
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -204,7 +212,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 title,
                 description,
                 action,
-                additionalProperties ?? new ChangeTrackingDictionary<string, string>(),
+                additionalProperties,
                 additionalBinaryDataProperties);
         }
     }

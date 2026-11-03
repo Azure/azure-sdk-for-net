@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
@@ -125,10 +124,10 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("loadDistributionPolicy"u8);
                 writer.WriteObjectValue(LoadDistributionPolicy, options);
             }
-            if (Optional.IsDefined(EntraJWTValidationConfig))
+            if (Optional.IsDefined(EntraJwtValidationConfig))
             {
                 writer.WritePropertyName("entraJWTValidationConfig"u8);
-                writer.WriteStringValue(EntraJWTValidationConfig);
+                writer.WriteObjectValue(EntraJwtValidationConfig, options);
             }
             if (Optional.IsCollectionDefined(AuthConfigs))
             {
@@ -197,7 +196,7 @@ namespace Azure.ResourceManager.Network.Models
             NetworkSubResource rewriteRuleSet = default;
             NetworkSubResource redirectConfiguration = default;
             NetworkSubResource loadDistributionPolicy = default;
-            ResourceIdentifier entraJWTValidationConfig = default;
+            NetworkSubResource entraJwtValidationConfig = default;
             IList<ApplicationGatewayAuthConfig> authConfigs = default;
             NetworkProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -299,7 +298,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    entraJWTValidationConfig = new ResourceIdentifier(prop.Value.GetString());
+                    entraJwtValidationConfig = NetworkSubResource.DeserializeNetworkSubResource(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("authConfigs"u8))
@@ -341,7 +340,7 @@ namespace Azure.ResourceManager.Network.Models
                 rewriteRuleSet,
                 redirectConfiguration,
                 loadDistributionPolicy,
-                entraJWTValidationConfig,
+                entraJwtValidationConfig,
                 authConfigs ?? new ChangeTrackingList<ApplicationGatewayAuthConfig>(),
                 provisioningState,
                 additionalBinaryDataProperties);

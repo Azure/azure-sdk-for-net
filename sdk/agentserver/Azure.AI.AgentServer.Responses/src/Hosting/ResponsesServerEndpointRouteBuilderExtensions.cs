@@ -1,12 +1,16 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+#pragma warning disable AAAS003 // Internal use of the experimental protocol task scope.
+
 using Azure.AI.AgentServer.Core;
+using Azure.AI.AgentServer.Core.Tasks;
 using Azure.AI.AgentServer.Responses.Internal;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
 
 namespace Azure.AI.AgentServer.Responses;
 
@@ -52,6 +56,17 @@ public static class ResponsesServerEndpointRouteBuilderExtensions
 
         group.AddEndpointFilter<SessionIdResponseHeaderFilter>();
         group.AddEndpointFilter<ResponsesExceptionFilter>();
+        group.AddEndpointFilter(async (context, next) =>
+        {
+            IServiceProvider provider = context.HttpContext.RequestServices;
+            ResponsesServerOptions options = provider.GetRequiredService<IOptions<ResponsesServerOptions>>().Value;
+            bool enabled = options.ResilientBackground || options.SteerableConversations;
+            using (provider.EnterResilientTaskScope("responses", enabled))
+            {
+                object? result = await next(context);
+                return result is IResult response ? new TaskScopedResult(response, enabled) : result;
+            }
+        });
 
         group.MapPost("/responses", async (HttpContext httpContext, ResponseEndpointHandler handler) =>
         {
@@ -83,6 +98,17 @@ public static class ResponsesServerEndpointRouteBuilderExtensions
         return group;
     }
 
+    private sealed class TaskScopedResult(IResult inner, bool enabled) : IResult
+    {
+        public async Task ExecuteAsync(HttpContext httpContext)
+        {
+            using (httpContext.RequestServices.EnterResilientTaskScope("responses", enabled))
+            {
+                await inner.ExecuteAsync(httpContext);
+            }
+        }
+    }
+
     /// <summary>
     /// Fails loudly at startup when resilient background responses are enabled but the composed
     /// persistence providers cannot survive a process restart. Enabling
@@ -98,6 +124,17 @@ public static class ResponsesServerEndpointRouteBuilderExtensions
         if (options is null || (!options.ResilientBackground && !options.SteerableConversations))
         {
             return;
+        }
+
+        bool resilientTasksEnabled = services
+            .GetRequiredService<Microsoft.Extensions.Options.IOptions<ResilientTaskOptions>>()
+            .Value.Enabled;
+        if (!resilientTasksEnabled)
+        {
+            throw new InvalidOperationException(
+                "ResilientBackground/SteerableConversations requires the Core resilient-task runtime. " +
+                "Ensure AddResponsesServer() is registered before host startup and restore " +
+                "the Core resilient-task runtime if its registration was replaced.");
         }
 
         if (options.ResilientBackground)

@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             int? containerLogMaxSizeInMB = default;
             int? containerLogMaxFiles = default;
             int? podMaxPids = default;
-            SeccompDefault? seccompDefault = default;
+            ContainerServiceSeccompDefault? seccompDefault = default;
             KubeletReservedResources kubeReserved = default;
             KubeletHardEvictionThreshold hardEvictionThreshold = default;
             SoftEvictionThreshold softEvictionThreshold = default;
@@ -336,7 +336,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     {
                         continue;
                     }
-                    seccompDefault = new SeccompDefault(prop.Value.GetString());
+                    seccompDefault = new ContainerServiceSeccompDefault(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("kubeReserved"u8))

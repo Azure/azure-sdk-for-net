@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ManageAgentInstallationContent(manageAgentInstallationList, action, additionalBinaryDataProperties);
+            return new ManageAgentInstallationContent(manageAgentInstallationList ?? new ChangeTrackingList<DynatraceManageAgentDetails>(), action, additionalBinaryDataProperties);
         }
     }
 }

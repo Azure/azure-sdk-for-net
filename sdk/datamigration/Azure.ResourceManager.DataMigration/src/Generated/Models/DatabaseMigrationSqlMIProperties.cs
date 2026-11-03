@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataMigration.Models
     public partial class DatabaseMigrationSqlMIProperties : DatabaseMigrationProperties
     {
         /// <summary> Initializes a new instance of <see cref="DatabaseMigrationSqlMIProperties"/>. </summary>
-        public DatabaseMigrationSqlMIProperties()
+        public DatabaseMigrationSqlMIProperties() : base("SqlMi")
         {
         }
 

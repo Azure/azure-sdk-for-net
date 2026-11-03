@@ -283,7 +283,7 @@ namespace Azure.ResourceManager.ProgrammableConnectivity.Models
                 dataProtectionOfficer,
                 registeredGeographicAddress,
                 privacyPolicyUri,
-                localRepresentatives,
+                localRepresentatives ?? new ChangeTrackingList<ApplicationLocalRepresentative>(),
                 additionalBinaryDataProperties);
         }
     }

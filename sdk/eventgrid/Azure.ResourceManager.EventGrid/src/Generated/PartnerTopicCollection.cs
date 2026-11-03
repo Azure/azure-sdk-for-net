@@ -39,9 +39,8 @@ namespace Azure.ResourceManager.EventGrid
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal PartnerTopicCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(PartnerTopicResource.ResourceType, out string partnerTopicApiVersion);
             _partnerTopicsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.EventGrid", PartnerTopicResource.ResourceType.Namespace, Diagnostics);
-            _partnerTopicsRestClient = new PartnerTopics(_partnerTopicsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, partnerTopicApiVersion ?? "2025-07-15-preview");
+            _partnerTopicsRestClient = new PartnerTopics(_partnerTopicsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.EventGrid/partnerTopics", out string partnerTopicsApiVersionOverride) ? partnerTopicsApiVersionOverride : "2025-07-15-preview");
             ValidateResourceId(id);
         }
 
@@ -290,7 +289,7 @@ namespace Azure.ResourceManager.EventGrid
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<PartnerTopicData, PartnerTopicResource>(new PartnerTopicsGetByResourceGroupAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<PartnerTopicData, PartnerTopicResource>(new PartnerTopicDataAsyncCollectionResultOfT(
                 _partnerTopicsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -327,7 +326,7 @@ namespace Azure.ResourceManager.EventGrid
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<PartnerTopicData, PartnerTopicResource>(new PartnerTopicsGetByResourceGroupCollectionResultOfT(
+            return new PageableWrapper<PartnerTopicData, PartnerTopicResource>(new PartnerTopicDataCollectionResultOfT(
                 _partnerTopicsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

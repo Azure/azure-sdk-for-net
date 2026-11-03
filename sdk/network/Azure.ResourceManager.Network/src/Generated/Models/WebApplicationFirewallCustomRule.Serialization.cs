@@ -276,7 +276,7 @@ namespace Azure.ResourceManager.Network.Models
                 rateLimitDuration,
                 rateLimitThreshold,
                 ruleType,
-                matchConditions,
+                matchConditions ?? new ChangeTrackingList<MatchCondition>(),
                 groupByUserSession ?? new ChangeTrackingList<GroupByUserSession>(),
                 action,
                 additionalBinaryDataProperties);

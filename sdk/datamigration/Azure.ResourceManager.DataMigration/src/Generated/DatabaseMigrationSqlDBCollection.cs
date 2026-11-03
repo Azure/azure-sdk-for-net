@@ -22,8 +22,8 @@ namespace Azure.ResourceManager.DataMigration
     /// </summary>
     public partial class DatabaseMigrationSqlDBCollection : ArmCollection
     {
-        private readonly ClientDiagnostics _databaseMigrationsSqlDbClientDiagnostics;
-        private readonly DatabaseMigrationsSqlDb _databaseMigrationsSqlDbRestClient;
+        private readonly ClientDiagnostics _databaseMigrationsSqlDBClientDiagnostics;
+        private readonly DatabaseMigrationsSqlDB _databaseMigrationsSqlDBRestClient;
 
         /// <summary> Initializes a new instance of DatabaseMigrationSqlDBCollection for mocking. </summary>
         protected DatabaseMigrationSqlDBCollection()
@@ -36,8 +36,8 @@ namespace Azure.ResourceManager.DataMigration
         internal DatabaseMigrationSqlDBCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             TryGetApiVersion(DatabaseMigrationSqlDBResource.ResourceType, out string databaseMigrationSqlDBApiVersion);
-            _databaseMigrationsSqlDbClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DataMigration", DatabaseMigrationSqlDBResource.ResourceType.Namespace, Diagnostics);
-            _databaseMigrationsSqlDbRestClient = new DatabaseMigrationsSqlDb(_databaseMigrationsSqlDbClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, databaseMigrationSqlDBApiVersion ?? "2025-09-01-preview");
+            _databaseMigrationsSqlDBClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DataMigration", DatabaseMigrationSqlDBResource.ResourceType.Namespace, Diagnostics);
+            _databaseMigrationsSqlDBRestClient = new DatabaseMigrationsSqlDB(_databaseMigrationsSqlDBClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, databaseMigrationSqlDBApiVersion ?? "2025-09-01-preview");
             ValidateResourceId(id);
         }
 
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.DataMigration
             Argument.AssertNotNullOrEmpty(targetDBName, nameof(targetDBName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _databaseMigrationsSqlDbClientDiagnostics.CreateScope("DatabaseMigrationSqlDBCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _databaseMigrationsSqlDBClientDiagnostics.CreateScope("DatabaseMigrationSqlDBCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -77,11 +77,11 @@ namespace Azure.ResourceManager.DataMigration
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _databaseMigrationsSqlDbRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, targetDBName, DatabaseMigrationSqlDBData.ToRequestContent(data), context);
+                HttpMessage message = _databaseMigrationsSqlDBRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, targetDBName, DatabaseMigrationSqlDBData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DataMigrationArmOperation<DatabaseMigrationSqlDBResource> operation = new DataMigrationArmOperation<DatabaseMigrationSqlDBResource>(
                     new DatabaseMigrationSqlDBResourceOperationSource(Client),
-                    _databaseMigrationsSqlDbClientDiagnostics,
+                    _databaseMigrationsSqlDBClientDiagnostics,
                     Pipeline,
                     message.Request,
                     response,
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.DataMigration
             Argument.AssertNotNullOrEmpty(targetDBName, nameof(targetDBName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _databaseMigrationsSqlDbClientDiagnostics.CreateScope("DatabaseMigrationSqlDBCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _databaseMigrationsSqlDBClientDiagnostics.CreateScope("DatabaseMigrationSqlDBCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -135,11 +135,11 @@ namespace Azure.ResourceManager.DataMigration
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _databaseMigrationsSqlDbRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, targetDBName, DatabaseMigrationSqlDBData.ToRequestContent(data), context);
+                HttpMessage message = _databaseMigrationsSqlDBRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, targetDBName, DatabaseMigrationSqlDBData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DataMigrationArmOperation<DatabaseMigrationSqlDBResource> operation = new DataMigrationArmOperation<DatabaseMigrationSqlDBResource>(
                     new DatabaseMigrationSqlDBResourceOperationSource(Client),
-                    _databaseMigrationsSqlDbClientDiagnostics,
+                    _databaseMigrationsSqlDBClientDiagnostics,
                     Pipeline,
                     message.Request,
                     response,
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.DataMigration
         {
             Argument.AssertNotNullOrEmpty(targetDBName, nameof(targetDBName));
 
-            using DiagnosticScope scope = _databaseMigrationsSqlDbClientDiagnostics.CreateScope("DatabaseMigrationSqlDBCollection.Get");
+            using DiagnosticScope scope = _databaseMigrationsSqlDBClientDiagnostics.CreateScope("DatabaseMigrationSqlDBCollection.Get");
             scope.Start();
             try
             {
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.DataMigration
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _databaseMigrationsSqlDbRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, targetDBName, migrationOperationId, expand, context);
+                HttpMessage message = _databaseMigrationsSqlDBRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, targetDBName, migrationOperationId, expand, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<DatabaseMigrationSqlDBData> response = Response.FromValue(DatabaseMigrationSqlDBData.FromResponse(result), result);
                 if (response.Value == null)
@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.DataMigration
         {
             Argument.AssertNotNullOrEmpty(targetDBName, nameof(targetDBName));
 
-            using DiagnosticScope scope = _databaseMigrationsSqlDbClientDiagnostics.CreateScope("DatabaseMigrationSqlDBCollection.Get");
+            using DiagnosticScope scope = _databaseMigrationsSqlDBClientDiagnostics.CreateScope("DatabaseMigrationSqlDBCollection.Get");
             scope.Start();
             try
             {
@@ -243,7 +243,7 @@ namespace Azure.ResourceManager.DataMigration
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _databaseMigrationsSqlDbRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, targetDBName, migrationOperationId, expand, context);
+                HttpMessage message = _databaseMigrationsSqlDBRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, targetDBName, migrationOperationId, expand, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<DatabaseMigrationSqlDBData> response = Response.FromValue(DatabaseMigrationSqlDBData.FromResponse(result), result);
                 if (response.Value == null)
@@ -286,7 +286,7 @@ namespace Azure.ResourceManager.DataMigration
         {
             Argument.AssertNotNullOrEmpty(targetDBName, nameof(targetDBName));
 
-            using DiagnosticScope scope = _databaseMigrationsSqlDbClientDiagnostics.CreateScope("DatabaseMigrationSqlDBCollection.Exists");
+            using DiagnosticScope scope = _databaseMigrationsSqlDBClientDiagnostics.CreateScope("DatabaseMigrationSqlDBCollection.Exists");
             scope.Start();
             try
             {
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.DataMigration
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _databaseMigrationsSqlDbRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, targetDBName, migrationOperationId, expand, context);
+                HttpMessage message = _databaseMigrationsSqlDBRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, targetDBName, migrationOperationId, expand, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<DatabaseMigrationSqlDBData> response = default;
@@ -345,7 +345,7 @@ namespace Azure.ResourceManager.DataMigration
         {
             Argument.AssertNotNullOrEmpty(targetDBName, nameof(targetDBName));
 
-            using DiagnosticScope scope = _databaseMigrationsSqlDbClientDiagnostics.CreateScope("DatabaseMigrationSqlDBCollection.Exists");
+            using DiagnosticScope scope = _databaseMigrationsSqlDBClientDiagnostics.CreateScope("DatabaseMigrationSqlDBCollection.Exists");
             scope.Start();
             try
             {
@@ -353,7 +353,7 @@ namespace Azure.ResourceManager.DataMigration
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _databaseMigrationsSqlDbRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, targetDBName, migrationOperationId, expand, context);
+                HttpMessage message = _databaseMigrationsSqlDBRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, targetDBName, migrationOperationId, expand, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<DatabaseMigrationSqlDBData> response = default;
@@ -404,7 +404,7 @@ namespace Azure.ResourceManager.DataMigration
         {
             Argument.AssertNotNullOrEmpty(targetDBName, nameof(targetDBName));
 
-            using DiagnosticScope scope = _databaseMigrationsSqlDbClientDiagnostics.CreateScope("DatabaseMigrationSqlDBCollection.GetIfExists");
+            using DiagnosticScope scope = _databaseMigrationsSqlDBClientDiagnostics.CreateScope("DatabaseMigrationSqlDBCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -412,7 +412,7 @@ namespace Azure.ResourceManager.DataMigration
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _databaseMigrationsSqlDbRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, targetDBName, migrationOperationId, expand, context);
+                HttpMessage message = _databaseMigrationsSqlDBRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, targetDBName, migrationOperationId, expand, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<DatabaseMigrationSqlDBData> response = default;
@@ -467,7 +467,7 @@ namespace Azure.ResourceManager.DataMigration
         {
             Argument.AssertNotNullOrEmpty(targetDBName, nameof(targetDBName));
 
-            using DiagnosticScope scope = _databaseMigrationsSqlDbClientDiagnostics.CreateScope("DatabaseMigrationSqlDBCollection.GetIfExists");
+            using DiagnosticScope scope = _databaseMigrationsSqlDBClientDiagnostics.CreateScope("DatabaseMigrationSqlDBCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -475,7 +475,7 @@ namespace Azure.ResourceManager.DataMigration
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _databaseMigrationsSqlDbRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, targetDBName, migrationOperationId, expand, context);
+                HttpMessage message = _databaseMigrationsSqlDBRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, targetDBName, migrationOperationId, expand, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<DatabaseMigrationSqlDBData> response = default;

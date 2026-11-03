@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.ComputeLimit.Mocking
         /// <returns> An object representing collection of ComputeLimitGuestSubscriptions and their operations over a ComputeLimitGuestSubscriptionResource. </returns>
         public virtual ComputeLimitGuestSubscriptionCollection GetComputeLimitGuestSubscriptions(AzureLocation location)
         {
-            return GetCachedClient(client => new ComputeLimitGuestSubscriptionCollection(client, Id, location));
+            return new ComputeLimitGuestSubscriptionCollection(Client, Id, location);
         }
 
         /// <summary>
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.ComputeLimit.Mocking
         /// <returns> An object representing collection of TrustedHostSubscriptions and their operations over a TrustedHostSubscriptionResource. </returns>
         public virtual TrustedHostSubscriptionCollection GetTrustedHostSubscriptions(AzureLocation location)
         {
-            return GetCachedClient(client => new TrustedHostSubscriptionCollection(client, Id, location));
+            return new TrustedHostSubscriptionCollection(Client, Id, location);
         }
 
         /// <summary>
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.ComputeLimit.Mocking
         /// <returns> An object representing collection of ComputeLimitSharedLimits and their operations over a ComputeLimitSharedLimitResource. </returns>
         public virtual ComputeLimitSharedLimitCollection GetComputeLimitSharedLimits(AzureLocation location)
         {
-            return GetCachedClient(client => new ComputeLimitSharedLimitCollection(client, Id, location));
+            return new ComputeLimitSharedLimitCollection(Client, Id, location);
         }
 
         /// <summary>
@@ -240,7 +240,7 @@ namespace Azure.ResourceManager.ComputeLimit.Mocking
         /// <returns> An object representing collection of ComputeLimitFeatures and their operations over a ComputeLimitFeatureResource. </returns>
         public virtual ComputeLimitFeatureCollection GetComputeLimitFeatures(AzureLocation location)
         {
-            return GetCachedClient(client => new ComputeLimitFeatureCollection(client, Id, location));
+            return new ComputeLimitFeatureCollection(Client, Id, location);
         }
 
         /// <summary>
@@ -308,7 +308,7 @@ namespace Azure.ResourceManager.ComputeLimit.Mocking
         /// <returns> An object representing collection of ComputeLimitVmFamilies and their operations over a ComputeLimitVmFamilyResource. </returns>
         public virtual ComputeLimitVmFamilyCollection GetComputeLimitVmFamilies(AzureLocation location)
         {
-            return GetCachedClient(client => new ComputeLimitVmFamilyCollection(client, Id, location));
+            return new ComputeLimitVmFamilyCollection(Client, Id, location);
         }
 
         /// <summary>
@@ -376,7 +376,7 @@ namespace Azure.ResourceManager.ComputeLimit.Mocking
         /// <returns> An object representing collection of SharedLimitCaps and their operations over a SharedLimitCapResource. </returns>
         public virtual SharedLimitCapCollection GetSharedLimitCaps(AzureLocation location)
         {
-            return GetCachedClient(client => new SharedLimitCapCollection(client, Id, location));
+            return new SharedLimitCapCollection(Client, Id, location);
         }
 
         /// <summary>

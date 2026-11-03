@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new HardwareSecurityModulesPrivateEndpointConnectionListResult(value, nextLink, additionalBinaryDataProperties);
+            return new HardwareSecurityModulesPrivateEndpointConnectionListResult(value ?? new ChangeTrackingList<CloudHsmClusterPrivateEndpointConnectionData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

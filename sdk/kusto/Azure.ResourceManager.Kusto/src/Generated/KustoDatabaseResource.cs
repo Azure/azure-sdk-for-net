@@ -456,7 +456,7 @@ namespace Azure.ResourceManager.Kusto
             {
                 CancellationToken = cancellationToken
             };
-            return new DatabasesAddPrincipalsAsyncCollectionResultOfT(
+            return new KustoDatabasePrincipalAsync0CollectionResultOfT(
                 _databasesRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -500,7 +500,7 @@ namespace Azure.ResourceManager.Kusto
             {
                 CancellationToken = cancellationToken
             };
-            return new DatabasesAddPrincipalsCollectionResultOfT(
+            return new KustoDatabasePrincipal0CollectionResultOfT(
                 _databasesRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -970,7 +970,7 @@ namespace Azure.ResourceManager.Kusto
             {
                 CancellationToken = cancellationToken
             };
-            return new DatabasesGetPrincipalsAsyncCollectionResultOfT(
+            return new KustoDatabasePrincipalAsyncCollectionResultOfT(
                 _databasesRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -1009,7 +1009,7 @@ namespace Azure.ResourceManager.Kusto
             {
                 CancellationToken = cancellationToken
             };
-            return new DatabasesGetPrincipalsCollectionResultOfT(
+            return new KustoDatabasePrincipalCollectionResultOfT(
                 _databasesRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -1052,7 +1052,7 @@ namespace Azure.ResourceManager.Kusto
             {
                 CancellationToken = cancellationToken
             };
-            return new DatabasesRemovePrincipalsAsyncCollectionResultOfT(
+            return new KustoDatabasePrincipalAsync1CollectionResultOfT(
                 _databasesRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -1096,7 +1096,7 @@ namespace Azure.ResourceManager.Kusto
             {
                 CancellationToken = cancellationToken
             };
-            return new DatabasesRemovePrincipalsCollectionResultOfT(
+            return new KustoDatabasePrincipal1CollectionResultOfT(
                 _databasesRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

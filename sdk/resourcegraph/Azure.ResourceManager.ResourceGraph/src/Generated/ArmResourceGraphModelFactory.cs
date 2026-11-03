@@ -286,7 +286,7 @@ namespace Azure.ResourceManager.ResourceGraph.Models
         {
             return new FacetResult(
                 expression,
-                default,
+                "FacetResult",
                 default,
                 totalRecords,
                 count,
@@ -301,7 +301,7 @@ namespace Azure.ResourceManager.ResourceGraph.Models
         {
             errors ??= new ChangeTrackingList<FacetErrorDetails>();
 
-            return new FacetError(expression, default, default, (errors ?? new ChangeTrackingList<FacetErrorDetails>()).ToList());
+            return new FacetError(expression, "FacetError", default, (errors ?? new ChangeTrackingList<FacetErrorDetails>()).ToList());
         }
 
         /// <summary> Describes a history request to be executed. </summary>

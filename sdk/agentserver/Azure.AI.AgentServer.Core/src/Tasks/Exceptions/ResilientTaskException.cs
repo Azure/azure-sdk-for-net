@@ -79,6 +79,11 @@ public sealed class ResilientTaskException : Exception
             return "The task steering queue is full.";
         }
 
+        if (errorCode == ResilientTaskErrorCode.NotEnabled)
+        {
+            return "Resilient tasks are not enabled for this host.";
+        }
+
         return "The resilient task operation failed.";
     }
 }

@@ -39,9 +39,8 @@ namespace Azure.ResourceManager.Discovery
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal DiscoveryBookshelfCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(DiscoveryBookshelfResource.ResourceType, out string discoveryBookshelfApiVersion);
             _bookshelvesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Discovery", DiscoveryBookshelfResource.ResourceType.Namespace, Diagnostics);
-            _bookshelvesRestClient = new Bookshelves(_bookshelvesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, discoveryBookshelfApiVersion ?? "2026-06-01");
+            _bookshelvesRestClient = new Bookshelves(_bookshelvesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.Discovery/bookshelves", out string bookshelvesApiVersionOverride) ? bookshelvesApiVersionOverride : "2026-06-01");
             ValidateResourceId(id);
         }
 
@@ -294,7 +293,7 @@ namespace Azure.ResourceManager.Discovery
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DiscoveryBookshelfData, DiscoveryBookshelfResource>(new BookshelvesGetByResourceGroupAsyncCollectionResultOfT(_bookshelvesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "DiscoveryBookshelfCollection.GetAll"), data => new DiscoveryBookshelfResource(Client, data));
+            return new AsyncPageableWrapper<DiscoveryBookshelfData, DiscoveryBookshelfResource>(new DiscoveryBookshelfDataAsyncCollectionResultOfT(_bookshelvesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "DiscoveryBookshelfCollection.GetAll"), data => new DiscoveryBookshelfResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +321,7 @@ namespace Azure.ResourceManager.Discovery
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DiscoveryBookshelfData, DiscoveryBookshelfResource>(new BookshelvesGetByResourceGroupCollectionResultOfT(_bookshelvesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "DiscoveryBookshelfCollection.GetAll"), data => new DiscoveryBookshelfResource(Client, data));
+            return new PageableWrapper<DiscoveryBookshelfData, DiscoveryBookshelfResource>(new DiscoveryBookshelfDataCollectionResultOfT(_bookshelvesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "DiscoveryBookshelfCollection.GetAll"), data => new DiscoveryBookshelfResource(Client, data));
         }
 
         /// <summary>

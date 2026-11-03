@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.ComputeLimit.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new TrustedHostSubscriptionListResult(value, nextLink, additionalBinaryDataProperties);
+            return new TrustedHostSubscriptionListResult(value ?? new ChangeTrackingList<TrustedHostSubscriptionData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

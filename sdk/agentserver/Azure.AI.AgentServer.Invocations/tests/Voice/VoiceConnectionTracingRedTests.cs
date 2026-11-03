@@ -38,6 +38,15 @@ public class VoiceConnectionTracingRedTests
     private static readonly TimeSpan TestTimeout = TimeSpan.FromSeconds(5);
     private static readonly TimeSpan ObservationTimeout = TimeSpan.FromSeconds(1);
 
+    [OneTimeSetUp]
+    public void IgnoreOnLinuxNet9()
+    {
+        if (OperatingSystem.IsLinux() && Environment.Version.Major == 9)
+        {
+            Assert.Ignore("Intermittent CI hang on Linux .NET 9: https://github.com/Azure/azure-sdk-for-net/issues/63770");
+        }
+    }
+
     [Test]
     public async Task VoiceWebSocket_ExportsSemanticConnectionWithoutGenericRequest_AndPreservesRemoteParent()
     {

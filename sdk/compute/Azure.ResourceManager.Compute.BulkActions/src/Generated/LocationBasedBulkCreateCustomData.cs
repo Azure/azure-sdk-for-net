@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Compute.BulkActions.Models;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute.BulkActions
 {
@@ -34,15 +35,19 @@ namespace Azure.ResourceManager.Compute.BulkActions
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="location"> The location name. </param>
         /// <param name="zones"> Zones in which the BulkCreateCustom is available. </param>
+        /// <param name="extendedLocation"> The extended location of the virtual machines created by the BulkCreateCustom operation. </param>
+        /// <param name="placement"> The availability zone placement constraints applied to the virtual machines created by the BulkCreateCustom operation. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <param name="plan"> Details of the resource plan. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal LocationBasedBulkCreateCustomData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, BulkCreateCustomProperties properties, AzureLocation location, IList<string> zones, IDictionary<string, string> tags, ManagedServiceIdentity identity, ArmPlan plan, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
+        internal LocationBasedBulkCreateCustomData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, BulkCreateCustomProperties properties, AzureLocation location, IList<string> zones, ExtendedLocation extendedLocation, BulkActionsVirtualMachinePlacement placement, IDictionary<string, string> tags, ManagedServiceIdentity identity, ArmPlan plan, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
             Location = location;
             Zones = zones;
+            ExtendedLocation = extendedLocation;
+            Placement = placement;
             Tags = tags;
             Identity = identity;
             Plan = plan;
@@ -57,6 +62,12 @@ namespace Azure.ResourceManager.Compute.BulkActions
 
         /// <summary> Zones in which the BulkCreateCustom is available. </summary>
         public IList<string> Zones { get; }
+
+        /// <summary> The extended location of the virtual machines created by the BulkCreateCustom operation. </summary>
+        public ExtendedLocation ExtendedLocation { get; set; }
+
+        /// <summary> The availability zone placement constraints applied to the virtual machines created by the BulkCreateCustom operation. </summary>
+        public BulkActionsVirtualMachinePlacement Placement { get; set; }
 
         /// <summary> Resource tags. </summary>
         public IDictionary<string, string> Tags { get; }

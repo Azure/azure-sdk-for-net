@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ManagedEnvironmentsCollection(value, nextLink, additionalBinaryDataProperties);
+            return new ManagedEnvironmentsCollection(value ?? new ChangeTrackingList<ContainerAppManagedEnvironmentData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

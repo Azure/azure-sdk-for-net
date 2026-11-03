@@ -15,13 +15,7 @@ namespace Azure.ResourceManager.ManagedOps
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
     /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
-    [ModelReaderWriterBuildable(typeof(AzureMonitorConfiguration))]
-    [ModelReaderWriterBuildable(typeof(ChangeTrackingConfiguration))]
-    [ModelReaderWriterBuildable(typeof(DefenderCspmInformation))]
-    [ModelReaderWriterBuildable(typeof(DefenderForServersInformation))]
-    [ModelReaderWriterBuildable(typeof(GuestConfigurationInformation))]
     [ModelReaderWriterBuildable(typeof(ManagedOpData))]
-    [ModelReaderWriterBuildable(typeof(ManagedOpListResult))]
     [ModelReaderWriterBuildable(typeof(ManagedOpPatch))]
     [ModelReaderWriterBuildable(typeof(ManagedOpResource))]
     [ModelReaderWriterBuildable(typeof(ManagedOpsAzureMonitorInformation))]
@@ -31,10 +25,7 @@ namespace Azure.ResourceManager.ManagedOps
     [ModelReaderWriterBuildable(typeof(ManagedOpsProperties))]
     [ModelReaderWriterBuildable(typeof(ManagedOpsServiceInformation))]
     [ModelReaderWriterBuildable(typeof(ManagedOpsSku))]
-    [ModelReaderWriterBuildable(typeof(ManagedOpUpdateProperties))]
-    [ModelReaderWriterBuildable(typeof(PolicyAssignmentProperties))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
-    [ModelReaderWriterBuildable(typeof(UpdateManagerInformation))]
     public partial class AzureResourceManagerManagedOpsContext : ModelReaderWriterContext
     {
     }

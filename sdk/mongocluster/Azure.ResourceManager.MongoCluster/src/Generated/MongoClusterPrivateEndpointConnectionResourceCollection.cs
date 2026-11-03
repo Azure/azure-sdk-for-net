@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.MongoCluster
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<MongoClusterPrivateEndpointConnectionResourceData, MongoClusterPrivateEndpointConnectionResource>(new PrivateEndpointConnectionsGetByMongoClusterAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<MongoClusterPrivateEndpointConnectionResourceData, MongoClusterPrivateEndpointConnectionResource>(new MongoClusterPrivateEndpointConnectionResourceDataAsyncCollectionResultOfT(
                 _privateEndpointConnectionsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.MongoCluster
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<MongoClusterPrivateEndpointConnectionResourceData, MongoClusterPrivateEndpointConnectionResource>(new PrivateEndpointConnectionsGetByMongoClusterCollectionResultOfT(
+            return new PageableWrapper<MongoClusterPrivateEndpointConnectionResourceData, MongoClusterPrivateEndpointConnectionResource>(new MongoClusterPrivateEndpointConnectionResourceDataCollectionResultOfT(
                 _privateEndpointConnectionsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

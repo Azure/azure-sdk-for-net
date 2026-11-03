@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.AppService.SreAgent.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new AgentListResult(value, nextLink, additionalBinaryDataProperties);
+            return new AgentListResult(value ?? new ChangeTrackingList<SreAgentData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

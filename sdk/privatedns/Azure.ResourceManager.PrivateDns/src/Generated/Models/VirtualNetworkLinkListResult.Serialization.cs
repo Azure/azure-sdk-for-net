@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.PrivateDns.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new VirtualNetworkLinkListResult(value, nextLink, additionalBinaryDataProperties);
+            return new VirtualNetworkLinkListResult(value ?? new ChangeTrackingList<VirtualNetworkLinkData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

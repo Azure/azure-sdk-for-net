@@ -79,6 +79,11 @@ namespace Azure.ResourceManager.Storage.Models
                 writer.WritePropertyName("allowStorageConnectors"u8);
                 writer.WriteBooleanValue(AllowStorageConnectors.Value);
             }
+            if (Optional.IsDefined(AllowBlobAccessPoints))
+            {
+                writer.WritePropertyName("allowBlobAccessPoints"u8);
+                writer.WriteBooleanValue(AllowBlobAccessPoints.Value);
+            }
             if (Optional.IsDefined(AllowStorageDataShares))
             {
                 writer.WritePropertyName("allowStorageDataShares"u8);
@@ -132,6 +137,7 @@ namespace Azure.ResourceManager.Storage.Models
                 return null;
             }
             bool? allowStorageConnectors = default;
+            bool? allowBlobAccessPoints = default;
             bool? allowStorageDataShares = default;
             bool? allowCrossTenantDataSharing = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -144,6 +150,15 @@ namespace Azure.ResourceManager.Storage.Models
                         continue;
                     }
                     allowStorageConnectors = prop.Value.GetBoolean();
+                    continue;
+                }
+                if (prop.NameEquals("allowBlobAccessPoints"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    allowBlobAccessPoints = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("allowStorageDataShares"u8))
@@ -169,7 +184,7 @@ namespace Azure.ResourceManager.Storage.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new StorageDataCollaborationPolicyProperties(allowStorageConnectors, allowStorageDataShares, allowCrossTenantDataSharing, additionalBinaryDataProperties);
+            return new StorageDataCollaborationPolicyProperties(allowStorageConnectors, allowBlobAccessPoints, allowStorageDataShares, allowCrossTenantDataSharing, additionalBinaryDataProperties);
         }
     }
 }

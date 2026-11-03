@@ -11,7 +11,7 @@ using Azure.ResourceManager.Compute.BulkActions;
 
 namespace Azure.ResourceManager.Compute.BulkActions.Models
 {
-    /// <summary> The operation to retry when a scheduled action fails. </summary>
+    /// <summary> The operation to retry when a recurring bulk action fails. </summary>
     public readonly partial struct ScheduledActionsResourceOperationType : IEquatable<ScheduledActionsResourceOperationType>
     {
         private readonly string _value;

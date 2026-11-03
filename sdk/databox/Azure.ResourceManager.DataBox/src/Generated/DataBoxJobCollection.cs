@@ -39,9 +39,8 @@ namespace Azure.ResourceManager.DataBox
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal DataBoxJobCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(DataBoxJobResource.ResourceType, out string dataBoxJobApiVersion);
             _jobResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DataBox", DataBoxJobResource.ResourceType.Namespace, Diagnostics);
-            _jobResourcesRestClient = new JobResources(_jobResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, dataBoxJobApiVersion ?? "2025-07-01");
+            _jobResourcesRestClient = new JobResources(_jobResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.DataBox/jobs", out string jobResourcesApiVersionOverride) ? jobResourcesApiVersionOverride : "2025-07-01");
             ValidateResourceId(id);
         }
 
@@ -297,7 +296,7 @@ namespace Azure.ResourceManager.DataBox
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DataBoxJobData, DataBoxJobResource>(new JobResourcesGetByResourceGroupAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<DataBoxJobData, DataBoxJobResource>(new DataBoxJobDataAsyncCollectionResultOfT(
                 _jobResourcesRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -332,7 +331,7 @@ namespace Azure.ResourceManager.DataBox
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DataBoxJobData, DataBoxJobResource>(new JobResourcesGetByResourceGroupCollectionResultOfT(
+            return new PageableWrapper<DataBoxJobData, DataBoxJobResource>(new DataBoxJobDataCollectionResultOfT(
                 _jobResourcesRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

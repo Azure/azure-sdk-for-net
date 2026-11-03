@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new UnknownBaseBackupPolicy(dataSourceTypes, objectType, additionalBinaryDataProperties);
+            return new UnknownBaseBackupPolicy(dataSourceTypes ?? new ChangeTrackingList<string>(), objectType, additionalBinaryDataProperties);
         }
     }
 }

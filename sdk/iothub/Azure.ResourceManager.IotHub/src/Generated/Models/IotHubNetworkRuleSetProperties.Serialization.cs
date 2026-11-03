@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.IotHub.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new IotHubNetworkRuleSetProperties(defaultAction, applyToBuiltInEventHubEndpoint, ipRules, additionalBinaryDataProperties);
+            return new IotHubNetworkRuleSetProperties(defaultAction, applyToBuiltInEventHubEndpoint, ipRules ?? new ChangeTrackingList<IotHubNetworkRuleSetIPRule>(), additionalBinaryDataProperties);
         }
     }
 }

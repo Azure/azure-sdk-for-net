@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.RedHatOpenShift.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new OpenShiftVersionList(value, nextLink, additionalBinaryDataProperties);
+            return new OpenShiftVersionList(value ?? new ChangeTrackingList<OpenShiftVersionData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

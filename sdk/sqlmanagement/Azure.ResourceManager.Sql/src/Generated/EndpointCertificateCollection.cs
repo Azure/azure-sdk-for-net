@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.Sql
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<EndpointCertificateData, EndpointCertificateResource>(new EndpointCertificatesGetByInstanceAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<EndpointCertificateData, EndpointCertificateResource>(new EndpointCertificateDataAsyncCollectionResultOfT(
                 _endpointCertificatesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.Sql
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<EndpointCertificateData, EndpointCertificateResource>(new EndpointCertificatesGetByInstanceCollectionResultOfT(
+            return new PageableWrapper<EndpointCertificateData, EndpointCertificateResource>(new EndpointCertificateDataCollectionResultOfT(
                 _endpointCertificatesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

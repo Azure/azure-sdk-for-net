@@ -31,6 +31,7 @@ public sealed class CancelBeforeContextProtocolTests
         };
         using var factory = new TestWebApplicationFactory(
             handler,
+            configureOptions: options => options.SteerableConversations = true,
             configureTestServices: services =>
             {
                 services.AddSingleton(state);

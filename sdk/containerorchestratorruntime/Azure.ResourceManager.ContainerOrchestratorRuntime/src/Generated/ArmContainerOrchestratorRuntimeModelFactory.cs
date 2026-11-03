@@ -79,14 +79,14 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Models
         /// <returns> A new <see cref="Models.StorageClassTypeProperties"/> instance for mocking. </returns>
         public static StorageClassTypeProperties StorageClassTypeProperties(string @type = default)
         {
-            return new UnknownStorageClassTypeProperties(default, default);
+            return new UnknownStorageClassTypeProperties(@type is null ? default : new StorageClassType(@type), default);
         }
 
         /// <summary> The properties of Native StorageClass. </summary>
         /// <returns> A new <see cref="Models.NativeStorageClassTypeProperties"/> instance for mocking. </returns>
         public static NativeStorageClassTypeProperties NativeStorageClassTypeProperties()
         {
-            return new NativeStorageClassTypeProperties(default, default);
+            return new NativeStorageClassTypeProperties(StorageClassType.Native, default);
         }
 
         /// <summary> The properties of RWX StorageClass. </summary>
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Models
         /// <returns> A new <see cref="Models.RwxStorageClassTypeProperties"/> instance for mocking. </returns>
         public static RwxStorageClassTypeProperties RwxStorageClassTypeProperties(string backingStorageClassName = default)
         {
-            return new RwxStorageClassTypeProperties(default, default, backingStorageClassName);
+            return new RwxStorageClassTypeProperties(StorageClassType.Rwx, default, backingStorageClassName);
         }
 
         /// <summary> The properties of Blob StorageClass. </summary>
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Models
         /// <returns> A new <see cref="Models.BlobStorageClassTypeProperties"/> instance for mocking. </returns>
         public static BlobStorageClassTypeProperties BlobStorageClassTypeProperties(string azureStorageAccountName = default, string azureStorageAccountKey = default)
         {
-            return new BlobStorageClassTypeProperties(default, default, azureStorageAccountName, azureStorageAccountKey);
+            return new BlobStorageClassTypeProperties(StorageClassType.Blob, default, azureStorageAccountName, azureStorageAccountKey);
         }
 
         /// <summary> The properties of NFS StorageClass. </summary>
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Models
         public static NfsStorageClassTypeProperties NfsStorageClassTypeProperties(string server = default, string share = default, string subDir = default, string mountPermissions = default, NfsDirectoryActionOnVolumeDeletion? onDelete = default)
         {
             return new NfsStorageClassTypeProperties(
-                default,
+                StorageClassType.Nfs,
                 default,
                 server,
                 share,
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Models
         public static SmbStorageClassTypeProperties SmbStorageClassTypeProperties(string source = default, string subDir = default, string username = default, string password = default, string domain = default)
         {
             return new SmbStorageClassTypeProperties(
-                default,
+                StorageClassType.Smb,
                 default,
                 source,
                 subDir,

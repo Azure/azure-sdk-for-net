@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.ResourceHealth.Mocking
 
         private ClientDiagnostics EventsClientDiagnostics => _eventsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ResourceHealth.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Events EventsRestClient => _eventsRestClient ??= new Events(EventsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-05-01");
+        private Events EventsRestClient => _eventsRestClient ??= new Events(EventsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.ResourceHealth/events", out string apiVersion) ? apiVersion : "2025-05-01");
 
         private ClientDiagnostics AvailabilityStatusesClientDiagnostics => _availabilityStatusesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ResourceHealth.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
@@ -242,7 +242,7 @@ namespace Azure.ResourceManager.ResourceHealth.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AvailabilityStatusesGetAvailabilityStatusesAsyncCollectionResultOfT(
+            return new ResourceHealthAvailabilityStatusAsync0CollectionResultOfT(
                 AvailabilityStatusesRestClient,
                 scope.ToString(),
                 filter,
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.ResourceHealth.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AvailabilityStatusesGetAvailabilityStatusesCollectionResultOfT(
+            return new ResourceHealthAvailabilityStatus0CollectionResultOfT(
                 AvailabilityStatusesRestClient,
                 scope.ToString(),
                 filter,
@@ -422,7 +422,7 @@ namespace Azure.ResourceManager.ResourceHealth.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new ChildAvailabilityStatusesGetHistoricalAvailabilityStatusesOfChildResourceAsyncCollectionResultOfT(
+            return new ResourceHealthAvailabilityStatusAsync2CollectionResultOfT(
                 ChildAvailabilityStatusesRestClient,
                 scope.ToString(),
                 filter,
@@ -462,7 +462,7 @@ namespace Azure.ResourceManager.ResourceHealth.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new ChildAvailabilityStatusesGetHistoricalAvailabilityStatusesOfChildResourceCollectionResultOfT(
+            return new ResourceHealthAvailabilityStatus2CollectionResultOfT(
                 ChildAvailabilityStatusesRestClient,
                 scope.ToString(),
                 filter,
@@ -502,7 +502,7 @@ namespace Azure.ResourceManager.ResourceHealth.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new ChildResourcesGetAvailabilityStatusOfChildResourcesAsyncCollectionResultOfT(
+            return new ResourceHealthAvailabilityStatusAsync3CollectionResultOfT(
                 ChildResourcesRestClient,
                 scope.ToString(),
                 filter,
@@ -542,7 +542,7 @@ namespace Azure.ResourceManager.ResourceHealth.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new ChildResourcesGetAvailabilityStatusOfChildResourcesCollectionResultOfT(
+            return new ResourceHealthAvailabilityStatus3CollectionResultOfT(
                 ChildResourcesRestClient,
                 scope.ToString(),
                 filter,

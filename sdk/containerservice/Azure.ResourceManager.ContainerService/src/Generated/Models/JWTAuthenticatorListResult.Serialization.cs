@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new JWTAuthenticatorListResult(value, nextLink, additionalBinaryDataProperties);
+            return new JWTAuthenticatorListResult(value ?? new ChangeTrackingList<ManagedClusterJwtAuthenticatorData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

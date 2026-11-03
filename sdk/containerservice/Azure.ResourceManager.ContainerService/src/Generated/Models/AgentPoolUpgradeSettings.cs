@@ -29,8 +29,9 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <param name="drainTimeoutInMinutes"> The drain timeout for a node. The amount of time (in minutes) to wait on eviction of pods and graceful termination per node. This eviction wait time honors waiting on pod disruption budgets. If this time is exceeded, the upgrade fails. If not specified, the default is 30 minutes. </param>
         /// <param name="nodeSoakDurationInMinutes"> The soak duration for a node. The amount of time (in minutes) to wait after draining a node and before reimaging it and moving on to next node. If not specified, the default is 0 minutes. </param>
         /// <param name="undrainableNodeBehavior"> Defines the behavior for undrainable nodes during upgrade. The most common cause of undrainable nodes is Pod Disruption Budgets (PDBs), but other issues, such as pod termination grace period is exceeding the remaining per-node drain timeout or pod is still being in a running state, can also cause undrainable nodes. </param>
+        /// <param name="upgradeGateSettings"> Settings for upgrade gating on upgrades of this agent pool. Health signals are `HealthSignal` custom resources published by monitoring components running in the cluster. When the cluster-level `enabled` is unset or `false`, this agent pool can opt in independently. When the cluster-level `enabled` is `true`, gating is inherited and setting this agent pool's `enabled` to `false` is rejected; an omitted value on a newly created agent pool is defaulted to `true`. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AgentPoolUpgradeSettings(string maxSurge, string maxUnavailable, string maxBlockedNodes, int? drainTimeoutInMinutes, int? nodeSoakDurationInMinutes, UndrainableNodeBehavior? undrainableNodeBehavior, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AgentPoolUpgradeSettings(string maxSurge, string maxUnavailable, string maxBlockedNodes, int? drainTimeoutInMinutes, int? nodeSoakDurationInMinutes, UndrainableNodeBehavior? undrainableNodeBehavior, UpgradeGateSettings upgradeGateSettings, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             MaxSurge = maxSurge;
             MaxUnavailable = maxUnavailable;
@@ -38,6 +39,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             DrainTimeoutInMinutes = drainTimeoutInMinutes;
             NodeSoakDurationInMinutes = nodeSoakDurationInMinutes;
             UndrainableNodeBehavior = undrainableNodeBehavior;
+            UpgradeGateSettings = upgradeGateSettings;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -64,5 +66,27 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <summary> Defines the behavior for undrainable nodes during upgrade. The most common cause of undrainable nodes is Pod Disruption Budgets (PDBs), but other issues, such as pod termination grace period is exceeding the remaining per-node drain timeout or pod is still being in a running state, can also cause undrainable nodes. </summary>
         [WirePath("undrainableNodeBehavior")]
         public UndrainableNodeBehavior? UndrainableNodeBehavior { get; set; }
+
+        /// <summary> Settings for upgrade gating on upgrades of this agent pool. Health signals are `HealthSignal` custom resources published by monitoring components running in the cluster. When the cluster-level `enabled` is unset or `false`, this agent pool can opt in independently. When the cluster-level `enabled` is `true`, gating is inherited and setting this agent pool's `enabled` to `false` is rejected; an omitted value on a newly created agent pool is defaulted to `true`. </summary>
+        [WirePath("upgradeGateSettings")]
+        internal UpgradeGateSettings UpgradeGateSettings { get; set; }
+
+        /// <summary> Whether upgrade gating is enabled. Defaults to `false` when unset, except on a newly created agent pool in a cluster where upgrade gating is enabled, which defaults to `true`. When `true`, upgrade-gated health checks are enabled for upgrades in the corresponding scope. Setting this to `true` at the cluster scope enables gating for the entire cluster, including all agent pool upgrades. When the cluster scope is unset or `false`, an agent pool can opt in independently by setting this to `true`. When the cluster scope is `true`, an agent pool cannot set this to `false`. Force upgrade (`overrideSettings.forceUpgrade`) overrides the gate: while the override window is active, the upgrade skips health signal validation and proceeds. </summary>
+        [WirePath("upgradeGateSettings.enabled")]
+        public bool? IsEnabled
+        {
+            get
+            {
+                return UpgradeGateSettings is null ? default : UpgradeGateSettings.IsEnabled;
+            }
+            set
+            {
+                if (UpgradeGateSettings is null)
+                {
+                    UpgradeGateSettings = new UpgradeGateSettings();
+                }
+                UpgradeGateSettings.IsEnabled = value;
+            }
+        }
     }
 }

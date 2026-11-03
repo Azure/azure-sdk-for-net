@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new VirtualNetworkList(value, nextLink, additionalBinaryDataProperties);
+            return new VirtualNetworkList(value ?? new ChangeTrackingList<DevTestLabVirtualNetworkData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

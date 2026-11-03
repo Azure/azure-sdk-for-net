@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new VmSkusListResult(value, nextLink, additionalBinaryDataProperties);
+            return new VmSkusListResult(value ?? new ChangeTrackingList<ContainerServiceVmSku>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

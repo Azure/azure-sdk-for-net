@@ -219,8 +219,8 @@ namespace Azure.ResourceManager.Monitor.Models
             return new LogProfileProperties(
                 storageAccountId,
                 serviceBusRuleId,
-                locations,
-                categories,
+                locations ?? new ChangeTrackingList<AzureLocation>(),
+                categories ?? new ChangeTrackingList<string>(),
                 retentionPolicy,
                 additionalBinaryDataProperties);
         }

@@ -97,7 +97,6 @@
             "$id": "9",
             "name": "durationConstant",
             "isExactName": false,
-            "resourceName": "Duration",
             "doc": "Test duration with azure specific encoding.",
             "accessibility": "public",
             "parameters": [

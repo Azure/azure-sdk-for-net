@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.Sql
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DatabaseTableData, ManagedDatabaseTableResource>(new ManagedDatabaseTablesGetBySchemaAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<DatabaseTableData, ManagedDatabaseTableResource>(new DatabaseTableDataAsync0CollectionResultOfT(
                 _managedDatabaseTablesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.Sql
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DatabaseTableData, ManagedDatabaseTableResource>(new ManagedDatabaseTablesGetBySchemaCollectionResultOfT(
+            return new PageableWrapper<DatabaseTableData, ManagedDatabaseTableResource>(new DatabaseTableData0CollectionResultOfT(
                 _managedDatabaseTablesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

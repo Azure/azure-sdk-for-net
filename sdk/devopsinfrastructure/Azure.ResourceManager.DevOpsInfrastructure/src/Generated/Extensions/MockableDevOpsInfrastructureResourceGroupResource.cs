@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new ImageVersionsGetImageVersionsByImageAsyncCollectionResultOfT(
+            return new DevOpsImageVersionAsyncCollectionResultOfT(
                 ImageVersionsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new ImageVersionsGetImageVersionsByImageCollectionResultOfT(
+            return new DevOpsImageVersionCollectionResultOfT(
                 ImageVersionsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.StorageSync
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<StorageSyncPrivateEndpointConnectionData, StorageSyncPrivateEndpointConnectionResource>(new PrivateEndpointConnectionsGetByStorageSyncServiceAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<StorageSyncPrivateEndpointConnectionData, StorageSyncPrivateEndpointConnectionResource>(new StorageSyncPrivateEndpointConnectionDataAsyncCollectionResultOfT(
                 _privateEndpointConnectionsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.StorageSync
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<StorageSyncPrivateEndpointConnectionData, StorageSyncPrivateEndpointConnectionResource>(new PrivateEndpointConnectionsGetByStorageSyncServiceCollectionResultOfT(
+            return new PageableWrapper<StorageSyncPrivateEndpointConnectionData, StorageSyncPrivateEndpointConnectionResource>(new StorageSyncPrivateEndpointConnectionDataCollectionResultOfT(
                 _privateEndpointConnectionsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

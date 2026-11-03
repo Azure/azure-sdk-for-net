@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Enclave.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new DedicatedHubResourceListResult(value, nextLink, additionalBinaryDataProperties);
+            return new DedicatedHubResourceListResult(value ?? new ChangeTrackingList<VirtualEnclaveDedicatedHubData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

@@ -299,7 +299,7 @@ namespace Azure.ResourceManager.Search
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<SharedSearchServicePrivateLinkResourceData, SharedSearchServicePrivateLinkResource>(new SharedPrivateLinkResourcesGetByServiceAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<SharedSearchServicePrivateLinkResourceData, SharedSearchServicePrivateLinkResource>(new SharedSearchServicePrivateLinkResourceDataAsyncCollectionResultOfT(
                 _sharedPrivateLinkResourcesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -335,7 +335,7 @@ namespace Azure.ResourceManager.Search
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<SharedSearchServicePrivateLinkResourceData, SharedSearchServicePrivateLinkResource>(new SharedPrivateLinkResourcesGetByServiceCollectionResultOfT(
+            return new PageableWrapper<SharedSearchServicePrivateLinkResourceData, SharedSearchServicePrivateLinkResource>(new SharedSearchServicePrivateLinkResourceDataCollectionResultOfT(
                 _sharedPrivateLinkResourcesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

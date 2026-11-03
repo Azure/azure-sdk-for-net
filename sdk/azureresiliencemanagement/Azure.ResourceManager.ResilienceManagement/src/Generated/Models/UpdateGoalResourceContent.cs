@@ -12,14 +12,14 @@ using Azure.ResourceManager.ResilienceManagement;
 
 namespace Azure.ResourceManager.ResilienceManagement.Models
 {
-    /// <summary> Request model for update goal resource. </summary>
+    /// <summary> Request body for updating goal resources. </summary>
     public partial class UpdateGoalResourceContent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="UpdateGoalResourceContent"/>. </summary>
-        /// <param name="resources"> List of update goal resource. </param>
+        /// <param name="resources"> The goal resources to update. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resources"/> is null. </exception>
         public UpdateGoalResourceContent(IEnumerable<GoalMembersData> resources)
         {
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="UpdateGoalResourceContent"/>. </summary>
-        /// <param name="resources"> List of update goal resource. </param>
+        /// <param name="resources"> The goal resources to update. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal UpdateGoalResourceContent(IList<GoalMembersData> resources, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> List of update goal resource. </summary>
+        /// <summary> The goal resources to update. </summary>
         public IList<GoalMembersData> Resources { get; }
     }
 }

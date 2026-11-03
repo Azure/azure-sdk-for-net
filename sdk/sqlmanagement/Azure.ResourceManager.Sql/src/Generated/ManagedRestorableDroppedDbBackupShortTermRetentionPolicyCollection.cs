@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.Sql
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ManagedBackupShortTermRetentionPolicyData, ManagedRestorableDroppedDbBackupShortTermRetentionPolicyResource>(new ManagedRestorableDroppedDatabaseBackupShortTermRetentionPoliciesGetByRestorableDroppedDatabaseAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<ManagedBackupShortTermRetentionPolicyData, ManagedRestorableDroppedDbBackupShortTermRetentionPolicyResource>(new ManagedBackupShortTermRetentionPolicyDataAsync0CollectionResultOfT(
                 _managedRestorableDroppedDatabaseBackupShortTermRetentionPoliciesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -317,7 +317,7 @@ namespace Azure.ResourceManager.Sql
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ManagedBackupShortTermRetentionPolicyData, ManagedRestorableDroppedDbBackupShortTermRetentionPolicyResource>(new ManagedRestorableDroppedDatabaseBackupShortTermRetentionPoliciesGetByRestorableDroppedDatabaseCollectionResultOfT(
+            return new PageableWrapper<ManagedBackupShortTermRetentionPolicyData, ManagedRestorableDroppedDbBackupShortTermRetentionPolicyResource>(new ManagedBackupShortTermRetentionPolicyData0CollectionResultOfT(
                 _managedRestorableDroppedDatabaseBackupShortTermRetentionPoliciesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

@@ -6,10 +6,9 @@ try
 {
     if (await this.CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
     {
-        await this.GetTagResource().DeleteAsync(global::Azure.WaitUntil.Completed, cancellationToken).ConfigureAwait(false);
-        global::Azure.Response<global::Azure.ResourceManager.Resources.TagResource> originalTags = await this.GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
-        originalTags.Value.Data.TagValues.ReplaceWith(tags);
-        await this.GetTagResource().CreateOrUpdateAsync(global::Azure.WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
+        global::Azure.ResourceManager.Resources.TagResourceData tagData = new global::Azure.ResourceManager.Resources.TagResourceData(new global::Azure.ResourceManager.Resources.Models.Tag());
+        tagData.TagValues.ReplaceWith(tags);
+        await this.GetTagResource().CreateOrUpdateAsync(global::Azure.WaitUntil.Completed, tagData, cancellationToken).ConfigureAwait(false);
         global::Azure.RequestContext context = new global::Azure.RequestContext
         {
             CancellationToken = cancellationToken

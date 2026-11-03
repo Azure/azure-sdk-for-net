@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.Sql
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<SubscriptionUsageData, SubscriptionUsageResource>(new SubscriptionUsagesGetByLocationAsyncCollectionResultOfT(_subscriptionUsagesRestClient, Guid.Parse(Id.SubscriptionId), _locationName, context, "SubscriptionUsageCollection.GetAll"), data => new SubscriptionUsageResource(Client, data));
+            return new AsyncPageableWrapper<SubscriptionUsageData, SubscriptionUsageResource>(new SubscriptionUsageDataAsyncCollectionResultOfT(_subscriptionUsagesRestClient, Guid.Parse(Id.SubscriptionId), _locationName, context, "SubscriptionUsageCollection.GetAll"), data => new SubscriptionUsageResource(Client, data));
         }
 
         /// <summary>
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.Sql
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<SubscriptionUsageData, SubscriptionUsageResource>(new SubscriptionUsagesGetByLocationCollectionResultOfT(_subscriptionUsagesRestClient, Guid.Parse(Id.SubscriptionId), _locationName, context, "SubscriptionUsageCollection.GetAll"), data => new SubscriptionUsageResource(Client, data));
+            return new PageableWrapper<SubscriptionUsageData, SubscriptionUsageResource>(new SubscriptionUsageDataCollectionResultOfT(_subscriptionUsagesRestClient, Guid.Parse(Id.SubscriptionId), _locationName, context, "SubscriptionUsageCollection.GetAll"), data => new SubscriptionUsageResource(Client, data));
         }
 
         /// <summary>

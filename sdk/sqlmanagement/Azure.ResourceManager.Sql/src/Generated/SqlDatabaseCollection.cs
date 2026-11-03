@@ -302,7 +302,7 @@ namespace Azure.ResourceManager.Sql
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<SqlDatabaseData, SqlDatabaseResource>(new DatabasesGetByServerAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<SqlDatabaseData, SqlDatabaseResource>(new SqlDatabaseDataAsyncCollectionResultOfT(
                 _databasesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -344,7 +344,7 @@ namespace Azure.ResourceManager.Sql
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<SqlDatabaseData, SqlDatabaseResource>(new DatabasesGetByServerCollectionResultOfT(
+            return new PageableWrapper<SqlDatabaseData, SqlDatabaseResource>(new SqlDatabaseDataCollectionResultOfT(
                 _databasesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

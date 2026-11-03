@@ -17,7 +17,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Compute.BulkActions
 {
-    /// <summary> One scheduled execution of a scheduled action. </summary>
+    /// <summary> One scheduled execution of a recurring bulk action. </summary>
     public partial class ScheduledActionOccurrenceData : ResourceData, IJsonModel<ScheduledActionOccurrenceData>
     {
         /// <param name="data"> The data to parse. </param>

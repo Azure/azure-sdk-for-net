@@ -23,8 +23,6 @@ namespace Azure.ResourceManager.Cdn.Mocking
     {
         private ClientDiagnostics _profilesClientDiagnostics;
         private Profiles _profilesRestClient;
-        private ClientDiagnostics _webAgentsClientDiagnostics;
-        private WebAgents _webAgentsRestClient;
         private ClientDiagnostics _cdnClientClientDiagnostics;
         private CdnClient _cdnClientRestClient;
         private ClientDiagnostics _resourceUsageClientDiagnostics;
@@ -46,23 +44,25 @@ namespace Azure.ResourceManager.Cdn.Mocking
 
         private ClientDiagnostics ProfilesClientDiagnostics => _profilesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Cdn.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Profiles ProfilesRestClient => _profilesRestClient ??= new Profiles(ProfilesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-09-01-preview");
-
-        private ClientDiagnostics WebAgentsClientDiagnostics => _webAgentsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Cdn.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-
-        private WebAgents WebAgentsRestClient => _webAgentsRestClient ??= new WebAgents(WebAgentsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-09-01-preview");
+        private Profiles ProfilesRestClient => _profilesRestClient ??= new Profiles(
+            ProfilesClientDiagnostics,
+            Pipeline,
+            Diagnostics.ApplicationId,
+            Endpoint,
+            "2026-10-01",
+            resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
 
         private ClientDiagnostics CdnClientClientDiagnostics => _cdnClientClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Cdn.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private CdnClient CdnClientRestClient => _cdnClientRestClient ??= new CdnClient(CdnClientClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-09-01-preview");
+        private CdnClient CdnClientRestClient => _cdnClientRestClient ??= new CdnClient(CdnClientClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-10-01");
 
         private ClientDiagnostics ResourceUsageClientDiagnostics => _resourceUsageClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Cdn.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ResourceUsage ResourceUsageRestClient => _resourceUsageRestClient ??= new ResourceUsage(ResourceUsageClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-09-01-preview");
+        private ResourceUsage ResourceUsageRestClient => _resourceUsageRestClient ??= new ResourceUsage(ResourceUsageClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-10-01");
 
         private ClientDiagnostics ManagedRuleSetsClientDiagnostics => _managedRuleSetsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Cdn.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ManagedRuleSets ManagedRuleSetsRestClient => _managedRuleSetsRestClient ??= new ManagedRuleSets(ManagedRuleSetsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-09-01-preview");
+        private ManagedRuleSets ManagedRuleSetsRestClient => _managedRuleSetsRestClient ??= new ManagedRuleSets(ManagedRuleSetsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-10-01");
 
         /// <summary>
         /// Lists all of the Azure Front Door Standard, Azure Front Door Premium, and CDN profiles within an Azure subscription.
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Cdn.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Cdn.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ProfileData, ProfileResource>(new ProfilesGetAllAsyncCollectionResultOfT(ProfilesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableCdnSubscriptionResource.GetProfiles"), data => new ProfileResource(Client, data));
+            return new AsyncPageableWrapper<ProfileData, ProfileResource>(new ProfileDataAsync0CollectionResultOfT(ProfilesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableCdnSubscriptionResource.GetProfiles"), data => new ProfileResource(Client, data));
         }
 
         /// <summary>
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Cdn.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -117,63 +117,7 @@ namespace Azure.ResourceManager.Cdn.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ProfileData, ProfileResource>(new ProfilesGetAllCollectionResultOfT(ProfilesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableCdnSubscriptionResource.GetProfiles"), data => new ProfileResource(Client, data));
-        }
-
-        /// <summary>
-        /// Lists all web agents within a subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Cdn/webAgents. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> WebAgents_ListBySubscription. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="CdnWebAgentResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<CdnWebAgentResource> GetCdnWebAgentsAsync(CancellationToken cancellationToken = default)
-        {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new AsyncPageableWrapper<CdnWebAgentData, CdnWebAgentResource>(new WebAgentsGetBySubscriptionAsyncCollectionResultOfT(WebAgentsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableCdnSubscriptionResource.GetCdnWebAgents"), data => new CdnWebAgentResource(Client, data));
-        }
-
-        /// <summary>
-        /// Lists all web agents within a subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Cdn/webAgents. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> WebAgents_ListBySubscription. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="CdnWebAgentResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<CdnWebAgentResource> GetCdnWebAgents(CancellationToken cancellationToken = default)
-        {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new PageableWrapper<CdnWebAgentData, CdnWebAgentResource>(new WebAgentsGetBySubscriptionCollectionResultOfT(WebAgentsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableCdnSubscriptionResource.GetCdnWebAgents"), data => new CdnWebAgentResource(Client, data));
+            return new PageableWrapper<ProfileData, ProfileResource>(new ProfileData0CollectionResultOfT(ProfilesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableCdnSubscriptionResource.GetProfiles"), data => new ProfileResource(Client, data));
         }
 
         /// <summary>
@@ -189,7 +133,7 @@ namespace Azure.ResourceManager.Cdn.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -237,7 +181,7 @@ namespace Azure.ResourceManager.Cdn.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -285,7 +229,7 @@ namespace Azure.ResourceManager.Cdn.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -333,7 +277,7 @@ namespace Azure.ResourceManager.Cdn.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -381,7 +325,7 @@ namespace Azure.ResourceManager.Cdn.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -393,7 +337,7 @@ namespace Azure.ResourceManager.Cdn.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new ResourceUsageGetResourceUsagesAsyncCollectionResultOfT(ResourceUsageRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableCdnSubscriptionResource.GetResourceUsages");
+            return new CdnUsageAsync1CollectionResultOfT(ResourceUsageRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableCdnSubscriptionResource.GetResourceUsages");
         }
 
         /// <summary>
@@ -409,7 +353,7 @@ namespace Azure.ResourceManager.Cdn.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -421,7 +365,7 @@ namespace Azure.ResourceManager.Cdn.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new ResourceUsageGetResourceUsagesCollectionResultOfT(ResourceUsageRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableCdnSubscriptionResource.GetResourceUsages");
+            return new CdnUsage1CollectionResultOfT(ResourceUsageRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableCdnSubscriptionResource.GetResourceUsages");
         }
 
         /// <summary>
@@ -437,7 +381,7 @@ namespace Azure.ResourceManager.Cdn.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -449,7 +393,7 @@ namespace Azure.ResourceManager.Cdn.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new ManagedRuleSetsGetManagedRuleSetsAsyncCollectionResultOfT(ManagedRuleSetsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableCdnSubscriptionResource.GetManagedRuleSets");
+            return new ManagedRuleSetDefinitionAsyncCollectionResultOfT(ManagedRuleSetsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableCdnSubscriptionResource.GetManagedRuleSets");
         }
 
         /// <summary>
@@ -465,7 +409,7 @@ namespace Azure.ResourceManager.Cdn.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -477,7 +421,7 @@ namespace Azure.ResourceManager.Cdn.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new ManagedRuleSetsGetManagedRuleSetsCollectionResultOfT(ManagedRuleSetsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableCdnSubscriptionResource.GetManagedRuleSets");
+            return new ManagedRuleSetDefinitionCollectionResultOfT(ManagedRuleSetsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableCdnSubscriptionResource.GetManagedRuleSets");
         }
     }
 }

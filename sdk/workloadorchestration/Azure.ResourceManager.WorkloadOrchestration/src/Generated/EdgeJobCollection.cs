@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<EdgeJobData, EdgeJobResource>(new JobsGetByTargetAsyncCollectionResultOfT(_jobsRestClient, Id.ToString(), context, "EdgeJobCollection.GetAll"), data => new EdgeJobResource(Client, data));
+            return new AsyncPageableWrapper<EdgeJobData, EdgeJobResource>(new EdgeJobDataAsyncCollectionResultOfT(_jobsRestClient, Id.ToString(), context, "EdgeJobCollection.GetAll"), data => new EdgeJobResource(Client, data));
         }
 
         /// <summary>
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<EdgeJobData, EdgeJobResource>(new JobsGetByTargetCollectionResultOfT(_jobsRestClient, Id.ToString(), context, "EdgeJobCollection.GetAll"), data => new EdgeJobResource(Client, data));
+            return new PageableWrapper<EdgeJobData, EdgeJobResource>(new EdgeJobDataCollectionResultOfT(_jobsRestClient, Id.ToString(), context, "EdgeJobCollection.GetAll"), data => new EdgeJobResource(Client, data));
         }
 
         /// <summary>

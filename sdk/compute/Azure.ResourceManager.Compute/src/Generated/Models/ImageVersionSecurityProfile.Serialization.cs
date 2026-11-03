@@ -14,7 +14,7 @@ using Azure.ResourceManager.Compute;
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> The security profile of a gallery image version. </summary>
-    internal partial class ImageVersionSecurityProfile : IJsonModel<ImageVersionSecurityProfile>
+    public partial class ImageVersionSecurityProfile : IJsonModel<ImageVersionSecurityProfile>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -79,6 +79,11 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("uefiSettings"u8);
                 writer.WriteObjectValue(UefiSettings, options);
             }
+            if (Optional.IsDefined(SecretsProvisioningSettings))
+            {
+                writer.WritePropertyName("secretsProvisioningSettings"u8);
+                writer.WriteObjectValue(SecretsProvisioningSettings, options);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -122,6 +127,7 @@ namespace Azure.ResourceManager.Compute.Models
                 return null;
             }
             GalleryImageVersionUefiSettings uefiSettings = default;
+            SecretsProvisioningSettings secretsProvisioningSettings = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -134,12 +140,21 @@ namespace Azure.ResourceManager.Compute.Models
                     uefiSettings = GalleryImageVersionUefiSettings.DeserializeGalleryImageVersionUefiSettings(prop.Value, options);
                     continue;
                 }
+                if (prop.NameEquals("secretsProvisioningSettings"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    secretsProvisioningSettings = SecretsProvisioningSettings.DeserializeSecretsProvisioningSettings(prop.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ImageVersionSecurityProfile(uefiSettings, additionalBinaryDataProperties);
+            return new ImageVersionSecurityProfile(uefiSettings, secretsProvisioningSettings, additionalBinaryDataProperties);
         }
     }
 }

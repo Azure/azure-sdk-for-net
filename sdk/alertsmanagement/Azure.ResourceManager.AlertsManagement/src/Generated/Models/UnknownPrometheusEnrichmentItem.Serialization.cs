@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                 alertEnrichmentType,
                 additionalBinaryDataProperties,
                 linkToApi,
-                datasources,
+                datasources ?? new ChangeTrackingList<string>(),
                 grafanaExplorePath,
                 query);
         }

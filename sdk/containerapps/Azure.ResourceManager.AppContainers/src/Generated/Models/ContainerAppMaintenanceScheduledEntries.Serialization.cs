@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ContainerAppMaintenanceScheduledEntries(scheduledEntries, additionalBinaryDataProperties);
+            return new ContainerAppMaintenanceScheduledEntries(scheduledEntries ?? new ChangeTrackingList<ManagedEnvironmentScheduledEntry>(), additionalBinaryDataProperties);
         }
     }
 }

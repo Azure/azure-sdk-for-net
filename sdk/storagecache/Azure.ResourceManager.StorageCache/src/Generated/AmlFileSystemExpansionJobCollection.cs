@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.StorageCache
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<AmlFileSystemExpansionJobData, AmlFileSystemExpansionJobResource>(new ExpansionJobsGetByAmlFilesystemAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<AmlFileSystemExpansionJobData, AmlFileSystemExpansionJobResource>(new AmlFileSystemExpansionJobDataAsyncCollectionResultOfT(
                 _expansionJobsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.StorageCache
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<AmlFileSystemExpansionJobData, AmlFileSystemExpansionJobResource>(new ExpansionJobsGetByAmlFilesystemCollectionResultOfT(
+            return new PageableWrapper<AmlFileSystemExpansionJobData, AmlFileSystemExpansionJobResource>(new AmlFileSystemExpansionJobDataCollectionResultOfT(
                 _expansionJobsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

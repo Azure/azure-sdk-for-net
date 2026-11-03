@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new AgentPoolDeleteMachinesContent(machineNames, additionalBinaryDataProperties);
+            return new AgentPoolDeleteMachinesContent(machineNames ?? new ChangeTrackingList<string>(), additionalBinaryDataProperties);
         }
     }
 }

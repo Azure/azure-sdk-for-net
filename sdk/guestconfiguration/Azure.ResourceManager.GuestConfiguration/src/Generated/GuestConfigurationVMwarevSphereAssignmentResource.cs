@@ -429,7 +429,7 @@ namespace Azure.ResourceManager.GuestConfiguration
             {
                 CancellationToken = cancellationToken
             };
-            return new GuestConfigurationConnectedVMwarevSphereAssignmentsReportsGetReportsAsyncCollectionResultOfT(
+            return new GuestConfigurationAssignmentReportAsync2CollectionResultOfT(
                 _guestConfigurationConnectedVMwarevSphereAssignmentsReportsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -468,7 +468,7 @@ namespace Azure.ResourceManager.GuestConfiguration
             {
                 CancellationToken = cancellationToken
             };
-            return new GuestConfigurationConnectedVMwarevSphereAssignmentsReportsGetReportsCollectionResultOfT(
+            return new GuestConfigurationAssignmentReport2CollectionResultOfT(
                 _guestConfigurationConnectedVMwarevSphereAssignmentsReportsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

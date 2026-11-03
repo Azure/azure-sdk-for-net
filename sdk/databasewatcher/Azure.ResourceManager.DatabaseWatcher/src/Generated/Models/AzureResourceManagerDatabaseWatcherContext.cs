@@ -15,7 +15,6 @@ namespace Azure.ResourceManager.DatabaseWatcher
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
     /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
-    [ModelReaderWriterBuildable(typeof(AlertRuleResourceListResult))]
     [ModelReaderWriterBuildable(typeof(DatabaseWatcherAlertRuleData))]
     [ModelReaderWriterBuildable(typeof(DatabaseWatcherAlertRuleProperties))]
     [ModelReaderWriterBuildable(typeof(DatabaseWatcherAlertRuleResource))]
@@ -35,18 +34,13 @@ namespace Azure.ResourceManager.DatabaseWatcher
     [ModelReaderWriterBuildable(typeof(DatabaseWatcherTargetProperties))]
     [ModelReaderWriterBuildable(typeof(DatabaseWatcherTargetResource))]
     [ModelReaderWriterBuildable(typeof(DatabaseWatcherUpdateProperties))]
-    [ModelReaderWriterBuildable(typeof(HealthValidationListResult))]
     [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
-    [ModelReaderWriterBuildable(typeof(SharedPrivateLinkResourceListResult))]
     [ModelReaderWriterBuildable(typeof(SqlDBElasticPoolTargetProperties))]
     [ModelReaderWriterBuildable(typeof(SqlDBSingleDatabaseTargetProperties))]
     [ModelReaderWriterBuildable(typeof(SqlMITargetProperties))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(TargetAuthenticationVaultSecret))]
-    [ModelReaderWriterBuildable(typeof(TargetListResult))]
-    [ModelReaderWriterBuildable(typeof(UnknownDatabaseWatcherTargetProperties))]
     [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
-    [ModelReaderWriterBuildable(typeof(WatcherListResult))]
     public partial class AzureResourceManagerDatabaseWatcherContext : ModelReaderWriterContext
     {
     }

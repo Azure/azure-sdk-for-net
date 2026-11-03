@@ -234,9 +234,9 @@ namespace Azure.ResourceManager.PrometheusRuleGroups.Models
                 description,
                 isEnabled,
                 clusterName,
-                scopes,
+                scopes ?? new ChangeTrackingList<ResourceIdentifier>(),
                 interval,
-                rules,
+                rules ?? new ChangeTrackingList<PrometheusRule>(),
                 additionalBinaryDataProperties);
         }
     }

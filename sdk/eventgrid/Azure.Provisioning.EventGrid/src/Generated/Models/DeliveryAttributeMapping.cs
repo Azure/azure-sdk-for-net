@@ -12,7 +12,7 @@ namespace Azure.Provisioning.EventGrid
 {
     /// <summary>
     /// Delivery attribute mapping details.
-    /// Please note this is the base class. The derived classes available for instantiation are: <see cref="StaticDeliveryAttributeMapping"/> and <see cref="DynamicDeliveryAttributeMapping"/>.
+    /// Please note this is the base class. The derived classes available for instantiation are: <see cref="DynamicDeliveryAttributeMapping"/> and <see cref="StaticDeliveryAttributeMapping"/>.
     /// </summary>
     public partial class DeliveryAttributeMapping : ProvisionableConstruct
     {

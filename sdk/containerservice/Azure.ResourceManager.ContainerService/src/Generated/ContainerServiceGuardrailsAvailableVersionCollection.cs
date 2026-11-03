@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.ContainerService
             TryGetApiVersion(ContainerServiceGuardrailsAvailableVersionResource.ResourceType, out string containerServiceGuardrailsAvailableVersionApiVersion);
             _location = location;
             _guardrailsAvailableVersionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ContainerService", ContainerServiceGuardrailsAvailableVersionResource.ResourceType.Namespace, Diagnostics);
-            _guardrailsAvailableVersionsRestClient = new GuardrailsAvailableVersions(_guardrailsAvailableVersionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, containerServiceGuardrailsAvailableVersionApiVersion ?? "2026-06-02-preview");
+            _guardrailsAvailableVersionsRestClient = new GuardrailsAvailableVersions(_guardrailsAvailableVersionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, containerServiceGuardrailsAvailableVersionApiVersion ?? "2026-08-02-preview");
             ValidateResourceId(id);
         }
 
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.ContainerService
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-06-02-preview. </description>
+        /// <description> 2026-08-02-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.ContainerService
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-06-02-preview. </description>
+        /// <description> 2026-08-02-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.ContainerService
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-06-02-preview. </description>
+        /// <description> 2026-08-02-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.ContainerService
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ContainerServiceGuardrailsAvailableVersionData, ContainerServiceGuardrailsAvailableVersionResource>(new GuardrailsAvailableVersionsGetGuardrailsVersionsAsyncCollectionResultOfT(_guardrailsAvailableVersionsRestClient, Guid.Parse(Id.SubscriptionId), _location, context, "ContainerServiceGuardrailsAvailableVersionCollection.GetAll"), data => new ContainerServiceGuardrailsAvailableVersionResource(Client, data));
+            return new AsyncPageableWrapper<ContainerServiceGuardrailsAvailableVersionData, ContainerServiceGuardrailsAvailableVersionResource>(new ContainerServiceGuardrailsAvailableVersionDataAsyncCollectionResultOfT(_guardrailsAvailableVersionsRestClient, Guid.Parse(Id.SubscriptionId), _location, context, "ContainerServiceGuardrailsAvailableVersionCollection.GetAll"), data => new ContainerServiceGuardrailsAvailableVersionResource(Client, data));
         }
 
         /// <summary>
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.ContainerService
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-06-02-preview. </description>
+        /// <description> 2026-08-02-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.ContainerService
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ContainerServiceGuardrailsAvailableVersionData, ContainerServiceGuardrailsAvailableVersionResource>(new GuardrailsAvailableVersionsGetGuardrailsVersionsCollectionResultOfT(_guardrailsAvailableVersionsRestClient, Guid.Parse(Id.SubscriptionId), _location, context, "ContainerServiceGuardrailsAvailableVersionCollection.GetAll"), data => new ContainerServiceGuardrailsAvailableVersionResource(Client, data));
+            return new PageableWrapper<ContainerServiceGuardrailsAvailableVersionData, ContainerServiceGuardrailsAvailableVersionResource>(new ContainerServiceGuardrailsAvailableVersionDataCollectionResultOfT(_guardrailsAvailableVersionsRestClient, Guid.Parse(Id.SubscriptionId), _location, context, "ContainerServiceGuardrailsAvailableVersionCollection.GetAll"), data => new ContainerServiceGuardrailsAvailableVersionResource(Client, data));
         }
 
         /// <summary>
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.ContainerService
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-06-02-preview. </description>
+        /// <description> 2026-08-02-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -283,7 +283,7 @@ namespace Azure.ResourceManager.ContainerService
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-06-02-preview. </description>
+        /// <description> 2026-08-02-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -340,7 +340,7 @@ namespace Azure.ResourceManager.ContainerService
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-06-02-preview. </description>
+        /// <description> 2026-08-02-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -401,7 +401,7 @@ namespace Azure.ResourceManager.ContainerService
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-06-02-preview. </description>
+        /// <description> 2026-08-02-preview. </description>
         /// </item>
         /// </list>
         /// </summary>

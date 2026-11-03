@@ -9,6 +9,7 @@ trigger:
   paths:
     include:
     - sdk/databox/Azure.ResourceManager.DataBox
+    - sdk/databox/Azure.Provisioning.DataBox
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:
@@ -18,3 +19,5 @@ extends:
     Artifacts:
     - name: Azure.ResourceManager.DataBox
       safeName: AzureResourceManagerDataBox
+    - name: Azure.Provisioning.DataBox
+      safeName: AzureProvisioningDataBox

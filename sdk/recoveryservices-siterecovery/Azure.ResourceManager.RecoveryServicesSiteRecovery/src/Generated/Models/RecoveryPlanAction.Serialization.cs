@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new RecoveryPlanAction(actionName, failoverTypes, failoverDirections, customDetails, additionalBinaryDataProperties);
+            return new RecoveryPlanAction(actionName, failoverTypes ?? new ChangeTrackingList<ReplicationProtectedItemOperation>(), failoverDirections ?? new ChangeTrackingList<PossibleOperationsDirection>(), customDetails, additionalBinaryDataProperties);
         }
     }
 }

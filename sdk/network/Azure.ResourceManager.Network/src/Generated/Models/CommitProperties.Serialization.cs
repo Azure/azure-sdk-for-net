@@ -296,7 +296,7 @@ namespace Azure.ResourceManager.Network.Models
                 resourceGuid,
                 commitType,
                 configurationIds ?? new ChangeTrackingList<ResourceIdentifier>(),
-                targetLocations,
+                targetLocations ?? new ChangeTrackingList<string>(),
                 activeLocations ?? new ChangeTrackingList<string>(),
                 forceUpdateTag,
                 additionalBinaryDataProperties);

@@ -47,11 +47,11 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public IDictionary<string, string> Tags { get; }
 
         /// <summary> The rack definition that is intended to reflect only a single rack in a single rack cluster, or an aggregator rack in a multi-rack cluster. </summary>
-        public NetworkCloudRackDefinition AggregatorOrSingleRackDefinition
+        public NetworkCloudRackDefinitionPatch AggregatorOrSingleRackDefinitionPatch
         {
             get
             {
-                return Properties is null ? default : Properties.AggregatorOrSingleRackDefinition;
+                return Properties is null ? default : Properties.AggregatorOrSingleRackDefinitionPatch;
             }
             set
             {
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 {
                     Properties = new ClusterPatchProperties();
                 }
-                Properties.AggregatorOrSingleRackDefinition = value;
+                Properties.AggregatorOrSingleRackDefinitionPatch = value;
             }
         }
 
@@ -98,11 +98,11 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         }
 
         /// <summary> Field Deprecated: Use managed identity to provide cluster privileges. The service principal to be used by the cluster during Arc Appliance installation. </summary>
-        public ServicePrincipalInformation ClusterServicePrincipal
+        public ServicePrincipalInformationPatch ClusterServicePrincipalPatch
         {
             get
             {
-                return Properties is null ? default : Properties.ClusterServicePrincipal;
+                return Properties is null ? default : Properties.ClusterServicePrincipalPatch;
             }
             set
             {
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 {
                     Properties = new ClusterPatchProperties();
                 }
-                Properties.ClusterServicePrincipal = value;
+                Properties.ClusterServicePrincipalPatch = value;
             }
         }
 
@@ -132,11 +132,11 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         }
 
         /// <summary> The validation threshold indicating the allowable failures of compute machines during environment validation and deployment. </summary>
-        public ValidationThreshold ComputeDeploymentThreshold
+        public ValidationThresholdPatch ComputeDeploymentThresholdPatch
         {
             get
             {
-                return Properties is null ? default : Properties.ComputeDeploymentThreshold;
+                return Properties is null ? default : Properties.ComputeDeploymentThresholdPatch;
             }
             set
             {
@@ -144,12 +144,12 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 {
                     Properties = new ClusterPatchProperties();
                 }
-                Properties.ComputeDeploymentThreshold = value;
+                Properties.ComputeDeploymentThresholdPatch = value;
             }
         }
 
         /// <summary> The list of rack definitions for the compute racks in a multi-rack cluster, or an empty list in a single-rack cluster. </summary>
-        public IList<NetworkCloudRackDefinition> ComputeRackDefinitions
+        public IList<NetworkCloudRackDefinitionPatch> ComputeRackDefinitionsPatch
         {
             get
             {
@@ -157,12 +157,12 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 {
                     Properties = new ClusterPatchProperties();
                 }
-                return Properties.ComputeRackDefinitions;
+                return Properties.ComputeRackDefinitionsPatch;
             }
         }
 
         /// <summary> The settings for cluster runtime protection. </summary>
-        public RuntimeProtectionConfiguration RuntimeProtectionConfiguration
+        public RuntimeProtectionConfigurationPatch RuntimeProtectionConfiguration
         {
             get
             {
@@ -179,11 +179,11 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         }
 
         /// <summary> The configuration for use of a key vault to store secrets for later retrieval by the operator. </summary>
-        public ClusterSecretArchive SecretArchive
+        public ClusterSecretArchivePatch SecretArchivePatch
         {
             get
             {
-                return Properties is null ? default : Properties.SecretArchive;
+                return Properties is null ? default : Properties.SecretArchivePatch;
             }
             set
             {
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 {
                     Properties = new ClusterPatchProperties();
                 }
-                Properties.SecretArchive = value;
+                Properties.SecretArchivePatch = value;
             }
         }
 
@@ -213,11 +213,11 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         }
 
         /// <summary> The strategy for updating the cluster. </summary>
-        public ClusterUpdateStrategy UpdateStrategy
+        public ClusterUpdateStrategyPatch UpdateStrategyPatch
         {
             get
             {
-                return Properties is null ? default : Properties.UpdateStrategy;
+                return Properties is null ? default : Properties.UpdateStrategyPatch;
             }
             set
             {
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 {
                     Properties = new ClusterPatchProperties();
                 }
-                Properties.UpdateStrategy = value;
+                Properties.UpdateStrategyPatch = value;
             }
         }
 

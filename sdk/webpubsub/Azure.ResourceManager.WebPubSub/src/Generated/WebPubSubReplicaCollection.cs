@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.WebPubSub
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<WebPubSubReplicaData, WebPubSubReplicaResource>(new ReplicasGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<WebPubSubReplicaData, WebPubSubReplicaResource>(new WebPubSubReplicaDataAsyncCollectionResultOfT(
                 _replicasRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.WebPubSub
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<WebPubSubReplicaData, WebPubSubReplicaResource>(new ReplicasGetAllCollectionResultOfT(
+            return new PageableWrapper<WebPubSubReplicaData, WebPubSubReplicaResource>(new WebPubSubReplicaDataCollectionResultOfT(
                 _replicasRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

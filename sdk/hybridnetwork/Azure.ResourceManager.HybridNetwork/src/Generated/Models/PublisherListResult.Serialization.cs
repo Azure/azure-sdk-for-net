@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new PublisherListResult(value, nextLink, additionalBinaryDataProperties);
+            return new PublisherListResult(value ?? new ChangeTrackingList<PublisherData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

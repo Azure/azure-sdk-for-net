@@ -292,7 +292,7 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ResolverContractData, ResolverContractResource>(new GraphQLApiResolverGetByApiAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<ResolverContractData, ResolverContractResource>(new ResolverContractDataAsyncCollectionResultOfT(
                 _graphQLApiResolverRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -333,7 +333,7 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ResolverContractData, ResolverContractResource>(new GraphQLApiResolverGetByApiCollectionResultOfT(
+            return new PageableWrapper<ResolverContractData, ResolverContractResource>(new ResolverContractDataCollectionResultOfT(
                 _graphQLApiResolverRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

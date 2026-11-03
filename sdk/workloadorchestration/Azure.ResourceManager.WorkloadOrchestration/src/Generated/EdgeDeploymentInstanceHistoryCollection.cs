@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<EdgeDeploymentInstanceHistoryData, EdgeDeploymentInstanceHistoryResource>(new InstanceHistoriesGetByInstanceAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<EdgeDeploymentInstanceHistoryData, EdgeDeploymentInstanceHistoryResource>(new EdgeDeploymentInstanceHistoryDataAsyncCollectionResultOfT(
                 _instanceHistoriesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<EdgeDeploymentInstanceHistoryData, EdgeDeploymentInstanceHistoryResource>(new InstanceHistoriesGetByInstanceCollectionResultOfT(
+            return new PageableWrapper<EdgeDeploymentInstanceHistoryData, EdgeDeploymentInstanceHistoryResource>(new EdgeDeploymentInstanceHistoryDataCollectionResultOfT(
                 _instanceHistoriesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

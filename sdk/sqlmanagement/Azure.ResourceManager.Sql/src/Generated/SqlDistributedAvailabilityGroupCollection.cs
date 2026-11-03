@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.Sql
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<SqlDistributedAvailabilityGroupData, SqlDistributedAvailabilityGroupResource>(new DistributedAvailabilityGroupsGetByInstanceAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<SqlDistributedAvailabilityGroupData, SqlDistributedAvailabilityGroupResource>(new SqlDistributedAvailabilityGroupDataAsyncCollectionResultOfT(
                 _distributedAvailabilityGroupsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.Sql
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<SqlDistributedAvailabilityGroupData, SqlDistributedAvailabilityGroupResource>(new DistributedAvailabilityGroupsGetByInstanceCollectionResultOfT(
+            return new PageableWrapper<SqlDistributedAvailabilityGroupData, SqlDistributedAvailabilityGroupResource>(new SqlDistributedAvailabilityGroupDataCollectionResultOfT(
                 _distributedAvailabilityGroupsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

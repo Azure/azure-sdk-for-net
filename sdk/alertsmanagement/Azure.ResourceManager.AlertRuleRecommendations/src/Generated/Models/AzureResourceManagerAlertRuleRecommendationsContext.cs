@@ -17,8 +17,6 @@ namespace Azure.ResourceManager.AlertRuleRecommendations
     /// </summary>
     [ModelReaderWriterBuildable(typeof(AlertRuleRecommendation))]
     [ModelReaderWriterBuildable(typeof(AlertRuleRecommendationArmTemplate))]
-    [ModelReaderWriterBuildable(typeof(AlertRuleRecommendationProperties))]
-    [ModelReaderWriterBuildable(typeof(AlertRuleRecommendationsListResponse))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     public partial class AzureResourceManagerAlertRuleRecommendationsContext : ModelReaderWriterContext
     {

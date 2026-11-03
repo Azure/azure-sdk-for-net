@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new AdlsBlobBackupDataSourceSettings(objectType, additionalBinaryDataProperties, containersList);
+            return new AdlsBlobBackupDataSourceSettings(objectType, additionalBinaryDataProperties, containersList ?? new ChangeTrackingList<string>());
         }
     }
 }

@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.Avs
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<AvsPrivateCloudAddonData, AvsPrivateCloudAddonResource>(new AddonsGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<AvsPrivateCloudAddonData, AvsPrivateCloudAddonResource>(new AvsPrivateCloudAddonDataAsyncCollectionResultOfT(
                 _addonsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.Avs
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<AvsPrivateCloudAddonData, AvsPrivateCloudAddonResource>(new AddonsGetAllCollectionResultOfT(
+            return new PageableWrapper<AvsPrivateCloudAddonData, AvsPrivateCloudAddonResource>(new AvsPrivateCloudAddonDataCollectionResultOfT(
                 _addonsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

@@ -17,10 +17,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.ExtensionTypes
     /// </summary>
     [ModelReaderWriterBuildable(typeof(ClusterExtensionTypeResource))]
     [ModelReaderWriterBuildable(typeof(ClusterExtensionTypeVersionResource))]
-    [ModelReaderWriterBuildable(typeof(ExtensionTypesList))]
-    [ModelReaderWriterBuildable(typeof(ExtensionTypeVersionsList))]
     [ModelReaderWriterBuildable(typeof(KubernetesConfigurationExtensionTypeClusterScopeSettings))]
-    [ModelReaderWriterBuildable(typeof(KubernetesConfigurationExtensionTypeClusterScopeSettingsProperties))]
     [ModelReaderWriterBuildable(typeof(KubernetesConfigurationExtensionTypeData))]
     [ModelReaderWriterBuildable(typeof(KubernetesConfigurationExtensionTypePlanInfo))]
     [ModelReaderWriterBuildable(typeof(KubernetesConfigurationExtensionTypeProperties))]

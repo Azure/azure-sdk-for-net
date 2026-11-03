@@ -289,7 +289,7 @@ namespace Azure.ResourceManager.Sql
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<SqlServerDnsAliasData, SqlServerDnsAliasResource>(new ServerDnsAliasesGetByServerAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<SqlServerDnsAliasData, SqlServerDnsAliasResource>(new SqlServerDnsAliasDataAsyncCollectionResultOfT(
                 _serverDnsAliasesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -323,7 +323,7 @@ namespace Azure.ResourceManager.Sql
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<SqlServerDnsAliasData, SqlServerDnsAliasResource>(new ServerDnsAliasesGetByServerCollectionResultOfT(
+            return new PageableWrapper<SqlServerDnsAliasData, SqlServerDnsAliasResource>(new SqlServerDnsAliasDataCollectionResultOfT(
                 _serverDnsAliasesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

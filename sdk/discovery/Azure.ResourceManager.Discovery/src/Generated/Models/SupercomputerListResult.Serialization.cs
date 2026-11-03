@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Discovery.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new SupercomputerListResult(value, nextLink, additionalBinaryDataProperties);
+            return new SupercomputerListResult(value ?? new ChangeTrackingList<DiscoverySupercomputerData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

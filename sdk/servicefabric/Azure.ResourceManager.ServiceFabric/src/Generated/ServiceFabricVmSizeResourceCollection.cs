@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.ServiceFabric
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ServiceFabricVmSizeResourceData, ServiceFabricVmSizeResource>(new UnsupportedVmSizesGetAllAsyncCollectionResultOfT(_unsupportedVmSizesRestClient, Id.SubscriptionId, _location, context, "ServiceFabricVmSizeResourceCollection.GetAll"), data => new ServiceFabricVmSizeResource(Client, data));
+            return new AsyncPageableWrapper<ServiceFabricVmSizeResourceData, ServiceFabricVmSizeResource>(new ServiceFabricVmSizeResourceDataAsyncCollectionResultOfT(_unsupportedVmSizesRestClient, Id.SubscriptionId, _location, context, "ServiceFabricVmSizeResourceCollection.GetAll"), data => new ServiceFabricVmSizeResource(Client, data));
         }
 
         /// <summary>
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.ServiceFabric
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ServiceFabricVmSizeResourceData, ServiceFabricVmSizeResource>(new UnsupportedVmSizesGetAllCollectionResultOfT(_unsupportedVmSizesRestClient, Id.SubscriptionId, _location, context, "ServiceFabricVmSizeResourceCollection.GetAll"), data => new ServiceFabricVmSizeResource(Client, data));
+            return new PageableWrapper<ServiceFabricVmSizeResourceData, ServiceFabricVmSizeResource>(new ServiceFabricVmSizeResourceDataCollectionResultOfT(_unsupportedVmSizesRestClient, Id.SubscriptionId, _location, context, "ServiceFabricVmSizeResourceCollection.GetAll"), data => new ServiceFabricVmSizeResource(Client, data));
         }
 
         /// <summary>

@@ -292,7 +292,7 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ApiManagementOpenIdConnectProviderData, ApiManagementOpenIdConnectProviderResource>(new OpenIdConnectProviderGetByServiceAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<ApiManagementOpenIdConnectProviderData, ApiManagementOpenIdConnectProviderResource>(new ApiManagementOpenIdConnectProviderDataAsyncCollectionResultOfT(
                 _openIdConnectProviderRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -332,7 +332,7 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ApiManagementOpenIdConnectProviderData, ApiManagementOpenIdConnectProviderResource>(new OpenIdConnectProviderGetByServiceCollectionResultOfT(
+            return new PageableWrapper<ApiManagementOpenIdConnectProviderData, ApiManagementOpenIdConnectProviderResource>(new ApiManagementOpenIdConnectProviderDataCollectionResultOfT(
                 _openIdConnectProviderRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

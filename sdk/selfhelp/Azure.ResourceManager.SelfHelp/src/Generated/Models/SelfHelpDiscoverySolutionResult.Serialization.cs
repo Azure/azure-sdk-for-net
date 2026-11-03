@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new SelfHelpDiscoverySolutionResult(value, nextLink, additionalBinaryDataProperties);
+            return new SelfHelpDiscoverySolutionResult(value ?? new ChangeTrackingList<SelfHelpSolutionMetadata>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

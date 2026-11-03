@@ -38,7 +38,13 @@ namespace Azure.ResourceManager.ServiceBus.Mocking
 
         private ClientDiagnostics NamespacesClientDiagnostics => _namespacesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ServiceBus.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Namespaces NamespacesRestClient => _namespacesRestClient ??= new Namespaces(NamespacesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-07-01-preview");
+        private Namespaces NamespacesRestClient => _namespacesRestClient ??= new Namespaces(
+            NamespacesClientDiagnostics,
+            Pipeline,
+            Diagnostics.ApplicationId,
+            Endpoint,
+            "2026-07-01-preview",
+            resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
 
         /// <summary>
         /// Gets all the available namespaces within the subscription, irrespective of the resource groups.
@@ -65,7 +71,7 @@ namespace Azure.ResourceManager.ServiceBus.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ServiceBusNamespaceData, ServiceBusNamespaceResource>(new NamespacesGetAllAsyncCollectionResultOfT(NamespacesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableServiceBusSubscriptionResource.GetServiceBusNamespaces"), data => new ServiceBusNamespaceResource(Client, data));
+            return new AsyncPageableWrapper<ServiceBusNamespaceData, ServiceBusNamespaceResource>(new ServiceBusNamespaceDataAsync0CollectionResultOfT(NamespacesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableServiceBusSubscriptionResource.GetServiceBusNamespaces"), data => new ServiceBusNamespaceResource(Client, data));
         }
 
         /// <summary>
@@ -93,7 +99,7 @@ namespace Azure.ResourceManager.ServiceBus.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ServiceBusNamespaceData, ServiceBusNamespaceResource>(new NamespacesGetAllCollectionResultOfT(NamespacesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableServiceBusSubscriptionResource.GetServiceBusNamespaces"), data => new ServiceBusNamespaceResource(Client, data));
+            return new PageableWrapper<ServiceBusNamespaceData, ServiceBusNamespaceResource>(new ServiceBusNamespaceData0CollectionResultOfT(NamespacesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableServiceBusSubscriptionResource.GetServiceBusNamespaces"), data => new ServiceBusNamespaceResource(Client, data));
         }
 
         /// <summary>

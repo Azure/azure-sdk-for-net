@@ -350,7 +350,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         {
             sasUriList ??= new ChangeTrackingList<string>();
 
-            return new MySqlFlexibleServerFullBackupStoreDetails(default, default, (sasUriList ?? new ChangeTrackingList<string>()).ToList());
+            return new MySqlFlexibleServerFullBackupStoreDetails("FullBackupStoreDetails", default, (sasUriList ?? new ChangeTrackingList<string>()).ToList());
         }
 
         /// <summary> BackupRequestBase is the base for all backup request. </summary>

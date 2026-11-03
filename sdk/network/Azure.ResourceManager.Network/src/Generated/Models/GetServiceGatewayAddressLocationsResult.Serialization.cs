@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Network.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new GetServiceGatewayAddressLocationsResult(value, nextLink, additionalBinaryDataProperties);
+            return new GetServiceGatewayAddressLocationsResult(value ?? new ChangeTrackingList<ServiceGatewayAddressLocationResponse>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

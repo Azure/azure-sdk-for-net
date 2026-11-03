@@ -29,8 +29,8 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <param name="objectType"> Type of the specific object - used for deserializing. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="absoluteCriteria">
-        /// it contains absolute values like "AllBackup" / "FirstOfDay" / "FirstOfWeek" / "FirstOfMonth"
-        /// and should be part of AbsoluteMarker enum
+        /// It contains absolute marker values such as `AllBackup`, `FirstOfDay`, `FirstOfWeek`, and `FirstOfMonth`.
+        /// These values should be part of the `AbsoluteMarker` enum.
         /// </param>
         /// <param name="daysOfMonth"> This is day of the month from 1 to 28 other wise last of month. </param>
         /// <param name="daysOfWeek"> It should be Sunday/Monday/T..../Saturday. </param>
@@ -48,8 +48,8 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         }
 
         /// <summary>
-        /// it contains absolute values like "AllBackup" / "FirstOfDay" / "FirstOfWeek" / "FirstOfMonth"
-        /// and should be part of AbsoluteMarker enum
+        /// It contains absolute marker values such as `AllBackup`, `FirstOfDay`, `FirstOfWeek`, and `FirstOfMonth`.
+        /// These values should be part of the `AbsoluteMarker` enum.
         /// </summary>
         public IList<BackupAbsoluteMarker> AbsoluteCriteria { get; }
 

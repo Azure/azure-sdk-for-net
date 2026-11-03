@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<SecureScoreData, SecureScoreResource>(new SecureScoresGetAllAsyncCollectionResultOfT(_secureScoresRestClient, Guid.Parse(Id.SubscriptionId), context, "SecureScoreCollection.GetAll"), data => new SecureScoreResource(Client, data));
+            return new AsyncPageableWrapper<SecureScoreData, SecureScoreResource>(new SecureScoreDataAsyncCollectionResultOfT(_secureScoresRestClient, Guid.Parse(Id.SubscriptionId), context, "SecureScoreCollection.GetAll"), data => new SecureScoreResource(Client, data));
         }
 
         /// <summary>
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<SecureScoreData, SecureScoreResource>(new SecureScoresGetAllCollectionResultOfT(_secureScoresRestClient, Guid.Parse(Id.SubscriptionId), context, "SecureScoreCollection.GetAll"), data => new SecureScoreResource(Client, data));
+            return new PageableWrapper<SecureScoreData, SecureScoreResource>(new SecureScoreDataCollectionResultOfT(_secureScoresRestClient, Guid.Parse(Id.SubscriptionId), context, "SecureScoreCollection.GetAll"), data => new SecureScoreResource(Client, data));
         }
 
         /// <summary>

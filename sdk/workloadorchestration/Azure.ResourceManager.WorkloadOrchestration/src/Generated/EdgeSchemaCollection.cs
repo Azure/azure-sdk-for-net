@@ -39,9 +39,8 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal EdgeSchemaCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(EdgeSchemaResource.ResourceType, out string edgeSchemaApiVersion);
             _schemasClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.WorkloadOrchestration", EdgeSchemaResource.ResourceType.Namespace, Diagnostics);
-            _schemasRestClient = new Schemas(_schemasClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, edgeSchemaApiVersion ?? "2025-06-01");
+            _schemasRestClient = new Schemas(_schemasClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.Edge/schemas", out string schemasApiVersionOverride) ? schemasApiVersionOverride : "2025-06-01");
             ValidateResourceId(id);
         }
 
@@ -294,7 +293,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<EdgeSchemaData, EdgeSchemaResource>(new SchemasGetByResourceGroupAsyncCollectionResultOfT(_schemasRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "EdgeSchemaCollection.GetAll"), data => new EdgeSchemaResource(Client, data));
+            return new AsyncPageableWrapper<EdgeSchemaData, EdgeSchemaResource>(new EdgeSchemaDataAsyncCollectionResultOfT(_schemasRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "EdgeSchemaCollection.GetAll"), data => new EdgeSchemaResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +321,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<EdgeSchemaData, EdgeSchemaResource>(new SchemasGetByResourceGroupCollectionResultOfT(_schemasRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "EdgeSchemaCollection.GetAll"), data => new EdgeSchemaResource(Client, data));
+            return new PageableWrapper<EdgeSchemaData, EdgeSchemaResource>(new EdgeSchemaDataCollectionResultOfT(_schemasRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "EdgeSchemaCollection.GetAll"), data => new EdgeSchemaResource(Client, data));
         }
 
         /// <summary>

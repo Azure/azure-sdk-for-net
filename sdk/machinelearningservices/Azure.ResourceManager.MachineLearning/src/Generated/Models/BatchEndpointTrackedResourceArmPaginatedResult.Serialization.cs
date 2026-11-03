@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new BatchEndpointTrackedResourceArmPaginatedResult(value, nextLink, additionalBinaryDataProperties);
+            return new BatchEndpointTrackedResourceArmPaginatedResult(value ?? new ChangeTrackingList<MachineLearningBatchEndpointData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

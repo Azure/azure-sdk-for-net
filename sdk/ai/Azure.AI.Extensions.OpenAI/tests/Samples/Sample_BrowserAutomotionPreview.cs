@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Text;
 using System.Threading.Tasks;
 using Azure.AI.Projects;
 using Azure.AI.Projects.Agents;
@@ -18,6 +19,9 @@ public class Sample_BrowserAutomotionPreview : ProjectsOpenAITestBase
     #region Snippet:Sample_ParseResponse_BrowserAutomotionPreview
     private static void ParseResponse(StreamingResponseUpdate streamResponse)
     {
+        StringBuilder errorMessage = new();
+        string errorCode = default;
+        bool hasError = false;
         if (streamResponse is StreamingResponseCreatedUpdate createUpdate)
         {
             Console.WriteLine($"Stream response created with ID: {createUpdate.Response.Id}");
@@ -32,7 +36,19 @@ public class Sample_BrowserAutomotionPreview : ProjectsOpenAITestBase
         }
         else if (streamResponse is StreamingResponseErrorUpdate errorUpdate)
         {
-            throw new InvalidOperationException($"The stream has failed with the error: {errorUpdate.Message}");
+            hasError = true;
+            if (!string.IsNullOrEmpty(errorUpdate.Code))
+            {
+                errorCode = errorUpdate.Code;
+            }
+            if (!string.IsNullOrEmpty(errorUpdate.Message))
+            {
+                errorMessage.Append(errorUpdate.Message);
+            }
+        }
+        if (hasError)
+        {
+            throw new InvalidOperationException($"The stream has failed with the error: {errorMessage}, error code: {errorCode}");
         }
     }
     #endregion
@@ -59,6 +75,7 @@ public class Sample_BrowserAutomotionPreview : ProjectsOpenAITestBase
         AIProjectClient projectClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential(), options: options);
 
         #endregion
+#pragma warning disable CS0618 // This sample intentionally demonstrates the legacy browser automation tool.
         #region Snippet:Sample_CreateAgent_BrowserAutomotionPreview_Async
         AIProjectConnection playwrightConnection = await projectClient.Connections.GetConnectionAsync(playwrightConnectionName);
         BrowserAutomationPreviewTool playwrightTool = new(
@@ -77,6 +94,7 @@ public class Sample_BrowserAutomotionPreview : ProjectsOpenAITestBase
             agentName: "myAgent",
             options: new(agentDefinition));
         #endregion
+#pragma warning restore CS0618
         #region Snippet:Sample_CreateResponse_BrowserAutomotionPreview_Async
         ProjectResponsesClient responseClient = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgent(agentVersion.Name);
         CreateResponseOptions responseOptions = new()
@@ -123,6 +141,7 @@ public class Sample_BrowserAutomotionPreview : ProjectsOpenAITestBase
             NetworkTimeout = TimeSpan.FromMinutes(5)
         };
         AIProjectClient projectClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential(), options: options);
+#pragma warning disable CS0618 // This sample intentionally demonstrates the legacy browser automation tool.
         #region Snippet:Sample_CreateAgent_BrowserAutomotionPreview_Sync
         AIProjectConnection playwrightConnection = projectClient.Connections.GetConnection(playwrightConnectionName);
         BrowserAutomationPreviewTool playwrightTool = new(
@@ -141,6 +160,7 @@ public class Sample_BrowserAutomotionPreview : ProjectsOpenAITestBase
             agentName: "myAgent",
             options: new(agentDefinition));
         #endregion
+#pragma warning restore CS0618
         #region Snippet:Sample_CreateResponse_BrowserAutomotionPreview_Sync
         ProjectResponsesClient responseClient = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgent(agentVersion.Name);
         CreateResponseOptions responseOptions = new()

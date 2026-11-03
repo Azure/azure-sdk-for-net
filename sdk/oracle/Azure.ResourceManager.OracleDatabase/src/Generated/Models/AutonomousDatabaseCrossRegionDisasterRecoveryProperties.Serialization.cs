@@ -206,6 +206,12 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             string databaseOcid = default;
             int? backupRetentionPeriodInDays = default;
             IList<string> whitelistedIPs = default;
+            bool? isScheduleAzUpdateToEarliest = default;
+            string timeScheduledAzUpdate = default;
+            string zone = default;
+            BackupDestinationType? backupDestination = default;
+            ResourceIdentifier resourceAnchorId = default;
+            ResourceIdentifier networkAnchorId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             AutonomousDatabaseSourceType source = default;
             ResourceIdentifier sourceId = default;
@@ -919,6 +925,52 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                     whitelistedIPs = array;
                     continue;
                 }
+                if (prop.NameEquals("isScheduleAzUpdateToEarliest"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    isScheduleAzUpdateToEarliest = prop.Value.GetBoolean();
+                    continue;
+                }
+                if (prop.NameEquals("timeScheduledAzUpdate"u8))
+                {
+                    timeScheduledAzUpdate = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("zone"u8))
+                {
+                    zone = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("backupDestination"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    backupDestination = new BackupDestinationType(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("resourceAnchorId"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    resourceAnchorId = new ResourceIdentifier(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("networkAnchorId"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    networkAnchorId = new ResourceIdentifier(prop.Value.GetString());
+                    continue;
+                }
                 if (prop.NameEquals("source"u8))
                 {
                     source = new AutonomousDatabaseSourceType(prop.Value.GetString());
@@ -1036,6 +1088,12 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 databaseOcid,
                 backupRetentionPeriodInDays,
                 whitelistedIPs ?? new ChangeTrackingList<string>(),
+                isScheduleAzUpdateToEarliest,
+                timeScheduledAzUpdate,
+                zone,
+                backupDestination,
+                resourceAnchorId,
+                networkAnchorId,
                 additionalBinaryDataProperties,
                 source,
                 sourceId,

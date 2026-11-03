@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ContainerGroupDnsConfiguration(nameServers, searchDomains, options0, additionalBinaryDataProperties);
+            return new ContainerGroupDnsConfiguration(nameServers ?? new ChangeTrackingList<string>(), searchDomains, options0, additionalBinaryDataProperties);
         }
     }
 }

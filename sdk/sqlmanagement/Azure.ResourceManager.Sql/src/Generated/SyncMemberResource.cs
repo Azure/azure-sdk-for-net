@@ -435,7 +435,7 @@ namespace Azure.ResourceManager.Sql
             {
                 CancellationToken = cancellationToken
             };
-            return new SyncMembersGetMemberSchemasAsyncCollectionResultOfT(
+            return new SyncFullSchemaPropertiesAsync0CollectionResultOfT(
                 _syncMembersRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -476,7 +476,7 @@ namespace Azure.ResourceManager.Sql
             {
                 CancellationToken = cancellationToken
             };
-            return new SyncMembersGetMemberSchemasCollectionResultOfT(
+            return new SyncFullSchemaProperties0CollectionResultOfT(
                 _syncMembersRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

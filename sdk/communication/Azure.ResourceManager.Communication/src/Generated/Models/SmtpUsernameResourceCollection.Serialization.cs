@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Communication.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new SmtpUsernameResourceCollection(value, nextLink, additionalBinaryDataProperties);
+            return new SmtpUsernameResourceCollection(value ?? new ChangeTrackingList<CommunicationSmtpUsernameData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

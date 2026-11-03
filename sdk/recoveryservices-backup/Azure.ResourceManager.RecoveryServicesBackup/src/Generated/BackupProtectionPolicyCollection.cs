@@ -304,7 +304,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<BackupProtectionPolicyData, BackupProtectionPolicyResource>(new BackupPoliciesGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<BackupProtectionPolicyData, BackupProtectionPolicyResource>(new BackupProtectionPolicyDataAsyncCollectionResultOfT(
                 _backupPoliciesRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -341,7 +341,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<BackupProtectionPolicyData, BackupProtectionPolicyResource>(new BackupPoliciesGetAllCollectionResultOfT(
+            return new PageableWrapper<BackupProtectionPolicyData, BackupProtectionPolicyResource>(new BackupProtectionPolicyDataCollectionResultOfT(
                 _backupPoliciesRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

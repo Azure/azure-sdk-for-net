@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ApiManagementCertificateData, ServiceWorkspaceCertificateResource>(new WorkspaceCertificateGetByWorkspaceAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<ApiManagementCertificateData, ServiceWorkspaceCertificateResource>(new ApiManagementCertificateDataAsyncCollectionResultOfT(
                 _workspaceCertificateRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -337,7 +337,7 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ApiManagementCertificateData, ServiceWorkspaceCertificateResource>(new WorkspaceCertificateGetByWorkspaceCollectionResultOfT(
+            return new PageableWrapper<ApiManagementCertificateData, ServiceWorkspaceCertificateResource>(new ApiManagementCertificateDataCollectionResultOfT(
                 _workspaceCertificateRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

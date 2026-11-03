@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.Sql
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<RestorableDroppedDatabaseData, RestorableDroppedDatabaseResource>(new RestorableDroppedDatabasesGetByServerAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<RestorableDroppedDatabaseData, RestorableDroppedDatabaseResource>(new RestorableDroppedDatabaseDataAsyncCollectionResultOfT(
                 _restorableDroppedDatabasesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.Sql
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<RestorableDroppedDatabaseData, RestorableDroppedDatabaseResource>(new RestorableDroppedDatabasesGetByServerCollectionResultOfT(
+            return new PageableWrapper<RestorableDroppedDatabaseData, RestorableDroppedDatabaseResource>(new RestorableDroppedDatabaseDataCollectionResultOfT(
                 _restorableDroppedDatabasesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

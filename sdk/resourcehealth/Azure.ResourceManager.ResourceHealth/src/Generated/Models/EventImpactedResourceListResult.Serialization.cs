@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new EventImpactedResourceListResult(value, nextLink, additionalBinaryDataProperties);
+            return new EventImpactedResourceListResult(value ?? new ChangeTrackingList<ResourceHealthEventImpactedResourceData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.Avs
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<AvsHostData, AvsHostResource>(new HostsGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<AvsHostData, AvsHostResource>(new AvsHostDataAsyncCollectionResultOfT(
                 _hostsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.Avs
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<AvsHostData, AvsHostResource>(new HostsGetAllCollectionResultOfT(
+            return new PageableWrapper<AvsHostData, AvsHostResource>(new AvsHostDataCollectionResultOfT(
                 _hostsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.NetworkFunction.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new AzureTrafficCollectorListResult(value, nextLink, additionalBinaryDataProperties);
+            return new AzureTrafficCollectorListResult(value ?? new ChangeTrackingList<AzureTrafficCollectorData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

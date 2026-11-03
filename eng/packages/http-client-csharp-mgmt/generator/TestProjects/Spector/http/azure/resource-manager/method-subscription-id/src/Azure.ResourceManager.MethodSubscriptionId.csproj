@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <Description>The Azure.ResourceManager.MethodSubscriptionId client library provides access to Azure services from .NET applications, with support for authentication, retries, and diagnostics.</Description>
+    <AssemblyTitle>SDK Code Generation Azure.ResourceManager.MethodSubscriptionId</AssemblyTitle>
+    <Version>1.0.0-beta.1</Version>
+    <PackageTags>Azure.ResourceManager.MethodSubscriptionId</PackageTags>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="$(AzureCoreSharedSources)ExperimentalAttribute.cs" LinkBase="Shared/Core" />
+  </ItemGroup>
+</Project>

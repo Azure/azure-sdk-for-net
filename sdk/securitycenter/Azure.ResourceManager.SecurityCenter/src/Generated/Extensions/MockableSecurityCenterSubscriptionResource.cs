@@ -74,43 +74,61 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
 
         private ClientDiagnostics AutomationsClientDiagnostics => _automationsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SecurityCenter.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Automations AutomationsRestClient => _automationsRestClient ??= new Automations(AutomationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2023-12-01-preview");
+        private Automations AutomationsRestClient => _automationsRestClient ??= new Automations(AutomationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
 
         private ClientDiagnostics SecurityConnectorsClientDiagnostics => _securityConnectorsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SecurityCenter.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private SecurityConnectors SecurityConnectorsRestClient => _securityConnectorsRestClient ??= new SecurityConnectors(SecurityConnectorsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2024-08-01-preview");
+        private SecurityConnectors SecurityConnectorsRestClient => _securityConnectorsRestClient ??= new SecurityConnectors(SecurityConnectorsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
 
         private ClientDiagnostics DiscoveredSecuritySolutionsClientDiagnostics => _discoveredSecuritySolutionsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SecurityCenter.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private DiscoveredSecuritySolutions DiscoveredSecuritySolutionsRestClient => _discoveredSecuritySolutionsRestClient ??= new DiscoveredSecuritySolutions(DiscoveredSecuritySolutionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2020-01-01");
+        private DiscoveredSecuritySolutions DiscoveredSecuritySolutionsRestClient => _discoveredSecuritySolutionsRestClient ??= new DiscoveredSecuritySolutions(
+            DiscoveredSecuritySolutionsClientDiagnostics,
+            Pipeline,
+            Diagnostics.ApplicationId,
+            Endpoint,
+            "2020-01-01",
+            resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
 
         private ClientDiagnostics JitNetworkAccessPoliciesClientDiagnostics => _jitNetworkAccessPoliciesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SecurityCenter.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private JitNetworkAccessPolicies JitNetworkAccessPoliciesRestClient => _jitNetworkAccessPoliciesRestClient ??= new JitNetworkAccessPolicies(JitNetworkAccessPoliciesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2020-01-01");
+        private JitNetworkAccessPolicies JitNetworkAccessPoliciesRestClient => _jitNetworkAccessPoliciesRestClient ??= new JitNetworkAccessPolicies(
+            JitNetworkAccessPoliciesClientDiagnostics,
+            Pipeline,
+            Diagnostics.ApplicationId,
+            Endpoint,
+            "2020-01-01",
+            resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
 
         private ClientDiagnostics TopologyResourcesClientDiagnostics => _topologyResourcesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SecurityCenter.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private TopologyResources TopologyResourcesRestClient => _topologyResourcesRestClient ??= new TopologyResources(TopologyResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2020-01-01");
+        private TopologyResources TopologyResourcesRestClient => _topologyResourcesRestClient ??= new TopologyResources(TopologyResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
 
         private ClientDiagnostics StandardsClientDiagnostics => _standardsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SecurityCenter.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Standards StandardsRestClient => _standardsRestClient ??= new Standards(StandardsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2021-08-01-preview");
+        private Standards StandardsRestClient => _standardsRestClient ??= new Standards(StandardsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
 
         private ClientDiagnostics AssignmentsClientDiagnostics => _assignmentsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SecurityCenter.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Assignments AssignmentsRestClient => _assignmentsRestClient ??= new Assignments(AssignmentsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2021-08-01-preview");
+        private Assignments AssignmentsRestClient => _assignmentsRestClient ??= new Assignments(AssignmentsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
 
         private ClientDiagnostics IotSecuritySolutionClientDiagnostics => _iotSecuritySolutionClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SecurityCenter.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private IotSecuritySolution IotSecuritySolutionRestClient => _iotSecuritySolutionRestClient ??= new IotSecuritySolution(IotSecuritySolutionClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2019-08-01");
+        private IotSecuritySolution IotSecuritySolutionRestClient => _iotSecuritySolutionRestClient ??= new IotSecuritySolution(IotSecuritySolutionClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
 
         private ClientDiagnostics PrivateLinksClientDiagnostics => _privateLinksClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SecurityCenter.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private PrivateLinks PrivateLinksRestClient => _privateLinksRestClient ??= new PrivateLinks(PrivateLinksClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-01-01");
+        private PrivateLinks PrivateLinksRestClient => _privateLinksRestClient ??= new PrivateLinks(PrivateLinksClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
 
         private ClientDiagnostics AllowedConnectionsClientDiagnostics => _allowedConnectionsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SecurityCenter.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private AllowedConnections AllowedConnectionsRestClient => _allowedConnectionsRestClient ??= new AllowedConnections(AllowedConnectionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2020-01-01");
+        private AllowedConnections AllowedConnectionsRestClient => _allowedConnectionsRestClient ??= new AllowedConnections(
+            AllowedConnectionsClientDiagnostics,
+            Pipeline,
+            Diagnostics.ApplicationId,
+            Endpoint,
+            "2020-01-01",
+            resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
 
         private ClientDiagnostics AlertsClientDiagnostics => _alertsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SecurityCenter.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
@@ -562,7 +580,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <returns> An object representing collection of SecurityOperators and their operations over a SecurityOperatorResource. </returns>
         public virtual SecurityOperatorCollection GetSecurityOperators(string pricingName)
         {
-            return GetCachedClient(client => new SecurityOperatorCollection(client, Id, pricingName));
+            return new SecurityOperatorCollection(Client, Id, pricingName);
         }
 
         /// <summary>
@@ -959,7 +977,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<SecurityAutomationData, SecurityAutomationResource>(new AutomationsGetAllAsyncCollectionResultOfT(AutomationsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableSecurityCenterSubscriptionResource.GetSecurityAutomations"), data => new SecurityAutomationResource(Client, data));
+            return new AsyncPageableWrapper<SecurityAutomationData, SecurityAutomationResource>(new SecurityAutomationDataAsync0CollectionResultOfT(AutomationsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableSecurityCenterSubscriptionResource.GetSecurityAutomations"), data => new SecurityAutomationResource(Client, data));
         }
 
         /// <summary>
@@ -987,7 +1005,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<SecurityAutomationData, SecurityAutomationResource>(new AutomationsGetAllCollectionResultOfT(AutomationsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableSecurityCenterSubscriptionResource.GetSecurityAutomations"), data => new SecurityAutomationResource(Client, data));
+            return new PageableWrapper<SecurityAutomationData, SecurityAutomationResource>(new SecurityAutomationData0CollectionResultOfT(AutomationsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableSecurityCenterSubscriptionResource.GetSecurityAutomations"), data => new SecurityAutomationResource(Client, data));
         }
 
         /// <summary>
@@ -1015,7 +1033,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<SecurityConnectorData, SecurityConnectorResource>(new SecurityConnectorsGetAllAsyncCollectionResultOfT(SecurityConnectorsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableSecurityCenterSubscriptionResource.GetSecurityConnectors"), data => new SecurityConnectorResource(Client, data));
+            return new AsyncPageableWrapper<SecurityConnectorData, SecurityConnectorResource>(new SecurityConnectorDataAsync0CollectionResultOfT(SecurityConnectorsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableSecurityCenterSubscriptionResource.GetSecurityConnectors"), data => new SecurityConnectorResource(Client, data));
         }
 
         /// <summary>
@@ -1043,7 +1061,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<SecurityConnectorData, SecurityConnectorResource>(new SecurityConnectorsGetAllCollectionResultOfT(SecurityConnectorsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableSecurityCenterSubscriptionResource.GetSecurityConnectors"), data => new SecurityConnectorResource(Client, data));
+            return new PageableWrapper<SecurityConnectorData, SecurityConnectorResource>(new SecurityConnectorData0CollectionResultOfT(SecurityConnectorsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableSecurityCenterSubscriptionResource.GetSecurityConnectors"), data => new SecurityConnectorResource(Client, data));
         }
 
         /// <summary>
@@ -1072,7 +1090,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DiscoveredSecuritySolutionData, DiscoveredSecuritySolutionResource>(new DiscoveredSecuritySolutionsGetByHomeRegionAsyncCollectionResultOfT(DiscoveredSecuritySolutionsRestClient, Guid.Parse(Id.SubscriptionId), ascLocation, context, "MockableSecurityCenterSubscriptionResource.GetDiscoveredSecuritySolutions"), data => new DiscoveredSecuritySolutionResource(Client, data));
+            return new AsyncPageableWrapper<DiscoveredSecuritySolutionData, DiscoveredSecuritySolutionResource>(new DiscoveredSecuritySolutionDataAsyncCollectionResultOfT(DiscoveredSecuritySolutionsRestClient, Guid.Parse(Id.SubscriptionId), ascLocation, context, "MockableSecurityCenterSubscriptionResource.GetDiscoveredSecuritySolutions"), data => new DiscoveredSecuritySolutionResource(Client, data));
         }
 
         /// <summary>
@@ -1101,7 +1119,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DiscoveredSecuritySolutionData, DiscoveredSecuritySolutionResource>(new DiscoveredSecuritySolutionsGetByHomeRegionCollectionResultOfT(DiscoveredSecuritySolutionsRestClient, Guid.Parse(Id.SubscriptionId), ascLocation, context, "MockableSecurityCenterSubscriptionResource.GetDiscoveredSecuritySolutions"), data => new DiscoveredSecuritySolutionResource(Client, data));
+            return new PageableWrapper<DiscoveredSecuritySolutionData, DiscoveredSecuritySolutionResource>(new DiscoveredSecuritySolutionDataCollectionResultOfT(DiscoveredSecuritySolutionsRestClient, Guid.Parse(Id.SubscriptionId), ascLocation, context, "MockableSecurityCenterSubscriptionResource.GetDiscoveredSecuritySolutions"), data => new DiscoveredSecuritySolutionResource(Client, data));
         }
 
         /// <summary>
@@ -1130,7 +1148,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<JitNetworkAccessPolicyData, JitNetworkAccessPolicyResource>(new JitNetworkAccessPoliciesGetByRegionAsyncCollectionResultOfT(JitNetworkAccessPoliciesRestClient, Guid.Parse(Id.SubscriptionId), ascLocation, context, "MockableSecurityCenterSubscriptionResource.GetJitNetworkAccessPolicies"), data => new JitNetworkAccessPolicyResource(Client, data));
+            return new AsyncPageableWrapper<JitNetworkAccessPolicyData, JitNetworkAccessPolicyResource>(new JitNetworkAccessPolicyDataAsync0CollectionResultOfT(JitNetworkAccessPoliciesRestClient, Guid.Parse(Id.SubscriptionId), ascLocation, context, "MockableSecurityCenterSubscriptionResource.GetJitNetworkAccessPolicies"), data => new JitNetworkAccessPolicyResource(Client, data));
         }
 
         /// <summary>
@@ -1159,7 +1177,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<JitNetworkAccessPolicyData, JitNetworkAccessPolicyResource>(new JitNetworkAccessPoliciesGetByRegionCollectionResultOfT(JitNetworkAccessPoliciesRestClient, Guid.Parse(Id.SubscriptionId), ascLocation, context, "MockableSecurityCenterSubscriptionResource.GetJitNetworkAccessPolicies"), data => new JitNetworkAccessPolicyResource(Client, data));
+            return new PageableWrapper<JitNetworkAccessPolicyData, JitNetworkAccessPolicyResource>(new JitNetworkAccessPolicyData0CollectionResultOfT(JitNetworkAccessPoliciesRestClient, Guid.Parse(Id.SubscriptionId), ascLocation, context, "MockableSecurityCenterSubscriptionResource.GetJitNetworkAccessPolicies"), data => new JitNetworkAccessPolicyResource(Client, data));
         }
 
         /// <summary>
@@ -1188,7 +1206,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<SecurityTopologyData, SecurityTopologyResource>(new TopologyResourcesGetByHomeRegionAsyncCollectionResultOfT(TopologyResourcesRestClient, Guid.Parse(Id.SubscriptionId), ascLocation, context, "MockableSecurityCenterSubscriptionResource.GetSecurityTopologies"), data => new SecurityTopologyResource(Client, data));
+            return new AsyncPageableWrapper<SecurityTopologyData, SecurityTopologyResource>(new SecurityTopologyDataAsyncCollectionResultOfT(TopologyResourcesRestClient, Guid.Parse(Id.SubscriptionId), ascLocation, context, "MockableSecurityCenterSubscriptionResource.GetSecurityTopologies"), data => new SecurityTopologyResource(Client, data));
         }
 
         /// <summary>
@@ -1217,7 +1235,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<SecurityTopologyData, SecurityTopologyResource>(new TopologyResourcesGetByHomeRegionCollectionResultOfT(TopologyResourcesRestClient, Guid.Parse(Id.SubscriptionId), ascLocation, context, "MockableSecurityCenterSubscriptionResource.GetSecurityTopologies"), data => new SecurityTopologyResource(Client, data));
+            return new PageableWrapper<SecurityTopologyData, SecurityTopologyResource>(new SecurityTopologyDataCollectionResultOfT(TopologyResourcesRestClient, Guid.Parse(Id.SubscriptionId), ascLocation, context, "MockableSecurityCenterSubscriptionResource.GetSecurityTopologies"), data => new SecurityTopologyResource(Client, data));
         }
 
         /// <summary>
@@ -1245,7 +1263,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<SecurityCenterStandardData, SecurityCenterStandardResource>(new StandardsGetBySubscriptionAsyncCollectionResultOfT(StandardsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableSecurityCenterSubscriptionResource.GetSecurityCenterStandards"), data => new SecurityCenterStandardResource(Client, data));
+            return new AsyncPageableWrapper<SecurityCenterStandardData, SecurityCenterStandardResource>(new SecurityCenterStandardDataAsync0CollectionResultOfT(StandardsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableSecurityCenterSubscriptionResource.GetSecurityCenterStandards"), data => new SecurityCenterStandardResource(Client, data));
         }
 
         /// <summary>
@@ -1273,7 +1291,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<SecurityCenterStandardData, SecurityCenterStandardResource>(new StandardsGetBySubscriptionCollectionResultOfT(StandardsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableSecurityCenterSubscriptionResource.GetSecurityCenterStandards"), data => new SecurityCenterStandardResource(Client, data));
+            return new PageableWrapper<SecurityCenterStandardData, SecurityCenterStandardResource>(new SecurityCenterStandardData0CollectionResultOfT(StandardsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableSecurityCenterSubscriptionResource.GetSecurityCenterStandards"), data => new SecurityCenterStandardResource(Client, data));
         }
 
         /// <summary>
@@ -1301,7 +1319,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<SecurityCenterAssignmentData, SecurityCenterAssignmentResource>(new AssignmentsGetBySubscriptionAsyncCollectionResultOfT(AssignmentsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableSecurityCenterSubscriptionResource.GetSecurityCenterAssignments"), data => new SecurityCenterAssignmentResource(Client, data));
+            return new AsyncPageableWrapper<SecurityCenterAssignmentData, SecurityCenterAssignmentResource>(new SecurityCenterAssignmentDataAsync0CollectionResultOfT(AssignmentsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableSecurityCenterSubscriptionResource.GetSecurityCenterAssignments"), data => new SecurityCenterAssignmentResource(Client, data));
         }
 
         /// <summary>
@@ -1329,7 +1347,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<SecurityCenterAssignmentData, SecurityCenterAssignmentResource>(new AssignmentsGetBySubscriptionCollectionResultOfT(AssignmentsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableSecurityCenterSubscriptionResource.GetSecurityCenterAssignments"), data => new SecurityCenterAssignmentResource(Client, data));
+            return new PageableWrapper<SecurityCenterAssignmentData, SecurityCenterAssignmentResource>(new SecurityCenterAssignmentData0CollectionResultOfT(AssignmentsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableSecurityCenterSubscriptionResource.GetSecurityCenterAssignments"), data => new SecurityCenterAssignmentResource(Client, data));
         }
 
         /// <summary>
@@ -1358,7 +1376,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<IotSecuritySolutionData, IotSecuritySolutionResource>(new IotSecuritySolutionGetBySubscriptionAsyncCollectionResultOfT(IotSecuritySolutionRestClient, Guid.Parse(Id.SubscriptionId), filter, context, "MockableSecurityCenterSubscriptionResource.GetIotSecuritySolutions"), data => new IotSecuritySolutionResource(Client, data));
+            return new AsyncPageableWrapper<IotSecuritySolutionData, IotSecuritySolutionResource>(new IotSecuritySolutionDataAsync0CollectionResultOfT(IotSecuritySolutionRestClient, Guid.Parse(Id.SubscriptionId), filter, context, "MockableSecurityCenterSubscriptionResource.GetIotSecuritySolutions"), data => new IotSecuritySolutionResource(Client, data));
         }
 
         /// <summary>
@@ -1387,7 +1405,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<IotSecuritySolutionData, IotSecuritySolutionResource>(new IotSecuritySolutionGetBySubscriptionCollectionResultOfT(IotSecuritySolutionRestClient, Guid.Parse(Id.SubscriptionId), filter, context, "MockableSecurityCenterSubscriptionResource.GetIotSecuritySolutions"), data => new IotSecuritySolutionResource(Client, data));
+            return new PageableWrapper<IotSecuritySolutionData, IotSecuritySolutionResource>(new IotSecuritySolutionData0CollectionResultOfT(IotSecuritySolutionRestClient, Guid.Parse(Id.SubscriptionId), filter, context, "MockableSecurityCenterSubscriptionResource.GetIotSecuritySolutions"), data => new IotSecuritySolutionResource(Client, data));
         }
 
         /// <summary>
@@ -1415,7 +1433,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<SecurityCenterPrivateLinkResourceData, PrivateLinkResource>(new PrivateLinksGetBySubscriptionAsyncCollectionResultOfT(PrivateLinksRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableSecurityCenterSubscriptionResource.GetPrivateLinkResources"), data => new PrivateLinkResource(Client, data));
+            return new AsyncPageableWrapper<SecurityCenterPrivateLinkResourceData, PrivateLinkResource>(new SecurityCenterPrivateLinkResourceDataAsync0CollectionResultOfT(PrivateLinksRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableSecurityCenterSubscriptionResource.GetPrivateLinkResources"), data => new PrivateLinkResource(Client, data));
         }
 
         /// <summary>
@@ -1443,7 +1461,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<SecurityCenterPrivateLinkResourceData, PrivateLinkResource>(new PrivateLinksGetBySubscriptionCollectionResultOfT(PrivateLinksRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableSecurityCenterSubscriptionResource.GetPrivateLinkResources"), data => new PrivateLinkResource(Client, data));
+            return new PageableWrapper<SecurityCenterPrivateLinkResourceData, PrivateLinkResource>(new SecurityCenterPrivateLinkResourceData0CollectionResultOfT(PrivateLinksRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableSecurityCenterSubscriptionResource.GetPrivateLinkResources"), data => new PrivateLinkResource(Client, data));
         }
 
         /// <summary>
@@ -1472,7 +1490,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<SecurityCenterAllowedConnectionData, SecurityCenterAllowedConnectionResource>(new AllowedConnectionsGetByHomeRegionAsyncCollectionResultOfT(AllowedConnectionsRestClient, Guid.Parse(Id.SubscriptionId), ascLocation, context, "MockableSecurityCenterSubscriptionResource.GetSecurityCenterAllowedConnections"), data => new SecurityCenterAllowedConnectionResource(Client, data));
+            return new AsyncPageableWrapper<SecurityCenterAllowedConnectionData, SecurityCenterAllowedConnectionResource>(new SecurityCenterAllowedConnectionDataAsyncCollectionResultOfT(AllowedConnectionsRestClient, Guid.Parse(Id.SubscriptionId), ascLocation, context, "MockableSecurityCenterSubscriptionResource.GetSecurityCenterAllowedConnections"), data => new SecurityCenterAllowedConnectionResource(Client, data));
         }
 
         /// <summary>
@@ -1501,7 +1519,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<SecurityCenterAllowedConnectionData, SecurityCenterAllowedConnectionResource>(new AllowedConnectionsGetByHomeRegionCollectionResultOfT(AllowedConnectionsRestClient, Guid.Parse(Id.SubscriptionId), ascLocation, context, "MockableSecurityCenterSubscriptionResource.GetSecurityCenterAllowedConnections"), data => new SecurityCenterAllowedConnectionResource(Client, data));
+            return new PageableWrapper<SecurityCenterAllowedConnectionData, SecurityCenterAllowedConnectionResource>(new SecurityCenterAllowedConnectionDataCollectionResultOfT(AllowedConnectionsRestClient, Guid.Parse(Id.SubscriptionId), ascLocation, context, "MockableSecurityCenterSubscriptionResource.GetSecurityCenterAllowedConnections"), data => new SecurityCenterAllowedConnectionResource(Client, data));
         }
 
         /// <summary>
@@ -1617,7 +1635,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DiscoveredSecuritySolutionData, DiscoveredSecuritySolutionResource>(new DiscoveredSecuritySolutionsGetDiscoveredSecuritySolutionsAsyncCollectionResultOfT(DiscoveredSecuritySolutionsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableSecurityCenterSubscriptionResource.GetDiscoveredSecuritySolutions"), data => new DiscoveredSecuritySolutionResource(Client, data));
+            return new AsyncPageableWrapper<DiscoveredSecuritySolutionData, DiscoveredSecuritySolutionResource>(new DiscoveredSecuritySolutionDataAsync0CollectionResultOfT(DiscoveredSecuritySolutionsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableSecurityCenterSubscriptionResource.GetDiscoveredSecuritySolutions"), data => new DiscoveredSecuritySolutionResource(Client, data));
         }
 
         /// <summary>
@@ -1645,7 +1663,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DiscoveredSecuritySolutionData, DiscoveredSecuritySolutionResource>(new DiscoveredSecuritySolutionsGetDiscoveredSecuritySolutionsCollectionResultOfT(DiscoveredSecuritySolutionsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableSecurityCenterSubscriptionResource.GetDiscoveredSecuritySolutions"), data => new DiscoveredSecuritySolutionResource(Client, data));
+            return new PageableWrapper<DiscoveredSecuritySolutionData, DiscoveredSecuritySolutionResource>(new DiscoveredSecuritySolutionData0CollectionResultOfT(DiscoveredSecuritySolutionsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableSecurityCenterSubscriptionResource.GetDiscoveredSecuritySolutions"), data => new DiscoveredSecuritySolutionResource(Client, data));
         }
 
         /// <summary>
@@ -1673,7 +1691,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new ExternalSecuritySolutionsGetExternalSecuritySolutionsAsyncCollectionResultOfT(ExternalSecuritySolutionsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableSecurityCenterSubscriptionResource.GetExternalSecuritySolutions");
+            return new ExternalSecuritySolutionAsync0CollectionResultOfT(ExternalSecuritySolutionsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableSecurityCenterSubscriptionResource.GetExternalSecuritySolutions");
         }
 
         /// <summary>
@@ -1701,7 +1719,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new ExternalSecuritySolutionsGetExternalSecuritySolutionsCollectionResultOfT(ExternalSecuritySolutionsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableSecurityCenterSubscriptionResource.GetExternalSecuritySolutions");
+            return new ExternalSecuritySolution0CollectionResultOfT(ExternalSecuritySolutionsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableSecurityCenterSubscriptionResource.GetExternalSecuritySolutions");
         }
 
         /// <summary>
@@ -1729,7 +1747,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<JitNetworkAccessPolicyData, JitNetworkAccessPolicyResource>(new JitNetworkAccessPoliciesGetJitNetworkAccessPoliciesAsyncCollectionResultOfT(JitNetworkAccessPoliciesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableSecurityCenterSubscriptionResource.GetJitNetworkAccessPolicies"), data => new JitNetworkAccessPolicyResource(Client, data));
+            return new AsyncPageableWrapper<JitNetworkAccessPolicyData, JitNetworkAccessPolicyResource>(new JitNetworkAccessPolicyDataAsync1CollectionResultOfT(JitNetworkAccessPoliciesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableSecurityCenterSubscriptionResource.GetJitNetworkAccessPolicies"), data => new JitNetworkAccessPolicyResource(Client, data));
         }
 
         /// <summary>
@@ -1757,7 +1775,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<JitNetworkAccessPolicyData, JitNetworkAccessPolicyResource>(new JitNetworkAccessPoliciesGetJitNetworkAccessPoliciesCollectionResultOfT(JitNetworkAccessPoliciesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableSecurityCenterSubscriptionResource.GetJitNetworkAccessPolicies"), data => new JitNetworkAccessPolicyResource(Client, data));
+            return new PageableWrapper<JitNetworkAccessPolicyData, JitNetworkAccessPolicyResource>(new JitNetworkAccessPolicyData1CollectionResultOfT(JitNetworkAccessPoliciesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableSecurityCenterSubscriptionResource.GetJitNetworkAccessPolicies"), data => new JitNetworkAccessPolicyResource(Client, data));
         }
 
         /// <summary>
@@ -1785,7 +1803,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<SecuritySolutionData, SecuritySolutionResource>(new SecuritySolutionsGetSecuritySolutionsAsyncCollectionResultOfT(SecuritySolutionsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableSecurityCenterSubscriptionResource.GetSecuritySolutions"), data => new SecuritySolutionResource(Client, data));
+            return new AsyncPageableWrapper<SecuritySolutionData, SecuritySolutionResource>(new SecuritySolutionDataAsyncCollectionResultOfT(SecuritySolutionsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableSecurityCenterSubscriptionResource.GetSecuritySolutions"), data => new SecuritySolutionResource(Client, data));
         }
 
         /// <summary>
@@ -1813,7 +1831,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<SecuritySolutionData, SecuritySolutionResource>(new SecuritySolutionsGetSecuritySolutionsCollectionResultOfT(SecuritySolutionsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableSecurityCenterSubscriptionResource.GetSecuritySolutions"), data => new SecuritySolutionResource(Client, data));
+            return new PageableWrapper<SecuritySolutionData, SecuritySolutionResource>(new SecuritySolutionDataCollectionResultOfT(SecuritySolutionsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableSecurityCenterSubscriptionResource.GetSecuritySolutions"), data => new SecuritySolutionResource(Client, data));
         }
 
         /// <summary>
@@ -1930,7 +1948,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new TasksGetTasksAsyncCollectionResultOfT(TasksRestClient, Guid.Parse(Id.SubscriptionId), filter, context, "MockableSecurityCenterSubscriptionResource.GetTasks");
+            return new SecurityTaskDataAsync1CollectionResultOfT(TasksRestClient, Guid.Parse(Id.SubscriptionId), filter, context, "MockableSecurityCenterSubscriptionResource.GetTasks");
         }
 
         /// <summary>
@@ -1959,7 +1977,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new TasksGetTasksCollectionResultOfT(TasksRestClient, Guid.Parse(Id.SubscriptionId), filter, context, "MockableSecurityCenterSubscriptionResource.GetTasks");
+            return new SecurityTaskData1CollectionResultOfT(TasksRestClient, Guid.Parse(Id.SubscriptionId), filter, context, "MockableSecurityCenterSubscriptionResource.GetTasks");
         }
 
         /// <summary>
@@ -1987,7 +2005,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ApiCollectionData, ApiCollectionResource>(new APICollectionsGetSecurityCenterApiCollectionsAsyncCollectionResultOfT(APICollectionsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableSecurityCenterSubscriptionResource.GetSecurityCenterApiCollections"), data => new ApiCollectionResource(Client, data));
+            return new AsyncPageableWrapper<ApiCollectionData, ApiCollectionResource>(new ApiCollectionDataAsync0CollectionResultOfT(APICollectionsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableSecurityCenterSubscriptionResource.GetSecurityCenterApiCollections"), data => new ApiCollectionResource(Client, data));
         }
 
         /// <summary>
@@ -2015,7 +2033,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ApiCollectionData, ApiCollectionResource>(new APICollectionsGetSecurityCenterApiCollectionsCollectionResultOfT(APICollectionsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableSecurityCenterSubscriptionResource.GetSecurityCenterApiCollections"), data => new ApiCollectionResource(Client, data));
+            return new PageableWrapper<ApiCollectionData, ApiCollectionResource>(new ApiCollectionData0CollectionResultOfT(APICollectionsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableSecurityCenterSubscriptionResource.GetSecurityCenterApiCollections"), data => new ApiCollectionResource(Client, data));
         }
 
         /// <summary>
@@ -2044,7 +2062,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new SecureScoreControlsGetSecureScoreControlsAsyncCollectionResultOfT(SecureScoreControlsRestClient, Guid.Parse(Id.SubscriptionId), expand?.ToString(), context, "MockableSecurityCenterSubscriptionResource.GetSecureScoreControls");
+            return new SecureScoreControlDetailsAsync0CollectionResultOfT(SecureScoreControlsRestClient, Guid.Parse(Id.SubscriptionId), expand?.ToString(), context, "MockableSecurityCenterSubscriptionResource.GetSecureScoreControls");
         }
 
         /// <summary>
@@ -2073,7 +2091,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new SecureScoreControlsGetSecureScoreControlsCollectionResultOfT(SecureScoreControlsRestClient, Guid.Parse(Id.SubscriptionId), expand?.ToString(), context, "MockableSecurityCenterSubscriptionResource.GetSecureScoreControls");
+            return new SecureScoreControlDetails0CollectionResultOfT(SecureScoreControlsRestClient, Guid.Parse(Id.SubscriptionId), expand?.ToString(), context, "MockableSecurityCenterSubscriptionResource.GetSecureScoreControls");
         }
 
         /// <summary>
@@ -2101,7 +2119,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new SecureScoreControlDefinitionsGetSecureScoreControlDefinitionsBySubscriptionAsyncCollectionResultOfT(SecureScoreControlDefinitionsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableSecurityCenterSubscriptionResource.GetSecureScoreControlDefinitionsBySubscription");
+            return new SecureScoreControlDefinitionItemAsync0CollectionResultOfT(SecureScoreControlDefinitionsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableSecurityCenterSubscriptionResource.GetSecureScoreControlDefinitionsBySubscription");
         }
 
         /// <summary>
@@ -2129,7 +2147,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new SecureScoreControlDefinitionsGetSecureScoreControlDefinitionsBySubscriptionCollectionResultOfT(SecureScoreControlDefinitionsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableSecurityCenterSubscriptionResource.GetSecureScoreControlDefinitionsBySubscription");
+            return new SecureScoreControlDefinitionItem0CollectionResultOfT(SecureScoreControlDefinitionsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableSecurityCenterSubscriptionResource.GetSecureScoreControlDefinitionsBySubscription");
         }
 
         /// <summary>
@@ -2157,7 +2175,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<SecurityCenterAllowedConnectionData, SecurityCenterAllowedConnectionResource>(new AllowedConnectionsGetAllowedConnectionsAsyncCollectionResultOfT(AllowedConnectionsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableSecurityCenterSubscriptionResource.GetAllowedConnections"), data => new SecurityCenterAllowedConnectionResource(Client, data));
+            return new AsyncPageableWrapper<SecurityCenterAllowedConnectionData, SecurityCenterAllowedConnectionResource>(new SecurityCenterAllowedConnectionDataAsync0CollectionResultOfT(AllowedConnectionsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableSecurityCenterSubscriptionResource.GetAllowedConnections"), data => new SecurityCenterAllowedConnectionResource(Client, data));
         }
 
         /// <summary>
@@ -2185,7 +2203,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<SecurityCenterAllowedConnectionData, SecurityCenterAllowedConnectionResource>(new AllowedConnectionsGetAllowedConnectionsCollectionResultOfT(AllowedConnectionsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableSecurityCenterSubscriptionResource.GetAllowedConnections"), data => new SecurityCenterAllowedConnectionResource(Client, data));
+            return new PageableWrapper<SecurityCenterAllowedConnectionData, SecurityCenterAllowedConnectionResource>(new SecurityCenterAllowedConnectionData0CollectionResultOfT(AllowedConnectionsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableSecurityCenterSubscriptionResource.GetAllowedConnections"), data => new SecurityCenterAllowedConnectionResource(Client, data));
         }
 
         /// <summary>
@@ -2213,7 +2231,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<SecurityTopologyData, SecurityTopologyResource>(new TopologyGetTopologiesAsyncCollectionResultOfT(TopologyRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableSecurityCenterSubscriptionResource.GetTopologies"), data => new SecurityTopologyResource(Client, data));
+            return new AsyncPageableWrapper<SecurityTopologyData, SecurityTopologyResource>(new SecurityTopologyDataAsync0CollectionResultOfT(TopologyRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableSecurityCenterSubscriptionResource.GetTopologies"), data => new SecurityTopologyResource(Client, data));
         }
 
         /// <summary>
@@ -2241,7 +2259,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<SecurityTopologyData, SecurityTopologyResource>(new TopologyGetTopologiesCollectionResultOfT(TopologyRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableSecurityCenterSubscriptionResource.GetTopologies"), data => new SecurityTopologyResource(Client, data));
+            return new PageableWrapper<SecurityTopologyData, SecurityTopologyResource>(new SecurityTopologyData0CollectionResultOfT(TopologyRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableSecurityCenterSubscriptionResource.GetTopologies"), data => new SecurityTopologyResource(Client, data));
         }
     }
 }

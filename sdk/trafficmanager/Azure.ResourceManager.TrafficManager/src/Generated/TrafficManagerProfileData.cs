@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.TrafficManager
             }
         }
 
-        /// <summary> When record type is set, a traffic manager profile will allow only endpoints that match this type. </summary>
+        /// <summary> When record type is set, a traffic manager profile will allow only endpoints that match this type. If it is not set, traffic manager profile will allow adding all types of endpoints. It is returned as null when this is not set. </summary>
         public TrafficManagerRecordType? RecordType
         {
             get

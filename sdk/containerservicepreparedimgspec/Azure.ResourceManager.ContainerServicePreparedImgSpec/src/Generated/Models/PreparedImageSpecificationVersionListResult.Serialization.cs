@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.ContainerServicePreparedImgSpec.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new PreparedImageSpecificationVersionListResult(value, nextLink, additionalBinaryDataProperties);
+            return new PreparedImageSpecificationVersionListResult(value ?? new ChangeTrackingList<PreparedImageSpecificationVersionData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

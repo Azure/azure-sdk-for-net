@@ -16,17 +16,20 @@ internal sealed class ResponsesStartupLogger : IHostedService
     private readonly IOptions<ResponsesServerOptions> _options;
     private readonly IOptions<InMemoryProviderOptions> _providerOptions;
     private readonly ResponsesProvider _provider;
+    private readonly ResponsesHostedCredentialFallback? _credentialFallback;
 
     public ResponsesStartupLogger(
         ILogger<ResponsesStartupLogger> logger,
         IOptions<ResponsesServerOptions> options,
         IOptions<InMemoryProviderOptions> providerOptions,
-        ResponsesProvider provider)
+        ResponsesProvider provider,
+        ResponsesHostedCredentialFallback? credentialFallback = null)
     {
         _logger = logger;
         _options = options;
         _providerOptions = providerOptions;
         _provider = provider;
+        _credentialFallback = credentialFallback;
     }
 
     public Task StartAsync(CancellationToken cancellationToken)
@@ -41,6 +44,40 @@ internal sealed class ResponsesStartupLogger : IHostedService
             opts.DefaultModel ?? "(not set)",
             opts.DefaultFetchHistoryCount,
             providerOpts.EventStreamTtl);
+
+        if (_credentialFallback is { } fallback)
+        {
+            if (fallback.OperatorSelection is null)
+            {
+                _logger.LogInformation(
+                    "No '{Section}:Credential' is configured; hosted Foundry storage uses the platform fallback " +
+                    "credential (DefaultAzureCredential limited to environment, workload identity and managed " +
+                    "identity). Configure a Credential section (for example CredentialSource=ManagedIdentityCredential) " +
+                    "to select the identity explicitly.",
+                    fallback.SectionName);
+            }
+            else
+            {
+                _logger.LogInformation(
+                    "No '{Section}:Credential' is configured; hosted Foundry storage uses DefaultAzureCredential " +
+                    "as selected by AZURE_TOKEN_CREDENTIALS='{Selection}'. Configure a Credential section " +
+                    "(for example CredentialSource=ManagedIdentityCredential) to select the identity explicitly.",
+                    fallback.SectionName,
+                    fallback.OperatorSelection);
+            }
+        }
+
+        if (opts.ResilientBackground || opts.SteerableConversations)
+        {
+            _logger.LogInformation(
+                "Responses resilience is enabled; stored responses use durable tasks and startup recovery.");
+        }
+        else
+        {
+            _logger.LogWarning(
+                "Responses resilience is disabled; stored responses run in-process and are not recovered after an ungraceful crash. " +
+                "Enable ResilientBackground or SteerableConversations to opt in.");
+        }
 
         return Task.CompletedTask;
     }

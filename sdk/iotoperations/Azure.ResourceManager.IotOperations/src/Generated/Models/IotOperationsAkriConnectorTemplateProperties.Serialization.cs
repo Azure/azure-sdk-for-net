@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.IotOperations.Models
                 aioMetadata,
                 runtimeConfiguration,
                 diagnostics,
-                deviceInboundEndpointTypes,
+                deviceInboundEndpointTypes ?? new ChangeTrackingList<AkriConnectorTemplateDeviceInboundEndpointType>(),
                 mqttConnectionConfiguration,
                 connectorMetadataRef,
                 healthState,

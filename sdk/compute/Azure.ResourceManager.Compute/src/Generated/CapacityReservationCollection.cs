@@ -298,7 +298,7 @@ namespace Azure.ResourceManager.Compute
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<CapacityReservationData, CapacityReservationResource>(new CapacityReservationsGetByCapacityReservationGroupAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<CapacityReservationData, CapacityReservationResource>(new CapacityReservationDataAsyncCollectionResultOfT(
                 _capacityReservationsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -334,7 +334,7 @@ namespace Azure.ResourceManager.Compute
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<CapacityReservationData, CapacityReservationResource>(new CapacityReservationsGetByCapacityReservationGroupCollectionResultOfT(
+            return new PageableWrapper<CapacityReservationData, CapacityReservationResource>(new CapacityReservationDataCollectionResultOfT(
                 _capacityReservationsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

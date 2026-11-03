@@ -1,6 +1,6 @@
 # Release History
 
-## 1.7.0-beta.1 (Unreleased)
+## 1.7.0-beta.3 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,27 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.7.0-beta.2 (2026-10-29)
+
+### Features Added
+
+- Added a typed `ManagementLock.Scope` property to apply a lock to an individual resource. Leaving it unset or assigning `null` preserves deployment-scope locking. ([#63624](https://github.com/Azure/azure-sdk-for-net/issues/63624))
+- Types deriving from `ManagementLock` that declare their own `Scope` member, such as the workaround described in the issue, now hide this property (warning CS0108). Remove that member and use `ManagementLock.Scope`.
+- Added support for explicitly tagged raw Bicep expressions in `BicepValue<BinaryData>` using the `text/vnd.microsoft.bicep` media type.
+
+### Bugs Fixed
+
+- Fixed null assignments to generated resource references in this library to clear the reference instead of emitting an explicit null. Clearing a required `Parent` leaves it unset for required-property validation.
+- Fixed `BicepValue<BinaryData>` literal compilation to emit JSON through Bicep's `json(...)` function while preserving generated base64-encoded properties.
+
+## 1.7.0-beta.1 (2026-10-27)
+
+### Features Added
+
+- Added JSON serialization and deserialization for `Infrastructure` and Bicep syntax nodes through `ModelReaderWriter`, including schema-compatible decorators, 64-bit integers, type annotations, and reverse indexing.
+- Added `OfResourceType<T>` to upgrade deserialized resources to generated resource types while preserving properties, metadata, conditions, and resource dependencies.
+- Added validation that rejects Bicep constructs without a JSON schema representation, including nested resource access, null suppression, and standalone decorators.
 
 ## 1.6.0 (2026-08-20)
 

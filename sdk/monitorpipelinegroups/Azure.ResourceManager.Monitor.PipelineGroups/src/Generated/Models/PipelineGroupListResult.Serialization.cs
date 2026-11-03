@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Monitor.PipelineGroups.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new PipelineGroupListResult(value, nextLink, additionalBinaryDataProperties);
+            return new PipelineGroupListResult(value ?? new ChangeTrackingList<PipelineGroupData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

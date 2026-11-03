@@ -411,7 +411,7 @@ namespace Azure.ResourceManager.Sql
             {
                 CancellationToken = cancellationToken
             };
-            return new SyncAgentsGetLinkedDatabasesAsyncCollectionResultOfT(
+            return new SyncAgentLinkedDatabaseAsyncCollectionResultOfT(
                 _syncAgentsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -450,7 +450,7 @@ namespace Azure.ResourceManager.Sql
             {
                 CancellationToken = cancellationToken
             };
-            return new SyncAgentsGetLinkedDatabasesCollectionResultOfT(
+            return new SyncAgentLinkedDatabaseCollectionResultOfT(
                 _syncAgentsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

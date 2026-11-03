@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ContainerServiceFleetPropertySelectorRequirement(name, @operator, values, additionalBinaryDataProperties);
+            return new ContainerServiceFleetPropertySelectorRequirement(name, @operator, values ?? new ChangeTrackingList<string>(), additionalBinaryDataProperties);
         }
     }
 }

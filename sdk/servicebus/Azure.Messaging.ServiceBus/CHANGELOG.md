@@ -4,6 +4,8 @@
 
 ### Features Added
 
+- Added `DeleteMessagesAsync` and `PurgeMessagesAsync` to `ServiceBusReceiver`. Both methods return result objects containing the number of deleted messages, and purge handles smaller batches caused by large messages.
+
 ### Breaking Changes
 
 - `ServiceBusProcessor` and `ServiceBusSessionProcessor` tracing now focuses on processing and settlement in both Application Insights/DiagnosticListener and experimental ActivitySource modes. Application-initiated receives continue to emit `Receive` activities. Migrate monitoring of internal receive loops, including idle polling and shutdown cancellation, from processor `Receive` activities to EventSource receive logs. ([#47985](https://github.com/Azure/azure-sdk-for-net/issues/47985))
