@@ -25,8 +25,8 @@ namespace Azure.ResourceManager.CognitiveServices
     /// </summary>
     public partial class CognitiveServicesAccountCostControlCollection : ArmCollection, IEnumerable<CognitiveServicesAccountCostControlResource>, IAsyncEnumerable<CognitiveServicesAccountCostControlResource>
     {
-        private readonly ClientDiagnostics _costControlsClientDiagnostics;
-        private readonly CostControls _costControlsRestClient;
+        private readonly ClientDiagnostics _accountCostControlsClientDiagnostics;
+        private readonly AccountCostControls _accountCostControlsRestClient;
 
         /// <summary> Initializes a new instance of CognitiveServicesAccountCostControlCollection for mocking. </summary>
         protected CognitiveServicesAccountCostControlCollection()
@@ -39,8 +39,8 @@ namespace Azure.ResourceManager.CognitiveServices
         internal CognitiveServicesAccountCostControlCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             TryGetApiVersion(CognitiveServicesAccountCostControlResource.ResourceType, out string cognitiveServicesAccountCostControlApiVersion);
-            _costControlsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CognitiveServices", CognitiveServicesAccountCostControlResource.ResourceType.Namespace, Diagnostics);
-            _costControlsRestClient = new CostControls(_costControlsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, cognitiveServicesAccountCostControlApiVersion ?? "2026-09-15-preview");
+            _accountCostControlsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CognitiveServices", CognitiveServicesAccountCostControlResource.ResourceType.Namespace, Diagnostics);
+            _accountCostControlsRestClient = new AccountCostControls(_accountCostControlsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, cognitiveServicesAccountCostControlApiVersion ?? "2026-11-15-preview");
             ValidateResourceId(id);
         }
 
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.CognitiveServices
         }
 
         /// <summary>
-        /// Creates or replaces a cost control.
+        /// Creates or replaces an account-owned budget synchronously. New names must contain 1-63 ASCII letters, numbers, underscores, or hyphens; leading underscores and hyphens are allowed. Existing dotted or 64-character names remain supported for reads and updates, but cannot be recreated. An omitted grouping selects the account's default counter. Explicit identityObjectId selections require the registered subscription feature Microsoft.CognitiveServices/CostControlsByIdentity; otherwise the request returns 403 FeatureNotRegistered.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -63,16 +63,16 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> CostControls_CreateOrUpdate. </description>
+        /// <description> AccountCostControls_CreateOrUpdate. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-09-15-preview. </description>
+        /// <description> 2026-11-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="costControlName"> The name of the CostControl. </param>
+        /// <param name="costControlName"> The cost-control name. New names contain 1-63 ASCII letters, numbers, underscores, or hyphens, including a leading underscore or hyphen. Existing dotted or 64-character names remain addressable but cannot be recreated. </param>
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.CognitiveServices
             Argument.AssertNotNullOrEmpty(costControlName, nameof(costControlName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _costControlsClientDiagnostics.CreateScope("CognitiveServicesAccountCostControlCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _accountCostControlsClientDiagnostics.CreateScope("CognitiveServicesAccountCostControlCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _costControlsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, costControlName, CognitiveServicesAccountCostControlData.ToRequestContent(data), matchConditions, context);
+                HttpMessage message = _accountCostControlsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, costControlName, CognitiveServicesAccountCostControlData.ToRequestContent(data), matchConditions, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<CognitiveServicesAccountCostControlData> response = Response.FromValue(CognitiveServicesAccountCostControlData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.CognitiveServices
         }
 
         /// <summary>
-        /// Creates or replaces a cost control.
+        /// Creates or replaces an account-owned budget synchronously. New names must contain 1-63 ASCII letters, numbers, underscores, or hyphens; leading underscores and hyphens are allowed. Existing dotted or 64-character names remain supported for reads and updates, but cannot be recreated. An omitted grouping selects the account's default counter. Explicit identityObjectId selections require the registered subscription feature Microsoft.CognitiveServices/CostControlsByIdentity; otherwise the request returns 403 FeatureNotRegistered.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -119,16 +119,16 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> CostControls_CreateOrUpdate. </description>
+        /// <description> AccountCostControls_CreateOrUpdate. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-09-15-preview. </description>
+        /// <description> 2026-11-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="costControlName"> The name of the CostControl. </param>
+        /// <param name="costControlName"> The cost-control name. New names contain 1-63 ASCII letters, numbers, underscores, or hyphens, including a leading underscore or hyphen. Existing dotted or 64-character names remain addressable but cannot be recreated. </param>
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.CognitiveServices
             Argument.AssertNotNullOrEmpty(costControlName, nameof(costControlName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _costControlsClientDiagnostics.CreateScope("CognitiveServicesAccountCostControlCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _accountCostControlsClientDiagnostics.CreateScope("CognitiveServicesAccountCostControlCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _costControlsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, costControlName, CognitiveServicesAccountCostControlData.ToRequestContent(data), matchConditions, context);
+                HttpMessage message = _accountCostControlsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, costControlName, CognitiveServicesAccountCostControlData.ToRequestContent(data), matchConditions, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<CognitiveServicesAccountCostControlData> response = Response.FromValue(CognitiveServicesAccountCostControlData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.CognitiveServices
         }
 
         /// <summary>
-        /// Gets a cost control.
+        /// Gets an account-owned cost control and its representation entity tag. Successful reads return 200 with the resource body.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -175,15 +175,15 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> CostControls_Get. </description>
+        /// <description> AccountCostControls_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-09-15-preview. </description>
+        /// <description> 2026-11-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="costControlName"> The name of the CostControl. </param>
+        /// <param name="costControlName"> The cost-control name. New names contain 1-63 ASCII letters, numbers, underscores, or hyphens, including a leading underscore or hyphen. Existing dotted or 64-character names remain addressable but cannot be recreated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="costControlName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="costControlName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.CognitiveServices
         {
             Argument.AssertNotNullOrEmpty(costControlName, nameof(costControlName));
 
-            using DiagnosticScope scope = _costControlsClientDiagnostics.CreateScope("CognitiveServicesAccountCostControlCollection.Get");
+            using DiagnosticScope scope = _accountCostControlsClientDiagnostics.CreateScope("CognitiveServicesAccountCostControlCollection.Get");
             scope.Start();
             try
             {
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _costControlsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, costControlName, context);
+                HttpMessage message = _accountCostControlsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, costControlName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<CognitiveServicesAccountCostControlData> response = Response.FromValue(CognitiveServicesAccountCostControlData.FromResponse(result), result);
                 if (response.Value == null)
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.CognitiveServices
         }
 
         /// <summary>
-        /// Gets a cost control.
+        /// Gets an account-owned cost control and its representation entity tag. Successful reads return 200 with the resource body.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -224,15 +224,15 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> CostControls_Get. </description>
+        /// <description> AccountCostControls_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-09-15-preview. </description>
+        /// <description> 2026-11-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="costControlName"> The name of the CostControl. </param>
+        /// <param name="costControlName"> The cost-control name. New names contain 1-63 ASCII letters, numbers, underscores, or hyphens, including a leading underscore or hyphen. Existing dotted or 64-character names remain addressable but cannot be recreated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="costControlName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="costControlName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -240,7 +240,7 @@ namespace Azure.ResourceManager.CognitiveServices
         {
             Argument.AssertNotNullOrEmpty(costControlName, nameof(costControlName));
 
-            using DiagnosticScope scope = _costControlsClientDiagnostics.CreateScope("CognitiveServicesAccountCostControlCollection.Get");
+            using DiagnosticScope scope = _accountCostControlsClientDiagnostics.CreateScope("CognitiveServicesAccountCostControlCollection.Get");
             scope.Start();
             try
             {
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _costControlsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, costControlName, context);
+                HttpMessage message = _accountCostControlsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, costControlName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<CognitiveServicesAccountCostControlData> response = Response.FromValue(CognitiveServicesAccountCostControlData.FromResponse(result), result);
                 if (response.Value == null)
@@ -265,7 +265,7 @@ namespace Azure.ResourceManager.CognitiveServices
         }
 
         /// <summary>
-        /// Lists the cost controls owned by an account.
+        /// Lists account-owned cost controls using the budget representation. An unrepresentable legacy entry causes the complete list request to fail.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -273,11 +273,11 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> CostControls_List. </description>
+        /// <description> AccountCostControls_List. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-09-15-preview. </description>
+        /// <description> 2026-11-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -290,7 +290,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 CancellationToken = cancellationToken
             };
             return new AsyncPageableWrapper<CognitiveServicesAccountCostControlData, CognitiveServicesAccountCostControlResource>(new CognitiveServicesAccountCostControlDataAsyncCollectionResultOfT(
-                _costControlsRestClient,
+                _accountCostControlsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
                 Id.Name,
@@ -299,7 +299,7 @@ namespace Azure.ResourceManager.CognitiveServices
         }
 
         /// <summary>
-        /// Lists the cost controls owned by an account.
+        /// Lists account-owned cost controls using the budget representation. An unrepresentable legacy entry causes the complete list request to fail.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -307,11 +307,11 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> CostControls_List. </description>
+        /// <description> AccountCostControls_List. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-09-15-preview. </description>
+        /// <description> 2026-11-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -324,7 +324,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 CancellationToken = cancellationToken
             };
             return new PageableWrapper<CognitiveServicesAccountCostControlData, CognitiveServicesAccountCostControlResource>(new CognitiveServicesAccountCostControlDataCollectionResultOfT(
-                _costControlsRestClient,
+                _accountCostControlsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
                 Id.Name,
@@ -341,15 +341,15 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> CostControls_Get. </description>
+        /// <description> AccountCostControls_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-09-15-preview. </description>
+        /// <description> 2026-11-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="costControlName"> The name of the CostControl. </param>
+        /// <param name="costControlName"> The cost-control name. New names contain 1-63 ASCII letters, numbers, underscores, or hyphens, including a leading underscore or hyphen. Existing dotted or 64-character names remain addressable but cannot be recreated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="costControlName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="costControlName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -357,7 +357,7 @@ namespace Azure.ResourceManager.CognitiveServices
         {
             Argument.AssertNotNullOrEmpty(costControlName, nameof(costControlName));
 
-            using DiagnosticScope scope = _costControlsClientDiagnostics.CreateScope("CognitiveServicesAccountCostControlCollection.Exists");
+            using DiagnosticScope scope = _accountCostControlsClientDiagnostics.CreateScope("CognitiveServicesAccountCostControlCollection.Exists");
             scope.Start();
             try
             {
@@ -365,7 +365,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _costControlsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, costControlName, context);
+                HttpMessage message = _accountCostControlsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, costControlName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<CognitiveServicesAccountCostControlData> response = default;
@@ -398,15 +398,15 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> CostControls_Get. </description>
+        /// <description> AccountCostControls_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-09-15-preview. </description>
+        /// <description> 2026-11-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="costControlName"> The name of the CostControl. </param>
+        /// <param name="costControlName"> The cost-control name. New names contain 1-63 ASCII letters, numbers, underscores, or hyphens, including a leading underscore or hyphen. Existing dotted or 64-character names remain addressable but cannot be recreated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="costControlName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="costControlName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -414,7 +414,7 @@ namespace Azure.ResourceManager.CognitiveServices
         {
             Argument.AssertNotNullOrEmpty(costControlName, nameof(costControlName));
 
-            using DiagnosticScope scope = _costControlsClientDiagnostics.CreateScope("CognitiveServicesAccountCostControlCollection.Exists");
+            using DiagnosticScope scope = _accountCostControlsClientDiagnostics.CreateScope("CognitiveServicesAccountCostControlCollection.Exists");
             scope.Start();
             try
             {
@@ -422,7 +422,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _costControlsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, costControlName, context);
+                HttpMessage message = _accountCostControlsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, costControlName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<CognitiveServicesAccountCostControlData> response = default;
@@ -455,15 +455,15 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> CostControls_Get. </description>
+        /// <description> AccountCostControls_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-09-15-preview. </description>
+        /// <description> 2026-11-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="costControlName"> The name of the CostControl. </param>
+        /// <param name="costControlName"> The cost-control name. New names contain 1-63 ASCII letters, numbers, underscores, or hyphens, including a leading underscore or hyphen. Existing dotted or 64-character names remain addressable but cannot be recreated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="costControlName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="costControlName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -471,7 +471,7 @@ namespace Azure.ResourceManager.CognitiveServices
         {
             Argument.AssertNotNullOrEmpty(costControlName, nameof(costControlName));
 
-            using DiagnosticScope scope = _costControlsClientDiagnostics.CreateScope("CognitiveServicesAccountCostControlCollection.GetIfExists");
+            using DiagnosticScope scope = _accountCostControlsClientDiagnostics.CreateScope("CognitiveServicesAccountCostControlCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -479,7 +479,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _costControlsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, costControlName, context);
+                HttpMessage message = _accountCostControlsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, costControlName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<CognitiveServicesAccountCostControlData> response = default;
@@ -516,15 +516,15 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> CostControls_Get. </description>
+        /// <description> AccountCostControls_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-09-15-preview. </description>
+        /// <description> 2026-11-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="costControlName"> The name of the CostControl. </param>
+        /// <param name="costControlName"> The cost-control name. New names contain 1-63 ASCII letters, numbers, underscores, or hyphens, including a leading underscore or hyphen. Existing dotted or 64-character names remain addressable but cannot be recreated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="costControlName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="costControlName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -532,7 +532,7 @@ namespace Azure.ResourceManager.CognitiveServices
         {
             Argument.AssertNotNullOrEmpty(costControlName, nameof(costControlName));
 
-            using DiagnosticScope scope = _costControlsClientDiagnostics.CreateScope("CognitiveServicesAccountCostControlCollection.GetIfExists");
+            using DiagnosticScope scope = _accountCostControlsClientDiagnostics.CreateScope("CognitiveServicesAccountCostControlCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -540,7 +540,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _costControlsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, costControlName, context);
+                HttpMessage message = _accountCostControlsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, costControlName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<CognitiveServicesAccountCostControlData> response = default;

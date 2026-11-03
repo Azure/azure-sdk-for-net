@@ -13,57 +13,52 @@ using Azure.ResourceManager.CognitiveServices;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
-    /// <summary> A request dimension used to partition cost control consumption. </summary>
-    public partial class CostControlDimension : IJsonModel<CostControlDimension>
+    /// <summary> Partial edits to a validity interval. Supplied dates cannot be null, and the merged start must precede the merged end. </summary>
+    public partial class CostControlTimePeriodPatch : IJsonModel<CostControlTimePeriodPatch>
     {
-        /// <summary> Initializes a new instance of <see cref="CostControlDimension"/> for deserialization. </summary>
-        internal CostControlDimension()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual CostControlDimension PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual CostControlTimePeriodPatch PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CostControlDimension>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CostControlTimePeriodPatch>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeCostControlDimension(document.RootElement, options);
+                        return DeserializeCostControlTimePeriodPatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CostControlDimension)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CostControlTimePeriodPatch)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CostControlDimension>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CostControlTimePeriodPatch>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerCognitiveServicesContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(CostControlDimension)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CostControlTimePeriodPatch)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<CostControlDimension>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<CostControlTimePeriodPatch>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        CostControlDimension IPersistableModel<CostControlDimension>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        CostControlTimePeriodPatch IPersistableModel<CostControlTimePeriodPatch>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<CostControlDimension>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<CostControlTimePeriodPatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<CostControlDimension>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<CostControlTimePeriodPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -74,17 +69,20 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CostControlDimension>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CostControlTimePeriodPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CostControlDimension)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(CostControlTimePeriodPatch)} does not support writing '{format}' format.");
             }
-            writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(Type.ToString());
-            if (options.Format != "W" && Optional.IsDefined(Attribute))
+            if (Optional.IsDefined(StartsOn))
             {
-                writer.WritePropertyName("attribute"u8);
-                writer.WriteStringValue(Attribute);
+                writer.WritePropertyName("startDate"u8);
+                writer.WriteStringValue(StartsOn.Value, "O");
+            }
+            if (Optional.IsDefined(EndsOn))
+            {
+                writer.WritePropertyName("endDate"u8);
+                writer.WriteStringValue(EndsOn.Value, "O");
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -105,42 +103,50 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        CostControlDimension IJsonModel<CostControlDimension>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        CostControlTimePeriodPatch IJsonModel<CostControlTimePeriodPatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual CostControlDimension JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual CostControlTimePeriodPatch JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CostControlDimension>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CostControlTimePeriodPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CostControlDimension)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(CostControlTimePeriodPatch)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeCostControlDimension(document.RootElement, options);
+            return DeserializeCostControlTimePeriodPatch(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static CostControlDimension DeserializeCostControlDimension(JsonElement element, ModelReaderWriterOptions options)
+        internal static CostControlTimePeriodPatch DeserializeCostControlTimePeriodPatch(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            CostControlDimensionType @type = default;
-            string attribute = default;
+            DateTimeOffset? startsOn = default;
+            DateTimeOffset? endsOn = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("type"u8))
+                if (prop.NameEquals("startDate"u8))
                 {
-                    @type = new CostControlDimensionType(prop.Value.GetString());
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    startsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (prop.NameEquals("attribute"u8))
+                if (prop.NameEquals("endDate"u8))
                 {
-                    attribute = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    endsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (options.Format != "W")
@@ -148,7 +154,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new CostControlDimension(@type, attribute, additionalBinaryDataProperties);
+            return new CostControlTimePeriodPatch(startsOn, endsOn, additionalBinaryDataProperties);
         }
     }
 }

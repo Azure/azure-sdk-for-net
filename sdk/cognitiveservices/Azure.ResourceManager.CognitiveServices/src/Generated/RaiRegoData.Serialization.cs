@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.CognitiveServices
             if (options.Format != "W" && Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
-                writer.WriteStringValue(ETag.Value.ToString());
+                writer.WriteStringValue(ETag);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.CognitiveServices
             ResourceType resourceType = default;
             SystemData systemData = default;
             RaiRegoProperties properties = default;
-            ETag? eTag = default;
+            string eTag = default;
             IDictionary<string, string> tags = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -217,11 +217,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 }
                 if (prop.NameEquals("etag"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    eTag = new ETag(prop.Value.GetString());
+                    eTag = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("tags"u8))

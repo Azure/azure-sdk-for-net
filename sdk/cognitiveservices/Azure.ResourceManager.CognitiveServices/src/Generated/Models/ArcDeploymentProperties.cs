@@ -21,12 +21,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <summary> Initializes a new instance of <see cref="ArcDeploymentProperties"/>. </summary>
         /// <param name="model"> Model reference. Required on creation and immutable after creation. </param>
         /// <param name="extensionId"> Full Azure resource ID of the Foundry inference extension on the target Arc-enabled Kubernetes cluster. Required on creation and immutable after creation. </param>
-        /// <param name="runtime"> Inference runtime. Required on creation and immutable after creation. </param>
-        /// <param name="compute"> Compute type for the deployment. Required on creation and immutable after creation. </param>
         /// <param name="replicas"> Physical replica count on the Arc cluster. </param>
         /// <param name="resources"> Per-replica Kubernetes resource requests and limits. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="model"/>, <paramref name="extensionId"/> or <paramref name="resources"/> is null. </exception>
-        public ArcDeploymentProperties(ArcDeploymentModel model, ResourceIdentifier extensionId, ArcDeploymentRuntime runtime, ArcDeploymentComputeType compute, int replicas, ArcDeploymentKubernetesResources resources)
+        public ArcDeploymentProperties(ArcDeploymentModel model, ResourceIdentifier extensionId, int replicas, ArcDeploymentKubernetesResources resources)
         {
             Argument.AssertNotNull(model, nameof(model));
             Argument.AssertNotNull(extensionId, nameof(extensionId));
@@ -34,8 +32,6 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 
             Model = model;
             ExtensionId = extensionId;
-            Runtime = runtime;
-            Compute = compute;
             Replicas = replicas;
             Resources = resources;
             NodeSelector = new ChangeTrackingDictionary<string, string>();
@@ -45,8 +41,8 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <summary> Initializes a new instance of <see cref="ArcDeploymentProperties"/>. </summary>
         /// <param name="model"> Model reference. Required on creation and immutable after creation. </param>
         /// <param name="extensionId"> Full Azure resource ID of the Foundry inference extension on the target Arc-enabled Kubernetes cluster. Required on creation and immutable after creation. </param>
-        /// <param name="runtime"> Inference runtime. Required on creation and immutable after creation. </param>
-        /// <param name="compute"> Compute type for the deployment. Required on creation and immutable after creation. </param>
+        /// <param name="runtime"> Read-only. Inference runtime resolved from the model asset. </param>
+        /// <param name="compute"> Read-only. Compute type resolved from the model asset. </param>
         /// <param name="deploymentTemplate">
         /// Optional deployment template identifier for advanced vLLM tuning. Allowed only when runtime is vllm.
         /// Example: azureml://registries/{registry}/deploymenttemplates/{template}/versions/{version}
@@ -90,13 +86,13 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         [WirePath("extensionId")]
         public ResourceIdentifier ExtensionId { get; set; }
 
-        /// <summary> Inference runtime. Required on creation and immutable after creation. </summary>
+        /// <summary> Read-only. Inference runtime resolved from the model asset. </summary>
         [WirePath("runtime")]
-        public ArcDeploymentRuntime Runtime { get; set; }
+        public ArcDeploymentRuntime Runtime { get; }
 
-        /// <summary> Compute type for the deployment. Required on creation and immutable after creation. </summary>
+        /// <summary> Read-only. Compute type resolved from the model asset. </summary>
         [WirePath("compute")]
-        public ArcDeploymentComputeType Compute { get; set; }
+        public ArcDeploymentComputeType Compute { get; }
 
         /// <summary>
         /// Optional deployment template identifier for advanced vLLM tuning. Allowed only when runtime is vllm.

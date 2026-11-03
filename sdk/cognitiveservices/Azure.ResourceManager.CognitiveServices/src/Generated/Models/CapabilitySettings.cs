@@ -13,22 +13,22 @@ using Azure.ResourceManager.CognitiveServices;
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
     /// <summary> Extensible agent capability configuration. Carries the Azure resource IDs of the agent storage dependencies. Modeled as an object so future capability-backed resources can be added without changing the account or project contract. </summary>
-    public partial class CognitiveServicesAgentCapabilitySettings
+    public partial class CapabilitySettings
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="CognitiveServicesAgentCapabilitySettings"/>. </summary>
-        public CognitiveServicesAgentCapabilitySettings()
+        /// <summary> Initializes a new instance of <see cref="CapabilitySettings"/>. </summary>
+        public CapabilitySettings()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="CognitiveServicesAgentCapabilitySettings"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="CapabilitySettings"/>. </summary>
         /// <param name="documentStore"> Azure resource ID of the document store used by agent runtime state. </param>
         /// <param name="vectorStore"> Azure resource ID of the vector store used by agent retrieval and indexing. </param>
         /// <param name="blobStore"> Azure resource ID of the blob store used by agent file and artifact storage. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CognitiveServicesAgentCapabilitySettings(ResourceIdentifier documentStore, ResourceIdentifier vectorStore, ResourceIdentifier blobStore, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CapabilitySettings(ResourceIdentifier documentStore, ResourceIdentifier vectorStore, ResourceIdentifier blobStore, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DocumentStore = documentStore;
             VectorStore = vectorStore;
