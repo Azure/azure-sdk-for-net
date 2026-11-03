@@ -190,7 +190,7 @@ describe("cleanupLiveEval", () => {
         calls.push(args);
         return args[1] === "get"
           ? { release_plan_details: fixture({ sdkInfo: [{ sdkPullRequestUrl: prUrl }] }) }
-          : {};
+          : { status: "Success", details: ["Release plan 1600 has been successfully abandoned."] };
       },
       getPullRequest: async () => ({ state: "open", created_at: "2026-01-01T00:00:00Z" }),
     });
@@ -282,14 +282,22 @@ describe("cleanupLiveEval", () => {
   });
 
   it("reports CLI cleanup warnings instead of claiming complete cleanup", async () => {
-    await assert.rejects(cleanupLiveEval({
-      azsdk: "azsdk.dll",
-      typeSpecProject: project,
-      queryPlans: () => [{ kind: "workItemId", id: 36111, pullRequestUrls: [] }],
-      runCli: (_, args) => args[1] === "get"
-        ? { release_plan_details: fixture() }
-        : { warnings: ["PR closure failed"] },
-    }), /PR closure failed/);
+    for (const property of ["details", "Details"]) {
+      await assert.rejects(cleanupLiveEval({
+        azsdk: "azsdk.dll",
+        typeSpecProject: project,
+        queryPlans: () => [{ kind: "workItemId", id: 36111, pullRequestUrls: [] }],
+        runCli: (_, args) => args[1] === "get"
+          ? { release_plan_details: fixture() }
+          : {
+            status: "Success",
+            [property]: [
+              "Release plan 1600 has been successfully abandoned.",
+              "Warning: plan 1600 remains Abandoned. Could not complete PR cleanup.",
+            ],
+          },
+      }), /cleanup needs follow-up: Warning: plan 1600 remains Abandoned\. Could not complete PR cleanup/);
+    }
   });
 });
 
