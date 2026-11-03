@@ -108,6 +108,12 @@ The client discovers failover ledgers through the configured confidential ledger
 
 Failover occurs for HTTP 408, 429, and 5xx responses and for retryable transport failures such as connection failures and network timeouts. The primary endpoint first consumes its normal `Retry.MaxRetries` budget. Each discovered failover endpoint then receives a fresh, independent retry budget. Caller-requested cancellation stops immediately and never triggers discovery or failover. If discovery is unavailable, metadata is malformed, or every failover fails, the original primary response or exception is surfaced.
 
+With an explicit, nonempty `collectionId`, HTTP 404 (including `InvalidTransactionId` and `UnknownLedgerEntry`) also triggers failover. Missing entries on failover ledgers are skipped in the configured order. Without a collection id, 404 remains on the primary; transient failover behavior is unchanged.
+
+**Historical-read compatibility:** after a primary 404, `GetLedgerEntry` and `GetLedgerEntryAsync` restore the legacy collection-based behavior by querying **the current entry of that collection** on each failover ledger, not the requested transaction id. Transaction ids are local to a CCF network. The fallback is therefore **not an exact historical lookup** and can return a different value. Its response has `state: "Ready"` and an `entry` containing the full current-entry payload, including tags and **the actual returned transaction id**, never relabeled with the requested id. Applications that require exact historical reads should not rely on this collection-based fallback. Transient primary failures still retry the original historical request without converting it to a current-entry lookup.
+
+This cross-ledger missing-entry fallback is independent of `EnableArchivedCollectionFallback`. That option only controls the primary-ledger history search by `GetCurrentLedgerEntry` after its current-entry attempts fail with 404.
+
 ```C#
 var options = new ConfidentialLedgerClientOptions
 {
