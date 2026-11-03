@@ -21,7 +21,7 @@ namespace Azure.Provisioning.Education
         private BicepValue<string> _name;
         private SystemData _systemData;
         private StudentProperties _properties;
-        private ResourceReference<ProvisionableResource> _scope;
+        private ResourceReference<EducationLab> _parent;
 
         /// <summary> Creates a new EducationStudent. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -80,18 +80,18 @@ namespace Azure.Provisioning.Education
             }
         }
 
-        /// <summary> Gets or sets the Scope. </summary>
-        public ProvisionableResource Scope
+        /// <summary> Gets or sets the Parent. </summary>
+        public EducationLab Parent
         {
             get
             {
                 Initialize();
-                return _scope.Value;
+                return _parent.Value;
             }
             set
             {
                 Initialize();
-                _scope.Value = value;
+                _parent.Value = value;
             }
         }
 
@@ -278,7 +278,7 @@ namespace Azure.Provisioning.Education
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _properties = DefineModelProperty<StudentProperties>(nameof(Properties), new string[] { "properties" });
-            _scope = DefineResource<ProvisionableResource>(nameof(Scope), new string[] { "scope" });
+            _parent = DefineResource<EducationLab>(nameof(Parent), new string[] { "parent" });
             DefineAdditionalProperties();
         }
 

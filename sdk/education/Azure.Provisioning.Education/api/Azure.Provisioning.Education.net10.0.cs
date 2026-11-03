@@ -72,8 +72,8 @@ namespace Azure.Provisioning.Education
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> LastName { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
+        public Azure.Provisioning.Education.EducationLab Parent { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Education.StudentRole> Role { get { throw null; } set { } }
-        public Azure.Provisioning.Primitives.ProvisionableResource Scope { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Education.StudentLabStatus> Status { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> SubscriptionAlias { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> SubscriptionId { get { throw null; } }
@@ -97,6 +97,7 @@ namespace Azure.Provisioning.Education
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } }
         public Azure.Provisioning.Education.EducationAmount OfferCap { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Education.EducationGrantType> OfferType { get { throw null; } }
+        public Azure.Provisioning.Primitives.ProvisionableResource Scope { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Education.EducationGrantStatus> Status { get { throw null; } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
