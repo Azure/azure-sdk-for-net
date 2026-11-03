@@ -86,8 +86,11 @@ namespace Azure.Analytics.PlanetaryComputer
             {
                 throw new FormatException($"The model {nameof(IngestionRun)} does not support writing '{format}' format.");
             }
-            writer.WritePropertyName("id"u8);
-            writer.WriteStringValue(Id);
+            if (LifecycleModelReaderWriterOptions.IsVisible(options, LifecycleVisibility.Read | LifecycleVisibility.Create | LifecycleVisibility.Update))
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
             if (Optional.IsDefined(ParentRunId))
             {
                 writer.WritePropertyName("parentRunId"u8);
