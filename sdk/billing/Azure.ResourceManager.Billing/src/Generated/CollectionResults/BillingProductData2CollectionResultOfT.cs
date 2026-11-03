@@ -14,7 +14,7 @@ using Azure.ResourceManager.Billing.Models;
 
 namespace Azure.ResourceManager.Billing
 {
-    internal partial class ProductsGetProductsCollectionResultOfT : Pageable<BillingProductData>
+    internal partial class BillingProductData2CollectionResultOfT : Pageable<BillingProductData>
     {
         private readonly Products _client;
         private readonly string _billingAccountName;
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Billing
         private readonly RequestContext _context;
         private readonly string _diagnosticScope;
 
-        /// <summary> Initializes a new instance of ProductsGetProductsCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <summary> Initializes a new instance of BillingProductData2CollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The Products client used to send requests. </param>
         /// <param name="billingAccountName"> The ID that uniquely identifies a billing account. </param>
         /// <param name="billingProfileName"> The ID that uniquely identifies a billing profile. </param>
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Billing
         /// <param name="search"> The search query option allows clients to request items within a collection matching a free-text search expression. search is only supported for string fields. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public ProductsGetProductsCollectionResultOfT(Products client, string billingAccountName, string billingProfileName, string invoiceSectionName, string filter, string orderBy, long? maxCount, long? skip, bool? count, string search, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public BillingProductData2CollectionResultOfT(Products client, string billingAccountName, string billingProfileName, string invoiceSectionName, string filter, string orderBy, long? maxCount, long? skip, bool? count, string search, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _billingAccountName = billingAccountName;
@@ -58,16 +58,16 @@ namespace Azure.ResourceManager.Billing
             _diagnosticScope = diagnosticScope;
         }
 
-        /// <summary> Gets the pages of ProductsGetProductsCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of BillingProductData2CollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of ProductsGetProductsCollectionResultOfT as an enumerable collection. </returns>
+        /// <returns> The pages of BillingProductData2CollectionResultOfT as an enumerable collection. </returns>
         public override IEnumerable<Page<BillingProductData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken, UriKind.RelativeOrAbsolute) : null;
             while (true)
             {
-                Response response = this.GetNextResponse(pageSizeHint, nextPage);
+                Response response = GetNextResponse(pageSizeHint, nextPage);
                 if (response is null)
                 {
                     yield break;
