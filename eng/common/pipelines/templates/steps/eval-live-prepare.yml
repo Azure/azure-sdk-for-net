@@ -1,4 +1,7 @@
 steps:
+  - script: echo "##vso[task.setvariable variable=NPM_CONFIG_USERCONFIG]$(Build.SourcesDirectory)/.npmrc"
+    displayName: 'Use pipeline npm configuration in isolated specs checkouts'
+
   - template: /eng/common/pipelines/templates/steps/eval-live-cleanup.yml
     parameters:
       typeSpecProject: specification/contosowidgetmanager/Contoso.WidgetManager
