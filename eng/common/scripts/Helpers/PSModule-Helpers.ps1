@@ -70,38 +70,43 @@ function moduleIsInstalled([string]$moduleName, [string]$version) {
 }
 
 function installModule([string]$moduleName, [string]$version, $repoUrl) {
-  $repo = (Get-PSRepository).Where({ $_.SourceLocation -eq $repoUrl })
-  if ($repo.Count -eq 0) {
-    Register-PSRepository -Name $repoUrl -SourceLocation $repoUrl -InstallationPolicy Trusted | Out-Null
+  # URL-based lookup can reuse a feed registered under another name. Its URL is not
+  # a safe cleanup name unless this invocation created that registration.
+  $registeredRepositoryName = $null
+  try {
     $repo = (Get-PSRepository).Where({ $_.SourceLocation -eq $repoUrl })
     if ($repo.Count -eq 0) {
-      throw "Failed to register package repository $repoUrl."
+      Register-PSRepository -Name $repoUrl -SourceLocation $repoUrl -InstallationPolicy Trusted -ErrorAction Stop | Out-Null
+      $registeredRepositoryName = $repoUrl
+      $repo = (Get-PSRepository).Where({ $_.SourceLocation -eq $repoUrl })
+      if ($repo.Count -eq 0) {
+        throw "Failed to register package repository $repoUrl."
+      }
+    }
+
+    Write-Verbose "Installing module $moduleName with version $version from $repoUrl"
+    # CurrentUser keeps modules in the CI cache path. -Force avoids trust prompts
+    # without changing the policy of a pre-existing repository registration.
+    Install-Module $moduleName -RequiredVersion $version -Repository $repo.Name -Scope CurrentUser -Force -WhatIf:$false -ErrorAction Stop
+    # Ensure module installed
+    $modules = (Get-Module -ListAvailable $moduleName)
+    if ($version -as [Version]) {
+      $modules = $modules.Where({ [Version]$_.Version -eq [Version]$version })
+    }
+    if ($modules.Count -eq 0) {
+      throw "Failed to install module $moduleName with version $version"
+    }
+
+    $script:InstalledModules["${moduleName}"] = $modules
+    return $modules[0]
+  }
+  finally {
+    # Temporary registrations can interfere with dotnet tool install on the same feed.
+    # Clean them up even on failure, but leave pre-existing registrations untouched.
+    if ($registeredRepositoryName) {
+      Unregister-PSRepository -Name $registeredRepositoryName -ErrorAction Stop | Out-Null
     }
   }
-
-  if ($repo.InstallationPolicy -ne "Trusted") {
-    Set-PSRepository -Name $repo.Name -InstallationPolicy "Trusted" | Out-Null
-  }
-
-  Write-Verbose "Installing module $moduleName with version $version from $repoUrl"
-  # Install under CurrentUser scope so that the end up under $CurrentUserModulePath for caching
-  Install-Module $moduleName -RequiredVersion $version -Repository $repo.Name -Scope CurrentUser -Force -WhatIf:$false
-  # Ensure module installed
-  $modules = (Get-Module -ListAvailable $moduleName)
-  if ($version -as [Version]) {
-    $modules = $modules.Where({ [Version]$_.Version -eq [Version]$version })
-  }
-  if ($modules.Count -eq 0) {
-    throw "Failed to install module $moduleName with version $version"
-  }
-
-  $script:InstalledModules["${moduleName}"] = $modules
-
-  # Unregister repository as it can cause overlap issues with `dotnet tool install`
-  # commands using the same devops feed
-  Unregister-PSRepository -Name $repoUrl | Out-Null
-
-  return $modules[0]
 }
 
 function InstallAndImport-ModuleIfNotInstalled([string]$module, [string]$version) {
@@ -130,7 +135,9 @@ function Install-ModuleIfNotInstalled() {
     $mutex = New-Object System.Threading.Mutex($false, "Install-ModuleIfNotInstalled")
     $null = $mutex.WaitOne()
 
-    # Check installed modules again after acquiring lock, in case it has been installed
+    # The first check can cache a miss while another process installs the module.
+    # Invalidate that entry so the mutex-protected recheck reads fresh inventory.
+    $script:InstalledModules.Remove($moduleName)
     $module = moduleIsInstalled -moduleName $moduleName -version $version
     if ($module) { return $module }
 

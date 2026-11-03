@@ -27,10 +27,10 @@ files
 .PARAMETER addDevVersion
 Reads the version out of the source and adds a DevVersion property to the
 package properties JSON file. If the package properties JSON file already
-exists, read the Version property from the existing package properties JSON file
-and set that as the Version property for the new output. This has the effect of
-"adding" a DevVersion property to the file which could be different from the
-Version property in that file.
+exists for the same package name, group, and SDK track, preserve its metadata
+and Version property. This has the effect of "adding" a DevVersion property
+which could be different from the Version property in that file. Metadata for
+a different package sharing the output filename is replaced.
 
 .PARAMETER artifactList
 Optional array of artifact names to filter the package properties. Only packages
@@ -52,15 +52,20 @@ Param (
 function SetOutput($outputPath, $incomingPackageSpec)
 {
 
-  # If there is an exsiting package info json file read that and set that as output object which gets properties updated here.
-  if (Test-Path $outputPath)
+  # Reusing JSON solely by filename can restore track 1 after track 2 wins a collision.
+  # Preserve release metadata only when adding a dev version for the same package;
+  # otherwise write the selected package's properties.
+  $outputObject = $incomingPackageSpec
+  if ($addDevVersion -and (Test-Path $outputPath))
   {
-    Write-Host "Found existing package info json."
-    $outputObject = ConvertFrom-Json (Get-Content $outputPath -Raw)
-  }
-  else
-  {
-    $outputObject = $incomingPackageSpec
+    $existingPackageSpec = ConvertFrom-Json (Get-Content $outputPath -Raw)
+    if ($existingPackageSpec.Name -eq $incomingPackageSpec.Name -and
+        [string]$existingPackageSpec.Group -eq [string]$incomingPackageSpec.Group -and
+        $existingPackageSpec.IsNewSdk -eq $incomingPackageSpec.IsNewSdk)
+    {
+      Write-Host "Preserving existing package info for a dev-version update."
+      $outputObject = $existingPackageSpec
+    }
   }
 
 

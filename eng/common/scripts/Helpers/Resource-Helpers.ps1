@@ -322,7 +322,8 @@ function Remove-WormStorageAccounts() {
   foreach ($group in $groups) {
     Write-Host "========================================="
     $accounts = Get-AzStorageAccount -ResourceGroupName $group.ResourceGroupName
-    if (!$accounts) { break }
+    # An empty group does not imply later matching groups have no storage accounts.
+    if (!$accounts) { continue }
 
     foreach ($account in $accounts) {
       RemoveStorageAccount -Account $account
@@ -393,7 +394,7 @@ function SetStorageNetworkAccessRules([string]$ResourceGroupName, [array]$AllowI
   # Add client IP to storage account when running as local user. Pipeline's have their own vnet with access
   if ($storageAccounts) {
     $appliedRule = $false
-    foreach ($account in $storageAccounts) {
+    :storageAccount foreach ($account in $storageAccounts) {
       $properties = Get-AzStorageAccount -ResourceGroupName $ResourceGroupName -AccountName $account.Name
       $rules = Get-AzStorageAccountNetworkRuleSet -ResourceGroupName $ResourceGroupName -AccountName $account.Name
 
@@ -406,8 +407,9 @@ function SetStorageNetworkAccessRules([string]$ResourceGroupName, [array]$AllowI
       # otherwise it's not worth updating due to timing and throttling issues.
       # If the network rules are deny only without any vnet/ip allowances, then we can't ever purge the storage account
       # when immutable blobs need to be removed.
+      # Skip only this account so later accounts and the final propagation wait still run.
       if (!$rules -or !$SetFirewall -or $rules.DefaultAction -eq "Allow") {
-        return
+        continue
       }
 
       # Add firewall rules in cases where existing rules added were incomplete to enable blob removal
@@ -434,7 +436,9 @@ function SetStorageNetworkAccessRules([string]$ResourceGroupName, [array]$AllowI
         if ($ipRanges) {
           foreach ($range in $ipRanges.IpRules) {
             if (DoesSubnetOverlap $range.IPAddressOrRange $clientIp) {
-              return
+              # Continue the outer account loop, not just the inner IP-rule loop.
+              # An existing allowance must not skip later accounts or the final wait.
+              continue storageAccount
             }
           }
         }
