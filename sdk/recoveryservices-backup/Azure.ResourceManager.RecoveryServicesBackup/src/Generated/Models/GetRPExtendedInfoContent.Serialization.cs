@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new GetRPExtendedInfoContent(recoveryPointIds, additionalBinaryDataProperties);
+            return new GetRPExtendedInfoContent(recoveryPointIds ?? new ChangeTrackingList<string>(), additionalBinaryDataProperties);
         }
     }
 }

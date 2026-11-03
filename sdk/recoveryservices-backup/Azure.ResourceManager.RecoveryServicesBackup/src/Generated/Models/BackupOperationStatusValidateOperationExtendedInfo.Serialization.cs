@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
             string objectType = "OperationStatusValidateOperationExtendedInfo";
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            ValidateOperationResponse validateOperationResponse = default;
+            ValidateOperationResult validateOperationResponse = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("objectType"u8))
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    validateOperationResponse = ValidateOperationResponse.DeserializeValidateOperationResponse(prop.Value, options);
+                    validateOperationResponse = ValidateOperationResult.DeserializeValidateOperationResult(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

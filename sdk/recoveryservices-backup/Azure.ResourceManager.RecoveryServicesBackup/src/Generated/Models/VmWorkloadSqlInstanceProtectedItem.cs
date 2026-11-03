@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     public partial class VmWorkloadSqlInstanceProtectedItem : VmWorkloadProtectedItem
     {
         /// <summary> Initializes a new instance of <see cref="VmWorkloadSqlInstanceProtectedItem"/>. </summary>
-        public VmWorkloadSqlInstanceProtectedItem()
+        public VmWorkloadSqlInstanceProtectedItem() : base("AzureVmWorkloadSQLInstance")
         {
             ChildDatabaseNameList = new ChangeTrackingList<string>();
         }

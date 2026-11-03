@@ -12,21 +12,21 @@ using Azure.ResourceManager.RecoveryServicesBackup;
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary> Base class for validate operation response. </summary>
-    internal partial class ValidateOperationResponse
+    internal partial class ValidateOperationResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ValidateOperationResponse"/>. </summary>
-        internal ValidateOperationResponse()
+        /// <summary> Initializes a new instance of <see cref="ValidateOperationResult"/>. </summary>
+        internal ValidateOperationResult()
         {
             ValidationResults = new ChangeTrackingList<BackupErrorDetail>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ValidateOperationResponse"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ValidateOperationResult"/>. </summary>
         /// <param name="validationResults"> Gets the validation result. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ValidateOperationResponse(IList<BackupErrorDetail> validationResults, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ValidateOperationResult(IList<BackupErrorDetail> validationResults, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ValidationResults = validationResults;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

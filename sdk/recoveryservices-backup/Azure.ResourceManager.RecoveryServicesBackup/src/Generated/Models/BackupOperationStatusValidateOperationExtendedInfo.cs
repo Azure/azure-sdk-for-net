@@ -22,13 +22,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="objectType"> This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="validateOperationResponse"> Gets the validation operation response. </param>
-        internal BackupOperationStatusValidateOperationExtendedInfo(string objectType, IDictionary<string, BinaryData> additionalBinaryDataProperties, ValidateOperationResponse validateOperationResponse) : base(objectType, additionalBinaryDataProperties)
+        internal BackupOperationStatusValidateOperationExtendedInfo(string objectType, IDictionary<string, BinaryData> additionalBinaryDataProperties, ValidateOperationResult validateOperationResponse) : base(objectType, additionalBinaryDataProperties)
         {
             ValidateOperationResponse = validateOperationResponse;
         }
 
         /// <summary> Gets the validation operation response. </summary>
-        internal ValidateOperationResponse ValidateOperationResponse { get; }
+        internal ValidateOperationResult ValidateOperationResponse { get; }
 
         /// <summary> Gets the validation result. </summary>
         public IList<BackupErrorDetail> ValidateOperationResponseValidationResults
