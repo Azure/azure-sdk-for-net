@@ -81,7 +81,7 @@ namespace Azure.AI.Projects.Agents
             writer.WritePropertyName("agent_version"u8);
             writer.WriteStringValue(AgentVersion);
             writer.WritePropertyName("offset_ms"u8);
-            writer.WriteNumberValue(OffsetMs);
+            writer.WriteNumberValue(Convert.ToInt32(Math.Round(OffsetMs.TotalMilliseconds)));
             if (Optional.IsDefined(BackendConversationId))
             {
                 writer.WritePropertyName("backend_conversation_id"u8);
@@ -89,21 +89,9 @@ namespace Azure.AI.Projects.Agents
             }
             writer.WritePropertyName("output"u8);
             writer.WriteStartArray();
-            foreach (BinaryData item in Output)
+            foreach (VoiceAgentLiveDelegationResultItem item in Output)
             {
-                if (item == null)
-                {
-                    writer.WriteNullValue();
-                    continue;
-                }
-#if NET6_0_OR_GREATER
-                writer.WriteRawValue(item);
-#else
-                using (JsonDocument document = JsonDocument.Parse(item))
-                {
-                    JsonSerializer.Serialize(writer, document.RootElement);
-                }
-#endif
+                writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
             if (Optional.IsDefined(DelegationContext))
@@ -148,16 +136,16 @@ namespace Azure.AI.Projects.Agents
             DateTimeOffset createdOn = default;
             string agentName = default;
             string agentVersion = default;
-            long offsetMs = default;
+            TimeSpan offsetMs = default;
             string backendConversationId = default;
-            IList<BinaryData> output = default;
+            IList<VoiceAgentLiveDelegationResultItem> output = default;
             string delegationContext = default;
             VoiceAgentLiveDelegationStatus status = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = prop.Value.GetString().ToVoiceAgentLiveConversationItemType();
+                    @type = new VoiceAgentLiveConversationItemType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("id"u8))
@@ -192,7 +180,7 @@ namespace Azure.AI.Projects.Agents
                 }
                 if (prop.NameEquals("offset_ms"u8))
                 {
-                    offsetMs = prop.Value.GetInt64();
+                    offsetMs = TimeSpan.FromMilliseconds(prop.Value.GetInt32());
                     continue;
                 }
                 if (prop.NameEquals("backend_conversation_id"u8))
@@ -202,17 +190,10 @@ namespace Azure.AI.Projects.Agents
                 }
                 if (prop.NameEquals("output"u8))
                 {
-                    List<BinaryData> array = new List<BinaryData>();
+                    List<VoiceAgentLiveDelegationResultItem> array = new List<VoiceAgentLiveDelegationResultItem>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(item.GetUtf8Bytes());
-                        }
+                        array.Add(VoiceAgentLiveDelegationResultItem.DeserializeVoiceAgentLiveDelegationResultItem(item, options));
                     }
                     output = array;
                     continue;
@@ -243,7 +224,7 @@ namespace Azure.AI.Projects.Agents
                 agentVersion,
                 offsetMs,
                 backendConversationId,
-                output ?? new ChangeTrackingList<BinaryData>(),
+                output ?? new ChangeTrackingList<VoiceAgentLiveDelegationResultItem>(),
                 delegationContext,
                 status);
         }

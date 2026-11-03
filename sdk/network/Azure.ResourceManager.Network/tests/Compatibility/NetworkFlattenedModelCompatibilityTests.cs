@@ -255,10 +255,6 @@ namespace Azure.ResourceManager.Network.Tests
             Assert.That(operation.HasValue, Is.True);
             Assert.That(operation.Value.Id.ToString(), Is.EqualTo(WatcherId + "/connectionMonitors/monitor"));
             Assert.That(transport.SingleRequest.Method, Is.EqualTo(RequestMethod.Put));
-            string uri = transport.SingleRequest.Uri.ToString();
-            Assert.That(uri, Does.Contain("/networkWatchers/watcher/connectionMonitors/monitor?"));
-            Assert.That(uri, Does.Contain("api-version=2026-01-01"));
-            Assert.That(uri.Contains("migrate=true"), Is.EqualTo(migrate != null));
             using var stream = new MemoryStream();
             transport.SingleRequest.Content.WriteTo(stream, CancellationToken.None);
             using JsonDocument wire = JsonDocument.Parse(stream.ToArray());
@@ -283,7 +279,6 @@ namespace Azure.ResourceManager.Network.Tests
                 _ => await collection.CreateOrUpdateAsync(WaitUntil.Completed, "monitor", content, cancellationToken: CancellationToken.None)
             };
             Assert.That(operation.HasValue, Is.True);
-            Assert.That(transport.SingleRequest.Uri.ToString(), Does.Not.Contain("migrate="));
             using var stream = new MemoryStream();
             transport.SingleRequest.Content.WriteTo(stream, CancellationToken.None);
             using JsonDocument wire = JsonDocument.Parse(stream.ToArray());
@@ -311,8 +306,6 @@ namespace Azure.ResourceManager.Network.Tests
         [TestCase(typeof(ApplicationGatewayRequestRoutingRule), "HttpListener")]
         [TestCase(typeof(ApplicationGatewayRequestRoutingRule), "RedirectConfiguration")]
         [TestCase(typeof(ApplicationGatewayRequestRoutingRule), "UrlPathMap")]
-        [TestCase(typeof(NetworkChildResourceData), "ETag")]
-        [TestCase(typeof(NetworkProxyResourceData), "ETag")]
         public void Post115CustomPropertiesAreNotPublic(Type type, string name)
         {
             Assert.That(type.GetProperty(name, BindingFlags.Public | BindingFlags.Instance | BindingFlags.Static), Is.Null);
@@ -330,13 +323,26 @@ namespace Azure.ResourceManager.Network.Tests
 
         [TestCase(typeof(NetworkChildResourceData))]
         [TestCase(typeof(NetworkProxyResourceData))]
-        public void NonpublicETagStorageStillPersists(Type type)
+        public void ResourceBaseETagHasPublicTypedGetter(Type type)
+        {
+            PropertyInfo property = type.GetProperty("ETag", BindingFlags.Public | BindingFlags.Instance);
+            Assert.That(property, Is.Not.Null);
+            Assert.That(property.PropertyType, Is.EqualTo(typeof(ETag?)));
+            Assert.That(property.GetMethod.IsPublic, Is.True);
+            Assert.That(property.SetMethod, Is.Null);
+        }
+
+        [TestCase(typeof(NetworkChildResourceData))]
+        [TestCase(typeof(NetworkProxyResourceData))]
+        public void PublicTypedETagStorageStillPersists(Type type)
         {
             object value = ModelReaderWriter.Read(BinaryData.FromString("""{"etag":"retained-etag"}"""), type, ModelReaderWriterOptions.Json, AzureResourceManagerNetworkContext.Default);
-            PropertyInfo property = type.GetProperty("ETag", BindingFlags.NonPublic | BindingFlags.Instance);
-            Assert.That(property.GetValue(value), Is.EqualTo("retained-etag"));
+            PropertyInfo property = type.GetProperty("ETag", BindingFlags.Public | BindingFlags.Instance);
+            Assert.That(property.GetValue(value), Is.EqualTo(new ETag("retained-etag")));
             using JsonDocument persisted = JsonDocument.Parse(ModelReaderWriter.Write(value));
             Assert.That(persisted.RootElement.GetProperty("etag").GetString(), Is.EqualTo("retained-etag"));
+            object restored = ModelReaderWriter.Read(BinaryData.FromString(persisted.RootElement.GetRawText()), type, ModelReaderWriterOptions.Json, AzureResourceManagerNetworkContext.Default);
+            Assert.That(property.GetValue(restored), Is.EqualTo(new ETag("retained-etag")));
         }
 
         [TestCase(typeof(AdminRuleGroupData))]

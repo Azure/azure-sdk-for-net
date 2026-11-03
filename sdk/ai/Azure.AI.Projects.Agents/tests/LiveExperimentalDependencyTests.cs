@@ -12,12 +12,12 @@ namespace Azure.AI.Projects.Agents.Tests;
 
 public class LiveExperimentalDependencyTests
 {
-    [TestCase(typeof(QuestionParam))]
-    [TestCase(typeof(QuestionParamPredicate))]
-    [TestCase(typeof(QuestionParamChoice))]
-    [TestCase(typeof(QuestionParamScore))]
-    [TestCase(typeof(ChoiceOptionParam))]
-    [TestCase(typeof(ScoreLevelParam))]
+    [TestCase(typeof(LiveDecisionQuestion))]
+    [TestCase(typeof(LiveDecisionPredicateQuestionParam))]
+    [TestCase(typeof(LiveDecisionChoiceQuestionParam))]
+    [TestCase(typeof(LiveDecisionScoreQuestionParam))]
+    [TestCase(typeof(LiveDecisionChoiceParam))]
+    [TestCase(typeof(LiveDecisionScoreLevelParam))]
     [TestCase(typeof(DecisionResult))]
     [TestCase(typeof(AnswerResource))]
     [TestCase(typeof(AnswerResourcePredicate))]

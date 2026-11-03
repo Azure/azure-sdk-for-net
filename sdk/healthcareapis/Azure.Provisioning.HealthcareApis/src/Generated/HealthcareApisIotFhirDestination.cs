@@ -203,7 +203,7 @@ namespace Azure.Provisioning.HealthcareApis
             _properties = DefineModelProperty<HealthcareApisIotFhirDestinationProperties>(nameof(Properties), new string[] { "properties" }, isRequired: true);
             _eTag = DefineProperty<ETag>(nameof(ETag), new string[] { "etag" });
             _location = DefineProperty<AzureLocation>(nameof(Location), new string[] { "location" });
-            _parent = DefineResource<HealthcareApisIotConnector>(nameof(Parent), new string[] { "parent" }, isRequired: true);
+            _parent = DefineResource<HealthcareApisIotConnector>(nameof(Parent), new string[] { "parent" });
             DefineAdditionalProperties();
         }
 

@@ -11,7 +11,7 @@ using Azure.Provisioning;
 namespace Azure.Provisioning.Network
 {
     /// <summary> Describes the properties of a connection monitor. </summary>
-    internal partial class ConnectionMonitorResultProperties : ConnectionMonitorCreateOrUpdateContent
+    internal partial class ConnectionMonitorResultProperties : ConnectionMonitorParameters
     {
         private BicepValue<NetworkProvisioningState> _provisioningState;
         private BicepValue<DateTimeOffset> _startsOn;

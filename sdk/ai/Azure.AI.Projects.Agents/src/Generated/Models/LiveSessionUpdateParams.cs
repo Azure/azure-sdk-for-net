@@ -21,14 +21,14 @@ namespace Azure.AI.Projects.Agents
         /// <summary> Initializes a new instance of <see cref="LiveSessionUpdateParams"/>. </summary>
         public LiveSessionUpdateParams()
         {
-            Triggers = new ChangeTrackingList<LiveDecisionTriggerInputParam2>();
+            Triggers = new ChangeTrackingList<LiveDecisionTriggerInputParam>();
         }
 
         /// <summary> Initializes a new instance of <see cref="LiveSessionUpdateParams"/>. </summary>
         /// <param name="delegation"></param>
         /// <param name="triggers"> At most one Decisions trigger per transcript event type. Triggers run independently of delegation. On update, omit triggers to keep the current configuration, send a list to replace it, or send an empty list to disable triggers. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal LiveSessionUpdateParams(BinaryData delegation, IList<LiveDecisionTriggerInputParam2> triggers, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal LiveSessionUpdateParams(BinaryData delegation, IList<LiveDecisionTriggerInputParam> triggers, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             _delegation = delegation;
             Triggers = triggers;
@@ -91,6 +91,6 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <summary> At most one Decisions trigger per transcript event type. Triggers run independently of delegation. On update, omit triggers to keep the current configuration, send a list to replace it, or send an empty list to disable triggers. </summary>
-        public IList<LiveDecisionTriggerInputParam2> Triggers { get; }
+        public IList<LiveDecisionTriggerInputParam> Triggers { get; }
     }
 }

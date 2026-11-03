@@ -15,7 +15,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="type"> The persisted item kind. </param>
         /// <param name="id"> Item ID used for retrieval. Foundry assigns speech IDs; delegation IDs retain their native value. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownVoiceAgentLiveConversationItem(VoiceAgentLiveConversationItemType @type, string id, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type, id, additionalBinaryDataProperties)
+        internal UnknownVoiceAgentLiveConversationItem(VoiceAgentLiveConversationItemType @type, string id, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type != default ? @type : "unknown", id, additionalBinaryDataProperties)
         {
         }
     }

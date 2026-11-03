@@ -21,15 +21,20 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <summary> Initializes a new instance of <see cref="LiveDecisionsDelegationUpdateParam"/>. </summary>
+        /// <param name="acknowledgementDelayMs"> Milliseconds to wait before requesting an automatic spoken acknowledgement for a delegation. The model may still speak before this delay. Any commentary or thinking appended to the session cancels all pending acknowledgements, including those for other delegations. Defaults to 400 for Decisions sessions and 0 (request immediately) for other sessions. Omission in a session update preserves the current value. Updates apply to subsequent delegations. </param>
         /// <param name="type"></param>
         /// <param name="decisions"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal LiveDecisionsDelegationUpdateParam(string @type, LiveDecisionsSettingsUpdateParam decisions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal LiveDecisionsDelegationUpdateParam(long? acknowledgementDelayMs, string @type, LiveDecisionsSettingsUpdateParam decisions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
+            AcknowledgementDelayMs = acknowledgementDelayMs;
             Type = @type;
             Decisions = decisions;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+
+        /// <summary> Milliseconds to wait before requesting an automatic spoken acknowledgement for a delegation. The model may still speak before this delay. Any commentary or thinking appended to the session cancels all pending acknowledgements, including those for other delegations. Defaults to 400 for Decisions sessions and 0 (request immediately) for other sessions. Omission in a session update preserves the current value. Updates apply to subsequent delegations. </summary>
+        public long? AcknowledgementDelayMs { get; set; }
 
         /// <summary> Gets the Type. </summary>
         internal string Type { get; } = "decisions";

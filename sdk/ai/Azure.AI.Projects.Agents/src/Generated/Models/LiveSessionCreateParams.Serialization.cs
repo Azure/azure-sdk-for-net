@@ -127,7 +127,7 @@ namespace Azure.AI.Projects.Agents
             {
                 writer.WritePropertyName("triggers"u8);
                 writer.WriteStartArray();
-                foreach (LiveDecisionTriggerInputParam2 item in Triggers)
+                foreach (LiveDecisionTriggerInputParam item in Triggers)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -192,7 +192,7 @@ namespace Azure.AI.Projects.Agents
             LiveInitialSessionAudioParam audio = default;
             bool delegationIsDefined = false;
             BinaryData delegation = default;
-            IList<LiveDecisionTriggerInputParam2> triggers = default;
+            IList<LiveDecisionTriggerInputParam> triggers = default;
             bool? store = default;
             LiveClientConfigParam client = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -254,10 +254,10 @@ namespace Azure.AI.Projects.Agents
                     {
                         continue;
                     }
-                    List<LiveDecisionTriggerInputParam2> array = new List<LiveDecisionTriggerInputParam2>();
+                    List<LiveDecisionTriggerInputParam> array = new List<LiveDecisionTriggerInputParam>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(LiveDecisionTriggerInputParam2.DeserializeLiveDecisionTriggerInputParam2(item, options));
+                        array.Add(LiveDecisionTriggerInputParam.DeserializeLiveDecisionTriggerInputParam(item, options));
                     }
                     triggers = array;
                     continue;
@@ -291,7 +291,7 @@ namespace Azure.AI.Projects.Agents
                 input ?? new ChangeTrackingList<LiveInitialItem>(),
                 audio,
                 delegation,
-                triggers ?? new ChangeTrackingList<LiveDecisionTriggerInputParam2>(),
+                triggers ?? new ChangeTrackingList<LiveDecisionTriggerInputParam>(),
                 store,
                 client,
                 additionalBinaryDataProperties)

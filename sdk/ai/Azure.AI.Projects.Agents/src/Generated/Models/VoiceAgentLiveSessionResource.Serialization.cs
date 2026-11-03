@@ -108,7 +108,7 @@ namespace Azure.AI.Projects.Agents
             {
                 writer.WritePropertyName("triggers"u8);
                 writer.WriteStartArray();
-                foreach (LiveDecisionTriggerInputParam2 item in Triggers)
+                foreach (LiveDecisionTriggerInputParam item in Triggers)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -135,14 +135,7 @@ namespace Azure.AI.Projects.Agents
                 if (Delegation != null)
                 {
                     writer.WritePropertyName("delegation"u8);
-#if NET6_0_OR_GREATER
-                    writer.WriteRawValue(Delegation);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(Delegation))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
+                    writer.WriteObjectValue(Delegation, options);
                 }
                 else
                 {
@@ -196,14 +189,14 @@ namespace Azure.AI.Projects.Agents
             string instructions = default;
             IList<LiveInitialItem> input = default;
             LiveInitialSessionAudioParam audio = default;
-            IList<LiveDecisionTriggerInputParam2> triggers = default;
+            IList<LiveDecisionTriggerInputParam> triggers = default;
             bool? store = default;
             LiveClientConfigParam client = default;
             string id = default;
             long expiresAt = default;
             string status = default;
             bool delegationIsDefined = false;
-            BinaryData delegation = default;
+            VoiceAgentLiveDelegation delegation = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -252,10 +245,10 @@ namespace Azure.AI.Projects.Agents
                     {
                         continue;
                     }
-                    List<LiveDecisionTriggerInputParam2> array = new List<LiveDecisionTriggerInputParam2>();
+                    List<LiveDecisionTriggerInputParam> array = new List<LiveDecisionTriggerInputParam>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(LiveDecisionTriggerInputParam2.DeserializeLiveDecisionTriggerInputParam2(item, options));
+                        array.Add(LiveDecisionTriggerInputParam.DeserializeLiveDecisionTriggerInputParam(item, options));
                     }
                     triggers = array;
                     continue;
@@ -301,7 +294,7 @@ namespace Azure.AI.Projects.Agents
                         delegation = null;
                         continue;
                     }
-                    delegation = prop.Value.GetUtf8Bytes();
+                    delegation = VoiceAgentLiveDelegation.DeserializeVoiceAgentLiveDelegation(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -314,7 +307,7 @@ namespace Azure.AI.Projects.Agents
                 instructions,
                 input ?? new ChangeTrackingList<LiveInitialItem>(),
                 audio,
-                triggers ?? new ChangeTrackingList<LiveDecisionTriggerInputParam2>(),
+                triggers ?? new ChangeTrackingList<LiveDecisionTriggerInputParam>(),
                 store,
                 client,
                 id,

@@ -13,8 +13,8 @@ using Azure.ResourceManager.RedHatOpenShiftHcp;
 
 namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
 {
-    /// <summary> ResourceStatus represents the observed status of the resource. </summary>
-    internal partial class HcpOpenShiftClusterResourceStatus : IJsonModel<HcpOpenShiftClusterResourceStatus>
+    /// <summary> ClusterResourceStatus represents the observed status of the cluster resource. </summary>
+    public partial class HcpOpenShiftClusterResourceStatus : IJsonModel<HcpOpenShiftClusterResourceStatus>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -84,6 +84,16 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
                 }
                 writer.WriteEndArray();
             }
+            if (options.Format != "W" && Optional.IsCollectionDefined(ActiveVersions))
+            {
+                writer.WritePropertyName("activeVersions"u8);
+                writer.WriteStartArray();
+                foreach (HcpOpenShiftClusterActiveVersion item in ActiveVersions)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -127,6 +137,7 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
                 return null;
             }
             IReadOnlyList<HcpOpenShiftClusterCondition> conditions = default;
+            IReadOnlyList<HcpOpenShiftClusterActiveVersion> activeVersions = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -144,12 +155,26 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
                     conditions = array;
                     continue;
                 }
+                if (prop.NameEquals("activeVersions"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<HcpOpenShiftClusterActiveVersion> array = new List<HcpOpenShiftClusterActiveVersion>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        array.Add(HcpOpenShiftClusterActiveVersion.DeserializeHcpOpenShiftClusterActiveVersion(item, options));
+                    }
+                    activeVersions = array;
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new HcpOpenShiftClusterResourceStatus(conditions ?? new ChangeTrackingList<HcpOpenShiftClusterCondition>(), additionalBinaryDataProperties);
+            return new HcpOpenShiftClusterResourceStatus(conditions ?? new ChangeTrackingList<HcpOpenShiftClusterCondition>(), activeVersions ?? new ChangeTrackingList<HcpOpenShiftClusterActiveVersion>(), additionalBinaryDataProperties);
         }
     }
 }

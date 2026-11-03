@@ -26,7 +26,7 @@ namespace Azure.AI.Projects.Agents
         {
             Model = model;
             Input = new ChangeTrackingList<LiveInitialItem>();
-            Triggers = new ChangeTrackingList<LiveDecisionTriggerInputParam2>();
+            Triggers = new ChangeTrackingList<LiveDecisionTriggerInputParam>();
         }
 
         /// <summary> Initializes a new instance of <see cref="LiveSessionCreateParams"/>. </summary>
@@ -39,7 +39,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="store"> Whether to store the session for later forking and recording download. Defaults to false for new sessions. </param>
         /// <param name="client"> Startup-only capabilities for an untrusted frontend attached to a unified WebRTC session. Trusted sideband connections are unaffected. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal LiveSessionCreateParams(ModelIdsLive model, string instructions, IList<LiveInitialItem> input, LiveInitialSessionAudioParam audio, BinaryData delegation, IList<LiveDecisionTriggerInputParam2> triggers, bool? store, LiveClientConfigParam client, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal LiveSessionCreateParams(ModelIdsLive model, string instructions, IList<LiveInitialItem> input, LiveInitialSessionAudioParam audio, BinaryData delegation, IList<LiveDecisionTriggerInputParam> triggers, bool? store, LiveClientConfigParam client, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Model = model;
             _instructions = instructions;
@@ -90,7 +90,7 @@ namespace Azure.AI.Projects.Agents
         /// <description> <see cref="LiveResponsesDelegationParam"/>. </description>
         /// </item>
         /// <item>
-        /// <description> <see cref="LiveDecisionsDelegationParam2"/>. </description>
+        /// <description> <see cref="LiveDecisionsDelegationParam"/>. </description>
         /// </item>
         /// </list>
         /// </remarks>
@@ -131,7 +131,7 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <summary> At most one Decisions trigger per transcript event type. Triggers run independently of delegation. On update, omit triggers to keep the current configuration, send a list to replace it, or send an empty list to disable triggers. </summary>
-        public IList<LiveDecisionTriggerInputParam2> Triggers { get; }
+        public IList<LiveDecisionTriggerInputParam> Triggers { get; }
 
         /// <summary> Whether to store the session for later forking and recording download. Defaults to false for new sessions. </summary>
         public bool? Store { get; set; }

@@ -13,6 +13,6 @@
     <FrameworkReference Include="Microsoft.AspNetCore.App" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Azure.AI.AgentServer.Core" />
+    <ProjectReference Include="..\..\Azure.AI.AgentServer.Core\src\Azure.AI.AgentServer.Core.csproj" />
   </ItemGroup>
 </Project>

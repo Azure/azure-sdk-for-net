@@ -79,7 +79,7 @@ namespace Azure.AI.Projects.Agents
             {
                 writer.WritePropertyName("questions"u8);
                 writer.WriteStartArray();
-                foreach (QuestionParam item in Questions)
+                foreach (LiveDecisionQuestion item in Questions)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -128,7 +128,7 @@ namespace Azure.AI.Projects.Agents
                 return null;
             }
             string model = default;
-            IList<QuestionParam> questions = default;
+            IList<LiveDecisionQuestion> questions = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -143,10 +143,10 @@ namespace Azure.AI.Projects.Agents
                     {
                         continue;
                     }
-                    List<QuestionParam> array = new List<QuestionParam>();
+                    List<LiveDecisionQuestion> array = new List<LiveDecisionQuestion>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(QuestionParam.DeserializeQuestionParam(item, options));
+                        array.Add(LiveDecisionQuestion.DeserializeLiveDecisionQuestion(item, options));
                     }
                     questions = array;
                     continue;
@@ -156,7 +156,7 @@ namespace Azure.AI.Projects.Agents
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new LiveDecisionsSettingsUpdateParam(model, questions ?? new ChangeTrackingList<QuestionParam>(), additionalBinaryDataProperties);
+            return new LiveDecisionsSettingsUpdateParam(model, questions ?? new ChangeTrackingList<LiveDecisionQuestion>(), additionalBinaryDataProperties);
         }
     }
 }

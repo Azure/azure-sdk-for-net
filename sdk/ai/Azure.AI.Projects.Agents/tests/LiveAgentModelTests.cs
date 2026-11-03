@@ -6,6 +6,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
+using System.Text.RegularExpressions;
 using NUnit.Framework;
 using OpenAI.Responses;
 
@@ -34,8 +35,8 @@ public class LiveAgentModelTests
 
     [TestCase("session.input_audio.append", typeof(LiveInputAudioAppend))]
     [TestCase("session.output_audio.delta", typeof(LiveOutputAudioDelta))]
-    [TestCase("transport.dtmf.received", typeof(LiveTransportDTMFReceived))]
-    [TestCase("transport.dtmf.send", typeof(LiveTransportDTMFSend))]
+    [TestCase("transport.dtmf.received", typeof(LiveServerEventLiveTransportDtmfReceived))]
+    [TestCase("transport.dtmf.sent", typeof(LiveServerEventLiveTransportDtmfSent))]
     [TestCase("transport.ringing", typeof(LiveServerEventLiveTransportRinging))]
     [TestCase("transport.answered", typeof(LiveServerEventLiveTransportAnswered))]
     [TestCase("transport.failed", typeof(LiveServerEventLiveTransportFailed))]
@@ -245,7 +246,32 @@ public class LiveAgentModelTests
             Assert.That(voice, Is.TypeOf(expectedType));
         });
         using JsonDocument document = JsonDocument.Parse(Write(root));
-        Assert.That(document.RootElement.TryGetProperty("sub_protocol", out _), Is.EqualTo(protocol != null));
+        Assert.That(document.RootElement.GetProperty("sub_protocol").GetString(), Is.EqualTo(protocol ?? "realtime"));
+    }
+
+    [TestCase(null, "realtime")]
+    [TestCase("realtime", "realtime")]
+    [TestCase("live", "live")]
+    [TestCase("future", "future")]
+    public void LegacyRealtimeRecordingDefaultsPreserveExplicitProtocols(string protocol, string expectedProtocol)
+    {
+        string protocolProperty = protocol == null ? "" : $",\"sub_protocol\":\"{protocol}\"";
+        string json = "{\"definition\":{\"kind\":\"voice\",\"model\":\"deployment\"" + protocolProperty + "}}";
+        string normalized = Regex.Replace(json,
+            ProjectsTestSanitizers.LegacyRealtimeVoiceDefinitionPattern,
+            ProjectsTestSanitizers.LegacyRealtimeVoiceDefinitionReplacement);
+        using JsonDocument document = JsonDocument.Parse(normalized);
+        JsonElement definition = document.RootElement.GetProperty("definition");
+        Assert.Multiple(() =>
+        {
+            Assert.That(definition.GetProperty("sub_protocol").GetString(), Is.EqualTo(expectedProtocol));
+            Assert.That(definition.EnumerateObject().Count(property => property.Name == "sub_protocol"), Is.EqualTo(1));
+            Assert.That(definition.GetProperty("model").GetString(), Is.EqualTo("deployment"));
+            if (protocol != null)
+            {
+                Assert.That(normalized, Is.EqualTo(json));
+            }
+        });
     }
 
     [TestCase("\"future\"")]
@@ -312,7 +338,7 @@ public class LiveAgentModelTests
         {
             Assert.That(defaultRealtime, Is.Not.Null);
             Assert.That(realtimeJson.RootElement.GetProperty("kind").GetString(), Is.EqualTo("voice"));
-            Assert.That(realtimeJson.RootElement.TryGetProperty("sub_protocol", out _), Is.False);
+            Assert.That(realtimeJson.RootElement.GetProperty("sub_protocol").GetString(), Is.EqualTo("realtime"));
             Assert.That(liveJson.RootElement.GetProperty("kind").GetString(), Is.EqualTo("voice"));
             Assert.That(liveJson.RootElement.GetProperty("sub_protocol").GetString(), Is.EqualTo("live"));
             Assert.That(liveJson.RootElement.GetProperty("model_type").GetString(), Is.EqualTo("self_deployed"));
@@ -343,7 +369,8 @@ public class LiveAgentModelTests
                 LiveServerEventLiveSessionClosed closed => closed.Session,
                 _ => throw new InvalidOperationException("Unexpected lifecycle event.")
             };
-            VoiceAgentLiveManagedAgentDelegation owner = Read<VoiceAgentLiveManagedAgentDelegation>(session.Delegation.ToString());
+            Assert.That(session.Delegation, Is.TypeOf<VoiceAgentLiveManagedAgentDelegation>());
+            VoiceAgentLiveManagedAgentDelegation owner = (VoiceAgentLiveManagedAgentDelegation)session.Delegation;
             Assert.Multiple(() =>
             {
                 Assert.That(session.Id, Is.EqualTo("live_1"));
@@ -351,7 +378,7 @@ public class LiveAgentModelTests
                 Assert.That(session.ExpiresAt, Is.EqualTo(1900000000));
                 Assert.That(session.Status, Is.EqualTo("active"));
                 Assert.That(session.Audio.Format, Is.TypeOf<LiveSessionAudioFormatPCMParam>());
-                Assert.That(owner.Type, Is.EqualTo("foundry_managed_agent"));
+                Assert.That(owner.Type, Is.EqualTo(VoiceAgentLiveDelegationType.FoundryManagedAgent));
                 Assert.That(owner.AgentName, Is.EqualTo("backend"));
                 Assert.That(owner.AgentVersion, Is.EqualTo("2"));
             });

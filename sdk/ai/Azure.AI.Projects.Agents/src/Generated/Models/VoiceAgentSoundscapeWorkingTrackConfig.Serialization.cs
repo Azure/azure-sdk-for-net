@@ -82,10 +82,10 @@ namespace Azure.AI.Projects.Agents
                 writer.WritePropertyName("gain"u8);
                 writer.WriteNumberValue(Gain.Value);
             }
-            if (Optional.IsDefined(DelayMs))
+            if (Optional.IsDefined(Delay))
             {
                 writer.WritePropertyName("delay_ms"u8);
-                writer.WriteNumberValue(Convert.ToInt32(Math.Round(DelayMs.Value.TotalMilliseconds)));
+                writer.WriteNumberValue(Convert.ToInt32(Math.Round(Delay.Value.TotalMilliseconds)));
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -131,7 +131,7 @@ namespace Azure.AI.Projects.Agents
             }
             VoiceAgentSoundscapeSourceConfig source = default;
             double? gain = default;
-            TimeSpan? delayMs = default;
+            TimeSpan? delay = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -155,7 +155,7 @@ namespace Azure.AI.Projects.Agents
                     {
                         continue;
                     }
-                    delayMs = TimeSpan.FromMilliseconds(prop.Value.GetInt32());
+                    delay = TimeSpan.FromMilliseconds(prop.Value.GetInt32());
                     continue;
                 }
                 if (options.Format != "W")
@@ -163,7 +163,7 @@ namespace Azure.AI.Projects.Agents
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new VoiceAgentSoundscapeWorkingTrackConfig(source, gain, delayMs, additionalBinaryDataProperties);
+            return new VoiceAgentSoundscapeWorkingTrackConfig(source, gain, delay, additionalBinaryDataProperties);
         }
     }
 }

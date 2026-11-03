@@ -18,14 +18,14 @@ namespace Azure.AI.Projects.Agents
         /// <summary> Initializes a new instance of <see cref="LiveDecisionsSettingsUpdateParam"/>. </summary>
         public LiveDecisionsSettingsUpdateParam()
         {
-            Questions = new ChangeTrackingList<QuestionParam>();
+            Questions = new ChangeTrackingList<LiveDecisionQuestion>();
         }
 
         /// <summary> Initializes a new instance of <see cref="LiveDecisionsSettingsUpdateParam"/>. </summary>
         /// <param name="model"></param>
         /// <param name="questions"> Native Decision API questions evaluated together, in order. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal LiveDecisionsSettingsUpdateParam(string model, IList<QuestionParam> questions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal LiveDecisionsSettingsUpdateParam(string model, IList<LiveDecisionQuestion> questions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Model = model;
             Questions = questions;
@@ -36,6 +36,6 @@ namespace Azure.AI.Projects.Agents
         public string Model { get; set; }
 
         /// <summary> Native Decision API questions evaluated together, in order. </summary>
-        public IList<QuestionParam> Questions { get; }
+        public IList<LiveDecisionQuestion> Questions { get; }
     }
 }

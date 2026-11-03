@@ -119,7 +119,7 @@ namespace Azure.AI.Projects.Agents
             {
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = prop.Value.GetString().ToVoiceAgentLiveConversationItemType();
+                    @type = new VoiceAgentLiveConversationItemType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("id"u8))

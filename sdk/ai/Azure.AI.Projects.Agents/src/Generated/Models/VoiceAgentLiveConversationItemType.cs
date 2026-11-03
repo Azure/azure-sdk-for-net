@@ -2,19 +2,70 @@
 
 #nullable disable
 
+using System;
+using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> The kind of a persisted Live conversation item. </summary>
     [Experimental("AAIP001")]
-    internal enum VoiceAgentLiveConversationItemType
+    internal readonly partial struct VoiceAgentLiveConversationItemType : IEquatable<VoiceAgentLiveConversationItemType>
     {
-        /// <summary> Input. </summary>
-        Input,
-        /// <summary> Output. </summary>
-        Output,
-        /// <summary> Delegation. </summary>
-        Delegation
+        private readonly string _value;
+        private const string InputValue = "input";
+        private const string OutputValue = "output";
+        private const string DelegationValue = "delegation";
+
+        /// <summary> Initializes a new instance of <see cref="VoiceAgentLiveConversationItemType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public VoiceAgentLiveConversationItemType(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Input. </summary>
+        public static VoiceAgentLiveConversationItemType Input { get; } = new VoiceAgentLiveConversationItemType(InputValue);
+
+        /// <summary> Gets the Output. </summary>
+        public static VoiceAgentLiveConversationItemType Output { get; } = new VoiceAgentLiveConversationItemType(OutputValue);
+
+        /// <summary> Gets the Delegation. </summary>
+        public static VoiceAgentLiveConversationItemType Delegation { get; } = new VoiceAgentLiveConversationItemType(DelegationValue);
+
+        /// <summary> Determines if two <see cref="VoiceAgentLiveConversationItemType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
+        public static bool operator ==(VoiceAgentLiveConversationItemType left, VoiceAgentLiveConversationItemType right) => left.Equals(right);
+
+        /// <summary> Determines if two <see cref="VoiceAgentLiveConversationItemType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
+        public static bool operator !=(VoiceAgentLiveConversationItemType left, VoiceAgentLiveConversationItemType right) => !left.Equals(right);
+
+        /// <summary> Converts a string to a <see cref="VoiceAgentLiveConversationItemType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator VoiceAgentLiveConversationItemType(string value) => new VoiceAgentLiveConversationItemType(value);
+
+        /// <summary> Converts a string to a <see cref="VoiceAgentLiveConversationItemType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator VoiceAgentLiveConversationItemType?(string value) => value == null ? null : new VoiceAgentLiveConversationItemType(value);
+
+        /// <inheritdoc/>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => obj is VoiceAgentLiveConversationItemType other && Equals(other);
+
+        /// <inheritdoc/>
+        public bool Equals(VoiceAgentLiveConversationItemType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+
+        /// <inheritdoc/>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+
+        /// <inheritdoc/>
+        public override string ToString() => _value;
     }
 }

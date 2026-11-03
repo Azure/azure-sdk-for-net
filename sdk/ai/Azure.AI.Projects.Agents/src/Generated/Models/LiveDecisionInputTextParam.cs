@@ -26,7 +26,7 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <summary> Initializes a new instance of <see cref="LiveDecisionInputTextParam"/>. </summary>
-        /// <param name="type"> The type of the input item. Always `input_text`. </param>
+        /// <param name="type"></param>
         /// <param name="text"> The text input to the model. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal LiveDecisionInputTextParam(string @type, string text, IDictionary<string, BinaryData> additionalBinaryDataProperties)
@@ -36,7 +36,7 @@ namespace Azure.AI.Projects.Agents
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> The type of the input item. Always `input_text`. </summary>
+        /// <summary> Gets the Type. </summary>
         public string Type { get; } = "input_text";
 
         /// <summary> The text input to the model. </summary>

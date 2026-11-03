@@ -20,6 +20,7 @@ namespace Azure.Provisioning.Subscription
         private BicepValue<string> _name;
         private SystemData _systemData;
         private BillingAccountPolicyProperties _properties;
+        private ResourceReference<ProvisionableResource> _scope;
 
         /// <summary> Creates a new BillingAccountPolicy. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -68,6 +69,21 @@ namespace Azure.Provisioning.Subscription
             }
         }
 
+        /// <summary> Gets or sets the Scope. </summary>
+        public ProvisionableResource Scope
+        {
+            get
+            {
+                Initialize();
+                return _scope.Value;
+            }
+            set
+            {
+                Initialize();
+                _scope.Value = value;
+            }
+        }
+
         /// <summary> Define all the provisionable properties for BillingAccountPolicy. </summary>
         protected override void DefineProvisionableProperties()
         {
@@ -76,6 +92,7 @@ namespace Azure.Provisioning.Subscription
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true, defaultValue: "default");
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _properties = DefineModelProperty<BillingAccountPolicyProperties>(nameof(Properties), new string[] { "properties" });
+            _scope = DefineResource<ProvisionableResource>(nameof(Scope), new string[] { "scope" });
             DefineAdditionalProperties();
         }
 

@@ -21,15 +21,20 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <summary> Initializes a new instance of <see cref="LiveResponsesDelegationUpdateParam"/>. </summary>
+        /// <param name="acknowledgementDelayMs"> Milliseconds to wait before requesting an automatic spoken acknowledgement for a delegation. The model may still speak before this delay. Any commentary or thinking appended to the session cancels all pending acknowledgements, including those for other delegations. Defaults to 400 for Decisions sessions and 0 (request immediately) for other sessions. Omission in a session update preserves the current value. Updates apply to subsequent delegations. </param>
         /// <param name="type"> The delegation owner. Always `responses` for tasks handled by the Responses API. </param>
         /// <param name="responses"> Responses backend settings to update. Omitted settings keep their existing values. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal LiveResponsesDelegationUpdateParam(string @type, LiveResponsesDelegationSettingsUpdateInputParam responses, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal LiveResponsesDelegationUpdateParam(long? acknowledgementDelayMs, string @type, LiveResponsesDelegationSettingsUpdateInputParam responses, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
+            AcknowledgementDelayMs = acknowledgementDelayMs;
             Type = @type;
             Responses = responses;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+
+        /// <summary> Milliseconds to wait before requesting an automatic spoken acknowledgement for a delegation. The model may still speak before this delay. Any commentary or thinking appended to the session cancels all pending acknowledgements, including those for other delegations. Defaults to 400 for Decisions sessions and 0 (request immediately) for other sessions. Omission in a session update preserves the current value. Updates apply to subsequent delegations. </summary>
+        public long? AcknowledgementDelayMs { get; set; }
 
         /// <summary> The delegation owner. Always `responses` for tasks handled by the Responses API. </summary>
         internal string Type { get; } = "responses";

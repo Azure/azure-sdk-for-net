@@ -76,6 +76,11 @@ public class VoiceAgentLiveVisitor : ScmLibraryVisitor
         {
             provider.Update(type: ResponseItemType);
         }
+        if (provider?.EnclosingType.Name == "VoiceAgentLiveDefinition" && provider.Name == "SubProtocol" &&
+            provider.Body is AutoPropertyBody body)
+        {
+            provider.Update(body: body with { InitializationExpression = Static(provider.Type).Property("Live") });
+        }
         return provider;
     }
 
@@ -310,10 +315,11 @@ public class VoiceAgentLiveVisitor : ScmLibraryVisitor
 
     private void UpdateVoiceFactory(MethodProvider method)
     {
-        if (!method.Signature.Parameters.Any(parameter => parameter.Name == "kind") || method.BodyStatements == null)
+        if (method.BodyStatements == null)
         {
             return;
         }
+        bool hasKindParameter = method.Signature.Parameters.Any(parameter => parameter.Name == "kind");
         string name = method.Signature.ReturnType.Name;
         // Keep the existing parameter order and append fields added by newer schemas.
         ParameterProvider[] parameters = name == "VoiceAgentDefinition"
@@ -327,7 +333,7 @@ public class VoiceAgentLiveVisitor : ScmLibraryVisitor
         List<MethodBodyStatement> body = [];
         foreach (MethodBodyStatement statement in method.BodyStatements)
         {
-            if (statement is ExpressionStatement
+            if (hasKindParameter && statement is ExpressionStatement
                 {
                     Expression: KeywordExpression { Expression: NewInstanceExpression instance }
                 })
@@ -341,7 +347,7 @@ public class VoiceAgentLiveVisitor : ScmLibraryVisitor
                     {
                         "kind" => Literal("voice"),
                         "subProtocol" when name == "VoiceAgentDefinition" => Default,
-                        "subProtocol" when name == "VoiceAgentLiveDefinition" => Literal("live"),
+                        "subProtocol" when name == "VoiceAgentLiveDefinition" => Static(constructor[index].Type).Property("Live"),
                         "modelType" when name == "VoiceAgentLiveDefinition" => Literal("self_deployed"),
                         _ => argument
                     }).ToArray();

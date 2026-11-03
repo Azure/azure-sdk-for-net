@@ -16,6 +16,7 @@ public class BetaVoiceAgentsConversationsTests : AgentsTestBase
 {
     public BetaVoiceAgentsConversationsTests(bool isAsync) : base(isAsync)
     {
+        ProjectsTestSanitizers.ApplyLegacyRealtimeVoiceRecordingDefaults(this);
     }
 
     private async Task<string> EnsureConversationsAgentAsync(AgentAdministrationClient agentsClient)

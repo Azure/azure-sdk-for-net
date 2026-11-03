@@ -8,10 +8,14 @@ using System.ComponentModel;
 namespace Azure.AI.Projects.Agents
 {
     /// <summary></summary>
-    public readonly partial struct LiveDecisionInputItemParamType : IEquatable<LiveDecisionInputItemParamType>
+    internal readonly partial struct LiveDecisionInputItemParamType : IEquatable<LiveDecisionInputItemParamType>
     {
         private readonly string _value;
         private const string MessageValue = "message";
+        private const string FunctionCallValue = "function_call";
+        private const string FunctionCallOutputValue = "function_call_output";
+        private const string CustomToolCallValue = "custom_tool_call";
+        private const string CustomToolCallOutputValue = "custom_tool_call_output";
 
         /// <summary> Initializes a new instance of <see cref="LiveDecisionInputItemParamType"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -25,6 +29,18 @@ namespace Azure.AI.Projects.Agents
 
         /// <summary> Gets the Message. </summary>
         public static LiveDecisionInputItemParamType Message { get; } = new LiveDecisionInputItemParamType(MessageValue);
+
+        /// <summary> Gets the FunctionCall. </summary>
+        public static LiveDecisionInputItemParamType FunctionCall { get; } = new LiveDecisionInputItemParamType(FunctionCallValue);
+
+        /// <summary> Gets the FunctionCallOutput. </summary>
+        public static LiveDecisionInputItemParamType FunctionCallOutput { get; } = new LiveDecisionInputItemParamType(FunctionCallOutputValue);
+
+        /// <summary> Gets the CustomToolCall. </summary>
+        public static LiveDecisionInputItemParamType CustomToolCall { get; } = new LiveDecisionInputItemParamType(CustomToolCallValue);
+
+        /// <summary> Gets the CustomToolCallOutput. </summary>
+        public static LiveDecisionInputItemParamType CustomToolCallOutput { get; } = new LiveDecisionInputItemParamType(CustomToolCallOutputValue);
 
         /// <summary> Determines if two <see cref="LiveDecisionInputItemParamType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

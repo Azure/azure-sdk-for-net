@@ -10,10 +10,15 @@ namespace Azure.AI.Projects.Agents
 {
     /// <summary>
     /// Shared voice-agent settings; protocol-specific fields remain flat on each subtype.
-    /// Creates and updates produce immutable versions. An agent's protocol cannot change across versions.
+    /// Creates and updates produce immutable versions. Each version selects its own protocol, so a new version can switch between Realtime and Live.
     /// </summary>
     public partial class VoiceAgentBaseDefinition : ProjectsAgentDefinition, IJsonModel<VoiceAgentBaseDefinition>
     {
+        /// <summary> Initializes a new instance of <see cref="VoiceAgentBaseDefinition"/> for deserialization. </summary>
+        internal VoiceAgentBaseDefinition()
+        {
+        }
+
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override ProjectsAgentDefinition PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
@@ -73,6 +78,8 @@ namespace Azure.AI.Projects.Agents
                 throw new FormatException($"The model {nameof(VoiceAgentBaseDefinition)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
+            writer.WritePropertyName("sub_protocol"u8);
+            writer.WriteStringValue(SubProtocol.ToSerialString());
             if (Optional.IsDefined(Instructions))
             {
                 writer.WritePropertyName("instructions"u8);

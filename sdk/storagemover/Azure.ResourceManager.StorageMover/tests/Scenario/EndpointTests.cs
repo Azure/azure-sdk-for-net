@@ -4,6 +4,7 @@
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
+using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.StorageMover.Models;
 using NUnit.Framework;
@@ -489,6 +490,102 @@ namespace Azure.ResourceManager.StorageMover.Tests.Scenario
             // Delete endpoint
             await endpoint.DeleteAsync(WaitUntil.Completed);
             Assert.IsFalse(await endpoints.ExistsAsync(endpointName));
+        }
+
+        [Test]
+        [RecordedTest]
+        public async Task BlobContainerEndpointCrossTenantTest()
+        {
+            ResourceGroupResource resourceGroup = await CreateResourceGroup(DefaultSubscription, ResourceGroupNamePrefix, TestLocation);
+            try
+            {
+                StorageMoverResource storageMover = (await resourceGroup.GetStorageMovers().CreateOrUpdateAsync(
+                    WaitUntil.Completed, Recording.GenerateAssetName(StorageMoverPrefix), new StorageMoverData(TestLocation))).Value;
+                StorageMoverEndpointCollection endpoints = storageMover.GetStorageMoverEndpoints();
+                string accountId = resourceGroup.Id + "/providers/Microsoft.Storage/storageAccounts/" + StorageAccountName;
+                string[] partners =
+                {
+                    "/subscriptions/11111111-1111-1111-1111-111111111111/resourceGroups/partner-rg/providers/Microsoft.Storage/storageAccounts/partnersa1",
+                    "/subscriptions/11111111-1111-1111-1111-111111111111/resourceGroups/partner-rg/providers/Microsoft.Storage/storageAccounts/partnersa2",
+                    "/subscriptions/11111111-1111-1111-1111-111111111111/resourceGroups/partner-rg/providers/Microsoft.Storage/storageAccounts/partnersa3",
+                };
+                string defaultName = Recording.GenerateAssetName("blob-default-");
+                StorageMoverEndpointResource defaultEndpoint = (await endpoints.CreateOrUpdateAsync(
+                    WaitUntil.Completed, defaultName,
+                    new StorageMoverEndpointData(new AzureStorageBlobContainerEndpointProperties(accountId, ContainerName)))).Value;
+                AzureStorageBlobContainerEndpointProperties properties = (AzureStorageBlobContainerEndpointProperties)defaultEndpoint.Data.Properties;
+                Assert.IsFalse(properties.EnableCrossTenantTransfer);
+                Assert.IsEmpty(properties.AllowedStorageAccounts);
+
+                string endpointName = Recording.GenerateAssetName("blob-xt-");
+                properties = new AzureStorageBlobContainerEndpointProperties(accountId, ContainerName)
+                {
+                    EnableCrossTenantTransfer = true,
+                };
+                RequestFailedException exception = Assert.ThrowsAsync<RequestFailedException>(async () =>
+                    await endpoints.CreateOrUpdateAsync(WaitUntil.Completed, endpointName, new StorageMoverEndpointData(properties)));
+                Assert.AreEqual(400, exception.Status);
+                Assert.AreEqual("InvalidRequestPropertyValue", exception.ErrorCode);
+
+                properties.AllowedStorageAccounts.Add(partners[0]);
+                properties.AllowedStorageAccounts.Add(partners[1]);
+                StorageMoverEndpointResource endpoint = (await endpoints.CreateOrUpdateAsync(
+                    WaitUntil.Completed, endpointName, new StorageMoverEndpointData(properties))).Value;
+                properties = (AzureStorageBlobContainerEndpointProperties)endpoint.Data.Properties;
+                Assert.IsTrue(properties.EnableCrossTenantTransfer);
+                CollectionAssert.AreEqual(new[] { partners[0], partners[1] }, properties.AllowedStorageAccounts);
+
+                endpoint = (await endpoints.GetAsync(endpointName)).Value;
+                properties = (AzureStorageBlobContainerEndpointProperties)endpoint.Data.Properties;
+                Assert.IsTrue(properties.EnableCrossTenantTransfer);
+                CollectionAssert.AreEqual(new[] { partners[0], partners[1] }, properties.AllowedStorageAccounts);
+
+                async Task<StorageMoverEndpointResource> PatchAsync(AzureStorageBlobContainerEndpointUpdateProperties update)
+                {
+                    return (await endpoint.UpdateAsync(new StorageMoverEndpointPatch
+                    {
+                        Identity = new ManagedServiceIdentity(ManagedServiceIdentityType.None),
+                        Properties = update,
+                    })).Value;
+                }
+
+                endpoint = await PatchAsync(new AzureStorageBlobContainerEndpointUpdateProperties
+                {
+                    AllowedStorageAccounts = { partners[2] },
+                });
+                properties = (AzureStorageBlobContainerEndpointProperties)endpoint.Data.Properties;
+                Assert.IsTrue(properties.EnableCrossTenantTransfer);
+                CollectionAssert.AreEqual(new[] { partners[2] }, properties.AllowedStorageAccounts);
+
+                endpoint = await PatchAsync(new AzureStorageBlobContainerEndpointUpdateProperties { Description = "Cross-tenant endpoint" });
+                properties = (AzureStorageBlobContainerEndpointProperties)endpoint.Data.Properties;
+                Assert.AreEqual("Cross-tenant endpoint", properties.Description);
+                CollectionAssert.AreEqual(new[] { partners[2] }, properties.AllowedStorageAccounts);
+
+                AzureStorageBlobContainerEndpointUpdateProperties disable = new AzureStorageBlobContainerEndpointUpdateProperties
+                {
+                    EnableCrossTenantTransfer = false,
+                };
+                disable.AllowedStorageAccounts.Clear();
+                endpoint = await PatchAsync(disable);
+                properties = (AzureStorageBlobContainerEndpointProperties)endpoint.Data.Properties;
+                Assert.IsFalse(properties.EnableCrossTenantTransfer);
+                Assert.IsEmpty(properties.AllowedStorageAccounts);
+
+                endpoint = (await endpoints.GetAsync(endpointName)).Value;
+                properties = (AzureStorageBlobContainerEndpointProperties)endpoint.Data.Properties;
+                Assert.IsFalse(properties.EnableCrossTenantTransfer);
+                Assert.IsEmpty(properties.AllowedStorageAccounts);
+
+                await endpoint.DeleteAsync(WaitUntil.Completed);
+                await defaultEndpoint.DeleteAsync(WaitUntil.Completed);
+                Assert.IsFalse(await endpoints.ExistsAsync(endpointName));
+                Assert.IsFalse(await endpoints.ExistsAsync(defaultName));
+            }
+            finally
+            {
+                await resourceGroup.DeleteAsync(WaitUntil.Completed);
+            }
         }
 
         private async Task<StorageMoverEndpointCollection> GetEndpointCollectionAsync()

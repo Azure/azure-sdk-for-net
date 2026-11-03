@@ -5,7 +5,6 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using System.Text.Json;
 
 namespace Azure.AI.Projects.Agents
 {
@@ -20,7 +19,7 @@ namespace Azure.AI.Projects.Agents
         /// <summary> Initializes a new instance of <see cref="VoiceAgentLiveDefinition"/>. </summary>
         /// <param name="model"> The GPT Live deployment name. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="model"/> is null. </exception>
-        public VoiceAgentLiveDefinition(string model)
+        public VoiceAgentLiveDefinition(string model) : base(VoiceAgentSubProtocol.Live)
         {
             Argument.AssertNotNull(model, nameof(model));
 
@@ -31,18 +30,17 @@ namespace Azure.AI.Projects.Agents
         /// <param name="kind"></param>
         /// <param name="contentFilterConfiguration"> Configuration for Responsible AI (RAI) content filtering and safety features. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="subProtocol"> The voice protocol for this agent version. Null and unknown values are invalid. </param>
         /// <param name="instructions"> Frontend instructions, templated with structured_inputs. Backend instructions belong in delegation.responses. </param>
         /// <param name="structuredInputs"> Template inputs for session instructions and supported greetings. </param>
         /// <param name="store"> Persists conversation content and audio in Foundry, not native Live recordings. Defaults to false. </param>
-        /// <param name="subProtocol"> Selects the Live protocol. </param>
         /// <param name="modelType"> Uses a Foundry model deployment. </param>
         /// <param name="model"> The GPT Live deployment name. </param>
         /// <param name="greeting"> Template-only startup greeting, rendered with session structured inputs. Foundry-only; not sent in native Live settings. </param>
         /// <param name="audio"> Startup audio formats and output voice. </param>
         /// <param name="delegation"> Delegation settings. Omit for client mode. responses.model is a backend deployment name in the Live resource, not a model catalog ID. </param>
-        internal VoiceAgentLiveDefinition(ProjectsAgentKind kind, ContentFilterConfiguration contentFilterConfiguration, IDictionary<string, BinaryData> additionalBinaryDataProperties, string instructions, IDictionary<string, StructuredInputDefinition> structuredInputs, bool? store, string subProtocol, string modelType, string model, VoiceAgentTemplateGreetingConfig greeting, LiveInitialSessionAudioParam audio, BinaryData delegation) : base(kind, contentFilterConfiguration, additionalBinaryDataProperties, instructions, structuredInputs, store)
+        internal VoiceAgentLiveDefinition(ProjectsAgentKind kind, ContentFilterConfiguration contentFilterConfiguration, IDictionary<string, BinaryData> additionalBinaryDataProperties, VoiceAgentSubProtocol subProtocol, string instructions, IDictionary<string, StructuredInputDefinition> structuredInputs, bool? store, VoiceModelType modelType, string model, VoiceAgentTemplateGreetingConfig greeting, LiveInitialSessionAudioParam audio, VoiceAgentLiveDelegation delegation) : base(kind, contentFilterConfiguration, additionalBinaryDataProperties, subProtocol, instructions, structuredInputs, store)
         {
-            SubProtocol = subProtocol;
             ModelType = modelType;
             Model = model;
             Greeting = greeting;
@@ -50,11 +48,8 @@ namespace Azure.AI.Projects.Agents
             Delegation = delegation;
         }
 
-        /// <summary> Selects the Live protocol. </summary>
-        public string SubProtocol { get; } = "live";
-
         /// <summary> Uses a Foundry model deployment. </summary>
-        public string ModelType { get; } = "self_deployed";
+        public VoiceModelType ModelType { get; } = "self_deployed";
 
         /// <summary> The GPT Live deployment name. </summary>
         public string Model { get; set; }
@@ -65,48 +60,7 @@ namespace Azure.AI.Projects.Agents
         /// <summary> Startup audio formats and output voice. </summary>
         public LiveInitialSessionAudioParam Audio { get; set; }
 
-        /// <summary>
-        /// Delegation settings. Omit for client mode. responses.model is a backend deployment name in the Live resource, not a model catalog ID.
-        /// <para> To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
-        /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
-        /// <para>
-        /// <remarks>
-        /// Supported types:
-        /// <list type="bullet">
-        /// <item>
-        /// <description> <see cref="LiveClientDelegationParam"/>. </description>
-        /// </item>
-        /// <item>
-        /// <description> <see cref="LiveResponsesDelegationParam"/>. </description>
-        /// </item>
-        /// <item>
-        /// <description> <see cref="VoiceAgentLiveManagedAgentDelegation"/>. </description>
-        /// </item>
-        /// </list>
-        /// </remarks>
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term> BinaryData.FromObjectAsJson("foo"). </term>
-        /// <description> Creates a payload of "foo". </description>
-        /// </item>
-        /// <item>
-        /// <term> BinaryData.FromString("\"foo\""). </term>
-        /// <description> Creates a payload of "foo". </description>
-        /// </item>
-        /// <item>
-        /// <term> BinaryData.FromObjectAsJson(new { key = "value" }). </term>
-        /// <description> Creates a payload of { "key": "value" }. </description>
-        /// </item>
-        /// <item>
-        /// <term> BinaryData.FromString("{\"key\": \"value\"}"). </term>
-        /// <description> Creates a payload of { "key": "value" }. </description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        public BinaryData Delegation { get; set; }
+        /// <summary> Delegation settings. Omit for client mode. responses.model is a backend deployment name in the Live resource, not a model catalog ID. </summary>
+        public VoiceAgentLiveDelegation Delegation { get; set; }
     }
 }

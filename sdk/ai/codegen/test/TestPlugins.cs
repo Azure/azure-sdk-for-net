@@ -1,7 +1,11 @@
 ﻿using System.Collections.Generic;
+using System.Reflection;
 using Extensions.Plugin.Visitors;
 using Microsoft.TypeSpec.Generator.Input;
+using Microsoft.TypeSpec.Generator.Primitives;
+using Microsoft.TypeSpec.Generator.Providers;
 using NUnit.Framework;
+using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
 
 namespace Test.Extensions.Plugin;
 
@@ -57,6 +61,44 @@ public class Tests
         public void UnrelatedModelsDoNotBecomeGenerationRoots(string name)
             => Assert.That(TestVisitor.IsEvent(Model(name)), Is.False);
 
+        [TestCase("VoiceAgentLiveDefinition", "SubProtocol", true)]
+        [TestCase("VoiceAgentDefinition", "SubProtocol", false)]
+        [TestCase("VoiceAgentLiveDefinition", "ModelType", false)]
+        public void OnlyLiveSubProtocolInitializerUsesTheEnumMember(string modelName, string propertyName, bool usesEnum)
+        {
+            AutoPropertyBody body = new(false) { InitializationExpression = Literal("live") };
+            PropertyProvider property = new(
+                $"The protocol.", MethodSignatureModifiers.Public, typeof(TestSubProtocol),
+                propertyName, body, new TestTypeProvider(modelName));
+
+            new TestVisitor().ConfigureProperty(property);
+
+            Assert.That(((AutoPropertyBody)property.Body).InitializationExpression!.ToDisplayString(),
+                usesEnum ? Does.EndWith(".Live") : Is.EqualTo("\"live\""));
+        }
+
+        private enum TestSubProtocol
+        {
+            Realtime,
+            Live
+        }
+
+        private class TestTypeProvider : TypeProvider
+        {
+            private readonly string _name;
+
+            public TestTypeProvider(string name)
+            {
+                _name = name;
+                typeof(TypeProvider).GetField("_customCodeView", BindingFlags.NonPublic | BindingFlags.Instance)!
+                    .SetValue(this, new Lazy<TypeProvider?>(() => null));
+            }
+
+            protected override string BuildNamespace() => "Azure.AI.Projects.Agents";
+            protected override string BuildRelativeFilePath() => $"{Name}.cs";
+            protected override string BuildName() => _name;
+        }
+
         private static InputClient Client(string name)
         {
             InputClient client = new();
@@ -74,6 +116,7 @@ public class Tests
         {
             public static void ConfigureInput(InputNamespace input) => Configure(input);
             public static bool IsEvent(InputModelType model) => IsNativeEvent(model);
+            public PropertyProvider ConfigureProperty(PropertyProvider property) => PreVisitProperty(null!, property);
         }
     }
 

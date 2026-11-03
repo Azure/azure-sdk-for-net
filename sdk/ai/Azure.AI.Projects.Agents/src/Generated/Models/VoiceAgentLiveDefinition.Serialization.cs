@@ -80,10 +80,8 @@ namespace Azure.AI.Projects.Agents
                 throw new FormatException($"The model {nameof(VoiceAgentLiveDefinition)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            writer.WritePropertyName("sub_protocol"u8);
-            writer.WriteStringValue(SubProtocol);
             writer.WritePropertyName("model_type"u8);
-            writer.WriteStringValue(ModelType);
+            writer.WriteStringValue(ModelType.ToString());
             writer.WritePropertyName("model"u8);
             writer.WriteStringValue(Model);
             if (Optional.IsDefined(Greeting))
@@ -99,14 +97,7 @@ namespace Azure.AI.Projects.Agents
             if (Optional.IsDefined(Delegation))
             {
                 writer.WritePropertyName("delegation"u8);
-#if NET6_0_OR_GREATER
-                writer.WriteRawValue(Delegation);
-#else
-                using (JsonDocument document = JsonDocument.Parse(Delegation))
-                {
-                    JsonSerializer.Serialize(writer, document.RootElement);
-                }
-#endif
+                writer.WriteObjectValue(Delegation, options);
             }
         }
 
@@ -138,15 +129,15 @@ namespace Azure.AI.Projects.Agents
             ProjectsAgentKind kind = default;
             ContentFilterConfiguration contentFilterConfiguration = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            VoiceAgentSubProtocol subProtocol = default;
             string instructions = default;
             IDictionary<string, StructuredInputDefinition> structuredInputs = default;
             bool? store = default;
-            string subProtocol = default;
-            string modelType = default;
+            VoiceModelType modelType = default;
             string model = default;
             VoiceAgentTemplateGreetingConfig greeting = default;
             LiveInitialSessionAudioParam audio = default;
-            BinaryData delegation = default;
+            VoiceAgentLiveDelegation delegation = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("kind"u8))
@@ -161,6 +152,11 @@ namespace Azure.AI.Projects.Agents
                         continue;
                     }
                     contentFilterConfiguration = ContentFilterConfiguration.DeserializeContentFilterConfiguration(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("sub_protocol"u8))
+                {
+                    subProtocol = prop.Value.GetString().ToVoiceAgentSubProtocol();
                     continue;
                 }
                 if (prop.NameEquals("instructions"u8))
@@ -191,14 +187,9 @@ namespace Azure.AI.Projects.Agents
                     store = prop.Value.GetBoolean();
                     continue;
                 }
-                if (prop.NameEquals("sub_protocol"u8))
-                {
-                    subProtocol = prop.Value.GetString();
-                    continue;
-                }
                 if (prop.NameEquals("model_type"u8))
                 {
-                    modelType = prop.Value.GetString();
+                    modelType = new VoiceModelType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("model"u8))
@@ -230,7 +221,7 @@ namespace Azure.AI.Projects.Agents
                     {
                         continue;
                     }
-                    delegation = prop.Value.GetUtf8Bytes();
+                    delegation = VoiceAgentLiveDelegation.DeserializeVoiceAgentLiveDelegation(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -242,10 +233,10 @@ namespace Azure.AI.Projects.Agents
                 kind,
                 contentFilterConfiguration,
                 additionalBinaryDataProperties,
+                subProtocol,
                 instructions,
                 structuredInputs ?? new ChangeTrackingDictionary<string, StructuredInputDefinition>(),
                 store,
-                subProtocol,
                 modelType,
                 model,
                 greeting,

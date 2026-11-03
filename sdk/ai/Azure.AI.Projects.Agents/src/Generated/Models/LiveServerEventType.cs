@@ -36,7 +36,7 @@ namespace Azure.AI.Projects.Agents
         private const string ErrorValue = "error";
         private const string InfoValue = "info";
         private const string TransportDtmfReceivedValue = "transport.dtmf.received";
-        private const string TransportDtmfSendValue = "transport.dtmf.send";
+        private const string TransportDtmfSentValue = "transport.dtmf.sent";
         private const string TransportRingingValue = "transport.ringing";
         private const string TransportAnsweredValue = "transport.answered";
         private const string TransportFailedValue = "transport.failed";
@@ -120,8 +120,8 @@ namespace Azure.AI.Projects.Agents
         /// <summary> Gets the TransportDtmfReceived. </summary>
         public static LiveServerEventType TransportDtmfReceived { get; } = new LiveServerEventType(TransportDtmfReceivedValue);
 
-        /// <summary> Gets the TransportDtmfSend. </summary>
-        public static LiveServerEventType TransportDtmfSend { get; } = new LiveServerEventType(TransportDtmfSendValue);
+        /// <summary> Gets the TransportDtmfSent. </summary>
+        public static LiveServerEventType TransportDtmfSent { get; } = new LiveServerEventType(TransportDtmfSentValue);
 
         /// <summary> Gets the TransportRinging. </summary>
         public static LiveServerEventType TransportRinging { get; } = new LiveServerEventType(TransportRingingValue);

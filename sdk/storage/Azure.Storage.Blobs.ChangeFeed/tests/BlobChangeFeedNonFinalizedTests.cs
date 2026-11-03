@@ -96,7 +96,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
                 endTime: endTime);
 
             Assert.AreEqual(1, collected.Count);
-            Assert.AreEqual(bucket.AddMinutes(2), collected[0].EventTime);
+            Assert.AreEqual(bucket.AddMinutes(2), collected[0].EventOccurredOn);
         }
 
         [Test]
@@ -120,7 +120,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
                 endTime: endTime);
 
             Assert.AreEqual(1, collected.Count);
-            Assert.AreEqual(bucket.AddSeconds(10), collected[0].EventTime);
+            Assert.AreEqual(bucket.AddSeconds(10), collected[0].EventOccurredOn);
         }
 
         private async Task<List<BlobChangeFeedEvent>> CollectAsync(
@@ -162,7 +162,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
         }
 
         private static BlobChangeFeedEvent BuildEvent(DateTimeOffset eventTime)
-            => new BlobChangeFeedEvent { EventTime = eventTime, Id = Guid.NewGuid() };
+            => new BlobChangeFeedEvent { EventOccurredOn = eventTime, Id = Guid.NewGuid() };
 
         private static SegmentBase<BlobChangeFeedEvent> BuildSegmentWithEvents(
             string manifestPath,

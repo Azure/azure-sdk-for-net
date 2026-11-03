@@ -42,13 +42,18 @@ namespace Azure.Provisioning.CosmosDB
             }
         }
 
-        /// <summary> Gets the Name. </summary>
+        /// <summary> Gets or sets the Name. </summary>
         public BicepValue<string> Name
         {
             get
             {
                 Initialize();
                 return _name;
+            }
+            set
+            {
+                Initialize();
+                _name.Assign(value);
             }
         }
 
@@ -166,7 +171,7 @@ namespace Azure.Provisioning.CosmosDB
             _location = DefineProperty<AzureLocation>(nameof(Location), new string[] { "location" }, isRequired: true);
             _properties = DefineModelProperty<ThroughputSettingsProperties>(nameof(Properties), new string[] { "properties" });
             _identity = DefineModelProperty<ManagedServiceIdentity>(nameof(Identity), new string[] { "identity" });
-            _parent = DefineResource<GremlinGraph>(nameof(Parent), new string[] { "parent" }, isRequired: true);
+            _parent = DefineResource<GremlinGraph>(nameof(Parent), new string[] { "parent" });
             DefineAdditionalProperties();
         }
 

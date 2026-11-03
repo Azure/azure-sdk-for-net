@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Network
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Network/expressRouteCrossConnections/", false);
             uri.AppendPath(crossConnectionName, true);
-            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Network/expressRouteCrossConnections") ?? "2026-01-01", true);
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Network/expressRouteCrossConnections") ?? "2026-03-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Network
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Network/expressRouteCrossConnections/", false);
             uri.AppendPath(crossConnectionName, true);
-            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Network/expressRouteCrossConnections") ?? "2026-01-01", true);
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Network/expressRouteCrossConnections") ?? "2026-03-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Network
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Network/expressRouteCrossConnections/", false);
             uri.AppendPath(crossConnectionName, true);
-            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Network/expressRouteCrossConnections") ?? "2026-01-01", true);
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Network/expressRouteCrossConnections") ?? "2026-03-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Network
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Network/expressRouteCrossConnections", false);
-            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Network/expressRouteCrossConnections") ?? "2026-01-01", true);
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Network/expressRouteCrossConnections") ?? "2026-03-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Network
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            uri.UpdateQuery("api-version", _getApiVersion?.Invoke("Microsoft.Network/expressRouteCrossConnections") ?? "2026-01-01");
+            uri.UpdateQuery("api-version", _getApiVersion?.Invoke("Microsoft.Network/expressRouteCrossConnections") ?? "2026-03-01");
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.Network
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/providers/Microsoft.Network/expressRouteCrossConnections", false);
-            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Network/expressRouteCrossConnections") ?? "2026-01-01", true);
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Network/expressRouteCrossConnections") ?? "2026-03-01", true);
             if (filter != null)
             {
                 uri.AppendQuery("$filter", filter, true);
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.Network
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            uri.UpdateQuery("api-version", _getApiVersion?.Invoke("Microsoft.Network/expressRouteCrossConnections") ?? "2026-01-01");
+            uri.UpdateQuery("api-version", _getApiVersion?.Invoke("Microsoft.Network/expressRouteCrossConnections") ?? "2026-03-01");
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.Network
             uri.AppendPath(peeringName, true);
             uri.AppendPath("/arpTables/", false);
             uri.AppendPath(devicePath, true);
-            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Network/expressRouteCrossConnections/peerings") ?? "2026-01-01", true);
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Network/expressRouteCrossConnections/peerings") ?? "2026-03-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.Network
             uri.AppendPath(peeringName, true);
             uri.AppendPath("/routeTablesSummary/", false);
             uri.AppendPath(devicePath, true);
-            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Network/expressRouteCrossConnections/peerings") ?? "2026-01-01", true);
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Network/expressRouteCrossConnections/peerings") ?? "2026-03-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.Network
             uri.AppendPath(peeringName, true);
             uri.AppendPath("/routeTables/", false);
             uri.AppendPath(devicePath, true);
-            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Network/expressRouteCrossConnections/peerings") ?? "2026-01-01", true);
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Network/expressRouteCrossConnections/peerings") ?? "2026-03-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -273,7 +273,7 @@ namespace Azure.ResourceManager.Network
             uri.AppendPath("/providers/Microsoft.Network/expressRouteCrossConnections/", false);
             uri.AppendPath(crossConnectionName, true);
             uri.AppendPath("/validateCircuitMigration", false);
-            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Network/expressRouteCrossConnections") ?? "2026-01-01", true);
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Network/expressRouteCrossConnections") ?? "2026-03-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -296,7 +296,7 @@ namespace Azure.ResourceManager.Network
             uri.AppendPath("/providers/Microsoft.Network/expressRouteCrossConnections/", false);
             uri.AppendPath(crossConnectionName, true);
             uri.AppendPath("/getCircuitMigrationInfo", false);
-            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Network/expressRouteCrossConnections") ?? "2026-01-01", true);
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Network/expressRouteCrossConnections") ?? "2026-03-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -319,7 +319,7 @@ namespace Azure.ResourceManager.Network
             uri.AppendPath("/providers/Microsoft.Network/expressRouteCrossConnections/", false);
             uri.AppendPath(crossConnectionName, true);
             uri.AppendPath("/prepareCircuitMigration", false);
-            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Network/expressRouteCrossConnections") ?? "2026-01-01", true);
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Network/expressRouteCrossConnections") ?? "2026-03-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -342,7 +342,7 @@ namespace Azure.ResourceManager.Network
             uri.AppendPath("/providers/Microsoft.Network/expressRouteCrossConnections/", false);
             uri.AppendPath(crossConnectionName, true);
             uri.AppendPath("/shutDownBgpForCircuitMigration", false);
-            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Network/expressRouteCrossConnections") ?? "2026-01-01", true);
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Network/expressRouteCrossConnections") ?? "2026-03-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -365,7 +365,7 @@ namespace Azure.ResourceManager.Network
             uri.AppendPath("/providers/Microsoft.Network/expressRouteCrossConnections/", false);
             uri.AppendPath(crossConnectionName, true);
             uri.AppendPath("/restoreBgpForCircuitMigration", false);
-            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Network/expressRouteCrossConnections") ?? "2026-01-01", true);
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Network/expressRouteCrossConnections") ?? "2026-03-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -388,7 +388,7 @@ namespace Azure.ResourceManager.Network
             uri.AppendPath("/providers/Microsoft.Network/expressRouteCrossConnections/", false);
             uri.AppendPath(crossConnectionName, true);
             uri.AppendPath("/migrateCircuit", false);
-            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Network/expressRouteCrossConnections") ?? "2026-01-01", true);
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Network/expressRouteCrossConnections") ?? "2026-03-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -411,7 +411,7 @@ namespace Azure.ResourceManager.Network
             uri.AppendPath("/providers/Microsoft.Network/expressRouteCrossConnections/", false);
             uri.AppendPath(crossConnectionName, true);
             uri.AppendPath("/commitCircuitMigration", false);
-            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Network/expressRouteCrossConnections") ?? "2026-01-01", true);
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Network/expressRouteCrossConnections") ?? "2026-03-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -434,7 +434,7 @@ namespace Azure.ResourceManager.Network
             uri.AppendPath("/providers/Microsoft.Network/expressRouteCrossConnections/", false);
             uri.AppendPath(crossConnectionName, true);
             uri.AppendPath("/rollbackCircuitMigration", false);
-            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Network/expressRouteCrossConnections") ?? "2026-01-01", true);
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Network/expressRouteCrossConnections") ?? "2026-03-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
