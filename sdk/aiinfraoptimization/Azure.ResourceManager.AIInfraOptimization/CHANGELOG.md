@@ -2,10 +2,11 @@
 
 ## 1.0.0-beta.1 (Unreleased)
 
+This is the initial public preview release of the Azure AI Infrastructure Optimization management client library for .NET.
+
 ### Features Added
 
-### Breaking Changes
+- Adds synchronous and asynchronous `RecommendVmSku` operations for requesting VM SKU recommendations.
+- Supports the `Microsoft.AIInfraOptimization` service API version `2026-06-01-preview`.
 
-### Bugs Fixed
-
-### Other Changes
+This package is a public preview, so expect incompatible changes in subsequent releases as we improve the product. To provide feedback, submit an issue in the [Azure SDK for .NET GitHub repository](https://github.com/Azure/azure-sdk-for-net/issues).
