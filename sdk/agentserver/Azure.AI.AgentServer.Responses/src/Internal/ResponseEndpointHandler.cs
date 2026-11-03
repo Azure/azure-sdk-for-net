@@ -653,6 +653,7 @@ internal sealed class ResponseEndpointHandler
         var enumerator = stream.Subscribe().GetAsyncEnumerator(relayCts.Token);
         Task? executionTask = execution.ExecutionTask;
         var createdSeen = false;
+        string? lastRelayedEventId = null;
         try
         {
             while (true)
@@ -673,7 +674,11 @@ internal sealed class ResponseEndpointHandler
                         if (executionTask is not null && !executionTask.IsCompletedSuccessfully)
                         {
                             Task completed = await Task.WhenAny(moveNextTask, executionTask);
-                            if (ReferenceEquals(completed, executionTask) && executionTask.IsFaulted)
+                            if (ReferenceEquals(completed, executionTask) && executionTask.IsFaulted &&
+                                string.Equals(
+                                    lastRelayedEventId,
+                                    await stream.GetLastEventIdAsync(cancellationToken),
+                                    StringComparison.Ordinal))
                             {
                                 Exception failure;
                                 try
@@ -696,6 +701,8 @@ internal sealed class ResponseEndpointHandler
                                 // it. Observe the task fault here to end only this HTTP subscription;
                                 // SseResult converts the exception to the existing SSE error event.
                                 //
+                                // The last published event has already been relayed. Otherwise the
+                                // pending read must drain buffered events, even when it is asynchronous.
                                 // Cancel and await the pending relay read before disposing its
                                 // enumerator. This cancellation is subscription-local: the Core stream
                                 // remains open and writable for recovery.
@@ -734,6 +741,7 @@ internal sealed class ResponseEndpointHandler
                 }
 
                 var item = enumerator.Current;
+                lastRelayedEventId = item.EventId ?? lastRelayedEventId;
                 if (string.Equals(item.EventType, "response.created", StringComparison.Ordinal))
                 {
                     createdSeen = true;

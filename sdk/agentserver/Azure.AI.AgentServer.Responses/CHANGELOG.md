@@ -8,6 +8,9 @@
 
 ### Bugs Fixed
 
+- Task-bound SSE relays now drain asynchronously read buffered events before reporting a durable
+  task completion failure, preserving response event ordering and the stream's recoverability.
+
 ### Other Changes
 
 ## 1.0.0-beta.9 (2026-10-15)
