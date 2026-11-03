@@ -16,7 +16,7 @@ namespace Azure.Security.KeyVault.Keys.Samples
     /// This sample demonstrates how to securely wrap a key generated inside a Managed HSM trusted execution
     /// environment (TEE) and securely unwrap it into a target TEE using the synchronous methods of
     /// <see cref="CryptographyClient"/>. Secure wrap and unwrap are only supported on Managed HSM with service
-    /// version 2026-01-01-preview or newer, and are remote-only operations.
+    /// version 2026-04-01 or newer, and are remote-only operations.
     /// </summary>
     public partial class SecureWrapUnwrapSample
     {

@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using Azure.Core;
@@ -332,7 +332,7 @@ namespace Azure.Security.KeyVault.Keys
         /// <summary>
         /// Registers a Managed HSM key that points at material managed by an external HSM.
         /// This operation requires the keys/create permission. Only available with service version
-        /// <see cref="KeyClientOptions.ServiceVersion.V2026_01_01_Preview"/> and newer, and only supported on Managed HSM.
+        /// <see cref="KeyClientOptions.ServiceVersion.V2026_04_01"/> and newer, and only supported on Managed HSM.
         /// </summary>
         /// <param name="externalKeyOptions">The key options object containing the name and external key reference for the key being registered.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
@@ -363,7 +363,7 @@ namespace Azure.Security.KeyVault.Keys
         /// <summary>
         /// Registers a Managed HSM key that points at material managed by an external HSM.
         /// This operation requires the keys/create permission. Only available with service version
-        /// <see cref="KeyClientOptions.ServiceVersion.V2026_01_01_Preview"/> and newer, and only supported on Managed HSM.
+        /// <see cref="KeyClientOptions.ServiceVersion.V2026_04_01"/> and newer, and only supported on Managed HSM.
         /// </summary>
         /// <param name="externalKeyOptions">The key options object containing the name and external key reference for the key being registered.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>

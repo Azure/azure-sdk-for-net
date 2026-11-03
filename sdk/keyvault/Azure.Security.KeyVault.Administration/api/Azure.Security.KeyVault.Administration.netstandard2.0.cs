@@ -110,7 +110,7 @@ namespace Azure.Security.KeyVault.Administration
     }
     public partial class KeyVaultAdministrationClientOptions : Azure.Core.ClientOptions
     {
-        public KeyVaultAdministrationClientOptions(Azure.Security.KeyVault.Administration.KeyVaultAdministrationClientOptions.ServiceVersion version = Azure.Security.KeyVault.Administration.KeyVaultAdministrationClientOptions.ServiceVersion.V2026_01_01_Preview) { }
+        public KeyVaultAdministrationClientOptions(Azure.Security.KeyVault.Administration.KeyVaultAdministrationClientOptions.ServiceVersion version = Azure.Security.KeyVault.Administration.KeyVaultAdministrationClientOptions.ServiceVersion.V2026_04_01) { }
         public bool DisableChallengeResourceVerification { get { throw null; } set { } }
         public Azure.Security.KeyVault.Administration.KeyVaultAdministrationClientOptions.ServiceVersion Version { get { throw null; } }
         public enum ServiceVersion
@@ -121,7 +121,7 @@ namespace Azure.Security.KeyVault.Administration
             V7_5 = 4,
             V7_6 = 5,
             V2025_07_01 = 6,
-            V2026_01_01_Preview = 7,
+            V2026_04_01 = 7,
         }
     }
     public static partial class KeyVaultAdministrationModelFactory
@@ -270,6 +270,7 @@ namespace Azure.Security.KeyVault.Administration
     }
     public partial class KeyVaultEkmConnection : System.ClientModel.Primitives.IJsonModel<Azure.Security.KeyVault.Administration.KeyVaultEkmConnection>, System.ClientModel.Primitives.IPersistableModel<Azure.Security.KeyVault.Administration.KeyVaultEkmConnection>
     {
+        public KeyVaultEkmConnection(string hostName, System.Collections.Generic.IEnumerable<System.BinaryData> serverCaCertificates) { }
         public KeyVaultEkmConnection(string hostName, System.Collections.Generic.IEnumerable<byte[]> serverCaCertificates) { }
         public string HostName { get { throw null; } set { } }
         public string PathPrefix { get { throw null; } set { } }
