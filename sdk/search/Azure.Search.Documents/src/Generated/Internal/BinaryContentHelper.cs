@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -15,14 +16,15 @@ namespace Azure.Search.Documents
     internal static partial class BinaryContentHelper
     {
         /// <param name="enumerable"></param>
-        public static RequestContent FromEnumerable<T>(IEnumerable<T> enumerable)
+        /// <param name="options"></param>
+        public static RequestContent FromEnumerable<T>(IEnumerable<T> enumerable, ModelReaderWriterOptions options = null)
             where T : notnull
         {
             Utf8JsonRequestContent content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteStartArray();
             foreach (var item in enumerable)
             {
-                content.JsonWriter.WriteObjectValue(item, ModelSerializationExtensions.WireOptions);
+                content.JsonWriter.WriteObjectValue(item, options ?? ModelSerializationExtensions.WireOptions);
             }
             content.JsonWriter.WriteEndArray();
 
@@ -30,7 +32,8 @@ namespace Azure.Search.Documents
         }
 
         /// <param name="enumerable"></param>
-        public static RequestContent FromEnumerable(IEnumerable<BinaryData> enumerable)
+        /// <param name="options"></param>
+        public static RequestContent FromEnumerable(IEnumerable<BinaryData> enumerable, ModelReaderWriterOptions options = null)
         {
             Utf8JsonRequestContent content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteStartArray();
@@ -58,7 +61,8 @@ namespace Azure.Search.Documents
         }
 
         /// <param name="span"></param>
-        public static RequestContent FromEnumerable<T>(ReadOnlySpan<T> span)
+        /// <param name="options"></param>
+        public static RequestContent FromEnumerable<T>(ReadOnlySpan<T> span, ModelReaderWriterOptions options = null)
             where T : notnull
         {
             Utf8JsonRequestContent content = new Utf8JsonRequestContent();
@@ -66,7 +70,7 @@ namespace Azure.Search.Documents
             int i = 0;
             for (; i < span.Length; i++)
             {
-                content.JsonWriter.WriteObjectValue(span[i], ModelSerializationExtensions.WireOptions);
+                content.JsonWriter.WriteObjectValue(span[i], options ?? ModelSerializationExtensions.WireOptions);
             }
             content.JsonWriter.WriteEndArray();
 
@@ -74,7 +78,8 @@ namespace Azure.Search.Documents
         }
 
         /// <param name="dictionary"></param>
-        public static RequestContent FromDictionary<TValue>(IDictionary<string, TValue> dictionary)
+        /// <param name="options"></param>
+        public static RequestContent FromDictionary<TValue>(IDictionary<string, TValue> dictionary, ModelReaderWriterOptions options = null)
             where TValue : notnull
         {
             Utf8JsonRequestContent content = new Utf8JsonRequestContent();
@@ -82,7 +87,7 @@ namespace Azure.Search.Documents
             foreach (var item in dictionary)
             {
                 content.JsonWriter.WritePropertyName(item.Key);
-                content.JsonWriter.WriteObjectValue(item.Value, ModelSerializationExtensions.WireOptions);
+                content.JsonWriter.WriteObjectValue(item.Value, options ?? ModelSerializationExtensions.WireOptions);
             }
             content.JsonWriter.WriteEndObject();
 
@@ -90,7 +95,8 @@ namespace Azure.Search.Documents
         }
 
         /// <param name="dictionary"></param>
-        public static RequestContent FromDictionary(IDictionary<string, BinaryData> dictionary)
+        /// <param name="options"></param>
+        public static RequestContent FromDictionary(IDictionary<string, BinaryData> dictionary, ModelReaderWriterOptions options = null)
         {
             Utf8JsonRequestContent content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteStartObject();
