@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Search.Models
             if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
-                writer.WriteStringValue(Status.Value.ToSerialString());
+                writer.WriteStringValue(Status.Value.ToString());
             }
             if (options.Format != "W" && Optional.IsDefined(StatusDetails))
             {
@@ -264,7 +264,7 @@ namespace Azure.ResourceManager.Search.Models
             SearchServiceHostingMode? hostingMode = default;
             SearchServiceComputeType? computeType = default;
             SearchServicePublicInternetAccess? publicInternetAccess = default;
-            SearchServiceStatus? status = default;
+            SearchServiceState? status = default;
             string statusDetails = default;
             SearchServiceProvisioningState? provisioningState = default;
             SearchServiceNetworkRuleSet networkRuleSet = default;
@@ -345,7 +345,7 @@ namespace Azure.ResourceManager.Search.Models
                     {
                         continue;
                     }
-                    status = prop.Value.GetString().ToSearchServiceStatus();
+                    status = new SearchServiceState(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("statusDetails"u8))

@@ -10,7 +10,11 @@ Compared with the previous GA SDK release (`1.3.0`, API version `2025-05-01`), t
 
 - Create serverless search services with `SearchServiceSkuName.Serverless`.
 - Configure knowledge-retrieval billing through `SearchServiceData.KnowledgeRetrieval` and `SearchServicePatch.KnowledgeRetrieval`, using `SearchKnowledgeRetrieval.Free` or `SearchKnowledgeRetrieval.Standard`.
-- Represent stopped search services with `SearchServiceStatus.Stopped`.
+- Read stopped services and future service statuses through `ServiceStatus` on `SearchServiceData` and `SearchServicePatch`, using the extensible `SearchServiceState` type. The legacy `Status` properties retain the existing `SearchServiceStatus` enum and return `null` for statuses it cannot represent.
+
+### Bugs Fixed
+
+- Fixed the legacy `SkuName` getters on `SearchServiceData` and `SearchServicePatch` to return `null` instead of throwing for Serverless and other SKUs the legacy enum cannot represent.
 
 ## 1.4.0-beta.3 (2026-09-04)
 

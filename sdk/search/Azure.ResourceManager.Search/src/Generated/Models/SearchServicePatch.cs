@@ -165,16 +165,6 @@ namespace Azure.ResourceManager.Search.Models
             }
         }
 
-        /// <summary> The status of the search service. Possible values include: 'running': The search service is running and no provisioning operations are underway. 'provisioning': The search service is being provisioned or scaled up or down. 'deleting': The search service is being deleted. 'degraded': The search service is degraded. This can occur when the underlying search units are not healthy. The search service is most likely operational, but performance might be slow and some requests might be dropped. 'disabled': The search service is disabled. In this state, the service will reject all API requests. 'error': The search service is in an error state. 'stopped': The search service is in a subscription that's disabled. If your service is in the degraded, disabled, or error states, it means the Azure AI Search team is actively investigating the underlying issue. Dedicated services in these states are still chargeable based on the number of search units provisioned. </summary>
-        [WirePath("properties.status")]
-        public SearchServiceStatus? Status
-        {
-            get
-            {
-                return Properties is null ? default : Properties.Status;
-            }
-        }
-
         /// <summary> The details of the search service status. </summary>
         [WirePath("properties.statusDetails")]
         public string StatusDetails
