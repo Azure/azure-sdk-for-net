@@ -1,4 +1,4 @@
-# Azure.ResourceManager.KoreAIArtemis management client library for .NET
+# Microsoft Azure KoreAIArtemis management client library for .NET
 
 This library supports managing Microsoft Azure resources.
 
