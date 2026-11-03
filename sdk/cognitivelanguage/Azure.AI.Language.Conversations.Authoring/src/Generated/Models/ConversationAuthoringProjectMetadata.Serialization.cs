@@ -100,32 +100,53 @@ namespace Azure.AI.Language.Conversations.Authoring
                 writer.WritePropertyName("lastDeployedDateTime"u8);
                 writer.WriteStringValue(LastDeployedOn.Value, "O");
             }
-            writer.WritePropertyName("projectKind"u8);
-            writer.WriteStringValue(ProjectKind.ToString());
-            if (Optional.IsDefined(Settings))
+            if (LifecycleModelReaderWriterOptions.IsVisible(options, LifecycleVisibility.Read | LifecycleVisibility.Create))
             {
-                writer.WritePropertyName("settings"u8);
-                writer.WriteObjectValue(Settings, options);
+                writer.WritePropertyName("projectKind"u8);
+                writer.WriteStringValue(ProjectKind.ToString());
             }
-            if (Optional.IsDefined(StorageInputContainerName))
+            if (LifecycleModelReaderWriterOptions.IsVisible(options, LifecycleVisibility.Read | LifecycleVisibility.Create))
             {
-                writer.WritePropertyName("storageInputContainerName"u8);
-                writer.WriteStringValue(StorageInputContainerName);
+                if (Optional.IsDefined(Settings))
+                {
+                    writer.WritePropertyName("settings"u8);
+                    writer.WriteObjectValue(Settings, options);
+                }
             }
-            writer.WritePropertyName("projectName"u8);
-            writer.WriteStringValue(ProjectName);
-            if (Optional.IsDefined(Multilingual))
+            if (LifecycleModelReaderWriterOptions.IsVisible(options, LifecycleVisibility.Read | LifecycleVisibility.Create))
             {
-                writer.WritePropertyName("multilingual"u8);
-                writer.WriteBooleanValue(Multilingual.Value);
+                if (Optional.IsDefined(StorageInputContainerName))
+                {
+                    writer.WritePropertyName("storageInputContainerName"u8);
+                    writer.WriteStringValue(StorageInputContainerName);
+                }
             }
-            if (Optional.IsDefined(Description))
+            if (LifecycleModelReaderWriterOptions.IsVisible(options, LifecycleVisibility.Read | LifecycleVisibility.Create))
             {
-                writer.WritePropertyName("description"u8);
-                writer.WriteStringValue(Description);
+                writer.WritePropertyName("projectName"u8);
+                writer.WriteStringValue(ProjectName);
             }
-            writer.WritePropertyName("language"u8);
-            writer.WriteStringValue(Language);
+            if (LifecycleModelReaderWriterOptions.IsVisible(options, LifecycleVisibility.Read | LifecycleVisibility.Create))
+            {
+                if (Optional.IsDefined(Multilingual))
+                {
+                    writer.WritePropertyName("multilingual"u8);
+                    writer.WriteBooleanValue(Multilingual.Value);
+                }
+            }
+            if (LifecycleModelReaderWriterOptions.IsVisible(options, LifecycleVisibility.Read | LifecycleVisibility.Create))
+            {
+                if (Optional.IsDefined(Description))
+                {
+                    writer.WritePropertyName("description"u8);
+                    writer.WriteStringValue(Description);
+                }
+            }
+            if (LifecycleModelReaderWriterOptions.IsVisible(options, LifecycleVisibility.Read | LifecycleVisibility.Create))
+            {
+                writer.WritePropertyName("language"u8);
+                writer.WriteStringValue(Language);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)

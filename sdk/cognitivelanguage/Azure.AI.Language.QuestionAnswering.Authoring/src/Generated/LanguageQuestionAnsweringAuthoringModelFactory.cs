@@ -211,7 +211,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <param name="dialog"> Context of a QnA. </param>
         /// <param name="activeLearningSuggestions"> List of Active Learning suggestions for the QnA. </param>
         /// <returns> A new <see cref="Authoring.QnaRecord"/> instance for mocking. </returns>
-        public static QnaRecord QnaRecord(int id = default, string answer = default, string source = default, IEnumerable<string> questions = default, IDictionary<string, string> metadata = default, QnaDialog dialog = default, IEnumerable<SuggestedQuestionsCluster> activeLearningSuggestions = default)
+        public static QnaRecord QnaRecord(int? id = default, string answer = default, string source = default, IEnumerable<string> questions = default, IDictionary<string, string> metadata = default, QnaDialog dialog = default, IEnumerable<SuggestedQuestionsCluster> activeLearningSuggestions = default)
         {
             questions ??= new ChangeTrackingList<string>();
             metadata ??= new ChangeTrackingDictionary<string, string>();
