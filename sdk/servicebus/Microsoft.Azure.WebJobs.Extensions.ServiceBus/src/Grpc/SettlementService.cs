@@ -47,7 +47,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.ServiceBus.Grpc
                 throw new RpcException(new Status(StatusCode.Unknown, ex.ToString()));
             }
 
-            throw new RpcException (new Status(StatusCode.FailedPrecondition, $"LockToken {request.Locktoken} not found."));
+            throw new RpcException(new Status(StatusCode.FailedPrecondition, $"LockToken {request.Locktoken} not found."));
         }
 
         public override async Task<Empty> Abandon(AbandonRequest request, ServerCallContext context)
@@ -68,7 +68,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.ServiceBus.Grpc
                 throw new RpcException(new Status(StatusCode.Unknown, ex.ToString()));
             }
 
-            throw new RpcException (new Status(StatusCode.FailedPrecondition, $"LockToken {request.Locktoken} not found."));
+            throw new RpcException(new Status(StatusCode.FailedPrecondition, $"LockToken {request.Locktoken} not found."));
         }
 
         public override async Task<Empty> Defer(DeferRequest request, ServerCallContext context)
@@ -89,7 +89,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.ServiceBus.Grpc
                 throw new RpcException(new Status(StatusCode.Unknown, ex.ToString()));
             }
 
-            throw new RpcException (new Status(StatusCode.FailedPrecondition, $"LockToken {request.Locktoken} not found."));
+            throw new RpcException(new Status(StatusCode.FailedPrecondition, $"LockToken {request.Locktoken} not found."));
         }
 
         public override async Task<Empty> Deadletter(DeadletterRequest request, ServerCallContext context)
@@ -124,7 +124,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.ServiceBus.Grpc
                 throw new RpcException(new Status(StatusCode.Unknown, ex.ToString()));
             }
 
-            throw new RpcException (new Status(StatusCode.FailedPrecondition, $"LockToken {request.Locktoken} not found."));
+            throw new RpcException(new Status(StatusCode.FailedPrecondition, $"LockToken {request.Locktoken} not found."));
         }
 
         public override async Task<Empty> RenewMessageLock(RenewMessageLockRequest request, ServerCallContext context)

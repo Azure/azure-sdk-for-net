@@ -1,10 +1,6 @@
 # Release History
 
-## 5.19.0-beta.1 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
+## 5.19.0 (2026-11-02)
 
 ### Bugs Fixed
 
@@ -13,6 +9,8 @@
   sessions without waiting for host shutdown. (#58170)
 
 ### Other Changes
+
+- Updated `Microsoft.Azure.WebJobs` and `Microsoft.Azure.WebJobs.Extensions.Rpc` to 3.0.48, which updates the transitive gRPC dependencies from 2.49.0 to 2.67.0. This addresses the outdated `Grpc.Net.Client` dependency in isolated-worker extension output reported in [Azure/azure-functions-dotnet-worker#3511](https://github.com/Azure/azure-functions-dotnet-worker/issues/3511).
 
 ## 5.18.0 (2026-09-09)
 

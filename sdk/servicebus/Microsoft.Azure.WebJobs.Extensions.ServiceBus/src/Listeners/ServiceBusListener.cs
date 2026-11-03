@@ -119,7 +119,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
                 () =>
                 {
                     var sessionProcessorOptions = options.ToSessionProcessorOptions(_autoCompleteMessages, concurrencyManager.Enabled);
-                    return messagingProvider.CreateSessionMessageProcessor(_client.Value,_entityPath, sessionProcessorOptions);
+                    return messagingProvider.CreateSessionMessageProcessor(_client.Value, _entityPath, sessionProcessorOptions);
                 });
 
             _administrationClient = new Lazy<ServiceBusAdministrationClient>(
@@ -485,9 +485,9 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
                                 cancellationToken).ConfigureAwait(false);
 
                             // Processing messages from a new session, create a new message cache for that session
-                             _cachedMessagesManager = new ServiceBusMessageManager(
-                                    maxBatchSize: _maxMessageBatchSize,
-                                    minBatchSize: _serviceBusOptions.MinMessageBatchSize);
+                            _cachedMessagesManager = new ServiceBusMessageManager(
+                                   maxBatchSize: _maxMessageBatchSize,
+                                   minBatchSize: _serviceBusOptions.MinMessageBatchSize);
                         }
                         catch (ServiceBusException ex)
                             when (ex.Reason == ServiceBusFailureReason.ServiceTimeout)
@@ -596,7 +596,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
                     // Ignore as we are stopping the host
                 }
                 catch (OperationCanceledException)
-                    when(cancellationToken.IsCancellationRequested)
+                    when (cancellationToken.IsCancellationRequested)
                 {
                     // Ignore as we are stopping the host
                     _logger.LogInformation($"Message processing has been stopped or cancelled ({_details.Value})");
@@ -820,7 +820,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
                             _monitoringCycleReceiveActions,
                             _client.Value);
 
-        await TriggerWithMessagesInternal(triggerMessages, input, _monitoringCycleReceiver, _monitoringCycleReceiveActions, _monitoringCycleMessageActions, backgroundCancellationToken).ConfigureAwait(false);
+                    await TriggerWithMessagesInternal(triggerMessages, input, _monitoringCycleReceiver, _monitoringCycleReceiveActions, _monitoringCycleMessageActions, backgroundCancellationToken).ConfigureAwait(false);
                 }
                 else
                 {

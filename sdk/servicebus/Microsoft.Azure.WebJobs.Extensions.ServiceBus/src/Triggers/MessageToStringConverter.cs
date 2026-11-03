@@ -42,7 +42,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Triggers
                     using Stream stream = input.Body.ToStream();
                     var serializer = DataContractBinarySerializer<string>.Instance;
                     stream.Position = 0;
-                    return (string) serializer.ReadObject(stream);
+                    return (string)serializer.ReadObject(stream);
                 }
                 catch
                 {

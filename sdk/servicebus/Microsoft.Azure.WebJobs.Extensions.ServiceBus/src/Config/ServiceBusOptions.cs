@@ -295,7 +295,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
 
         internal ServiceBusProcessorOptions ToProcessorOptions(bool autoCompleteMessagesOptionEvaluatedValue, bool dynamicConcurrencyEnabled)
         {
-           var processorOptions = new ServiceBusProcessorOptions
+            var processorOptions = new ServiceBusProcessorOptions
             {
                 AutoCompleteMessages = autoCompleteMessagesOptionEvaluatedValue,
                 PrefetchCount = PrefetchCount,

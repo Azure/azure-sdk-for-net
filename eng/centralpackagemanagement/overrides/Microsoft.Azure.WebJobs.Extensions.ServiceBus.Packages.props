@@ -1,0 +1,7 @@
+<Project>
+  <ItemGroup>
+    <PackageVersion Update="Microsoft.Azure.WebJobs" Version="3.0.48" />
+    <PackageVersion Update="Microsoft.Azure.WebJobs.Sources" Version="3.0.48" />
+    <PackageVersion Update="Microsoft.Azure.WebJobs.Extensions.Rpc" Version="3.0.48" />
+  </ItemGroup>
+</Project>

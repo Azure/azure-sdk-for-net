@@ -130,9 +130,9 @@ namespace Microsoft.Extensions.Hosting
             builder.Services.TryAddSingleton<MessagingProvider>();
             builder.Services.AddSingleton<CleanupService>();
             builder.Services.AddSingleton<ServiceBusClientFactory>();
-            #if NET6_0_OR_GREATER
+#if NET6_0_OR_GREATER
             builder.Services.AddSingleton<SettlementService>();
-            #endif
+#endif
             return builder;
         }
 
@@ -141,7 +141,8 @@ namespace Microsoft.Extensions.Hosting
             // We need to register an instance of ServiceBusScalerProvider in the DI container and then map it to the interfaces IScaleMonitorProvider and ITargetScalerProvider.
             // Since there can be more than one instance of ServiceBusScalerProvider, we have to store a reference to the created instance to filter it out later.
             ServiceBusScalerProvider serviceBusScalerProvider = null;
-            builder.Services.AddSingleton(serviceProvider => {
+            builder.Services.AddSingleton(serviceProvider =>
+            {
                 // Force construction of CleanupService so MS.DI disposes it on host teardown;
                 // CleanupService.Dispose() then calls MessagingProvider.DisposeAsync(). Scale-only
                 // hosts don't build any IExtensionConfigProvider, which is the binding path's only
