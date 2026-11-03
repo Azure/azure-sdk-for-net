@@ -34,7 +34,7 @@ namespace Azure.Core.Amqp
         /// into a managed string.
         /// </summary>
         /// <param name="bytes">The UTF-8 bytes to borrow.</param>
-        /// <returns>A value that can be used in an AMQP application-property dictionary.</returns>
+        /// <returns>A validated descriptor containing the borrowed UTF-8 bytes.</returns>
         /// <exception cref="ArgumentException">The bytes are not valid UTF-8.</exception>
         public static AmqpUtf8String FromBytes(ReadOnlyMemory<byte> bytes)
         {

@@ -4,7 +4,8 @@
 
 ### Features Added
 
-- Added `AmqpUtf8String.FromBytes` to encode borrowed UTF-8 bytes as AMQP string-valued application properties without creating intermediate managed strings.
+- Added `AmqpUtf8String.FromBytes` to represent borrowed UTF-8 bytes for AMQP string encoding without creating intermediate managed strings.
+- Added support for `AmqpUtf8String` in AMQP application properties.
 
 ### Breaking Changes
 
