@@ -143,6 +143,8 @@ namespace Azure.Storage.Blobs.Models
         private const string CopyIdMismatchValue = "CopyIdMismatch";
         /// <summary> Feature version mismatch. </summary>
         private const string FeatureVersionMismatchValue = "FeatureVersionMismatch";
+        /// <summary> Feature is not enabled. </summary>
+        private const string FeatureNotEnabledValue = "FeatureNotEnabled";
         /// <summary> Incremental copy blob mismatch. </summary>
         private const string IncrementalCopyBlobMismatchValue = "IncrementalCopyBlobMismatch";
         /// <summary> Incremental copy source must be snapshot. </summary>
@@ -447,6 +449,9 @@ namespace Azure.Storage.Blobs.Models
 
         /// <summary> Feature version mismatch. </summary>
         public static BlobErrorCode FeatureVersionMismatch { get; } = new BlobErrorCode(FeatureVersionMismatchValue);
+
+        /// <summary> Feature is not enabled. </summary>
+        public static BlobErrorCode FeatureNotEnabled { get; } = new BlobErrorCode(FeatureNotEnabledValue);
 
         /// <summary> Incremental copy blob mismatch. </summary>
         public static BlobErrorCode IncrementalCopyBlobMismatch { get; } = new BlobErrorCode(IncrementalCopyBlobMismatchValue);

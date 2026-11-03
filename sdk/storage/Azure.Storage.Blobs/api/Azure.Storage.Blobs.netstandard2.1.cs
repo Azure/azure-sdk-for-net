@@ -676,6 +676,7 @@ namespace Azure.Storage.Blobs.Models
         public static Azure.Storage.Blobs.Models.BlobErrorCode CopyAcrossAccountsNotSupported { get { throw null; } }
         public static Azure.Storage.Blobs.Models.BlobErrorCode CopyIdMismatch { get { throw null; } }
         public static Azure.Storage.Blobs.Models.BlobErrorCode EmptyMetadataKey { get { throw null; } }
+        public static Azure.Storage.Blobs.Models.BlobErrorCode FeatureNotEnabled { get { throw null; } }
         public static Azure.Storage.Blobs.Models.BlobErrorCode FeatureVersionMismatch { get { throw null; } }
         public static Azure.Storage.Blobs.Models.BlobErrorCode IncrementalCopyBlobMismatch { get { throw null; } }
         public static Azure.Storage.Blobs.Models.BlobErrorCode IncrementalCopyOfEarlierSnapshotNotAllowed { get { throw null; } }
