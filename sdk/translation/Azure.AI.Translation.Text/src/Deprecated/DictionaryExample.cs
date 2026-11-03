@@ -9,7 +9,7 @@ using System.Text.Json;
 namespace Azure.AI.Translation.Text
 {
     /// <summary> Dictionary Example. </summary>
-    [Obsolete("This class is obsolete and will be removed in a future release.")]
+    [Obsolete("This class is obsolete and will be removed in a future release.", error: true)]
     [EditorBrowsable(EditorBrowsableState.Never)]
     public class DictionaryExample : IJsonModel<DictionaryExample>
     {
