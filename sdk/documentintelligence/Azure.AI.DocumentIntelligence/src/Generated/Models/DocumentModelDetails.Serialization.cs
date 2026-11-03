@@ -86,8 +86,11 @@ namespace Azure.AI.DocumentIntelligence
             {
                 throw new FormatException($"The model {nameof(DocumentModelDetails)} does not support writing '{format}' format.");
             }
-            writer.WritePropertyName("modelId"u8);
-            writer.WriteStringValue(ModelId);
+            if (LifecycleModelReaderWriterOptions.IsVisible(options, LifecycleVisibility.Read | LifecycleVisibility.Create))
+            {
+                writer.WritePropertyName("modelId"u8);
+                writer.WriteStringValue(ModelId);
+            }
             if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);

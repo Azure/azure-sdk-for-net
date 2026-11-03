@@ -97,90 +97,120 @@ namespace Azure.AI.Discovery
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(Title))
+            if (LifecycleModelReaderWriterOptions.IsVisible(options, LifecycleVisibility.Read | LifecycleVisibility.Create | LifecycleVisibility.Update))
             {
-                writer.WritePropertyName("title"u8);
-                writer.WriteStringValue(Title);
-            }
-            if (Optional.IsDefined(Priority))
-            {
-                writer.WritePropertyName("priority"u8);
-                writer.WriteStringValue(Priority.Value.ToString());
-            }
-            if (Optional.IsDefined(Description))
-            {
-                writer.WritePropertyName("description"u8);
-                writer.WriteStringValue(Description);
-            }
-            if (Optional.IsCollectionDefined(ValidationRequirements))
-            {
-                writer.WritePropertyName("validationRequirements"u8);
-                writer.WriteStartArray();
-                foreach (string item in ValidationRequirements)
+                if (Optional.IsDefined(Title))
                 {
-                    if (item == null)
+                    writer.WritePropertyName("title"u8);
+                    writer.WriteStringValue(Title);
+                }
+            }
+            if (LifecycleModelReaderWriterOptions.IsVisible(options, LifecycleVisibility.Read | LifecycleVisibility.Create | LifecycleVisibility.Update))
+            {
+                if (Optional.IsDefined(Priority))
+                {
+                    writer.WritePropertyName("priority"u8);
+                    writer.WriteStringValue(Priority.Value.ToString());
+                }
+            }
+            if (LifecycleModelReaderWriterOptions.IsVisible(options, LifecycleVisibility.Read | LifecycleVisibility.Create | LifecycleVisibility.Update))
+            {
+                if (Optional.IsDefined(Description))
+                {
+                    writer.WritePropertyName("description"u8);
+                    writer.WriteStringValue(Description);
+                }
+            }
+            if (LifecycleModelReaderWriterOptions.IsVisible(options, LifecycleVisibility.Read | LifecycleVisibility.Create | LifecycleVisibility.Update))
+            {
+                if (Optional.IsCollectionDefined(ValidationRequirements))
+                {
+                    writer.WritePropertyName("validationRequirements"u8);
+                    writer.WriteStartArray();
+                    foreach (string item in ValidationRequirements)
                     {
-                        writer.WriteNullValue();
-                        continue;
+                        if (item == null)
+                        {
+                            writer.WriteNullValue();
+                            continue;
+                        }
+                        writer.WriteStringValue(item);
                     }
-                    writer.WriteStringValue(item);
+                    writer.WriteEndArray();
                 }
-                writer.WriteEndArray();
             }
-            if (Optional.IsDefined(ParentId))
+            if (LifecycleModelReaderWriterOptions.IsVisible(options, LifecycleVisibility.Read | LifecycleVisibility.Create | LifecycleVisibility.Update))
             {
-                writer.WritePropertyName("parentId"u8);
-                writer.WriteStringValue(ParentId);
-            }
-            if (Optional.IsCollectionDefined(DependsOn))
-            {
-                writer.WritePropertyName("dependsOn"u8);
-                writer.WriteStartArray();
-                foreach (string item in DependsOn)
+                if (Optional.IsDefined(ParentId))
                 {
-                    if (item == null)
+                    writer.WritePropertyName("parentId"u8);
+                    writer.WriteStringValue(ParentId);
+                }
+            }
+            if (LifecycleModelReaderWriterOptions.IsVisible(options, LifecycleVisibility.Read | LifecycleVisibility.Create | LifecycleVisibility.Update))
+            {
+                if (Optional.IsCollectionDefined(DependsOn))
+                {
+                    writer.WritePropertyName("dependsOn"u8);
+                    writer.WriteStartArray();
+                    foreach (string item in DependsOn)
                     {
-                        writer.WriteNullValue();
-                        continue;
+                        if (item == null)
+                        {
+                            writer.WriteNullValue();
+                            continue;
+                        }
+                        writer.WriteStringValue(item);
                     }
-                    writer.WriteStringValue(item);
+                    writer.WriteEndArray();
                 }
-                writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(RelatedTo))
+            if (LifecycleModelReaderWriterOptions.IsVisible(options, LifecycleVisibility.Read | LifecycleVisibility.Create | LifecycleVisibility.Update))
             {
-                writer.WritePropertyName("relatedTo"u8);
-                writer.WriteStartArray();
-                foreach (string item in RelatedTo)
+                if (Optional.IsCollectionDefined(RelatedTo))
                 {
-                    if (item == null)
+                    writer.WritePropertyName("relatedTo"u8);
+                    writer.WriteStartArray();
+                    foreach (string item in RelatedTo)
                     {
-                        writer.WriteNullValue();
-                        continue;
+                        if (item == null)
+                        {
+                            writer.WriteNullValue();
+                            continue;
+                        }
+                        writer.WriteStringValue(item);
                     }
-                    writer.WriteStringValue(item);
+                    writer.WriteEndArray();
                 }
-                writer.WriteEndArray();
             }
-            if (Optional.IsDefined(AssignedTo))
+            if (LifecycleModelReaderWriterOptions.IsVisible(options, LifecycleVisibility.Read | LifecycleVisibility.Create | LifecycleVisibility.Update))
             {
-                writer.WritePropertyName("assignedTo"u8);
-                writer.WriteObjectValue(AssignedTo, options);
-            }
-            if (Optional.IsCollectionDefined(Comments))
-            {
-                writer.WritePropertyName("comments"u8);
-                writer.WriteStartArray();
-                foreach (TaskComment item in Comments)
+                if (Optional.IsDefined(AssignedTo))
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WritePropertyName("assignedTo"u8);
+                    writer.WriteObjectValue(AssignedTo, options);
                 }
-                writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Status))
+            if (LifecycleModelReaderWriterOptions.IsVisible(options, LifecycleVisibility.Read | LifecycleVisibility.Create | LifecycleVisibility.Update))
             {
-                writer.WritePropertyName("status"u8);
-                writer.WriteStringValue(Status.Value.ToString());
+                if (Optional.IsCollectionDefined(Comments))
+                {
+                    writer.WritePropertyName("comments"u8);
+                    writer.WriteStartArray();
+                    foreach (TaskComment item in Comments)
+                    {
+                        writer.WriteObjectValue(item, options);
+                    }
+                    writer.WriteEndArray();
+                }
+            }
+            if (LifecycleModelReaderWriterOptions.IsVisible(options, LifecycleVisibility.Read | LifecycleVisibility.Update))
+            {
+                if (Optional.IsDefined(Status))
+                {
+                    writer.WritePropertyName("status"u8);
+                    writer.WriteStringValue(Status.Value.ToString());
+                }
             }
             if (options.Format != "W" && Optional.IsDefined(CreatedOn))
             {
@@ -192,10 +222,13 @@ namespace Azure.AI.Discovery
                 writer.WritePropertyName("createdBy"u8);
                 writer.WriteStringValue(CreatedBy);
             }
-            if (Optional.IsDefined(CreatedByType))
+            if (LifecycleModelReaderWriterOptions.IsVisible(options, LifecycleVisibility.Read | LifecycleVisibility.Create))
             {
-                writer.WritePropertyName("createdByType"u8);
-                writer.WriteStringValue(CreatedByType.Value.ToString());
+                if (Optional.IsDefined(CreatedByType))
+                {
+                    writer.WritePropertyName("createdByType"u8);
+                    writer.WriteStringValue(CreatedByType.Value.ToString());
+                }
             }
             if (options.Format != "W" && Optional.IsDefined(LastModifiedOn))
             {
@@ -222,30 +255,39 @@ namespace Azure.AI.Discovery
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(InvestigationId))
+            if (LifecycleModelReaderWriterOptions.IsVisible(options, LifecycleVisibility.Read | LifecycleVisibility.Create))
             {
-                writer.WritePropertyName("investigationId"u8);
-                writer.WriteStringValue(InvestigationId);
-            }
-            if (Optional.IsDefined(TaskResult))
-            {
-                writer.WritePropertyName("taskResult"u8);
-                writer.WriteObjectValue(TaskResult, options);
-            }
-            if (Optional.IsCollectionDefined(StorageAssetIds))
-            {
-                writer.WritePropertyName("storageAssetIds"u8);
-                writer.WriteStartArray();
-                foreach (ResourceIdentifier item in StorageAssetIds)
+                if (Optional.IsDefined(InvestigationId))
                 {
-                    if (item == null)
-                    {
-                        writer.WriteNullValue();
-                        continue;
-                    }
-                    writer.WriteStringValue(item);
+                    writer.WritePropertyName("investigationId"u8);
+                    writer.WriteStringValue(InvestigationId);
                 }
-                writer.WriteEndArray();
+            }
+            if (LifecycleModelReaderWriterOptions.IsVisible(options, LifecycleVisibility.Read | LifecycleVisibility.Update))
+            {
+                if (Optional.IsDefined(TaskResult))
+                {
+                    writer.WritePropertyName("taskResult"u8);
+                    writer.WriteObjectValue(TaskResult, options);
+                }
+            }
+            if (LifecycleModelReaderWriterOptions.IsVisible(options, LifecycleVisibility.Read | LifecycleVisibility.Create | LifecycleVisibility.Update))
+            {
+                if (Optional.IsCollectionDefined(StorageAssetIds))
+                {
+                    writer.WritePropertyName("storageAssetIds"u8);
+                    writer.WriteStartArray();
+                    foreach (ResourceIdentifier item in StorageAssetIds)
+                    {
+                        if (item == null)
+                        {
+                            writer.WriteNullValue();
+                            continue;
+                        }
+                        writer.WriteStringValue(item);
+                    }
+                    writer.WriteEndArray();
+                }
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
