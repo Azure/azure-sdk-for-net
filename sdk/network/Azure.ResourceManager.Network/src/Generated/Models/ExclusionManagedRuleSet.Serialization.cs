@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new ExclusionManagedRuleSet(ruleSetType, ruleSetVersion, ruleGroups ?? new ChangeTrackingList<ExclusionManagedRuleGroup>(), additionalBinaryDataProperties);

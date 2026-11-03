@@ -2,8 +2,13 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ClientModel;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Generator.Primitives;
 using Azure.Generator.Tests.TestHelpers;
 using Azure.Generator.Visitors;
 using Microsoft.TypeSpec.Generator.Expressions;
@@ -19,6 +24,135 @@ namespace Azure.Generator.Tests.Visitors
 {
     public class StreamingResponseVisitorTests
     {
+        [Test]
+        public void ForwardsProtocolOperationCancellation(
+            [Values("CreateSse", "CreateJsonLines")] string factoryName,
+            [Values(false, true)] bool nullableContext,
+            [Values("context", "requestContext")] string contextName)
+        {
+            MockHelpers.LoadMockGenerator();
+            var context = new ParameterProvider(
+                contextName,
+                $"The request context.",
+                new CSharpType(typeof(RequestContext), isNullable: nullableContext),
+                defaultValue: nullableContext ? Null : null);
+            var method = CreateMethod(CreateStreamingResponseType(), context);
+            var expression = CreateStreamingFactory(factoryName);
+            var visitor = new TestStreamingResponseVisitor();
+
+            visitor.Visit(expression, method);
+
+            Assert.AreEqual(factoryName == "CreateSse" ? 3 : 2, expression.Arguments.Count);
+            Assert.AreEqual($"({contextName}?.CancellationToken ?? default)", expression.Arguments[^1].ToDisplayString());
+            if (factoryName == "CreateSse")
+            {
+                Assert.AreSame(Null, expression.Arguments[1]);
+            }
+            var arguments = expression.Arguments;
+
+            visitor.Visit(expression, method);
+
+            CollectionAssert.AreEqual(arguments, expression.Arguments, "Revisiting must not duplicate cancellation or predicates.");
+        }
+
+        [Test]
+        public void PreservesSseCompletionPredicate()
+        {
+            MockHelpers.LoadMockGenerator();
+            var expression = CreateStreamingFactory("CreateSse");
+            var predicate = new VariableExpression(typeof(Delegate), "isTerminalEvent");
+            expression.Update(arguments: [expression.Arguments[0], predicate]);
+
+            new TestStreamingResponseVisitor().Visit(
+                expression, CreateMethod(CreateStreamingResponseType(), KnownAzureParameters.OptionalRequestContext));
+
+            Assert.AreEqual(3, expression.Arguments.Count);
+            Assert.AreSame(predicate, expression.Arguments[1]);
+            Assert.AreEqual("(context?.CancellationToken ?? default)", expression.Arguments[2].ToDisplayString());
+        }
+
+        [TestCase("CreateSse")]
+        [TestCase("CreateJsonLines")]
+        public void PreservesExistingProtocolCancellation(string factoryName)
+        {
+            MockHelpers.LoadMockGenerator();
+            var expression = CreateStreamingFactory(factoryName);
+            var cancellationToken = new VariableExpression(typeof(CancellationToken), "operationToken");
+            expression.Update(arguments: factoryName == "CreateSse"
+                ? [expression.Arguments[0], Null, cancellationToken]
+                : [expression.Arguments[0], cancellationToken]);
+            var argumentCount = expression.Arguments.Count;
+
+            new TestStreamingResponseVisitor().Visit(
+                expression, CreateMethod(CreateStreamingResponseType(), KnownAzureParameters.OptionalRequestContext));
+
+            Assert.AreEqual(argumentCount, expression.Arguments.Count);
+            Assert.AreSame(cancellationToken, expression.Arguments[^1]);
+        }
+
+        [Test]
+        public void PreservesConvenienceCancellation(
+            [Values("CreateSse", "CreateJsonLines")] string factoryName,
+            [Values(false, true)] bool typed)
+        {
+            MockHelpers.LoadMockGenerator();
+            var expression = CreateStreamingFactory(factoryName);
+            var cancellationToken = KnownAzureParameters.CancellationTokenWithoutDefault;
+            var arguments = new List<ValueExpression> { expression.Arguments[0] };
+            if (typed)
+            {
+                expression.Update(typeArguments: [typeof(BinaryData)]);
+                arguments.Add(new VariableExpression(typeof(Delegate), "parser"));
+            }
+            if (factoryName == "CreateSse")
+            {
+                arguments.Add(new VariableExpression(typeof(Delegate), "isTerminalEvent"));
+            }
+            arguments.Add(cancellationToken);
+            expression.Update(arguments: arguments);
+
+            new TestStreamingResponseVisitor().Visit(expression, CreateMethod(CreateStreamingResponseType(), cancellationToken));
+
+            Assert.AreEqual(arguments.Count, expression.Arguments.Count);
+            CollectionAssert.AreEqual(arguments.Skip(1), expression.Arguments.Skip(1));
+        }
+
+        [TestCase("CreateSse")]
+        [TestCase("CreateJsonLines")]
+        public void DoesNotAddCancellationWithoutRequestContext(string factoryName)
+        {
+            MockHelpers.LoadMockGenerator();
+            var expression = CreateStreamingFactory(factoryName);
+
+            new TestStreamingResponseVisitor().Visit(expression, CreateMethod(CreateStreamingResponseType()));
+
+            Assert.AreEqual(1, expression.Arguments.Count);
+        }
+
+        [TestCase("CreateResult", false, false)]
+        [TestCase("CreateSse", true, false)]
+        [TestCase("CreateJsonLines", true, false)]
+        [TestCase("CreateSse", false, true)]
+        [TestCase("CreateJsonLines", false, true)]
+        public void DoesNotAddProtocolCancellationToOtherFactories(string factoryName, bool otherDeclaringType, bool generic)
+        {
+            MockHelpers.LoadMockGenerator();
+            var expression = CreateStreamingFactory(factoryName);
+            if (otherDeclaringType)
+            {
+                expression.Update(instanceReference: Static(typeof(BinaryData)));
+            }
+            if (generic)
+            {
+                expression.Update(typeArguments: [typeof(BinaryData)]);
+            }
+
+            new TestStreamingResponseVisitor().Visit(
+                expression, CreateMethod(CreateStreamingResponseType(), KnownAzureParameters.OptionalRequestContext));
+
+            Assert.AreEqual(1, expression.Arguments.Count);
+        }
+
         [Test]
         public void TransfersHttpMessageContentForStreamingReturnType()
         {
@@ -162,7 +296,18 @@ namespace Azure.Generator.Tests.Visitors
             return new InvokeMethodExpression(null, signature, [response]);
         }
 
-        private static MethodProvider CreateMethod(CSharpType returnType)
+        private static InvokeMethodExpression CreateStreamingFactory(string name)
+        {
+            var message = new VariableExpression(typeof(HttpMessage), "message");
+            var processMessage = CreateInvocation(
+                "ProcessMessageAsync",
+                new CSharpType(typeof(Task<>), typeof(Response)),
+                message);
+            processMessage.Update(callAsAsync: true);
+            return Static(typeof(AsyncStreamingResult)).Invoke(name, new ScopedApi<Response>(processMessage));
+        }
+
+        private static MethodProvider CreateMethod(CSharpType returnType, params ParameterProvider[] parameters)
         {
             var signature = new MethodSignature(
                 "TestMethod",
@@ -170,14 +315,12 @@ namespace Azure.Generator.Tests.Visitors
                 MethodSignatureModifiers.Public | MethodSignatureModifiers.Async,
                 new CSharpType(typeof(Task<>), returnType),
                 null,
-                []);
+                parameters);
             return new TestMethodProvider(signature);
         }
 
-#pragma warning disable SCME0005 // Type is for evaluation purposes only and is subject to change or removal in future updates.
         private static CSharpType CreateStreamingResponseType()
             => new(typeof(System.ClientModel.AsyncStreamingResult<>), typeof(BinaryData));
-#pragma warning restore SCME0005 // Type is for evaluation purposes only and is subject to change or removal in future updates.
 
         private class TestStreamingResponseVisitor : StreamingResponseVisitor
         {

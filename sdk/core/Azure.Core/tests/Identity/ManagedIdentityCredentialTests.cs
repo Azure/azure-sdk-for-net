@@ -53,6 +53,20 @@ namespace Azure.Core.Tests.Identity
             Assert.IsTrue(messages.Any(message => ExceptionChainContains(ex, message)), $"Expected exception chain to contain one of: {string.Join(", ", messages)}{Environment.NewLine}Actual: {ex}");
         }
 
+        [Test]
+        public void MtlsProofOfPossessionIsOnByDefault()
+        {
+#pragma warning disable AZID0004 // Testing experimental mTLS proof-of-possession API
+            var options = new ManagedIdentityCredentialOptions();
+
+            Assert.IsTrue(options.EnableMtlsProofOfPossession);
+
+            options.EnableMtlsProofOfPossession = false;
+
+            Assert.IsFalse(options.EnableMtlsProofOfPossession);
+#pragma warning restore AZID0004
+        }
+
         #region Private Helpers
 
         private static ManagedIdentityId ResolveManagedIdentityId(string clientId = null, string resourceId = null)
@@ -71,7 +85,7 @@ namespace Azure.Core.Tests.Identity
             bool isManagedIdentityPipeline = false,
             bool preserveTransport = true,
             Action<MockMsalManagedIdentityClient> configureMockMsal = null,
-            bool disableMtlsProofOfPossession = false,
+            bool enableMtlsProofOfPossession = true,
             bool instrument = true,
             TimeSpan? initialImdsConnectionTimeout = null)
         {
@@ -83,7 +97,7 @@ namespace Azure.Core.Tests.Identity
                 IsForceRefreshEnabled = isForceRefreshEnabled,
                 PreserveTransport = preserveTransport,
                 Options = options,
-                DisableMtlsProofOfPossession = disableMtlsProofOfPossession,
+                EnableMtlsProofOfPossession = enableMtlsProofOfPossession,
                 InitialImdsConnectionTimeout = initialImdsConnectionTimeout
             };
             // Inject a mock MSAL client that:
@@ -418,7 +432,7 @@ namespace Azure.Core.Tests.Identity
 
         [NonParallelizable]
         [Test]
-        public async Task ProofOfPossessionRequestSkipsCapabilitiesWhenMtlsIsDisabled()
+        public async Task ProofOfPossessionRequestSkipsCapabilitiesWhenMtlsIsNotEnabled()
         {
             using var environment = new TestEnvVar(new() { { "MSI_ENDPOINT", null }, { "MSI_SECRET", null }, { "IDENTITY_ENDPOINT", null }, { "IDENTITY_HEADER", null }, { "AZURE_POD_IDENTITY_AUTHORITY_HOST", null } });
 
@@ -433,11 +447,11 @@ namespace Azure.Core.Tests.Identity
                     mock.GetManagedIdentityCapabilitiesFactory = (_, _) =>
                     {
                         capabilityCallCount++;
-                        throw new MsalClientException("managed_identity_request_failed", "Capability discovery should not run when mTLS proof-of-possession is disabled.");
+                        throw new MsalClientException("managed_identity_request_failed", "Capability discovery should not run when mTLS proof-of-possession is not enabled.");
                     };
                     mock.AcquireTokenForManagedIdentityAsyncFactory = (_, _) => AuthenticationResultFactory.Create(accessToken: ExpectedToken);
                 },
-                disableMtlsProofOfPossession: true,
+                enableMtlsProofOfPossession: false,
                 instrument: false);
 
             AccessToken token = await GetTokenAsync(
@@ -788,12 +802,12 @@ namespace Azure.Core.Tests.Identity
             Assert.AreEqual(expectedTokenBindingAvailable, mockMsal.LastIsTokenBindingAvailable);
         }
 
-        [TestCase(false, false, true)]
-        [TestCase(true, true, true)]
-        [TestCase(true, false, false)]
+        [TestCase(false, true, true)]
+        [TestCase(true, false, true)]
+        [TestCase(true, true, false)]
         public async Task KeyGuardBearerRequestsUseConfiguredTransport(
             bool isProofOfPossessionEnabled,
-            bool disableMtlsProofOfPossession,
+            bool enableMtlsProofOfPossession,
             bool attestationSupportAvailable)
         {
             using var environment = new TestEnvVar(new()
@@ -819,7 +833,7 @@ namespace Azure.Core.Tests.Identity
                     mock.OverrideAttestationSupport = true;
                     mock.AttestationSupport = attestationSupportAvailable ? builder => builder : null;
                 },
-                disableMtlsProofOfPossession: disableMtlsProofOfPossession);
+                enableMtlsProofOfPossession: enableMtlsProofOfPossession);
             var context = new TokenRequestContext(
                 MockScopes.Default,
                 isProofOfPossessionEnabled: isProofOfPossessionEnabled);
@@ -1943,6 +1957,59 @@ namespace Azure.Core.Tests.Identity
 
             Assert.AreEqual(ExpectedToken, actualToken.Token);
             Assert.That(messages, Does.Contain(string.Format(AzureIdentityEventSource.ManagedIdentitySourceAttemptedMessage, "TokenExchangeManagedIdentitySource", true)));
+        }
+
+        [TestCase(1)]
+        [TestCase(4095)]
+        [TestCase(4096)]
+        [TestCase(4097)]
+        [TestCase(5000)]
+        [TestCase(16384)]
+        public async Task TokenExchangePreservesEntireAssertion(int assertionLength)
+        {
+            string assertion = new string(Enumerable.Range(0, assertionLength).Select(i => (char)('a' + i % 26)).ToArray());
+            string tokenFilePath = Path.GetTempFileName();
+            try
+            {
+                File.WriteAllText(tokenFilePath, assertion);
+                using var environment = new TestEnvVar(new()
+                {
+                    { "MSI_ENDPOINT", null },
+                    { "MSI_SECRET", null },
+                    { "IDENTITY_ENDPOINT", null },
+                    { "IDENTITY_HEADER", null },
+                    { "AZURE_POD_IDENTITY_AUTHORITY_HOST", null },
+                    { "AZURE_CLIENT_ID", "mock-client-id" },
+                    { "AZURE_TENANT_ID", "mock-tenant-id" },
+                    { "AZURE_AUTHORITY_HOST", "https://mock.authority.com/" },
+                    { "AZURE_FEDERATED_TOKEN_FILE", tokenFilePath }
+                });
+
+                int requestCount = 0;
+                var transport = new MockTransport(request =>
+                {
+                    using var stream = new MemoryStream();
+                    request.Content.WriteTo(stream, default);
+                    string content = new BinaryData(stream.ToArray()).ToString();
+                    string assertionField = content.Split('&').Single(field => field.StartsWith("client_assertion=", StringComparison.Ordinal));
+                    Assert.AreEqual(assertion, Uri.UnescapeDataString(assertionField.Substring("client_assertion=".Length)));
+                    requestCount++;
+                    return CreateMockResponseWithTokeType(200, ExpectedToken);
+                });
+
+                var credential = CreateBareCredentialWithOptions(new TokenCredentialOptions { Transport = transport });
+                AccessToken token = await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default), default);
+                Assert.AreEqual(ExpectedToken, token.Token);
+
+                File.Delete(tokenFilePath);
+                token = await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Alternate), default);
+                Assert.AreEqual(ExpectedToken, token.Token);
+                Assert.AreEqual(2, requestCount);
+            }
+            finally
+            {
+                File.Delete(tokenFilePath);
+            }
         }
 
         [NonParallelizable]

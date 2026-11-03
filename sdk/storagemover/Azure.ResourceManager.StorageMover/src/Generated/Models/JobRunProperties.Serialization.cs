@@ -528,7 +528,7 @@ namespace Azure.ResourceManager.StorageMover.Models
                     {
                         continue;
                     }
-                    sourceProperties = BinaryData.FromString(prop.Value.GetRawText());
+                    sourceProperties = prop.Value.GetUtf8Bytes();
                     continue;
                 }
                 if (prop.NameEquals("targetName"u8))
@@ -547,7 +547,7 @@ namespace Azure.ResourceManager.StorageMover.Models
                     {
                         continue;
                     }
-                    targetProperties = BinaryData.FromString(prop.Value.GetRawText());
+                    targetProperties = prop.Value.GetUtf8Bytes();
                     continue;
                 }
                 if (prop.NameEquals("jobDefinitionProperties"u8))
@@ -556,7 +556,7 @@ namespace Azure.ResourceManager.StorageMover.Models
                     {
                         continue;
                     }
-                    jobDefinitionProperties = BinaryData.FromString(prop.Value.GetRawText());
+                    jobDefinitionProperties = prop.Value.GetUtf8Bytes();
                     continue;
                 }
                 if (prop.NameEquals("error"u8))
@@ -593,7 +593,7 @@ namespace Azure.ResourceManager.StorageMover.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new JobRunProperties(

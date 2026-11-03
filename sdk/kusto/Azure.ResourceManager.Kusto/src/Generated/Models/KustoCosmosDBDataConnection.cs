@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Kusto.Models
     public partial class KustoCosmosDBDataConnection : KustoDataConnectionData
     {
         /// <summary> Initializes a new instance of <see cref="KustoCosmosDBDataConnection"/>. </summary>
-        public KustoCosmosDBDataConnection() : base(DataConnectionKind.CosmosDb)
+        public KustoCosmosDBDataConnection() : base(DataConnectionKind.CosmosDB)
         {
         }
 

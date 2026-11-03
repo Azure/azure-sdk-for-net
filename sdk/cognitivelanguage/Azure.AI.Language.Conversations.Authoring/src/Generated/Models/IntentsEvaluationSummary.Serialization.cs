@@ -215,8 +215,8 @@ namespace Azure.AI.Language.Conversations.Authoring
                 }
             }
             return new IntentsEvaluationSummary(
-                confusionMatrix,
-                intents,
+                confusionMatrix ?? new ChangeTrackingDictionary<string, AnalyzeConversationAuthoringConfusionMatrixRow>(),
+                intents ?? new ChangeTrackingDictionary<string, IntentEvaluationSummary>(),
                 microF1,
                 microPrecision,
                 microRecall,

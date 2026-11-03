@@ -3,6 +3,7 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
 
 namespace Azure.Identity
@@ -27,11 +28,13 @@ namespace Azure.Identity
         }
 
         /// <summary>
-        /// Disables mTLS proof-of-possession token acquisition for <see cref="ManagedIdentityCredential"/>.
-        /// When set to <c>true</c>, the credential requests bearer tokens even if proof-of-possession
-        /// was requested by the caller and runtime prerequisites for mTLS proof-of-possession are available.
+        /// Enables mTLS proof-of-possession token acquisition for <see cref="ManagedIdentityCredential"/>.
+        /// The default is <c>true</c>. Set to <c>false</c> to request bearer tokens even when proof-of-possession
+        /// was requested by the caller and the runtime prerequisites for mTLS proof-of-possession are available.
         /// </summary>
-        public bool DisableMtlsProofOfPossession { get; set; }
+        /// <seealso href="https://learn.microsoft.com/entra/msal/dotnet/advanced/proof-of-possession-tokens"/>
+        [Experimental("AZID0004")]
+        public bool EnableMtlsProofOfPossession { get; set; } = true;
 
         /// <summary>
         /// Specifies the configuration for the managed identity.

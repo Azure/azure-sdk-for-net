@@ -175,7 +175,7 @@ namespace Azure.Analytics.PlanetaryComputer
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new TileSetBoundingBox(lowerLeft, upperRight, crs, additionalBinaryDataProperties);
+            return new TileSetBoundingBox(lowerLeft ?? new ChangeTrackingList<double>(), upperRight ?? new ChangeTrackingList<double>(), crs, additionalBinaryDataProperties);
         }
     }
 }

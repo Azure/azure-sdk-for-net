@@ -184,7 +184,7 @@ namespace Azure.Developer.LoadTesting
             return new UnknownNotificationRule(
                 notificationRuleId,
                 displayName,
-                actionGroupIds,
+                actionGroupIds ?? new ChangeTrackingList<string>(),
                 scope,
                 createdOn,
                 createdBy,

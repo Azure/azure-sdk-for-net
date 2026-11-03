@@ -191,7 +191,7 @@ namespace Azure.AI.Language.QuestionAnswering.Inference
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new AnswersFromTextOptions(question, textDocuments, language, stringIndexType, additionalBinaryDataProperties);
+            return new AnswersFromTextOptions(question, textDocuments ?? new ChangeTrackingList<TextDocument>(), language, stringIndexType, additionalBinaryDataProperties);
         }
     }
 }

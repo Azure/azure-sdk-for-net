@@ -212,10 +212,10 @@ namespace Azure.AI.Language.Text
             }
             return new PiiResultWithDetectedLanguage(
                 id,
-                warnings,
+                warnings ?? new ChangeTrackingList<DocumentWarning>(),
                 statistics,
                 redactedText,
-                entities,
+                entities ?? new ChangeTrackingList<PiiEntity>(),
                 detectedLanguage,
                 additionalBinaryDataProperties);
         }

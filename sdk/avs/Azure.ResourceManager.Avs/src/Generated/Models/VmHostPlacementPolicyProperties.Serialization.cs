@@ -243,7 +243,7 @@ namespace Azure.ResourceManager.Avs.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new VmHostPlacementPolicyProperties(
@@ -252,8 +252,8 @@ namespace Azure.ResourceManager.Avs.Models
                 displayName,
                 provisioningState,
                 additionalBinaryDataProperties,
-                vmMembers,
-                hostMembers,
+                vmMembers ?? new ChangeTrackingList<ResourceIdentifier>(),
+                hostMembers ?? new ChangeTrackingList<string>(),
                 affinityType,
                 affinityStrength,
                 azureHybridBenefitType);

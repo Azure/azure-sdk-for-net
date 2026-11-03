@@ -246,7 +246,7 @@ namespace Azure.AI.ContentUnderstanding
             return new DocumentTable(
                 rowCount,
                 columnCount,
-                cells,
+                cells ?? new ChangeTrackingList<DocumentTableCell>(),
                 source,
                 span,
                 caption,

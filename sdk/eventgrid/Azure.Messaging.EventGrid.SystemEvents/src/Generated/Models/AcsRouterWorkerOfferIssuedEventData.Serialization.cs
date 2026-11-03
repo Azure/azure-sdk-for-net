@@ -347,12 +347,12 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 queueId,
                 offerId,
                 jobPriority,
-                workerLabels,
+                workerLabels ?? new ChangeTrackingDictionary<string, string>(),
                 offeredOn,
                 expiresOn,
-                workerTags,
-                jobLabels,
-                jobTags);
+                workerTags ?? new ChangeTrackingDictionary<string, string>(),
+                jobLabels ?? new ChangeTrackingDictionary<string, string>(),
+                jobTags ?? new ChangeTrackingDictionary<string, string>());
         }
 
         internal partial class AcsRouterWorkerOfferIssuedEventDataConverter : JsonConverter<AcsRouterWorkerOfferIssuedEventData>

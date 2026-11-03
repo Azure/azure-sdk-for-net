@@ -169,7 +169,7 @@ namespace Azure.Developer.LoadTesting
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new PagedNotificationRule(value, nextLink, additionalBinaryDataProperties);
+            return new PagedNotificationRule(value ?? new ChangeTrackingList<NotificationRule>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

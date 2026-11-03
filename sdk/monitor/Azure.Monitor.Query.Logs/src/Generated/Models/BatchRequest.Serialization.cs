@@ -158,7 +158,7 @@ namespace Azure.Monitor.Query.Logs.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new BatchRequest(requests, additionalBinaryDataProperties);
+            return new BatchRequest(requests ?? new ChangeTrackingList<BatchQueryRequest>(), additionalBinaryDataProperties);
         }
     }
 }

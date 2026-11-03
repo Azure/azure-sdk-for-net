@@ -285,7 +285,7 @@ namespace Azure.ResourceManager.AppContainers
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ContainerAppHttpRouteConfigData, ContainerAppHttpRouteConfigResource>(new HttpRouteConfigGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<ContainerAppHttpRouteConfigData, ContainerAppHttpRouteConfigResource>(new ContainerAppHttpRouteConfigDataAsyncCollectionResultOfT(
                 _httpRouteConfigRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -319,7 +319,7 @@ namespace Azure.ResourceManager.AppContainers
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ContainerAppHttpRouteConfigData, ContainerAppHttpRouteConfigResource>(new HttpRouteConfigGetAllCollectionResultOfT(
+            return new PageableWrapper<ContainerAppHttpRouteConfigData, ContainerAppHttpRouteConfigResource>(new ContainerAppHttpRouteConfigDataCollectionResultOfT(
                 _httpRouteConfigRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

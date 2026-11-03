@@ -856,7 +856,7 @@ namespace Azure.ResourceManager.EventHubs.Models
         /// <returns> A new <see cref="Models.EventHubsApplicationGroupPolicy"/> instance for mocking. </returns>
         public static EventHubsApplicationGroupPolicy EventHubsApplicationGroupPolicy(string name = default, string applicationGroupPolicyType = default)
         {
-            return new UnknownApplicationGroupPolicy(name, default, default);
+            return new UnknownApplicationGroupPolicy(name, applicationGroupPolicyType is null ? default : new ApplicationGroupPolicyType(applicationGroupPolicyType), default);
         }
 
         /// <summary> Properties of the throttling policy. </summary>
@@ -866,7 +866,7 @@ namespace Azure.ResourceManager.EventHubs.Models
         /// <returns> A new <see cref="Models.EventHubsThrottlingPolicy"/> instance for mocking. </returns>
         public static EventHubsThrottlingPolicy EventHubsThrottlingPolicy(string name = default, long rateLimitThreshold = default, EventHubsMetricId metricId = default)
         {
-            return new EventHubsThrottlingPolicy(name, default, default, rateLimitThreshold, metricId);
+            return new EventHubsThrottlingPolicy(name, ApplicationGroupPolicyType.ThrottlingPolicy, default, rateLimitThreshold, metricId);
         }
 
         /// <summary> Single Event Hubs Cluster resource in List or Get operations. </summary>
@@ -885,7 +885,7 @@ namespace Azure.ResourceManager.EventHubs.Models
         /// <param name="supportsScaling"> A value that indicates whether Scaling is Supported. </param>
         /// <returns> A new <see cref="EventHubs.EventHubsClusterData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static EventHubsClusterData EventHubsClusterData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, EventHubsClusterSku sku = default, DateTimeOffset? createdOn = default, EventHubsClusterProvisioningState? provisioningState = default, DateTimeOffset? updatedOn = default, string metricId = default, string status = default, bool? supportsScaling = default)
+        public static EventHubsClusterData EventHubsClusterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, EventHubsClusterSku sku, DateTimeOffset? createdOn, EventHubsClusterProvisioningState? provisioningState, DateTimeOffset? updatedOn, string metricId, string status, bool? supportsScaling)
         {
             return new EventHubsClusterData(
                 id,
@@ -936,7 +936,7 @@ namespace Azure.ResourceManager.EventHubs.Models
         /// <param name="alternateName"> Alternate name specified when alias and namespace names are same. </param>
         /// <returns> A new <see cref="EventHubs.EventHubsNamespaceData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static EventHubsNamespaceData EventHubsNamespaceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, EventHubsSku sku = default, ManagedServiceIdentity identity = default, EventHubsTlsVersion? minimumTlsVersion = default, string provisioningState = default, string status = default, DateTimeOffset? createdOn = default, DateTimeOffset? updatedOn = default, string serviceBusEndpoint = default, ResourceIdentifier clusterArmId = default, string metricId = default, bool? isAutoInflateEnabled = default, EventHubsPublicNetworkAccess? publicNetworkAccess = default, int? maximumThroughputUnits = default, bool? kafkaEnabled = default, bool? zoneRedundant = default, EventHubsEncryption encryption = default, IEnumerable<EventHubsPrivateEndpointConnectionData> privateEndpointConnections = default, bool? disableLocalAuth = default, string alternateName = default)
+        public static EventHubsNamespaceData EventHubsNamespaceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, EventHubsSku sku, ManagedServiceIdentity identity, EventHubsTlsVersion? minimumTlsVersion, string provisioningState, string status, DateTimeOffset? createdOn, DateTimeOffset? updatedOn, string serviceBusEndpoint, ResourceIdentifier clusterArmId, string metricId, bool? isAutoInflateEnabled, EventHubsPublicNetworkAccess? publicNetworkAccess, int? maximumThroughputUnits, bool? kafkaEnabled, bool? zoneRedundant, EventHubsEncryption encryption, IEnumerable<EventHubsPrivateEndpointConnectionData> privateEndpointConnections, bool? disableLocalAuth, string alternateName)
         {
             return new EventHubsNamespaceData(
                 id,
@@ -983,7 +983,7 @@ namespace Azure.ResourceManager.EventHubs.Models
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <returns> A new <see cref="EventHubs.EventHubsPrivateEndpointConnectionData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static EventHubsPrivateEndpointConnectionData EventHubsPrivateEndpointConnectionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ResourceIdentifier privateEndpointId = default, EventHubsPrivateLinkServiceConnectionState connectionState = default, EventHubsPrivateEndpointConnectionProvisioningState? provisioningState = default, AzureLocation? location = default)
+        public static EventHubsPrivateEndpointConnectionData EventHubsPrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ResourceIdentifier privateEndpointId, EventHubsPrivateLinkServiceConnectionState connectionState, EventHubsPrivateEndpointConnectionProvisioningState? provisioningState, AzureLocation? location)
         {
             return new EventHubsPrivateEndpointConnectionData(
                 id,
@@ -1011,7 +1011,7 @@ namespace Azure.ResourceManager.EventHubs.Models
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <returns> A new <see cref="EventHubs.EventHubData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static EventHubData EventHubData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IEnumerable<string> partitionIds = default, DateTimeOffset? createdOn = default, DateTimeOffset? updatedOn = default, long? partitionCount = default, EventHubEntityStatus? status = default, string userMetadata = default, CaptureDescription captureDescription = default, RetentionDescription retentionDescription = default, AzureLocation? location = default)
+        public static EventHubData EventHubData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IEnumerable<string> partitionIds, DateTimeOffset? createdOn, DateTimeOffset? updatedOn, long? partitionCount, EventHubEntityStatus? status, string userMetadata, CaptureDescription captureDescription, RetentionDescription retentionDescription, AzureLocation? location)
         {
             return new EventHubData(
                 id,

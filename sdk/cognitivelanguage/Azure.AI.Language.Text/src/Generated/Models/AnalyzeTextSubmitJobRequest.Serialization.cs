@@ -205,7 +205,7 @@ namespace Azure.AI.Language.Text
             return new AnalyzeTextSubmitJobRequest(
                 displayName,
                 textInput,
-                actions,
+                actions ?? new ChangeTrackingList<AnalyzeTextOperationAction>(),
                 defaultLanguage,
                 cancelAfter,
                 additionalBinaryDataProperties);

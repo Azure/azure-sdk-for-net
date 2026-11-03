@@ -323,8 +323,8 @@ namespace Azure.Analytics.PlanetaryComputer
                 description,
                 title,
                 stacVersion,
-                conformsTo,
-                links,
+                conformsTo ?? new ChangeTrackingList<Uri>(),
+                links ?? new ChangeTrackingList<StacLink>(),
                 kind,
                 additionalBinaryDataProperties);
         }

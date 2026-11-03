@@ -89,9 +89,9 @@ namespace Azure.Provisioning.ContainerService
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            _resourceId = DefineProperty<ResourceIdentifier>(nameof(ResourceId), new string[] { "resourceId" }, isRequired: true);
+            _resourceId = DefineProperty<ResourceIdentifier>(nameof(ResourceId), new string[] { "resourceId" });
             _tenantId = DefineProperty<Guid>(nameof(TenantId), new string[] { "tenantId" });
-            _referralResource = DefineProperty<string>(nameof(ReferralResource), new string[] { "referralResource" }, isRequired: true);
+            _referralResource = DefineProperty<string>(nameof(ReferralResource), new string[] { "referralResource" });
             _location = DefineProperty<AzureLocation>(nameof(Location), new string[] { "location" });
             DefineAdditionalProperties();
         }

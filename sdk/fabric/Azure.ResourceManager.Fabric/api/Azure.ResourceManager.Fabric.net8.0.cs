@@ -231,6 +231,7 @@ namespace Azure.ResourceManager.Fabric.Models
     }
     public partial class FabricCapacityProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Fabric.Models.FabricCapacityProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Fabric.Models.FabricCapacityProperties>
     {
+        public FabricCapacityProperties(Azure.ResourceManager.Fabric.Models.CapacityOverageProperties overage, System.Collections.Generic.IList<string> administrationMembers) { }
         public FabricCapacityProperties(Azure.ResourceManager.Fabric.Models.FabricCapacityAdministration administration) { }
         public System.Collections.Generic.IList<string> AdministrationMembers { get { throw null; } set { } }
         public Azure.ResourceManager.Fabric.Models.CapacityOverageProperties Overage { get { throw null; } set { } }

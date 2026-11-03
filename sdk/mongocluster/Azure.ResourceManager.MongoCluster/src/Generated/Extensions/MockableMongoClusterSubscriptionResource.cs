@@ -38,7 +38,13 @@ namespace Azure.ResourceManager.MongoCluster.Mocking
 
         private ClientDiagnostics MongoClustersClientDiagnostics => _mongoClustersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.MongoCluster.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private MongoClusters MongoClustersRestClient => _mongoClustersRestClient ??= new MongoClusters(MongoClustersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-06-15-preview");
+        private MongoClusters MongoClustersRestClient => _mongoClustersRestClient ??= new MongoClusters(
+            MongoClustersClientDiagnostics,
+            Pipeline,
+            Diagnostics.ApplicationId,
+            Endpoint,
+            "2026-06-15-preview",
+            resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
 
         /// <summary>
         /// List all the mongo clusters in a given subscription.
@@ -65,7 +71,7 @@ namespace Azure.ResourceManager.MongoCluster.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<MongoClusterData, MongoClusterResource>(new MongoClustersGetAllAsyncCollectionResultOfT(MongoClustersRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableMongoClusterSubscriptionResource.GetMongoClusters"), data => new MongoClusterResource(Client, data));
+            return new AsyncPageableWrapper<MongoClusterData, MongoClusterResource>(new MongoClusterDataAsync0CollectionResultOfT(MongoClustersRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableMongoClusterSubscriptionResource.GetMongoClusters"), data => new MongoClusterResource(Client, data));
         }
 
         /// <summary>
@@ -93,7 +99,7 @@ namespace Azure.ResourceManager.MongoCluster.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<MongoClusterData, MongoClusterResource>(new MongoClustersGetAllCollectionResultOfT(MongoClustersRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableMongoClusterSubscriptionResource.GetMongoClusters"), data => new MongoClusterResource(Client, data));
+            return new PageableWrapper<MongoClusterData, MongoClusterResource>(new MongoClusterData0CollectionResultOfT(MongoClustersRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableMongoClusterSubscriptionResource.GetMongoClusters"), data => new MongoClusterResource(Client, data));
         }
 
         /// <summary>

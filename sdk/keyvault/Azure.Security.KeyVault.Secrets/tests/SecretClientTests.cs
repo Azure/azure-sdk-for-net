@@ -12,7 +12,8 @@ using NUnit.Framework;
 
 namespace Azure.Security.KeyVault.Secrets.Tests
 {
-    public class SecretClientTests: ClientTestBase
+    [NonParallelizable]
+    public class SecretClientTests : ClientTestBase
     {
         public SecretClientTests(bool isAsync) : base(isAsync)
         {
@@ -25,6 +26,104 @@ namespace Azure.Security.KeyVault.Secrets.Tests
         }
 
         public SecretClient Client { get; }
+
+        [SetUp]
+        public void Setup()
+        {
+            ChallengeBasedAuthenticationPolicy.ClearCache();
+        }
+
+        [TearDown]
+        public void TearDown()
+        {
+            ChallengeBasedAuthenticationPolicy.ClearCache();
+        }
+
+        [Test]
+        public void ChallengeResourceWithUserInfoIsRejected([Values("resource", "scope")] string parameter)
+        {
+            string value = "https://resource.example@contoso.test";
+            if (parameter == "scope")
+            {
+                value += "/.default";
+            }
+
+            var transport = new MockTransport(new MockResponse(401).WithHeader(
+                "WWW-Authenticate",
+                $"Bearer authorization=\"https://login.microsoftonline.com/11111111-1111-1111-1111-111111111111\", {parameter}=\"{value}\""));
+            int credentialCalls = 0;
+            var credential = new MockCredential
+            {
+                GetTokenCallback = (_, _) => credentialCalls++
+            };
+            using SecretClient client = InstrumentClient(new SecretClient(
+                new Uri("https://test.contoso.test"), credential, new SecretClientOptions { Transport = transport }));
+
+            Assert.ThrowsAsync<InvalidOperationException>(async () => await client.GetSecretAsync("test"));
+            Assert.That(credentialCalls, Is.Zero);
+            Assert.That(transport.Requests.Count, Is.EqualTo(1));
+            Assert.That(transport.SingleRequest.Headers.Contains("Authorization"), Is.False);
+        }
+
+        [Test]
+        public void RedirectDoesNotDiscloseToken(
+            [Values(301, 302, 307, 308)] int status,
+            [Values(false, true)] bool allowRedirect)
+        {
+            int credentialCalls = 0;
+            var credential = new MockCredential
+            {
+                GetTokenCallback = (_, _) => credentialCalls++
+            };
+            int sends = 0;
+            var transport = new MockTransport(request =>
+            {
+                switch (++sends)
+                {
+                    case 1:
+                        Assert.That(request.Uri.Host, Is.EqualTo("redirect.vault.azure.net"));
+                        Assert.That(request.Headers.Contains("Authorization"), Is.False);
+                        return new MockResponse(401).WithHeader(
+                            "WWW-Authenticate",
+                            "Bearer authorization=\"https://login.microsoftonline.com/11111111-1111-1111-1111-111111111111\", resource=\"https://vault.azure.net\"");
+                    case 2:
+                        Assert.That(request.Uri.Host, Is.EqualTo("redirect.vault.azure.net"));
+                        Assert.That(request.Headers.Contains("Authorization"), Is.True);
+                        return new MockResponse(status).WithHeader("Location", "https://test.contoso.test/secrets/test");
+                    case 3:
+                        Assert.That(allowRedirect, Is.True);
+                        Assert.That(request.Uri.Host, Is.EqualTo("test.contoso.test"));
+                        Assert.That(request.Headers.Contains("Authorization"), Is.False);
+                        return new MockResponse(401).WithHeader(
+                            "WWW-Authenticate",
+                            "Bearer authorization=\"https://login.microsoftonline.com/11111111-1111-1111-1111-111111111111\", resource=\"https://resource.example@contoso.test\"");
+                    default:
+                        throw new AssertionException("A redirected challenge must not result in an authenticated resend.");
+                }
+            });
+            var options = new SecretClientOptions { Transport = transport };
+            if (allowRedirect)
+            {
+                options.AddPolicy(new HttpPipelineSynchronousPolicyForTest(
+                    message => RedirectPolicy.SetAllowAutoRedirect(message, true)), HttpPipelinePosition.PerCall);
+            }
+            using SecretClient client = InstrumentClient(new SecretClient(
+                new Uri("https://redirect.vault.azure.net"), credential, options));
+
+            if (allowRedirect)
+            {
+                Assert.ThrowsAsync<InvalidOperationException>(async () => await client.GetSecretAsync("test"));
+            }
+            else
+            {
+                RequestFailedException exception = Assert.ThrowsAsync<RequestFailedException>(
+                    async () => await client.GetSecretAsync("test"));
+                Assert.That(exception.Status, Is.EqualTo(status));
+            }
+
+            Assert.That(sends, Is.EqualTo(allowRedirect ? 3 : 2));
+            Assert.That(credentialCalls, Is.EqualTo(1));
+        }
 
         [Test]
         public void SetArgumentValidation()
@@ -62,6 +161,49 @@ namespace Azure.Security.KeyVault.Secrets.Tests
         {
             Assert.ThrowsAsync<ArgumentNullException>(() => Client.GetSecretAsync(null));
             Assert.ThrowsAsync<ArgumentException>(() => Client.GetSecretAsync(""));
+        }
+
+        [Test]
+        public async Task GetSecret_DeserializesWireModel()
+        {
+            var transport = new MockTransport(new MockResponse(200).WithJson(
+                @"{""value"":""value"",""id"":""https://example.vault.azure.net/secrets/x/abc123"",""contentType"":""text/plain"",""attributes"":{""enabled"":true,""created"":10,""updated"":20},""tags"":{""env"":""test""}}"));
+            using SecretClient client = InstrumentClient(new SecretClient(
+                new Uri("https://example.vault.azure.net"),
+                new MockCredential(),
+                new SecretClientOptions { Transport = transport }));
+
+            KeyVaultSecret secret = (await client.GetSecretAsync("x")).Value;
+
+            Assert.AreEqual("value", secret.Value);
+            Assert.AreEqual("x", secret.Name);
+            Assert.AreEqual("abc123", secret.Properties.Version);
+            Assert.AreEqual("text/plain", secret.Properties.ContentType);
+            Assert.IsTrue(secret.Properties.Enabled);
+            Assert.AreEqual(DateTimeOffset.FromUnixTimeSeconds(10), secret.Properties.CreatedOn);
+            Assert.AreEqual(DateTimeOffset.FromUnixTimeSeconds(20), secret.Properties.UpdatedOn);
+            Assert.AreEqual("test", secret.Properties.Tags["env"]);
+        }
+
+        [Test]
+        public async Task UpdateSecretProperties_DeserializesWireModel()
+        {
+            var transport = new MockTransport(new MockResponse(200).WithJson(
+                @"{""id"":""https://example.vault.azure.net/secrets/x/abc123"",""contentType"":""application/json"",""attributes"":{""enabled"":false,""updated"":20},""tags"":{""env"":""test""}}"));
+            using SecretClient client = InstrumentClient(new SecretClient(
+                new Uri("https://example.vault.azure.net"),
+                new MockCredential(),
+                new SecretClientOptions { Transport = transport }));
+
+            var update = new SecretProperties("x") { Version = "abc123", Enabled = false };
+            SecretProperties properties = (await client.UpdateSecretPropertiesAsync(update)).Value;
+
+            Assert.AreEqual("x", properties.Name);
+            Assert.AreEqual("abc123", properties.Version);
+            Assert.AreEqual("application/json", properties.ContentType);
+            Assert.IsFalse(properties.Enabled);
+            Assert.AreEqual(DateTimeOffset.FromUnixTimeSeconds(20), properties.UpdatedOn);
+            Assert.AreEqual("test", properties.Tags["env"]);
         }
 
         [Test]
@@ -212,19 +354,22 @@ namespace Azure.Security.KeyVault.Secrets.Tests
         // SecretClientOptions.ServiceVersion enum value. The mapping must
         // match the legacy hand-written SecretClientOptions.GetVersionString()
         // exactly so existing customers see byte-identical wire requests.
-        [TestCase(SecretClientOptions.ServiceVersion.V7_0,        "7.0")]
-        [TestCase(SecretClientOptions.ServiceVersion.V7_1,        "7.1")]
-        [TestCase(SecretClientOptions.ServiceVersion.V7_2,        "7.2")]
-        [TestCase(SecretClientOptions.ServiceVersion.V7_3,        "7.3")]
-        [TestCase(SecretClientOptions.ServiceVersion.V7_4,        "7.4")]
-        [TestCase(SecretClientOptions.ServiceVersion.V7_5,        "7.5")]
-        [TestCase(SecretClientOptions.ServiceVersion.V7_6,        "7.6")]
+        [TestCase(SecretClientOptions.ServiceVersion.V7_0, "7.0")]
+        [TestCase(SecretClientOptions.ServiceVersion.V7_1, "7.1")]
+        [TestCase(SecretClientOptions.ServiceVersion.V7_2, "7.2")]
+        [TestCase(SecretClientOptions.ServiceVersion.V7_3, "7.3")]
+        [TestCase(SecretClientOptions.ServiceVersion.V7_4, "7.4")]
+        [TestCase(SecretClientOptions.ServiceVersion.V7_5, "7.5")]
+        [TestCase(SecretClientOptions.ServiceVersion.V7_6, "7.6")]
         [TestCase(SecretClientOptions.ServiceVersion.V2025_07_01, "2025-07-01")]
-        public async Task ServiceVersion_SendsExpectedWireApiVersion(SecretClientOptions.ServiceVersion version, string expectedWireVersion)
+        [TestCase(SecretClientOptions.ServiceVersion.V2026_04_01, "2026-04-01")]
+        [TestCase(null, "2026-04-01")]
+        public async Task ServiceVersion_SendsExpectedWireApiVersion(SecretClientOptions.ServiceVersion? version, string expectedWireVersion)
         {
             var transport = new MockTransport(new MockResponse(200).WithJson(
                 @"{""value"":""v"",""id"":""https://example.vault.azure.net/secrets/x/1""}"));
-            var options = new SecretClientOptions(version) { Transport = transport };
+            var options = version.HasValue ? new SecretClientOptions(version.Value) : new SecretClientOptions();
+            options.Transport = transport;
 
             SecretClient client = InstrumentClient(new SecretClient(new Uri("https://example.vault.azure.net"), new MockCredential(), options));
             await client.GetSecretAsync("x");
@@ -237,7 +382,8 @@ namespace Azure.Security.KeyVault.Secrets.Tests
             foreach (string kv in query.TrimStart('?').Split('&'))
             {
                 int eq = kv.IndexOf('=');
-                if (eq < 0) continue;
+                if (eq < 0)
+                    continue;
                 if (string.Equals(kv.Substring(0, eq), "api-version", StringComparison.OrdinalIgnoreCase))
                 {
                     actual = System.Uri.UnescapeDataString(kv.Substring(eq + 1));
@@ -366,9 +512,9 @@ namespace Azure.Security.KeyVault.Secrets.Tests
             await Task.Delay(50);
 
             string log = capturedLogContent.ToString();
-            Assert.That(log, Does.Contain("kv-pt-test"),                 "ApplicationId must reach the logging layer via User-Agent.");
-            Assert.That(log, Does.Contain("diag-marker-1234"),           "LoggedHeaderNames allow-listed value must appear unsanitized in logs.");
-            Assert.That(log, Does.Contain("audit-marker-5678"),          "LoggedQueryParameters allow-listed value must appear unsanitized in logs.");
+            Assert.That(log, Does.Contain("kv-pt-test"), "ApplicationId must reach the logging layer via User-Agent.");
+            Assert.That(log, Does.Contain("diag-marker-1234"), "LoggedHeaderNames allow-listed value must appear unsanitized in logs.");
+            Assert.That(log, Does.Contain("audit-marker-5678"), "LoggedQueryParameters allow-listed value must appear unsanitized in logs.");
         }
 
         // Tiny no-op policy used by the AddPolicy tests above. Increments a
@@ -460,14 +606,14 @@ namespace Azure.Security.KeyVault.Secrets.Tests
         public void WriteUpdateBody_TagsSet_EmitsTagsField()
         {
             var props = new SecretProperties("name") { Version = "ver" };
-            props.Tags["env"]   = "prod";
+            props.Tags["env"] = "prod";
             props.Tags["owner"] = "rohit";
 
             using var body = SecretMapper.WriteUpdateBody(props);
             using var doc = System.Text.Json.JsonDocument.Parse(body);
 
             Assert.IsTrue(doc.RootElement.TryGetProperty("tags", out var tags));
-            Assert.AreEqual("prod",  tags.GetProperty("env").GetString());
+            Assert.AreEqual("prod", tags.GetProperty("env").GetString());
             Assert.AreEqual("rohit", tags.GetProperty("owner").GetString());
         }
 
@@ -481,8 +627,8 @@ namespace Azure.Security.KeyVault.Secrets.Tests
             var pivot = new DateTimeOffset(2026, 6, 15, 12, 0, 0, TimeSpan.Zero);
             var props = new SecretProperties("name")
             {
-                Version   = "ver",
-                Enabled   = false,
+                Version = "ver",
+                Enabled = false,
                 NotBefore = pivot,
                 ExpiresOn = pivot.AddDays(30),
                 ContentType = "application/json",
@@ -494,13 +640,13 @@ namespace Azure.Security.KeyVault.Secrets.Tests
             Assert.AreEqual("application/json", doc.RootElement.GetProperty("contentType").GetString());
             System.Text.Json.JsonElement attrs = doc.RootElement.GetProperty("attributes");
             Assert.IsFalse(attrs.GetProperty("enabled").GetBoolean());
-            Assert.AreEqual(pivot.ToUnixTimeSeconds(),               attrs.GetProperty("nbf").GetInt64());
-            Assert.AreEqual(pivot.AddDays(30).ToUnixTimeSeconds(),   attrs.GetProperty("exp").GetInt64());
+            Assert.AreEqual(pivot.ToUnixTimeSeconds(), attrs.GetProperty("nbf").GetInt64());
+            Assert.AreEqual(pivot.AddDays(30).ToUnixTimeSeconds(), attrs.GetProperty("exp").GetInt64());
             // read-only fields must not be present
-            Assert.IsFalse(attrs.TryGetProperty("created",         out _));
-            Assert.IsFalse(attrs.TryGetProperty("updated",         out _));
+            Assert.IsFalse(attrs.TryGetProperty("created", out _));
+            Assert.IsFalse(attrs.TryGetProperty("updated", out _));
             Assert.IsFalse(attrs.TryGetProperty("recoverableDays", out _));
-            Assert.IsFalse(attrs.TryGetProperty("recoveryLevel",   out _));
+            Assert.IsFalse(attrs.TryGetProperty("recoveryLevel", out _));
         }
 
         [Test]
@@ -515,9 +661,9 @@ namespace Azure.Security.KeyVault.Secrets.Tests
             using var doc = System.Text.Json.JsonDocument.Parse(body);
 
             Assert.AreEqual(System.Text.Json.JsonValueKind.Object, doc.RootElement.ValueKind);
-            Assert.IsFalse(doc.RootElement.TryGetProperty("attributes",  out _));
+            Assert.IsFalse(doc.RootElement.TryGetProperty("attributes", out _));
             Assert.IsFalse(doc.RootElement.TryGetProperty("contentType", out _));
-            Assert.IsFalse(doc.RootElement.TryGetProperty("tags",        out _));
+            Assert.IsFalse(doc.RootElement.TryGetProperty("tags", out _));
         }
         // -------------------------------------------------------------------
         // Wire-shape guards for GetSecret(outContentType), SetSecret tags,
@@ -543,7 +689,8 @@ namespace Azure.Security.KeyVault.Secrets.Tests
             foreach (string kv in query.TrimStart('?').Split('&'))
             {
                 int eq = kv.IndexOf('=');
-                if (eq < 0) continue;
+                if (eq < 0)
+                    continue;
                 if (string.Equals(kv.Substring(0, eq), "outContentType", StringComparison.OrdinalIgnoreCase))
                 {
                     actual = System.Uri.UnescapeDataString(kv.Substring(eq + 1));
@@ -592,9 +739,9 @@ namespace Azure.Security.KeyVault.Secrets.Tests
             Assert.IsNotNull(captured, "Request body was not captured.");
             using var doc = System.Text.Json.JsonDocument.Parse(captured);
             Assert.IsTrue(doc.RootElement.TryGetProperty("tags", out var tags));
-            Assert.AreEqual("prod",   tags.GetProperty("env").GetString());
+            Assert.AreEqual("prod", tags.GetProperty("env").GetString());
             Assert.AreEqual("westus", tags.GetProperty("region").GetString());
-            Assert.AreEqual("value",  doc.RootElement.GetProperty("value").GetString());
+            Assert.AreEqual("value", doc.RootElement.GetProperty("value").GetString());
         }
 
         [Test]
@@ -641,11 +788,12 @@ namespace Azure.Security.KeyVault.Secrets.Tests
         [Test]
         public async Task DisableChallengeResourceVerification_True_AllowsMismatchedChallengeResource()
         {
+            Uri vaultUri = new($"https://verification-disabled-{IsAsync}.vault.azure.net");
             var challenge = new MockResponse(401);
             challenge.AddHeader("WWW-Authenticate",
                 "Bearer authorization=\"https://login.microsoftonline.com/common\", resource=\"https://attacker.example\"");
             var success = new MockResponse(200).WithJson(
-                @"{""value"":""v"",""id"":""https://example.vault.azure.net/secrets/x/1""}");
+                $@"{{""value"":""v"",""id"":""{vaultUri}secrets/x/1""}}");
 
             var transport = new MockTransport(challenge, success);
             var opts = new SecretClientOptions
@@ -654,7 +802,7 @@ namespace Azure.Security.KeyVault.Secrets.Tests
                 DisableChallengeResourceVerification = true,
             };
             SecretClient client = InstrumentClient(new SecretClient(
-                new Uri("https://example.vault.azure.net"),
+                vaultUri,
                 new MockCredential(),
                 opts));
 
@@ -709,7 +857,8 @@ namespace Azure.Security.KeyVault.Secrets.Tests
         {
             var payload = @"{""value"":""v"",""id"":""https://example.vault.azure.net/secrets/x/1"",""recoveryId"":""https://example.vault.azure.net/deletedsecrets/x""}";
             var pollResponse = new MockResponse(statusCode);
-            if (statusCode == 200) pollResponse = pollResponse.WithJson(payload);
+            if (statusCode == 200)
+                pollResponse = pollResponse.WithJson(payload);
 
             var transport = new MockTransport(
                 new MockResponse(200).WithJson(payload),
@@ -756,7 +905,8 @@ namespace Azure.Security.KeyVault.Secrets.Tests
         {
             var payload = @"{""value"":""v"",""id"":""https://example.vault.azure.net/secrets/x/1""}";
             var pollResponse = new MockResponse(statusCode);
-            if (statusCode == 200) pollResponse = pollResponse.WithJson(payload);
+            if (statusCode == 200)
+                pollResponse = pollResponse.WithJson(payload);
 
             var transport = new MockTransport(
                 new MockResponse(200).WithJson(payload),

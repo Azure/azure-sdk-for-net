@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
                 return null;
             }
             ExternalAuthProvisioningState? provisioningState = default;
-            HcpOpenShiftClusterResourceStatus status = default;
+            ExternalAuthResourceStatus status = default;
             HcpOpenShiftClusterExternalAuthTokenIssuerProfile issuer = default;
             IList<HcpOpenShiftClusterExternalAuthClientProfile> clients = default;
             HcpOpenShiftClusterExternalAuthClaimProfile claim = default;
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
                     {
                         continue;
                     }
-                    status = HcpOpenShiftClusterResourceStatus.DeserializeHcpOpenShiftClusterResourceStatus(prop.Value, options);
+                    status = ExternalAuthResourceStatus.DeserializeExternalAuthResourceStatus(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("issuer"u8))
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new HcpOpenShiftClusterExternalAuthProperties(

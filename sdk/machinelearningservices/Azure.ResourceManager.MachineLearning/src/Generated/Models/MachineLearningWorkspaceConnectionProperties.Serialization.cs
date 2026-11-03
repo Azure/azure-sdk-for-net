@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary>
     /// The MachineLearningWorkspaceConnectionProperties.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AadAuthTypeWorkspaceConnectionProperties"/>, <see cref="AccessKeyAuthTypeWorkspaceConnectionProperties"/>, <see cref="AccountKeyAuthTypeWorkspaceConnectionProperties"/>, <see cref="ApiKeyAuthWorkspaceConnectionProperties"/>, <see cref="CustomKeysWorkspaceConnectionProperties"/>, <see cref="MachineLearningManagedIdentityAuthTypeWorkspaceConnection"/>, <see cref="MachineLearningNoneAuthTypeWorkspaceConnection"/>, <see cref="OAuth2AuthTypeWorkspaceConnectionProperties"/>, <see cref="MachineLearningPatAuthTypeWorkspaceConnection"/>, <see cref="MachineLearningSasAuthTypeWorkspaceConnection"/>, <see cref="ServicePrincipalAuthTypeWorkspaceConnectionProperties"/>, and <see cref="MachineLearningUsernamePasswordAuthTypeWorkspaceConnection"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AadAuthTypeWorkspaceConnectionProperties"/>, <see cref="AccessKeyAuthTypeWorkspaceConnectionProperties"/>, <see cref="AccountKeyAuthTypeWorkspaceConnectionProperties"/>, <see cref="ApiKeyAuthWorkspaceConnectionProperties"/>, <see cref="CustomKeysWorkspaceConnectionProperties"/>, <see cref="MachineLearningManagedIdentityAuthTypeWorkspaceConnection"/>, <see cref="MachineLearningNoneAuthTypeWorkspaceConnection"/>, <see cref="MachineLearningPatAuthTypeWorkspaceConnection"/>, <see cref="MachineLearningSasAuthTypeWorkspaceConnection"/>, <see cref="MachineLearningUsernamePasswordAuthTypeWorkspaceConnection"/>, <see cref="OAuth2AuthTypeWorkspaceConnectionProperties"/>, and <see cref="ServicePrincipalAuthTypeWorkspaceConnectionProperties"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownWorkspaceConnectionPropertiesV2))]
     public abstract partial class MachineLearningWorkspaceConnectionProperties : IJsonModel<MachineLearningWorkspaceConnectionProperties>
@@ -220,16 +220,16 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         return MachineLearningManagedIdentityAuthTypeWorkspaceConnection.DeserializeMachineLearningManagedIdentityAuthTypeWorkspaceConnection(element, options);
                     case "None":
                         return MachineLearningNoneAuthTypeWorkspaceConnection.DeserializeMachineLearningNoneAuthTypeWorkspaceConnection(element, options);
-                    case "OAuth2":
-                        return OAuth2AuthTypeWorkspaceConnectionProperties.DeserializeOAuth2AuthTypeWorkspaceConnectionProperties(element, options);
                     case "PAT":
                         return MachineLearningPatAuthTypeWorkspaceConnection.DeserializeMachineLearningPatAuthTypeWorkspaceConnection(element, options);
                     case "SAS":
                         return MachineLearningSasAuthTypeWorkspaceConnection.DeserializeMachineLearningSasAuthTypeWorkspaceConnection(element, options);
-                    case "ServicePrincipal":
-                        return ServicePrincipalAuthTypeWorkspaceConnectionProperties.DeserializeServicePrincipalAuthTypeWorkspaceConnectionProperties(element, options);
                     case "UsernamePassword":
                         return MachineLearningUsernamePasswordAuthTypeWorkspaceConnection.DeserializeMachineLearningUsernamePasswordAuthTypeWorkspaceConnection(element, options);
+                    case "OAuth2":
+                        return OAuth2AuthTypeWorkspaceConnectionProperties.DeserializeOAuth2AuthTypeWorkspaceConnectionProperties(element, options);
+                    case "ServicePrincipal":
+                        return ServicePrincipalAuthTypeWorkspaceConnectionProperties.DeserializeServicePrincipalAuthTypeWorkspaceConnectionProperties(element, options);
                 }
             }
             return UnknownWorkspaceConnectionPropertiesV2.DeserializeUnknownWorkspaceConnectionPropertiesV2(element, options);

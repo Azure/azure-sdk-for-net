@@ -40,7 +40,7 @@ namespace Azure.AI.AgentServer.Invocations.Tests;
 /// request, and asserts on the response content.
 /// </summary>
 [TestFixture]
-public class SampleEndToEndTests
+public partial class SampleEndToEndTests
 {
     // ═══════════════════════════════════════════════════════════════════
     //  Sample 1: Echo Handler — basic POST /invocations
@@ -940,6 +940,47 @@ public class SampleEndToEndTests
         }
     }
 
+    [TestCase("invocations_ws")]
+    [TestCase("voice_conversation_engine")]
+    public async Task SampleVoice1_UserBargeInCancelsApplicationGeneration(string path)
+    {
+        DelayedVoiceSupportHandler.Reset();
+        var builder = WebApplication.CreateBuilder();
+        builder.WebHost.UseTestServer();
+        builder.Services.AddAgentServerCore();
+        builder.Services.AddVoice<DelayedVoiceSupportHandler>();
+        await using var app = builder.Build();
+        app.UseAgentServerCore();
+        app.MapInvocationsServer();
+        await app.StartAsync();
+        var wsClient = app.GetTestServer().CreateWebSocketClient();
+        using var ws = await wsClient.ConnectAsync(
+            new Uri(app.GetTestServer().BaseAddress, path), CancellationToken.None);
+
+        await StartVoiceSessionAsync(ws);
+        await SendVoiceUserMessageAsync(ws, "m_user", "in_1", "hello");
+        await DelayedVoiceSupportHandler.Started.Task.WaitAsync(TimeSpan.FromSeconds(2));
+        var created = await ReceiveJsonAsync(ws).WaitAsync(TimeSpan.FromSeconds(2));
+        Assert.That(created.GetProperty("type").GetString(), Is.EqualTo("response.created"));
+        try
+        {
+            await SendJsonAsync(ws, new
+            {
+                type = "user.barge_in",
+                id = "m_interrupt",
+                ts = "2026-10-19T00:00:02Z",
+                response_id = created.GetProperty("response_id").GetString(),
+                heard_text = "",
+            });
+            await DelayedVoiceSupportHandler.Cancelled.Task.WaitAsync(TimeSpan.FromSeconds(2));
+        }
+        finally
+        {
+            await ws.CloseOutputAsync(
+                System.Net.WebSockets.WebSocketCloseStatus.NormalClosure, "done", CancellationToken.None);
+        }
+    }
+
     [Test]
     public async Task SampleVoice1_ResponseCreatedPreservesInputOrder()
     {
@@ -1455,21 +1496,19 @@ public class SampleEndToEndTests
     }
 
     [Test]
-    public async Task ResilientResearch_CancelQueuedInvocation_ReturnsNotFoundWithoutCancellingTurns()
+    public async Task ResilientResearch_CancelQueuedInvocation_PreventsExecution()
     {
         var activeStarted = new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
         var releaseActive = new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
         var steeredStarted = new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
         var releaseSteered = new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
         int steeredExecutions = 0;
-        TaskContext<Snippets.SampleResilientResearchSnippets.ResearchRequest>? activeContext = null;
 
         await using var env = await CreateControlledResilientResearchServerAsync(
             async (context, cancellationToken) =>
             {
                 if (!context.IsSteeredTurn)
                 {
-                    activeContext = context;
                     activeStarted.TrySetResult();
                     await releaseActive.Task;
                     return new("active-completed", Array.Empty<string>());
@@ -1500,24 +1539,24 @@ public class SampleEndToEndTests
             using HttpResponseMessage cancel = await env.Client.PostAsync(
                 $"/invocations/{queuedInvocationId}/cancel?agent_session_id={sessionId}",
                 content: null);
-            Assert.That(cancel.StatusCode, Is.EqualTo(HttpStatusCode.NotFound),
-                "This sample layer supports cancellation of the active invocation, not queued inputs.");
-            Assert.That(activeContext!.CancelRequested, Is.False);
-            Assert.That(Volatile.Read(ref steeredExecutions), Is.Zero);
+            Assert.That(cancel.StatusCode, Is.EqualTo(HttpStatusCode.Accepted));
 
             releaseActive.TrySetResult();
-            await steeredStarted.Task.WaitAsync(TimeSpan.FromSeconds(5));
-            Assert.That(Volatile.Read(ref steeredExecutions), Is.EqualTo(1),
-                "Rejecting a queued cancellation must not remove that queued input.");
-            releaseSteered.TrySetResult();
             TaskDefinition<
                 Snippets.SampleResilientResearchSnippets.ResearchRequest,
                 Snippets.SampleResilientResearchSnippets.ResearchResult> research =
                 env.Services.GetResilientTask<
                     Snippets.SampleResilientResearchSnippets.ResearchRequest,
                     Snippets.SampleResilientResearchSnippets.ResearchResult>("research");
-            await WaitForResearchChainToSettleAsync(
+            Task settled = WaitForResearchChainToSettleAsync(
                 research, taskId, activeInvocationId, queuedInvocationId);
+            Task first = await Task.WhenAny(settled, steeredStarted.Task);
+            Assert.That(
+                first,
+                Is.SameAs(settled),
+                "The cancelled queued invocation must never be promoted or executed.");
+            await settled;
+            Assert.That(Volatile.Read(ref steeredExecutions), Is.Zero);
         }
         finally
         {
@@ -1599,6 +1638,69 @@ public class SampleEndToEndTests
             new StringContent("""{"Topic":"second turn"}""", Encoding.UTF8, "application/json"));
         Assert.That(second.StatusCode, Is.EqualTo(HttpStatusCode.Accepted),
             "A second turn on the same session must be accepted (steered/queued), not conflict.");
+    }
+
+    [Test]
+    public async Task ResilientResearch_ExplicitCancel_ClosesStreamWithTerminalEvent()
+    {
+        var backend = new BlockingStreamingBackendHandler();
+        await using var env = await CreateResilientResearchServerAsync(backend);
+        string invocationId = "research-cancel-" + Guid.NewGuid().ToString("N");
+
+        var start = new HttpRequestMessage(HttpMethod.Post, "/invocations")
+        {
+            Content = new StringContent(
+                """{"Topic":"cancel test"}""", Encoding.UTF8, "application/json"),
+        };
+        start.Headers.Add("x-agent-invocation-id", invocationId);
+
+        HttpResponseMessage startResponse = await env.Client.SendAsync(start);
+        Assert.That(startResponse.StatusCode, Is.EqualTo(HttpStatusCode.Accepted));
+        await backend.Started.WaitAsync(TimeSpan.FromSeconds(5));
+
+        HttpResponseMessage cancelResponse = await env.Client.PostAsync(
+            $"/invocations/{invocationId}/cancel",
+            content: null);
+        Assert.That(cancelResponse.StatusCode, Is.EqualTo(HttpStatusCode.Accepted));
+
+        string rawSse = await ReadResilientResearchStreamAsync(env.Client, invocationId)
+            .WaitAsync(TimeSpan.FromSeconds(5));
+        List<SseEvent> events = ParseSseEvents(rawSse);
+
+        Assert.That(events[^1].Type, Is.EqualTo("run_failed"));
+        Assert.That(events[^1].Content, Does.Contain("cancel").IgnoreCase);
+        Assert.That(rawSse, Does.Contain("event: done"),
+            "A terminal cancellation must close the stream so the SSE relay emits its done frame.");
+    }
+
+    [Test]
+    public async Task ResilientResearch_Timeout_ClosesStreamWithTerminalEvent()
+    {
+        var backend = new BlockingStreamingBackendHandler();
+        await using var env = await CreateResilientResearchServerAsync(
+            backend,
+            timeout: TimeSpan.FromMilliseconds(500));
+        string invocationId = "research-timeout-" + Guid.NewGuid().ToString("N");
+
+        var start = new HttpRequestMessage(HttpMethod.Post, "/invocations")
+        {
+            Content = new StringContent(
+                """{"Topic":"timeout test"}""", Encoding.UTF8, "application/json"),
+        };
+        start.Headers.Add("x-agent-invocation-id", invocationId);
+
+        HttpResponseMessage startResponse = await env.Client.SendAsync(start);
+        Assert.That(startResponse.StatusCode, Is.EqualTo(HttpStatusCode.Accepted));
+        await backend.Started.WaitAsync(TimeSpan.FromSeconds(5));
+
+        string rawSse = await ReadResilientResearchStreamAsync(env.Client, invocationId)
+            .WaitAsync(TimeSpan.FromSeconds(5));
+        List<SseEvent> events = ParseSseEvents(rawSse);
+
+        Assert.That(events[^1].Type, Is.EqualTo("run_failed"));
+        Assert.That(events[^1].Content, Does.Contain("timed out").IgnoreCase);
+        Assert.That(rawSse, Does.Contain("event: done"),
+            "A terminal timeout must close the stream so the SSE relay emits its done frame.");
     }
 
     // ═══════════════════════════════════════════════════════════════════
@@ -1834,40 +1936,33 @@ public class SampleEndToEndTests
     /// backend that returns canned OpenAI Responses SSE — so the snippet code runs exactly
     /// as in production while staying deterministic and offline.
     /// </summary>
-    private static async Task<TestEnv> CreateResilientResearchServerAsync()
+    private static async Task<TestEnv> CreateResilientResearchServerAsync(
+        HttpMessageHandler? modelHandler = null,
+        TimeSpan? timeout = null)
     {
-        var model = CreateMockResponsesClient();
-
-        AgentEventStreamRegistry? streamsRef = null;
+        var model = CreateMockResponsesClient(modelHandler);
 
         var env = await CreateTestServerAsync<Snippets.SampleResilientResearchSnippets.ResilientResearchHandler>(
             services =>
             {
+                services.SetResilientTasksEnabled();
+                services.AddSingleton(model);
+
                 // In-memory replay with a TTL so retained streams are reclaimed.
                 services.AddAgentEventStreams(o => o.UseInMemoryReplay(
                     ttl: TimeSpan.FromMinutes(5)));
 
                 // AddResilientMultiTurnTask self-initializes the resilient-tasks services and
-                // registers the returned TaskDefinition as a keyed singleton (keyed by task name),
-                // so the handler resolves it via GetResilientTask. The stream registry is a
-                // singleton resolved from the built provider below and read lazily when a turn
-                // actually runs, so capturing it via streamsRef is safe.
-                services.AddResilientMultiTurnTask<Snippets.SampleResilientResearchSnippets.ResearchRequest,
-                             Snippets.SampleResilientResearchSnippets.ResearchResult>(
-                        "research",
-                        (ctx, ct) => Snippets.SampleResilientResearchSnippets.RunResearchAsync(
-                            streamsRef!, model, "test-model", ctx,
-                            numPhases: 2, callsPerPhase: 2,
-                            interPhaseCooldown: TimeSpan.Zero,
-                            intraPhaseCooldown: TimeSpan.Zero,
-                            ct: ct),
-                        steerable: true);
-            },
-            configurePostBuild: app =>
-            {
-                // Resolve the singleton AgentEventStreamRegistry from the built container so the
-                // captured delegate can reach it (the registry is read lazily at invocation time).
-                streamsRef = app.Services.GetRequiredService<AgentEventStreamRegistry>();
+                // registers the returned TaskDefinition as a keyed singleton. The task engine
+                // constructs ResearchTask and its ResponsesClient dependency in a fresh scope for
+                // every attempt.
+                services.AddResilientMultiTurnTask<
+                    Snippets.SampleResilientResearchSnippets.ResearchRequest,
+                    Snippets.SampleResilientResearchSnippets.ResearchResult,
+                    Snippets.SampleResilientResearchSnippets.ResearchTask>(
+                    "research",
+                    steerable: true,
+                    configure: options => options.Timeout = timeout);
             });
 
         return env;
@@ -1883,6 +1978,7 @@ public class SampleEndToEndTests
             Snippets.SampleResilientResearchSnippets.ResilientResearchHandler>(
             services =>
             {
+                services.SetResilientTasksEnabled();
                 services.AddAgentEventStreams(o => o.UseInMemoryReplay(
                     ttl: TimeSpan.FromMinutes(5)));
                 services.AddResilientMultiTurnTask<
@@ -1944,15 +2040,48 @@ public class SampleEndToEndTests
     /// in-process mock that emits canned OpenAI Responses SSE. The SDK genuinely parses the
     /// streaming protocol — only the network hop is replaced.
     /// </summary>
-    private static ResponsesClient CreateMockResponsesClient() =>
+    private static ResponsesClient CreateMockResponsesClient(HttpMessageHandler? handler = null) =>
         new ResponsesClient(
             new ApiKeyCredential("unused-key"),
             new ResponsesClientOptions
             {
                 Endpoint = new Uri("http://mock-openai-backend"),
                 Transport = new HttpClientPipelineTransport(
-                    new HttpClient(new MockStreamingBackendHandler())),
+                    new HttpClient(handler ?? new MockStreamingBackendHandler())),
             });
+
+    private static async Task<string> ReadResilientResearchStreamAsync(
+        HttpClient client,
+        string invocationId)
+    {
+        var request = new HttpRequestMessage(
+            HttpMethod.Get,
+            $"/invocations/{invocationId}");
+        request.Headers.TryAddWithoutValidation("Accept", "text/event-stream");
+
+        HttpResponseMessage response = await client.SendAsync(request);
+        Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
+        return await response.Content.ReadAsStringAsync();
+    }
+
+    private sealed class BlockingStreamingBackendHandler : HttpMessageHandler
+    {
+        private readonly TaskCompletionSource _started =
+            new(TaskCreationOptions.RunContinuationsAsynchronously);
+        private readonly TaskCompletionSource _release =
+            new(TaskCreationOptions.RunContinuationsAsynchronously);
+
+        public Task Started => _started.Task;
+
+        protected override async Task<HttpResponseMessage> SendAsync(
+            HttpRequestMessage request,
+            CancellationToken cancellationToken)
+        {
+            _started.TrySetResult();
+            await _release.Task.WaitAsync(cancellationToken);
+            throw new InvalidOperationException("The blocking test transport was released unexpectedly.");
+        }
+    }
 
     /// <summary>
     /// Mock backend returning a canned OpenAI Responses SSE stream with a short text delta,
@@ -2025,6 +2154,7 @@ public class SampleEndToEndTests
         return await CreateTestServerAsync<Snippets.SampleResilientMultiturnSnippets.ResilientMultiturnHandler>(
             services =>
             {
+                services.SetResilientTasksEnabled();
                 services.AddResilientMultiTurnTask<Snippets.SampleResilientMultiturnSnippets.ConversationInput,
                                       Snippets.SampleResilientMultiturnSnippets.ConversationOutput>(
                         "conversation",
@@ -2066,15 +2196,23 @@ public class SampleEndToEndTests
         configureServices?.Invoke(builder.Services);
 
         var app = builder.Build();
-        configurePostBuild?.Invoke(app);
-        if (configureServerSide)
+        try
         {
-            app.UseWebSockets();
-        }
-        app.MapInvocationsServer();
-        await app.StartAsync();
+            configurePostBuild?.Invoke(app);
+            if (configureServerSide)
+            {
+                app.UseWebSockets();
+            }
+            app.MapInvocationsServer();
+            await app.StartAsync();
 
-        return new TestEnv(app);
+            return new TestEnv(app);
+        }
+        catch
+        {
+            await app.DisposeAsync();
+            throw;
+        }
     }
 
     /// <summary>
@@ -2099,8 +2237,14 @@ public class SampleEndToEndTests
         public async ValueTask DisposeAsync()
         {
             Client.Dispose();
-            await _app.StopAsync();
-            await _app.DisposeAsync();
+            try
+            {
+                await _app.StopAsync();
+            }
+            finally
+            {
+                await _app.DisposeAsync();
+            }
         }
     }
 }

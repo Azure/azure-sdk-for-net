@@ -3,7 +3,6 @@
 
 using System;
 using System.ClientModel;
-using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
@@ -23,8 +22,7 @@ namespace Azure.Search.Documents.KnowledgeBases
     /// <summary>
     /// Azure Cognitive Search client that can be used to query an knowledge base.
     /// </summary>
-    [CodeGenSuppress(nameof(RetrieveStreamAsync), typeof(KnowledgeBaseRetrievalRequest), typeof(string), typeof(string), typeof(CancellationToken))] // disable convvenience overload
-    [CodeGenSuppress(nameof(RetrieveStreamAsync), typeof(RequestContent), typeof(string), typeof(string), typeof(RequestContext))]
+    [CodeGenSuppress(nameof(RetrieveStreamAsync), typeof(KnowledgeBaseRetrievalRequest), typeof(string), typeof(string), typeof(CancellationToken))] // Keep the typed streaming convenience overload.
     public partial class KnowledgeBaseRetrievalClient
     {
         /// <summary>
@@ -37,13 +35,6 @@ namespace Azure.Search.Documents.KnowledgeBases
         /// Gets the name of the knowledge base.
         /// </summary>
         public virtual string KnowledgeBaseName => _knowledgeBaseName;
-
-        /// <summary> Initializes a new instance of KnowledgeBaseRetrievalClient from a <see cref="KnowledgeBaseRetrievalClientSettings"/>. </summary>
-        /// <param name="settings"> The settings for KnowledgeBaseRetrievalClient. </param>
-        [Experimental("SCME0002")]
-        public KnowledgeBaseRetrievalClient(KnowledgeBaseRetrievalClientSettings settings) : this(settings?.Endpoint, settings?.KnowledgeBaseName, settings?.CredentialProvider as TokenCredential, settings?.Options)
-        {
-        }
 
         /// <summary> Initializes a new instance of KnowledgeBaseRetrievalClient. </summary>
         /// <param name="authenticationPolicy"> The authentication policy to use for pipeline creation. </param>
@@ -69,70 +60,6 @@ namespace Azure.Search.Documents.KnowledgeBases
             }
             _apiVersion = options.Version.ToVersionString();
             ClientDiagnostics = new ClientDiagnostics(options, true);
-        }
-
-        /// <summary>
-        /// KnowledgeBase retrieves relevant data from backing stores.
-        /// </summary>
-        /// <param name="content">The content to send as the body of the request.</param>
-        /// <param name="context">The request context.</param>
-        /// <returns>The response returned from the service.</returns>
-        [ForwardsClientCalls]
-        public virtual Response Retrieve(RequestContent content, RequestContext context) =>
-            Retrieve(content, querySourceAuthorization: null, context: context);
-
-        /// <summary>
-        /// KnowledgeBase retrieves relevant data from backing stores.
-        /// </summary>
-        /// <param name="content">The content to send as the body of the request.</param>
-        /// <param name="context">The request context.</param>
-        /// <returns>The response returned from the service.</returns>
-        [ForwardsClientCalls]
-        public virtual Task<Response> RetrieveAsync(RequestContent content, RequestContext context) =>
-            RetrieveAsync(content, querySourceAuthorization: null, context: context);
-
-        // Remove this customization once the generator emits AsyncStreamingResult.
-        /// <summary>
-        /// [Protocol Method] Retrieves relevant data from backing stores and streams progress and results as server-sent events.
-        /// Each event contains an event name and a JSON-encoded data payload.
-        /// The stream ends with either a <c>response.completed</c> event or an <c>error</c> event.
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="querySourceAuthorization"> Token identifying the user for which the query is being executed. This token is used to enforce security restrictions on documents. </param>
-        /// <param name="queryWorkIQSourceAuthorization"> User assertion token for a customer-owned Entra app registration configured on a Work IQ knowledge source. Used for on-behalf-of authentication to the Work IQ API. </param>
-        /// <param name="context"> The request options, including cancellation for the request and stream enumeration. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The streaming response returned from the service. </returns>
-        public virtual async Task<AsyncStreamingResult<SseItem<BinaryData>>> RetrieveStreamAsync(
-            RequestContent content,
-            string querySourceAuthorization = default,
-            string queryWorkIQSourceAuthorization = default,
-            RequestContext context = null)
-        {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("KnowledgeBaseRetrievalClient.RetrieveStream");
-            scope.Start();
-            try
-            {
-                Argument.AssertNotNull(content, nameof(content));
-
-                using HttpMessage message = CreateRetrieveStreamRequest(content, querySourceAuthorization, queryWorkIQSourceAuthorization, context);
-                message.BufferResponse = false;
-                await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                return AsyncStreamingResult.CreateSse(
-                    new AzurePipelineResponse(message),
-                    operationCancellationToken: context?.CancellationToken ?? default);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
         }
 
         /// <summary>

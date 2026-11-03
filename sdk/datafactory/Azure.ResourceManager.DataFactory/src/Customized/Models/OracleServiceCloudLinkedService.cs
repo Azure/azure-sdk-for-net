@@ -31,11 +31,5 @@ namespace Azure.ResourceManager.DataFactory.Models
                 TypeProperties.Password = value;
             }
         }
-
-        /// <summary> Initializes a new instance restored as workaround for issues #59298 and #59852. </summary>
-        public OracleServiceCloudLinkedService(DataFactoryElement<string> host, DataFactoryElement<string> username, DataFactorySecret password) : base("OracleServiceCloud")
-        {
-            TypeProperties = new OracleServiceCloudLinkedServiceTypeProperties(host, username, password);
-        }
     }
 }

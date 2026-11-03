@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.EventHubs
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<EventHubsFabricShortcutData, EventHubsFabricShortcutResource>(new FabricShortcutsGetByEventHubAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<EventHubsFabricShortcutData, EventHubsFabricShortcutResource>(new EventHubsFabricShortcutDataAsyncCollectionResultOfT(
                 _fabricShortcutsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.EventHubs
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<EventHubsFabricShortcutData, EventHubsFabricShortcutResource>(new FabricShortcutsGetByEventHubCollectionResultOfT(
+            return new PageableWrapper<EventHubsFabricShortcutData, EventHubsFabricShortcutResource>(new EventHubsFabricShortcutDataCollectionResultOfT(
                 _fabricShortcutsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

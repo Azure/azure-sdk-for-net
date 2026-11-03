@@ -1,14 +1,11 @@
 # Release History
 
-## 1.0.0-beta.3 (Unreleased)
-
-### Features Added
+## 1.0.0-beta.3 (2026-10-15)
 
 ### Breaking Changes
 
-### Bugs Fixed
-
-### Other Changes
+- Changed `AgricultureServiceConfig.InstanceUri` from `string` to `System.Uri`.
+- Changed `DataConnectorCredentials.KeyVaultUri` from `string` to `System.Uri`.
 
 ## 1.0.0-beta.2 (2026-04-17)
 

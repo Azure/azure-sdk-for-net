@@ -220,11 +220,11 @@ namespace Azure.AI.Language.Text
             }
             return new SentimentActionResult(
                 id,
-                warnings,
+                warnings ?? new ChangeTrackingList<DocumentWarning>(),
                 statistics,
                 sentiment,
                 confidenceScores,
-                sentences,
+                sentences ?? new ChangeTrackingList<SentenceSentiment>(),
                 detectedLanguage,
                 additionalBinaryDataProperties);
         }

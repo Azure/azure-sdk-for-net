@@ -25,7 +25,7 @@ namespace Azure.Provisioning.Storage
         /// <summary> Creates a new FileService. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
         /// <param name="resourceVersion"> The resource API version. </param>
-        public FileService(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.Storage/storageAccounts/fileServices", resourceVersion ?? "2025-06-01")
+        public FileService(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.Storage/storageAccounts/fileServices", resourceVersion ?? "2026-06-01")
         {
         }
 
@@ -39,13 +39,18 @@ namespace Azure.Provisioning.Storage
             }
         }
 
-        /// <summary> Gets the Name. </summary>
+        /// <summary> Gets or sets the Name. </summary>
         public BicepValue<string> Name
         {
             get
             {
                 Initialize();
                 return _name;
+            }
+            set
+            {
+                Initialize();
+                _name.Assign(value);
             }
         }
 
@@ -159,7 +164,7 @@ namespace Azure.Provisioning.Storage
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _fileServiceProperties = DefineModelProperty<FileServicePropertiesProperties>(nameof(FileServiceProperties), new string[] { "properties" });
             _sku = DefineModelProperty<StorageSku>(nameof(Sku), new string[] { "sku" }, isOutput: true);
-            _parent = DefineResource<StorageAccount>(nameof(Parent), new string[] { "parent" }, isRequired: true);
+            _parent = DefineResource<StorageAccount>(nameof(Parent), new string[] { "parent" });
             DefineAdditionalProperties();
         }
 
@@ -179,6 +184,12 @@ namespace Azure.Provisioning.Storage
         /// <summary></summary>
         public static partial class ResourceVersions
         {
+            /// <summary> API version "2026-06-01". </summary>
+            public static readonly string V2026_06_01 = "2026-06-01";
+            /// <summary> API version "2026-04-01". </summary>
+            public static readonly string V2026_04_01 = "2026-04-01";
+            /// <summary> API version "2025-08-01". </summary>
+            public static readonly string V2025_08_01 = "2025-08-01";
             /// <summary> API version "2025-06-01". </summary>
             public static readonly string V2025_06_01 = "2025-06-01";
         }

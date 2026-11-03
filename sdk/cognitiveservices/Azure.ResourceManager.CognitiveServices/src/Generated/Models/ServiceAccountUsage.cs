@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.CognitiveServices;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
@@ -16,6 +17,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private CognitiveServicesQuotaScopeType? _scopeType;
+        private bool _scopeTypeIsDefined;
+        private string _scopeId;
+        private bool _scopeIdIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="ServiceAccountUsage"/>. </summary>
         internal ServiceAccountUsage()
@@ -23,6 +28,8 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ServiceAccountUsage"/>. </summary>
+        /// <param name="id"> Fully qualified resource ID for the usage. Ex - /subscriptions/{subscriptionId}/providers/Microsoft.CognitiveServices/locations/{location}/usages/{usageName}. </param>
+        /// <param name="type"> The type of the usage resource. E.g. "Microsoft.CognitiveServices/locations/usages". </param>
         /// <param name="unit"> The unit of the metric. </param>
         /// <param name="name"> The name information for the metric. </param>
         /// <param name="quotaPeriod"> The quota period used to summarize the usage values. </param>
@@ -33,8 +40,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="scopeType"> The scope type of the quota usage. </param>
         /// <param name="scopeId"> The scope identifier of the quota usage. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ServiceAccountUsage(ServiceAccountUsageUnitType? unit, ServiceAccountUsageMetricName name, string quotaPeriod, double? limit, double? currentValue, string nextResetTime, ServiceAccountQuotaUsageStatus? status, CognitiveServicesQuotaScopeType? scopeType, string scopeId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ServiceAccountUsage(ResourceIdentifier id, ResourceType? @type, ServiceAccountUsageUnitType? unit, ServiceAccountUsageMetricName name, string quotaPeriod, double? limit, double? currentValue, string nextResetTime, ServiceAccountQuotaUsageStatus? status, CognitiveServicesQuotaScopeType? scopeType, string scopeId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
+            Id = id;
+            Type = @type;
             Unit = unit;
             Name = name;
             QuotaPeriod = quotaPeriod;
@@ -42,10 +51,18 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             CurrentValue = currentValue;
             NextResetTime = nextResetTime;
             Status = status;
-            ScopeType = scopeType;
-            ScopeId = scopeId;
+            _scopeType = scopeType;
+            _scopeId = scopeId;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+
+        /// <summary> Fully qualified resource ID for the usage. Ex - /subscriptions/{subscriptionId}/providers/Microsoft.CognitiveServices/locations/{location}/usages/{usageName}. </summary>
+        [WirePath("id")]
+        public ResourceIdentifier Id { get; }
+
+        /// <summary> The type of the usage resource. E.g. "Microsoft.CognitiveServices/locations/usages". </summary>
+        [WirePath("type")]
+        public ResourceType? Type { get; }
 
         /// <summary> The unit of the metric. </summary>
         [WirePath("unit")]
@@ -77,10 +94,22 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 
         /// <summary> The scope type of the quota usage. </summary>
         [WirePath("scopeType")]
-        public CognitiveServicesQuotaScopeType? ScopeType { get; }
+        public CognitiveServicesQuotaScopeType? ScopeType
+        {
+            get
+            {
+                return _scopeType;
+            }
+        }
 
         /// <summary> The scope identifier of the quota usage. </summary>
         [WirePath("scopeId")]
-        public string ScopeId { get; }
+        public string ScopeId
+        {
+            get
+            {
+                return _scopeId;
+            }
+        }
     }
 }

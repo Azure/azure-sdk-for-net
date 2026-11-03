@@ -11,33 +11,33 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.BulkActions.Models
 {
-    /// <summary> The details of a response from an operation on a resource. </summary>
+    /// <summary> The status and settings for an operation on one virtual machine. </summary>
     public partial class ComputeBulkOperationDetails
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ComputeBulkOperationDetails"/>. </summary>
-        /// <param name="operationId"> Operation identifier for the unique operation. </param>
+        /// <param name="operationId"> The operation ID used to track the action for this virtual machine. </param>
         internal ComputeBulkOperationDetails(string operationId)
         {
             OperationId = operationId;
         }
 
         /// <summary> Initializes a new instance of <see cref="ComputeBulkOperationDetails"/>. </summary>
-        /// <param name="operationId"> Operation identifier for the unique operation. </param>
-        /// <param name="resourceId"> Unique identifier for the resource involved in the operation, for example Azure resource ID. </param>
-        /// <param name="operationKind"> Type of operation performed on the resources. </param>
-        /// <param name="subscriptionId"> Subscription id attached to the request. </param>
-        /// <param name="deadlineOn"> Deadline for the operation. </param>
-        /// <param name="deadlineKind"> Type of deadline of the operation. </param>
-        /// <param name="state"> Current state of the operation. </param>
-        /// <param name="timeZone"> Timezone for the operation. </param>
-        /// <param name="error"> Operation level errors if they exist. </param>
-        /// <param name="fallbackOperationInfo"> Fallback operation details if a fallback was performed. </param>
-        /// <param name="completedOn"> Time the operation was complete if errors are null. </param>
-        /// <param name="retryPolicy"> Retry policy the user can pass. </param>
-        /// <param name="resourceNotificationDetails"> Resource notification details. </param>
+        /// <param name="operationId"> The operation ID used to track the action for this virtual machine. </param>
+        /// <param name="resourceId"> The virtual machine's Azure resource ID. </param>
+        /// <param name="operationKind"> The type of operation performed on the virtual machine. </param>
+        /// <param name="subscriptionId"> The subscription ID associated with the bulk action. </param>
+        /// <param name="deadlineOn"> The requested deadline for the operation. </param>
+        /// <param name="deadlineKind"> Specifies whether the deadline time indicates the time at which the operation should start or should be complete. </param>
+        /// <param name="state"> The current state of the operation. </param>
+        /// <param name="timeZone"> The time zone used to interpret the operation deadline. </param>
+        /// <param name="error"> Contains error details if the operation does not succeed. </param>
+        /// <param name="fallbackOperationInfo"> Information about the fallback operation attempted after the requested operation did not succeed. </param>
+        /// <param name="completedOn"> The date and time when the operation completed. </param>
+        /// <param name="retryPolicy"> The retry settings for the bulk action. </param>
+        /// <param name="resourceNotificationDetails"> Caller-provided context associated with the virtual machine operation. </param>
         /// <param name="capacityRecommendation"> The capacity/placement recommendation computed for the operation, if requested. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal ComputeBulkOperationDetails(string operationId, ResourceIdentifier resourceId, ComputeBulkOperationKind? operationKind, Guid? subscriptionId, DateTimeOffset? deadlineOn, BulkActionDeadlineKind? deadlineKind, BulkActionOperationState? state, string timeZone, ComputeBulkOperationError error, ComputeBulkFallbackOperationInfo fallbackOperationInfo, DateTimeOffset? completedOn, BulkOperationRetryPolicy retryPolicy, ResourceNotificationDetails resourceNotificationDetails, CapacityRecommendation capacityRecommendation, IDictionary<string, BinaryData> additionalBinaryDataProperties)
@@ -59,46 +59,46 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Operation identifier for the unique operation. </summary>
+        /// <summary> The operation ID used to track the action for this virtual machine. </summary>
         public string OperationId { get; }
 
-        /// <summary> Unique identifier for the resource involved in the operation, for example Azure resource ID. </summary>
+        /// <summary> The virtual machine's Azure resource ID. </summary>
         public ResourceIdentifier ResourceId { get; }
 
-        /// <summary> Type of operation performed on the resources. </summary>
+        /// <summary> The type of operation performed on the virtual machine. </summary>
         public ComputeBulkOperationKind? OperationKind { get; }
 
-        /// <summary> Subscription id attached to the request. </summary>
+        /// <summary> The subscription ID associated with the bulk action. </summary>
         public Guid? SubscriptionId { get; }
 
-        /// <summary> Deadline for the operation. </summary>
+        /// <summary> The requested deadline for the operation. </summary>
         public DateTimeOffset? DeadlineOn { get; }
 
-        /// <summary> Current state of the operation. </summary>
+        /// <summary> The current state of the operation. </summary>
         public BulkActionOperationState? State { get; }
 
-        /// <summary> Timezone for the operation. </summary>
+        /// <summary> The time zone used to interpret the operation deadline. </summary>
         public string TimeZone { get; }
 
-        /// <summary> Operation level errors if they exist. </summary>
+        /// <summary> Contains error details if the operation does not succeed. </summary>
         public ComputeBulkOperationError Error { get; }
 
-        /// <summary> Fallback operation details if a fallback was performed. </summary>
+        /// <summary> Information about the fallback operation attempted after the requested operation did not succeed. </summary>
         public ComputeBulkFallbackOperationInfo FallbackOperationInfo { get; }
 
-        /// <summary> Time the operation was complete if errors are null. </summary>
+        /// <summary> The date and time when the operation completed. </summary>
         public DateTimeOffset? CompletedOn { get; }
 
-        /// <summary> Retry policy the user can pass. </summary>
+        /// <summary> The retry settings for the bulk action. </summary>
         public BulkOperationRetryPolicy RetryPolicy { get; }
 
-        /// <summary> Resource notification details. </summary>
+        /// <summary> Caller-provided context associated with the virtual machine operation. </summary>
         internal ResourceNotificationDetails ResourceNotificationDetails { get; }
 
         /// <summary> The capacity/placement recommendation computed for the operation, if requested. </summary>
         public CapacityRecommendation CapacityRecommendation { get; }
 
-        /// <summary> Resource context for notification tracking. </summary>
+        /// <summary> Caller-provided context string returned with the virtual machine operation result notification. Do not include secrets or personal data. </summary>
         public string ResourceContext
         {
             get

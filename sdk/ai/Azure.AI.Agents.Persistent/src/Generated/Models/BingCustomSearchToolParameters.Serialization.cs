@@ -146,7 +146,7 @@ namespace Azure.AI.Agents.Persistent
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new BingCustomSearchToolParameters(searchConfigurations, additionalBinaryDataProperties);
+            return new BingCustomSearchToolParameters(searchConfigurations ?? new ChangeTrackingList<BingCustomSearchConfiguration>(), additionalBinaryDataProperties);
         }
     }
 }

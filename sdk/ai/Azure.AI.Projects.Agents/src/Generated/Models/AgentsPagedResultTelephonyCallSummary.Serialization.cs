@@ -182,7 +182,7 @@ namespace Azure.AI.Projects.Agents
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new AgentsPagedResultTelephonyCallSummary(data, firstId, lastId, hasMore, additionalBinaryDataProperties);
+            return new AgentsPagedResultTelephonyCallSummary(data ?? new ChangeTrackingList<TelephonyCallSummary>(), firstId, lastId, hasMore, additionalBinaryDataProperties);
         }
     }
 }

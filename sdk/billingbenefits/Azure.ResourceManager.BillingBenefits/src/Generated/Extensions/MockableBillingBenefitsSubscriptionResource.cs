@@ -44,23 +44,41 @@ namespace Azure.ResourceManager.BillingBenefits.Mocking
 
         private ClientDiagnostics CreditsClientDiagnostics => _creditsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.BillingBenefits.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Credits CreditsRestClient => _creditsRestClient ??= new Credits(CreditsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-12-01-preview");
+        private Credits CreditsRestClient => _creditsRestClient ??= new Credits(
+            CreditsClientDiagnostics,
+            Pipeline,
+            Diagnostics.ApplicationId,
+            Endpoint,
+            "2025-12-01-preview",
+            resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
 
         private ClientDiagnostics ConditionalCreditsClientDiagnostics => _conditionalCreditsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.BillingBenefits.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ConditionalCredits ConditionalCreditsRestClient => _conditionalCreditsRestClient ??= new ConditionalCredits(ConditionalCreditsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-12-01-preview");
+        private ConditionalCredits ConditionalCreditsRestClient => _conditionalCreditsRestClient ??= new ConditionalCredits(
+            ConditionalCreditsClientDiagnostics,
+            Pipeline,
+            Diagnostics.ApplicationId,
+            Endpoint,
+            "2025-12-01-preview",
+            resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
 
         private ClientDiagnostics MaccsClientDiagnostics => _maccsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.BillingBenefits.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Maccs MaccsRestClient => _maccsRestClient ??= new Maccs(MaccsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-12-01-preview");
+        private Maccs MaccsRestClient => _maccsRestClient ??= new Maccs(MaccsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.BillingBenefits/maccs", out string apiVersion0) ? apiVersion0 : "2025-12-01-preview");
 
         private ClientDiagnostics DiscountsClientDiagnostics => _discountsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.BillingBenefits.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Discounts DiscountsRestClient => _discountsRestClient ??= new Discounts(DiscountsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-12-01-preview");
+        private Discounts DiscountsRestClient => _discountsRestClient ??= new Discounts(
+            DiscountsClientDiagnostics,
+            Pipeline,
+            Diagnostics.ApplicationId,
+            Endpoint,
+            "2025-12-01-preview",
+            resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
 
         private ClientDiagnostics FreeServicesClientDiagnostics => _freeServicesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.BillingBenefits.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private FreeServices FreeServicesRestClient => _freeServicesRestClient ??= new FreeServices(FreeServicesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-12-01-preview");
+        private FreeServices FreeServicesRestClient => _freeServicesRestClient ??= new FreeServices(FreeServicesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.BillingBenefits/freeServices", out string apiVersion1) ? apiVersion1 : "2025-12-01-preview");
 
         /// <summary>
         /// List credits under a subscription from primary service tenant.
@@ -87,7 +105,7 @@ namespace Azure.ResourceManager.BillingBenefits.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<CreditData, CreditResource>(new CreditsGetBySubscriptionAsyncCollectionResultOfT(CreditsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableBillingBenefitsSubscriptionResource.GetCredits"), data => new CreditResource(Client, data));
+            return new AsyncPageableWrapper<CreditData, CreditResource>(new CreditDataAsync0CollectionResultOfT(CreditsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableBillingBenefitsSubscriptionResource.GetCredits"), data => new CreditResource(Client, data));
         }
 
         /// <summary>
@@ -115,7 +133,7 @@ namespace Azure.ResourceManager.BillingBenefits.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<CreditData, CreditResource>(new CreditsGetBySubscriptionCollectionResultOfT(CreditsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableBillingBenefitsSubscriptionResource.GetCredits"), data => new CreditResource(Client, data));
+            return new PageableWrapper<CreditData, CreditResource>(new CreditData0CollectionResultOfT(CreditsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableBillingBenefitsSubscriptionResource.GetCredits"), data => new CreditResource(Client, data));
         }
 
         /// <summary>
@@ -143,7 +161,7 @@ namespace Azure.ResourceManager.BillingBenefits.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ConditionalCreditData, ConditionalCreditResource>(new ConditionalCreditsGetBySubscriptionAsyncCollectionResultOfT(ConditionalCreditsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableBillingBenefitsSubscriptionResource.GetConditionalCredits"), data => new ConditionalCreditResource(Client, data));
+            return new AsyncPageableWrapper<ConditionalCreditData, ConditionalCreditResource>(new ConditionalCreditDataAsync0CollectionResultOfT(ConditionalCreditsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableBillingBenefitsSubscriptionResource.GetConditionalCredits"), data => new ConditionalCreditResource(Client, data));
         }
 
         /// <summary>
@@ -171,7 +189,7 @@ namespace Azure.ResourceManager.BillingBenefits.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ConditionalCreditData, ConditionalCreditResource>(new ConditionalCreditsGetBySubscriptionCollectionResultOfT(ConditionalCreditsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableBillingBenefitsSubscriptionResource.GetConditionalCredits"), data => new ConditionalCreditResource(Client, data));
+            return new PageableWrapper<ConditionalCreditData, ConditionalCreditResource>(new ConditionalCreditData0CollectionResultOfT(ConditionalCreditsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableBillingBenefitsSubscriptionResource.GetConditionalCredits"), data => new ConditionalCreditResource(Client, data));
         }
 
         /// <summary>
@@ -199,7 +217,7 @@ namespace Azure.ResourceManager.BillingBenefits.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<MaccData, MaccResource>(new MaccsGetBySubscriptionAsyncCollectionResultOfT(MaccsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableBillingBenefitsSubscriptionResource.GetMaccs"), data => new MaccResource(Client, data));
+            return new AsyncPageableWrapper<MaccData, MaccResource>(new MaccDataAsync0CollectionResultOfT(MaccsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableBillingBenefitsSubscriptionResource.GetMaccs"), data => new MaccResource(Client, data));
         }
 
         /// <summary>
@@ -227,7 +245,7 @@ namespace Azure.ResourceManager.BillingBenefits.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<MaccData, MaccResource>(new MaccsGetBySubscriptionCollectionResultOfT(MaccsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableBillingBenefitsSubscriptionResource.GetMaccs"), data => new MaccResource(Client, data));
+            return new PageableWrapper<MaccData, MaccResource>(new MaccData0CollectionResultOfT(MaccsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableBillingBenefitsSubscriptionResource.GetMaccs"), data => new MaccResource(Client, data));
         }
 
         /// <summary>
@@ -255,7 +273,7 @@ namespace Azure.ResourceManager.BillingBenefits.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DiscountData, DiscountResource>(new DiscountsSubscriptionListAsyncCollectionResultOfT(DiscountsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableBillingBenefitsSubscriptionResource.GetDiscounts"), data => new DiscountResource(Client, data));
+            return new AsyncPageableWrapper<DiscountData, DiscountResource>(new DiscountDataAsync0CollectionResultOfT(DiscountsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableBillingBenefitsSubscriptionResource.GetDiscounts"), data => new DiscountResource(Client, data));
         }
 
         /// <summary>
@@ -283,7 +301,7 @@ namespace Azure.ResourceManager.BillingBenefits.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DiscountData, DiscountResource>(new DiscountsSubscriptionListCollectionResultOfT(DiscountsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableBillingBenefitsSubscriptionResource.GetDiscounts"), data => new DiscountResource(Client, data));
+            return new PageableWrapper<DiscountData, DiscountResource>(new DiscountData0CollectionResultOfT(DiscountsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableBillingBenefitsSubscriptionResource.GetDiscounts"), data => new DiscountResource(Client, data));
         }
 
         /// <summary>
@@ -311,7 +329,7 @@ namespace Azure.ResourceManager.BillingBenefits.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<FreeServicesData, FreeServicesResource>(new FreeServicesGetBySubscriptionAsyncCollectionResultOfT(FreeServicesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableBillingBenefitsSubscriptionResource.GetFreeServices"), data => new FreeServicesResource(Client, data));
+            return new AsyncPageableWrapper<FreeServicesData, FreeServicesResource>(new FreeServicesDataAsync0CollectionResultOfT(FreeServicesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableBillingBenefitsSubscriptionResource.GetFreeServices"), data => new FreeServicesResource(Client, data));
         }
 
         /// <summary>
@@ -339,7 +357,7 @@ namespace Azure.ResourceManager.BillingBenefits.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<FreeServicesData, FreeServicesResource>(new FreeServicesGetBySubscriptionCollectionResultOfT(FreeServicesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableBillingBenefitsSubscriptionResource.GetFreeServices"), data => new FreeServicesResource(Client, data));
+            return new PageableWrapper<FreeServicesData, FreeServicesResource>(new FreeServicesData0CollectionResultOfT(FreeServicesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableBillingBenefitsSubscriptionResource.GetFreeServices"), data => new FreeServicesResource(Client, data));
         }
     }
 }

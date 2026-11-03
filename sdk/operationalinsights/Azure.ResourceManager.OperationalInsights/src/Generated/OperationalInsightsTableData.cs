@@ -151,6 +151,24 @@ namespace Azure.ResourceManager.OperationalInsights
             }
         }
 
+        /// <summary> The protection level of the table. Determines the default data access isolation behavior. </summary>
+        [WirePath("properties.protectionLevel")]
+        public TableProtectionLevelEnum? ProtectionLevel
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProtectionLevel;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new TableProperties();
+                }
+                Properties.ProtectionLevel = value;
+            }
+        }
+
         /// <summary> The timestamp that table plan was last modified (UTC). </summary>
         [WirePath("properties.lastPlanModifiedDate")]
         public string LastPlanModifiedDate

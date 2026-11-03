@@ -194,10 +194,10 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ResourceSkuRestrictions(restrictionsType, values, restrictionInfo, reasonCode, additionalBinaryDataProperties);
+            return new ResourceSkuRestrictions(restrictionsType, values ?? new ChangeTrackingList<string>(), restrictionInfo, reasonCode, additionalBinaryDataProperties);
         }
     }
 }

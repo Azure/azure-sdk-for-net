@@ -16,6 +16,7 @@ using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Billing.Models;
 using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Billing
 {
@@ -445,7 +446,7 @@ namespace Azure.ResourceManager.Billing
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<BillingRequestData, BillingRequestResource>(new BillingRequestsGetByBillingProfileAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<BillingRequestData, BillingRequestResource>(new BillingRequestDataAsync1CollectionResultOfT(
                 _billingRequestsRestClient,
                 Id.Parent.Name,
                 Id.Name,
@@ -494,7 +495,7 @@ namespace Azure.ResourceManager.Billing
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<BillingRequestData, BillingRequestResource>(new BillingRequestsGetByBillingProfileCollectionResultOfT(
+            return new PageableWrapper<BillingRequestData, BillingRequestResource>(new BillingRequestData1CollectionResultOfT(
                 _billingRequestsRestClient,
                 Id.Parent.Name,
                 Id.Name,
@@ -541,7 +542,7 @@ namespace Azure.ResourceManager.Billing
             {
                 CancellationToken = cancellationToken
             };
-            return new MicrosoftBillingBillingProfilesCheckAccessByBillingProfileAsyncCollectionResultOfT(
+            return new BillingProfileResourceCheckAccessBillingPermissionsAsyncCollectionResultOfT(
                 _billingProfilesRestClient,
                 Id.Parent.Name,
                 Id.Name,
@@ -583,7 +584,7 @@ namespace Azure.ResourceManager.Billing
             {
                 CancellationToken = cancellationToken
             };
-            return new MicrosoftBillingBillingProfilesCheckAccessByBillingProfileCollectionResultOfT(
+            return new BillingProfileResourceCheckAccessBillingPermissionsCollectionResultOfT(
                 _billingProfilesRestClient,
                 Id.Parent.Name,
                 Id.Name,
@@ -747,7 +748,7 @@ namespace Azure.ResourceManager.Billing
             {
                 CancellationToken = cancellationToken
             };
-            return new InvoicesGetByBillingProfileAsyncCollectionResultOfT(
+            return new BillingInvoiceDataAsync0CollectionResultOfT(
                 _invoicesRestClient,
                 Id.Parent.Name,
                 Id.Name,
@@ -800,7 +801,7 @@ namespace Azure.ResourceManager.Billing
             {
                 CancellationToken = cancellationToken
             };
-            return new InvoicesGetByBillingProfileCollectionResultOfT(
+            return new BillingInvoiceData0CollectionResultOfT(
                 _invoicesRestClient,
                 Id.Parent.Name,
                 Id.Name,
@@ -845,7 +846,7 @@ namespace Azure.ResourceManager.Billing
             {
                 CancellationToken = cancellationToken
             };
-            return new BillingProfilesGetBillingPermissionsAsyncCollectionResultOfT(_billingProfilesRestClient, Id.Parent.Name, Id.Name, context, "BillingProfileResource.GetBillingPermissions");
+            return new BillingPermissionAsync0CollectionResultOfT(_billingProfilesRestClient, Id.Parent.Name, Id.Name, context, "BillingProfileResource.GetBillingPermissions");
         }
 
         /// <summary>
@@ -877,7 +878,105 @@ namespace Azure.ResourceManager.Billing
             {
                 CancellationToken = cancellationToken
             };
-            return new BillingProfilesGetBillingPermissionsCollectionResultOfT(_billingProfilesRestClient, Id.Parent.Name, Id.Name, context, "BillingProfileResource.GetBillingPermissions");
+            return new BillingPermission0CollectionResultOfT(_billingProfilesRestClient, Id.Parent.Name, Id.Name, context, "BillingProfileResource.GetBillingPermissions");
+        }
+
+        /// <summary>
+        /// Lists the products for a billing profile. These don't include products billed based on usage. The operation is supported for billing accounts with agreement type Microsoft Customer Agreement or Microsoft Partner Agreement.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/products. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> BillingProfiles_ProductsListByBillingProfile. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="BillingProfileResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="filter"> The filter query option allows clients to filter a collection of resources that are addressed by a request URL. </param>
+        /// <param name="orderBy"> The orderby query option allows clients to request resources in a particular order. </param>
+        /// <param name="maxCount"> The top query option requests the number of items in the queried collection to be included in the result. The maximum supported value for top is 50. </param>
+        /// <param name="skip"> The skip query option requests the number of items in the queried collection that are to be skipped and not included in the result. </param>
+        /// <param name="count"> The count query option allows clients to request a count of the matching resources included with the resources in the response. </param>
+        /// <param name="search"> The search query option allows clients to request items within a collection matching a free-text search expression. search is only supported for string fields. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="BillingProductResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<BillingProductResource> GetProductsAsync(string filter = default, string orderBy = default, long? maxCount = default, long? skip = default, bool? count = default, string search = default, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<BillingProductData, BillingProductResource>(new BillingProductDataAsync0CollectionResultOfT(
+                _productsRestClient,
+                Id.Parent.Name,
+                Id.Name,
+                filter,
+                orderBy,
+                maxCount,
+                skip,
+                count,
+                search,
+                context,
+                "BillingProfileResource.GetProducts"), data => new BillingProductResource(Client, data));
+        }
+
+        /// <summary>
+        /// Lists the products for a billing profile. These don't include products billed based on usage. The operation is supported for billing accounts with agreement type Microsoft Customer Agreement or Microsoft Partner Agreement.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/products. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> BillingProfiles_ProductsListByBillingProfile. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="BillingProfileResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="filter"> The filter query option allows clients to filter a collection of resources that are addressed by a request URL. </param>
+        /// <param name="orderBy"> The orderby query option allows clients to request resources in a particular order. </param>
+        /// <param name="maxCount"> The top query option requests the number of items in the queried collection to be included in the result. The maximum supported value for top is 50. </param>
+        /// <param name="skip"> The skip query option requests the number of items in the queried collection that are to be skipped and not included in the result. </param>
+        /// <param name="count"> The count query option allows clients to request a count of the matching resources included with the resources in the response. </param>
+        /// <param name="search"> The search query option allows clients to request items within a collection matching a free-text search expression. search is only supported for string fields. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="BillingProductResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<BillingProductResource> GetProducts(string filter = default, string orderBy = default, long? maxCount = default, long? skip = default, bool? count = default, string search = default, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<BillingProductData, BillingProductResource>(new BillingProductData0CollectionResultOfT(
+                _productsRestClient,
+                Id.Parent.Name,
+                Id.Name,
+                filter,
+                orderBy,
+                maxCount,
+                skip,
+                count,
+                search,
+                context,
+                "BillingProfileResource.GetProducts"), data => new BillingProductResource(Client, data));
         }
 
         /// <summary>
@@ -915,7 +1014,7 @@ namespace Azure.ResourceManager.Billing
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<BillingReservationData, BillingReservationResource>(new ReservationsGetByBillingProfileAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<BillingReservationData, BillingReservationResource>(new BillingReservationDataAsync1CollectionResultOfT(
                 _reservationsRestClient,
                 Id.Parent.Name,
                 Id.Name,
@@ -964,7 +1063,7 @@ namespace Azure.ResourceManager.Billing
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<BillingReservationData, BillingReservationResource>(new ReservationsGetByBillingProfileCollectionResultOfT(
+            return new PageableWrapper<BillingReservationData, BillingReservationResource>(new BillingReservationData1CollectionResultOfT(
                 _reservationsRestClient,
                 Id.Parent.Name,
                 Id.Name,
@@ -1130,7 +1229,7 @@ namespace Azure.ResourceManager.Billing
             {
                 CancellationToken = cancellationToken
             };
-            return new TransactionsGetByBillingProfileAsyncCollectionResultOfT(
+            return new BillingTransactionDataAsync0CollectionResultOfT(
                 _transactionsRestClient,
                 Id.Parent.Name,
                 Id.Name,
@@ -1185,7 +1284,7 @@ namespace Azure.ResourceManager.Billing
             {
                 CancellationToken = cancellationToken
             };
-            return new TransactionsGetByBillingProfileCollectionResultOfT(
+            return new BillingTransactionData0CollectionResultOfT(
                 _transactionsRestClient,
                 Id.Parent.Name,
                 Id.Name,
@@ -1516,10 +1615,9 @@ namespace Azure.ResourceManager.Billing
             {
                 if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
                 {
-                    await GetTagResource().DeleteAsync(WaitUntil.Completed, cancellationToken).ConfigureAwait(false);
-                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
-                    originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
+                    TagResourceData tagData = new TagResourceData(new Tag());
+                    tagData.TagValues.ReplaceWith(tags);
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, tagData, cancellationToken).ConfigureAwait(false);
                     RequestContext context = new RequestContext
                     {
                         CancellationToken = cancellationToken
@@ -1558,10 +1656,9 @@ namespace Azure.ResourceManager.Billing
             {
                 if (CanUseTagResource(cancellationToken))
                 {
-                    GetTagResource().Delete(WaitUntil.Completed, cancellationToken);
-                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
-                    originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
+                    TagResourceData tagData = new TagResourceData(new Tag());
+                    tagData.TagValues.ReplaceWith(tags);
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, tagData, cancellationToken);
                     RequestContext context = new RequestContext
                     {
                         CancellationToken = cancellationToken

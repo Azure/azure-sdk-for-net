@@ -169,7 +169,7 @@ namespace Azure.AI.Projects
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new AgentInsightDetails(highlightedTraces, linkedTraces, recommendedActions, additionalBinaryDataProperties);
+            return new AgentInsightDetails(highlightedTraces ?? new ChangeTrackingList<AgentInsightHighlightedTrace>(), linkedTraces ?? new ChangeTrackingList<AgentInsightLinkedTrace>(), recommendedActions, additionalBinaryDataProperties);
         }
     }
 }

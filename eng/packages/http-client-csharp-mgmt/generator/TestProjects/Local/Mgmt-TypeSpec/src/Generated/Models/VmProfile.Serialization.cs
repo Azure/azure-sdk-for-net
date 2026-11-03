@@ -151,6 +151,10 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
 
             if (local.StartsWith("applicationProfile"u8))
             {
+                if (ApplicationProfile == null)
+                {
+                    return false;
+                }
                 return ApplicationProfile.Patch.TryGetEncodedValue([.. "$"u8, .. local.Slice("applicationProfile"u8.Length)], out value);
             }
             return false;
@@ -168,6 +172,10 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
 
             if (local.StartsWith("applicationProfile"u8))
             {
+                if (ApplicationProfile == null)
+                {
+                    return false;
+                }
                 ApplicationProfile.Patch.Set([.. "$"u8, .. local.Slice("applicationProfile"u8.Length)], value);
                 return true;
             }

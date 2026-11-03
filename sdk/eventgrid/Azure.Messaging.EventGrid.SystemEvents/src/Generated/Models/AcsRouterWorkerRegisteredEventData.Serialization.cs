@@ -263,11 +263,11 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             }
             return new AcsRouterWorkerRegisteredEventData(
                 workerId,
-                queueAssignments,
-                channelConfigurations,
+                queueAssignments ?? new ChangeTrackingList<AcsRouterQueueDetails>(),
+                channelConfigurations ?? new ChangeTrackingList<AcsRouterChannelConfiguration>(),
                 totalCapacity,
-                labels,
-                tags,
+                labels ?? new ChangeTrackingDictionary<string, string>(),
+                tags ?? new ChangeTrackingDictionary<string, string>(),
                 additionalBinaryDataProperties);
         }
 

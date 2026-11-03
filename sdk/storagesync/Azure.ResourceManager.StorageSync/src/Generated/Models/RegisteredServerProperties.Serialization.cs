@@ -295,7 +295,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                     {
                         continue;
                     }
-                    serverCertificate = BinaryData.FromString(prop.Value.GetRawText());
+                    serverCertificate = prop.Value.GetUtf8Bytes();
                     continue;
                 }
                 if (prop.NameEquals("agentVersion"u8))
@@ -490,7 +490,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new RegisteredServerProperties(

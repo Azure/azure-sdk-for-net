@@ -299,7 +299,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<SiteRecoveryRecoveryPlanData, SiteRecoveryRecoveryPlanResource>(new ReplicationRecoveryPlansGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<SiteRecoveryRecoveryPlanData, SiteRecoveryRecoveryPlanResource>(new SiteRecoveryRecoveryPlanDataAsyncCollectionResultOfT(
                 _replicationRecoveryPlansRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -333,7 +333,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<SiteRecoveryRecoveryPlanData, SiteRecoveryRecoveryPlanResource>(new ReplicationRecoveryPlansGetAllCollectionResultOfT(
+            return new PageableWrapper<SiteRecoveryRecoveryPlanData, SiteRecoveryRecoveryPlanResource>(new SiteRecoveryRecoveryPlanDataCollectionResultOfT(
                 _replicationRecoveryPlansRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

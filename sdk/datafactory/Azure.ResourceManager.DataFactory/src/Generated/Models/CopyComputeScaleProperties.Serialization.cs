@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     timeToLive = prop.Value.GetInt32();
                     continue;
                 }
-                additionalProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                additionalProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
             }
             return new CopyComputeScaleProperties(dataIntegrationUnit, timeToLive, additionalProperties);
         }

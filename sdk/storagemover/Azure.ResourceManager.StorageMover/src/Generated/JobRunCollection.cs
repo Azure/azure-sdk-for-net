@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.StorageMover
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<JobRunData, JobRunResource>(new JobRunsGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<JobRunData, JobRunResource>(new JobRunDataAsyncCollectionResultOfT(
                 _jobRunsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.StorageMover
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<JobRunData, JobRunResource>(new JobRunsGetAllCollectionResultOfT(
+            return new PageableWrapper<JobRunData, JobRunResource>(new JobRunDataCollectionResultOfT(
                 _jobRunsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

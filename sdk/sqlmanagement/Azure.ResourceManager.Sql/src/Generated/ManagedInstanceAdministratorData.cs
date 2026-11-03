@@ -118,5 +118,23 @@ namespace Azure.ResourceManager.Sql
                 Properties.TenantId = value;
             }
         }
+
+        /// <summary> Principal type of the managed instance administrator. </summary>
+        [WirePath("properties.principalType")]
+        public ManagedInstanceAdministratorPrincipalType? PrincipalType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PrincipalType;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ManagedInstanceAdministratorProperties();
+                }
+                Properties.PrincipalType = value;
+            }
+        }
     }
 }

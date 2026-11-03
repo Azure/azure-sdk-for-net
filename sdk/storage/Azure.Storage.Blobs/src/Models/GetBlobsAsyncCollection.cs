@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 #pragma warning disable SA1402  // File may only contain a single type
@@ -46,7 +46,7 @@ namespace Azure.Storage.Blobs.Models
             bool async,
             CancellationToken cancellationToken)
         {
-            Response<ListBlobsFlatSegmentResponse> response;
+            Response<ListBlobsFlatSegmentResult> response;
 
             if (async)
             {

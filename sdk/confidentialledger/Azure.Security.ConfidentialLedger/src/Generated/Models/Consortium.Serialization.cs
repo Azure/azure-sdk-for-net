@@ -166,7 +166,7 @@ namespace Azure.Security.ConfidentialLedger.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new Consortium(members, nextLink, additionalBinaryDataProperties);
+            return new Consortium(members ?? new ChangeTrackingList<ConsortiumMember>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

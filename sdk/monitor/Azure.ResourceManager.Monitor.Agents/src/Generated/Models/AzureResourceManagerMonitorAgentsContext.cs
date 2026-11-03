@@ -22,7 +22,6 @@ namespace Azure.ResourceManager.Monitor.Agents
     [ModelReaderWriterBuildable(typeof(ObservabilityAgentPatchProperties))]
     [ModelReaderWriterBuildable(typeof(ObservabilityAgentProperties))]
     [ModelReaderWriterBuildable(typeof(ObservabilityAgentResource))]
-    [ModelReaderWriterBuildable(typeof(ObservabilityAgentResourceListResult))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
     public partial class AzureResourceManagerMonitorAgentsContext : ModelReaderWriterContext

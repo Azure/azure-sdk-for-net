@@ -163,7 +163,7 @@ namespace Azure.AI.VoiceLive
                 id,
                 @object,
                 additionalBinaryDataProperties,
-                tools,
+                tools ?? new ChangeTrackingList<VoiceLiveMcpTool>(),
                 serverLabel);
         }
     }

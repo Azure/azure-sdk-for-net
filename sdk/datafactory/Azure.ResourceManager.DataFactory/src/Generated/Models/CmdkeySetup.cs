@@ -8,12 +8,27 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> The custom setup of running cmdkey commands. </summary>
     public partial class CmdkeySetup : CustomSetupBase
     {
+        /// <summary> Initializes a new instance of <see cref="CmdkeySetup"/>. </summary>
+        /// <param name="targetName"> The server name of data source access. Type: string. </param>
+        /// <param name="userName"> The user name of data source access. Type: string. </param>
+        /// <param name="password"> The password of data source access. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="targetName"/>, <paramref name="userName"/> or <paramref name="password"/> is null. </exception>
+        public CmdkeySetup(DataFactoryElement<string> targetName, DataFactoryElement<string> userName, DataFactorySecret password) : base("CmdkeySetup")
+        {
+            Argument.AssertNotNull(targetName, nameof(targetName));
+            Argument.AssertNotNull(userName, nameof(userName));
+            Argument.AssertNotNull(password, nameof(password));
+
+            TypeProperties = new CmdkeySetupTypeProperties(targetName, userName, password);
+        }
+
         /// <summary> Initializes a new instance of <see cref="CmdkeySetup"/>. </summary>
         /// <param name="customSetupBaseType"> The type of custom setup. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>

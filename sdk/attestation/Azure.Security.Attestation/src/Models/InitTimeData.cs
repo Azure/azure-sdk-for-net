@@ -2,14 +2,12 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
-using Azure.Core;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.Security.Attestation
 {
-    [CodeGenModel("InitTimeData")]
+    [CodeGenType("InitTimeData")]
     internal partial class InitTimeData
     {
         /// <summary>
@@ -19,7 +17,7 @@ namespace Azure.Security.Attestation
         public InitTimeData(byte[] binaryData)
         {
             DataType = Azure.Security.Attestation.DataType.Binary;
-            Data = binaryData;
+            Data = BinaryData.FromBytes(binaryData);
         }
 
         /// <summary>
@@ -28,9 +26,9 @@ namespace Azure.Security.Attestation
         /// <param name="serializableObject">object to serialize.</param>
         public InitTimeData(object serializableObject)
         {
-            DataType = Azure.Security.Attestation.DataType.Json;
+            DataType = Azure.Security.Attestation.DataType.JSON;
 
-            Data = JsonSerializer.SerializeToUtf8Bytes(serializableObject);
+            Data = BinaryData.FromBytes(JsonSerializer.SerializeToUtf8Bytes(serializableObject));
         }
     }
 }

@@ -309,7 +309,7 @@ namespace Azure.AI.Discovery
                 inlineFiles ?? new ChangeTrackingList<InlineFile>(),
                 inputData ?? new ChangeTrackingList<InputDataMount>(),
                 outputData ?? new ChangeTrackingList<OutputDataMount>(),
-                nodePoolIds,
+                nodePoolIds ?? new ChangeTrackingList<ResourceIdentifier>(),
                 infraOverrides,
                 environmentVariables ?? new ChangeTrackingList<RunRequestEnvironmentVariable>(),
                 additionalBinaryDataProperties);

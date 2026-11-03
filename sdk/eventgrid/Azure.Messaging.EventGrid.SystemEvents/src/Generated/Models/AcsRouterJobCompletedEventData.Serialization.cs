@@ -199,8 +199,8 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 channelId,
                 additionalBinaryDataProperties,
                 queueId,
-                labels,
-                tags,
+                labels ?? new ChangeTrackingDictionary<string, string>(),
+                tags ?? new ChangeTrackingDictionary<string, string>(),
                 assignmentId,
                 workerId);
         }

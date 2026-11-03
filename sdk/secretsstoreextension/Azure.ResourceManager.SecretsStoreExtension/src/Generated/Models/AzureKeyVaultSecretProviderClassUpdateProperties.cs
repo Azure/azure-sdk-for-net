@@ -23,13 +23,18 @@ namespace Azure.ResourceManager.SecretsStoreExtension.Models
 
         /// <summary> Initializes a new instance of <see cref="AzureKeyVaultSecretProviderClassUpdateProperties"/>. </summary>
         /// <param name="keyvaultName"> The name of the Azure Key Vault to sync secrets from. </param>
+        /// <param name="cloudName">
+        /// The Azure cloud containing the key vault.
+        /// If omitted, the in-cluster Azure Key Vault provider's configured default cloud is used.
+        /// </param>
         /// <param name="clientId"> The user assigned managed identity client ID that should be used to access the Azure Key Vault. </param>
         /// <param name="tenantId"> The Azure Active Directory tenant ID that should be used for authenticating requests to the Azure Key Vault. </param>
         /// <param name="objects"> Objects defines the desired state of synced K8s secret objects. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AzureKeyVaultSecretProviderClassUpdateProperties(string keyvaultName, Guid? clientId, Guid? tenantId, string objects, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AzureKeyVaultSecretProviderClassUpdateProperties(string keyvaultName, AzureCloudName? cloudName, Guid? clientId, Guid? tenantId, string objects, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             KeyvaultName = keyvaultName;
+            CloudName = cloudName;
             ClientId = clientId;
             TenantId = tenantId;
             Objects = objects;
@@ -38,6 +43,12 @@ namespace Azure.ResourceManager.SecretsStoreExtension.Models
 
         /// <summary> The name of the Azure Key Vault to sync secrets from. </summary>
         public string KeyvaultName { get; set; }
+
+        /// <summary>
+        /// The Azure cloud containing the key vault.
+        /// If omitted, the in-cluster Azure Key Vault provider's configured default cloud is used.
+        /// </summary>
+        public AzureCloudName? CloudName { get; set; }
 
         /// <summary> The user assigned managed identity client ID that should be used to access the Azure Key Vault. </summary>
         public Guid? ClientId { get; set; }

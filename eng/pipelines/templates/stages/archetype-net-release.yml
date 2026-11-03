@@ -154,15 +154,45 @@ stages:
                   runOnce:
                     deploy:
                       steps:
-                        - task: 1ES.PublishNuget@1
-                          displayName: Publish ${{ artifact.name }} package to ${{ parameters.PublicFeed }}
-                          inputs:
-                            packageParentPath: '$(Pipeline.Workspace)'
-                            packagesToPush: '$(Pipeline.Workspace)/${{parameters.ArtifactName}}-signed/${{artifact.name}}/*.nupkg;!$(Pipeline.Workspace)//${{parameters.ArtifactName}}-signed/${{artifact.name}}/*.symbols.nupkg'
-                            ${{ if eq(parameters.PublicFeed, 'Nuget.org') }}:
-                              nuGetFeedType: external
-                              publishFeedCredentials: Nuget.org
-                            ${{ if ne(parameters.PublicFeed, 'Nuget.org') }}:
+                        - ${{ if eq(parameters.PublicFeed, 'Nuget.org') }}:
+                          - pwsh: |
+                              $source = '$(Pipeline.Workspace)/${{parameters.ArtifactName}}-signed/${{artifact.name}}'
+                              $destination = '$(Pipeline.Workspace)/esrp/${{artifact.safeName}}'
+                              Remove-Item -Recurse -Force $destination -ErrorAction SilentlyContinue
+                              New-Item -ItemType Directory -Path $destination | Out-Null
+                              $packages = @(Get-ChildItem -Path $source -Filter '*.nupkg' -File | Where-Object Name -NotLike '*.symbols.nupkg')
+                              if ($packages.Count -eq 0) {
+                                throw "No product NuGet packages found in $source"
+                              }
+                              $packages | Copy-Item -Destination $destination
+                            displayName: Stage NuGet packages for ESRP
+
+                          - task: EsrpRelease@14
+                            displayName: Publish ${{ artifact.name }} package to ${{ parameters.PublicFeed }} via ESRP
+                            inputs:
+                              ConnectedServiceName: 'Azure SDK PME Managed Identity'
+                              ClientId: '5f81938c-2544-4f1f-9251-dd9de5b8a81b'
+                              DomainTenantId: '975f013f-7f24-47e8-a7d3-abc4752bf346'
+                              UseManagedIdentity: true
+                              KeyVaultName: 'kv-azuresdk-codesign'
+                              SignCertName: 'azure-sdk-esrp-release-certificate'
+                              Intent: 'PackageDistribution'
+                              ContentType: 'NuGet'
+                              OrganizationName: 'azure-sdk'
+                              ContentSource: 'Folder'
+                              FolderLocation: '$(Pipeline.Workspace)/esrp/${{artifact.safeName}}'
+                              WaitForReleaseCompletion: true
+                              Owners: ${{ coalesce(variables['Build.RequestedForEmail'], 'azuresdk@microsoft.com') }}
+                              Approvers: ${{ coalesce(variables['Build.RequestedForEmail'], 'azuresdk@microsoft.com') }}
+                              ServiceEndpointUrl: 'https://api.esrp.microsoft.com'
+                              MainPublisher: 'ESRPRELPACMAN'
+
+                        - ${{ if ne(parameters.PublicFeed, 'Nuget.org') }}:
+                          - task: 1ES.PublishNuget@1
+                            displayName: Publish ${{ artifact.name }} package to ${{ parameters.PublicFeed }}
+                            inputs:
+                              packageParentPath: '$(Pipeline.Workspace)'
+                              packagesToPush: '$(Pipeline.Workspace)/${{parameters.ArtifactName}}-signed/${{artifact.name}}/*.nupkg;!$(Pipeline.Workspace)/${{parameters.ArtifactName}}-signed/${{artifact.name}}/*.symbols.nupkg'
                               publishVstsFeed: ${{ parameters.PublicFeed }}
 
                         - task: 1ES.PublishNuget@1

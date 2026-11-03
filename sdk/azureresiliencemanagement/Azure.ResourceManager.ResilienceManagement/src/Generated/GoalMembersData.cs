@@ -13,7 +13,7 @@ using Azure.ResourceManager.ResilienceManagement.Models;
 
 namespace Azure.ResourceManager.ResilienceManagement
 {
-    /// <summary> Goal Resource a AzureResilienceProviderHub resource. </summary>
+    /// <summary> A goal resource in the Azure Resilience Management provider. </summary>
     public partial class GoalMembersData : ResourceData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

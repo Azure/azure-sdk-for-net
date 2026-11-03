@@ -164,7 +164,7 @@ namespace Azure.AI.Language.Conversations.Authoring
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new AnalyzeConversationAuthoringUtteranceEntitiesEvaluationResult(expectedEntities, predictedEntities, additionalBinaryDataProperties);
+            return new AnalyzeConversationAuthoringUtteranceEntitiesEvaluationResult(expectedEntities ?? new ChangeTrackingList<UtteranceEntityEvaluationResult>(), predictedEntities ?? new ChangeTrackingList<UtteranceEntityEvaluationResult>(), additionalBinaryDataProperties);
         }
     }
 }

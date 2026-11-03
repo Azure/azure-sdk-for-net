@@ -204,10 +204,9 @@ namespace Azure.Identity
                          sendCertificateChain,
                          options);
 
-            // mTLS proof-of-possession for the certificate credential is only enabled when the caller
-            // opts in via SendCertificateChain (subject name / issuer). When it is not enabled, the PoP
-            // client is the standard client, so proof-of-possession requests fall back to a regular
-            // bearer token instead of attempting an mTLS PoP handshake.
+            // The PoP client requires subject name / issuer authentication via SendCertificateChain.
+            // PoP is enabled by default when requested by the caller, unless disabled by the
+            // first-party AppContext switch or environment variable.
             //
             // The PoP client is created lazily on first use, but all input parameters - including a
             // snapshot of the options - are captured here at construction time so the client's state is
@@ -252,7 +251,7 @@ namespace Azure.Identity
             try
             {
                 var tenantId = TenantIdResolver.Resolve(TenantId, requestContext, AdditionallyAllowedTenantIds);
-                MsalConfidentialClient client = requestContext.IsProofOfPossessionEnabled && !AppContextSwitches.DisableClientCertificateMtlsProofOfPossession ? PopClient : Client;
+                MsalConfidentialClient client = requestContext.IsProofOfPossessionEnabled && AppContextSwitches.EnableClientCertificateMtlsProofOfPossession ? PopClient : Client;
                 AuthenticationResult result = client.AcquireTokenForClientAsync(requestContext.Scopes, tenantId, requestContext.Claims, requestContext.IsCaeEnabled, false, cancellationToken).EnsureCompleted();
 
                 return scope.Succeeded(result.ToAccessToken());
@@ -280,7 +279,7 @@ namespace Azure.Identity
             try
             {
                 var tenantId = TenantIdResolver.Resolve(TenantId, requestContext, AdditionallyAllowedTenantIds);
-                MsalConfidentialClient client = requestContext.IsProofOfPossessionEnabled && !AppContextSwitches.DisableClientCertificateMtlsProofOfPossession ? PopClient : Client;
+                MsalConfidentialClient client = requestContext.IsProofOfPossessionEnabled && AppContextSwitches.EnableClientCertificateMtlsProofOfPossession ? PopClient : Client;
                 AuthenticationResult result = await client
                     .AcquireTokenForClientAsync(requestContext.Scopes, tenantId, requestContext.Claims, requestContext.IsCaeEnabled, true, cancellationToken)
                     .ConfigureAwait(false);

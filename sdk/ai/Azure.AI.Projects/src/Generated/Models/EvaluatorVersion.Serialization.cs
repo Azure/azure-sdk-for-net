@@ -423,7 +423,7 @@ namespace Azure.AI.Projects.Evaluation
                 displayName,
                 metadata ?? new ChangeTrackingDictionary<string, string>(),
                 evaluatorType,
-                categories,
+                categories ?? new ChangeTrackingList<EvaluatorCategory>(),
                 supportedEvaluationLevels ?? new ChangeTrackingList<ProjectsEvaluationLevel>(),
                 definition,
                 generationArtifacts,

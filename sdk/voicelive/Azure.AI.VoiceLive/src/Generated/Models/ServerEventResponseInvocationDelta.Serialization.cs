@@ -164,7 +164,7 @@ namespace Azure.AI.VoiceLive
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ServerEventResponseInvocationDelta(@type, eventId, additionalBinaryDataProperties, delta);
+            return new ServerEventResponseInvocationDelta(@type, eventId, additionalBinaryDataProperties, delta ?? new ChangeTrackingDictionary<string, BinaryData>());
         }
     }
 }

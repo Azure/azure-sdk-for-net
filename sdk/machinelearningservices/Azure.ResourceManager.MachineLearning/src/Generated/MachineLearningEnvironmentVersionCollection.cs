@@ -292,7 +292,7 @@ namespace Azure.ResourceManager.MachineLearning
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<MachineLearningEnvironmentVersionData, MachineLearningEnvironmentVersionResource>(new EnvironmentVersionsGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<MachineLearningEnvironmentVersionData, MachineLearningEnvironmentVersionResource>(new MachineLearningEnvironmentVersionDataAsyncCollectionResultOfT(
                 _environmentVersionsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

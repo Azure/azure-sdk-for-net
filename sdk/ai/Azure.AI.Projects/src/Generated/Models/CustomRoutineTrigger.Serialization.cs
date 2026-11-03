@@ -174,7 +174,7 @@ namespace Azure.AI.Projects
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new CustomRoutineTrigger(@type, additionalBinaryDataProperties, provider, eventName, parameters);
+            return new CustomRoutineTrigger(@type, additionalBinaryDataProperties, provider, eventName, parameters ?? new ChangeTrackingDictionary<string, BinaryData>());
         }
     }
 }

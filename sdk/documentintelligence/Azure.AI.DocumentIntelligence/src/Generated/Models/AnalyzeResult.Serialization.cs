@@ -425,7 +425,7 @@ namespace Azure.AI.DocumentIntelligence
                 stringIndexType,
                 contentFormat,
                 content,
-                pages,
+                pages ?? new ChangeTrackingList<DocumentPage>(),
                 paragraphs ?? new ChangeTrackingList<DocumentParagraph>(),
                 tables ?? new ChangeTrackingList<DocumentTable>(),
                 figures ?? new ChangeTrackingList<DocumentFigure>(),

@@ -35,6 +35,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
+        /// <summary> Initializes a new instance of <see cref="FabricSpecificCreateNetworkMappingContent"/>. </summary>
+        protected FabricSpecificCreateNetworkMappingContent() : this(default)
+        {
+        }
+
         /// <summary> The instance type. </summary>
         internal string InstanceType { get; set; }
     }

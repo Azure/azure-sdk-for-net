@@ -291,7 +291,7 @@ namespace Azure.ResourceManager.Datadog
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DatadogMonitoredSubscriptionData, DatadogMonitoredSubscriptionResource>(new MonitoredSubscriptionsGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<DatadogMonitoredSubscriptionData, DatadogMonitoredSubscriptionResource>(new DatadogMonitoredSubscriptionDataAsyncCollectionResultOfT(
                 _monitoredSubscriptionsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -325,7 +325,7 @@ namespace Azure.ResourceManager.Datadog
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DatadogMonitoredSubscriptionData, DatadogMonitoredSubscriptionResource>(new MonitoredSubscriptionsGetAllCollectionResultOfT(
+            return new PageableWrapper<DatadogMonitoredSubscriptionData, DatadogMonitoredSubscriptionResource>(new DatadogMonitoredSubscriptionDataCollectionResultOfT(
                 _monitoredSubscriptionsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

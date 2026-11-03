@@ -202,7 +202,7 @@ namespace Azure.Analytics.PlanetaryComputer
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new TilerCoreModelsResponsesPoint(coordinates, values, bandNames, additionalBinaryDataProperties);
+            return new TilerCoreModelsResponsesPoint(coordinates ?? new ChangeTrackingList<float>(), values ?? new ChangeTrackingList<float>(), bandNames ?? new ChangeTrackingList<string>(), additionalBinaryDataProperties);
         }
     }
 }

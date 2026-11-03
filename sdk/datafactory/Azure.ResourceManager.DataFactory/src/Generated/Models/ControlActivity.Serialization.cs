@@ -110,28 +110,28 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 switch (discriminator.GetString())
                 {
+                    case "AppendVariable":
+                        return AppendVariableActivity.DeserializeAppendVariableActivity(element, options);
                     case "ExecutePipeline":
                         return ExecutePipelineActivity.DeserializeExecutePipelineActivity(element, options);
-                    case "IfCondition":
-                        return IfConditionActivity.DeserializeIfConditionActivity(element, options);
-                    case "Switch":
-                        return SwitchActivity.DeserializeSwitchActivity(element, options);
-                    case "ForEach":
-                        return ForEachActivity.DeserializeForEachActivity(element, options);
-                    case "Wait":
-                        return WaitActivity.DeserializeWaitActivity(element, options);
                     case "Fail":
                         return FailActivity.DeserializeFailActivity(element, options);
+                    case "Filter":
+                        return FilterActivity.DeserializeFilterActivity(element, options);
+                    case "ForEach":
+                        return ForEachActivity.DeserializeForEachActivity(element, options);
+                    case "IfCondition":
+                        return IfConditionActivity.DeserializeIfConditionActivity(element, options);
+                    case "SetVariable":
+                        return SetVariableActivity.DeserializeSetVariableActivity(element, options);
+                    case "Switch":
+                        return SwitchActivity.DeserializeSwitchActivity(element, options);
                     case "Until":
                         return UntilActivity.DeserializeUntilActivity(element, options);
                     case "Validation":
                         return ValidationActivity.DeserializeValidationActivity(element, options);
-                    case "Filter":
-                        return FilterActivity.DeserializeFilterActivity(element, options);
-                    case "SetVariable":
-                        return SetVariableActivity.DeserializeSetVariableActivity(element, options);
-                    case "AppendVariable":
-                        return AppendVariableActivity.DeserializeAppendVariableActivity(element, options);
+                    case "Wait":
+                        return WaitActivity.DeserializeWaitActivity(element, options);
                     case "WebHook":
                         return WebHookActivity.DeserializeWebHookActivity(element, options);
                 }

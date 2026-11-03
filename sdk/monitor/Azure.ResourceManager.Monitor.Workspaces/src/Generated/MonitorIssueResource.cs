@@ -939,7 +939,7 @@ namespace Azure.ResourceManager.Monitor.Workspaces
             {
                 CancellationToken = cancellationToken
             };
-            return new IssueGetAlertsAsyncCollectionResultOfT(
+            return new IssueRelatedAlertInfoAsyncCollectionResultOfT(
                 _issueRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -983,7 +983,7 @@ namespace Azure.ResourceManager.Monitor.Workspaces
             {
                 CancellationToken = cancellationToken
             };
-            return new IssueGetAlertsCollectionResultOfT(
+            return new IssueRelatedAlertInfoCollectionResultOfT(
                 _issueRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -1027,7 +1027,7 @@ namespace Azure.ResourceManager.Monitor.Workspaces
             {
                 CancellationToken = cancellationToken
             };
-            return new IssueGetResourcesAsyncCollectionResultOfT(
+            return new IssueRelatedResourceInfoAsyncCollectionResultOfT(
                 _issueRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -1071,7 +1071,7 @@ namespace Azure.ResourceManager.Monitor.Workspaces
             {
                 CancellationToken = cancellationToken
             };
-            return new IssueGetResourcesCollectionResultOfT(
+            return new IssueRelatedResourceInfoCollectionResultOfT(
                 _issueRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

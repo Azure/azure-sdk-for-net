@@ -281,7 +281,7 @@ namespace Azure.ResourceManager.ServiceLinker
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<LinkerResourceData, LinkerResource>(new LinkerResourcesGetAllAsyncCollectionResultOfT(_linkerResourcesRestClient, Id.ToString(), context, "LinkerResourceCollection.GetAll"), data => new LinkerResource(Client, data));
+            return new AsyncPageableWrapper<LinkerResourceData, LinkerResource>(new LinkerResourceDataAsync0CollectionResultOfT(_linkerResourcesRestClient, Id.ToString(), context, "LinkerResourceCollection.GetAll"), data => new LinkerResource(Client, data));
         }
 
         /// <summary>
@@ -309,7 +309,7 @@ namespace Azure.ResourceManager.ServiceLinker
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<LinkerResourceData, LinkerResource>(new LinkerResourcesGetAllCollectionResultOfT(_linkerResourcesRestClient, Id.ToString(), context, "LinkerResourceCollection.GetAll"), data => new LinkerResource(Client, data));
+            return new PageableWrapper<LinkerResourceData, LinkerResource>(new LinkerResourceData0CollectionResultOfT(_linkerResourcesRestClient, Id.ToString(), context, "LinkerResourceCollection.GetAll"), data => new LinkerResource(Client, data));
         }
 
         /// <summary>

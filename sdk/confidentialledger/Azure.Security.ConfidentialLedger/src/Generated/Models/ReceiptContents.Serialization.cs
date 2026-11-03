@@ -253,7 +253,7 @@ namespace Azure.Security.ConfidentialLedger.Models
                 leaf,
                 leafComponents,
                 nodeId,
-                proof,
+                proof ?? new ChangeTrackingList<ReceiptElement>(),
                 root,
                 serviceEndorsements ?? new ChangeTrackingList<string>(),
                 signature,

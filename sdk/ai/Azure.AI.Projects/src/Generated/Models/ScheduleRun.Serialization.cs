@@ -231,7 +231,7 @@ namespace Azure.AI.Projects.Evaluation
                 success,
                 triggerTime,
                 error,
-                properties,
+                properties ?? new ChangeTrackingDictionary<string, string>(),
                 additionalBinaryDataProperties);
         }
     }

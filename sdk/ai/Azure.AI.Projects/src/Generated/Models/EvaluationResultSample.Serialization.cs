@@ -171,8 +171,8 @@ namespace Azure.AI.Projects.Evaluation
             return new EvaluationResultSample(
                 id,
                 @type,
-                features,
-                correlationInfo,
+                features ?? new ChangeTrackingDictionary<string, BinaryData>(),
+                correlationInfo ?? new ChangeTrackingDictionary<string, BinaryData>(),
                 additionalBinaryDataProperties,
                 evaluationResult);
         }

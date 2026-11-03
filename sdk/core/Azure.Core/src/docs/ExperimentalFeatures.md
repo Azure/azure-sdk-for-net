@@ -84,30 +84,6 @@ Or in your project file:
 </PropertyGroup>
 ```
 
-## AZID0002 - Identity: IsAzureProxyEnabled Experimental API
-
-### Description
-
-The `IsAzureProxyEnabled` property on `WorkloadIdentityCredentialOptions` enables the Azure Kubernetes Service proxy for workload identity authentication.
-
-### Affected APIs
-
-- `Azure.Identity.WorkloadIdentityCredentialOptions.IsAzureProxyEnabled`
-
-### Suppression
-
-```csharp
-#pragma warning disable AZID0002
-```
-
-Or in your project file:
-
-```xml
-<PropertyGroup>
-  <NoWarn>$(NoWarn);AZID0002</NoWarn>
-</PropertyGroup>
-```
-
 ## AZID0003 - Identity: TokenRequestCallback Experimental API
 
 ### Description
@@ -153,5 +129,46 @@ Or in your project file:
 ```xml
 <PropertyGroup>
   <NoWarn>$(NoWarn);AZID0003</NoWarn>
+</PropertyGroup>
+```
+
+## AZID0004 - Identity: mTLS Token Binding Experimental API
+
+### Description
+
+The mTLS token binding and proof-of-possession APIs enable proof-of-possession token support for managed identity scenarios. These APIs allow transport-level certificate binding for token requests, enabling mTLS-based token binding on supported Azure VMs. The `EnableMtlsProofOfPossession` option is enabled by default and controls mTLS proof-of-possession token acquisition when the underlying requirements are met; set it to `false` to opt out and use bearer tokens. These APIs are experimental and subject to change as the feature matures.
+
+### Affected APIs
+
+- `Azure.Core.Pipeline.BearerTokenAuthenticationPolicy` constructors accepting `HttpPipelineTransportOptions`
+- `Azure.Core.Pipeline.BearerTokenAuthenticationPolicy.TransportOptionsChanged` event
+- `Azure.Core.Pipeline.BearerTokenAuthenticationPolicy.OnTransportOptionsChanged` method
+- `Azure.Identity.ManagedIdentityCredentialOptions.EnableMtlsProofOfPossession` property
+
+### Example Usage
+
+```csharp
+#pragma warning disable AZID0004
+
+// mTLS proof-of-possession is enabled by default. Set it to false to opt out and use bearer tokens.
+var credential = new ManagedIdentityCredential(new ManagedIdentityCredentialOptions
+{
+    EnableMtlsProofOfPossession = false
+});
+
+#pragma warning restore AZID0004
+```
+
+### Suppression
+
+```csharp
+#pragma warning disable AZID0004
+```
+
+Or in your project file:
+
+```xml
+<PropertyGroup>
+  <NoWarn>$(NoWarn);AZID0004</NoWarn>
 </PropertyGroup>
 ```

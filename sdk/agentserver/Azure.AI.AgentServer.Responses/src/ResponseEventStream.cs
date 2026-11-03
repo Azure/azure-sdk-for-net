@@ -139,7 +139,8 @@ public class ResponseEventStream
     /// Produces a checkpoint control signal to <c>yield</c> at a phase boundary so the framework
     /// persists the current <see cref="Response"/> snapshot as a resume watermark.
     /// <para>
-    /// Usage inside a handler: <c>yield return stream.Checkpoint();</c>. The <c>yield</c> is
+    /// It is a pure factory: the returned event has no effect until the handler <c>yield</c>s it —
+    /// <c>yield return stream.CreateCheckpointEvent();</c>. The <c>yield</c> is
     /// <b>backpressured</b> — control does not return to the handler until the persist completes.
     /// The checkpoint is a <b>no-op</b> unless the response is a resilient background response
     /// (<c>ResilientBackground=true</c> + <c>store=true</c> + <c>background=true</c>). On recovery,
@@ -149,7 +150,7 @@ public class ResponseEventStream
     /// The signal is never emitted to the SSE wire; it does not consume a sequence number.
     /// </summary>
     /// <returns>A checkpoint control event to yield for persistence.</returns>
-    public ResponseStreamEvent Checkpoint() => new ResponseCheckpointEvent(_response);
+    public virtual ResponseStreamEvent CreateCheckpointEvent() => new ResponseCheckpointEvent(_response);
 
     /// <summary>
     /// Produces a <c>response.completed</c> event.
@@ -993,11 +994,11 @@ public class ResponseEventStream
     public virtual long NextSequenceNumber() => _sequenceNumber++;
 
     /// <summary>
-    /// Gets the internal metadata map for this response — the .NET equivalent of Python's
-    /// <c>stream.internal_metadata</c>. Unlike <see cref="Models.ResponseObject.Metadata"/> (the
-    /// client's own metadata, which is never stripped), internal metadata is framework-reserved:
-    /// every mutation is folded into the response snapshot as a compact JSON string under the
-    /// reserved key <c>_internal_metadata</c> inside <see cref="Models.ResponseObject.Metadata"/>,
+    /// Gets the framework-reserved metadata map that is persisted with the response for recovery and
+    /// stripped on egress — the .NET equivalent of Python's <c>stream.internal_metadata</c>. Unlike
+    /// <see cref="Models.ResponseObject.Metadata"/> (the client's own metadata, which is never
+    /// stripped), every mutation here is folded into the response snapshot as a compact JSON string
+    /// under the reserved key <c>_internal_metadata</c> inside <see cref="Models.ResponseObject.Metadata"/>,
     /// so it is persisted <em>with</em> the response on every snapshot the orchestrator writes and
     /// survives crash/recovery (read back on recovery via
     /// <see cref="ResponseContext.PersistedResponse"/>). It is stripped from every client-facing
@@ -1005,7 +1006,7 @@ public class ResponseEventStream
     /// free-form; values are strings. On a mock-constructed stream (no backing response) the map is
     /// purely in-memory.
     /// </summary>
-    public virtual IDictionary<string, string> InternalMetadata => _internalMetadata ??= new WriteThroughInternalMetadata(this);
+    public virtual IDictionary<string, string> PersistedMetadata => _internalMetadata ??= new WriteThroughInternalMetadata(this);
 
     private WriteThroughInternalMetadata? _internalMetadata;
 
@@ -1062,7 +1063,7 @@ public class ResponseEventStream
     /// <summary>
     /// A write-through <see cref="IDictionary{TKey, TValue}"/> that re-folds the accumulated map
     /// into the owning stream's response snapshot on every mutation, so developer writes to
-    /// <see cref="InternalMetadata"/> are durably persisted with the response.
+    /// <see cref="PersistedMetadata"/> are durably persisted with the response.
     /// </summary>
     private sealed class WriteThroughInternalMetadata : IDictionary<string, string>
     {

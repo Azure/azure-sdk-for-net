@@ -106,7 +106,6 @@
                 "$id": "11",
                 "name": "post",
                 "isExactName": false,
-                "resourceName": "Constant",
                 "doc": "post constant query value",
                 "accessibility": "public",
                 "parameters": [
@@ -241,7 +240,6 @@
                 "$id": "19",
                 "name": "dollarSign",
                 "isExactName": false,
-                "resourceName": "SpecialChar",
                 "accessibility": "public",
                 "parameters": [
                   {

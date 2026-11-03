@@ -13,14 +13,14 @@ using Azure.ResourceManager.Compute.BulkActions;
 
 namespace Azure.ResourceManager.Compute.BulkActions.Models
 {
-    /// <summary> The resources needed for the user request. </summary>
+    /// <summary> The virtual machines targeted by a bulk action. </summary>
     public partial class UserRequestResources
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="UserRequestResources"/>. </summary>
-        /// <param name="ids"> The resource ids used for the request. </param>
+        /// <param name="ids"> The Azure resource IDs of the target virtual machines. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="ids"/> is null. </exception>
         public UserRequestResources(IEnumerable<ResourceIdentifier> ids)
         {
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="UserRequestResources"/>. </summary>
-        /// <param name="ids"> The resource ids used for the request. </param>
+        /// <param name="ids"> The Azure resource IDs of the target virtual machines. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal UserRequestResources(IList<ResourceIdentifier> ids, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> The resource ids used for the request. </summary>
+        /// <summary> The Azure resource IDs of the target virtual machines. </summary>
         public IList<ResourceIdentifier> Ids { get; }
     }
 }

@@ -8,8 +8,21 @@ parameters:
 - name: ArtifactLocation
   type: string
   default: ''
+- name: AuthToken
+  type: string
+  default: ''
+- name: Condition
+  type: string
+  default: and(succeededOrFailed(), ne(variables['Skip.Verify-RestApiSpecLocation'], 'true'))
 
 steps:
+  - ${{ if eq(parameters.AuthToken, '') }}:
+    - template: /eng/common/pipelines/templates/steps/login-to-github.yml
+      parameters:
+        TokenOwners:
+          - Azure
+        Condition: ${{ parameters.Condition }}
+
   - task: Powershell@2
     inputs:
       filePath: $(Build.SourcesDirectory)/eng/common/scripts/Verify-RestApiSpecLocation.ps1
@@ -21,5 +34,5 @@ steps:
       workingDirectory: $(Pipeline.Workspace)
     displayName: Verify REST API spec location for "${{ parameters.PackageName }}"
     env:
-      GH_TOKEN: $(azuresdk-github-pat)
-    condition: and(succeededOrFailed(), ne(variables['Skip.Verify-RestApiSpecLocation'], 'true'))
+      GH_TOKEN: ${{ coalesce(parameters.AuthToken, '$(GH_TOKEN)') }}
+    condition: ${{ parameters.Condition }}

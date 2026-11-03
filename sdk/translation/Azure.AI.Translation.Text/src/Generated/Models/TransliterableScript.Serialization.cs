@@ -162,7 +162,7 @@ namespace Azure.AI.Translation.Text
                 nativeName,
                 directionality,
                 additionalBinaryDataProperties,
-                toScripts);
+                toScripts ?? new ChangeTrackingList<LanguageScript>());
         }
     }
 }

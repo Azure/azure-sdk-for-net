@@ -342,7 +342,7 @@ namespace Azure.Messaging.WebPubSub
 
                 Response clientTokenResponse = async ?
                     await GenerateClientTokenImplAsync(userId, roles, minutesToExpire, groups, clientEndpointString, context).ConfigureAwait(false) :
-                    GenerateClientTokenImpl(userId, roles, minutesToExpire, null, clientEndpointString, context);
+                    GenerateClientTokenImpl(userId, roles, minutesToExpire, groups, clientEndpointString, context);
                 using var jsonDocument = JsonDocument.Parse(clientTokenResponse.Content);
                 return jsonDocument.RootElement.GetProperty(ClientTokenResponseTokenPropertyName).GetString();
             }

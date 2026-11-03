@@ -40,8 +40,8 @@ namespace Specs.Azure.Core.Traits
 
         public virtual Task<Response> RepeatableActionAsync(int id, RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Response<UserActionResponse> RepeatableAction(int id, UserActionParam body, CancellationToken cancellationToken = default) => throw null;
+        public virtual Response<UserActionResult> RepeatableAction(int id, UserActionParam body, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response<UserActionResponse>> RepeatableActionAsync(int id, UserActionParam body, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<Response<UserActionResult>> RepeatableActionAsync(int id, UserActionParam body, CancellationToken cancellationToken = default) => throw null;
     }
 }

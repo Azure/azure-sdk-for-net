@@ -241,7 +241,7 @@ namespace Azure.Developer.LoadTesting
             return new TestsNotificationRule(
                 notificationRuleId,
                 displayName,
-                actionGroupIds,
+                actionGroupIds ?? new ChangeTrackingList<string>(),
                 scope,
                 createdOn,
                 createdBy,
@@ -249,7 +249,7 @@ namespace Azure.Developer.LoadTesting
                 lastModifiedBy,
                 additionalBinaryDataProperties,
                 testIds ?? new ChangeTrackingList<string>(),
-                eventFilters);
+                eventFilters ?? new ChangeTrackingDictionary<string, TestsNotificationEventFilter>());
         }
     }
 }

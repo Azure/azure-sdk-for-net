@@ -21,6 +21,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of <see cref="ApplicationGatewayRequestRoutingRulePropertiesFormat"/>. </summary>
         public ApplicationGatewayRequestRoutingRulePropertiesFormat()
         {
+            AuthConfigs = new ChangeTrackingList<ApplicationGatewayAuthConfig>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ApplicationGatewayRequestRoutingRulePropertiesFormat"/>. </summary>
@@ -30,13 +31,15 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="backendHttpSettings"> Backend http settings resource of the application gateway. </param>
         /// <param name="httpListener"> Http listener resource of the application gateway. </param>
         /// <param name="urlPathMap"> URL path map resource of the application gateway. </param>
+        /// <param name="advancedRoutingMap"> Advanced routing map resource of the application gateway. </param>
         /// <param name="rewriteRuleSet"> Rewrite Rule Set resource in Basic rule of the application gateway. </param>
         /// <param name="redirectConfiguration"> Redirect configuration resource of the application gateway. </param>
         /// <param name="loadDistributionPolicy"> Load Distribution Policy resource of the application gateway. </param>
-        /// <param name="entraJWTValidationConfig"> Entra JWT validation configuration resource of the application gateway. </param>
+        /// <param name="entraJwtValidationConfig"> Entra JWT validation configuration resource of the application gateway. </param>
+        /// <param name="authConfigs"> Authentication configuration bindings of the request routing rule. Only one authentication configuration is supported. Authentication configuration names must be unique across the Application Gateway, and an Application Gateway can reference at most 100 distinct authentication policies. Authentication policies can only be bound to Application Gateways using the Standard_v2 or WAF_v2 SKU. </param>
         /// <param name="provisioningState"> The provisioning state of the request routing rule resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ApplicationGatewayRequestRoutingRulePropertiesFormat(ApplicationGatewayRequestRoutingRuleType? ruleType, int? priority, NetworkSubResource backendAddressPool, NetworkSubResource backendHttpSettings, NetworkSubResource httpListener, NetworkSubResource urlPathMap, NetworkSubResource rewriteRuleSet, NetworkSubResource redirectConfiguration, NetworkSubResource loadDistributionPolicy, ResourceIdentifier entraJWTValidationConfig, NetworkProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ApplicationGatewayRequestRoutingRulePropertiesFormat(ApplicationGatewayRequestRoutingRuleType? ruleType, int? priority, NetworkSubResource backendAddressPool, NetworkSubResource backendHttpSettings, NetworkSubResource httpListener, NetworkSubResource urlPathMap, NetworkSubResource advancedRoutingMap, NetworkSubResource rewriteRuleSet, NetworkSubResource redirectConfiguration, NetworkSubResource loadDistributionPolicy, NetworkSubResource entraJwtValidationConfig, IList<ApplicationGatewayAuthConfig> authConfigs, NetworkProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             RuleType = ruleType;
             Priority = priority;
@@ -44,10 +47,12 @@ namespace Azure.ResourceManager.Network.Models
             BackendHttpSettings = backendHttpSettings;
             HttpListener = httpListener;
             UrlPathMap = urlPathMap;
+            AdvancedRoutingMap = advancedRoutingMap;
             RewriteRuleSet = rewriteRuleSet;
             RedirectConfiguration = redirectConfiguration;
             LoadDistributionPolicy = loadDistributionPolicy;
-            EntraJWTValidationConfig = entraJWTValidationConfig;
+            EntraJwtValidationConfig = entraJwtValidationConfig;
+            AuthConfigs = authConfigs;
             ProvisioningState = provisioningState;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -76,6 +81,10 @@ namespace Azure.ResourceManager.Network.Models
         [WirePath("urlPathMap")]
         internal NetworkSubResource UrlPathMap { get; set; }
 
+        /// <summary> Advanced routing map resource of the application gateway. </summary>
+        [WirePath("advancedRoutingMap")]
+        internal NetworkSubResource AdvancedRoutingMap { get; set; }
+
         /// <summary> Rewrite Rule Set resource in Basic rule of the application gateway. </summary>
         [WirePath("rewriteRuleSet")]
         internal NetworkSubResource RewriteRuleSet { get; set; }
@@ -90,7 +99,11 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Entra JWT validation configuration resource of the application gateway. </summary>
         [WirePath("entraJWTValidationConfig")]
-        public ResourceIdentifier EntraJWTValidationConfig { get; set; }
+        internal NetworkSubResource EntraJwtValidationConfig { get; set; }
+
+        /// <summary> Authentication configuration bindings of the request routing rule. Only one authentication configuration is supported. Authentication configuration names must be unique across the Application Gateway, and an Application Gateway can reference at most 100 distinct authentication policies. Authentication policies can only be bound to Application Gateways using the Standard_v2 or WAF_v2 SKU. </summary>
+        [WirePath("authConfigs")]
+        public IList<ApplicationGatewayAuthConfig> AuthConfigs { get; } = new ChangeTrackingList<ApplicationGatewayAuthConfig>();
 
         /// <summary> The provisioning state of the request routing rule resource. </summary>
         [WirePath("provisioningState")]
@@ -169,6 +182,24 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Resource ID. </summary>
+        [WirePath("advancedRoutingMap.id")]
+        public ResourceIdentifier AdvancedRoutingMapId
+        {
+            get
+            {
+                return AdvancedRoutingMap is null ? default : AdvancedRoutingMap.Id;
+            }
+            set
+            {
+                if (AdvancedRoutingMap is null)
+                {
+                    AdvancedRoutingMap = new NetworkSubResource();
+                }
+                AdvancedRoutingMap.Id = value;
+            }
+        }
+
+        /// <summary> Resource ID. </summary>
         [WirePath("rewriteRuleSet.id")]
         public ResourceIdentifier RewriteRuleSetId
         {
@@ -219,6 +250,24 @@ namespace Azure.ResourceManager.Network.Models
                     LoadDistributionPolicy = new NetworkSubResource();
                 }
                 LoadDistributionPolicy.Id = value;
+            }
+        }
+
+        /// <summary> Resource ID. </summary>
+        [WirePath("entraJWTValidationConfig.id")]
+        public ResourceIdentifier EntraJwtValidationConfigId
+        {
+            get
+            {
+                return EntraJwtValidationConfig is null ? default : EntraJwtValidationConfig.Id;
+            }
+            set
+            {
+                if (EntraJwtValidationConfig is null)
+                {
+                    EntraJwtValidationConfig = new NetworkSubResource();
+                }
+                EntraJwtValidationConfig.Id = value;
             }
         }
     }

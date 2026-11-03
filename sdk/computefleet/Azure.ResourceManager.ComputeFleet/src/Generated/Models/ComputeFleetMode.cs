@@ -15,9 +15,9 @@ namespace Azure.ResourceManager.ComputeFleet.Models
     public readonly partial struct ComputeFleetMode : IEquatable<ComputeFleetMode>
     {
         private readonly string _value;
-        /// <summary> Default. Managed is the default mode for Compute Fleet where VMs are provisioned via virtual machine scale sets. </summary>
+        /// <summary> Default. Managed mode where Compute Fleet provisions the VMs, manages them and their lifecycle. </summary>
         private const string ManagedValue = "Managed";
-        /// <summary> Launch mode for Compute Fleet will directly launch VM instances to be managed by the customer. </summary>
+        /// <summary> Launch mode where Compute Fleet launches the VMs and the customer manages them and their lifecycle. </summary>
         private const string LaunchValue = "Launch";
 
         /// <summary> Initializes a new instance of <see cref="ComputeFleetMode"/>. </summary>
@@ -30,10 +30,10 @@ namespace Azure.ResourceManager.ComputeFleet.Models
             _value = value;
         }
 
-        /// <summary> Default. Managed is the default mode for Compute Fleet where VMs are provisioned via virtual machine scale sets. </summary>
+        /// <summary> Default. Managed mode where Compute Fleet provisions the VMs, manages them and their lifecycle. </summary>
         public static ComputeFleetMode Managed { get; } = new ComputeFleetMode(ManagedValue);
 
-        /// <summary> Launch mode for Compute Fleet will directly launch VM instances to be managed by the customer. </summary>
+        /// <summary> Launch mode where Compute Fleet launches the VMs and the customer manages them and their lifecycle. </summary>
         public static ComputeFleetMode Launch { get; } = new ComputeFleetMode(LaunchValue);
 
         /// <summary> Determines if two <see cref="ComputeFleetMode"/> values are the same. </summary>

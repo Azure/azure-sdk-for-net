@@ -709,7 +709,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new VMwareToAzStackHciProtectedItemCustomProperties(
@@ -723,8 +723,8 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 targetResourceGroupId,
                 targetLocation,
                 customLocationRegion,
-                disksToInclude,
-                nicsToInclude,
+                disksToInclude ?? new ChangeTrackingList<VMwareToAzStackHciDiskInput>(),
+                nicsToInclude ?? new ChangeTrackingList<VMwareToAzStackHciNicInput>(),
                 protectedDisks ?? new ChangeTrackingList<VMwareToAzStackHciProtectedDiskProperties>(),
                 protectedNics ?? new ChangeTrackingList<VMwareToAzStackHciProtectedNicProperties>(),
                 targetVmBiosId,

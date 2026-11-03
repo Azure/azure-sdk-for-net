@@ -169,7 +169,7 @@ namespace Azure.AI.Projects.Agents
                         }
                         else
                         {
-                            array.Add(ModelReaderWriter.Read<RealtimeItem>(item.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureAIProjectsAgentsContext.Default));
+                            array.Add(ModelReaderWriter.Read<RealtimeItem>(item.GetUtf8Bytes(), options, AzureAIProjectsAgentsContext.Default));
                         }
                     }
                     data = array;
@@ -195,7 +195,7 @@ namespace Azure.AI.Projects.Agents
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new AgentsPagedResultRealtimeConversationItem(data, firstId, lastId, hasMore, additionalBinaryDataProperties);
+            return new AgentsPagedResultRealtimeConversationItem(data ?? new ChangeTrackingList<RealtimeItem>(), firstId, lastId, hasMore, additionalBinaryDataProperties);
         }
     }
 }

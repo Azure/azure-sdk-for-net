@@ -49,11 +49,17 @@ internal static class TaskWireKeys
 
     // Payload reserved keys
     public const string PayloadInput = "input";
+    // Accepted order and executing identity diverge while steering inputs are queued.
     public const string PayloadLastInputId = "last_input_id";
+    public const string PayloadActiveInputId = "active_input_id";
     public const string PayloadTurnStartedAt = "turn_started_at";
     public const string PayloadRetryAttempt = "retry_attempt";
     public const string PayloadSteering = "steering";
     public const string PayloadSchemaVersion = "schema_version";
+    public const string PayloadProtocolScope = "protocol_scope";
+    public const string ProtocolCore = "core";
+    public const string ProtocolInvocations = "invocations";
+    public const string ProtocolResponses = "responses";
 
     // Current task-document schema version stamped at create (spec §20/§38). Its presence
     // is REQUIRED: a stale in_progress record lacking it is legacy and MUST be deleted

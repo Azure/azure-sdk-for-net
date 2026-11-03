@@ -219,7 +219,7 @@ namespace Azure.Developer.LoadTesting
                 }
             }
             return new TestAppComponents(
-                components,
+                components ?? new ChangeTrackingDictionary<string, LoadTestingAppComponent>(),
                 testId,
                 createdOn,
                 createdBy,

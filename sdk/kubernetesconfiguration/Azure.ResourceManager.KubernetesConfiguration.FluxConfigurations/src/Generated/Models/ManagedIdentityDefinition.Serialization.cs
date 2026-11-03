@@ -74,10 +74,17 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
             {
                 throw new FormatException($"The model {nameof(ManagedIdentityDefinition)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(ClientId))
+            if (Optional.IsDefined(ClientId, _clientIdIsDefined))
             {
-                writer.WritePropertyName("clientId"u8);
-                writer.WriteStringValue(ClientId);
+                if (ClientId != null)
+                {
+                    writer.WritePropertyName("clientId"u8);
+                    writer.WriteStringValue(ClientId);
+                }
+                else
+                {
+                    writer.WriteNull("clientId"u8);
+                }
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -121,12 +128,14 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
             {
                 return null;
             }
+            bool clientIdIsDefined = false;
             string clientId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("clientId"u8))
                 {
+                    clientIdIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         clientId = null;
@@ -137,10 +146,13 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ManagedIdentityDefinition(clientId, additionalBinaryDataProperties);
+            return new ManagedIdentityDefinition(clientId, additionalBinaryDataProperties)
+            {
+                _clientIdIsDefined = clientIdIsDefined
+            };
         }
     }
 }

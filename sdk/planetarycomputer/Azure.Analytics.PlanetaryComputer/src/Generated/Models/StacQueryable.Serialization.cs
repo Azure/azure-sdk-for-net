@@ -223,7 +223,7 @@ namespace Azure.Analytics.PlanetaryComputer
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new StacQueryable(name, definition, createIndex, dataKind, additionalBinaryDataProperties);
+            return new StacQueryable(name, definition ?? new ChangeTrackingDictionary<string, BinaryData>(), createIndex, dataKind, additionalBinaryDataProperties);
         }
     }
 }

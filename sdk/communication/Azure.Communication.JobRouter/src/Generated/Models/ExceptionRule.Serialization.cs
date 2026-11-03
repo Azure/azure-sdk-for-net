@@ -162,7 +162,7 @@ namespace Azure.Communication.JobRouter
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ExceptionRule(id, trigger, actions, additionalBinaryDataProperties);
+            return new ExceptionRule(id, trigger, actions ?? new ChangeTrackingList<ExceptionAction>(), additionalBinaryDataProperties);
         }
     }
 }

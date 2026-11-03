@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.Monitor.Models
                         }
                         else
                         {
-                            array.Add(BinaryData.FromString(item.GetRawText()));
+                            array.Add(item.GetUtf8Bytes());
                         }
                     }
                     customVMScrapeConfig = array;
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new PrometheusForwarderDataSource(streams ?? new ChangeTrackingList<DataCollectionRuleKnownPrometheusForwarderDataSourceStream>(), labelIncludeFilter ?? new ChangeTrackingDictionary<string, string>(), customVMScrapeConfig ?? new ChangeTrackingList<BinaryData>(), name, additionalBinaryDataProperties);

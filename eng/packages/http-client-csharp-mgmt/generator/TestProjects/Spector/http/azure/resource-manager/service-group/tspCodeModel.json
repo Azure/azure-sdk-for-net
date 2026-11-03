@@ -1896,6 +1896,7 @@
                   "scopeResourceType": "Microsoft.Management/serviceGroups"
                 },
                 "resourceName": "ServiceGroupExtensionResource",
+                "resourceNameIsExplicit": false,
                 "nameConstraints": {
                   "pattern": "^[a-zA-Z0-9-]{3,24}$"
                 },
@@ -1936,7 +1937,6 @@
                 "$id": "131",
                 "name": "get",
                 "isExactName": false,
-                "resourceName": "ServiceGroupExtensionResource",
                 "doc": "Get a ServiceGroupExtensionResource",
                 "accessibility": "public",
                 "parameters": [
@@ -2220,7 +2220,6 @@
                 "$id": "146",
                 "name": "createOrUpdate",
                 "isExactName": false,
-                "resourceName": "ServiceGroupExtensionResource",
                 "doc": "Create a ServiceGroupExtensionResource",
                 "accessibility": "public",
                 "parameters": [
@@ -2653,7 +2652,6 @@
                 "$id": "167",
                 "name": "update",
                 "isExactName": false,
-                "resourceName": "ServiceGroupExtensionResource",
                 "doc": "Update a ServiceGroupExtensionResource",
                 "accessibility": "public",
                 "parameters": [
@@ -3032,7 +3030,6 @@
                 "$id": "186",
                 "name": "delete",
                 "isExactName": false,
-                "resourceName": "ServiceGroupExtensionResource",
                 "doc": "Delete a ServiceGroupExtensionResource",
                 "accessibility": "public",
                 "parameters": [
@@ -3270,7 +3267,6 @@
                 "$id": "199",
                 "name": "listByServiceGroup",
                 "isExactName": false,
-                "resourceName": "ServiceGroupExtensionResource",
                 "doc": "List ServiceGroupExtensionResource resources by scope",
                 "accessibility": "public",
                 "parameters": [
@@ -3480,6 +3476,7 @@
                   "value"
                 ],
                 "nextLink": {
+                  "verb": "GET",
                   "responseSegments": [
                     "nextLink"
                   ],

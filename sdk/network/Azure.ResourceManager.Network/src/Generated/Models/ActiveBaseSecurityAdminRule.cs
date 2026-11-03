@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Network.Models
 {
     /// <summary>
     /// Network base admin rule.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ActiveSecurityAdminRule"/> and <see cref="ActiveDefaultSecurityAdminRule"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ActiveDefaultSecurityAdminRule"/> and <see cref="ActiveSecurityAdminRule"/>.
     /// </summary>
     public abstract partial class ActiveBaseSecurityAdminRule
     {

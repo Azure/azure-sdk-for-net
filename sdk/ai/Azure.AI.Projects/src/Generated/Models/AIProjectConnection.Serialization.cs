@@ -236,7 +236,7 @@ namespace Azure.AI.Projects
                 target,
                 isDefault,
                 credentials,
-                metadata,
+                metadata ?? new ChangeTrackingDictionary<string, string>(),
                 additionalBinaryDataProperties);
         }
     }

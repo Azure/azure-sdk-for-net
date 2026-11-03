@@ -162,7 +162,7 @@ namespace Azure.AI.Projects.Agents
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new AgentCard(version, description, skills, additionalBinaryDataProperties);
+            return new AgentCard(version, description, skills ?? new ChangeTrackingList<AgentCardSkill>(), additionalBinaryDataProperties);
         }
     }
 }

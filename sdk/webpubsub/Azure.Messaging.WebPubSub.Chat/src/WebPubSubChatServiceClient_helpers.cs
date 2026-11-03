@@ -100,7 +100,7 @@ namespace Azure.Messaging.WebPubSub.Chat
         {
             EnsureTokenCredential();
             int minutesToExpire = Math.Max((int)expiresAfter.TotalMinutes, 1);
-            Response<GenerateClientTokenResponse> response = await GenerateClientTokenAsync(options.UserId, ChatClientRoles, minutesToExpire, cancellationToken).ConfigureAwait(false);
+            Response<GenerateClientTokenResult> response = await GenerateClientTokenAsync(options.UserId, ChatClientRoles, minutesToExpire, cancellationToken).ConfigureAwait(false);
             return response.Value.Token;
         }
 

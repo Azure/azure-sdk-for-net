@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         /// <summary> The relative URL of the Key Vault containing the key. </summary>
         internal ComputeBulkActionsSubResourceInfo SourceVault { get; set; }
 
-        /// <summary> The ID of the sub-resource. </summary>
+        /// <summary> The Azure resource ID. </summary>
         public string SourceVaultId
         {
             get

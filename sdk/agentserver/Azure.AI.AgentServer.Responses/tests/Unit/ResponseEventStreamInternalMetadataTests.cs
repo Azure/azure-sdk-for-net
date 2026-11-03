@@ -11,7 +11,7 @@ using Azure.AI.AgentServer.Responses.Models;
 namespace Azure.AI.AgentServer.Responses.Tests.Unit;
 
 /// <summary>
-/// Unit tests for <see cref="ResponseEventStream.InternalMetadata"/> — the .NET port of Python's
+/// Unit tests for <see cref="ResponseEventStream.PersistedMetadata"/> — the .NET port of Python's
 /// <c>stream.internal_metadata</c> persist-but-strip contract. Values a handler writes ride on the
 /// response (folded into <c>metadata["_internal_metadata"]</c> as a compact JSON string so they are
 /// persisted with every snapshot the orchestrator writes and survive recovery), yet are stripped
@@ -46,7 +46,7 @@ public class ResponseEventStreamInternalMetadataTests : IDisposable
     {
         var stream = NewStream("resp_fold");
 
-        stream.InternalMetadata["k"] = "v";
+        stream.PersistedMetadata["k"] = "v";
 
         Assert.That(stream.Response.Metadata, Is.Not.Null);
         Assert.That(stream.Response.Metadata!.AdditionalProperties.ContainsKey("_internal_metadata"), Is.True);
@@ -61,9 +61,9 @@ public class ResponseEventStreamInternalMetadataTests : IDisposable
     {
         var stream = NewStream("resp_multi");
 
-        stream.InternalMetadata["a"] = "1";
-        stream.InternalMetadata["b"] = "2";
-        stream.InternalMetadata["a"] = "updated";
+        stream.PersistedMetadata["a"] = "1";
+        stream.PersistedMetadata["b"] = "2";
+        stream.PersistedMetadata["a"] = "updated";
 
         var json = stream.Response.Metadata!.AdditionalProperties["_internal_metadata"];
         using var doc = JsonDocument.Parse(json);
@@ -84,7 +84,7 @@ public class ResponseEventStreamInternalMetadataTests : IDisposable
         };
         var stream = new ResponseEventStream(new StubContext("resp_user"), request);
 
-        stream.InternalMetadata["secret"] = "hidden";
+        stream.PersistedMetadata["secret"] = "hidden";
 
         Assert.Multiple(() =>
         {
@@ -97,7 +97,7 @@ public class ResponseEventStreamInternalMetadataTests : IDisposable
     public void InternalMetadata_SurvivesSnapshot_Durable()
     {
         var stream = NewStream("resp_snap");
-        stream.InternalMetadata["trace"] = "abc";
+        stream.PersistedMetadata["trace"] = "abc";
 
         var snapshot = stream.Response.Snapshot();
 
@@ -110,10 +110,10 @@ public class ResponseEventStreamInternalMetadataTests : IDisposable
     public void InternalMetadata_Remove_UpdatesFoldedValue()
     {
         var stream = NewStream("resp_remove");
-        stream.InternalMetadata["a"] = "1";
-        stream.InternalMetadata["b"] = "2";
+        stream.PersistedMetadata["a"] = "1";
+        stream.PersistedMetadata["b"] = "2";
 
-        stream.InternalMetadata.Remove("a");
+        stream.PersistedMetadata.Remove("a");
 
         var json = stream.Response.Metadata!.AdditionalProperties["_internal_metadata"];
         using var doc = JsonDocument.Parse(json);
@@ -128,9 +128,9 @@ public class ResponseEventStreamInternalMetadataTests : IDisposable
     public void InternalMetadata_Clear_RemovesFoldedKey()
     {
         var stream = NewStream("resp_clear");
-        stream.InternalMetadata["a"] = "1";
+        stream.PersistedMetadata["a"] = "1";
 
-        stream.InternalMetadata.Clear();
+        stream.PersistedMetadata.Clear();
 
         var meta = stream.Response.Metadata;
         Assert.That(meta is null || !meta.AdditionalProperties.ContainsKey("_internal_metadata"), Is.True);
@@ -141,7 +141,7 @@ public class ResponseEventStreamInternalMetadataTests : IDisposable
     {
         // Turn 1: write internal metadata, then take the durable snapshot the orchestrator would persist.
         var stream = NewStream("resp_recover");
-        stream.InternalMetadata["phase"] = "analyze";
+        stream.PersistedMetadata["phase"] = "analyze";
         var persisted = stream.Response.Snapshot();
 
         // Recovery re-invocation: the stream is seeded from the persisted snapshot.
@@ -149,7 +149,7 @@ public class ResponseEventStreamInternalMetadataTests : IDisposable
 
         Assert.Multiple(() =>
         {
-            Assert.That(recovered.InternalMetadata.TryGetValue("phase", out var value), Is.True);
+            Assert.That(recovered.PersistedMetadata.TryGetValue("phase", out var value), Is.True);
             Assert.That(value, Is.EqualTo("analyze"));
         });
     }
@@ -158,7 +158,7 @@ public class ResponseEventStreamInternalMetadataTests : IDisposable
     public async Task InternalMetadata_RoundTripsThroughFileResponsesProvider()
     {
         var stream = NewStream("resp_file_rt");
-        stream.InternalMetadata["k"] = "v";
+        stream.PersistedMetadata["k"] = "v";
         var snapshot = stream.Response.Snapshot();
 
         var provider = new FileResponsesProvider(_root);
@@ -175,7 +175,7 @@ public class ResponseEventStreamInternalMetadataTests : IDisposable
     public void InternalMetadata_IsStrippedFromClientEgressPayload()
     {
         var stream = NewStream("resp_egress");
-        stream.InternalMetadata["secret"] = "value";
+        stream.PersistedMetadata["secret"] = "value";
         stream.Response.Metadata!.AdditionalProperties["user"] = "keep";
 
         // Serialize the response the way an egress path would, then strip.
@@ -201,8 +201,8 @@ public class ResponseEventStreamInternalMetadataTests : IDisposable
     {
         var stream = new MockStream();
 
-        Assert.DoesNotThrow(() => stream.InternalMetadata["k"] = "v");
-        Assert.That(stream.InternalMetadata["k"], Is.EqualTo("v"));
+        Assert.DoesNotThrow(() => stream.PersistedMetadata["k"] = "v");
+        Assert.That(stream.PersistedMetadata["k"], Is.EqualTo("v"));
     }
 
     private static ResponseEventStream NewStream(string responseId)

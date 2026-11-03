@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.ProgramEnrollment.Mocking
 
         private ClientDiagnostics EduEnrollmentsClientDiagnostics => _eduEnrollmentsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ProgramEnrollment.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private EduEnrollments EduEnrollmentsRestClient => _eduEnrollmentsRestClient ??= new EduEnrollments(EduEnrollmentsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-03-01-preview");
+        private EduEnrollments EduEnrollmentsRestClient => _eduEnrollmentsRestClient ??= new EduEnrollments(EduEnrollmentsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.ProgramEnrollment/eduEnrollments", out string apiVersion) ? apiVersion : "2026-03-01-preview");
 
         /// <summary>
         /// Lists the edu enrollments in a subscription.
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.ProgramEnrollment.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<EduEnrollmentData, EduEnrollmentResource>(new EduEnrollmentsGetBySubscriptionAsyncCollectionResultOfT(EduEnrollmentsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableProgramEnrollmentSubscriptionResource.GetEduEnrollments"), data => new EduEnrollmentResource(Client, data));
+            return new AsyncPageableWrapper<EduEnrollmentData, EduEnrollmentResource>(new EduEnrollmentDataAsync0CollectionResultOfT(EduEnrollmentsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableProgramEnrollmentSubscriptionResource.GetEduEnrollments"), data => new EduEnrollmentResource(Client, data));
         }
 
         /// <summary>
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.ProgramEnrollment.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<EduEnrollmentData, EduEnrollmentResource>(new EduEnrollmentsGetBySubscriptionCollectionResultOfT(EduEnrollmentsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableProgramEnrollmentSubscriptionResource.GetEduEnrollments"), data => new EduEnrollmentResource(Client, data));
+            return new PageableWrapper<EduEnrollmentData, EduEnrollmentResource>(new EduEnrollmentData0CollectionResultOfT(EduEnrollmentsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableProgramEnrollmentSubscriptionResource.GetEduEnrollments"), data => new EduEnrollmentResource(Client, data));
         }
     }
 }

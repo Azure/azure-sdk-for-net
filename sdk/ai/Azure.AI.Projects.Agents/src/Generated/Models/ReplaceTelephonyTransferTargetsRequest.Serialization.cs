@@ -154,7 +154,7 @@ namespace Azure.AI.Projects.Agents
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ReplaceTelephonyTransferTargetsRequest(transferTargets, additionalBinaryDataProperties);
+            return new ReplaceTelephonyTransferTargetsRequest(transferTargets ?? new ChangeTrackingList<TelephonyTransferTarget>(), additionalBinaryDataProperties);
         }
     }
 }

@@ -169,7 +169,7 @@ namespace Azure.AI.Language.Conversations.Authoring
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new PagedAnalyzeConversationAuthoringProjectTrainedModel(value, nextLink, additionalBinaryDataProperties);
+            return new PagedAnalyzeConversationAuthoringProjectTrainedModel(value ?? new ChangeTrackingList<ConversationAuthoringProjectTrainedModel>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

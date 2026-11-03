@@ -181,7 +181,7 @@ namespace Azure.AI.AnomalyDetector
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ModelList(models, currentCount, maxCount, nextLink, additionalBinaryDataProperties);
+            return new ModelList(models ?? new ChangeTrackingList<AnomalyDetectionModel>(), currentCount, maxCount, nextLink, additionalBinaryDataProperties);
         }
     }
 }

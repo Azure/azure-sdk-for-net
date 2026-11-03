@@ -170,7 +170,7 @@ namespace Azure.Data.SchemaRegistry.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new SchemaVersions(value, nextLink, additionalBinaryDataProperties);
+            return new SchemaVersions(value ?? new ChangeTrackingList<int>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

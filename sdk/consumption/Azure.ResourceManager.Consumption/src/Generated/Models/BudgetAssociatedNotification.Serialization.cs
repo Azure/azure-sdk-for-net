@@ -284,14 +284,14 @@ namespace Azure.ResourceManager.Consumption.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new BudgetAssociatedNotification(
                 isEnabled,
                 @operator,
                 threshold,
-                contactEmails,
+                contactEmails ?? new ChangeTrackingList<string>(),
                 contactRoles ?? new ChangeTrackingList<string>(),
                 contactGroups ?? new ChangeTrackingList<string>(),
                 thresholdType,

@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
 {
     /// <summary>
     /// Azure virtual network function application definition.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AzureCoreNetworkFunctionVhdApplication"/> and <see cref="AzureCoreNetworkFunctionArmTemplateApplication"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AzureCoreNetworkFunctionArmTemplateApplication"/> and <see cref="AzureCoreNetworkFunctionVhdApplication"/>.
     /// </summary>
     public abstract partial class AzureCoreNetworkFunctionApplication : NetworkFunctionApplication
     {

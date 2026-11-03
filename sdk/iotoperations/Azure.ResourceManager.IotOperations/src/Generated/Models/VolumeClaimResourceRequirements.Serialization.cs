@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.IotOperations.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new VolumeClaimResourceRequirements(limits ?? new ChangeTrackingDictionary<string, string>(), requests ?? new ChangeTrackingDictionary<string, string>(), claims ?? new ChangeTrackingList<VolumeClaimResourceRequirementsClaims>(), additionalBinaryDataProperties);

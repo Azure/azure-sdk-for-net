@@ -23,7 +23,6 @@ namespace Azure.ResourceManager.Storage.Models
         // operators/conversions partial, breaking the build. Re-declare the missing members
         // here. Remove once the upstream fix lands in a new mgmt-emitter alpha.
         private readonly string _value;
-        private const string PlannedValue = "Planned";
 
         /// <summary> Initializes a new instance of <see cref="FailoverRequestFailoverType"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
@@ -31,9 +30,6 @@ namespace Azure.ResourceManager.Storage.Models
         {
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
-
-        /// <summary> Planned. </summary>
-        public static FailoverRequestFailoverType Planned { get; } = new FailoverRequestFailoverType(PlannedValue);
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]

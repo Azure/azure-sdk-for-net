@@ -24,6 +24,7 @@ namespace Azure.SdkAnalyzers
         private const string SystemThreadingTasksNamespace = "System.Threading.Tasks";
         private const string AzureNamespace = "Azure";
         private const string SystemClientModelNamespace = "System.ClientModel";
+        private const string SystemClientModelPrimitivesNamespace = "System.ClientModel.Primitives";
 
         public override SymbolKind[] SymbolKinds { get; } = new[] { SymbolKind.NamedType };
 
@@ -115,7 +116,9 @@ namespace Azure.SdkAnalyzers
                 IsOrInheritsFrom(unwrapped, "AsyncStreamingResult", SystemClientModelNamespace) ||
                 IsOrInheritsFrom(unwrapped, "AsyncStreamingClientResult", SystemClientModelNamespace) ||
                 IsOrInheritsFrom(returnType, "CollectionResult", SystemClientModelNamespace) ||
-                IsOrInheritsFrom(returnType, "AsyncCollectionResult", SystemClientModelNamespace))
+                IsOrInheritsFrom(returnType, "AsyncCollectionResult", SystemClientModelNamespace) ||
+                IsOrInheritsFrom(returnType, "CollectionResult", SystemClientModelPrimitivesNamespace, arity: 0) ||
+                IsOrInheritsFrom(returnType, "AsyncCollectionResult", SystemClientModelPrimitivesNamespace, arity: 0))
             {
                 return true;
             }
@@ -123,11 +126,12 @@ namespace Azure.SdkAnalyzers
             return false;
         }
 
-        private static bool IsOrInheritsFrom(ITypeSymbol type, string typeName, string namespaceFullName)
+        private static bool IsOrInheritsFrom(ITypeSymbol type, string typeName, string namespaceFullName, int? arity = null)
         {
             for (ITypeSymbol current = type; current != null; current = current.BaseType)
             {
                 if (current.Name == typeName &&
+                    (!arity.HasValue || (current is INamedTypeSymbol namedType && namedType.Arity == arity.Value)) &&
                     current.ContainingNamespace != null &&
                     current.ContainingNamespace.ToDisplayString() == namespaceFullName)
                 {

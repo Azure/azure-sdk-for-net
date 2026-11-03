@@ -17,11 +17,11 @@ namespace Azure.Security.ConfidentialLedger
         public ConfidentialLedgerClient(System.Uri ledgerEndpoint, System.Security.Cryptography.X509Certificates.X509Certificate2 clientCertificate, Azure.Security.ConfidentialLedger.ConfidentialLedgerClientOptions options) { }
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
         public virtual Azure.Response CreateLedgerEntry(Azure.Core.RequestContent content, string collectionId, Azure.RequestContext context) { throw null; }
-        public virtual Azure.Response CreateLedgerEntry(Azure.Core.RequestContent content, string collectionId = null, string tags = null, Azure.RequestContext context = null) { throw null; }
-        public virtual Azure.Response<Azure.Security.ConfidentialLedger.Models.LedgerWriteResult> CreateLedgerEntry(Azure.Security.ConfidentialLedger.Models.LedgerEntry entry, string collectionId = null, string tags = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response CreateLedgerEntry(Azure.Core.RequestContent content, string collectionId = null, string tags = null, bool? waitForCommit = default(bool?), Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Response<Azure.Security.ConfidentialLedger.Models.LedgerWriteResult> CreateLedgerEntry(Azure.Security.ConfidentialLedger.Models.LedgerEntry entry, string collectionId = null, string tags = null, bool? waitForCommit = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> CreateLedgerEntryAsync(Azure.Core.RequestContent content, string collectionId, Azure.RequestContext context) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> CreateLedgerEntryAsync(Azure.Core.RequestContent content, string collectionId = null, string tags = null, Azure.RequestContext context = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Security.ConfidentialLedger.Models.LedgerWriteResult>> CreateLedgerEntryAsync(Azure.Security.ConfidentialLedger.Models.LedgerEntry entry, string collectionId = null, string tags = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> CreateLedgerEntryAsync(Azure.Core.RequestContent content, string collectionId = null, string tags = null, bool? waitForCommit = default(bool?), Azure.RequestContext context = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Security.ConfidentialLedger.Models.LedgerWriteResult>> CreateLedgerEntryAsync(Azure.Security.ConfidentialLedger.Models.LedgerEntry entry, string collectionId = null, string tags = null, bool? waitForCommit = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response CreateOrUpdateLedgerUser(string userId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> CreateOrUpdateLedgerUserAsync(string userId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response CreateOrUpdateUser(string userId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
@@ -142,8 +142,10 @@ namespace Azure.Security.ConfidentialLedger
         public virtual Azure.Pageable<Azure.Security.ConfidentialLedger.Models.LedgerUser> GetUsers(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<System.BinaryData> GetUsersAsync(Azure.RequestContext context) { throw null; }
         public virtual Azure.AsyncPageable<Azure.Security.ConfidentialLedger.Models.LedgerUser> GetUsersAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Operation PostLedgerEntry(Azure.WaitUntil waitUntil, Azure.Core.RequestContent content, bool waitForCommit, string collectionId = null, string tags = null, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Operation PostLedgerEntry(Azure.WaitUntil waitUntil, Azure.Core.RequestContent content, string collectionId, Azure.RequestContext context) { throw null; }
         public virtual Azure.Operation PostLedgerEntry(Azure.WaitUntil waitUntil, Azure.Core.RequestContent content, string collectionId = null, string tags = null, Azure.RequestContext context = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Operation> PostLedgerEntryAsync(Azure.WaitUntil waitUntil, Azure.Core.RequestContent content, bool waitForCommit, string collectionId = null, string tags = null, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Operation> PostLedgerEntryAsync(Azure.WaitUntil waitUntil, Azure.Core.RequestContent content, string collectionId, Azure.RequestContext context) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Operation> PostLedgerEntryAsync(Azure.WaitUntil waitUntil, Azure.Core.RequestContent content, string collectionId = null, string tags = null, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Operation RehydratePostLedgerEntryOperation(string operationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -181,6 +183,7 @@ namespace Azure.Security.ConfidentialLedger
             V2024_08_22_Preview = 3,
             V2024_12_09_Preview = 4,
             V2026_02_23 = 5,
+            V2026_07_31_Preview = 6,
         }
     }
     [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("SCME0002")]
@@ -317,7 +320,7 @@ namespace Azure.Security.ConfidentialLedger.Models
         public static Azure.Security.ConfidentialLedger.Models.LedgerRole LedgerRole(string roleName = null, System.Collections.Generic.IEnumerable<string> roleActions = null) { throw null; }
         public static Azure.Security.ConfidentialLedger.Models.LedgerUser LedgerUser(Azure.Security.ConfidentialLedger.Models.ConfidentialLedgerUserRoleName assignedRole = default(Azure.Security.ConfidentialLedger.Models.ConfidentialLedgerUserRoleName), string userId = null) { throw null; }
         public static Azure.Security.ConfidentialLedger.Models.LedgerUserMultipleRoles LedgerUserMultipleRoles(System.Collections.Generic.IEnumerable<Azure.Security.ConfidentialLedger.Models.ConfidentialLedgerUserRoleName> assignedRoles = null, string userId = null) { throw null; }
-        public static Azure.Security.ConfidentialLedger.Models.LedgerWriteResult LedgerWriteResult(string transactionId = null, string collectionId = null) { throw null; }
+        public static Azure.Security.ConfidentialLedger.Models.LedgerWriteResult LedgerWriteResult(string transactionId = null, string collectionId = null, Azure.Security.ConfidentialLedger.Models.ReceiptContents receipt = null, Azure.Security.ConfidentialLedger.Models.TransactionState state = default(Azure.Security.ConfidentialLedger.Models.TransactionState), System.Collections.Generic.IEnumerable<Azure.Security.ConfidentialLedger.Models.ApplicationClaim> applicationClaims = null) { throw null; }
         public static Azure.Security.ConfidentialLedger.Models.MethodToEndpointProperties MethodToEndpointProperties(Azure.Security.ConfidentialLedger.Models.EndpointProperties @get = null, Azure.Security.ConfidentialLedger.Models.EndpointProperties put = null, Azure.Security.ConfidentialLedger.Models.EndpointProperties patch = null, Azure.Security.ConfidentialLedger.Models.EndpointProperties delete = null) { throw null; }
         public static Azure.Security.ConfidentialLedger.Models.ModuleDef ModuleDef(string module = null, string name = null) { throw null; }
         public static Azure.Security.ConfidentialLedger.Models.ReceiptContents ReceiptContents(string cert = null, string leaf = null, Azure.Security.ConfidentialLedger.Models.ReceiptLeafComponents leafComponents = null, string nodeId = null, System.Collections.Generic.IEnumerable<Azure.Security.ConfidentialLedger.Models.ReceiptElement> proof = null, string root = null, System.Collections.Generic.IEnumerable<string> serviceEndorsements = null, string signature = null) { throw null; }
@@ -657,7 +660,10 @@ namespace Azure.Security.ConfidentialLedger.Models
     public partial class LedgerWriteResult : System.ClientModel.Primitives.IJsonModel<Azure.Security.ConfidentialLedger.Models.LedgerWriteResult>, System.ClientModel.Primitives.IPersistableModel<Azure.Security.ConfidentialLedger.Models.LedgerWriteResult>
     {
         internal LedgerWriteResult() { }
+        public System.Collections.Generic.IList<Azure.Security.ConfidentialLedger.Models.ApplicationClaim> ApplicationClaims { get { throw null; } }
         public string CollectionId { get { throw null; } }
+        public Azure.Security.ConfidentialLedger.Models.ReceiptContents Receipt { get { throw null; } }
+        public Azure.Security.ConfidentialLedger.Models.TransactionState State { get { throw null; } }
         public string TransactionId { get { throw null; } }
         protected virtual Azure.Security.ConfidentialLedger.Models.LedgerWriteResult JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }

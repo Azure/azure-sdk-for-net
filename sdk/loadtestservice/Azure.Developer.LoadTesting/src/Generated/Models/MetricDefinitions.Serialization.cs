@@ -154,7 +154,7 @@ namespace Azure.Developer.LoadTesting
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new MetricDefinitions(value, additionalBinaryDataProperties);
+            return new MetricDefinitions(value ?? new ChangeTrackingList<MetricDefinition>(), additionalBinaryDataProperties);
         }
     }
 }

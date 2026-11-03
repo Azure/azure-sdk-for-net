@@ -246,7 +246,7 @@ namespace Azure.AI.Projects.Agents
             return new CreateToolboxVersionRequest(
                 description,
                 metadata ?? new ChangeTrackingDictionary<string, string>(),
-                tools,
+                tools ?? new ChangeTrackingList<ToolboxTool>(),
                 skills ?? new ChangeTrackingList<ToolboxSkill>(),
                 policies,
                 additionalBinaryDataProperties);

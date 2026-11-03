@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Sql
         {
             TryGetApiVersion(ManagedInstanceStartStopScheduleResource.ResourceType, out string managedInstanceStartStopScheduleApiVersion);
             _startStopManagedInstanceSchedulesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ManagedInstanceStartStopScheduleResource.ResourceType.Namespace, Diagnostics);
-            _startStopManagedInstanceSchedulesRestClient = new StartStopManagedInstanceSchedules(_startStopManagedInstanceSchedulesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, managedInstanceStartStopScheduleApiVersion ?? "2025-02-01-preview");
+            _startStopManagedInstanceSchedulesRestClient = new StartStopManagedInstanceSchedules(_startStopManagedInstanceSchedulesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, managedInstanceStartStopScheduleApiVersion ?? "2025-08-01-preview");
             ValidateResourceId(id);
         }
 
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-02-01-preview. </description>
+        /// <description> 2025-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-02-01-preview. </description>
+        /// <description> 2025-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-02-01-preview. </description>
+        /// <description> 2025-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-02-01-preview. </description>
+        /// <description> 2025-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -264,7 +264,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-02-01-preview. </description>
+        /// <description> 2025-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -276,7 +276,7 @@ namespace Azure.ResourceManager.Sql
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ManagedInstanceStartStopScheduleData, ManagedInstanceStartStopScheduleResource>(new StartStopManagedInstanceSchedulesGetByInstanceAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<ManagedInstanceStartStopScheduleData, ManagedInstanceStartStopScheduleResource>(new ManagedInstanceStartStopScheduleDataAsyncCollectionResultOfT(
                 _startStopManagedInstanceSchedulesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -298,7 +298,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-02-01-preview. </description>
+        /// <description> 2025-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -310,7 +310,7 @@ namespace Azure.ResourceManager.Sql
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ManagedInstanceStartStopScheduleData, ManagedInstanceStartStopScheduleResource>(new StartStopManagedInstanceSchedulesGetByInstanceCollectionResultOfT(
+            return new PageableWrapper<ManagedInstanceStartStopScheduleData, ManagedInstanceStartStopScheduleResource>(new ManagedInstanceStartStopScheduleDataCollectionResultOfT(
                 _startStopManagedInstanceSchedulesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -332,7 +332,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-02-01-preview. </description>
+        /// <description> 2025-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -385,7 +385,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-02-01-preview. </description>
+        /// <description> 2025-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -438,7 +438,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-02-01-preview. </description>
+        /// <description> 2025-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -495,7 +495,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-02-01-preview. </description>
+        /// <description> 2025-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>

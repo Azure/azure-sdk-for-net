@@ -6,7 +6,10 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
 using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
+using System.Net.ServerSentEvents;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -70,6 +73,13 @@ namespace Azure.Search.Documents.KnowledgeBases
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/>, <paramref name="knowledgeBaseName"/> or <paramref name="credential"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="knowledgeBaseName"/> is an empty string, and was expected to be non-empty. </exception>
         public KnowledgeBaseRetrievalClient(Uri endpoint, string knowledgeBaseName, TokenCredential credential, SearchClientOptions options) : this(new BearerTokenAuthenticationPolicy(credential, AuthorizationScopes), endpoint, knowledgeBaseName, options)
+        {
+        }
+
+        /// <summary> Initializes a new instance of KnowledgeBaseRetrievalClient from a <see cref="KnowledgeBaseRetrievalClientSettings"/>. </summary>
+        /// <param name="settings"> The settings for KnowledgeBaseRetrievalClient. </param>
+        [Experimental("SCME0002")]
+        public KnowledgeBaseRetrievalClient(KnowledgeBaseRetrievalClientSettings settings) : this(string.Equals(settings?.Credential?.CredentialSource, "apikeycredential", StringComparison.OrdinalIgnoreCase) ? new AzureKeyCredentialPolicy(new AzureKeyCredential(settings.Credential.Key), AuthorizationHeader) : new BearerTokenAuthenticationPolicy(settings?.CredentialProvider as TokenCredential, AuthorizationScopes), settings?.Endpoint, settings?.KnowledgeBaseName, settings?.Options)
         {
         }
 
@@ -173,6 +183,85 @@ namespace Azure.Search.Documents.KnowledgeBases
 
             Response result = await RetrieveAsync(retrievalRequest, querySourceAuthorization, queryWorkIQSourceAuthorization, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((KnowledgeBaseRetrievalResponse)result, result);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Retrieves relevant data from backing stores and streams progress and results as server-sent
+        /// events.
+        /// Process the response incrementally using server-sent event framing. Each event contains an
+        /// event name and a JSON-encoded data payload. The stream ends with either a `response.completed`
+        /// event or an `error` event. OpenAPI 2.0 represents the response body as a string, so generated
+        /// clients may expose the raw response without typed event parsing. Do not deserialize the
+        /// complete response body as a single JSON document.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="querySourceAuthorization"> Token identifying the user for which the query is being executed. This token is used to enforce security restrictions on documents. </param>
+        /// <param name="queryWorkIQSourceAuthorization"> User assertion token for a customer-owned Entra app registration configured on a Work IQ knowledge source. Used for on-behalf-of authentication to the Work IQ API. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<AsyncStreamingResult<SseItem<BinaryData>>> RetrieveStreamAsync(RequestContent content, string querySourceAuthorization = default, string queryWorkIQSourceAuthorization = default, RequestContext context = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("KnowledgeBaseRetrievalClient.RetrieveStream");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNull(content, nameof(content));
+
+                using HttpMessage message = CreateRetrieveStreamRequest(content, querySourceAuthorization, queryWorkIQSourceAuthorization, context);
+                message.BufferResponse = false;
+                await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                return AsyncStreamingResult.CreateSse(new AzurePipelineResponse(message), null, context?.CancellationToken ?? default);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] KnowledgeBase retrieves relevant data from backing stores.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual Response Retrieve(RequestContent content, RequestContext context)
+        {
+            return Retrieve(content: content, querySourceAuthorization: default, queryWorkIQSourceAuthorization: default, context: context);
+        }
+
+        /// <summary>
+        /// [Protocol Method] KnowledgeBase retrieves relevant data from backing stores.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual Task<Response> RetrieveAsync(RequestContent content, RequestContext context)
+        {
+            return RetrieveAsync(content: content, querySourceAuthorization: default, queryWorkIQSourceAuthorization: default, context: context);
         }
 
         /// <summary> KnowledgeBase retrieves relevant data from backing stores. </summary>

@@ -20,6 +20,13 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
     public class ReceiverTests
     {
         [Test]
+        public void ModelFactoryCreatesDeleteResults()
+        {
+            Assert.AreEqual(3, ServiceBusModelFactory.DeleteMessagesResult(3).DeletedCount);
+            Assert.AreEqual((long)int.MaxValue + 7, ServiceBusModelFactory.PurgeMessagesResult((long)int.MaxValue + 7).DeletedCount);
+        }
+
+        [Test]
         public void ClientProperties()
         {
             var account = Encoding.Default.GetString(ServiceBusTestUtilities.GetRandomBuffer(12));
@@ -94,15 +101,21 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
         }
 
         [Test]
-        public void DeleteValidatesMaxMessageCount()
+        public void DeleteValidatesMessageCount()
         {
-            var account = Encoding.Default.GetString(ServiceBusTestUtilities.GetRandomBuffer(12));
-            var fullyQualifiedNamespace = new UriBuilder($"{account}.servicebus.windows.net/").Host;
-            var client = new ServiceBusClient(fullyQualifiedNamespace, Mock.Of<TokenCredential>());
-            var receiver = client.CreateReceiver("queueName");
+            var transport = new Mock<TransportReceiver>();
+            var receiver = new ServiceBusReceiver(
+                ServiceBusTestUtilities.GetMockedReceiverConnection(transport),
+                "queueName", false, new ServiceBusReceiverOptions());
             Assert.That(
                 async () => await receiver.DeleteMessagesAsync(0, default),
                 Throws.InstanceOf<ArgumentOutOfRangeException>());
+            Assert.That(
+                async () => await receiver.DeleteMessagesAsync(-1, default),
+                Throws.InstanceOf<ArgumentOutOfRangeException>());
+
+            transport.Verify(inner => inner.DeleteMessagesAsync(
+                It.IsAny<int>(), It.IsAny<DateTimeOffset>(), It.IsAny<CancellationToken>()), Times.Never);
         }
 
         [Test]
@@ -591,16 +604,14 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                     It.IsAny<int>(),
                     It.IsAny<DateTimeOffset>(),
                     It.IsAny<CancellationToken>()))
-                .ReturnsAsync(expectedDeleteCount)
-                .ReturnsAsync(0);
+                .ReturnsAsync(new DeleteMessagesResult(expectedDeleteCount))
+                .ReturnsAsync(new DeleteMessagesResult(0));
 
-            // Delete with no parameters should continue to invoke the service
-            // operation until the count of messages deleted is less than the
-            // maximum allowed.
+            // Purge continues until the service reports zero, even after a partial batch.
 
             var receiver = mockReceiver.Object;
-            var deleteCount = await receiver.PurgeMessagesAsync();
-            Assert.AreEqual(expectedDeleteCount, deleteCount);
+            var result = await receiver.PurgeMessagesAsync();
+            Assert.AreEqual(expectedDeleteCount, result.DeletedCount);
 
             mockReceiver
                 .Verify(receiver => receiver.DeleteMessagesAsync(
@@ -614,6 +625,220 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
         public async Task PurgeMessagesEvaluatesReturnedCount()
         {
             var expectedDeleteCount = (ServiceBusReceiver.MaxDeleteMessageCount * 3) - 1;
+            var timestamps = new List<DateTimeOffset>();
+            var deleteCounts = new Queue<int>(new[]
+            {
+                ServiceBusReceiver.MaxDeleteMessageCount,
+                ServiceBusReceiver.MaxDeleteMessageCount,
+                ServiceBusReceiver.MaxDeleteMessageCount - 1,
+                0
+            });
+            var mockConnection = ServiceBusTestUtilities.CreateMockConnection();
+            var mockReceiver = new Mock<ServiceBusReceiver>(
+                mockConnection.Object,
+                "fake",
+                false,
+                new ServiceBusReceiverOptions(),
+                default(string),
+                false,
+                default(CancellationToken))
+            {
+                CallBase = true
+            };
+
+            mockReceiver
+                .Setup(receiver => receiver.DeleteMessagesAsync(
+                    It.IsAny<int>(),
+                    It.IsAny<DateTimeOffset>(),
+                    It.IsAny<CancellationToken>()))
+                .Returns<int, DateTimeOffset, CancellationToken>((_, timestamp, _) =>
+                {
+                    timestamps.Add(timestamp);
+                    return Task.FromResult(new DeleteMessagesResult(deleteCounts.Dequeue()));
+                });
+
+            // Purge continues until the service reports zero, even after a partial batch.
+
+            var receiver = mockReceiver.Object;
+            var result = await receiver.PurgeMessagesAsync();
+            Assert.AreEqual(expectedDeleteCount, result.DeletedCount);
+            Assert.That(timestamps, Has.Count.EqualTo(4));
+            Assert.That(timestamps, Is.All.EqualTo(timestamps[0]));
+
+            mockReceiver
+                .Verify(receiver => receiver.DeleteMessagesAsync(
+                    ServiceBusReceiver.MaxDeleteMessageCount,
+                    It.IsAny<DateTimeOffset>(),
+                    It.IsAny<CancellationToken>()),
+                    Times.Exactly(4));
+        }
+
+        [Test]
+        public async Task PurgeMessagesSupportsPremiumBatchSize()
+        {
+            const int premiumBatchSize = 4000;
+            var mockConnection = ServiceBusTestUtilities.CreateMockConnection();
+            var mockReceiver = new Mock<ServiceBusReceiver>(
+                mockConnection.Object,
+                "fake",
+                false,
+                new ServiceBusReceiverOptions(),
+                default(string),
+                false,
+                default(CancellationToken))
+            {
+                CallBase = true
+            };
+
+            mockReceiver
+                .SetupSequence(receiver => receiver.DeleteMessagesAsync(
+                    premiumBatchSize,
+                    It.IsAny<DateTimeOffset>(),
+                    It.IsAny<CancellationToken>()))
+                .ReturnsAsync(new DeleteMessagesResult(premiumBatchSize))
+                .ReturnsAsync(new DeleteMessagesResult(2))
+                .ReturnsAsync(new DeleteMessagesResult(0));
+
+            var result = await mockReceiver.Object.PurgeMessagesAsync(
+                null, new ServiceBusPurgeMessagesOptions { MaxMessagesPerBatch = premiumBatchSize });
+
+            Assert.That(result.DeletedCount, Is.EqualTo(premiumBatchSize + 2));
+            mockReceiver.Verify(receiver => receiver.DeleteMessagesAsync(
+                premiumBatchSize,
+                It.IsAny<DateTimeOffset>(),
+                It.IsAny<CancellationToken>()), Times.Exactly(3));
+        }
+
+        [Test]
+        public async Task PurgeMessagesAllowsServiceToEnforceBatchSizeLimit()
+        {
+            const int requestedBatchSize = 4001;
+            var mockConnection = ServiceBusTestUtilities.CreateMockConnection();
+            var mockReceiver = new Mock<ServiceBusReceiver>(
+                mockConnection.Object,
+                "fake",
+                false,
+                new ServiceBusReceiverOptions(),
+                default(string),
+                false,
+                default(CancellationToken))
+            {
+                CallBase = true
+            };
+
+            mockReceiver
+                .Setup(receiver => receiver.DeleteMessagesAsync(
+                    requestedBatchSize,
+                    It.IsAny<DateTimeOffset>(),
+                    It.IsAny<CancellationToken>()))
+                .ReturnsAsync(new DeleteMessagesResult(0));
+
+            var result = await mockReceiver.Object.PurgeMessagesAsync(
+                null, new ServiceBusPurgeMessagesOptions { MaxMessagesPerBatch = requestedBatchSize });
+
+            Assert.That(result.DeletedCount, Is.Zero);
+            mockReceiver.Verify(receiver => receiver.DeleteMessagesAsync(
+                requestedBatchSize,
+                It.IsAny<DateTimeOffset>(),
+                It.IsAny<CancellationToken>()), Times.Once);
+        }
+
+        [TestCase(0)]
+        [TestCase(-1)]
+        public void PurgeMessagesRejectsInvalidBatchSize(int maxMessagesPerBatch)
+        {
+            var options = new ServiceBusPurgeMessagesOptions();
+
+            Assert.That(
+                () => options.MaxMessagesPerBatch = maxMessagesPerBatch,
+                Throws.InstanceOf<ArgumentOutOfRangeException>());
+            Assert.That(options.MaxMessagesPerBatch, Is.EqualTo(500));
+        }
+
+        [TestCase(false)]
+        [TestCase(true)]
+        public async Task PurgeMessagesConvenienceOverloadsAreUnambiguous(bool useSession)
+        {
+            var transport = new Mock<TransportReceiver>();
+            transport.Setup(inner => inner.DeleteMessagesAsync(
+                It.IsAny<int>(), It.IsAny<DateTimeOffset>(), It.IsAny<CancellationToken>())).ReturnsAsync(0);
+            var connection = ServiceBusTestUtilities.GetMockedReceiverConnection(transport);
+            await using ServiceBusReceiver receiver = useSession
+                ? new ServiceBusSessionReceiver(connection, "fake", new ServiceBusSessionReceiverOptions(), default, "session")
+                : new ServiceBusReceiver(connection, "fake", false, new ServiceBusReceiverOptions());
+
+            Assert.That((await receiver.PurgeMessagesAsync()).DeletedCount, Is.Zero);
+            Assert.That((await receiver.PurgeMessagesAsync(default)).DeletedCount, Is.Zero);
+            Assert.That((await receiver.PurgeMessagesAsync(null)).DeletedCount, Is.Zero);
+            Assert.That((await receiver.PurgeMessagesAsync(default, CancellationToken.None)).DeletedCount, Is.Zero);
+            Assert.That((await receiver.PurgeMessagesAsync(null, new ServiceBusPurgeMessagesOptions())).DeletedCount, Is.Zero);
+
+            transport.Verify(inner => inner.DeleteMessagesAsync(
+                500, It.IsAny<DateTimeOffset>(), CancellationToken.None), Times.Exactly(5));
+        }
+
+        [TestCase(false)]
+        [TestCase(true)]
+        public async Task PurgeMessagesCapturesOptionsAndForwardsCutoffAndCancellation(bool useSession)
+        {
+            var options = new ServiceBusPurgeMessagesOptions { MaxMessagesPerBatch = 4000 };
+            var cutoff = new DateTimeOffset(2026, 1, 1, 0, 0, 0, TimeSpan.Zero);
+            using var cancellationSource = new CancellationTokenSource();
+            var counts = new Queue<int>(new[] { 4000, 2, 0 });
+            var transport = new Mock<TransportReceiver>();
+            transport.Setup(inner => inner.DeleteMessagesAsync(4000, cutoff, cancellationSource.Token))
+                .Returns(() =>
+                {
+                    options.MaxMessagesPerBatch = 1;
+                    return Task.FromResult(counts.Dequeue());
+                });
+            var connection = ServiceBusTestUtilities.GetMockedReceiverConnection(transport);
+            await using ServiceBusReceiver receiver = useSession
+                ? new ServiceBusSessionReceiver(connection, "fake", new ServiceBusSessionReceiverOptions(), default, "session")
+                : new ServiceBusReceiver(connection, "fake", false, new ServiceBusReceiverOptions());
+
+            var result = await receiver.PurgeMessagesAsync(cutoff, options, cancellationSource.Token);
+
+            Assert.That(result.DeletedCount, Is.EqualTo(4002));
+            transport.Verify(inner => inner.DeleteMessagesAsync(4000, cutoff, cancellationSource.Token), Times.Exactly(3));
+            transport.Verify(inner => inner.DeleteMessagesAsync(
+                It.IsAny<int>(), It.IsAny<DateTimeOffset>(), It.IsAny<CancellationToken>()), Times.Exactly(3));
+        }
+
+        [Test]
+        public async Task PurgeMessagesRejectsNullOptionsBeforeDispatch()
+        {
+            var transport = new Mock<TransportReceiver>();
+            await using var receiver = new ServiceBusReceiver(
+                ServiceBusTestUtilities.GetMockedReceiverConnection(transport),
+                "fake", false, new ServiceBusReceiverOptions());
+
+            Assert.That(async () => await receiver.PurgeMessagesAsync(null, options: null),
+                Throws.ArgumentNullException.With.Property("ParamName").EqualTo("options"));
+            transport.Verify(inner => inner.DeleteMessagesAsync(
+                It.IsAny<int>(), It.IsAny<DateTimeOffset>(), It.IsAny<CancellationToken>()), Times.Never);
+        }
+
+        [Test]
+        public async Task PurgeMessagesWithOptionsHonorsCancellationBeforeDispatch()
+        {
+            var transport = new Mock<TransportReceiver>();
+            await using var receiver = new ServiceBusReceiver(
+                ServiceBusTestUtilities.GetMockedReceiverConnection(transport),
+                "fake", false, new ServiceBusReceiverOptions());
+            using var cancellationSource = new CancellationTokenSource();
+            cancellationSource.Cancel();
+
+            Assert.That(async () => await receiver.PurgeMessagesAsync(
+                null, new ServiceBusPurgeMessagesOptions(), cancellationSource.Token),
+                Throws.InstanceOf<OperationCanceledException>());
+            transport.Verify(inner => inner.DeleteMessagesAsync(
+                It.IsAny<int>(), It.IsAny<DateTimeOffset>(), It.IsAny<CancellationToken>()), Times.Never);
+        }
+
+        [Test]
+        public async Task PurgeMessagesTotalDoesNotOverflowInt32()
+        {
             var mockConnection = ServiceBusTestUtilities.CreateMockConnection();
             var mockReceiver = new Mock<ServiceBusReceiver>(
                 mockConnection.Object,
@@ -632,25 +857,13 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                     It.IsAny<int>(),
                     It.IsAny<DateTimeOffset>(),
                     It.IsAny<CancellationToken>()))
-                .ReturnsAsync(ServiceBusReceiver.MaxDeleteMessageCount)
-                .ReturnsAsync(ServiceBusReceiver.MaxDeleteMessageCount)
-                .ReturnsAsync(ServiceBusReceiver.MaxDeleteMessageCount - 1)
-                .ReturnsAsync(0);
+                .ReturnsAsync(new DeleteMessagesResult(int.MaxValue))
+                .ReturnsAsync(new DeleteMessagesResult(1))
+                .ReturnsAsync(new DeleteMessagesResult(0));
 
-            // Delete with no parameters should continue to invoke the service
-            // operation until the count of messages deleted is less than the
-            // maximum allowed.
+            var result = await mockReceiver.Object.PurgeMessagesAsync();
 
-            var receiver = mockReceiver.Object;
-            var deleteCount = await receiver.PurgeMessagesAsync();
-            Assert.AreEqual(expectedDeleteCount, deleteCount);
-
-            mockReceiver
-                .Verify(receiver => receiver.DeleteMessagesAsync(
-                    ServiceBusReceiver.MaxDeleteMessageCount,
-                    It.IsAny<DateTimeOffset>(),
-                    It.IsAny<CancellationToken>()),
-                    Times.Exactly(4));
+            Assert.That(result.DeletedCount, Is.EqualTo((long)int.MaxValue + 1));
         }
 
         [Test]
@@ -676,16 +889,14 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                     It.IsAny<int>(),
                     It.IsAny<DateTimeOffset>(),
                     It.IsAny<CancellationToken>()))
-                .ReturnsAsync(expectedDeleteCount)
-                .ReturnsAsync(0);
+                .ReturnsAsync(new DeleteMessagesResult(expectedDeleteCount))
+                .ReturnsAsync(new DeleteMessagesResult(0));
 
-            // Purge for a date should continue to invoke the service
-            // operation until the count of messages deleted is less than the
-            // maximum allowed.
+            // Purge continues until the service reports zero, even after a partial batch.
 
             var receiver = mockReceiver.Object;
-            var deleteCount = await receiver.PurgeMessagesAsync(expectedDate);
-            Assert.AreEqual(expectedDeleteCount, deleteCount);
+            var result = await receiver.PurgeMessagesAsync(expectedDate);
+            Assert.AreEqual(expectedDeleteCount, result.DeletedCount);
 
             mockReceiver
                 .Verify(receiver => receiver.DeleteMessagesAsync(
@@ -718,19 +929,17 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                     It.IsAny<int>(),
                     It.IsAny<DateTimeOffset>(),
                     It.IsAny<CancellationToken>()))
-                .ReturnsAsync(ServiceBusReceiver.MaxDeleteMessageCount)
-                .ReturnsAsync(ServiceBusReceiver.MaxDeleteMessageCount)
-                .ReturnsAsync(ServiceBusReceiver.MaxDeleteMessageCount)
-                .ReturnsAsync(ServiceBusReceiver.MaxDeleteMessageCount - 1)
-                .ReturnsAsync(0);
+                .ReturnsAsync(new DeleteMessagesResult(ServiceBusReceiver.MaxDeleteMessageCount))
+                .ReturnsAsync(new DeleteMessagesResult(ServiceBusReceiver.MaxDeleteMessageCount))
+                .ReturnsAsync(new DeleteMessagesResult(ServiceBusReceiver.MaxDeleteMessageCount))
+                .ReturnsAsync(new DeleteMessagesResult(ServiceBusReceiver.MaxDeleteMessageCount - 1))
+                .ReturnsAsync(new DeleteMessagesResult(0));
 
-            // Delete for a date should continue to invoke the service
-            // operation until the count of messages deleted is less than the
-            // maximum allowed.
+            // Purge continues until the service reports zero, even after a partial batch.
 
             var receiver = mockReceiver.Object;
-            var deleteCount = await receiver.PurgeMessagesAsync(expectedDate);
-            Assert.AreEqual(expectedDeleteCount, deleteCount);
+            var result = await receiver.PurgeMessagesAsync(expectedDate);
+            Assert.AreEqual(expectedDeleteCount, result.DeletedCount);
 
             mockReceiver
                 .Verify(receiver => receiver.DeleteMessagesAsync(
@@ -778,7 +987,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
             var receiver = new ServiceBusReceiver(mockConnection.Object, "fake", false, new ServiceBusReceiverOptions());
             var returnedCount = await receiver.DeleteMessagesAsync(expectedCount);
 
-            Assert.AreEqual(expectedCount, returnedCount);
+            Assert.AreEqual(expectedCount, returnedCount.DeletedCount);
 
             mockTransportReceiver
                 .Verify(receiver => receiver.DeleteMessagesAsync(
@@ -822,8 +1031,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                 .ReturnsAsync(expectedCount);
 
             var receiver = new ServiceBusReceiver(mockConnection.Object, "fake", false, new ServiceBusReceiverOptions());
-            var returnedCount = await receiver.DeleteMessagesAsync(requestedCount, expectedDate, cancellationSource.Token);
-            Assert.AreEqual(expectedCount, returnedCount);
+            var result = await receiver.DeleteMessagesAsync(requestedCount, expectedDate, cancellationSource.Token);
+            Assert.AreEqual(expectedCount, result.DeletedCount);
 
             mockTransportReceiver
                 .Verify(receiver => receiver.DeleteMessagesAsync(
@@ -831,6 +1040,40 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                     expectedDate,
                     cancellationSource.Token),
                     Times.Once);
+        }
+
+        [Test]
+        public async Task DeleteMessagesAllowsPremiumCount()
+        {
+            const int requestedCount = 4000;
+            var mockConnection = ServiceBusTestUtilities.CreateMockConnection();
+            var mockTransportReceiver = new Mock<TransportReceiver>();
+
+            mockConnection
+                .Setup(connection => connection.CreateTransportReceiver(
+                    It.IsAny<string>(),
+                    It.IsAny<ServiceBusRetryPolicy>(),
+                    It.IsAny<ServiceBusReceiveMode>(),
+                    It.IsAny<uint>(),
+                    It.IsAny<string>(),
+                    It.IsAny<string>(),
+                    It.IsAny<bool>(),
+                    It.IsAny<bool>(),
+                    It.IsAny<bool>(),
+                    It.IsAny<Guid?>(),
+                    It.IsAny<CancellationToken>()))
+                .Returns(mockTransportReceiver.Object);
+            mockTransportReceiver
+                .Setup(receiver => receiver.DeleteMessagesAsync(
+                    requestedCount,
+                    It.IsAny<DateTimeOffset>(),
+                    It.IsAny<CancellationToken>()))
+                .ReturnsAsync(requestedCount);
+
+            var receiver = new ServiceBusReceiver(mockConnection.Object, "fake", false, new ServiceBusReceiverOptions());
+            var result = await receiver.DeleteMessagesAsync(requestedCount);
+
+            Assert.That(result.DeletedCount, Is.EqualTo(requestedCount));
         }
     }
 }

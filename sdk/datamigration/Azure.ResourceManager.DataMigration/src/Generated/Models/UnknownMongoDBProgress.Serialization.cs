@@ -214,14 +214,14 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new UnknownMongoDBProgress(
                 bytesCopied,
                 documentsCopied,
                 elapsedTime,
-                errors,
+                errors ?? new ChangeTrackingDictionary<string, DataMigrationMongoDBError>(),
                 eventsPending,
                 eventsReplayed,
                 lastEventOn,

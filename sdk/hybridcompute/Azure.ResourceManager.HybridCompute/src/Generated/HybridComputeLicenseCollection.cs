@@ -41,7 +41,13 @@ namespace Azure.ResourceManager.HybridCompute
         {
             TryGetApiVersion(HybridComputeLicenseResource.ResourceType, out string hybridComputeLicenseApiVersion);
             _licensesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HybridCompute", HybridComputeLicenseResource.ResourceType.Namespace, Diagnostics);
-            _licensesRestClient = new Licenses(_licensesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, hybridComputeLicenseApiVersion ?? "2026-07-15");
+            _licensesRestClient = new Licenses(
+                _licensesClientDiagnostics,
+                Pipeline,
+                Diagnostics.ApplicationId,
+                Endpoint,
+                hybridComputeLicenseApiVersion ?? "2026-07-15",
+                resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 
@@ -294,7 +300,7 @@ namespace Azure.ResourceManager.HybridCompute
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<HybridComputeLicenseData, HybridComputeLicenseResource>(new LicensesGetByResourceGroupAsyncCollectionResultOfT(_licensesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "HybridComputeLicenseCollection.GetAll"), data => new HybridComputeLicenseResource(Client, data));
+            return new AsyncPageableWrapper<HybridComputeLicenseData, HybridComputeLicenseResource>(new HybridComputeLicenseDataAsyncCollectionResultOfT(_licensesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "HybridComputeLicenseCollection.GetAll"), data => new HybridComputeLicenseResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +328,7 @@ namespace Azure.ResourceManager.HybridCompute
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<HybridComputeLicenseData, HybridComputeLicenseResource>(new LicensesGetByResourceGroupCollectionResultOfT(_licensesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "HybridComputeLicenseCollection.GetAll"), data => new HybridComputeLicenseResource(Client, data));
+            return new PageableWrapper<HybridComputeLicenseData, HybridComputeLicenseResource>(new HybridComputeLicenseDataCollectionResultOfT(_licensesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "HybridComputeLicenseCollection.GetAll"), data => new HybridComputeLicenseResource(Client, data));
         }
 
         /// <summary>

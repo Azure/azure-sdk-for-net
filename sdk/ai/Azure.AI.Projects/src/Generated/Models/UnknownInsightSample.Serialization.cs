@@ -159,7 +159,7 @@ namespace Azure.AI.Projects.Evaluation
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new UnknownInsightSample(id, @type, features, correlationInfo, additionalBinaryDataProperties);
+            return new UnknownInsightSample(id, @type, features ?? new ChangeTrackingDictionary<string, BinaryData>(), correlationInfo ?? new ChangeTrackingDictionary<string, BinaryData>(), additionalBinaryDataProperties);
         }
     }
 }

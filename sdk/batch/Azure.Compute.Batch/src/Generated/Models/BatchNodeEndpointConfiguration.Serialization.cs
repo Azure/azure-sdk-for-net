@@ -146,7 +146,7 @@ namespace Azure.Compute.Batch
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new BatchNodeEndpointConfiguration(inboundEndpoints, additionalBinaryDataProperties);
+            return new BatchNodeEndpointConfiguration(inboundEndpoints ?? new ChangeTrackingList<InboundEndpoint>(), additionalBinaryDataProperties);
         }
     }
 }

@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.ContainerServiceAIManager.Models
                         }
                         else
                         {
-                            dictionary.Add(prop0.Name, BinaryData.FromString(prop0.Value.GetRawText()));
+                            dictionary.Add(prop0.Name, prop0.Value.GetUtf8Bytes());
                         }
                     }
                     config = dictionary;
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.ContainerServiceAIManager.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new BaseModelReference(id, totalWeightSizeBytes, config ?? new ChangeTrackingDictionary<string, BinaryData>(), additionalBinaryDataProperties);

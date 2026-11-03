@@ -259,7 +259,7 @@ namespace Azure.AI.Projects.Evaluation
                 filter,
                 eventType,
                 enabled,
-                systemData,
+                systemData ?? new ChangeTrackingDictionary<string, string>(),
                 additionalBinaryDataProperties);
         }
     }

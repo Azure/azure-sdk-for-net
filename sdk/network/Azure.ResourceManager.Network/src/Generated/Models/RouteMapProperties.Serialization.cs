@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new RouteMapProperties(associatedInboundConnections ?? new ChangeTrackingList<string>(), associatedOutboundConnections ?? new ChangeTrackingList<string>(), rules ?? new ChangeTrackingList<RouteMapRule>(), provisioningState, additionalBinaryDataProperties);

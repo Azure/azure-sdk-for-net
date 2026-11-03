@@ -296,6 +296,10 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
 
             if (local.StartsWith("properties"u8))
             {
+                if (Properties == null)
+                {
+                    return false;
+                }
                 return Properties.Patch.TryGetEncodedValue([.. "$"u8, .. local.Slice("properties"u8.Length)], out value);
             }
             return false;
@@ -313,6 +317,10 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
 
             if (local.StartsWith("properties"u8))
             {
+                if (Properties == null)
+                {
+                    return false;
+                }
                 Properties.Patch.Set([.. "$"u8, .. local.Slice("properties"u8.Length)], value);
                 return true;
             }

@@ -775,7 +775,6 @@ IsOverridable = true,
 }},
                     Mode = ComputeFleetMode.Managed,
                     CapacityType = ComputeFleetCapacityType.Vm,
-                    ZoneAllocationPolicy = new ComputeFleetZoneAllocationPolicy(ComputeFleetZoneDistributionStrategy.BestEffortSingleZone),
                 },
             };
             ArmOperation<ComputeFleetResource> lro = await computeFleet.UpdateAsync(WaitUntil.Completed, patch);

@@ -47,7 +47,7 @@ namespace BasicTypeSpec
                 {
                     yield break;
                 }
-                ListWithContinuationTokenHeaderResponseResponse result = (ListWithContinuationTokenHeaderResponseResponse)response;
+                ListWithContinuationTokenHeaderResponseResult result = (ListWithContinuationTokenHeaderResponseResult)response;
                 if (response.Headers.TryGetValue("next-token", out string value) && !string.IsNullOrEmpty(value))
                 {
                     nextPage = value;

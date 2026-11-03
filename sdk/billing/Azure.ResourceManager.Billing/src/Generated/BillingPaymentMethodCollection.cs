@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.Billing
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<BillingPaymentMethodData, BillingPaymentMethodResource>(new PaymentMethodsGetByUserAsyncCollectionResultOfT(_paymentMethodsRestClient, context, "BillingPaymentMethodCollection.GetAll"), data => new BillingPaymentMethodResource(Client, data));
+            return new AsyncPageableWrapper<BillingPaymentMethodData, BillingPaymentMethodResource>(new BillingPaymentMethodDataAsync0CollectionResultOfT(_paymentMethodsRestClient, context, "BillingPaymentMethodCollection.GetAll"), data => new BillingPaymentMethodResource(Client, data));
         }
 
         /// <summary>
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.Billing
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<BillingPaymentMethodData, BillingPaymentMethodResource>(new PaymentMethodsGetByUserCollectionResultOfT(_paymentMethodsRestClient, context, "BillingPaymentMethodCollection.GetAll"), data => new BillingPaymentMethodResource(Client, data));
+            return new PageableWrapper<BillingPaymentMethodData, BillingPaymentMethodResource>(new BillingPaymentMethodData0CollectionResultOfT(_paymentMethodsRestClient, context, "BillingPaymentMethodCollection.GetAll"), data => new BillingPaymentMethodResource(Client, data));
         }
 
         /// <summary>

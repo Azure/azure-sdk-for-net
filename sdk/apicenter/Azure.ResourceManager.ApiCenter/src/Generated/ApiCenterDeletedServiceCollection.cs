@@ -39,9 +39,8 @@ namespace Azure.ResourceManager.ApiCenter
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ApiCenterDeletedServiceCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ApiCenterDeletedServiceResource.ResourceType, out string apiCenterDeletedServiceApiVersion);
             _deletedServicesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiCenter", ApiCenterDeletedServiceResource.ResourceType.Namespace, Diagnostics);
-            _deletedServicesRestClient = new DeletedServices(_deletedServicesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, apiCenterDeletedServiceApiVersion ?? "2024-06-01-preview");
+            _deletedServicesRestClient = new DeletedServices(_deletedServicesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.ApiCenter/deletedServices", out string deletedServicesApiVersionOverride) ? deletedServicesApiVersionOverride : "2024-06-01-preview");
             ValidateResourceId(id);
         }
 
@@ -179,7 +178,7 @@ namespace Azure.ResourceManager.ApiCenter
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ApiCenterDeletedServiceData, ApiCenterDeletedServiceResource>(new DeletedServicesGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<ApiCenterDeletedServiceData, ApiCenterDeletedServiceResource>(new ApiCenterDeletedServiceDataAsyncCollectionResultOfT(
                 _deletedServicesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -214,7 +213,7 @@ namespace Azure.ResourceManager.ApiCenter
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ApiCenterDeletedServiceData, ApiCenterDeletedServiceResource>(new DeletedServicesGetAllCollectionResultOfT(
+            return new PageableWrapper<ApiCenterDeletedServiceData, ApiCenterDeletedServiceResource>(new ApiCenterDeletedServiceDataCollectionResultOfT(
                 _deletedServicesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

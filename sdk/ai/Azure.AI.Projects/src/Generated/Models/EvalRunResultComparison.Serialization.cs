@@ -181,7 +181,7 @@ namespace Azure.AI.Projects.Evaluation
                 metricName,
                 evaluatorName,
                 baselineRunSummary,
-                compareItems,
+                compareItems ?? new ChangeTrackingList<EvalRunResultCompareItem>(),
                 additionalBinaryDataProperties);
         }
     }

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -18,21 +19,58 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Initializes a new instance of <see cref="ApplicationGatewayFirewallRule"/>. </summary>
         /// <param name="ruleId"> The identifier of the web application firewall rule. </param>
+        public ApplicationGatewayFirewallRule(int ruleId)
+        {
+            RuleId = ruleId;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ApplicationGatewayFirewallRule"/>. </summary>
+        /// <param name="ruleId"> The identifier of the web application firewall rule. </param>
         /// <param name="ruleIdString"> The string representation of the web application firewall rule identifier. </param>
         /// <param name="state"> The string representation of the web application firewall rule state. </param>
         /// <param name="action"> The string representation of the web application firewall rule action. </param>
         /// <param name="sensitivity"> The string representation of the web application firewall rule sensitivity. </param>
+        /// <param name="paranoiaLevel"> OWASP CRS paranoia level of a managed rule. Applicable only for DRS and OWASP rules. </param>
         /// <param name="description"> The description of the web application firewall rule. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ApplicationGatewayFirewallRule(int ruleId, string ruleIdString, ApplicationGatewayWafRuleStateType? state, ApplicationGatewayWafRuleActionType? action, ApplicationGatewayWafRuleSensitivityType? sensitivity, string description, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ApplicationGatewayFirewallRule(int ruleId, string ruleIdString, ApplicationGatewayWafRuleStateType? state, ApplicationGatewayWafRuleActionType? action, ApplicationGatewayWafRuleSensitivityType? sensitivity, ApplicationGatewayWafRuleParanoiaLevel? paranoiaLevel, string description, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             RuleId = ruleId;
             RuleIdString = ruleIdString;
             State = state;
             Action = action;
             Sensitivity = sensitivity;
+            ParanoiaLevel = paranoiaLevel;
             Description = description;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+
+        /// <summary> The identifier of the web application firewall rule. </summary>
+        [WirePath("ruleId")]
+        public int RuleId { get; set; }
+
+        /// <summary> The string representation of the web application firewall rule identifier. </summary>
+        [WirePath("ruleIdString")]
+        public string RuleIdString { get; set; }
+
+        /// <summary> The string representation of the web application firewall rule state. </summary>
+        [WirePath("state")]
+        public ApplicationGatewayWafRuleStateType? State { get; set; }
+
+        /// <summary> The string representation of the web application firewall rule action. </summary>
+        [WirePath("action")]
+        public ApplicationGatewayWafRuleActionType? Action { get; set; }
+
+        /// <summary> The string representation of the web application firewall rule sensitivity. </summary>
+        [WirePath("sensitivity")]
+        public ApplicationGatewayWafRuleSensitivityType? Sensitivity { get; set; }
+
+        /// <summary> OWASP CRS paranoia level of a managed rule. Applicable only for DRS and OWASP rules. </summary>
+        [WirePath("paranoiaLevel")]
+        public ApplicationGatewayWafRuleParanoiaLevel? ParanoiaLevel { get; set; }
+
+        /// <summary> The description of the web application firewall rule. </summary>
+        [WirePath("description")]
+        public string Description { get; set; }
     }
 }

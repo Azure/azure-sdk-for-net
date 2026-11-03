@@ -218,7 +218,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 maxWaitUntil,
                 timeCreated,
                 defaultAction,
-                targetResources,
+                targetResources ?? new ChangeTrackingList<VirtualMachineScaleSetLifecycleHookEventTargetResource>(),
                 additionalContext,
                 state,
                 additionalBinaryDataProperties);

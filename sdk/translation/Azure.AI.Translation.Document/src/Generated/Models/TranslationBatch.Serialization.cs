@@ -172,7 +172,7 @@ namespace Azure.AI.Translation.Document
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new TranslationBatch(inputs, options0, additionalBinaryDataProperties);
+            return new TranslationBatch(inputs ?? new ChangeTrackingList<DocumentTranslationInput>(), options0, additionalBinaryDataProperties);
         }
     }
 }

@@ -322,9 +322,9 @@ namespace Azure.Analytics.PlanetaryComputer
                 geometry,
                 id,
                 collection,
-                boundingBox,
+                boundingBox ?? new ChangeTrackingList<float>(),
                 properties,
-                assets,
+                assets ?? new ChangeTrackingDictionary<string, StacAsset>(),
                 recordedOn,
                 eTag);
         }

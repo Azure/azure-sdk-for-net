@@ -19,17 +19,13 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
 
         /// <summary> Initializes a new instance of <see cref="BulkCreateProperties"/>. </summary>
         /// <param name="capacity"> Total capacity to achieve. It can be in terms of VMs or vCPUs. </param>
-        /// <param name="priorityProfile"> Configuration Options for Regular or Spot instances in BulkCreate. </param>
         /// <param name="computeProfile"> Compute Profile to configure the Virtual Machines. Applied uniformly to every virtual machine created by the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="priorityProfile"/> or <paramref name="computeProfile"/> is null. </exception>
-        public BulkCreateProperties(int capacity, PriorityProfile priorityProfile, ComputeProfile computeProfile)
+        /// <exception cref="ArgumentNullException"> <paramref name="computeProfile"/> is null. </exception>
+        public BulkCreateProperties(int capacity, ComputeProfile computeProfile)
         {
-            Argument.AssertNotNull(priorityProfile, nameof(priorityProfile));
             Argument.AssertNotNull(computeProfile, nameof(computeProfile));
 
             Capacity = capacity;
-            PriorityProfile = priorityProfile;
-            VmSizesProfile = new ChangeTrackingList<BulkCreateVmSizeProfile>();
             ComputeProfile = computeProfile;
         }
 
@@ -38,26 +34,16 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         /// <param name="provisioningState"> The status of the last operation. </param>
         /// <param name="capacity"> Total capacity to achieve. It can be in terms of VMs or vCPUs. </param>
         /// <param name="capacityType"> Specifies capacity type for launching instances. It can be in terms of VMs or vCPUs. </param>
-        /// <param name="minCapacity"> The minimum capacity, expressed in units specified by capacityType, that Azure must be able to allocate for the request to proceed. If Azure cannot allocate at least this capacity with high confidence, the request is rejected with 409 Conflict (InsufficientCapacity) and no VMs are created. Otherwise, Azure allocates as much capacity as possible, up to the requested capacity. Must be greater than 0, less than capacity, and requires partialFulfillmentPolicy.mode to be Enabled. </param>
-        /// <param name="partialFulfillmentPolicy"> Controls how partial fulfillment is handled for a BulkCreate request. When enabled, Azure creates only the VMs or vCPUs it has high confidence can be successfully allocated, instead of attempting the entire request and potentially returning allocation failures. </param>
-        /// <param name="priorityProfile"> Configuration Options for Regular or Spot instances in BulkCreate. </param>
-        /// <param name="vmSizesProfile"> List of VM sizes supported for BulkCreate. Every virtual machine is created from the operation-level computeProfile regardless of the size selected, so no per-VM-size override can be supplied here. </param>
         /// <param name="computeProfile"> Compute Profile to configure the Virtual Machines. Applied uniformly to every virtual machine created by the operation. </param>
-        /// <param name="zoneAllocationPolicy"> Zone Allocation Policy for launching instances. </param>
         /// <param name="executionParameters"> Extra parameters that control how the request is executed, including the retry policy. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BulkCreateProperties(DateTimeOffset? createdOn, BulkInstancesOperationProvisioningState? provisioningState, int capacity, CapacityType? capacityType, int? minCapacity, PartialFulfillmentPolicy partialFulfillmentPolicy, PriorityProfile priorityProfile, IList<BulkCreateVmSizeProfile> vmSizesProfile, ComputeProfile computeProfile, ZoneAllocationPolicy zoneAllocationPolicy, BulkActionExecutionParameterDetail executionParameters, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BulkCreateProperties(DateTimeOffset? createdOn, BulkInstancesOperationProvisioningState? provisioningState, int capacity, CapacityType? capacityType, ComputeProfile computeProfile, BulkActionExecutionParameterDetail executionParameters, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             CreatedOn = createdOn;
             ProvisioningState = provisioningState;
             Capacity = capacity;
             CapacityType = capacityType;
-            MinCapacity = minCapacity;
-            PartialFulfillmentPolicy = partialFulfillmentPolicy;
-            PriorityProfile = priorityProfile;
-            VmSizesProfile = vmSizesProfile;
             ComputeProfile = computeProfile;
-            ZoneAllocationPolicy = zoneAllocationPolicy;
             ExecutionParameters = executionParameters;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -74,23 +60,8 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         /// <summary> Specifies capacity type for launching instances. It can be in terms of VMs or vCPUs. </summary>
         public CapacityType? CapacityType { get; set; }
 
-        /// <summary> The minimum capacity, expressed in units specified by capacityType, that Azure must be able to allocate for the request to proceed. If Azure cannot allocate at least this capacity with high confidence, the request is rejected with 409 Conflict (InsufficientCapacity) and no VMs are created. Otherwise, Azure allocates as much capacity as possible, up to the requested capacity. Must be greater than 0, less than capacity, and requires partialFulfillmentPolicy.mode to be Enabled. </summary>
-        public int? MinCapacity { get; set; }
-
-        /// <summary> Controls how partial fulfillment is handled for a BulkCreate request. When enabled, Azure creates only the VMs or vCPUs it has high confidence can be successfully allocated, instead of attempting the entire request and potentially returning allocation failures. </summary>
-        public PartialFulfillmentPolicy PartialFulfillmentPolicy { get; set; }
-
-        /// <summary> Configuration Options for Regular or Spot instances in BulkCreate. </summary>
-        public PriorityProfile PriorityProfile { get; set; }
-
-        /// <summary> List of VM sizes supported for BulkCreate. Every virtual machine is created from the operation-level computeProfile regardless of the size selected, so no per-VM-size override can be supplied here. </summary>
-        public IList<BulkCreateVmSizeProfile> VmSizesProfile { get; }
-
         /// <summary> Compute Profile to configure the Virtual Machines. Applied uniformly to every virtual machine created by the operation. </summary>
         public ComputeProfile ComputeProfile { get; set; }
-
-        /// <summary> Zone Allocation Policy for launching instances. </summary>
-        public ZoneAllocationPolicy ZoneAllocationPolicy { get; set; }
 
         /// <summary> Extra parameters that control how the request is executed, including the retry policy. </summary>
         public BulkActionExecutionParameterDetail ExecutionParameters { get; set; }

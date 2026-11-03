@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
     /// <summary>
     /// Class to contain criteria for item level restore
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ItemPathBasedRestoreCriteria"/>, <see cref="RangeBasedItemLevelRestoreCriteria"/>, <see cref="GenericRestoreDataSourceCriteria"/>, <see cref="KubernetesStorageClassRestoreCriteria"/>, <see cref="KubernetesPVRestoreCriteria"/>, <see cref="KubernetesClusterRestoreCriteria"/>, and <see cref="KubernetesClusterVaultTierRestoreCriteria"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="GenericRestoreDataSourceCriteria"/>, <see cref="ItemPathBasedRestoreCriteria"/>, <see cref="KubernetesClusterRestoreCriteria"/>, <see cref="KubernetesClusterVaultTierRestoreCriteria"/>, <see cref="KubernetesPVRestoreCriteria"/>, <see cref="KubernetesStorageClassRestoreCriteria"/>, and <see cref="RangeBasedItemLevelRestoreCriteria"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownItemLevelRestoreCriteria))]
     public abstract partial class ItemLevelRestoreCriteria : IJsonModel<ItemLevelRestoreCriteria>
@@ -125,20 +125,20 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "ItemPathBasedRestoreCriteria":
-                        return ItemPathBasedRestoreCriteria.DeserializeItemPathBasedRestoreCriteria(element, options);
-                    case "RangeBasedItemLevelRestoreCriteria":
-                        return RangeBasedItemLevelRestoreCriteria.DeserializeRangeBasedItemLevelRestoreCriteria(element, options);
                     case "GenericRestoreDatasourceCriteria":
                         return GenericRestoreDataSourceCriteria.DeserializeGenericRestoreDataSourceCriteria(element, options);
-                    case "KubernetesStorageClassRestoreCriteria":
-                        return KubernetesStorageClassRestoreCriteria.DeserializeKubernetesStorageClassRestoreCriteria(element, options);
-                    case "KubernetesPVRestoreCriteria":
-                        return KubernetesPVRestoreCriteria.DeserializeKubernetesPVRestoreCriteria(element, options);
+                    case "ItemPathBasedRestoreCriteria":
+                        return ItemPathBasedRestoreCriteria.DeserializeItemPathBasedRestoreCriteria(element, options);
                     case "KubernetesClusterRestoreCriteria":
                         return KubernetesClusterRestoreCriteria.DeserializeKubernetesClusterRestoreCriteria(element, options);
                     case "KubernetesClusterVaultTierRestoreCriteria":
                         return KubernetesClusterVaultTierRestoreCriteria.DeserializeKubernetesClusterVaultTierRestoreCriteria(element, options);
+                    case "KubernetesPVRestoreCriteria":
+                        return KubernetesPVRestoreCriteria.DeserializeKubernetesPVRestoreCriteria(element, options);
+                    case "KubernetesStorageClassRestoreCriteria":
+                        return KubernetesStorageClassRestoreCriteria.DeserializeKubernetesStorageClassRestoreCriteria(element, options);
+                    case "RangeBasedItemLevelRestoreCriteria":
+                        return RangeBasedItemLevelRestoreCriteria.DeserializeRangeBasedItemLevelRestoreCriteria(element, options);
                 }
             }
             return UnknownItemLevelRestoreCriteria.DeserializeUnknownItemLevelRestoreCriteria(element, options);

@@ -337,7 +337,7 @@ namespace Azure.AI.Projects.Evaluation
                 task,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 properties ?? new ChangeTrackingDictionary<string, string>(),
-                systemData,
+                systemData ?? new ChangeTrackingDictionary<string, string>(),
                 additionalBinaryDataProperties);
         }
     }

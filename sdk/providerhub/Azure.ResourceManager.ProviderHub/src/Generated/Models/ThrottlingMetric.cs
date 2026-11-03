@@ -29,12 +29,14 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// <param name="metricType"> The throttling metric type. </param>
         /// <param name="limit"> The limit. </param>
         /// <param name="interval"> The interval. </param>
+        /// <param name="bucketSize"> The bucket size. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ThrottlingMetric(ThrottlingMetricType metricType, long limit, TimeSpan? interval, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ThrottlingMetric(ThrottlingMetricType metricType, long limit, TimeSpan? interval, string bucketSize, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             MetricType = metricType;
             Limit = limit;
             Interval = interval;
+            BucketSize = bucketSize;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -46,5 +48,8 @@ namespace Azure.ResourceManager.ProviderHub.Models
 
         /// <summary> The interval. </summary>
         public TimeSpan? Interval { get; set; }
+
+        /// <summary> The bucket size. </summary>
+        public string BucketSize { get; set; }
     }
 }

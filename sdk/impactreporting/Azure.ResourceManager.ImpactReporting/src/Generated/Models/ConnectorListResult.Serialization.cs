@@ -167,10 +167,10 @@ namespace Azure.ResourceManager.ImpactReporting.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ConnectorListResult(value, nextLink, additionalBinaryDataProperties);
+            return new ConnectorListResult(value ?? new ChangeTrackingList<ImpactConnectorData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

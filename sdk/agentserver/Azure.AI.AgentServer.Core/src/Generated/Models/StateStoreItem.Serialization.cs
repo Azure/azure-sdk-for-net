@@ -257,7 +257,7 @@ namespace Azure.AI.AgentServer.Core.Storage
                 id,
                 @object,
                 key,
-                value,
+                value ?? new ChangeTrackingDictionary<string, BinaryData>(),
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 etag,
                 createdAt,

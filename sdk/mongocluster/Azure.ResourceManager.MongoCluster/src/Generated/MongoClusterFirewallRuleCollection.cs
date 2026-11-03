@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.MongoCluster
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<MongoClusterFirewallRuleData, MongoClusterFirewallRuleResource>(new FirewallRulesGetByMongoClusterAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<MongoClusterFirewallRuleData, MongoClusterFirewallRuleResource>(new MongoClusterFirewallRuleDataAsyncCollectionResultOfT(
                 _firewallRulesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.MongoCluster
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<MongoClusterFirewallRuleData, MongoClusterFirewallRuleResource>(new FirewallRulesGetByMongoClusterCollectionResultOfT(
+            return new PageableWrapper<MongoClusterFirewallRuleData, MongoClusterFirewallRuleResource>(new MongoClusterFirewallRuleDataCollectionResultOfT(
                 _firewallRulesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

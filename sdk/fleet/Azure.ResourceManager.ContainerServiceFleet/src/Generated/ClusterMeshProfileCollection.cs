@@ -297,7 +297,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ClusterMeshProfileData, ClusterMeshProfileResource>(new ClusterMeshProfilesGetByFleetAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<ClusterMeshProfileData, ClusterMeshProfileResource>(new ClusterMeshProfileDataAsyncCollectionResultOfT(
                 _clusterMeshProfilesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -331,7 +331,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ClusterMeshProfileData, ClusterMeshProfileResource>(new ClusterMeshProfilesGetByFleetCollectionResultOfT(
+            return new PageableWrapper<ClusterMeshProfileData, ClusterMeshProfileResource>(new ClusterMeshProfileDataCollectionResultOfT(
                 _clusterMeshProfilesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

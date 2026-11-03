@@ -175,7 +175,7 @@ namespace Azure.Security.KeyVault.Administration
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new EkmProxyClientCertificateInfo(caCertificates, subjectCommonName, additionalBinaryDataProperties);
+            return new EkmProxyClientCertificateInfo(caCertificates ?? new ChangeTrackingList<BinaryData>(), subjectCommonName, additionalBinaryDataProperties);
         }
     }
 }

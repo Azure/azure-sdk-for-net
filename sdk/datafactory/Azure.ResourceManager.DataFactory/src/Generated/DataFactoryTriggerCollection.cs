@@ -291,7 +291,7 @@ namespace Azure.ResourceManager.DataFactory
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DataFactoryTriggerData, DataFactoryTriggerResource>(new TriggersGetByFactoryAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<DataFactoryTriggerData, DataFactoryTriggerResource>(new DataFactoryTriggerDataAsync0CollectionResultOfT(
                 _triggersRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -325,7 +325,7 @@ namespace Azure.ResourceManager.DataFactory
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DataFactoryTriggerData, DataFactoryTriggerResource>(new TriggersGetByFactoryCollectionResultOfT(
+            return new PageableWrapper<DataFactoryTriggerData, DataFactoryTriggerResource>(new DataFactoryTriggerData0CollectionResultOfT(
                 _triggersRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

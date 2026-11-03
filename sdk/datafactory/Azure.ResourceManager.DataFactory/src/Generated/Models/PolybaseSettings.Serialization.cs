@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     ReadUseTypeDefault(prop, ref useTypeDefault);
                     continue;
                 }
-                additionalProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                additionalProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
             }
             return new PolybaseSettings(rejectType, rejectValue, rejectSampleValue, useTypeDefault, additionalProperties);
         }

@@ -46,17 +46,5 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             StorageApplianceName = storageApplianceName;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
-
-        /// <summary> The credentials of the administrative interface on this storage appliance. The password field is expected to be an Azure Key Vault key URL. Until the cluster is converted to utilize managed identity by setting the secret archive settings, the actual password value should be provided instead. </summary>
-        public AdministrativeCredentials AdminCredentials { get; set; }
-
-        /// <summary> The slot that storage appliance is in the rack based on the BOM configuration. </summary>
-        public long RackSlot { get; set; }
-
-        /// <summary> The serial number of the appliance. </summary>
-        public string SerialNumber { get; set; }
-
-        /// <summary> The user-provided name for the storage appliance that will be created from this specification. </summary>
-        public string StorageApplianceName { get; set; }
     }
 }

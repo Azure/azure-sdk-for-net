@@ -281,7 +281,7 @@ namespace Azure.ResourceManager.Enclave
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<VirtualEnclaveApprovalData, VirtualEnclaveApprovalResource>(new ApprovalGetByParentAsyncCollectionResultOfT(_approvalRestClient, Id.ToString(), context, "VirtualEnclaveApprovalCollection.GetAll"), data => new VirtualEnclaveApprovalResource(Client, data));
+            return new AsyncPageableWrapper<VirtualEnclaveApprovalData, VirtualEnclaveApprovalResource>(new VirtualEnclaveApprovalDataAsyncCollectionResultOfT(_approvalRestClient, Id.ToString(), context, "VirtualEnclaveApprovalCollection.GetAll"), data => new VirtualEnclaveApprovalResource(Client, data));
         }
 
         /// <summary>
@@ -309,7 +309,7 @@ namespace Azure.ResourceManager.Enclave
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<VirtualEnclaveApprovalData, VirtualEnclaveApprovalResource>(new ApprovalGetByParentCollectionResultOfT(_approvalRestClient, Id.ToString(), context, "VirtualEnclaveApprovalCollection.GetAll"), data => new VirtualEnclaveApprovalResource(Client, data));
+            return new PageableWrapper<VirtualEnclaveApprovalData, VirtualEnclaveApprovalResource>(new VirtualEnclaveApprovalDataCollectionResultOfT(_approvalRestClient, Id.ToString(), context, "VirtualEnclaveApprovalCollection.GetAll"), data => new VirtualEnclaveApprovalResource(Client, data));
         }
 
         /// <summary>

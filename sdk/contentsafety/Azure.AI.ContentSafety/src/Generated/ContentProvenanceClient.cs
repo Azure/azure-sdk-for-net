@@ -88,7 +88,7 @@ namespace Azure.AI.ContentSafety
         /// <summary> Initializes a new instance of ContentProvenanceClient from a <see cref="ContentProvenanceClientSettings"/>. </summary>
         /// <param name="settings"> The settings for ContentProvenanceClient. </param>
         [Experimental("SCME0002")]
-        public ContentProvenanceClient(ContentProvenanceClientSettings settings) : this(settings?.Endpoint, settings?.CredentialProvider as TokenCredential, settings?.Options)
+        public ContentProvenanceClient(ContentProvenanceClientSettings settings) : this(string.Equals(settings?.Credential?.CredentialSource, "apikeycredential", StringComparison.OrdinalIgnoreCase) ? new AzureKeyCredentialPolicy(new AzureKeyCredential(settings.Credential.Key), AuthorizationHeader) : new BearerTokenAuthenticationPolicy(settings?.CredentialProvider as TokenCredential, AuthorizationScopes), settings?.Endpoint, settings?.Options)
         {
         }
 

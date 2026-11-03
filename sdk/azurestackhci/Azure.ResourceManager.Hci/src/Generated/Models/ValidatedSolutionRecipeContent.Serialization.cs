@@ -167,10 +167,10 @@ namespace Azure.ResourceManager.Hci.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ValidatedSolutionRecipeContent(info, capabilities, components, additionalBinaryDataProperties);
+            return new ValidatedSolutionRecipeContent(info, capabilities, components ?? new ChangeTrackingList<ValidatedSolutionRecipeComponent>(), additionalBinaryDataProperties);
         }
     }
 }

@@ -169,7 +169,7 @@ namespace Azure.Messaging.EventGrid.Namespaces
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new AcknowledgeRequest(lockTokens, additionalBinaryDataProperties);
+            return new AcknowledgeRequest(lockTokens ?? new ChangeTrackingList<string>(), additionalBinaryDataProperties);
         }
     }
 }

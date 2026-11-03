@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.Avs
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<AvsCloudLinkData, AvsCloudLinkResource>(new CloudLinksGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<AvsCloudLinkData, AvsCloudLinkResource>(new AvsCloudLinkDataAsyncCollectionResultOfT(
                 _cloudLinksRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.Avs
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<AvsCloudLinkData, AvsCloudLinkResource>(new CloudLinksGetAllCollectionResultOfT(
+            return new PageableWrapper<AvsCloudLinkData, AvsCloudLinkResource>(new AvsCloudLinkDataCollectionResultOfT(
                 _cloudLinksRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

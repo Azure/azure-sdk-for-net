@@ -17,3 +17,5 @@ extends:
     Artifacts:
     - name: Azure.ResourceManager.Databricks
       safeName: AzureResourceManagerDatabricks
+    - name: Azure.Provisioning.Databricks
+      safeName: AzureProvisioningDatabricks

@@ -3,14 +3,18 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
 using System.ClientModel.Primitives;
-using System.Collections.Generic;
 using System.Text.Json;
 
 namespace Azure.AI.Projects
 {
-    /// <summary> Caller-supplied inputs for a data generation job. </summary>
-    public partial class DataGenerationJobInputs : IJsonModel<DataGenerationJobInputs>
+    /// <summary>
+    /// Caller-supplied inputs for a data generation job.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="EvaluationDataGenerationJobInputs"/>, <see cref="ReinforcementFineTuningDataGenerationJobInputs"/>, and <see cref="SupervisedFineTuningDataGenerationJobInputs"/>.
+    /// </summary>
+    [PersistableModelProxy(typeof(UnknownDataGenerationJobInputs))]
+    public abstract partial class DataGenerationJobInputs : IJsonModel<DataGenerationJobInputs>
     {
         /// <summary> Initializes a new instance of <see cref="DataGenerationJobInputs"/> for deserialization. </summary>
         internal DataGenerationJobInputs()
@@ -57,6 +61,16 @@ namespace Azure.AI.Projects
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<DataGenerationJobInputs>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
+        /// <param name="dataGenerationJobInputs"> The <see cref="DataGenerationJobInputs"/> to serialize into <see cref="BinaryContent"/>. </param>
+        public static implicit operator BinaryContent(DataGenerationJobInputs dataGenerationJobInputs)
+        {
+            if (dataGenerationJobInputs == null)
+            {
+                return null;
+            }
+            return BinaryContent.Create(dataGenerationJobInputs, ModelSerializationExtensions.WireOptions);
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DataGenerationJobInputs>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -84,15 +98,10 @@ namespace Azure.AI.Projects
                 writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
-            writer.WritePropertyName("options"u8);
-            writer.WriteObjectValue(Options, options);
+            writer.WritePropertyName("generation_configuration"u8);
+            writer.WriteObjectValue(GenerationConfiguration, options);
             writer.WritePropertyName("scenario"u8);
             writer.WriteStringValue(Scenario.ToString());
-            if (Optional.IsDefined(OutputOptions))
-            {
-                writer.WritePropertyName("output_options"u8);
-                writer.WriteObjectValue(OutputOptions, options);
-            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -135,60 +144,19 @@ namespace Azure.AI.Projects
             {
                 return null;
             }
-            string name = default;
-            IList<DataGenerationJobSource> sources = default;
-            DataGenerationJobOptions options0 = default;
-            DataGenerationJobScenario scenario = default;
-            DataGenerationJobOutputOptions outputOptions = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            foreach (var prop in element.EnumerateObject())
+            if (element.TryGetProperty("scenario"u8, out JsonElement discriminator))
             {
-                if (prop.NameEquals("name"u8))
+                switch (discriminator.GetString())
                 {
-                    name = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("sources"u8))
-                {
-                    List<DataGenerationJobSource> array = new List<DataGenerationJobSource>();
-                    foreach (var item in prop.Value.EnumerateArray())
-                    {
-                        array.Add(DataGenerationJobSource.DeserializeDataGenerationJobSource(item, options));
-                    }
-                    sources = array;
-                    continue;
-                }
-                if (prop.NameEquals("options"u8))
-                {
-                    options0 = DataGenerationJobOptions.DeserializeDataGenerationJobOptions(prop.Value, options);
-                    continue;
-                }
-                if (prop.NameEquals("scenario"u8))
-                {
-                    scenario = new DataGenerationJobScenario(prop.Value.GetString());
-                    continue;
-                }
-                if (prop.NameEquals("output_options"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    outputOptions = DataGenerationJobOutputOptions.DeserializeDataGenerationJobOutputOptions(prop.Value, options);
-                    continue;
-                }
-                if (options.Format != "W")
-                {
-                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
+                    case "evaluation":
+                        return EvaluationDataGenerationJobInputs.DeserializeEvaluationDataGenerationJobInputs(element, options);
+                    case "reinforcement_finetuning_preview":
+                        return ReinforcementFineTuningDataGenerationJobInputs.DeserializeReinforcementFineTuningDataGenerationJobInputs(element, options);
+                    case "supervised_finetuning_preview":
+                        return SupervisedFineTuningDataGenerationJobInputs.DeserializeSupervisedFineTuningDataGenerationJobInputs(element, options);
                 }
             }
-            return new DataGenerationJobInputs(
-                name,
-                sources,
-                options0,
-                scenario,
-                outputOptions,
-                additionalBinaryDataProperties);
+            return UnknownDataGenerationJobInputs.DeserializeUnknownDataGenerationJobInputs(element, options);
         }
     }
 }

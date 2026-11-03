@@ -146,7 +146,7 @@ namespace Azure.AI.Language.Text.Authoring
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new DocumentEntityRecognitionEvalResult(entities, additionalBinaryDataProperties);
+            return new DocumentEntityRecognitionEvalResult(entities ?? new ChangeTrackingList<DocumentEntityRegionEvalResult>(), additionalBinaryDataProperties);
         }
     }
 }

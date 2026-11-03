@@ -26,12 +26,16 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="resourceArmId"> arm id of the soft-deleted resource. </param>
         /// <param name="softDeletedArtifactType"> artifact type of the soft-deleted resource. </param>
         /// <param name="softDeletedOn"> The timestamp for when the resource is soft-deleted. In dateTime offset format. </param>
+        /// <param name="consumptionEndsOn"> The timestamp after which a soft-deleted gallery image version is no longer consumable for VM/VMSS creation or VMSS scale out. It is calculated from the soft-deleted time plus the retention period. In dateTime offset format. </param>
+        /// <param name="hardDeletionTargetOn"> The timestamp at which a soft-deleted gallery image version is permanently (hard) deleted and can no longer be recovered. In dateTime offset format. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal GallerySoftDeletedResourceProperties(ResourceIdentifier resourceArmId, GallerySoftDeletedArtifactType? softDeletedArtifactType, DateTimeOffset? softDeletedOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal GallerySoftDeletedResourceProperties(ResourceIdentifier resourceArmId, GallerySoftDeletedArtifactType? softDeletedArtifactType, DateTimeOffset? softDeletedOn, DateTimeOffset? consumptionEndsOn, DateTimeOffset? hardDeletionTargetOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ResourceArmId = resourceArmId;
             SoftDeletedArtifactType = softDeletedArtifactType;
             SoftDeletedOn = softDeletedOn;
+            ConsumptionEndsOn = consumptionEndsOn;
+            HardDeletionTargetOn = hardDeletionTargetOn;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -43,5 +47,11 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> The timestamp for when the resource is soft-deleted. In dateTime offset format. </summary>
         public DateTimeOffset? SoftDeletedOn { get; set; }
+
+        /// <summary> The timestamp after which a soft-deleted gallery image version is no longer consumable for VM/VMSS creation or VMSS scale out. It is calculated from the soft-deleted time plus the retention period. In dateTime offset format. </summary>
+        public DateTimeOffset? ConsumptionEndsOn { get; }
+
+        /// <summary> The timestamp at which a soft-deleted gallery image version is permanently (hard) deleted and can no longer be recovered. In dateTime offset format. </summary>
+        public DateTimeOffset? HardDeletionTargetOn { get; }
     }
 }

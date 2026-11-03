@@ -152,10 +152,10 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new DaprSecretsCollection(value, additionalBinaryDataProperties);
+            return new DaprSecretsCollection(value ?? new ChangeTrackingList<ContainerAppDaprSecret>(), additionalBinaryDataProperties);
         }
     }
 }

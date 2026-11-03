@@ -167,10 +167,10 @@ namespace Azure.ResourceManager.AppService.SreAgent.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new AgentSpaceListResult(value, nextLink, additionalBinaryDataProperties);
+            return new AgentSpaceListResult(value ?? new ChangeTrackingList<AgentSpaceData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

@@ -25,10 +25,10 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="id"> Resource ID. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="name"> Name of the resource. </param>
-        /// <param name="type"> Resource type. </param>
+        /// <param name="resourceType"> Resource type. </param>
         /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="properties"> Properties of the DDoS detection rule. </param>
-        internal DdosDetectionRule(ResourceIdentifier id, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, string @type, ETag? eTag, DdosDetectionRulePropertiesFormat properties) : base(id, additionalBinaryDataProperties, name, @type)
+        internal DdosDetectionRule(ResourceIdentifier id, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, ResourceType? resourceType, ETag? eTag, DdosDetectionRulePropertiesFormat properties) : base(id, additionalBinaryDataProperties, name, resourceType)
         {
             ETag = eTag;
             Properties = properties;

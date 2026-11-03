@@ -154,7 +154,7 @@ namespace Azure.Analytics.Defender.Easm
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new DeltaDateResult(date, deltas, additionalBinaryDataProperties);
+            return new DeltaDateResult(date, deltas ?? new ChangeTrackingList<DailyDeltaTypeResult>(), additionalBinaryDataProperties);
         }
     }
 }

@@ -63,6 +63,22 @@ namespace Azure.Security.ConfidentialLedger
 
         private async ValueTask ProcessAsync(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline, bool async)
         {
+            // Only explicitly marked ledger-entry reads may fail over. For all other requests,
+            // preserve the normal pipeline response or exception without intercepting transport failures.
+            if (message.Request.Method != RequestMethod.Get || !IsEligible(message))
+            {
+                if (async)
+                {
+                    await ProcessNextAsync(message, pipeline).ConfigureAwait(false);
+                }
+                else
+                {
+                    ProcessNext(message, pipeline);
+                }
+
+                return;
+            }
+
             // Capture the primary endpoint before the request is mutated.
             Uri primaryEndpoint = message.Request.Uri.ToUri();
 
@@ -84,10 +100,7 @@ namespace Azure.Security.ConfidentialLedger
                 primaryException = ExceptionDispatchInfo.Capture(exception);
             }
 
-            // Only the supported ledger-entry reads are explicitly marked for failover. Other GETs,
-            // including governance, receipt, status, and pageable operations, stay on the primary.
-            if (message.Request.Method != RequestMethod.Get || !IsEligible(message) ||
-                (primaryException == null && !ShouldFailover(message.Response)))
+            if (primaryException == null && !ShouldFailover(message.Response))
             {
                 return;
             }

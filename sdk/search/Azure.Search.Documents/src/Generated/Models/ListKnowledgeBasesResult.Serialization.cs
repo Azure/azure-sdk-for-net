@@ -166,7 +166,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ListKnowledgeBasesResult(value, odataNextLink, additionalBinaryDataProperties);
+            return new ListKnowledgeBasesResult(value ?? new ChangeTrackingList<KnowledgeBase>(), odataNextLink, additionalBinaryDataProperties);
         }
     }
 }

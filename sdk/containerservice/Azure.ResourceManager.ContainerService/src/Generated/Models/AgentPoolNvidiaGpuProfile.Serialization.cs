@@ -89,6 +89,16 @@ namespace Azure.ResourceManager.ContainerService.Models
                 writer.WritePropertyName("migStrategy"u8);
                 writer.WriteStringValue(MigStrategy.Value.ToString());
             }
+            if (Optional.IsCollectionDefined(MigProfiles))
+            {
+                writer.WritePropertyName("migProfiles"u8);
+                writer.WriteStartArray();
+                foreach (GpuInstanceProfile item in MigProfiles)
+                {
+                    writer.WriteStringValue(item.ToString());
+                }
+                writer.WriteEndArray();
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -132,8 +142,9 @@ namespace Azure.ResourceManager.ContainerService.Models
                 return null;
             }
             GpuManagementMode? managementMode = default;
-            NvidiaDriverMode? driverMode = default;
-            MultiInstanceGpuStrategy? migStrategy = default;
+            AgentPoolNvidiaDriverMode? driverMode = default;
+            AgentPoolMultiInstanceGpuStrategy? migStrategy = default;
+            IList<GpuInstanceProfile> migProfiles = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -152,7 +163,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     {
                         continue;
                     }
-                    driverMode = new NvidiaDriverMode(prop.Value.GetString());
+                    driverMode = new AgentPoolNvidiaDriverMode(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("migStrategy"u8))
@@ -161,15 +172,29 @@ namespace Azure.ResourceManager.ContainerService.Models
                     {
                         continue;
                     }
-                    migStrategy = new MultiInstanceGpuStrategy(prop.Value.GetString());
+                    migStrategy = new AgentPoolMultiInstanceGpuStrategy(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("migProfiles"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<GpuInstanceProfile> array = new List<GpuInstanceProfile>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        array.Add(new GpuInstanceProfile(item.GetString()));
+                    }
+                    migProfiles = array;
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new AgentPoolNvidiaGpuProfile(managementMode, driverMode, migStrategy, additionalBinaryDataProperties);
+            return new AgentPoolNvidiaGpuProfile(managementMode, driverMode, migStrategy, migProfiles ?? new ChangeTrackingList<GpuInstanceProfile>(), additionalBinaryDataProperties);
         }
     }
 }

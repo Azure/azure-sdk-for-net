@@ -171,10 +171,10 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new AddressPrefixSetPropertiesFormat(addressPrefixes, provisioningState, additionalBinaryDataProperties);
+            return new AddressPrefixSetPropertiesFormat(addressPrefixes ?? new ChangeTrackingList<string>(), provisioningState, additionalBinaryDataProperties);
         }
     }
 }

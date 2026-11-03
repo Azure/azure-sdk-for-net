@@ -264,7 +264,7 @@ namespace Azure.ResourceManager.ProgrammableConnectivity.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new GatewayApplicationOwnerProperties(
@@ -283,7 +283,7 @@ namespace Azure.ResourceManager.ProgrammableConnectivity.Models
                 dataProtectionOfficer,
                 registeredGeographicAddress,
                 privacyPolicyUri,
-                localRepresentatives,
+                localRepresentatives ?? new ChangeTrackingList<ApplicationLocalRepresentative>(),
                 additionalBinaryDataProperties);
         }
     }

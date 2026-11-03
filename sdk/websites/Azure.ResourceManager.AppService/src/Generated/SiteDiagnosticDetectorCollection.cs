@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DetectorDefinitionResourceData, SiteDiagnosticDetectorResource>(new DetectorDefinitionResourcesGetSiteDetectorsAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<DetectorDefinitionResourceData, SiteDiagnosticDetectorResource>(new DetectorDefinitionResourceDataAsyncCollectionResultOfT(
                 _detectorDefinitionResourcesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DetectorDefinitionResourceData, SiteDiagnosticDetectorResource>(new DetectorDefinitionResourcesGetSiteDetectorsCollectionResultOfT(
+            return new PageableWrapper<DetectorDefinitionResourceData, SiteDiagnosticDetectorResource>(new DetectorDefinitionResourceDataCollectionResultOfT(
                 _detectorDefinitionResourcesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

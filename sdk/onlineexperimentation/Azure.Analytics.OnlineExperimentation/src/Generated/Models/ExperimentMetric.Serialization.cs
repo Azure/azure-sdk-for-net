@@ -255,7 +255,7 @@ namespace Azure.Analytics.OnlineExperimentation
                 lifecycle,
                 displayName,
                 description,
-                categories,
+                categories ?? new ChangeTrackingList<string>(),
                 desiredDirection,
                 definition,
                 eTag,

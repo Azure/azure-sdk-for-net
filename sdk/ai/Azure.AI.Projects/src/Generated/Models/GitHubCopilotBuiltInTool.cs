@@ -4,7 +4,7 @@
 
 namespace Azure.AI.Projects
 {
-    /// <summary> A customer-configurable GitHub Copilot built-in tool. </summary>
+    /// <summary> The legacy GitHub Copilot built-in tool names retained for compatibility. Use `MicrosoftCopilotBuiltInTool` for new integrations. </summary>
     internal enum GitHubCopilotBuiltInTool
     {
         /// <summary> Read and search files in the harness workspace. </summary>

@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Models
         /// <returns> A new <see cref="Models.PerformanceDetail"/> instance for mocking. </returns>
         public static PerformanceDetail PerformanceDetail(string dataSource = default)
         {
-            return new UnknownPerformanceDetail(default, default);
+            return new UnknownPerformanceDetail(dataSource is null ? default : new SapDiscoveryDataSource(dataSource), default);
         }
 
         /// <summary> The SAP instance specific performance data for Excel import. </summary>
@@ -217,14 +217,14 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Models
         /// <returns> A new <see cref="Models.ExcelPerformanceDetail"/> instance for mocking. </returns>
         public static ExcelPerformanceDetail ExcelPerformanceDetail(int? maxCpuLoad = default, int? totalSourceDbSizeGB = default)
         {
-            return new ExcelPerformanceDetail(default, default, maxCpuLoad, totalSourceDbSizeGB);
+            return new ExcelPerformanceDetail(SapDiscoveryDataSource.Excel, default, maxCpuLoad, totalSourceDbSizeGB);
         }
 
         /// <summary> The SAP instance specific performance data for native discovery. </summary>
         /// <returns> A new <see cref="Models.NativePerformanceDetail"/> instance for mocking. </returns>
         public static NativePerformanceDetail NativePerformanceDetail()
         {
-            return new NativePerformanceDetail(default, default);
+            return new NativePerformanceDetail(SapDiscoveryDataSource.Native, default);
         }
 
         /// <summary> Defines the request body for updating Server Instances resource. </summary>

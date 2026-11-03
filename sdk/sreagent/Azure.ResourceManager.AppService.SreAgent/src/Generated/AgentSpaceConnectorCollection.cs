@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.AppService.SreAgent
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<AgentSpaceConnectorData, AgentSpaceConnectorResource>(new AgentSpacesConnectorsGetByAgentSpaceAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<AgentSpaceConnectorData, AgentSpaceConnectorResource>(new AgentSpaceConnectorDataAsyncCollectionResultOfT(
                 _agentSpacesConnectorsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.AppService.SreAgent
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<AgentSpaceConnectorData, AgentSpaceConnectorResource>(new AgentSpacesConnectorsGetByAgentSpaceCollectionResultOfT(
+            return new PageableWrapper<AgentSpaceConnectorData, AgentSpaceConnectorResource>(new AgentSpaceConnectorDataCollectionResultOfT(
                 _agentSpacesConnectorsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

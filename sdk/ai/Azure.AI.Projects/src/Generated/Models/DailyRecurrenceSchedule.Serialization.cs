@@ -136,7 +136,7 @@ namespace Azure.AI.Projects.Evaluation
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new DailyRecurrenceSchedule(@type, additionalBinaryDataProperties, hours);
+            return new DailyRecurrenceSchedule(@type, additionalBinaryDataProperties, hours ?? new ChangeTrackingList<int>());
         }
     }
 }

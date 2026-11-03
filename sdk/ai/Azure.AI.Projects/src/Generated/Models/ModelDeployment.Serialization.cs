@@ -214,7 +214,7 @@ namespace Azure.AI.Projects
                 modelName,
                 modelVersion,
                 modelPublisher,
-                capabilities,
+                capabilities ?? new ChangeTrackingDictionary<string, string>(),
                 sku,
                 connectionName);
         }

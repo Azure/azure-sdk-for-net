@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Monitor.Agents.Mocking
 
         private ClientDiagnostics ObservabilityAgentsClientDiagnostics => _observabilityAgentsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Monitor.Agents.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ObservabilityAgents ObservabilityAgentsRestClient => _observabilityAgentsRestClient ??= new ObservabilityAgents(ObservabilityAgentsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-05-01-preview");
+        private ObservabilityAgents ObservabilityAgentsRestClient => _observabilityAgentsRestClient ??= new ObservabilityAgents(ObservabilityAgentsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.Monitor/observabilityAgents", out string apiVersion) ? apiVersion : "2026-05-01-preview");
 
         /// <summary>
         /// Lists observability agents in the specified subscription.
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Monitor.Agents.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ObservabilityAgentData, ObservabilityAgentResource>(new ObservabilityAgentsGetBySubscriptionAsyncCollectionResultOfT(ObservabilityAgentsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableMonitorAgentsSubscriptionResource.GetObservabilityAgents"), data => new ObservabilityAgentResource(Client, data));
+            return new AsyncPageableWrapper<ObservabilityAgentData, ObservabilityAgentResource>(new ObservabilityAgentDataAsync0CollectionResultOfT(ObservabilityAgentsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableMonitorAgentsSubscriptionResource.GetObservabilityAgents"), data => new ObservabilityAgentResource(Client, data));
         }
 
         /// <summary>
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Monitor.Agents.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ObservabilityAgentData, ObservabilityAgentResource>(new ObservabilityAgentsGetBySubscriptionCollectionResultOfT(ObservabilityAgentsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableMonitorAgentsSubscriptionResource.GetObservabilityAgents"), data => new ObservabilityAgentResource(Client, data));
+            return new PageableWrapper<ObservabilityAgentData, ObservabilityAgentResource>(new ObservabilityAgentData0CollectionResultOfT(ObservabilityAgentsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableMonitorAgentsSubscriptionResource.GetObservabilityAgents"), data => new ObservabilityAgentResource(Client, data));
         }
     }
 }

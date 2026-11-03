@@ -211,7 +211,7 @@ namespace Azure.AI.AgentServer.Core.Storage
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new CreateItemRequest(key, value, tags ?? new ChangeTrackingDictionary<string, string>(), additionalBinaryDataProperties);
+            return new CreateItemRequest(key, value ?? new ChangeTrackingDictionary<string, BinaryData>(), tags ?? new ChangeTrackingDictionary<string, string>(), additionalBinaryDataProperties);
         }
     }
 }

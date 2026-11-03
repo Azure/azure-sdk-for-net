@@ -8,12 +8,28 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> A WebLinkedService that uses client certificate based authentication to communicate with an HTTP endpoint. This scheme follows mutual authentication; the server must also provide valid credentials to the client. </summary>
     public partial class WebClientCertificateAuthentication : WebLinkedServiceTypeProperties
     {
+        /// <summary> Initializes a new instance of <see cref="WebClientCertificateAuthentication"/>. </summary>
+        /// <param name="uri"> The URL of the web service endpoint, e.g. https://www.microsoft.com . Type: string (or Expression with resultType string). </param>
+        /// <param name="pfx"> Base64-encoded contents of a PFX file. </param>
+        /// <param name="password"> Password for the PFX file. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="uri"/>, <paramref name="pfx"/> or <paramref name="password"/> is null. </exception>
+        public WebClientCertificateAuthentication(DataFactoryElement<string> uri, DataFactorySecret pfx, DataFactorySecret password) : base(uri, WebAuthenticationType.ClientCertificate)
+        {
+            Argument.AssertNotNull(uri, nameof(uri));
+            Argument.AssertNotNull(pfx, nameof(pfx));
+            Argument.AssertNotNull(password, nameof(password));
+
+            Pfx = pfx;
+            Password = password;
+        }
+
         /// <summary> Initializes a new instance of <see cref="WebClientCertificateAuthentication"/>. </summary>
         /// <param name="uri"> The URL of the web service endpoint, e.g. https://www.microsoft.com . Type: string (or Expression with resultType string). </param>
         /// <param name="authenticationType"> Type of authentication used to connect to the web table source. </param>

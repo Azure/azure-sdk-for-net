@@ -289,7 +289,7 @@ namespace Azure.ResourceManager.Monitor.Workspaces
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<MonitorIssueData, MonitorIssueResource>(new IssueGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<MonitorIssueData, MonitorIssueResource>(new MonitorIssueDataAsyncCollectionResultOfT(
                 _issueRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -323,7 +323,7 @@ namespace Azure.ResourceManager.Monitor.Workspaces
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<MonitorIssueData, MonitorIssueResource>(new IssueGetAllCollectionResultOfT(
+            return new PageableWrapper<MonitorIssueData, MonitorIssueResource>(new MonitorIssueDataCollectionResultOfT(
                 _issueRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

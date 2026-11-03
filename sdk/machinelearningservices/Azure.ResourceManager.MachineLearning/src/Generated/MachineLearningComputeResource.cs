@@ -531,7 +531,7 @@ namespace Azure.ResourceManager.MachineLearning
             {
                 CancellationToken = cancellationToken
             };
-            return new ComputeGetNodesAsyncCollectionResultOfT(
+            return new AmlComputeNodeInformationAsyncCollectionResultOfT(
                 _computeRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -570,7 +570,7 @@ namespace Azure.ResourceManager.MachineLearning
             {
                 CancellationToken = cancellationToken
             };
-            return new ComputeGetNodesCollectionResultOfT(
+            return new AmlComputeNodeInformationCollectionResultOfT(
                 _computeRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

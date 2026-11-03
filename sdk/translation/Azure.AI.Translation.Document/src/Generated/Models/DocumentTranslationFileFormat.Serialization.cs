@@ -261,8 +261,8 @@ namespace Azure.AI.Translation.Document
             }
             return new DocumentTranslationFileFormat(
                 format,
-                fileExtensions,
-                contentTypes,
+                fileExtensions ?? new ChangeTrackingList<string>(),
+                contentTypes ?? new ChangeTrackingList<string>(),
                 defaultFormatVersion,
                 formatVersions ?? new ChangeTrackingList<string>(),
                 @type,

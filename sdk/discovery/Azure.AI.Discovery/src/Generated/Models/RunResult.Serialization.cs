@@ -237,7 +237,7 @@ namespace Azure.AI.Discovery
                 completedOn,
                 createdBy,
                 toolReport,
-                outputData,
+                outputData ?? new ChangeTrackingList<OutputDataUri>(),
                 debugInfo,
                 additionalBinaryDataProperties);
         }

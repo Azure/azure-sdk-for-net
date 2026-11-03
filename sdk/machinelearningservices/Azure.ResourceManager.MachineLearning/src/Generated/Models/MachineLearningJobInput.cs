@@ -13,12 +13,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary>
     /// Command job definition.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="MachineLearningTableJobInput"/>, <see cref="MachineLearningCustomModelJobInput"/>, <see cref="MachineLearningFlowModelJobInput"/>, <see cref="MachineLearningLiteralJobInput"/>, <see cref="MachineLearningTritonModelJobInput"/>, <see cref="MachineLearningUriFileJobInput"/>, and <see cref="MachineLearningUriFolderJobInput"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="MachineLearningCustomModelJobInput"/>, <see cref="MachineLearningFlowModelJobInput"/>, <see cref="MachineLearningLiteralJobInput"/>, <see cref="MachineLearningTableJobInput"/>, <see cref="MachineLearningTritonModelJobInput"/>, <see cref="MachineLearningUriFileJobInput"/>, and <see cref="MachineLearningUriFolderJobInput"/>.
     /// </summary>
     public abstract partial class MachineLearningJobInput
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private string _description;
+        private protected bool _descriptionIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="MachineLearningJobInput"/>. </summary>
         /// <param name="jobInputType"> [Required] Specifies the type of job. </param>
@@ -33,14 +35,25 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal MachineLearningJobInput(string description, JobInputType jobInputType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Description = description;
+            _description = description;
             JobInputType = jobInputType;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Description for the input. </summary>
         [WirePath("description")]
-        public string Description { get; set; }
+        public string Description
+        {
+            get
+            {
+                return _description;
+            }
+            set
+            {
+                _description = value;
+                _descriptionIsDefined = true;
+            }
+        }
 
         /// <summary> [Required] Specifies the type of job. </summary>
         [WirePath("jobInputType")]

@@ -52,7 +52,7 @@ public class Sample_SessionFiles : SamplesBase
         File.WriteAllText(
             path: filePath,
             contents: "The word 'apple' uses the code 442345, while the word 'banana' uses the code 673457.");
-        SessionFileWriteResponse writeResponse = await sessionClient.UploadAsync(
+        SessionFileWriteResult writeResponse = await sessionClient.UploadAsync(
                 sessionStoragePath: filePath,
                 localPath: filePath
             );
@@ -132,7 +132,7 @@ public class Sample_SessionFiles : SamplesBase
             path: filePath,
             contents: "The word 'apple' uses the code 442345, while the word 'banana' uses the code 673457.");
 
-        SessionFileWriteResponse writeResponse = sessionClient.Upload(
+        SessionFileWriteResult writeResponse = sessionClient.Upload(
             sessionStoragePath: filePath,
             localPath: filePath
         );

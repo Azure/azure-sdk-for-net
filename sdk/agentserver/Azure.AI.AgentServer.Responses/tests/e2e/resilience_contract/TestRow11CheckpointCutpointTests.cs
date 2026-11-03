@@ -139,7 +139,7 @@ public class TestRow11CheckpointCutpointTests : CrashRecoveryE2ETestBase
             onPhaseEmitted();
 
             // Checkpoint the phase so a subsequent crash would resume past it (C1 semantics).
-            yield return stream.Checkpoint();
+            yield return stream.CreateCheckpointEvent();
         }
 
         await Task.Yield();

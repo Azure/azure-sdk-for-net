@@ -149,7 +149,7 @@ namespace Azure.AI.Vision.ImageAnalysis
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new DenseCaptionsResult(values, additionalBinaryDataProperties);
+            return new DenseCaptionsResult(values ?? new ChangeTrackingList<DenseCaption>(), additionalBinaryDataProperties);
         }
     }
 }

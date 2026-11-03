@@ -208,12 +208,12 @@ namespace Azure.ResourceManager.Compute.Recommender.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new ComputeSkuMixPlacementGenerateResult(
                 id,
-                placementChoices,
+                placementChoices ?? new ChangeTrackingList<ComputeSkuMixPlacementDeploymentChoice>(),
                 validUntilOn,
                 partialFulfillmentReason,
                 capacityLimits ?? new ChangeTrackingList<ComputeSkuMixPlacementCapacityLimit>(),

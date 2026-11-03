@@ -165,7 +165,7 @@ namespace Azure.AI.Vision.ImageAnalysis
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new DetectedTextWord(text, boundingPolygon, confidence, additionalBinaryDataProperties);
+            return new DetectedTextWord(text, boundingPolygon ?? new ChangeTrackingList<ImagePoint>(), confidence, additionalBinaryDataProperties);
         }
     }
 }

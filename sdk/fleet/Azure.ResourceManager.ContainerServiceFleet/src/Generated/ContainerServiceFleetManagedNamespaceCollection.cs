@@ -297,7 +297,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ContainerServiceFleetManagedNamespaceData, ContainerServiceFleetManagedNamespaceResource>(new FleetManagedNamespacesGetByFleetAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<ContainerServiceFleetManagedNamespaceData, ContainerServiceFleetManagedNamespaceResource>(new ContainerServiceFleetManagedNamespaceDataAsyncCollectionResultOfT(
                 _fleetManagedNamespacesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -331,7 +331,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ContainerServiceFleetManagedNamespaceData, ContainerServiceFleetManagedNamespaceResource>(new FleetManagedNamespacesGetByFleetCollectionResultOfT(
+            return new PageableWrapper<ContainerServiceFleetManagedNamespaceData, ContainerServiceFleetManagedNamespaceResource>(new ContainerServiceFleetManagedNamespaceDataCollectionResultOfT(
                 _fleetManagedNamespacesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    requestInterval = BinaryData.FromString(prop.Value.GetRawText());
+                    requestInterval = prop.Value.GetUtf8Bytes();
                     continue;
                 }
                 if (prop.NameEquals("additionalColumns"u8))
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     ReadAdditionalColumns(prop, ref additionalColumns);
                     continue;
                 }
-                additionalProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                additionalProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
             }
             return new RestSource(
                 copySourceType,

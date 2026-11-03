@@ -182,7 +182,7 @@ namespace Azure.AI.Projects.Agents
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new CodeConfiguration(runtime, entryPoint, dependencyResolution, contentHash, additionalBinaryDataProperties);
+            return new CodeConfiguration(runtime, entryPoint ?? new ChangeTrackingList<string>(), dependencyResolution, contentHash, additionalBinaryDataProperties);
         }
     }
 }

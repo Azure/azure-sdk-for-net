@@ -1,3 +1,4 @@
 <Solution>
   <Project Path="src/Type.Model.Inheritance.Recursive.csproj" />
+  <Project Path="tests/Type.Model.Inheritance.Recursive.Tests.csproj" />
 </Solution>

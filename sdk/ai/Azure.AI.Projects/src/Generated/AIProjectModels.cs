@@ -546,14 +546,14 @@ namespace Azure.AI.Projects
         /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="version"/> or <paramref name="modelVersion"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual ClientResult<CreateAsyncResponse> CreateModelVersionRequest(string name, string version, ModelVersion modelVersion, CancellationToken cancellationToken = default)
+        public virtual ClientResult<CreateAsyncResult> CreateModelVersionRequest(string name, string version, ModelVersion modelVersion, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNullOrEmpty(version, nameof(version));
             Argument.AssertNotNull(modelVersion, nameof(modelVersion));
 
             ClientResult result = CreateModelVersionRequest(name, version, modelVersion, cancellationToken.ToRequestOptions());
-            return ClientResult.FromValue((CreateAsyncResponse)result, result.GetRawResponse());
+            return ClientResult.FromValue((CreateAsyncResult)result, result.GetRawResponse());
         }
 
         /// <summary> Creates a model version asynchronously with blob content validation. Returns 202 Accepted with a location header for polling the operation status. </summary>
@@ -564,14 +564,14 @@ namespace Azure.AI.Projects
         /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="version"/> or <paramref name="modelVersion"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual async Task<ClientResult<CreateAsyncResponse>> CreateModelVersionRequestAsync(string name, string version, ModelVersion modelVersion, CancellationToken cancellationToken = default)
+        public virtual async Task<ClientResult<CreateAsyncResult>> CreateModelVersionRequestAsync(string name, string version, ModelVersion modelVersion, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNullOrEmpty(version, nameof(version));
             Argument.AssertNotNull(modelVersion, nameof(modelVersion));
 
             ClientResult result = await CreateModelVersionRequestAsync(name, version, modelVersion, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
-            return ClientResult.FromValue((CreateAsyncResponse)result, result.GetRawResponse());
+            return ClientResult.FromValue((CreateAsyncResult)result, result.GetRawResponse());
         }
 
         /// <summary>

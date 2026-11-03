@@ -234,7 +234,7 @@ namespace Azure.Analytics.PlanetaryComputer
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new StacMosaic(id, name, description, cql, additionalBinaryDataProperties);
+            return new StacMosaic(id, name, description, cql ?? new ChangeTrackingList<IDictionary<string, BinaryData>>(), additionalBinaryDataProperties);
         }
     }
 }

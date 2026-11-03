@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.OperationalInsights
                 }
                 if (prop.NameEquals("properties"u8))
                 {
-                    properties = BinaryData.FromString(prop.Value.GetRawText());
+                    properties = prop.Value.GetUtf8Bytes();
                     continue;
                 }
                 if (prop.NameEquals("etag"u8))
@@ -260,7 +260,7 @@ namespace Azure.ResourceManager.OperationalInsights
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new OperationalInsightsDataSourceData(

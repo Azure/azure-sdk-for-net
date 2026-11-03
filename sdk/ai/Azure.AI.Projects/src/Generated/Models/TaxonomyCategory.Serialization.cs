@@ -222,7 +222,7 @@ namespace Azure.AI.Projects.Evaluation
                 name,
                 description,
                 riskCategory,
-                subCategories,
+                subCategories ?? new ChangeTrackingList<TaxonomySubCategory>(),
                 properties ?? new ChangeTrackingDictionary<string, string>(),
                 additionalBinaryDataProperties);
         }

@@ -169,7 +169,7 @@ namespace Azure.AI.Projects.Memory
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new MemoryStoreSearchResponse(searchId, memories, usage, additionalBinaryDataProperties);
+            return new MemoryStoreSearchResponse(searchId, memories ?? new ChangeTrackingList<MemorySearchItem>(), usage, additionalBinaryDataProperties);
         }
     }
 }

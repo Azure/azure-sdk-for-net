@@ -192,7 +192,7 @@ namespace Azure.AI.Projects
                 dataSchema,
                 metrics ?? new ChangeTrackingDictionary<string, EvaluatorMetric>(),
                 additionalBinaryDataProperties,
-                dimensions,
+                dimensions ?? new ChangeTrackingList<EvaluationsDimension>(),
                 passThreshold);
         }
     }

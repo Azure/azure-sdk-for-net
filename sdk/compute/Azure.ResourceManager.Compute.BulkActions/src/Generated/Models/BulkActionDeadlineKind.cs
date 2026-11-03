@@ -11,13 +11,13 @@ using Azure.ResourceManager.Compute.BulkActions;
 
 namespace Azure.ResourceManager.Compute.BulkActions.Models
 {
-    /// <summary> The types of deadlines supported by Bulkactions. </summary>
+    /// <summary> The deadline behavior for a bulk action. </summary>
     public readonly partial struct BulkActionDeadlineKind : IEquatable<BulkActionDeadlineKind>
     {
         private readonly string _value;
-        /// <summary> Initiate the operation at the given deadline. </summary>
+        /// <summary> Bulk Actions attempts to start the operation at the specified deadline. </summary>
         private const string InitiateAtValue = "InitiateAt";
-        /// <summary> Complete the operation by the given deadline. </summary>
+        /// <summary> Bulk Actions attempts to complete the operation by the specified deadline. </summary>
         private const string CompleteByValue = "CompleteBy";
         private const string UnknownValue = "Unknown";
 
@@ -31,10 +31,10 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
             _value = value;
         }
 
-        /// <summary> Initiate the operation at the given deadline. </summary>
+        /// <summary> Bulk Actions attempts to start the operation at the specified deadline. </summary>
         public static BulkActionDeadlineKind InitiateAt { get; } = new BulkActionDeadlineKind(InitiateAtValue);
 
-        /// <summary> Complete the operation by the given deadline. </summary>
+        /// <summary> Bulk Actions attempts to complete the operation by the specified deadline. </summary>
         public static BulkActionDeadlineKind CompleteBy { get; } = new BulkActionDeadlineKind(CompleteByValue);
 
         /// <summary> Gets the Unknown. </summary>

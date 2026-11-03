@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="restorePointLabel"> The label of restore point for backup request by user. </param>
         /// <param name="location"> Resource location. </param>
         /// <returns> A new <see cref="Sql.SqlServerDatabaseRestorePointData"/> instance for mocking. </returns>
-        public static SqlServerDatabaseRestorePointData SqlServerDatabaseRestorePointData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, RestorePointType? restorePointType, DateTimeOffset? earliestRestoreOn, DateTimeOffset? restorePointCreatedOn, string restorePointLabel, AzureLocation? location)
+        public static SqlServerDatabaseRestorePointData SqlServerDatabaseRestorePointData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, RestorePointType? restorePointType = default, DateTimeOffset? earliestRestoreOn = default, DateTimeOffset? restorePointCreatedOn = default, string restorePointLabel = default, AzureLocation? location = default)
         {
             return new SqlServerDatabaseRestorePointData(
                 id,
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="clientClassificationSource"> Gets or sets the ClientClassificationSource. </param>
         /// <param name="managedBy"> Resource that manages the sensitivity label. </param>
         /// <returns> A new <see cref="Sql.SensitivityLabelData"/> instance for mocking. </returns>
-        public static SensitivityLabelData SensitivityLabelData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string schemaName, string tableName, string columnName, string labelName, string labelId, string informationType, string informationTypeId, bool? isDisabled, SensitivityLabelRank? rank, ClientClassificationSource? clientClassificationSource, string managedBy)
+        public static SensitivityLabelData SensitivityLabelData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string schemaName = default, string tableName = default, string columnName = default, string labelName = default, string labelId = default, string informationType = default, string informationTypeId = default, bool? isDisabled = default, SensitivityLabelRank? rank = default, ClientClassificationSource? clientClassificationSource = default, string managedBy = default)
         {
             return new SensitivityLabelData(
                 id,
@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="managedBy"> Resource that manages the database. </param>
         /// <param name="identity"> The Azure Active Directory identity of the database. </param>
         /// <returns> A new <see cref="Sql.SqlDatabaseData"/> instance for mocking. </returns>
-        public static SqlDatabaseData SqlDatabaseData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, SqlDatabaseCreateMode? createMode, string collation, long? maxSizeBytes, SampleSchemaName? sampleName, ResourceIdentifier elasticPoolId, ResourceIdentifier sourceDatabaseId, SqlDatabaseStatus? status, Guid? databaseId, DateTimeOffset? createdOn, string currentServiceObjectiveName, string requestedServiceObjectiveName, AzureLocation? defaultSecondaryLocation, ResourceIdentifier failoverGroupId, DateTimeOffset? restorePointInTime, DateTimeOffset? sourceDatabaseDeletedOn, ResourceIdentifier recoveryServicesRecoveryPointId, ResourceIdentifier longTermRetentionBackupResourceId, ResourceIdentifier recoverableDatabaseId, ResourceIdentifier restorableDroppedDatabaseId, CatalogCollationType? catalogCollation, bool? isZoneRedundant, DatabaseLicenseType? licenseType, long? maxLogSizeBytes, DateTimeOffset? earliestRestoreOn, DatabaseReadScale? readScale, int? highAvailabilityReplicaCount, SecondaryType? secondaryType, SqlSku currentSku, int? autoPauseDelay, SqlBackupStorageRedundancy? currentBackupStorageRedundancy, SqlBackupStorageRedundancy? requestedBackupStorageRedundancy, double? minCapacity, DateTimeOffset? pausedOn, DateTimeOffset? resumedOn, ResourceIdentifier maintenanceConfigurationId, bool? isLedgerOn, bool? isInfraEncryptionEnabled, Guid? federatedClientId, IDictionary<string, SqlDatabaseKey> keys, string encryptionProtector, SqlAlwaysEncryptedEnclaveType? preferredEnclaveType, bool? useFreeLimit, FreeLimitExhaustionBehavior? freeLimitExhaustionBehavior, ResourceIdentifier sourceResourceId, bool? manualCutover, bool? performCutover, SqlAvailabilityZoneType? availabilityZone, bool? encryptionProtectorAutoRotation, string provisioningState, SqlSku sku, string kind, string managedBy, DatabaseIdentity identity)
+        public static SqlDatabaseData SqlDatabaseData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, SqlDatabaseCreateMode? createMode = default, string collation = default, long? maxSizeBytes = default, SampleSchemaName? sampleName = default, ResourceIdentifier elasticPoolId = default, ResourceIdentifier sourceDatabaseId = default, SqlDatabaseStatus? status = default, Guid? databaseId = default, DateTimeOffset? createdOn = default, string currentServiceObjectiveName = default, string requestedServiceObjectiveName = default, AzureLocation? defaultSecondaryLocation = default, ResourceIdentifier failoverGroupId = default, DateTimeOffset? restorePointInTime = default, DateTimeOffset? sourceDatabaseDeletedOn = default, ResourceIdentifier recoveryServicesRecoveryPointId = default, ResourceIdentifier longTermRetentionBackupResourceId = default, ResourceIdentifier recoverableDatabaseId = default, ResourceIdentifier restorableDroppedDatabaseId = default, CatalogCollationType? catalogCollation = default, bool? isZoneRedundant = default, DatabaseLicenseType? licenseType = default, long? maxLogSizeBytes = default, DateTimeOffset? earliestRestoreOn = default, DatabaseReadScale? readScale = default, int? highAvailabilityReplicaCount = default, SecondaryType? secondaryType = default, SqlSku currentSku = default, int? autoPauseDelay = default, SqlBackupStorageRedundancy? currentBackupStorageRedundancy = default, SqlBackupStorageRedundancy? requestedBackupStorageRedundancy = default, double? minCapacity = default, DateTimeOffset? pausedOn = default, DateTimeOffset? resumedOn = default, ResourceIdentifier maintenanceConfigurationId = default, bool? isLedgerOn = default, bool? isInfraEncryptionEnabled = default, Guid? federatedClientId = default, IDictionary<string, SqlDatabaseKey> keys = default, string encryptionProtector = default, SqlAlwaysEncryptedEnclaveType? preferredEnclaveType = default, bool? useFreeLimit = default, FreeLimitExhaustionBehavior? freeLimitExhaustionBehavior = default, ResourceIdentifier sourceResourceId = default, bool? manualCutover = default, bool? performCutover = default, SqlAvailabilityZoneType? availabilityZone = default, bool? encryptionProtectorAutoRotation = default, string provisioningState = default, SqlSku sku = default, string kind = default, string managedBy = default, DatabaseIdentity identity = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -430,7 +430,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="provisioningState"> Specifies the provisioning state for this resource. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <returns> A new <see cref="Models.SqlDatabasePatch"/> instance for mocking. </returns>
-        public static SqlDatabasePatch SqlDatabasePatch(SqlSku sku, DatabaseIdentity identity, SqlDatabaseCreateMode? createMode, string collation, long? maxSizeBytes, SampleSchemaName? sampleName, ResourceIdentifier elasticPoolId, ResourceIdentifier sourceDatabaseId, SqlDatabaseStatus? status, Guid? databaseId, DateTimeOffset? createdOn, string currentServiceObjectiveName, string requestedServiceObjectiveName, AzureLocation? defaultSecondaryLocation, ResourceIdentifier failoverGroupId, DateTimeOffset? restorePointInTime, DateTimeOffset? sourceDatabaseDeletedOn, ResourceIdentifier recoveryServicesRecoveryPointId, ResourceIdentifier longTermRetentionBackupResourceId, ResourceIdentifier recoverableDatabaseId, ResourceIdentifier restorableDroppedDatabaseId, CatalogCollationType? catalogCollation, bool? isZoneRedundant, DatabaseLicenseType? licenseType, long? maxLogSizeBytes, DateTimeOffset? earliestRestoreOn, DatabaseReadScale? readScale, int? highAvailabilityReplicaCount, SecondaryType? secondaryType, SqlSku currentSku, int? autoPauseDelay, SqlBackupStorageRedundancy? currentBackupStorageRedundancy, SqlBackupStorageRedundancy? requestedBackupStorageRedundancy, double? minCapacity, DateTimeOffset? pausedOn, DateTimeOffset? resumedOn, ResourceIdentifier maintenanceConfigurationId, bool? isLedgerOn, bool? isInfraEncryptionEnabled, Guid? federatedClientId, IDictionary<string, SqlDatabaseKey> keys, string encryptionProtector, SqlAlwaysEncryptedEnclaveType? preferredEnclaveType, bool? useFreeLimit, FreeLimitExhaustionBehavior? freeLimitExhaustionBehavior, bool? manualCutover, bool? performCutover, bool? encryptionProtectorAutoRotation, string provisioningState, IDictionary<string, string> tags)
+        public static SqlDatabasePatch SqlDatabasePatch(SqlSku sku = default, DatabaseIdentity identity = default, SqlDatabaseCreateMode? createMode = default, string collation = default, long? maxSizeBytes = default, SampleSchemaName? sampleName = default, ResourceIdentifier elasticPoolId = default, ResourceIdentifier sourceDatabaseId = default, SqlDatabaseStatus? status = default, Guid? databaseId = default, DateTimeOffset? createdOn = default, string currentServiceObjectiveName = default, string requestedServiceObjectiveName = default, AzureLocation? defaultSecondaryLocation = default, ResourceIdentifier failoverGroupId = default, DateTimeOffset? restorePointInTime = default, DateTimeOffset? sourceDatabaseDeletedOn = default, ResourceIdentifier recoveryServicesRecoveryPointId = default, ResourceIdentifier longTermRetentionBackupResourceId = default, ResourceIdentifier recoverableDatabaseId = default, ResourceIdentifier restorableDroppedDatabaseId = default, CatalogCollationType? catalogCollation = default, bool? isZoneRedundant = default, DatabaseLicenseType? licenseType = default, long? maxLogSizeBytes = default, DateTimeOffset? earliestRestoreOn = default, DatabaseReadScale? readScale = default, int? highAvailabilityReplicaCount = default, SecondaryType? secondaryType = default, SqlSku currentSku = default, int? autoPauseDelay = default, SqlBackupStorageRedundancy? currentBackupStorageRedundancy = default, SqlBackupStorageRedundancy? requestedBackupStorageRedundancy = default, double? minCapacity = default, DateTimeOffset? pausedOn = default, DateTimeOffset? resumedOn = default, ResourceIdentifier maintenanceConfigurationId = default, bool? isLedgerOn = default, bool? isInfraEncryptionEnabled = default, Guid? federatedClientId = default, IDictionary<string, SqlDatabaseKey> keys = default, string encryptionProtector = default, SqlAlwaysEncryptedEnclaveType? preferredEnclaveType = default, bool? useFreeLimit = default, FreeLimitExhaustionBehavior? freeLimitExhaustionBehavior = default, bool? manualCutover = default, bool? performCutover = default, bool? encryptionProtectorAutoRotation = default, string provisioningState = default, IDictionary<string, string> tags = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -709,7 +709,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="identity"> The Azure Active Directory identity of the server. </param>
         /// <param name="kind"> Kind of sql server. This is metadata used for the Azure portal experience. </param>
         /// <returns> A new <see cref="Sql.SqlServerData"/> instance for mocking. </returns>
-        public static SqlServerData SqlServerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string administratorLogin, string administratorLoginPassword, string version, string state, string fullyQualifiedDomainName, IEnumerable<SqlServerPrivateEndpointConnection> privateEndpointConnections, SqlMinimalTlsVersion? minTlsVersion, ServerNetworkAccessFlag? publicNetworkAccess, ServerWorkspaceFeature? workspaceFeature, ResourceIdentifier primaryUserAssignedIdentityId, Guid? federatedClientId, Uri keyId, ServerExternalAdministrator administrators, ServerNetworkAccessFlag? restrictOutboundNetworkAccess, ServerNetworkAccessFlag? isIPv6Enabled, ExternalGovernanceStatus? externalGovernanceStatus, int? retentionDays, SqlServerCreateMode? createMode, ManagedServiceIdentity identity, string kind)
+        public static SqlServerData SqlServerData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string administratorLogin = default, string administratorLoginPassword = default, string version = default, string state = default, string fullyQualifiedDomainName = default, IEnumerable<SqlServerPrivateEndpointConnection> privateEndpointConnections = default, SqlMinimalTlsVersion? minTlsVersion = default, ServerNetworkAccessFlag? publicNetworkAccess = default, ServerWorkspaceFeature? workspaceFeature = default, ResourceIdentifier primaryUserAssignedIdentityId = default, Guid? federatedClientId = default, Uri keyId = default, ServerExternalAdministrator administrators = default, ServerNetworkAccessFlag? restrictOutboundNetworkAccess = default, ServerNetworkAccessFlag? isIPv6Enabled = default, ExternalGovernanceStatus? externalGovernanceStatus = default, int? retentionDays = default, SqlServerCreateMode? createMode = default, ManagedServiceIdentity identity = default, string kind = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -817,7 +817,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="createMode"> Create mode for server, only valid values for this are Normal and Restore. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <returns> A new <see cref="Models.SqlServerPatch"/> instance for mocking. </returns>
-        public static SqlServerPatch SqlServerPatch(ManagedServiceIdentity identity, string administratorLogin, string administratorLoginPassword, string version, string state, string fullyQualifiedDomainName, IEnumerable<SqlServerPrivateEndpointConnection> privateEndpointConnections, SqlMinimalTlsVersion? minTlsVersion, ServerNetworkAccessFlag? publicNetworkAccess, ServerWorkspaceFeature? workspaceFeature, ResourceIdentifier primaryUserAssignedIdentityId, Guid? federatedClientId, Uri keyId, ServerExternalAdministrator administrators, ServerNetworkAccessFlag? restrictOutboundNetworkAccess, ServerNetworkAccessFlag? isIPv6Enabled, ExternalGovernanceStatus? externalGovernanceStatus, int? retentionDays, SqlServerCreateMode? createMode, IDictionary<string, string> tags)
+        public static SqlServerPatch SqlServerPatch(ManagedServiceIdentity identity = default, string administratorLogin = default, string administratorLoginPassword = default, string version = default, string state = default, string fullyQualifiedDomainName = default, IEnumerable<SqlServerPrivateEndpointConnection> privateEndpointConnections = default, SqlMinimalTlsVersion? minTlsVersion = default, ServerNetworkAccessFlag? publicNetworkAccess = default, ServerWorkspaceFeature? workspaceFeature = default, ResourceIdentifier primaryUserAssignedIdentityId = default, Guid? federatedClientId = default, Uri keyId = default, ServerExternalAdministrator administrators = default, ServerNetworkAccessFlag? restrictOutboundNetworkAccess = default, ServerNetworkAccessFlag? isIPv6Enabled = default, ExternalGovernanceStatus? externalGovernanceStatus = default, int? retentionDays = default, SqlServerCreateMode? createMode = default, IDictionary<string, string> tags = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -1121,7 +1121,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="storageAccountSubscriptionId"> Specifies the blob storage subscription Id. </param>
         /// <param name="kind"> Resource kind. </param>
         /// <returns> A new <see cref="Sql.SqlDatabaseBlobAuditingPolicyData"/> instance for mocking. </returns>
-        public static SqlDatabaseBlobAuditingPolicyData SqlDatabaseBlobAuditingPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, int? retentionDays, IEnumerable<string> auditActionsAndGroups, bool? isStorageSecondaryKeyInUse, bool? isAzureMonitorTargetEnabled, int? queueDelayMs, bool? isManagedIdentityInUse, BlobAuditingPolicyState? state, string storageEndpoint, string storageAccountAccessKey, Guid? storageAccountSubscriptionId, string kind)
+        public static SqlDatabaseBlobAuditingPolicyData SqlDatabaseBlobAuditingPolicyData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, int? retentionDays = default, IEnumerable<string> auditActionsAndGroups = default, bool? isStorageSecondaryKeyInUse = default, bool? isAzureMonitorTargetEnabled = default, int? queueDelayMs = default, bool? isManagedIdentityInUse = default, BlobAuditingPolicyState? state = default, string storageEndpoint = default, string storageAccountAccessKey = default, Guid? storageAccountSubscriptionId = default, string kind = default)
         {
             return new SqlDatabaseBlobAuditingPolicyData(
                 id,
@@ -1381,7 +1381,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="kind"> Resource kind. </param>
         /// <param name="location"> Resource location. </param>
         /// <returns> A new <see cref="Sql.SqlAdvisorData"/> instance for mocking. </returns>
-        public static SqlAdvisorData SqlAdvisorData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SqlAdvisorStatus? advisorStatus, AutoExecuteStatus? autoExecuteStatus, AutoExecuteStatusInheritedFrom? autoExecuteStatusInheritedFrom, string recommendationsStatus, DateTimeOffset? lastCheckedOn, IEnumerable<RecommendedActionData> recommendedActions, string kind, AzureLocation? location)
+        public static SqlAdvisorData SqlAdvisorData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, SqlAdvisorStatus? advisorStatus = default, AutoExecuteStatus? autoExecuteStatus = default, AutoExecuteStatusInheritedFrom? autoExecuteStatusInheritedFrom = default, string recommendationsStatus = default, DateTimeOffset? lastCheckedOn = default, IEnumerable<RecommendedActionData> recommendedActions = default, string kind = default, AzureLocation? location = default)
         {
             return new SqlAdvisorData(
                 id,
@@ -1431,7 +1431,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="kind"> Resource kind. </param>
         /// <param name="location"> Resource location. </param>
         /// <returns> A new <see cref="Sql.RecommendedActionData"/> instance for mocking. </returns>
-        public static RecommendedActionData RecommendedActionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string recommendationReason, DateTimeOffset? validSince, DateTimeOffset? lastRefresh, RecommendedActionStateInfo state, bool? isExecutableAction, bool? isRevertableAction, bool? isArchivedAction, DateTimeOffset? executeActionStartOn, TimeSpan? executeActionDuration, DateTimeOffset? revertActionStartOn, TimeSpan? revertActionDuration, RecommendedActionInitiatedBy? executeActionInitiatedBy, DateTimeOffset? executeActionInitiatedOn, RecommendedActionInitiatedBy? revertActionInitiatedBy, DateTimeOffset? revertActionInitiatedOn, int? score, RecommendedActionImplementationInfo implementationDetails, RecommendedActionErrorInfo errorDetails, IEnumerable<RecommendedActionImpactRecord> estimatedImpact, IEnumerable<RecommendedActionImpactRecord> observedImpact, IEnumerable<RecommendedActionMetricInfo> timeSeries, IEnumerable<string> linkedObjects, IReadOnlyDictionary<string, string> actionDetails, string kind, AzureLocation? location)
+        public static RecommendedActionData RecommendedActionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string recommendationReason = default, DateTimeOffset? validSince = default, DateTimeOffset? lastRefresh = default, RecommendedActionStateInfo state = default, bool? isExecutableAction = default, bool? isRevertableAction = default, bool? isArchivedAction = default, DateTimeOffset? executeActionStartOn = default, TimeSpan? executeActionDuration = default, DateTimeOffset? revertActionStartOn = default, TimeSpan? revertActionDuration = default, RecommendedActionInitiatedBy? executeActionInitiatedBy = default, DateTimeOffset? executeActionInitiatedOn = default, RecommendedActionInitiatedBy? revertActionInitiatedBy = default, DateTimeOffset? revertActionInitiatedOn = default, int? score = default, RecommendedActionImplementationInfo implementationDetails = default, RecommendedActionErrorInfo errorDetails = default, IEnumerable<RecommendedActionImpactRecord> estimatedImpact = default, IEnumerable<RecommendedActionImpactRecord> observedImpact = default, IEnumerable<RecommendedActionMetricInfo> timeSeries = default, IEnumerable<string> linkedObjects = default, IReadOnlyDictionary<string, string> actionDetails = default, string kind = default, AzureLocation? location = default)
         {
             return new RecommendedActionData(
                 id,
@@ -1955,7 +1955,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="location"> The location of the data masking policy. </param>
         /// <param name="kind"> The kind of Data Masking Policy. Metadata, used for Azure portal. </param>
         /// <returns> A new <see cref="Sql.DataMaskingPolicyData"/> instance for mocking. </returns>
-        public static DataMaskingPolicyData DataMaskingPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DataMaskingState? dataMaskingState, string exemptPrincipals, string applicationPrincipals, string maskingLevel, AzureLocation? location, string kind)
+        public static DataMaskingPolicyData DataMaskingPolicyData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, DataMaskingState? dataMaskingState = default, string exemptPrincipals = default, string applicationPrincipals = default, string maskingLevel = default, AzureLocation? location = default, string kind = default)
         {
             return new DataMaskingPolicyData(
                 id,
@@ -1975,16 +1975,25 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="version"> The version of the deleted server. </param>
         /// <param name="deletedOn"> The deletion time of the deleted server. </param>
         /// <param name="originalId"> The original ID of the server before deletion. </param>
+        /// <param name="originalResourceGroup"> The resource group of the original server before deletion. </param>
         /// <param name="fullyQualifiedDomainName"> The fully qualified domain name of the server. </param>
+        /// <param name="scheduledPurgeOn"> The date and time when the deleted server will be permanently deleted (purged). </param>
         /// <returns> A new <see cref="Sql.DeletedServerData"/> instance for mocking. </returns>
-        public static DeletedServerData DeletedServerData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string version = default, DateTimeOffset? deletedOn = default, ResourceIdentifier originalId = default, string fullyQualifiedDomainName = default)
+        public static DeletedServerData DeletedServerData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string version = default, DateTimeOffset? deletedOn = default, ResourceIdentifier originalId = default, string originalResourceGroup = default, string fullyQualifiedDomainName = default, DateTimeOffset? scheduledPurgeOn = default)
         {
             return new DeletedServerData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                version is null && deletedOn is null && originalId is null && fullyQualifiedDomainName is null ? default : new DeletedServerProperties(version, deletedOn, originalId, fullyQualifiedDomainName, default),
+                version is null && deletedOn is null && originalId is null && originalResourceGroup is null && fullyQualifiedDomainName is null && scheduledPurgeOn is null ? default : new DeletedServerProperties(
+                    version,
+                    deletedOn,
+                    originalId,
+                    originalResourceGroup,
+                    fullyQualifiedDomainName,
+                    scheduledPurgeOn,
+                    default),
                 default);
         }
 
@@ -2002,16 +2011,17 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="instanceAvailabilityGroupName"> Managed instance side availability group name. </param>
         /// <param name="failoverMode"> The link failover mode - can be Manual if intended to be used for two-way failover with a supported SQL Server, or None for one-way failover to Azure. </param>
         /// <param name="seedingMode"> Database seeding mode – can be Automatic (default), or Manual for supported scenarios. </param>
+        /// <param name="linkMode"> Specifies whether the link operates in single-database or multi-database mode. </param>
         /// <param name="databases"> Databases in the distributed availability group. </param>
         /// <returns> A new <see cref="Sql.SqlDistributedAvailabilityGroupData"/> instance for mocking. </returns>
-        public static SqlDistributedAvailabilityGroupData SqlDistributedAvailabilityGroupData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string distributedAvailabilityGroupName = default, Guid? distributedAvailabilityGroupId = default, SqlReplicationModeType? replicationMode = default, SqlServerSideLinkRole? partnerLinkRole = default, string partnerAvailabilityGroupName = default, string partnerEndpoint = default, SqlServerSideLinkRole? instanceLinkRole = default, string instanceAvailabilityGroupName = default, SqlServerFailoverModeType? failoverMode = default, SeedingModeType? seedingMode = default, IEnumerable<DistributedAvailabilityGroupDatabase> databases = default)
+        public static SqlDistributedAvailabilityGroupData SqlDistributedAvailabilityGroupData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string distributedAvailabilityGroupName = default, Guid? distributedAvailabilityGroupId = default, SqlReplicationModeType? replicationMode = default, SqlServerSideLinkRole? partnerLinkRole = default, string partnerAvailabilityGroupName = default, string partnerEndpoint = default, SqlServerSideLinkRole? instanceLinkRole = default, string instanceAvailabilityGroupName = default, SqlServerFailoverModeType? failoverMode = default, SeedingModeType? seedingMode = default, LinkModeType? linkMode = default, IEnumerable<DistributedAvailabilityGroupDatabase> databases = default)
         {
             return new SqlDistributedAvailabilityGroupData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                distributedAvailabilityGroupName is null && distributedAvailabilityGroupId is null && replicationMode is null && partnerLinkRole is null && partnerAvailabilityGroupName is null && partnerEndpoint is null && instanceLinkRole is null && instanceAvailabilityGroupName is null && failoverMode is null && seedingMode is null && databases is null ? default : new DistributedAvailabilityGroupProperties(
+                distributedAvailabilityGroupName is null && distributedAvailabilityGroupId is null && replicationMode is null && partnerLinkRole is null && partnerAvailabilityGroupName is null && partnerEndpoint is null && instanceLinkRole is null && instanceAvailabilityGroupName is null && failoverMode is null && seedingMode is null && linkMode is null && databases is null ? default : new DistributedAvailabilityGroupProperties(
                     distributedAvailabilityGroupName,
                     distributedAvailabilityGroupId,
                     replicationMode,
@@ -2022,6 +2032,7 @@ namespace Azure.ResourceManager.Sql.Models
                     instanceAvailabilityGroupName,
                     failoverMode,
                     seedingMode,
+                    linkMode,
                     (databases ?? new ChangeTrackingList<DistributedAvailabilityGroupDatabase>()).ToList(),
                     default),
                 default);
@@ -2208,7 +2219,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="extendedAccessibilityInfo"> Additional observability and troubleshooting information for databases in ‘Inaccessible’ state. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <returns> A new <see cref="Models.ManagedDatabasePatch"/> instance for mocking. </returns>
-        public static ManagedDatabasePatch ManagedDatabasePatch(string collation, ManagedDatabaseStatus? status, DateTimeOffset? createdOn, DateTimeOffset? earliestRestorePoint, DateTimeOffset? restorePointInTime, AzureLocation? defaultSecondaryLocation, CatalogCollationType? catalogCollation, ManagedDatabaseCreateMode? createMode, Uri storageContainerUri, ResourceIdentifier sourceDatabaseId, ResourceIdentifier crossSubscriptionSourceDatabaseId, ResourceIdentifier restorableDroppedDatabaseId, ResourceIdentifier crossSubscriptionRestorableDroppedDatabaseId, string storageContainerIdentity, string storageContainerSasToken, ResourceIdentifier failoverGroupId, ResourceIdentifier recoverableDatabaseId, ResourceIdentifier longTermRetentionBackupResourceId, bool? allowAutoCompleteRestore, string lastBackupName, ResourceIdentifier crossSubscriptionTargetManagedInstanceId, bool? isLedgerOn, ManagedDatabaseExtendedAccessibilityInfo extendedAccessibilityInfo, IDictionary<string, string> tags)
+        public static ManagedDatabasePatch ManagedDatabasePatch(string collation = default, ManagedDatabaseStatus? status = default, DateTimeOffset? createdOn = default, DateTimeOffset? earliestRestorePoint = default, DateTimeOffset? restorePointInTime = default, AzureLocation? defaultSecondaryLocation = default, CatalogCollationType? catalogCollation = default, ManagedDatabaseCreateMode? createMode = default, Uri storageContainerUri = default, ResourceIdentifier sourceDatabaseId = default, ResourceIdentifier crossSubscriptionSourceDatabaseId = default, ResourceIdentifier restorableDroppedDatabaseId = default, ResourceIdentifier crossSubscriptionRestorableDroppedDatabaseId = default, string storageContainerIdentity = default, string storageContainerSasToken = default, ResourceIdentifier failoverGroupId = default, ResourceIdentifier recoverableDatabaseId = default, ResourceIdentifier longTermRetentionBackupResourceId = default, bool? allowAutoCompleteRestore = default, string lastBackupName = default, ResourceIdentifier crossSubscriptionTargetManagedInstanceId = default, bool? isLedgerOn = default, ManagedDatabaseExtendedAccessibilityInfo extendedAccessibilityInfo = default, IDictionary<string, string> tags = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -2352,7 +2363,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="identity"> The Azure Active Directory identity of the managed instance. </param>
         /// <param name="sku"> Managed instance SKU. Allowed values for sku.name: GP_Gen5 (General Purpose, Standard-series); GP_G8IM (General Purpose, Premium-series); GP_G8IH (General Purpose, Premium-series memory optimized); BC_Gen5 (Business Critical, Standard-Series); BC_G8IM (Business Critical, Premium-series); BC_G8IH (Business Critical, Premium-series memory optimized). </param>
         /// <returns> A new <see cref="Sql.ManagedInstanceData"/> instance for mocking. </returns>
-        public static ManagedInstanceData ManagedInstanceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedInstancePropertiesProvisioningState? provisioningState, ManagedServerCreateMode? managedInstanceCreateMode, string fullyQualifiedDomainName, bool? isGeneralPurposeV2, string administratorLogin, string administratorLoginPassword, ResourceIdentifier subnetId, string state, ManagedInstanceLicenseType? licenseType, HybridSecondaryUsage? hybridSecondaryUsage, HybridSecondaryUsageDetected? hybridSecondaryUsageDetected, int? vCores, int? storageSizeInGB, int? storageIOps, int? storageThroughputMBps, int? memorySizeInGB, string collation, string dnsZone, ResourceIdentifier managedDnsZonePartner, bool? isPublicDataEndpointEnabled, ResourceIdentifier sourceManagedInstanceId, DateTimeOffset? restorePointInTime, ManagedInstanceProxyOverride? proxyOverride, string timezoneId, ResourceIdentifier instancePoolId, ResourceIdentifier maintenanceConfigurationId, IEnumerable<ManagedInstancePecProperty> privateEndpointConnections, string minimalTlsVersion, SqlBackupStorageRedundancy? currentBackupStorageRedundancy, SqlBackupStorageRedundancy? requestedBackupStorageRedundancy, bool? isZoneRedundant, ResourceIdentifier primaryUserAssignedIdentityId, Uri keyId, ManagedInstanceExternalAdministrator administrators, SqlServicePrincipal servicePrincipal, ResourceIdentifier virtualClusterId, ExternalGovernanceStatus? externalGovernanceStatus, SqlManagedInstancePricingModel? pricingModel, DateTimeOffset? createOn, AuthMetadataLookupMode? authenticationMetadata, ManagedInstanceDatabaseFormat? databaseFormat, SqlAvailabilityZoneType? requestedLogicalAvailabilityZone, ManagedServiceIdentity identity, SqlSku sku)
+        public static ManagedInstanceData ManagedInstanceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ManagedInstancePropertiesProvisioningState? provisioningState = default, ManagedServerCreateMode? managedInstanceCreateMode = default, string fullyQualifiedDomainName = default, bool? isGeneralPurposeV2 = default, string administratorLogin = default, string administratorLoginPassword = default, ResourceIdentifier subnetId = default, string state = default, ManagedInstanceLicenseType? licenseType = default, HybridSecondaryUsage? hybridSecondaryUsage = default, HybridSecondaryUsageDetected? hybridSecondaryUsageDetected = default, int? vCores = default, int? storageSizeInGB = default, int? storageIOps = default, int? storageThroughputMBps = default, int? memorySizeInGB = default, string collation = default, string dnsZone = default, ResourceIdentifier managedDnsZonePartner = default, bool? isPublicDataEndpointEnabled = default, ResourceIdentifier sourceManagedInstanceId = default, DateTimeOffset? restorePointInTime = default, ManagedInstanceProxyOverride? proxyOverride = default, string timezoneId = default, ResourceIdentifier instancePoolId = default, ResourceIdentifier maintenanceConfigurationId = default, IEnumerable<ManagedInstancePecProperty> privateEndpointConnections = default, string minimalTlsVersion = default, SqlBackupStorageRedundancy? currentBackupStorageRedundancy = default, SqlBackupStorageRedundancy? requestedBackupStorageRedundancy = default, bool? isZoneRedundant = default, ResourceIdentifier primaryUserAssignedIdentityId = default, Uri keyId = default, ManagedInstanceExternalAdministrator administrators = default, SqlServicePrincipal servicePrincipal = default, ResourceIdentifier virtualClusterId = default, ExternalGovernanceStatus? externalGovernanceStatus = default, SqlManagedInstancePricingModel? pricingModel = default, DateTimeOffset? createOn = default, AuthMetadataLookupMode? authenticationMetadata = default, ManagedInstanceDatabaseFormat? databaseFormat = default, SqlAvailabilityZoneType? requestedLogicalAvailabilityZone = default, ManagedServiceIdentity identity = default, SqlSku sku = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -2528,7 +2539,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="requestedLogicalAvailabilityZone"> Specifies the logical availability zone Managed Instance is pinned to. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <returns> A new <see cref="Models.ManagedInstancePatch"/> instance for mocking. </returns>
-        public static ManagedInstancePatch ManagedInstancePatch(SqlSku sku, ManagedServiceIdentity identity, ManagedInstancePropertiesProvisioningState? provisioningState, ManagedServerCreateMode? managedInstanceCreateMode, string fullyQualifiedDomainName, bool? isGeneralPurposeV2, string administratorLogin, string administratorLoginPassword, ResourceIdentifier subnetId, string state, ManagedInstanceLicenseType? licenseType, HybridSecondaryUsage? hybridSecondaryUsage, HybridSecondaryUsageDetected? hybridSecondaryUsageDetected, int? vCores, int? storageSizeInGB, int? storageIOps, int? storageThroughputMBps, int? memorySizeInGB, string collation, string dnsZone, ResourceIdentifier managedDnsZonePartner, bool? isPublicDataEndpointEnabled, ResourceIdentifier sourceManagedInstanceId, DateTimeOffset? restorePointInTime, ManagedInstanceProxyOverride? proxyOverride, string timezoneId, ResourceIdentifier instancePoolId, ResourceIdentifier maintenanceConfigurationId, IEnumerable<ManagedInstancePecProperty> privateEndpointConnections, string minimalTlsVersion, SqlBackupStorageRedundancy? currentBackupStorageRedundancy, SqlBackupStorageRedundancy? requestedBackupStorageRedundancy, bool? isZoneRedundant, ResourceIdentifier primaryUserAssignedIdentityId, Uri keyId, ManagedInstanceExternalAdministrator administrators, SqlServicePrincipal servicePrincipal, ResourceIdentifier virtualClusterId, ExternalGovernanceStatus? externalGovernanceStatus, SqlManagedInstancePricingModel? pricingModel, DateTimeOffset? createOn, AuthMetadataLookupMode? authenticationMetadata, ManagedInstanceDatabaseFormat? databaseFormat, SqlAvailabilityZoneType? requestedLogicalAvailabilityZone, IDictionary<string, string> tags)
+        public static ManagedInstancePatch ManagedInstancePatch(SqlSku sku = default, ManagedServiceIdentity identity = default, ManagedInstancePropertiesProvisioningState? provisioningState = default, ManagedServerCreateMode? managedInstanceCreateMode = default, string fullyQualifiedDomainName = default, bool? isGeneralPurposeV2 = default, string administratorLogin = default, string administratorLoginPassword = default, ResourceIdentifier subnetId = default, string state = default, ManagedInstanceLicenseType? licenseType = default, HybridSecondaryUsage? hybridSecondaryUsage = default, HybridSecondaryUsageDetected? hybridSecondaryUsageDetected = default, int? vCores = default, int? storageSizeInGB = default, int? storageIOps = default, int? storageThroughputMBps = default, int? memorySizeInGB = default, string collation = default, string dnsZone = default, ResourceIdentifier managedDnsZonePartner = default, bool? isPublicDataEndpointEnabled = default, ResourceIdentifier sourceManagedInstanceId = default, DateTimeOffset? restorePointInTime = default, ManagedInstanceProxyOverride? proxyOverride = default, string timezoneId = default, ResourceIdentifier instancePoolId = default, ResourceIdentifier maintenanceConfigurationId = default, IEnumerable<ManagedInstancePecProperty> privateEndpointConnections = default, string minimalTlsVersion = default, SqlBackupStorageRedundancy? currentBackupStorageRedundancy = default, SqlBackupStorageRedundancy? requestedBackupStorageRedundancy = default, bool? isZoneRedundant = default, ResourceIdentifier primaryUserAssignedIdentityId = default, Uri keyId = default, ManagedInstanceExternalAdministrator administrators = default, SqlServicePrincipal servicePrincipal = default, ResourceIdentifier virtualClusterId = default, ExternalGovernanceStatus? externalGovernanceStatus = default, SqlManagedInstancePricingModel? pricingModel = default, DateTimeOffset? createOn = default, AuthMetadataLookupMode? authenticationMetadata = default, ManagedInstanceDatabaseFormat? databaseFormat = default, SqlAvailabilityZoneType? requestedLogicalAvailabilityZone = default, IDictionary<string, string> tags = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -2756,7 +2767,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// </param>
         /// <param name="kind"> Kind of elastic pool. This is metadata used for the Azure portal experience. </param>
         /// <returns> A new <see cref="Sql.ElasticPoolData"/> instance for mocking. </returns>
-        public static ElasticPoolData ElasticPoolData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ElasticPoolState? state, DateTimeOffset? createdOn, long? maxSizeBytes, double? minCapacity, ElasticPoolPerDatabaseSettings perDatabaseSettings, bool? isZoneRedundant, ElasticPoolLicenseType? licenseType, ResourceIdentifier maintenanceConfigurationId, int? highAvailabilityReplicaCount, int? autoPauseDelay, SqlAlwaysEncryptedEnclaveType? preferredEnclaveType, SqlAvailabilityZoneType? availabilityZone, SqlSku currentSku, SqlSku sku, string kind)
+        public static ElasticPoolData ElasticPoolData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ElasticPoolState? state = default, DateTimeOffset? createdOn = default, long? maxSizeBytes = default, double? minCapacity = default, ElasticPoolPerDatabaseSettings perDatabaseSettings = default, bool? isZoneRedundant = default, ElasticPoolLicenseType? licenseType = default, ResourceIdentifier maintenanceConfigurationId = default, int? highAvailabilityReplicaCount = default, int? autoPauseDelay = default, SqlAlwaysEncryptedEnclaveType? preferredEnclaveType = default, SqlAvailabilityZoneType? availabilityZone = default, SqlSku currentSku = default, SqlSku sku = default, string kind = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -2844,7 +2855,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="kind"> Kind of encryption protector. This is metadata used for the Azure portal experience. </param>
         /// <param name="location"> Resource location. </param>
         /// <returns> A new <see cref="Sql.EncryptionProtectorData"/> instance for mocking. </returns>
-        public static EncryptionProtectorData EncryptionProtectorData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string subregion, string serverKeyName, SqlServerKeyType? serverKeyType, Uri uri, string thumbprint, bool? isAutoRotationEnabled, string keyVersion, string kind, AzureLocation? location)
+        public static EncryptionProtectorData EncryptionProtectorData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string subregion = default, string serverKeyName = default, SqlServerKeyType? serverKeyType = default, Uri uri = default, string thumbprint = default, bool? isAutoRotationEnabled = default, string keyVersion = default, string kind = default, AzureLocation? location = default)
         {
             return new EncryptionProtectorData(
                 id,
@@ -2870,16 +2881,26 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="publicBlob"> The certificate public blob. </param>
+        /// <param name="trustedRootCertificates"> Trusted root certificates required to validate the instance certificate. </param>
         /// <returns> A new <see cref="Sql.EndpointCertificateData"/> instance for mocking. </returns>
-        public static EndpointCertificateData EndpointCertificateData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string publicBlob = default)
+        public static EndpointCertificateData EndpointCertificateData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string publicBlob = default, IEnumerable<EndpointTrustedRootCertificateInfo> trustedRootCertificates = default)
         {
             return new EndpointCertificateData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                publicBlob is null ? default : new EndpointCertificateProperties(publicBlob, default),
+                publicBlob is null && trustedRootCertificates is null ? default : new EndpointCertificateProperties(publicBlob, (trustedRootCertificates ?? new ChangeTrackingList<EndpointTrustedRootCertificateInfo>()).ToList(), default),
                 default);
+        }
+
+        /// <summary> Trusted root certificate required to validate the instance certificate. </summary>
+        /// <param name="subject"> Root certificate subject name. </param>
+        /// <param name="publicBlob"> Root certificate public blob as DER encoded hex string. </param>
+        /// <returns> A new <see cref="Models.EndpointTrustedRootCertificateInfo"/> instance for mocking. </returns>
+        public static EndpointTrustedRootCertificateInfo EndpointTrustedRootCertificateInfo(string subject = default, string publicBlob = default)
+        {
+            return new EndpointTrustedRootCertificateInfo(subject, publicBlob, default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -2896,7 +2917,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> Resource location. </param>
         /// <returns> A new <see cref="Sql.FailoverGroupData"/> instance for mocking. </returns>
-        public static FailoverGroupData FailoverGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, FailoverGroupReadWriteEndpoint readWriteEndpoint, FailoverGroupReadOnlyEndpoint readOnlyEndpoint, FailoverGroupReplicationRole? replicationRole, string replicationState, IEnumerable<PartnerServerInfo> partnerServers, IEnumerable<ResourceIdentifier> failoverDatabases, FailoverGroupDatabasesSecondaryType? secondaryType, IDictionary<string, string> tags, AzureLocation? location)
+        public static FailoverGroupData FailoverGroupData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, FailoverGroupReadWriteEndpoint readWriteEndpoint = default, FailoverGroupReadOnlyEndpoint readOnlyEndpoint = default, FailoverGroupReplicationRole? replicationRole = default, string replicationState = default, IEnumerable<PartnerServerInfo> partnerServers = default, IEnumerable<ResourceIdentifier> failoverDatabases = default, FailoverGroupDatabasesSecondaryType? secondaryType = default, IDictionary<string, string> tags = default, AzureLocation? location = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -2976,7 +2997,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="location"> Backup policy location. </param>
         /// <param name="kind"> Kind of geo backup policy.  This is metadata used for the Azure portal experience. </param>
         /// <returns> A new <see cref="Sql.GeoBackupPolicyData"/> instance for mocking. </returns>
-        public static GeoBackupPolicyData GeoBackupPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, GeoBackupPolicyState? geoBackupPolicyState, string storageType, AzureLocation? location, string kind)
+        public static GeoBackupPolicyData GeoBackupPolicyData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, GeoBackupPolicyState? geoBackupPolicyState = default, string storageType = default, AzureLocation? location = default, string kind = default)
         {
             return new GeoBackupPolicyData(
                 id,
@@ -3001,7 +3022,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="managedInstancePairs"> List of managed instance pairs in the failover group. </param>
         /// <param name="readOnlyEndpointFailoverPolicy"> Failover policy of the read-only endpoint for the failover group. </param>
         /// <returns> A new <see cref="Sql.InstanceFailoverGroupData"/> instance for mocking. </returns>
-        public static InstanceFailoverGroupData InstanceFailoverGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, GeoSecondaryInstanceType? secondaryType, InstanceFailoverGroupReadWriteEndpoint readWriteEndpoint, InstanceFailoverGroupReplicationRole? replicationRole, string replicationState, IEnumerable<PartnerRegionInfo> partnerRegions, IEnumerable<ManagedInstancePairInfo> managedInstancePairs, ReadOnlyEndpointFailoverPolicy? readOnlyEndpointFailoverPolicy)
+        public static InstanceFailoverGroupData InstanceFailoverGroupData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, GeoSecondaryInstanceType? secondaryType = default, InstanceFailoverGroupReadWriteEndpoint readWriteEndpoint = default, InstanceFailoverGroupReplicationRole? replicationRole = default, string replicationState = default, IEnumerable<PartnerRegionInfo> partnerRegions = default, IEnumerable<ManagedInstancePairInfo> managedInstancePairs = default, ReadOnlyEndpointFailoverPolicy? readOnlyEndpointFailoverPolicy = default)
         {
             return new InstanceFailoverGroupData(
                 id,
@@ -3103,7 +3124,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="maintenanceConfigurationId"> Specifies maintenance configuration id to apply to this managed instance. </param>
         /// <param name="sku"> The name and tier of the SKU. </param>
         /// <returns> A new <see cref="Sql.InstancePoolData"/> instance for mocking. </returns>
-        public static InstancePoolData InstancePoolData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ResourceIdentifier subnetId, int? vCores, InstancePoolLicenseType? licenseType, string dnsZone, ResourceIdentifier maintenanceConfigurationId, SqlSku sku)
+        public static InstancePoolData InstancePoolData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ResourceIdentifier subnetId = default, int? vCores = default, InstancePoolLicenseType? licenseType = default, string dnsZone = default, ResourceIdentifier maintenanceConfigurationId = default, SqlSku sku = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -3133,7 +3154,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="maintenanceConfigurationId"> Specifies maintenance configuration id to apply to this managed instance. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <returns> A new <see cref="Models.InstancePoolPatch"/> instance for mocking. </returns>
-        public static InstancePoolPatch InstancePoolPatch(SqlSku sku, ResourceIdentifier subnetId, int? vCores, InstancePoolLicenseType? licenseType, string dnsZone, ResourceIdentifier maintenanceConfigurationId, IDictionary<string, string> tags)
+        public static InstancePoolPatch InstancePoolPatch(SqlSku sku = default, ResourceIdentifier subnetId = default, int? vCores = default, InstancePoolLicenseType? licenseType = default, string dnsZone = default, ResourceIdentifier maintenanceConfigurationId = default, IDictionary<string, string> tags = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -3221,7 +3242,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="sku"> The name and tier of the SKU. </param>
         /// <param name="identity"> The identity of the job agent. </param>
         /// <returns> A new <see cref="Sql.SqlServerJobAgentData"/> instance for mocking. </returns>
-        public static SqlServerJobAgentData SqlServerJobAgentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ResourceIdentifier databaseId, JobAgentState? state, SqlSku sku, JobAgentIdentity identity)
+        public static SqlServerJobAgentData SqlServerJobAgentData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ResourceIdentifier databaseId = default, JobAgentState? state = default, SqlSku sku = default, JobAgentIdentity identity = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -3677,15 +3698,22 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="login"> Login name of the managed instance administrator. </param>
         /// <param name="sid"> SID (object ID) of the managed instance administrator. </param>
         /// <param name="tenantId"> Tenant ID of the managed instance administrator. </param>
+        /// <param name="principalType"> Principal type of the managed instance administrator. </param>
         /// <returns> A new <see cref="Sql.ManagedInstanceAdministratorData"/> instance for mocking. </returns>
-        public static ManagedInstanceAdministratorData ManagedInstanceAdministratorData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ManagedInstanceAdministratorType? administratorType = default, string login = default, Guid? sid = default, Guid? tenantId = default)
+        public static ManagedInstanceAdministratorData ManagedInstanceAdministratorData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ManagedInstanceAdministratorType? administratorType = default, string login = default, Guid? sid = default, Guid? tenantId = default, ManagedInstanceAdministratorPrincipalType? principalType = default)
         {
             return new ManagedInstanceAdministratorData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                administratorType is null && login is null && sid is null && tenantId is null ? default : new ManagedInstanceAdministratorProperties(administratorType.GetValueOrDefault(), login, sid.GetValueOrDefault(), tenantId, default),
+                administratorType is null && login is null && sid is null && tenantId is null && principalType is null ? default : new ManagedInstanceAdministratorProperties(
+                    administratorType.GetValueOrDefault(),
+                    login,
+                    sid.GetValueOrDefault(),
+                    tenantId,
+                    principalType,
+                    default),
                 default);
         }
 
@@ -3717,7 +3745,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="isFqdnEnabled"> Status of FQDN of managed instance DTC. Toggling this setting might trigger a restart of the managed instance. </param>
         /// <param name="provisioningState"> Provisioning state of managed instance DTC. </param>
         /// <returns> A new <see cref="Sql.ManagedInstanceDtcData"/> instance for mocking. </returns>
-        public static ManagedInstanceDtcData ManagedInstanceDtcData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, bool? dtcEnabled, ManagedInstanceDtcSecuritySettings securitySettings, IEnumerable<string> externalDnsSuffixSearchList, string dtcHostNameDnsSuffix, bool? isFqdnEnabled, JobExecutionProvisioningState? provisioningState)
+        public static ManagedInstanceDtcData ManagedInstanceDtcData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, bool? dtcEnabled = default, ManagedInstanceDtcSecuritySettings securitySettings = default, IEnumerable<string> externalDnsSuffixSearchList = default, string dtcHostNameDnsSuffix = default, bool? isFqdnEnabled = default, JobExecutionProvisioningState? provisioningState = default)
         {
             return new ManagedInstanceDtcData(
                 id,
@@ -3774,7 +3802,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="isAutoRotationEnabled"> Key auto rotation opt-in flag. Either true or false. </param>
         /// <param name="kind"> Kind of encryption protector. This is metadata used for the Azure portal experience. </param>
         /// <returns> A new <see cref="Sql.ManagedInstanceEncryptionProtectorData"/> instance for mocking. </returns>
-        public static ManagedInstanceEncryptionProtectorData ManagedInstanceEncryptionProtectorData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string serverKeyName, SqlServerKeyType? serverKeyType, Uri uri, string thumbprint, bool? isAutoRotationEnabled, string kind)
+        public static ManagedInstanceEncryptionProtectorData ManagedInstanceEncryptionProtectorData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string serverKeyName = default, SqlServerKeyType? serverKeyType = default, Uri uri = default, string thumbprint = default, bool? isAutoRotationEnabled = default, string kind = default)
         {
             return new ManagedInstanceEncryptionProtectorData(
                 id,
@@ -3803,7 +3831,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="isAutoRotationEnabled"> Key auto rotation opt-in flag. Either true or false. </param>
         /// <param name="kind"> Kind of encryption protector. This is metadata used for the Azure portal experience. </param>
         /// <returns> A new <see cref="Sql.ManagedInstanceKeyData"/> instance for mocking. </returns>
-        public static ManagedInstanceKeyData ManagedInstanceKeyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SqlServerKeyType? serverKeyType, Uri uri, string thumbprint, DateTimeOffset? createdOn, bool? isAutoRotationEnabled, string kind)
+        public static ManagedInstanceKeyData ManagedInstanceKeyData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, SqlServerKeyType? serverKeyType = default, Uri uri = default, string thumbprint = default, DateTimeOffset? createdOn = default, bool? isAutoRotationEnabled = default, string kind = default)
         {
             return new ManagedInstanceKeyData(
                 id,
@@ -3955,7 +3983,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="provisioningState"> State of the Private Endpoint Connection. </param>
         /// <param name="privateEndpointId"> Resource id of the private endpoint. </param>
         /// <returns> A new <see cref="Sql.ManagedInstancePrivateEndpointConnectionData"/> instance for mocking. </returns>
-        public static ManagedInstancePrivateEndpointConnectionData ManagedInstancePrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ManagedInstancePrivateLinkServiceConnectionStateProperty privateLinkServiceConnectionState, string provisioningState, ResourceIdentifier privateEndpointId)
+        public static ManagedInstancePrivateEndpointConnectionData ManagedInstancePrivateEndpointConnectionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ManagedInstancePrivateLinkServiceConnectionStateProperty privateLinkServiceConnectionState = default, string provisioningState = default, ResourceIdentifier privateEndpointId = default)
         {
             return new ManagedInstancePrivateEndpointConnectionData(
                 id,
@@ -4212,7 +4240,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="provisioningState"> State of the private endpoint connection. </param>
         /// <param name="privateEndpointId"> Resource id of the private endpoint. </param>
         /// <returns> A new <see cref="Sql.SqlPrivateEndpointConnectionData"/> instance for mocking. </returns>
-        public static SqlPrivateEndpointConnectionData SqlPrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IEnumerable<string> groupIds, SqlPrivateLinkServiceConnectionStateProperty connectionState, SqlPrivateEndpointProvisioningState? provisioningState, ResourceIdentifier privateEndpointId)
+        public static SqlPrivateEndpointConnectionData SqlPrivateEndpointConnectionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IEnumerable<string> groupIds = default, SqlPrivateLinkServiceConnectionStateProperty connectionState = default, SqlPrivateEndpointProvisioningState? provisioningState = default, ResourceIdentifier privateEndpointId = default)
         {
             return new SqlPrivateEndpointConnectionData(
                 id,
@@ -4313,7 +4341,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="keys"> The resource ids of the user assigned identities to use. </param>
         /// <param name="sku"> The name and tier of the SKU. </param>
         /// <returns> A new <see cref="Sql.RestorableDroppedDatabaseData"/> instance for mocking. </returns>
-        public static RestorableDroppedDatabaseData RestorableDroppedDatabaseData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string databaseName, long? maxSizeBytes, DateTimeOffset? createdOn, DateTimeOffset? deletedOn, DateTimeOffset? earliestRestoreOn, SqlBackupStorageRedundancy? backupStorageRedundancy, IDictionary<string, SqlDatabaseKey> keys, SqlSku sku)
+        public static RestorableDroppedDatabaseData RestorableDroppedDatabaseData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string databaseName = default, long? maxSizeBytes = default, DateTimeOffset? createdOn = default, DateTimeOffset? deletedOn = default, DateTimeOffset? earliestRestoreOn = default, SqlBackupStorageRedundancy? backupStorageRedundancy = default, IDictionary<string, SqlDatabaseKey> keys = default, SqlSku sku = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -4433,7 +4461,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="location"> Resource location. </param>
         /// <param name="kind"> Metadata used for the Azure portal experience. </param>
         /// <returns> A new <see cref="Sql.SqlServerConnectionPolicyData"/> instance for mocking. </returns>
-        public static SqlServerConnectionPolicyData SqlServerConnectionPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ServerConnectionType? connectionType, AzureLocation? location, string kind)
+        public static SqlServerConnectionPolicyData SqlServerConnectionPolicyData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ServerConnectionType? connectionType = default, AzureLocation? location = default, string kind = default)
         {
             return new SqlServerConnectionPolicyData(
                 id,
@@ -4528,7 +4556,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="kind"> Kind of encryption protector. This is metadata used for the Azure portal experience. </param>
         /// <param name="location"> Resource location. </param>
         /// <returns> A new <see cref="Sql.SqlServerKeyData"/> instance for mocking. </returns>
-        public static SqlServerKeyData SqlServerKeyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string subregion, SqlServerKeyType? serverKeyType, Uri uri, string thumbprint, DateTimeOffset? createdOn, bool? isAutoRotationEnabled, string keyVersion, string kind, AzureLocation? location)
+        public static SqlServerKeyData SqlServerKeyData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string subregion = default, SqlServerKeyType? serverKeyType = default, Uri uri = default, string thumbprint = default, DateTimeOffset? createdOn = default, bool? isAutoRotationEnabled = default, string keyVersion = default, string kind = default, AzureLocation? location = default)
         {
             return new SqlServerKeyData(
                 id,
@@ -4691,7 +4719,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="expireOn"> Expiration time of the sync agent version. </param>
         /// <param name="version"> Version of the sync agent. </param>
         /// <returns> A new <see cref="Sql.SyncAgentData"/> instance for mocking. </returns>
-        public static SyncAgentData SyncAgentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string syncAgentName, ResourceIdentifier syncDatabaseId, DateTimeOffset? lastAliveOn, SyncAgentState? state, bool? isUpToDate, DateTimeOffset? expireOn, string version)
+        public static SyncAgentData SyncAgentData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string syncAgentName = default, ResourceIdentifier syncDatabaseId = default, DateTimeOffset? lastAliveOn = default, SyncAgentState? state = default, bool? isUpToDate = default, DateTimeOffset? expireOn = default, string version = default)
         {
             return new SyncAgentData(
                 id,
@@ -4766,7 +4794,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="sku"> The name and capacity of the SKU. </param>
         /// <param name="identity"> Sync group authentication information. </param>
         /// <returns> A new <see cref="Sql.SyncGroupData"/> instance for mocking. </returns>
-        public static SyncGroupData SyncGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, int? interval, DateTimeOffset? lastSyncOn, SyncConflictResolutionPolicy? conflictResolutionPolicy, ResourceIdentifier syncDatabaseId, string hubDatabaseUserName, string hubDatabasePassword, SyncGroupState? syncState, SyncGroupSchema schema, bool? isConflictLoggingEnabled, int? conflictLoggingRetentionInDays, bool? usePrivateLinkConnection, string privateEndpointName, SqlSku sku, DataSyncParticipantIdentity identity)
+        public static SyncGroupData SyncGroupData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, int? interval = default, DateTimeOffset? lastSyncOn = default, SyncConflictResolutionPolicy? conflictResolutionPolicy = default, ResourceIdentifier syncDatabaseId = default, string hubDatabaseUserName = default, string hubDatabasePassword = default, SyncGroupState? syncState = default, SyncGroupSchema schema = default, bool? isConflictLoggingEnabled = default, int? conflictLoggingRetentionInDays = default, bool? usePrivateLinkConnection = default, string privateEndpointName = default, SqlSku sku = default, DataSyncParticipantIdentity identity = default)
         {
             return new SyncGroupData(
                 id,
@@ -4936,7 +4964,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="syncState"> Sync state of the sync member. </param>
         /// <param name="identity"> Sync member authentication information. </param>
         /// <returns> A new <see cref="Sql.SyncMemberData"/> instance for mocking. </returns>
-        public static SyncMemberData SyncMemberData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SyncMemberDbType? databaseType, ResourceIdentifier syncAgentId, Guid? sqlServerDatabaseId, ResourceIdentifier syncMemberAzureDatabaseResourceId, bool? usePrivateLinkConnection, string privateEndpointName, string serverName, string databaseName, string userName, string password, SyncDirection? syncDirection, SyncMemberState? syncState, DataSyncParticipantIdentity identity)
+        public static SyncMemberData SyncMemberData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, SyncMemberDbType? databaseType = default, ResourceIdentifier syncAgentId = default, Guid? sqlServerDatabaseId = default, ResourceIdentifier syncMemberAzureDatabaseResourceId = default, bool? usePrivateLinkConnection = default, string privateEndpointName = default, string serverName = default, string databaseName = default, string userName = default, string password = default, SyncDirection? syncDirection = default, SyncMemberState? syncState = default, DataSyncParticipantIdentity identity = default)
         {
             return new SyncMemberData(
                 id,
@@ -5009,7 +5037,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="childResources"> List of resources in this virtual cluster. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <returns> A new <see cref="Models.VirtualClusterPatch"/> instance for mocking. </returns>
-        public static VirtualClusterPatch VirtualClusterPatch(ResourceIdentifier subnetId, string version, IEnumerable<string> childResources, IDictionary<string, string> tags)
+        public static VirtualClusterPatch VirtualClusterPatch(ResourceIdentifier subnetId = default, string version = default, IEnumerable<string> childResources = default, IDictionary<string, string> tags = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -5427,7 +5455,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="suffixSize"> If maskingFunction is set to Text, the number of characters to show unmasked at the end of the string. Otherwise, this parameter will be ignored. </param>
         /// <param name="replacementString"> If maskingFunction is set to Text, the character to use for masking the unexposed part of the string. Otherwise, this parameter will be ignored. </param>
         /// <returns> A new <see cref="Models.DataMaskingRule"/> instance for mocking. </returns>
-        public static DataMaskingRule DataMaskingRule(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, string kind, string ruleId, SqlDataMaskingRuleState? dataMaskingRuleState, string schemaName, string tableName, string columnName, string aliasName, SqlDataMaskingFunction? dataMaskingFunction, string numberFrom, string numberTo, string prefixSize, string suffixSize, string replacementString)
+        public static DataMaskingRule DataMaskingRule(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, AzureLocation? location = default, string kind = default, string ruleId = default, SqlDataMaskingRuleState? dataMaskingRuleState = default, string schemaName = default, string tableName = default, string columnName = default, string aliasName = default, SqlDataMaskingFunction? dataMaskingFunction = default, string numberFrom = default, string numberTo = default, string prefixSize = default, string suffixSize = default, string replacementString = default)
         {
             return new DataMaskingRule(
                 id,
@@ -6645,7 +6673,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="additionalDetails"></param>
         /// <returns> A new <see cref="Sql.RecommendedActionData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static RecommendedActionData RecommendedActionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string kind = default, AzureLocation? location = default, string recommendationReason = default, DateTimeOffset? validSince = default, DateTimeOffset? lastRefresh = default, RecommendedActionStateInfo state = default, bool? isExecutableAction = default, bool? isRevertableAction = default, bool? isArchivedAction = default, DateTimeOffset? executeActionStartOn = default, TimeSpan? executeActionDuration = default, DateTimeOffset? revertActionStartOn = default, TimeSpan? revertActionDuration = default, RecommendedActionInitiatedBy? executeActionInitiatedBy = default, DateTimeOffset? executeActionInitiatedOn = default, RecommendedActionInitiatedBy? revertActionInitiatedBy = default, DateTimeOffset? revertActionInitiatedOn = default, int? score = default, RecommendedActionImplementationInfo implementationDetails = default, RecommendedActionErrorInfo errorDetails = default, IEnumerable<RecommendedActionImpactRecord> estimatedImpact = default, IEnumerable<RecommendedActionImpactRecord> observedImpact = default, IEnumerable<RecommendedActionMetricInfo> timeSeries = default, IEnumerable<string> linkedObjects = default, IReadOnlyDictionary<string, string> additionalDetails = default)
+        public static RecommendedActionData RecommendedActionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, AzureLocation? location, string recommendationReason, DateTimeOffset? validSince, DateTimeOffset? lastRefresh, RecommendedActionStateInfo state, bool? isExecutableAction, bool? isRevertableAction, bool? isArchivedAction, DateTimeOffset? executeActionStartOn, TimeSpan? executeActionDuration, DateTimeOffset? revertActionStartOn, TimeSpan? revertActionDuration, RecommendedActionInitiatedBy? executeActionInitiatedBy, DateTimeOffset? executeActionInitiatedOn, RecommendedActionInitiatedBy? revertActionInitiatedBy, DateTimeOffset? revertActionInitiatedOn, int? score, RecommendedActionImplementationInfo implementationDetails, RecommendedActionErrorInfo errorDetails, IEnumerable<RecommendedActionImpactRecord> estimatedImpact, IEnumerable<RecommendedActionImpactRecord> observedImpact, IEnumerable<RecommendedActionMetricInfo> timeSeries, IEnumerable<string> linkedObjects, IReadOnlyDictionary<string, string> additionalDetails)
         {
             return new RecommendedActionData(
                 id,
@@ -6703,7 +6731,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="reason"> The reason for the capability not being available. </param>
         /// <returns> A new <see cref="Models.ManagedInstanceVcoresCapability"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ManagedInstanceVcoresCapability ManagedInstanceVcoresCapability(string name, int? value, MaxLimitRangeCapability supportedMemorySizesInGB, MaxSizeCapability includedMaxSize, IEnumerable<MaxSizeRangeCapability> supportedStorageSizes = default, long? includedStorageIOps = default, MaxLimitRangeCapability supportedStorageIOps = default, double? iopsMinValueOverrideFactorPerSelectedStorageGB = default, double? iopsIncludedValueOverrideFactorPerSelectedStorageGB = default, long? includedStorageThroughputMBps = default, MaxLimitRangeCapability supportedStorageThroughputMBps = default, double? throughputMBpsMinValueOverrideFactorPerSelectedStorageGB = default, double? throughputMBpsIncludedValueOverrideFactorPerSelectedStorageGB = default, bool? isInstancePoolSupported = default, bool? isStandaloneSupported = default, IEnumerable<ManagedInstanceMaintenanceConfigurationCapability> supportedMaintenanceConfigurations = default, SqlCapabilityStatus? status = default, string reason = default)
+        public static ManagedInstanceVcoresCapability ManagedInstanceVcoresCapability(string name, int? value, MaxLimitRangeCapability supportedMemorySizesInGB, MaxSizeCapability includedMaxSize, IEnumerable<MaxSizeRangeCapability> supportedStorageSizes, long? includedStorageIOps, MaxLimitRangeCapability supportedStorageIOps, double? iopsMinValueOverrideFactorPerSelectedStorageGB, double? iopsIncludedValueOverrideFactorPerSelectedStorageGB, long? includedStorageThroughputMBps, MaxLimitRangeCapability supportedStorageThroughputMBps, double? throughputMBpsMinValueOverrideFactorPerSelectedStorageGB, double? throughputMBpsIncludedValueOverrideFactorPerSelectedStorageGB, bool? isInstancePoolSupported, bool? isStandaloneSupported, IEnumerable<ManagedInstanceMaintenanceConfigurationCapability> supportedMaintenanceConfigurations, SqlCapabilityStatus? status, string reason)
         {
             return new ManagedInstanceVcoresCapability(
                 name,
@@ -6814,7 +6842,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="storageAccountSubscriptionId"> Specifies the blob storage subscription Id. </param>
         /// <returns> A new <see cref="Sql.SqlDatabaseBlobAuditingPolicyData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static SqlDatabaseBlobAuditingPolicyData SqlDatabaseBlobAuditingPolicyData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string kind = default, int? retentionDays = default, IEnumerable<string> auditActionsAndGroups = default, bool? isStorageSecondaryKeyInUse = default, bool? isAzureMonitorTargetEnabled = default, int? queueDelayMs = default, bool? isManagedIdentityInUse = default, BlobAuditingPolicyState? state = default, string storageEndpoint = default, string storageAccountAccessKey = default, Guid? storageAccountSubscriptionId = default)
+        public static SqlDatabaseBlobAuditingPolicyData SqlDatabaseBlobAuditingPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, int? retentionDays, IEnumerable<string> auditActionsAndGroups, bool? isStorageSecondaryKeyInUse, bool? isAzureMonitorTargetEnabled, int? queueDelayMs, bool? isManagedIdentityInUse, BlobAuditingPolicyState? state, string storageEndpoint, string storageAccountAccessKey, Guid? storageAccountSubscriptionId)
         {
             return new SqlDatabaseBlobAuditingPolicyData(
                 id,
@@ -6852,7 +6880,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="recommendedActions"> Gets the recommended actions for this advisor. </param>
         /// <returns> A new <see cref="Sql.SqlAdvisorData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static SqlAdvisorData SqlAdvisorData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string kind = default, AzureLocation? location = default, SqlAdvisorStatus? advisorStatus = default, AutoExecuteStatus? autoExecuteStatus = default, AutoExecuteStatusInheritedFrom? autoExecuteStatusInheritedFrom = default, string recommendationsStatus = default, DateTimeOffset? lastCheckedOn = default, IEnumerable<RecommendedActionData> recommendedActions = default)
+        public static SqlAdvisorData SqlAdvisorData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, AzureLocation? location, SqlAdvisorStatus? advisorStatus, AutoExecuteStatus? autoExecuteStatus, AutoExecuteStatusInheritedFrom? autoExecuteStatusInheritedFrom, string recommendationsStatus, DateTimeOffset? lastCheckedOn, IEnumerable<RecommendedActionData> recommendedActions)
         {
             return new SqlAdvisorData(
                 id,
@@ -6890,7 +6918,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="networkIsolation"> Optional resource information to enable network isolation for request. </param>
         /// <returns> A new <see cref="Models.SqlDatabaseExtension"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static SqlDatabaseExtension SqlDatabaseExtension(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, DatabaseExtensionOperationMode? operationMode = default, StorageKeyType? storageKeyType = default, string storageKey = default, Uri storageUri = default, string administratorLogin = default, string administratorLoginPassword = default, string authenticationType = default, string databaseEdition = default, string serviceObjectiveName = default, string maxSizeBytes = default, NetworkIsolationSettings networkIsolation = default)
+        public static SqlDatabaseExtension SqlDatabaseExtension(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DatabaseExtensionOperationMode? operationMode, StorageKeyType? storageKeyType, string storageKey, Uri storageUri, string administratorLogin, string administratorLoginPassword, string authenticationType, string databaseEdition, string serviceObjectiveName, string maxSizeBytes, NetworkIsolationSettings networkIsolation)
         {
             return new SqlDatabaseExtension(
                 id,
@@ -7015,7 +7043,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="encryptionProtectorAutoRotation"> The flag to enable or disable auto rotation of database encryption protector AKV key. </param>
         /// <returns> A new <see cref="Sql.SqlDatabaseData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static SqlDatabaseData SqlDatabaseData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, SqlSku sku = default, string kind = default, string managedBy = default, DatabaseIdentity identity = default, SqlDatabaseCreateMode? createMode = default, string collation = default, long? maxSizeBytes = default, SampleSchemaName? sampleName = default, ResourceIdentifier elasticPoolId = default, ResourceIdentifier sourceDatabaseId = default, SqlDatabaseStatus? status = default, Guid? databaseId = default, DateTimeOffset? createdOn = default, string currentServiceObjectiveName = default, string requestedServiceObjectiveName = default, AzureLocation? defaultSecondaryLocation = default, ResourceIdentifier failoverGroupId = default, DateTimeOffset? restorePointInTime = default, DateTimeOffset? sourceDatabaseDeletedOn = default, ResourceIdentifier recoveryServicesRecoveryPointId = default, ResourceIdentifier longTermRetentionBackupResourceId = default, ResourceIdentifier recoverableDatabaseId = default, ResourceIdentifier restorableDroppedDatabaseId = default, CatalogCollationType? catalogCollation = default, bool? isZoneRedundant = default, DatabaseLicenseType? licenseType = default, long? maxLogSizeBytes = default, DateTimeOffset? earliestRestoreOn = default, DatabaseReadScale? readScale = default, int? highAvailabilityReplicaCount = default, SecondaryType? secondaryType = default, SqlSku currentSku = default, int? autoPauseDelay = default, SqlBackupStorageRedundancy? currentBackupStorageRedundancy = default, SqlBackupStorageRedundancy? requestedBackupStorageRedundancy = default, double? minCapacity = default, DateTimeOffset? pausedOn = default, DateTimeOffset? resumedOn = default, ResourceIdentifier maintenanceConfigurationId = default, bool? isLedgerOn = default, bool? isInfraEncryptionEnabled = default, Guid? federatedClientId = default, IDictionary<string, SqlDatabaseKey> keys = default, string encryptionProtector = default, SqlAlwaysEncryptedEnclaveType? preferredEnclaveType = default, bool? useFreeLimit = default, FreeLimitExhaustionBehavior? freeLimitExhaustionBehavior = default, ResourceIdentifier sourceResourceId = default, bool? manualCutover = default, bool? performCutover = default, SqlAvailabilityZoneType? availabilityZone = default, bool? encryptionProtectorAutoRotation = default)
+        public static SqlDatabaseData SqlDatabaseData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, SqlSku sku, string kind, string managedBy, DatabaseIdentity identity, SqlDatabaseCreateMode? createMode, string collation, long? maxSizeBytes, SampleSchemaName? sampleName, ResourceIdentifier elasticPoolId, ResourceIdentifier sourceDatabaseId, SqlDatabaseStatus? status, Guid? databaseId, DateTimeOffset? createdOn, string currentServiceObjectiveName, string requestedServiceObjectiveName, AzureLocation? defaultSecondaryLocation, ResourceIdentifier failoverGroupId, DateTimeOffset? restorePointInTime, DateTimeOffset? sourceDatabaseDeletedOn, ResourceIdentifier recoveryServicesRecoveryPointId, ResourceIdentifier longTermRetentionBackupResourceId, ResourceIdentifier recoverableDatabaseId, ResourceIdentifier restorableDroppedDatabaseId, CatalogCollationType? catalogCollation, bool? isZoneRedundant, DatabaseLicenseType? licenseType, long? maxLogSizeBytes, DateTimeOffset? earliestRestoreOn, DatabaseReadScale? readScale, int? highAvailabilityReplicaCount, SecondaryType? secondaryType, SqlSku currentSku, int? autoPauseDelay, SqlBackupStorageRedundancy? currentBackupStorageRedundancy, SqlBackupStorageRedundancy? requestedBackupStorageRedundancy, double? minCapacity, DateTimeOffset? pausedOn, DateTimeOffset? resumedOn, ResourceIdentifier maintenanceConfigurationId, bool? isLedgerOn, bool? isInfraEncryptionEnabled, Guid? federatedClientId, IDictionary<string, SqlDatabaseKey> keys, string encryptionProtector, SqlAlwaysEncryptedEnclaveType? preferredEnclaveType, bool? useFreeLimit, FreeLimitExhaustionBehavior? freeLimitExhaustionBehavior, ResourceIdentifier sourceResourceId, bool? manualCutover, bool? performCutover, SqlAvailabilityZoneType? availabilityZone, bool? encryptionProtectorAutoRotation)
         {
             return new SqlDatabaseData(
                 id,
@@ -7158,7 +7186,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="encryptionProtectorAutoRotation"> The flag to enable or disable auto rotation of database encryption protector AKV key. </param>
         /// <returns> A new <see cref="Models.SqlDatabasePatch"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static SqlDatabasePatch SqlDatabasePatch(SqlSku sku = default, DatabaseIdentity identity = default, IDictionary<string, string> tags = default, SqlDatabaseCreateMode? createMode = default, string collation = default, long? maxSizeBytes = default, SampleSchemaName? sampleName = default, ResourceIdentifier elasticPoolId = default, ResourceIdentifier sourceDatabaseId = default, SqlDatabaseStatus? status = default, Guid? databaseId = default, DateTimeOffset? createdOn = default, string currentServiceObjectiveName = default, string requestedServiceObjectiveName = default, AzureLocation? defaultSecondaryLocation = default, ResourceIdentifier failoverGroupId = default, DateTimeOffset? restorePointInTime = default, DateTimeOffset? sourceDatabaseDeletedOn = default, ResourceIdentifier recoveryServicesRecoveryPointId = default, ResourceIdentifier longTermRetentionBackupResourceId = default, ResourceIdentifier recoverableDatabaseId = default, ResourceIdentifier restorableDroppedDatabaseId = default, CatalogCollationType? catalogCollation = default, bool? isZoneRedundant = default, DatabaseLicenseType? licenseType = default, long? maxLogSizeBytes = default, DateTimeOffset? earliestRestoreOn = default, DatabaseReadScale? readScale = default, int? highAvailabilityReplicaCount = default, SecondaryType? secondaryType = default, SqlSku currentSku = default, int? autoPauseDelay = default, SqlBackupStorageRedundancy? currentBackupStorageRedundancy = default, SqlBackupStorageRedundancy? requestedBackupStorageRedundancy = default, double? minCapacity = default, DateTimeOffset? pausedOn = default, DateTimeOffset? resumedOn = default, ResourceIdentifier maintenanceConfigurationId = default, bool? isLedgerOn = default, bool? isInfraEncryptionEnabled = default, Guid? federatedClientId = default, IDictionary<string, SqlDatabaseKey> keys = default, string encryptionProtector = default, SqlAlwaysEncryptedEnclaveType? preferredEnclaveType = default, bool? useFreeLimit = default, FreeLimitExhaustionBehavior? freeLimitExhaustionBehavior = default, bool? manualCutover = default, bool? performCutover = default, bool? encryptionProtectorAutoRotation = default)
+        public static SqlDatabasePatch SqlDatabasePatch(SqlSku sku, DatabaseIdentity identity, IDictionary<string, string> tags, SqlDatabaseCreateMode? createMode, string collation, long? maxSizeBytes, SampleSchemaName? sampleName, ResourceIdentifier elasticPoolId, ResourceIdentifier sourceDatabaseId, SqlDatabaseStatus? status, Guid? databaseId, DateTimeOffset? createdOn, string currentServiceObjectiveName, string requestedServiceObjectiveName, AzureLocation? defaultSecondaryLocation, ResourceIdentifier failoverGroupId, DateTimeOffset? restorePointInTime, DateTimeOffset? sourceDatabaseDeletedOn, ResourceIdentifier recoveryServicesRecoveryPointId, ResourceIdentifier longTermRetentionBackupResourceId, ResourceIdentifier recoverableDatabaseId, ResourceIdentifier restorableDroppedDatabaseId, CatalogCollationType? catalogCollation, bool? isZoneRedundant, DatabaseLicenseType? licenseType, long? maxLogSizeBytes, DateTimeOffset? earliestRestoreOn, DatabaseReadScale? readScale, int? highAvailabilityReplicaCount, SecondaryType? secondaryType, SqlSku currentSku, int? autoPauseDelay, SqlBackupStorageRedundancy? currentBackupStorageRedundancy, SqlBackupStorageRedundancy? requestedBackupStorageRedundancy, double? minCapacity, DateTimeOffset? pausedOn, DateTimeOffset? resumedOn, ResourceIdentifier maintenanceConfigurationId, bool? isLedgerOn, bool? isInfraEncryptionEnabled, Guid? federatedClientId, IDictionary<string, SqlDatabaseKey> keys, string encryptionProtector, SqlAlwaysEncryptedEnclaveType? preferredEnclaveType, bool? useFreeLimit, FreeLimitExhaustionBehavior? freeLimitExhaustionBehavior, bool? manualCutover, bool? performCutover, bool? encryptionProtectorAutoRotation)
         {
             return new SqlDatabasePatch(sku, identity, createMode is null && collation is null && maxSizeBytes is null && sampleName is null && elasticPoolId is null && sourceDatabaseId is null && status is null && databaseId is null && createdOn is null && currentServiceObjectiveName is null && requestedServiceObjectiveName is null && defaultSecondaryLocation is null && failoverGroupId is null && restorePointInTime is null && sourceDatabaseDeletedOn is null && recoveryServicesRecoveryPointId is null && longTermRetentionBackupResourceId is null && recoverableDatabaseId is null && restorableDroppedDatabaseId is null && catalogCollation is null && isZoneRedundant is null && licenseType is null && maxLogSizeBytes is null && earliestRestoreOn is null && readScale is null && highAvailabilityReplicaCount is null && secondaryType is null && currentSku is null && autoPauseDelay is null && currentBackupStorageRedundancy is null && requestedBackupStorageRedundancy is null && minCapacity is null && pausedOn is null && resumedOn is null && maintenanceConfigurationId is null && isLedgerOn is null && isInfraEncryptionEnabled is null && federatedClientId is null && keys is null && encryptionProtector is null && preferredEnclaveType is null && useFreeLimit is null && freeLimitExhaustionBehavior is null && manualCutover is null && performCutover is null && encryptionProtectorAutoRotation is null ? default : new DatabaseUpdateProperties(
                 createMode,
@@ -7220,7 +7248,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="results"> The rule baseline result list. </param>
         /// <returns> A new <see cref="Models.SqlVulnerabilityAssessmentBaselineCreateOrUpdateContent"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static SqlVulnerabilityAssessmentBaselineCreateOrUpdateContent SqlVulnerabilityAssessmentBaselineCreateOrUpdateContent(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, bool? isLatestScan = default, IDictionary<string, IList<IList<string>>> results = default)
+        public static SqlVulnerabilityAssessmentBaselineCreateOrUpdateContent SqlVulnerabilityAssessmentBaselineCreateOrUpdateContent(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, bool? isLatestScan, IDictionary<string, IList<IList<string>>> results)
         {
             return new SqlVulnerabilityAssessmentBaselineCreateOrUpdateContent(
                 id,
@@ -7240,7 +7268,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="results"> The rule baseline result. </param>
         /// <returns> A new <see cref="Models.SqlVulnerabilityAssessmentBaselineRuleCreateOrUpdateContent"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static SqlVulnerabilityAssessmentBaselineRuleCreateOrUpdateContent SqlVulnerabilityAssessmentBaselineRuleCreateOrUpdateContent(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, bool? isLatestScan = default, IEnumerable<IList<string>> results = default)
+        public static SqlVulnerabilityAssessmentBaselineRuleCreateOrUpdateContent SqlVulnerabilityAssessmentBaselineRuleCreateOrUpdateContent(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, bool? isLatestScan, IEnumerable<IList<string>> results)
         {
             return new SqlVulnerabilityAssessmentBaselineRuleCreateOrUpdateContent(
                 id,
@@ -7264,7 +7292,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="maskingLevel"> The masking level. This is a legacy parameter and is no longer used. </param>
         /// <returns> A new <see cref="Sql.DataMaskingPolicyData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static DataMaskingPolicyData DataMaskingPolicyData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, AzureLocation? location = default, string kind = default, DataMaskingState? dataMaskingState = default, string exemptPrincipals = default, string applicationPrincipals = default, string maskingLevel = default)
+        public static DataMaskingPolicyData DataMaskingPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, string kind, DataMaskingState? dataMaskingState, string exemptPrincipals, string applicationPrincipals, string maskingLevel)
         {
             return new DataMaskingPolicyData(
                 id,
@@ -7298,7 +7326,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="replacementString"> If maskingFunction is set to Text, the character to use for masking the unexposed part of the string. Otherwise, this parameter will be ignored. </param>
         /// <returns> A new <see cref="Models.DataMaskingRule"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static DataMaskingRule DataMaskingRule(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, AzureLocation? location = default, string kind = default, string ruleId = default, DataMaskingRuleState? ruleState = default, string schemaName = default, string tableName = default, string columnName = default, string aliasName = default, DataMaskingFunction? maskingFunction = default, string numberFrom = default, string numberTo = default, string prefixSize = default, string suffixSize = default, string replacementString = default)
+        public static DataMaskingRule DataMaskingRule(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, string kind, string ruleId, DataMaskingRuleState? ruleState, string schemaName, string tableName, string columnName, string aliasName, DataMaskingFunction? maskingFunction, string numberFrom, string numberTo, string prefixSize, string suffixSize, string replacementString)
         {
             return new DataMaskingRule(
                 id,
@@ -7320,6 +7348,77 @@ namespace Azure.ResourceManager.Sql.Models
                     prefixSize,
                     suffixSize,
                     replacementString,
+                    default),
+                default);
+        }
+
+        /// <summary> A deleted server. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="version"> The version of the deleted server. </param>
+        /// <param name="deletedOn"> The deletion time of the deleted server. </param>
+        /// <param name="originalId"> The original ID of the server before deletion. </param>
+        /// <param name="fullyQualifiedDomainName"> The fully qualified domain name of the server. </param>
+        /// <returns> A new <see cref="Sql.DeletedServerData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static DeletedServerData DeletedServerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string version, DateTimeOffset? deletedOn, ResourceIdentifier originalId, string fullyQualifiedDomainName)
+        {
+            return new DeletedServerData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                version is null && deletedOn is null && originalId is null && fullyQualifiedDomainName is null ? default : new DeletedServerProperties(
+                    version,
+                    deletedOn,
+                    originalId,
+                    default,
+                    fullyQualifiedDomainName,
+                    default,
+                    default),
+                default);
+        }
+
+        /// <summary> Distributed availability group between box and Sql Managed Instance. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="distributedAvailabilityGroupName"> Name of the distributed availability group. </param>
+        /// <param name="distributedAvailabilityGroupId"> ID of the distributed availability group. </param>
+        /// <param name="replicationMode"> Replication mode of the link. </param>
+        /// <param name="partnerLinkRole"> SQL server side link role. </param>
+        /// <param name="partnerAvailabilityGroupName"> SQL server side availability group name. </param>
+        /// <param name="partnerEndpoint"> SQL server side endpoint - IP or DNS resolvable name. </param>
+        /// <param name="instanceLinkRole"> Managed instance side link role. </param>
+        /// <param name="instanceAvailabilityGroupName"> Managed instance side availability group name. </param>
+        /// <param name="failoverMode"> The link failover mode - can be Manual if intended to be used for two-way failover with a supported SQL Server, or None for one-way failover to Azure. </param>
+        /// <param name="seedingMode"> Database seeding mode – can be Automatic (default), or Manual for supported scenarios. </param>
+        /// <param name="databases"> Databases in the distributed availability group. </param>
+        /// <returns> A new <see cref="Sql.SqlDistributedAvailabilityGroupData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static SqlDistributedAvailabilityGroupData SqlDistributedAvailabilityGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string distributedAvailabilityGroupName, Guid? distributedAvailabilityGroupId, SqlReplicationModeType? replicationMode, SqlServerSideLinkRole? partnerLinkRole, string partnerAvailabilityGroupName, string partnerEndpoint, SqlServerSideLinkRole? instanceLinkRole, string instanceAvailabilityGroupName, SqlServerFailoverModeType? failoverMode, SeedingModeType? seedingMode, IEnumerable<DistributedAvailabilityGroupDatabase> databases)
+        {
+            return new SqlDistributedAvailabilityGroupData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                distributedAvailabilityGroupName is null && distributedAvailabilityGroupId is null && replicationMode is null && partnerLinkRole is null && partnerAvailabilityGroupName is null && partnerEndpoint is null && instanceLinkRole is null && instanceAvailabilityGroupName is null && failoverMode is null && seedingMode is null && databases is null ? default : new DistributedAvailabilityGroupProperties(
+                    distributedAvailabilityGroupName,
+                    distributedAvailabilityGroupId,
+                    replicationMode,
+                    partnerLinkRole,
+                    partnerAvailabilityGroupName,
+                    partnerEndpoint,
+                    instanceLinkRole,
+                    instanceAvailabilityGroupName,
+                    failoverMode,
+                    seedingMode,
+                    default,
+                    (databases ?? new ChangeTrackingList<DistributedAvailabilityGroupDatabase>()).ToList(),
                     default),
                 default);
         }
@@ -7353,7 +7452,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="availabilityZone"> Specifies the availability zone the pool's primary replica is pinned to. </param>
         /// <returns> A new <see cref="Sql.ElasticPoolData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ElasticPoolData ElasticPoolData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, SqlSku sku = default, string kind = default, ElasticPoolState? state = default, DateTimeOffset? createdOn = default, long? maxSizeBytes = default, double? minCapacity = default, ElasticPoolPerDatabaseSettings perDatabaseSettings = default, bool? isZoneRedundant = default, ElasticPoolLicenseType? licenseType = default, ResourceIdentifier maintenanceConfigurationId = default, int? highAvailabilityReplicaCount = default, int? autoPauseDelay = default, SqlAlwaysEncryptedEnclaveType? preferredEnclaveType = default, SqlAvailabilityZoneType? availabilityZone = default)
+        public static ElasticPoolData ElasticPoolData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, SqlSku sku, string kind, ElasticPoolState? state, DateTimeOffset? createdOn, long? maxSizeBytes, double? minCapacity, ElasticPoolPerDatabaseSettings perDatabaseSettings, bool? isZoneRedundant, ElasticPoolLicenseType? licenseType, ResourceIdentifier maintenanceConfigurationId, int? highAvailabilityReplicaCount, int? autoPauseDelay, SqlAlwaysEncryptedEnclaveType? preferredEnclaveType, SqlAvailabilityZoneType? availabilityZone)
         {
             return new ElasticPoolData(
                 id,
@@ -7398,7 +7497,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="keyVersion"> The version of the server key being used as encryption protector. </param>
         /// <returns> A new <see cref="Sql.EncryptionProtectorData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static EncryptionProtectorData EncryptionProtectorData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string kind = default, AzureLocation? location = default, string subregion = default, string serverKeyName = default, SqlServerKeyType? serverKeyType = default, Uri uri = default, string thumbprint = default, bool? isAutoRotationEnabled = default, string keyVersion = default)
+        public static EncryptionProtectorData EncryptionProtectorData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, AzureLocation? location, string subregion, string serverKeyName, SqlServerKeyType? serverKeyType, Uri uri, string thumbprint, bool? isAutoRotationEnabled, string keyVersion)
         {
             return new EncryptionProtectorData(
                 id,
@@ -7419,6 +7518,25 @@ namespace Azure.ResourceManager.Sql.Models
                 default);
         }
 
+        /// <summary> Certificate used on an endpoint on the Managed Instance. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="publicBlob"> The certificate public blob. </param>
+        /// <returns> A new <see cref="Sql.EndpointCertificateData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static EndpointCertificateData EndpointCertificateData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string publicBlob)
+        {
+            return new EndpointCertificateData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                publicBlob is null ? default : new EndpointCertificateProperties(publicBlob, default, default),
+                default);
+        }
+
         /// <summary> A failover group. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
@@ -7435,7 +7553,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="secondaryType"> Databases secondary type on partner server. </param>
         /// <returns> A new <see cref="Sql.FailoverGroupData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static FailoverGroupData FailoverGroupData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, AzureLocation? location = default, IDictionary<string, string> tags = default, FailoverGroupReadWriteEndpoint readWriteEndpoint = default, FailoverGroupReadOnlyEndpoint readOnlyEndpoint = default, FailoverGroupReplicationRole? replicationRole = default, string replicationState = default, IEnumerable<PartnerServerInfo> partnerServers = default, IEnumerable<ResourceIdentifier> failoverDatabases = default, FailoverGroupDatabasesSecondaryType? secondaryType = default)
+        public static FailoverGroupData FailoverGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, IDictionary<string, string> tags, FailoverGroupReadWriteEndpoint readWriteEndpoint, FailoverGroupReadOnlyEndpoint readOnlyEndpoint, FailoverGroupReplicationRole? replicationRole, string replicationState, IEnumerable<PartnerServerInfo> partnerServers, IEnumerable<ResourceIdentifier> failoverDatabases, FailoverGroupDatabasesSecondaryType? secondaryType)
         {
             return new FailoverGroupData(
                 id,
@@ -7467,7 +7585,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="storageType"> The storage type of the geo backup policy. </param>
         /// <returns> A new <see cref="Sql.GeoBackupPolicyData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static GeoBackupPolicyData GeoBackupPolicyData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, AzureLocation? location = default, string kind = default, GeoBackupPolicyState? geoBackupPolicyState = default, string storageType = default)
+        public static GeoBackupPolicyData GeoBackupPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, string kind, GeoBackupPolicyState? geoBackupPolicyState, string storageType)
         {
             return new GeoBackupPolicyData(
                 id,
@@ -7494,7 +7612,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="managedInstancePairs"> List of managed instance pairs in the failover group. </param>
         /// <returns> A new <see cref="Sql.InstanceFailoverGroupData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static InstanceFailoverGroupData InstanceFailoverGroupData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, GeoSecondaryInstanceType? secondaryType = default, InstanceFailoverGroupReadWriteEndpoint readWriteEndpoint = default, ReadOnlyEndpointFailoverPolicy? readOnlyEndpointFailoverPolicy = default, InstanceFailoverGroupReplicationRole? replicationRole = default, string replicationState = default, IEnumerable<PartnerRegionInfo> partnerRegions = default, IEnumerable<ManagedInstancePairInfo> managedInstancePairs = default)
+        public static InstanceFailoverGroupData InstanceFailoverGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, GeoSecondaryInstanceType? secondaryType, InstanceFailoverGroupReadWriteEndpoint readWriteEndpoint, ReadOnlyEndpointFailoverPolicy? readOnlyEndpointFailoverPolicy, InstanceFailoverGroupReplicationRole? replicationRole, string replicationState, IEnumerable<PartnerRegionInfo> partnerRegions, IEnumerable<ManagedInstancePairInfo> managedInstancePairs)
         {
             return new InstanceFailoverGroupData(
                 id,
@@ -7528,7 +7646,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="maintenanceConfigurationId"> Specifies maintenance configuration id to apply to this managed instance. </param>
         /// <returns> A new <see cref="Sql.InstancePoolData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static InstancePoolData InstancePoolData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, SqlSku sku = default, ResourceIdentifier subnetId = default, int? vCores = default, InstancePoolLicenseType? licenseType = default, string dnsZone = default, ResourceIdentifier maintenanceConfigurationId = default)
+        public static InstancePoolData InstancePoolData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, SqlSku sku, ResourceIdentifier subnetId, int? vCores, InstancePoolLicenseType? licenseType, string dnsZone, ResourceIdentifier maintenanceConfigurationId)
         {
             return new InstancePoolData(
                 id,
@@ -7558,7 +7676,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="maintenanceConfigurationId"> Specifies maintenance configuration id to apply to this managed instance. </param>
         /// <returns> A new <see cref="Models.InstancePoolPatch"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static InstancePoolPatch InstancePoolPatch(SqlSku sku = default, IDictionary<string, string> tags = default, ResourceIdentifier subnetId = default, int? vCores = default, InstancePoolLicenseType? licenseType = default, string dnsZone = default, ResourceIdentifier maintenanceConfigurationId = default)
+        public static InstancePoolPatch InstancePoolPatch(SqlSku sku, IDictionary<string, string> tags, ResourceIdentifier subnetId, int? vCores, InstancePoolLicenseType? licenseType, string dnsZone, ResourceIdentifier maintenanceConfigurationId)
         {
             return new InstancePoolPatch(sku, subnetId is null && vCores is null && licenseType is null && dnsZone is null && maintenanceConfigurationId is null ? default : new InstancePoolProperties(
                 subnetId,
@@ -7582,7 +7700,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="state"> The state of the job agent. </param>
         /// <returns> A new <see cref="Sql.SqlServerJobAgentData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static SqlServerJobAgentData SqlServerJobAgentData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, SqlSku sku = default, JobAgentIdentity identity = default, ResourceIdentifier databaseId = default, JobAgentState? state = default)
+        public static SqlServerJobAgentData SqlServerJobAgentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, SqlSku sku, JobAgentIdentity identity, ResourceIdentifier databaseId, JobAgentState? state)
         {
             return new SqlServerJobAgentData(
                 id,
@@ -7624,7 +7742,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="extendedAccessibilityInfo"> Additional observability and troubleshooting information for databases in ‘Inaccessible’ state. </param>
         /// <returns> A new <see cref="Models.ManagedDatabasePatch"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ManagedDatabasePatch ManagedDatabasePatch(IDictionary<string, string> tags = default, string collation = default, ManagedDatabaseStatus? status = default, DateTimeOffset? createdOn = default, DateTimeOffset? earliestRestorePoint = default, DateTimeOffset? restorePointInTime = default, AzureLocation? defaultSecondaryLocation = default, CatalogCollationType? catalogCollation = default, ManagedDatabaseCreateMode? createMode = default, Uri storageContainerUri = default, ResourceIdentifier sourceDatabaseId = default, ResourceIdentifier crossSubscriptionSourceDatabaseId = default, ResourceIdentifier restorableDroppedDatabaseId = default, ResourceIdentifier crossSubscriptionRestorableDroppedDatabaseId = default, string storageContainerIdentity = default, string storageContainerSasToken = default, ResourceIdentifier failoverGroupId = default, ResourceIdentifier recoverableDatabaseId = default, ResourceIdentifier longTermRetentionBackupResourceId = default, bool? allowAutoCompleteRestore = default, string lastBackupName = default, ResourceIdentifier crossSubscriptionTargetManagedInstanceId = default, bool? isLedgerOn = default, ManagedDatabaseExtendedAccessibilityInfo extendedAccessibilityInfo = default)
+        public static ManagedDatabasePatch ManagedDatabasePatch(IDictionary<string, string> tags, string collation, ManagedDatabaseStatus? status, DateTimeOffset? createdOn, DateTimeOffset? earliestRestorePoint, DateTimeOffset? restorePointInTime, AzureLocation? defaultSecondaryLocation, CatalogCollationType? catalogCollation, ManagedDatabaseCreateMode? createMode, Uri storageContainerUri, ResourceIdentifier sourceDatabaseId, ResourceIdentifier crossSubscriptionSourceDatabaseId, ResourceIdentifier restorableDroppedDatabaseId, ResourceIdentifier crossSubscriptionRestorableDroppedDatabaseId, string storageContainerIdentity, string storageContainerSasToken, ResourceIdentifier failoverGroupId, ResourceIdentifier recoverableDatabaseId, ResourceIdentifier longTermRetentionBackupResourceId, bool? allowAutoCompleteRestore, string lastBackupName, ResourceIdentifier crossSubscriptionTargetManagedInstanceId, bool? isLedgerOn, ManagedDatabaseExtendedAccessibilityInfo extendedAccessibilityInfo)
         {
             return new ManagedDatabasePatch(collation is null && status is null && createdOn is null && earliestRestorePoint is null && restorePointInTime is null && defaultSecondaryLocation is null && catalogCollation is null && createMode is null && storageContainerUri is null && sourceDatabaseId is null && crossSubscriptionSourceDatabaseId is null && restorableDroppedDatabaseId is null && crossSubscriptionRestorableDroppedDatabaseId is null && storageContainerIdentity is null && storageContainerSasToken is null && failoverGroupId is null && recoverableDatabaseId is null && longTermRetentionBackupResourceId is null && allowAutoCompleteRestore is null && lastBackupName is null && crossSubscriptionTargetManagedInstanceId is null && isLedgerOn is null && extendedAccessibilityInfo is null ? default : new ManagedDatabaseProperties(
                 collation,
@@ -7671,7 +7789,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="clientClassificationSource"></param>
         /// <returns> A new <see cref="Sql.SensitivityLabelData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static SensitivityLabelData SensitivityLabelData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string managedBy = default, string schemaName = default, string tableName = default, string columnName = default, string labelName = default, string labelId = default, string informationType = default, string informationTypeId = default, bool? isDisabled = default, SensitivityLabelRank? rank = default, ClientClassificationSource? clientClassificationSource = default)
+        public static SensitivityLabelData SensitivityLabelData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string managedBy, string schemaName, string tableName, string columnName, string labelName, string labelId, string informationType, string informationTypeId, bool? isDisabled, SensitivityLabelRank? rank, ClientClassificationSource? clientClassificationSource)
         {
             return new SensitivityLabelData(
                 id,
@@ -7706,7 +7824,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="sensitivityLabel"> The sensitivity label information to apply on a column. </param>
         /// <returns> A new <see cref="Models.SensitivityLabelUpdate"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static SensitivityLabelUpdate SensitivityLabelUpdate(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, SensitivityLabelUpdateKind? op = default, string schema = default, string table = default, string column = default, SensitivityLabelData sensitivityLabel = default)
+        public static SensitivityLabelUpdate SensitivityLabelUpdate(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SensitivityLabelUpdateKind? op, string schema, string table, string column, SensitivityLabelData sensitivityLabel)
         {
             return new SensitivityLabelUpdate(
                 id,
@@ -7734,7 +7852,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="column"> Column name to update. </param>
         /// <returns> A new <see cref="Models.RecommendedSensitivityLabelUpdate"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static RecommendedSensitivityLabelUpdate RecommendedSensitivityLabelUpdate(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, RecommendedSensitivityLabelUpdateKind? op = default, string schema = default, string table = default, string column = default)
+        public static RecommendedSensitivityLabelUpdate RecommendedSensitivityLabelUpdate(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, RecommendedSensitivityLabelUpdateKind? op, string schema, string table, string column)
         {
             return new RecommendedSensitivityLabelUpdate(
                 id,
@@ -7742,6 +7860,34 @@ namespace Azure.ResourceManager.Sql.Models
                 resourceType,
                 systemData,
                 op is null && schema is null && table is null && column is null ? default : new RecommendedSensitivityLabelUpdateProperties(op.GetValueOrDefault(), schema, table, column, default),
+                default);
+        }
+
+        /// <summary> An Azure SQL managed instance administrator. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="administratorType"> Type of the managed instance administrator. </param>
+        /// <param name="login"> Login name of the managed instance administrator. </param>
+        /// <param name="sid"> SID (object ID) of the managed instance administrator. </param>
+        /// <param name="tenantId"> Tenant ID of the managed instance administrator. </param>
+        /// <returns> A new <see cref="Sql.ManagedInstanceAdministratorData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static ManagedInstanceAdministratorData ManagedInstanceAdministratorData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ManagedInstanceAdministratorType? administratorType, string login, Guid? sid, Guid? tenantId)
+        {
+            return new ManagedInstanceAdministratorData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                administratorType is null && login is null && sid is null && tenantId is null ? default : new ManagedInstanceAdministratorProperties(
+                    administratorType.GetValueOrDefault(),
+                    login,
+                    sid.GetValueOrDefault(),
+                    tenantId,
+                    default,
+                    default),
                 default);
         }
 
@@ -7757,7 +7903,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="provisioningState"> Provisioning state of managed instance DTC. </param>
         /// <returns> A new <see cref="Sql.ManagedInstanceDtcData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ManagedInstanceDtcData ManagedInstanceDtcData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, bool? dtcEnabled = default, ManagedInstanceDtcSecuritySettings securitySettings = default, IEnumerable<string> externalDnsSuffixSearchList = default, string dtcHostNameDnsSuffix = default, JobExecutionProvisioningState? provisioningState = default)
+        public static ManagedInstanceDtcData ManagedInstanceDtcData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, bool? dtcEnabled, ManagedInstanceDtcSecuritySettings securitySettings, IEnumerable<string> externalDnsSuffixSearchList, string dtcHostNameDnsSuffix, JobExecutionProvisioningState? provisioningState)
         {
             return new ManagedInstanceDtcData(
                 id,
@@ -7788,7 +7934,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="isAutoRotationEnabled"> Key auto rotation opt-in flag. Either true or false. </param>
         /// <returns> A new <see cref="Sql.ManagedInstanceEncryptionProtectorData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ManagedInstanceEncryptionProtectorData ManagedInstanceEncryptionProtectorData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string kind = default, string serverKeyName = default, SqlServerKeyType? serverKeyType = default, Uri uri = default, string thumbprint = default, bool? isAutoRotationEnabled = default)
+        public static ManagedInstanceEncryptionProtectorData ManagedInstanceEncryptionProtectorData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, string serverKeyName, SqlServerKeyType? serverKeyType, Uri uri, string thumbprint, bool? isAutoRotationEnabled)
         {
             return new ManagedInstanceEncryptionProtectorData(
                 id,
@@ -7819,7 +7965,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="isAutoRotationEnabled"> Key auto rotation opt-in flag. Either true or false. </param>
         /// <returns> A new <see cref="Sql.ManagedInstanceKeyData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ManagedInstanceKeyData ManagedInstanceKeyData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string kind = default, SqlServerKeyType? serverKeyType = default, Uri uri = default, string thumbprint = default, DateTimeOffset? createdOn = default, bool? isAutoRotationEnabled = default)
+        public static ManagedInstanceKeyData ManagedInstanceKeyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, SqlServerKeyType? serverKeyType, Uri uri, string thumbprint, DateTimeOffset? createdOn, bool? isAutoRotationEnabled)
         {
             return new ManagedInstanceKeyData(
                 id,
@@ -7847,7 +7993,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="provisioningState"> State of the Private Endpoint Connection. </param>
         /// <returns> A new <see cref="Sql.ManagedInstancePrivateEndpointConnectionData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ManagedInstancePrivateEndpointConnectionData ManagedInstancePrivateEndpointConnectionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ResourceIdentifier privateEndpointId = default, ManagedInstancePrivateLinkServiceConnectionStateProperty connectionState = default, string provisioningState = default)
+        public static ManagedInstancePrivateEndpointConnectionData ManagedInstancePrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ResourceIdentifier privateEndpointId, ManagedInstancePrivateLinkServiceConnectionStateProperty connectionState, string provisioningState)
         {
             return new ManagedInstancePrivateEndpointConnectionData(
                 id,
@@ -7922,7 +8068,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="requestedLogicalAvailabilityZone"> Specifies the logical availability zone Managed Instance is pinned to. </param>
         /// <returns> A new <see cref="Sql.ManagedInstanceData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ManagedInstanceData ManagedInstanceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ManagedServiceIdentity identity = default, SqlSku sku = default, ManagedInstancePropertiesProvisioningState? provisioningState = default, ManagedServerCreateMode? managedInstanceCreateMode = default, string fullyQualifiedDomainName = default, bool? isGeneralPurposeV2 = default, string administratorLogin = default, string administratorLoginPassword = default, ResourceIdentifier subnetId = default, string state = default, ManagedInstanceLicenseType? licenseType = default, HybridSecondaryUsage? hybridSecondaryUsage = default, HybridSecondaryUsageDetected? hybridSecondaryUsageDetected = default, int? vCores = default, int? storageSizeInGB = default, int? storageIOps = default, int? storageThroughputMBps = default, int? memorySizeInGB = default, string collation = default, string dnsZone = default, ResourceIdentifier managedDnsZonePartner = default, bool? isPublicDataEndpointEnabled = default, ResourceIdentifier sourceManagedInstanceId = default, DateTimeOffset? restorePointInTime = default, ManagedInstanceProxyOverride? proxyOverride = default, string timezoneId = default, ResourceIdentifier instancePoolId = default, ResourceIdentifier maintenanceConfigurationId = default, IEnumerable<ManagedInstancePecProperty> privateEndpointConnections = default, string minimalTlsVersion = default, SqlBackupStorageRedundancy? currentBackupStorageRedundancy = default, SqlBackupStorageRedundancy? requestedBackupStorageRedundancy = default, bool? isZoneRedundant = default, ResourceIdentifier primaryUserAssignedIdentityId = default, Uri keyId = default, ManagedInstanceExternalAdministrator administrators = default, SqlServicePrincipal servicePrincipal = default, ResourceIdentifier virtualClusterId = default, ExternalGovernanceStatus? externalGovernanceStatus = default, SqlManagedInstancePricingModel? pricingModel = default, DateTimeOffset? createOn = default, AuthMetadataLookupMode? authenticationMetadata = default, ManagedInstanceDatabaseFormat? databaseFormat = default, SqlAvailabilityZoneType? requestedLogicalAvailabilityZone = default)
+        public static ManagedInstanceData ManagedInstanceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, SqlSku sku, ManagedInstancePropertiesProvisioningState? provisioningState, ManagedServerCreateMode? managedInstanceCreateMode, string fullyQualifiedDomainName, bool? isGeneralPurposeV2, string administratorLogin, string administratorLoginPassword, ResourceIdentifier subnetId, string state, ManagedInstanceLicenseType? licenseType, HybridSecondaryUsage? hybridSecondaryUsage, HybridSecondaryUsageDetected? hybridSecondaryUsageDetected, int? vCores, int? storageSizeInGB, int? storageIOps, int? storageThroughputMBps, int? memorySizeInGB, string collation, string dnsZone, ResourceIdentifier managedDnsZonePartner, bool? isPublicDataEndpointEnabled, ResourceIdentifier sourceManagedInstanceId, DateTimeOffset? restorePointInTime, ManagedInstanceProxyOverride? proxyOverride, string timezoneId, ResourceIdentifier instancePoolId, ResourceIdentifier maintenanceConfigurationId, IEnumerable<ManagedInstancePecProperty> privateEndpointConnections, string minimalTlsVersion, SqlBackupStorageRedundancy? currentBackupStorageRedundancy, SqlBackupStorageRedundancy? requestedBackupStorageRedundancy, bool? isZoneRedundant, ResourceIdentifier primaryUserAssignedIdentityId, Uri keyId, ManagedInstanceExternalAdministrator administrators, SqlServicePrincipal servicePrincipal, ResourceIdentifier virtualClusterId, ExternalGovernanceStatus? externalGovernanceStatus, SqlManagedInstancePricingModel? pricingModel, DateTimeOffset? createOn, AuthMetadataLookupMode? authenticationMetadata, ManagedInstanceDatabaseFormat? databaseFormat, SqlAvailabilityZoneType? requestedLogicalAvailabilityZone)
         {
             return new ManagedInstanceData(
                 id,
@@ -8039,7 +8185,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="requestedLogicalAvailabilityZone"> Specifies the logical availability zone Managed Instance is pinned to. </param>
         /// <returns> A new <see cref="Models.ManagedInstancePatch"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ManagedInstancePatch ManagedInstancePatch(SqlSku sku = default, ManagedServiceIdentity identity = default, IDictionary<string, string> tags = default, ManagedInstancePropertiesProvisioningState? provisioningState = default, ManagedServerCreateMode? managedInstanceCreateMode = default, string fullyQualifiedDomainName = default, bool? isGeneralPurposeV2 = default, string administratorLogin = default, string administratorLoginPassword = default, ResourceIdentifier subnetId = default, string state = default, ManagedInstanceLicenseType? licenseType = default, HybridSecondaryUsage? hybridSecondaryUsage = default, HybridSecondaryUsageDetected? hybridSecondaryUsageDetected = default, int? vCores = default, int? storageSizeInGB = default, int? storageIOps = default, int? storageThroughputMBps = default, int? memorySizeInGB = default, string collation = default, string dnsZone = default, ResourceIdentifier managedDnsZonePartner = default, bool? isPublicDataEndpointEnabled = default, ResourceIdentifier sourceManagedInstanceId = default, DateTimeOffset? restorePointInTime = default, ManagedInstanceProxyOverride? proxyOverride = default, string timezoneId = default, ResourceIdentifier instancePoolId = default, ResourceIdentifier maintenanceConfigurationId = default, IEnumerable<ManagedInstancePecProperty> privateEndpointConnections = default, string minimalTlsVersion = default, SqlBackupStorageRedundancy? currentBackupStorageRedundancy = default, SqlBackupStorageRedundancy? requestedBackupStorageRedundancy = default, bool? isZoneRedundant = default, ResourceIdentifier primaryUserAssignedIdentityId = default, Uri keyId = default, ManagedInstanceExternalAdministrator administrators = default, SqlServicePrincipal servicePrincipal = default, ResourceIdentifier virtualClusterId = default, ExternalGovernanceStatus? externalGovernanceStatus = default, SqlManagedInstancePricingModel? pricingModel = default, DateTimeOffset? createOn = default, AuthMetadataLookupMode? authenticationMetadata = default, ManagedInstanceDatabaseFormat? databaseFormat = default, SqlAvailabilityZoneType? requestedLogicalAvailabilityZone = default)
+        public static ManagedInstancePatch ManagedInstancePatch(SqlSku sku, ManagedServiceIdentity identity, IDictionary<string, string> tags, ManagedInstancePropertiesProvisioningState? provisioningState, ManagedServerCreateMode? managedInstanceCreateMode, string fullyQualifiedDomainName, bool? isGeneralPurposeV2, string administratorLogin, string administratorLoginPassword, ResourceIdentifier subnetId, string state, ManagedInstanceLicenseType? licenseType, HybridSecondaryUsage? hybridSecondaryUsage, HybridSecondaryUsageDetected? hybridSecondaryUsageDetected, int? vCores, int? storageSizeInGB, int? storageIOps, int? storageThroughputMBps, int? memorySizeInGB, string collation, string dnsZone, ResourceIdentifier managedDnsZonePartner, bool? isPublicDataEndpointEnabled, ResourceIdentifier sourceManagedInstanceId, DateTimeOffset? restorePointInTime, ManagedInstanceProxyOverride? proxyOverride, string timezoneId, ResourceIdentifier instancePoolId, ResourceIdentifier maintenanceConfigurationId, IEnumerable<ManagedInstancePecProperty> privateEndpointConnections, string minimalTlsVersion, SqlBackupStorageRedundancy? currentBackupStorageRedundancy, SqlBackupStorageRedundancy? requestedBackupStorageRedundancy, bool? isZoneRedundant, ResourceIdentifier primaryUserAssignedIdentityId, Uri keyId, ManagedInstanceExternalAdministrator administrators, SqlServicePrincipal servicePrincipal, ResourceIdentifier virtualClusterId, ExternalGovernanceStatus? externalGovernanceStatus, SqlManagedInstancePricingModel? pricingModel, DateTimeOffset? createOn, AuthMetadataLookupMode? authenticationMetadata, ManagedInstanceDatabaseFormat? databaseFormat, SqlAvailabilityZoneType? requestedLogicalAvailabilityZone)
         {
             return new ManagedInstancePatch(sku, identity, provisioningState is null && managedInstanceCreateMode is null && fullyQualifiedDomainName is null && isGeneralPurposeV2 is null && administratorLogin is null && administratorLoginPassword is null && subnetId is null && state is null && licenseType is null && hybridSecondaryUsage is null && hybridSecondaryUsageDetected is null && vCores is null && storageSizeInGB is null && storageIOps is null && storageThroughputMBps is null && memorySizeInGB is null && collation is null && dnsZone is null && managedDnsZonePartner is null && isPublicDataEndpointEnabled is null && sourceManagedInstanceId is null && restorePointInTime is null && proxyOverride is null && timezoneId is null && instancePoolId is null && maintenanceConfigurationId is null && privateEndpointConnections is null && minimalTlsVersion is null && currentBackupStorageRedundancy is null && requestedBackupStorageRedundancy is null && isZoneRedundant is null && primaryUserAssignedIdentityId is null && keyId is null && administrators is null && servicePrincipal is null && virtualClusterId is null && externalGovernanceStatus is null && pricingModel is null && createOn is null && authenticationMetadata is null && databaseFormat is null && requestedLogicalAvailabilityZone is null ? default : new ManagedInstanceProperties(
                 provisioningState,
@@ -8098,7 +8244,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="provisioningState"> State of the private endpoint connection. </param>
         /// <returns> A new <see cref="Sql.SqlPrivateEndpointConnectionData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static SqlPrivateEndpointConnectionData SqlPrivateEndpointConnectionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ResourceIdentifier privateEndpointId = default, IEnumerable<string> groupIds = default, SqlPrivateLinkServiceConnectionStateProperty connectionState = default, SqlPrivateEndpointProvisioningState? provisioningState = default)
+        public static SqlPrivateEndpointConnectionData SqlPrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ResourceIdentifier privateEndpointId, IEnumerable<string> groupIds, SqlPrivateLinkServiceConnectionStateProperty connectionState, SqlPrivateEndpointProvisioningState? provisioningState)
         {
             return new SqlPrivateEndpointConnectionData(
                 id,
@@ -8126,7 +8272,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="keys"> The resource ids of the user assigned identities to use. </param>
         /// <returns> A new <see cref="Sql.RestorableDroppedDatabaseData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static RestorableDroppedDatabaseData RestorableDroppedDatabaseData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, SqlSku sku = default, string databaseName = default, long? maxSizeBytes = default, DateTimeOffset? createdOn = default, DateTimeOffset? deletedOn = default, DateTimeOffset? earliestRestoreOn = default, SqlBackupStorageRedundancy? backupStorageRedundancy = default, IDictionary<string, SqlDatabaseKey> keys = default)
+        public static RestorableDroppedDatabaseData RestorableDroppedDatabaseData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, SqlSku sku, string databaseName, long? maxSizeBytes, DateTimeOffset? createdOn, DateTimeOffset? deletedOn, DateTimeOffset? earliestRestoreOn, SqlBackupStorageRedundancy? backupStorageRedundancy, IDictionary<string, SqlDatabaseKey> keys)
         {
             return new RestorableDroppedDatabaseData(
                 id,
@@ -8160,7 +8306,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="restorePointLabel"> The label of restore point for backup request by user. </param>
         /// <returns> A new <see cref="Sql.SqlServerDatabaseRestorePointData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static SqlServerDatabaseRestorePointData SqlServerDatabaseRestorePointData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, AzureLocation? location = default, RestorePointType? restorePointType = default, DateTimeOffset? earliestRestoreOn = default, DateTimeOffset? restorePointCreatedOn = default, string restorePointLabel = default)
+        public static SqlServerDatabaseRestorePointData SqlServerDatabaseRestorePointData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, RestorePointType? restorePointType, DateTimeOffset? earliestRestoreOn, DateTimeOffset? restorePointCreatedOn, string restorePointLabel)
         {
             return new SqlServerDatabaseRestorePointData(
                 id,
@@ -8182,7 +8328,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="connectionType"> The server connection type. </param>
         /// <returns> A new <see cref="Sql.SqlServerConnectionPolicyData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static SqlServerConnectionPolicyData SqlServerConnectionPolicyData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, AzureLocation? location = default, string kind = default, ServerConnectionType? connectionType = default)
+        public static SqlServerConnectionPolicyData SqlServerConnectionPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, string kind, ServerConnectionType? connectionType)
         {
             return new SqlServerConnectionPolicyData(
                 id,
@@ -8211,7 +8357,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="keyVersion"> The version of the server key. </param>
         /// <returns> A new <see cref="Sql.SqlServerKeyData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static SqlServerKeyData SqlServerKeyData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string kind = default, AzureLocation? location = default, string subregion = default, SqlServerKeyType? serverKeyType = default, Uri uri = default, string thumbprint = default, DateTimeOffset? createdOn = default, bool? isAutoRotationEnabled = default, string keyVersion = default)
+        public static SqlServerKeyData SqlServerKeyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, AzureLocation? location, string subregion, SqlServerKeyType? serverKeyType, Uri uri, string thumbprint, DateTimeOffset? createdOn, bool? isAutoRotationEnabled, string keyVersion)
         {
             return new SqlServerKeyData(
                 id,
@@ -8261,7 +8407,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="createMode"> Create mode for server, only valid values for this are Normal and Restore. </param>
         /// <returns> A new <see cref="Sql.SqlServerData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static SqlServerData SqlServerData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ManagedServiceIdentity identity = default, string kind = default, string administratorLogin = default, string administratorLoginPassword = default, string version = default, string state = default, string fullyQualifiedDomainName = default, IEnumerable<SqlServerPrivateEndpointConnection> privateEndpointConnections = default, SqlMinimalTlsVersion? minTlsVersion = default, ServerNetworkAccessFlag? publicNetworkAccess = default, ServerWorkspaceFeature? workspaceFeature = default, ResourceIdentifier primaryUserAssignedIdentityId = default, Guid? federatedClientId = default, Uri keyId = default, ServerExternalAdministrator administrators = default, ServerNetworkAccessFlag? restrictOutboundNetworkAccess = default, ServerNetworkAccessFlag? isIPv6Enabled = default, ExternalGovernanceStatus? externalGovernanceStatus = default, int? retentionDays = default, SqlServerCreateMode? createMode = default)
+        public static SqlServerData SqlServerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, string kind, string administratorLogin, string administratorLoginPassword, string version, string state, string fullyQualifiedDomainName, IEnumerable<SqlServerPrivateEndpointConnection> privateEndpointConnections, SqlMinimalTlsVersion? minTlsVersion, ServerNetworkAccessFlag? publicNetworkAccess, ServerWorkspaceFeature? workspaceFeature, ResourceIdentifier primaryUserAssignedIdentityId, Guid? federatedClientId, Uri keyId, ServerExternalAdministrator administrators, ServerNetworkAccessFlag? restrictOutboundNetworkAccess, ServerNetworkAccessFlag? isIPv6Enabled, ExternalGovernanceStatus? externalGovernanceStatus, int? retentionDays, SqlServerCreateMode? createMode)
         {
             return new SqlServerData(
                 id,
@@ -8318,7 +8464,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="createMode"> Create mode for server, only valid values for this are Normal and Restore. </param>
         /// <returns> A new <see cref="Models.SqlServerPatch"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static SqlServerPatch SqlServerPatch(ManagedServiceIdentity identity = default, IDictionary<string, string> tags = default, string administratorLogin = default, string administratorLoginPassword = default, string version = default, string state = default, string fullyQualifiedDomainName = default, IEnumerable<SqlServerPrivateEndpointConnection> privateEndpointConnections = default, SqlMinimalTlsVersion? minTlsVersion = default, ServerNetworkAccessFlag? publicNetworkAccess = default, ServerWorkspaceFeature? workspaceFeature = default, ResourceIdentifier primaryUserAssignedIdentityId = default, Guid? federatedClientId = default, Uri keyId = default, ServerExternalAdministrator administrators = default, ServerNetworkAccessFlag? restrictOutboundNetworkAccess = default, ServerNetworkAccessFlag? isIPv6Enabled = default, ExternalGovernanceStatus? externalGovernanceStatus = default, int? retentionDays = default, SqlServerCreateMode? createMode = default)
+        public static SqlServerPatch SqlServerPatch(ManagedServiceIdentity identity, IDictionary<string, string> tags, string administratorLogin, string administratorLoginPassword, string version, string state, string fullyQualifiedDomainName, IEnumerable<SqlServerPrivateEndpointConnection> privateEndpointConnections, SqlMinimalTlsVersion? minTlsVersion, ServerNetworkAccessFlag? publicNetworkAccess, ServerWorkspaceFeature? workspaceFeature, ResourceIdentifier primaryUserAssignedIdentityId, Guid? federatedClientId, Uri keyId, ServerExternalAdministrator administrators, ServerNetworkAccessFlag? restrictOutboundNetworkAccess, ServerNetworkAccessFlag? isIPv6Enabled, ExternalGovernanceStatus? externalGovernanceStatus, int? retentionDays, SqlServerCreateMode? createMode)
         {
             return new SqlServerPatch(identity, administratorLogin is null && administratorLoginPassword is null && version is null && state is null && fullyQualifiedDomainName is null && privateEndpointConnections is null && minTlsVersion is null && publicNetworkAccess is null && workspaceFeature is null && primaryUserAssignedIdentityId is null && federatedClientId is null && keyId is null && administrators is null && restrictOutboundNetworkAccess is null && isIPv6Enabled is null && externalGovernanceStatus is null && retentionDays is null && createMode is null ? default : new ServerProperties(
                 administratorLogin,
@@ -8355,7 +8501,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="version"> Version of the sync agent. </param>
         /// <returns> A new <see cref="Sql.SyncAgentData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static SyncAgentData SyncAgentData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ResourceIdentifier syncDatabaseId = default, DateTimeOffset? lastAliveOn = default, SyncAgentState? state = default, bool? isUpToDate = default, DateTimeOffset? expireOn = default, string version = default)
+        public static SyncAgentData SyncAgentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ResourceIdentifier syncDatabaseId, DateTimeOffset? lastAliveOn, SyncAgentState? state, bool? isUpToDate, DateTimeOffset? expireOn, string version)
         {
             return new SyncAgentData(
                 id,
@@ -8394,7 +8540,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="privateEndpointName"> Private endpoint name of the sync group if use private link connection is enabled. </param>
         /// <returns> A new <see cref="Sql.SyncGroupData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static SyncGroupData SyncGroupData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, SqlSku sku = default, int? interval = default, DateTimeOffset? lastSyncOn = default, SyncConflictResolutionPolicy? conflictResolutionPolicy = default, ResourceIdentifier syncDatabaseId = default, string hubDatabaseUserName = default, string hubDatabasePassword = default, SyncGroupState? syncState = default, SyncGroupSchema schema = default, bool? isConflictLoggingEnabled = default, int? conflictLoggingRetentionInDays = default, bool? usePrivateLinkConnection = default, string privateEndpointName = default)
+        public static SyncGroupData SyncGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SqlSku sku, int? interval, DateTimeOffset? lastSyncOn, SyncConflictResolutionPolicy? conflictResolutionPolicy, ResourceIdentifier syncDatabaseId, string hubDatabaseUserName, string hubDatabasePassword, SyncGroupState? syncState, SyncGroupSchema schema, bool? isConflictLoggingEnabled, int? conflictLoggingRetentionInDays, bool? usePrivateLinkConnection, string privateEndpointName)
         {
             return new SyncGroupData(
                 id,
@@ -8439,7 +8585,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="syncState"> Sync state of the sync member. </param>
         /// <returns> A new <see cref="Sql.SyncMemberData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static SyncMemberData SyncMemberData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, SyncMemberDbType? databaseType = default, ResourceIdentifier syncAgentId = default, Guid? sqlServerDatabaseId = default, ResourceIdentifier syncMemberAzureDatabaseResourceId = default, bool? usePrivateLinkConnection = default, string privateEndpointName = default, string serverName = default, string databaseName = default, string userName = default, string password = default, SyncDirection? syncDirection = default, SyncMemberState? syncState = default)
+        public static SyncMemberData SyncMemberData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SyncMemberDbType? databaseType, ResourceIdentifier syncAgentId, Guid? sqlServerDatabaseId, ResourceIdentifier syncMemberAzureDatabaseResourceId, bool? usePrivateLinkConnection, string privateEndpointName, string serverName, string databaseName, string userName, string password, SyncDirection? syncDirection, SyncMemberState? syncState)
         {
             return new SyncMemberData(
                 id,
@@ -8471,7 +8617,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="childResources"> List of resources in this virtual cluster. </param>
         /// <returns> A new <see cref="Models.VirtualClusterPatch"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static VirtualClusterPatch VirtualClusterPatch(IDictionary<string, string> tags = default, ResourceIdentifier subnetId = default, string version = default, IEnumerable<string> childResources = default)
+        public static VirtualClusterPatch VirtualClusterPatch(IDictionary<string, string> tags, ResourceIdentifier subnetId, string version, IEnumerable<string> childResources)
         {
             return new VirtualClusterPatch(subnetId is null && version is null && childResources is null ? default : new VirtualClusterProperties(subnetId, version, (childResources ?? new ChangeTrackingList<string>()).ToList(), default), tags ?? new ChangeTrackingDictionary<string, string>(), default);
         }

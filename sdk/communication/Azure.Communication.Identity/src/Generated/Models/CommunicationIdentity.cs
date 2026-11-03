@@ -6,37 +6,15 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
-namespace Azure.Communication.Identity.Models
+namespace Azure.Communication.Identity
 {
-    /// <summary> A communication identity. </summary>
     internal partial class CommunicationIdentity
     {
-        /// <summary> Initializes a new instance of <see cref="CommunicationIdentity"/>. </summary>
-        /// <param name="id"> Identifier of the identity. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        internal CommunicationIdentity(string id)
-        {
-            Argument.AssertNotNull(id, nameof(id));
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-            Id = id;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="CommunicationIdentity"/>. </summary>
-        /// <param name="customId"> The custom Id if one has been associated with the identity. </param>
-        /// <param name="lastTokenIssuedAt"> Last time a token has been issued for the identity. </param>
-        /// <param name="id"> Identifier of the identity. </param>
-        internal CommunicationIdentity(string customId, DateTimeOffset? lastTokenIssuedAt, string id)
-        {
-            CustomId = customId;
-            LastTokenIssuedAt = lastTokenIssuedAt;
-            Id = id;
-        }
-
-        /// <summary> The custom Id if one has been associated with the identity. </summary>
-        public string CustomId { get; }
-        /// <summary> Last time a token has been issued for the identity. </summary>
-        public DateTimeOffset? LastTokenIssuedAt { get; }
         /// <summary> Identifier of the identity. </summary>
         public string Id { get; }
     }

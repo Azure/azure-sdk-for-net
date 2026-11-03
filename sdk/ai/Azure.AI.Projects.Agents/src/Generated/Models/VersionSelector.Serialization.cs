@@ -143,7 +143,7 @@ namespace Azure.AI.Projects.Agents
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new VersionSelector(versionSelectionRules, additionalBinaryDataProperties);
+            return new VersionSelector(versionSelectionRules ?? new ChangeTrackingList<VersionSelectionRule>(), additionalBinaryDataProperties);
         }
     }
 }

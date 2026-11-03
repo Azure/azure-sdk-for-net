@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.Relay
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<RelayAuthorizationRuleData, WcfRelayAuthorizationRuleResource>(new WCFRelaysGetAuthorizationRulesAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<RelayAuthorizationRuleData, WcfRelayAuthorizationRuleResource>(new RelayAuthorizationRuleDataAsync0CollectionResultOfT(
                 _wcfRelaysRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.Relay
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<RelayAuthorizationRuleData, WcfRelayAuthorizationRuleResource>(new WCFRelaysGetAuthorizationRulesCollectionResultOfT(
+            return new PageableWrapper<RelayAuthorizationRuleData, WcfRelayAuthorizationRuleResource>(new RelayAuthorizationRuleData0CollectionResultOfT(
                 _wcfRelaysRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

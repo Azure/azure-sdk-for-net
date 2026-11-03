@@ -11,7 +11,7 @@ using Azure.ResourceManager.Compute.BulkActions;
 
 namespace Azure.ResourceManager.Compute.BulkActions.Models
 {
-    /// <summary> Schedule changes for a scheduled action. Omitted properties keep their current values. </summary>
+    /// <summary> Schedule changes for a recurring bulk action. Omitted properties keep their current values. </summary>
     public partial class ScheduledActionsSchedulePatch
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ScheduledActionsSchedulePatch"/>. </summary>
-        /// <param name="scheduledTime"> The local time of day when the scheduled action runs. </param>
+        /// <param name="scheduledTime"> The local time of day when the recurring bulk action runs. </param>
         /// <param name="timeZone"> The time zone used to interpret the scheduled time. </param>
         /// <param name="requestedWeekDays"> The days of the week when the action runs. An empty array means every day of the week. </param>
         /// <param name="requestedMonths"> The months when the action runs. An empty array means every month. </param>
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> The local time of day when the scheduled action runs. </summary>
+        /// <summary> The local time of day when the recurring bulk action runs. </summary>
         public TimeSpan? ScheduledTime { get; set; }
 
         /// <summary> The time zone used to interpret the scheduled time. </summary>

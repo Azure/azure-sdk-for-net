@@ -188,7 +188,7 @@ namespace Azure.Monitor.Query.Logs.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new LogsQueryResult(allTables, error, statistics, visualization, additionalBinaryDataProperties);
+            return new LogsQueryResult(allTables ?? new ChangeTrackingList<LogsTable>(), error, statistics, visualization, additionalBinaryDataProperties);
         }
     }
 }

@@ -16,8 +16,8 @@ namespace Azure.AI.AgentServer.Responses.Tests.Helpers;
 /// <summary>
 /// A test-only <see cref="ITaskStore"/> decorator that wraps a real inner store (typically a
 /// <see cref="LocalTaskStore"/>) and layers spy/fault-injection over the create path. This lets a
-/// test drive the REAL Core resilient-task engine to completion (or to the point at which it makes
-/// its first persistence call) while:
+/// test drive the REAL Core resilient-task engine to completion (or to an injected persistence
+/// failure) while:
 /// <list type="bullet">
 ///   <item>capturing the exact <see cref="TaskCreateRequest"/> the engine handed to the store
 ///     (task name via <c>Source[SourceName]</c>, chain/task id, wire payload) for post-hoc
@@ -26,6 +26,8 @@ namespace Azure.AI.AgentServer.Responses.Tests.Helpers;
 ///     (e.g. an <see cref="Azure.AI.AgentServer.Core.Tasks.ResilientTaskException"/> to simulate a
 ///     Core conflict/precondition failure, or a plain <see cref="InvalidOperationException"/> to
 ///     simulate a task-store infra failure).</item>
+///   <item>optionally failing selected patch requests (for example the final completed/suspended
+///     transition) while all other operations continue to delegate to the real store.</item>
 /// </list>
 /// All other <see cref="ITaskStore"/> methods delegate transparently to the inner store, so the
 /// engine's subsequent reads/patches/deletes on the record behave identically to production.
@@ -54,6 +56,16 @@ internal sealed class SpyTaskStore : ITaskStore
     /// delegating to the inner store. Leave <see langword="null"/> for a pure pass-through spy.
     /// </summary>
     public Exception? ThrowOnCreate { get; set; }
+
+    /// <summary>
+    /// When non-<see langword="null"/>, matching <see cref="PatchAsync"/> calls throw this exception.
+    /// </summary>
+    public Exception? ThrowOnPatch { get; set; }
+
+    /// <summary>
+    /// Optional selector for patch fault injection. When omitted, every patch matches.
+    /// </summary>
+    public Func<TaskPatchRequest, bool>? PatchFailurePredicate { get; set; }
 
     /// <summary>
     /// The task name pulled from the last create request's <c>source.name</c> field (i.e. the
@@ -118,8 +130,19 @@ internal sealed class SpyTaskStore : ITaskStore
     public Task<TaskRecord?> GetAsync(string taskId, CancellationToken cancellationToken = default)
         => _inner.GetAsync(taskId, cancellationToken);
 
-    public Task<TaskRecord> PatchAsync(string taskId, TaskPatchRequest patch, string? ifMatch, CancellationToken cancellationToken = default)
-        => _inner.PatchAsync(taskId, patch, ifMatch, cancellationToken);
+    public Task<TaskRecord> PatchAsync(
+        string taskId,
+        TaskPatchRequest patch,
+        string? ifMatch,
+        CancellationToken cancellationToken = default)
+    {
+        if (ThrowOnPatch is { } ex && (PatchFailurePredicate?.Invoke(patch) ?? true))
+        {
+            return Task.FromException<TaskRecord>(ex);
+        }
+
+        return _inner.PatchAsync(taskId, patch, ifMatch, cancellationToken);
+    }
 
     public Task DeleteAsync(string taskId, string? ifMatch = null, bool force = false, bool cascade = false, CancellationToken cancellationToken = default)
         => _inner.DeleteAsync(taskId, ifMatch, force, cascade, cancellationToken);
