@@ -20,7 +20,7 @@ namespace Azure.Provisioning.CosmosDB
             BackupPolicyType.Assign(CosmosDB.BackupPolicyType.Continuous);
         }
 
-        /// <summary> Gets the ContinuousModeProperties. </summary>
+        /// <summary> Gets or sets the ContinuousModeProperties. </summary>
         internal ContinuousModeProperties ContinuousModeProperties
         {
             get
@@ -28,14 +28,27 @@ namespace Azure.Provisioning.CosmosDB
                 Initialize();
                 return _continuousModeProperties;
             }
+            set
+            {
+                Initialize();
+                AssignOrReplace(ref _continuousModeProperties, value);
+            }
         }
 
-        /// <summary> Gets the Tier. </summary>
+        /// <summary> Gets or sets the Tier. </summary>
         public BicepValue<ContinuousTier> ContinuousModeTier
         {
             get
             {
                 return ContinuousModeProperties is null ? default : ContinuousModeProperties.Tier;
+            }
+            set
+            {
+                if (ContinuousModeProperties is null)
+                {
+                    ContinuousModeProperties = new ContinuousModeProperties();
+                }
+                ContinuousModeProperties.Tier = value;
             }
         }
 

@@ -14,7 +14,7 @@ using Azure.ResourceManager.CloudHealth;
 namespace Azure.ResourceManager.CloudHealth.Models
 {
     /// <summary> Prometheus Metrics Query recommendation configuration. </summary>
-    public partial class PrometheusMetricsRecommendationConfiguration : SignalRecommendationConfiguration, IJsonModel<PrometheusMetricsRecommendationConfiguration>
+    public partial class PrometheusMetricsRecommendationConfiguration : HealthModelSignalRecommendationConfiguration, IJsonModel<PrometheusMetricsRecommendationConfiguration>
     {
         /// <summary> Initializes a new instance of <see cref="PrometheusMetricsRecommendationConfiguration"/> for deserialization. </summary>
         internal PrometheusMetricsRecommendationConfiguration()
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.CloudHealth.Models
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override SignalRecommendationConfiguration PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override HealthModelSignalRecommendationConfiguration PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<PrometheusMetricsRecommendationConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.CloudHealth.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override SignalRecommendationConfiguration JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override HealthModelSignalRecommendationConfiguration JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<PrometheusMetricsRecommendationConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")

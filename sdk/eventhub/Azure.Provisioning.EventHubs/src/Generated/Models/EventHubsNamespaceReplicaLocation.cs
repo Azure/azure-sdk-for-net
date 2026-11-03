@@ -12,7 +12,7 @@ using Azure.Provisioning.Primitives;
 namespace Azure.Provisioning.EventHubs
 {
     /// <summary> Namespace replication properties. </summary>
-    public partial class EventHubsNamespaceReplicaLocation : ProvisionableConstruct
+    internal partial class EventHubsNamespaceReplicaLocation : ProvisionableConstruct
     {
         private BicepValue<string> _locationName;
         private BicepValue<EventHubsNamespaceGeoDrRoleType> _roleType;

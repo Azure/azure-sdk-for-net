@@ -26,7 +26,7 @@ namespace Azure.Provisioning.Storage
         /// <summary> Creates a new ImmutabilityPolicy. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
         /// <param name="resourceVersion"> The resource API version. </param>
-        internal ImmutabilityPolicy(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.Storage/storageAccounts/blobServices/containers/immutabilityPolicies", resourceVersion ?? "2026-06-01")
+        public ImmutabilityPolicy(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.Storage/storageAccounts/blobServices/containers/immutabilityPolicies", resourceVersion ?? "2026-06-01")
         {
         }
 
@@ -40,13 +40,18 @@ namespace Azure.Provisioning.Storage
             }
         }
 
-        /// <summary> Gets the Name. </summary>
+        /// <summary> Gets or sets the Name. </summary>
         public BicepValue<string> Name
         {
             get
             {
                 Initialize();
                 return _name;
+            }
+            set
+            {
+                Initialize();
+                _name.Assign(value);
             }
         }
 
@@ -60,13 +65,18 @@ namespace Azure.Provisioning.Storage
             }
         }
 
-        /// <summary> Gets the Properties. </summary>
+        /// <summary> Gets or sets the Properties. </summary>
         internal ImmutabilityPolicyProperty Properties
         {
             get
             {
                 Initialize();
                 return _properties;
+            }
+            set
+            {
+                Initialize();
+                AssignOrReplace(ref _properties, value);
             }
         }
 
@@ -95,12 +105,20 @@ namespace Azure.Provisioning.Storage
             }
         }
 
-        /// <summary> Gets the ImmutabilityPeriodSinceCreationInDays. </summary>
+        /// <summary> Gets or sets the ImmutabilityPeriodSinceCreationInDays. </summary>
         public BicepValue<int> ImmutabilityPeriodSinceCreationInDays
         {
             get
             {
-                return Properties.ImmutabilityPeriodSinceCreationInDays;
+                return Properties is null ? default : Properties.ImmutabilityPeriodSinceCreationInDays;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ImmutabilityPolicyProperty();
+                }
+                Properties.ImmutabilityPeriodSinceCreationInDays = value;
             }
         }
 
@@ -109,25 +127,45 @@ namespace Azure.Provisioning.Storage
         {
             get
             {
+                if (Properties is null)
+                {
+                    Properties = new ImmutabilityPolicyProperty();
+                }
                 return Properties.State;
             }
         }
 
-        /// <summary> Gets the AllowProtectedAppendWrites. </summary>
+        /// <summary> Gets or sets the AllowProtectedAppendWrites. </summary>
         public BicepValue<bool> AllowProtectedAppendWrites
         {
             get
             {
-                return Properties.AllowProtectedAppendWrites;
+                return Properties is null ? default : Properties.AllowProtectedAppendWrites;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ImmutabilityPolicyProperty();
+                }
+                Properties.AllowProtectedAppendWrites = value;
             }
         }
 
-        /// <summary> Gets the AllowProtectedAppendWritesAll. </summary>
+        /// <summary> Gets or sets the AllowProtectedAppendWritesAll. </summary>
         public BicepValue<bool> AllowProtectedAppendWritesAll
         {
             get
             {
-                return Properties.AllowProtectedAppendWritesAll;
+                return Properties is null ? default : Properties.AllowProtectedAppendWritesAll;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ImmutabilityPolicyProperty();
+                }
+                Properties.AllowProtectedAppendWritesAll = value;
             }
         }
 
@@ -138,9 +176,9 @@ namespace Azure.Provisioning.Storage
             _id = DefineProperty<ResourceIdentifier>(nameof(Id), new string[] { "id" }, isOutput: true);
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true, defaultValue: "default");
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
-            _properties = DefineModelProperty<ImmutabilityPolicyProperty>(nameof(Properties), new string[] { "properties" });
+            _properties = DefineModelProperty<ImmutabilityPolicyProperty>(nameof(Properties), new string[] { "properties" }, isRequired: true);
             _eTag = DefineProperty<ETag>(nameof(ETag), new string[] { "etag" }, isOutput: true);
-            _parent = DefineResource<BlobContainer>(nameof(Parent), new string[] { "parent" }, isRequired: true);
+            _parent = DefineResource<BlobContainer>(nameof(Parent), new string[] { "parent" });
             DefineAdditionalProperties();
         }
 

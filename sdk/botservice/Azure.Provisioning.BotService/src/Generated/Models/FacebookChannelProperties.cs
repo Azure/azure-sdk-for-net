@@ -36,7 +36,7 @@ namespace Azure.Provisioning.BotService
             }
         }
 
-        /// <summary> Gets the Pages. </summary>
+        /// <summary> Gets or sets the Pages. </summary>
         public BicepList<FacebookPage> Pages
         {
             get
@@ -44,9 +44,14 @@ namespace Azure.Provisioning.BotService
                 Initialize();
                 return _pages;
             }
+            set
+            {
+                Initialize();
+                _pages.Assign(value);
+            }
         }
 
-        /// <summary> Gets the AppId. </summary>
+        /// <summary> Gets or sets the AppId. </summary>
         public BicepValue<string> AppId
         {
             get
@@ -54,15 +59,25 @@ namespace Azure.Provisioning.BotService
                 Initialize();
                 return _appId;
             }
+            set
+            {
+                Initialize();
+                _appId.Assign(value);
+            }
         }
 
-        /// <summary> Gets the AppSecret. </summary>
+        /// <summary> Gets or sets the AppSecret. </summary>
         public BicepValue<string> AppSecret
         {
             get
             {
                 Initialize();
                 return _appSecret;
+            }
+            set
+            {
+                Initialize();
+                _appSecret.Assign(value);
             }
         }
 
@@ -76,13 +91,18 @@ namespace Azure.Provisioning.BotService
             }
         }
 
-        /// <summary> Gets the IsEnabled. </summary>
+        /// <summary> Gets or sets the IsEnabled. </summary>
         public BicepValue<bool> IsEnabled
         {
             get
             {
                 Initialize();
                 return _isEnabled;
+            }
+            set
+            {
+                Initialize();
+                _isEnabled.Assign(value);
             }
         }
 
@@ -92,10 +112,10 @@ namespace Azure.Provisioning.BotService
             base.DefineProvisionableProperties();
             _verifyToken = DefineProperty<string>(nameof(VerifyToken), new string[] { "verifyToken" }, isOutput: true);
             _pages = DefineListProperty<FacebookPage>(nameof(Pages), new string[] { "pages" });
-            _appId = DefineProperty<string>(nameof(AppId), new string[] { "appId" });
+            _appId = DefineProperty<string>(nameof(AppId), new string[] { "appId" }, isRequired: true);
             _appSecret = DefineProperty<string>(nameof(AppSecret), new string[] { "appSecret" });
             _callbackUri = DefineProperty<Uri>(nameof(CallbackUri), new string[] { "callbackUrl" }, isOutput: true);
-            _isEnabled = DefineProperty<bool>(nameof(IsEnabled), new string[] { "isEnabled" });
+            _isEnabled = DefineProperty<bool>(nameof(IsEnabled), new string[] { "isEnabled" }, isRequired: true);
             DefineAdditionalProperties();
         }
 

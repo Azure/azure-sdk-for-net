@@ -21,6 +21,7 @@ namespace Azure.Provisioning.Kusto
         private BicepValue<string> _name;
         private SystemData _systemData;
         private DatabasePrincipalProperties _properties;
+        private ResourceReference<KustoDatabase> _parent;
 
         /// <summary> Creates a new KustoDatabasePrincipalAssignment. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -76,6 +77,21 @@ namespace Azure.Provisioning.Kusto
             {
                 Initialize();
                 AssignOrReplace(ref _properties, value);
+            }
+        }
+
+        /// <summary> Gets or sets the Parent. </summary>
+        public KustoDatabase Parent
+        {
+            get
+            {
+                Initialize();
+                return _parent.Value;
+            }
+            set
+            {
+                Initialize();
+                _parent.Value = value;
             }
         }
 
@@ -207,6 +223,7 @@ namespace Azure.Provisioning.Kusto
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _properties = DefineModelProperty<DatabasePrincipalProperties>(nameof(Properties), new string[] { "properties" });
+            _parent = DefineResource<KustoDatabase>(nameof(Parent), new string[] { "parent" });
             DefineAdditionalProperties();
         }
 

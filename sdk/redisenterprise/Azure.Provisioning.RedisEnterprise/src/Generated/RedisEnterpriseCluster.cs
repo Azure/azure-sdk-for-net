@@ -270,7 +270,7 @@ namespace Azure.Provisioning.RedisEnterprise
         }
 
         /// <summary> Gets the PrivateEndpointConnections. </summary>
-        public BicepList<RedisEnterpriseClusterRedisEnterprisePrivateEndpointConnection> PrivateEndpointConnections
+        public BicepList<RedisEnterprisePrivateEndpointConnection> PrivateEndpointConnections
         {
             get
             {

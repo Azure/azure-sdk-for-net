@@ -21,7 +21,7 @@ namespace Azure.Provisioning.CosmosDB
         {
         }
 
-        /// <summary> Gets the DatabaseName. </summary>
+        /// <summary> Gets or sets the DatabaseName. </summary>
         public BicepValue<string> DatabaseName
         {
             get
@@ -29,15 +29,25 @@ namespace Azure.Provisioning.CosmosDB
                 Initialize();
                 return _databaseName;
             }
+            set
+            {
+                Initialize();
+                _databaseName.Assign(value);
+            }
         }
 
-        /// <summary> Gets the GraphNames. </summary>
+        /// <summary> Gets or sets the GraphNames. </summary>
         public BicepList<string> GraphNames
         {
             get
             {
                 Initialize();
                 return _graphNames;
+            }
+            set
+            {
+                Initialize();
+                _graphNames.Assign(value);
             }
         }
 

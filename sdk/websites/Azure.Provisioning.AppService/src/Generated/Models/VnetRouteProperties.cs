@@ -22,7 +22,7 @@ namespace Azure.Provisioning.AppService
         {
         }
 
-        /// <summary> Gets or sets the StartAddress. </summary>
+        /// <summary> Gets the StartAddress. </summary>
         public BicepValue<string> StartAddress
         {
             get
@@ -30,14 +30,9 @@ namespace Azure.Provisioning.AppService
                 Initialize();
                 return _startAddress;
             }
-            set
-            {
-                Initialize();
-                _startAddress.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the EndAddress. </summary>
+        /// <summary> Gets the EndAddress. </summary>
         public BicepValue<string> EndAddress
         {
             get
@@ -45,25 +40,15 @@ namespace Azure.Provisioning.AppService
                 Initialize();
                 return _endAddress;
             }
-            set
-            {
-                Initialize();
-                _endAddress.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the RouteType. </summary>
+        /// <summary> Gets the RouteType. </summary>
         public BicepValue<AppServiceVirtualNetworkRouteType> RouteType
         {
             get
             {
                 Initialize();
                 return _routeType;
-            }
-            set
-            {
-                Initialize();
-                _routeType.Assign(value);
             }
         }
 

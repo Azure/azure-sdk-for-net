@@ -15,7 +15,8 @@ import { getAllSdkClients } from "../src/sdk-client-utils.js";
 import { ok, strictEqual, deepStrictEqual } from "assert";
 import {
   ArmResourceSchema,
-  ResourceScopeKind
+  ResourceScopeKind,
+  convertArmProviderSchemaToArguments
 } from "../src/resource-metadata.js";
 
 describe("Resource Detection", () => {
@@ -2626,6 +2627,21 @@ interface SharedConfigs {
       "PublicSharedConfig",
       "Subscription resource should have OverrideResourceName 'PublicSharedConfig'"
     );
+    strictEqual(rgResource.metadata.resourceNameIsExplicit, false);
+    strictEqual(subResource.metadata.resourceNameIsExplicit, true);
+    const resolvedSchema = resolveArmResources(program, sdkContext);
+    strictEqual(
+      resolvedSchema.resources.find(
+        (r) => r.metadata.scope.kind === ResourceScopeKind.Subscription
+      )?.metadata.resourceNameIsExplicit,
+      true
+    );
+    strictEqual(
+      resolvedSchema.resources.find(
+        (r) => r.metadata.scope.kind === ResourceScopeKind.ResourceGroup
+      )?.metadata.resourceNameIsExplicit,
+      false
+    );
 
     // The operation paths are authoritative: both remaining List operations
     // have the sharedConfigs resource type, so they belong to SharedConfig.
@@ -5225,7 +5241,7 @@ interface DynamicChildren {
     );
   });
 
-  it("RoutedOperations with dynamic parent type expands into concrete resources", async () => {
+  it.each([false, true])("expanded names (%s)", async (explicit) => {
     // This test validates the fix for resources that use Legacy.RoutedOperations with
     // dynamic parent types (e.g., {parentType}/{parentName}). The emitter should:
     // 1. Reclassify ActionSync operations based on HTTP verb (GET->Read, PUT->Create, DELETE->Delete)
@@ -5265,6 +5281,7 @@ union ParentType {
 }
 
 /** Private endpoint connection model */
+${explicit ? '@clientName("CustomConnection", "csharp")' : ""}
 model PrivateEndpointConnection is ProxyResource<PrivateEndpointConnectionProperties> {
   ...ResourceNameParameter<PrivateEndpointConnection>;
 }
@@ -5367,7 +5384,7 @@ interface PrivateEndpointConnections {
     ok(topicPec, "TopicPrivateEndpointConnection resource should exist");
     strictEqual(
       topicPec.metadata.resourceName,
-      "TopicPrivateEndpointConnection"
+      explicit ? "TopicCustomConnection" : "TopicPrivateEndpointConnection"
     );
 
     const domainPec = armProviderSchema.resources.find(
@@ -5378,7 +5395,7 @@ interface PrivateEndpointConnections {
     ok(domainPec, "DomainPrivateEndpointConnection resource should exist");
     strictEqual(
       domainPec.metadata.resourceName,
-      "DomainPrivateEndpointConnection"
+      explicit ? "DomainCustomConnection" : "DomainPrivateEndpointConnection"
     );
 
     // Verify expanded resources share the same model
@@ -5409,6 +5426,7 @@ interface PrivateEndpointConnections {
 
     // Verify each expanded resource has Read, Create, and Delete operations
     for (const pec of [topicPec, domainPec]) {
+      strictEqual(pec.metadata.resourceNameIsExplicit, explicit);
       const hasRead = pec.metadata.methods.some((m) => m.kind === "Read");
       const hasCreate = pec.metadata.methods.some((m) => m.kind === "Create");
       const hasDelete = pec.metadata.methods.some((m) => m.kind === "Delete");
@@ -5496,9 +5514,18 @@ interface RecordSets {
       armProviderSchema.resources[0].metadata.resourceName,
       "DnsRecordSet"
     );
+    strictEqual(
+      armProviderSchema.resources[0].metadata.resourceNameIsExplicit,
+      true
+    );
+    strictEqual(
+      convertArmProviderSchemaToArguments(armProviderSchema).resources[0]
+        .resourceNameIsExplicit,
+      true
+    );
   });
 
-  it("resource-name override - map for expandable {parentType} resource", async () => {
+  it.each([false, true])("expanded map names (%s)", async (partial) => {
     const program = await typeSpecCompile(
       `
 /** Parent topic resource */
@@ -5585,7 +5612,7 @@ interface PrivateEndpointConnections {
 #suppress "@azure-tools/typespec-client-generator-core/client-option" "Custom expanded names"
 @@clientOption(PrivateEndpointConnections.get, "resource-name", #{
   topics: "TopicPrivateEndpointConnectionCustom",
-  domains: "DomainPrivateEndpointConnectionCustom",
+  ${partial ? "" : 'domains: "DomainPrivateEndpointConnectionCustom",'}
 }, "csharp");
 `,
       runner
@@ -5616,8 +5643,12 @@ interface PrivateEndpointConnections {
     );
     strictEqual(
       domainPec.metadata.resourceName,
-      "DomainPrivateEndpointConnectionCustom"
+      partial
+        ? "DomainPrivateEndpointConnection"
+        : "DomainPrivateEndpointConnectionCustom"
     );
+    strictEqual(topicPec.metadata.resourceNameIsExplicit, true);
+    strictEqual(domainPec.metadata.resourceNameIsExplicit, !partial);
 
     // Underlying model unchanged.
     strictEqual(topicPec.resourceModelId, domainPec.resourceModelId);

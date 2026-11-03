@@ -21,7 +21,7 @@ namespace Azure.Provisioning.BotService
         {
         }
 
-        /// <summary> Gets the Id. </summary>
+        /// <summary> Gets or sets the Id. </summary>
         public BicepValue<string> Id
         {
             get
@@ -29,9 +29,14 @@ namespace Azure.Provisioning.BotService
                 Initialize();
                 return _id;
             }
+            set
+            {
+                Initialize();
+                _id.Assign(value);
+            }
         }
 
-        /// <summary> Gets the AccessToken. </summary>
+        /// <summary> Gets or sets the AccessToken. </summary>
         public BicepValue<string> AccessToken
         {
             get
@@ -39,13 +44,18 @@ namespace Azure.Provisioning.BotService
                 Initialize();
                 return _accessToken;
             }
+            set
+            {
+                Initialize();
+                _accessToken.Assign(value);
+            }
         }
 
         /// <summary> Define all the provisionable properties for FacebookPage. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            _id = DefineProperty<string>(nameof(Id), new string[] { "id" });
+            _id = DefineProperty<string>(nameof(Id), new string[] { "id" }, isRequired: true);
             _accessToken = DefineProperty<string>(nameof(AccessToken), new string[] { "accessToken" });
             DefineAdditionalProperties();
         }

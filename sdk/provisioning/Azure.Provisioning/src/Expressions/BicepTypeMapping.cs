@@ -6,6 +6,7 @@ using System.Globalization;
 using System.Net;
 using System.Reflection;
 using System.Runtime.Serialization;
+using System.Text;
 using System.Xml;
 using Azure.Core;
 
@@ -17,6 +18,9 @@ namespace Azure.Provisioning.Expressions;
 internal static class BicepTypeMapping
 {
     private const string RoundtripZFormat = "yyyy-MM-ddTHH:mm:ss.fffffffZ";
+    private const string JsonMediaType = "application/json";
+    private const string BicepMediaType = "text/vnd.microsoft.bicep";
+    private static readonly UTF8Encoding s_strictUtf8 = new(false, true);
 
     /// <summary>
     /// Map standard Azure types into Bicep primitive type names like bool,
@@ -107,12 +111,84 @@ internal static class BicepTypeMapping
             IPAddress a => BicepSyntax.Value(ToLiteralString(a, format)),
             ETag e => BicepSyntax.Value(ToLiteralString(e, format)),
             ResourceIdentifier i => BicepSyntax.Value(ToLiteralString(i, format)),
+            BinaryData b => ToBicep(b, format),
             AzureLocation azureLocation => BicepSyntax.Value(ToLiteralString(azureLocation, format)),
             ResourceType rt => BicepSyntax.Value(ToLiteralString(rt, format)),
             Enum e => BicepSyntax.Value(ToLiteralString(e, format)),
             ValueType ee => BicepSyntax.Value(ToLiteralString(ee, format)),
             _ => throw new InvalidOperationException($"Cannot convert {value} to a Bicep expression.")
         };
+
+    /// <summary>
+    /// Convert a <see cref="BinaryData"/> value into a Bicep expression.
+    /// </summary>
+    /// <param name="value">The <see cref="BinaryData"/> value.</param>
+    /// <param name="format">An optional format that controls literal serialization.</param>
+    /// <returns>The corresponding Bicep expression.</returns>
+    public static BicepExpression ToBicep(BinaryData value, string? format)
+    {
+        if (format == "base64")
+        {
+            return BicepSyntax.Value(Convert.ToBase64String(value.ToArray()));
+        }
+
+        string? mediaType = value.MediaType;
+        if (mediaType is null || IsMediaType(mediaType, JsonMediaType))
+        {
+            return BicepFunction.ParseJson(BicepSyntax.Value(DecodeUtf8(value, mediaType ?? JsonMediaType))).Compile();
+        }
+
+        if (IsMediaType(mediaType, BicepMediaType))
+        {
+            return new RawExpression(DecodeUtf8(value, mediaType));
+        }
+        throw new InvalidOperationException(
+            $"Cannot compile BinaryData with unsupported media type '{mediaType}'. " +
+            $"Use '{JsonMediaType}', '{BicepMediaType}', or omit the media type for JSON.");
+    }
+
+    private static string DecodeUtf8(BinaryData value, string mediaType)
+    {
+        try
+        {
+            return s_strictUtf8.GetString(value.ToArray());
+        }
+        catch (DecoderFallbackException exception)
+        {
+            throw new InvalidOperationException($"Cannot compile BinaryData with media type '{mediaType}' because its contents are not valid UTF-8.", exception);
+        }
+    }
+
+    private static bool IsMediaType(string value, string expected)
+    {
+        string[] parts = value.Split(';');
+        if (!string.Equals(parts[0].Trim(), expected, StringComparison.OrdinalIgnoreCase))
+        {
+            return false;
+        }
+
+        bool foundCharset = false;
+        for (int i = 1; i < parts.Length; i++)
+        {
+            string parameter = parts[i].Trim();
+            int separator = parameter.IndexOf('=');
+            if (separator < 0 ||
+                !string.Equals(parameter.Substring(0, separator).Trim(), "charset", StringComparison.OrdinalIgnoreCase) ||
+                foundCharset)
+            {
+                return false;
+            }
+
+            string charset = parameter.Substring(separator + 1).Trim().Trim('"');
+            if (!string.Equals(charset, "utf-8", StringComparison.OrdinalIgnoreCase))
+            {
+                return false;
+            }
+            foundCharset = true;
+        }
+
+        return true;
+    }
 
     private static string FormatDateTimeOffsetAsString(DateTimeOffset value, string? format) => format switch
     {

@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 using Azure.ResourceManager.OracleDatabase;
 
 namespace Azure.ResourceManager.OracleDatabase.Models
@@ -94,6 +95,11 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 writer.WritePropertyName("ocid"u8);
                 writer.WriteStringValue(ExadataInfraOcid);
             }
+            if (Optional.IsDefined(ResourceAnchorId))
+            {
+                writer.WritePropertyName("resourceAnchorId"u8);
+                writer.WriteStringValue(ResourceAnchorId);
+            }
             if (Optional.IsDefined(ComputeCount))
             {
                 writer.WritePropertyName("computeCount"u8);
@@ -156,6 +162,11 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             }
             writer.WritePropertyName("shape"u8);
             writer.WriteStringValue(Shape);
+            if (Optional.IsDefined(ProximityPlacementGroup))
+            {
+                writer.WritePropertyName("proximityPlacementGroup"u8);
+                writer.WriteObjectValue(ProximityPlacementGroup, options);
+            }
             if (options.Format != "W" && Optional.IsDefined(OciUri))
             {
                 writer.WritePropertyName("ociUrl"u8);
@@ -307,6 +318,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             }
             IReadOnlyList<DefinedFileSystemConfiguration> definedFileSystemConfiguration = default;
             string exadataInfraOcid = default;
+            ResourceIdentifier resourceAnchorId = default;
             int? computeCount = default;
             int? storageCount = default;
             int? totalStorageSizeInGbs = default;
@@ -319,6 +331,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             OracleDatabaseProvisioningState? provisioningState = default;
             CloudExadataInfrastructureLifecycleState? lifecycleState = default;
             string shape = default;
+            ProximityPlacementGroup proximityPlacementGroup = default;
             Uri ociUri = default;
             int? cpuCount = default;
             int? maxCpuCount = default;
@@ -361,6 +374,15 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 if (prop.NameEquals("ocid"u8))
                 {
                     exadataInfraOcid = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("resourceAnchorId"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    resourceAnchorId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("computeCount"u8))
@@ -466,6 +488,15 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 if (prop.NameEquals("shape"u8))
                 {
                     shape = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("proximityPlacementGroup"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    proximityPlacementGroup = ProximityPlacementGroup.DeserializeProximityPlacementGroup(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("ociUrl"u8))
@@ -638,6 +669,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             return new CloudExadataInfrastructureProperties(
                 definedFileSystemConfiguration ?? new ChangeTrackingList<DefinedFileSystemConfiguration>(),
                 exadataInfraOcid,
+                resourceAnchorId,
                 computeCount,
                 storageCount,
                 totalStorageSizeInGbs,
@@ -650,6 +682,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 provisioningState,
                 lifecycleState,
                 shape,
+                proximityPlacementGroup,
                 ociUri,
                 cpuCount,
                 maxCpuCount,

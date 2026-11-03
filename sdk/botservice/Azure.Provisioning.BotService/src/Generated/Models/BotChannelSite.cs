@@ -40,13 +40,18 @@ namespace Azure.Provisioning.BotService
         {
         }
 
-        /// <summary> Gets the TenantId. </summary>
+        /// <summary> Gets or sets the TenantId. </summary>
         public BicepValue<Guid> TenantId
         {
             get
             {
                 Initialize();
                 return _tenantId;
+            }
+            set
+            {
+                Initialize();
+                _tenantId.Assign(value);
             }
         }
 
@@ -60,13 +65,18 @@ namespace Azure.Provisioning.BotService
             }
         }
 
-        /// <summary> Gets the SiteName. </summary>
+        /// <summary> Gets or sets the SiteName. </summary>
         public BicepValue<string> SiteName
         {
             get
             {
                 Initialize();
                 return _siteName;
+            }
+            set
+            {
+                Initialize();
+                _siteName.Assign(value);
             }
         }
 
@@ -90,13 +100,18 @@ namespace Azure.Provisioning.BotService
             }
         }
 
-        /// <summary> Gets the IsEnabled. </summary>
+        /// <summary> Gets or sets the IsEnabled. </summary>
         public BicepValue<bool> IsEnabled
         {
             get
             {
                 Initialize();
                 return _isEnabled;
+            }
+            set
+            {
+                Initialize();
+                _isEnabled.Assign(value);
             }
         }
 
@@ -110,7 +125,7 @@ namespace Azure.Provisioning.BotService
             }
         }
 
-        /// <summary> Gets the IsEndpointParametersEnabled. </summary>
+        /// <summary> Gets or sets the IsEndpointParametersEnabled. </summary>
         public BicepValue<bool> IsEndpointParametersEnabled
         {
             get
@@ -118,9 +133,14 @@ namespace Azure.Provisioning.BotService
                 Initialize();
                 return _isEndpointParametersEnabled;
             }
+            set
+            {
+                Initialize();
+                _isEndpointParametersEnabled.Assign(value);
+            }
         }
 
-        /// <summary> Gets the IsDetailedLoggingEnabled. </summary>
+        /// <summary> Gets or sets the IsDetailedLoggingEnabled. </summary>
         public BicepValue<bool> IsDetailedLoggingEnabled
         {
             get
@@ -128,9 +148,14 @@ namespace Azure.Provisioning.BotService
                 Initialize();
                 return _isDetailedLoggingEnabled;
             }
+            set
+            {
+                Initialize();
+                _isDetailedLoggingEnabled.Assign(value);
+            }
         }
 
-        /// <summary> Gets the IsBlockUserUploadEnabled. </summary>
+        /// <summary> Gets or sets the IsBlockUserUploadEnabled. </summary>
         public BicepValue<bool> IsBlockUserUploadEnabled
         {
             get
@@ -138,9 +163,14 @@ namespace Azure.Provisioning.BotService
                 Initialize();
                 return _isBlockUserUploadEnabled;
             }
+            set
+            {
+                Initialize();
+                _isBlockUserUploadEnabled.Assign(value);
+            }
         }
 
-        /// <summary> Gets the IsNoStorageEnabled. </summary>
+        /// <summary> Gets or sets the IsNoStorageEnabled. </summary>
         public BicepValue<bool> IsNoStorageEnabled
         {
             get
@@ -148,9 +178,14 @@ namespace Azure.Provisioning.BotService
                 Initialize();
                 return _isNoStorageEnabled;
             }
+            set
+            {
+                Initialize();
+                _isNoStorageEnabled.Assign(value);
+            }
         }
 
-        /// <summary> Gets the ETag. </summary>
+        /// <summary> Gets or sets the ETag. </summary>
         public BicepValue<ETag> ETag
         {
             get
@@ -158,9 +193,14 @@ namespace Azure.Provisioning.BotService
                 Initialize();
                 return _eTag;
             }
+            set
+            {
+                Initialize();
+                _eTag.Assign(value);
+            }
         }
 
-        /// <summary> Gets the AppId. </summary>
+        /// <summary> Gets or sets the AppId. </summary>
         public BicepValue<string> AppId
         {
             get
@@ -168,9 +208,14 @@ namespace Azure.Provisioning.BotService
                 Initialize();
                 return _appId;
             }
+            set
+            {
+                Initialize();
+                _appId.Assign(value);
+            }
         }
 
-        /// <summary> Gets the IsV1Enabled. </summary>
+        /// <summary> Gets or sets the IsV1Enabled. </summary>
         public BicepValue<bool> IsV1Enabled
         {
             get
@@ -178,9 +223,14 @@ namespace Azure.Provisioning.BotService
                 Initialize();
                 return _isV1Enabled;
             }
+            set
+            {
+                Initialize();
+                _isV1Enabled.Assign(value);
+            }
         }
 
-        /// <summary> Gets the IsV3Enabled. </summary>
+        /// <summary> Gets or sets the IsV3Enabled. </summary>
         public BicepValue<bool> IsV3Enabled
         {
             get
@@ -188,9 +238,14 @@ namespace Azure.Provisioning.BotService
                 Initialize();
                 return _isV3Enabled;
             }
+            set
+            {
+                Initialize();
+                _isV3Enabled.Assign(value);
+            }
         }
 
-        /// <summary> Gets the IsSecureSiteEnabled. </summary>
+        /// <summary> Gets or sets the IsSecureSiteEnabled. </summary>
         public BicepValue<bool> IsSecureSiteEnabled
         {
             get
@@ -198,9 +253,14 @@ namespace Azure.Provisioning.BotService
                 Initialize();
                 return _isSecureSiteEnabled;
             }
+            set
+            {
+                Initialize();
+                _isSecureSiteEnabled.Assign(value);
+            }
         }
 
-        /// <summary> Gets the TrustedOrigins. </summary>
+        /// <summary> Gets or sets the TrustedOrigins. </summary>
         public BicepList<string> TrustedOrigins
         {
             get
@@ -208,9 +268,14 @@ namespace Azure.Provisioning.BotService
                 Initialize();
                 return _trustedOrigins;
             }
+            set
+            {
+                Initialize();
+                _trustedOrigins.Assign(value);
+            }
         }
 
-        /// <summary> Gets the IsWebChatSpeechEnabled. </summary>
+        /// <summary> Gets or sets the IsWebChatSpeechEnabled. </summary>
         public BicepValue<bool> IsWebChatSpeechEnabled
         {
             get
@@ -218,15 +283,25 @@ namespace Azure.Provisioning.BotService
                 Initialize();
                 return _isWebChatSpeechEnabled;
             }
+            set
+            {
+                Initialize();
+                _isWebChatSpeechEnabled.Assign(value);
+            }
         }
 
-        /// <summary> Gets the IsWebchatPreviewEnabled. </summary>
+        /// <summary> Gets or sets the IsWebchatPreviewEnabled. </summary>
         public BicepValue<bool> IsWebchatPreviewEnabled
         {
             get
             {
                 Initialize();
                 return _isWebchatPreviewEnabled;
+            }
+            set
+            {
+                Initialize();
+                _isWebchatPreviewEnabled.Assign(value);
             }
         }
 
@@ -236,10 +311,10 @@ namespace Azure.Provisioning.BotService
             base.DefineProvisionableProperties();
             _tenantId = DefineProperty<Guid>(nameof(TenantId), new string[] { "tenantId" });
             _siteId = DefineProperty<string>(nameof(SiteId), new string[] { "siteId" }, isOutput: true);
-            _siteName = DefineProperty<string>(nameof(SiteName), new string[] { "siteName" });
+            _siteName = DefineProperty<string>(nameof(SiteName), new string[] { "siteName" }, isRequired: true);
             _key = DefineProperty<string>(nameof(Key), new string[] { "key" }, isOutput: true);
             _key2 = DefineProperty<string>(nameof(Key2), new string[] { "key2" }, isOutput: true);
-            _isEnabled = DefineProperty<bool>(nameof(IsEnabled), new string[] { "isEnabled" });
+            _isEnabled = DefineProperty<bool>(nameof(IsEnabled), new string[] { "isEnabled" }, isRequired: true);
             _isTokenEnabled = DefineProperty<bool>(nameof(IsTokenEnabled), new string[] { "isTokenEnabled" }, isOutput: true);
             _isEndpointParametersEnabled = DefineProperty<bool>(nameof(IsEndpointParametersEnabled), new string[] { "isEndpointParametersEnabled" });
             _isDetailedLoggingEnabled = DefineProperty<bool>(nameof(IsDetailedLoggingEnabled), new string[] { "isDetailedLoggingEnabled" });

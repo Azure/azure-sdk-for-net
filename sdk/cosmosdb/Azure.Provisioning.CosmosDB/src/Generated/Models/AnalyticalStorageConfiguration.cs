@@ -20,13 +20,18 @@ namespace Azure.Provisioning.CosmosDB
         {
         }
 
-        /// <summary> Gets the SchemaType. </summary>
+        /// <summary> Gets or sets the SchemaType. </summary>
         public BicepValue<AnalyticalStorageSchemaType> SchemaType
         {
             get
             {
                 Initialize();
                 return _schemaType;
+            }
+            set
+            {
+                Initialize();
+                _schemaType.Assign(value);
             }
         }
 

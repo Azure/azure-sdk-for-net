@@ -20,7 +20,7 @@ namespace Azure.Provisioning.EventHubs
         private SystemData _systemData;
         private NetworkRuleSetProperties _properties;
         private BicepValue<AzureLocation> _location;
-        private ResourceReference<EHNamespace> _parent;
+        private ResourceReference<EventHubsNamespace> _parent;
 
         /// <summary> Creates a new EventHubsNetworkRuleSet. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -39,13 +39,18 @@ namespace Azure.Provisioning.EventHubs
             }
         }
 
-        /// <summary> Gets the Name. </summary>
+        /// <summary> Gets or sets the Name. </summary>
         public BicepValue<string> Name
         {
             get
             {
                 Initialize();
                 return _name;
+            }
+            set
+            {
+                Initialize();
+                _name.Assign(value);
             }
         }
 
@@ -85,7 +90,7 @@ namespace Azure.Provisioning.EventHubs
         }
 
         /// <summary> Gets or sets the Parent. </summary>
-        public EHNamespace Parent
+        public EventHubsNamespace Parent
         {
             get
             {
@@ -193,7 +198,7 @@ namespace Azure.Provisioning.EventHubs
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _properties = DefineModelProperty<NetworkRuleSetProperties>(nameof(Properties), new string[] { "properties" });
             _location = DefineProperty<AzureLocation>(nameof(Location), new string[] { "location" }, isOutput: true);
-            _parent = DefineResource<EHNamespace>(nameof(Parent), new string[] { "parent" }, isRequired: true);
+            _parent = DefineResource<EventHubsNamespace>(nameof(Parent), new string[] { "parent" });
             DefineAdditionalProperties();
         }
 

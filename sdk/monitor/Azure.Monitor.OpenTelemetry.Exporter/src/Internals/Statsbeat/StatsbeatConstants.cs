@@ -26,21 +26,13 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat
 
         /// <summary>
         /// Configuration endpoint queried at startup when the
-        /// <see cref="RouteSdkStatsToDistroEndpointSwitchName"/> AppContext switch is enabled
-        /// and the customer's connection string maps to a non-EU region (or is unknown).
+        /// <see cref="RouteSdkStatsToDistroEndpointSwitchName"/> AppContext switch is enabled.
+        /// All customer regions use this endpoint because the collector has no EU deployment.
         /// Returns JSON of shape <c>{"ver":1,"enabled":true,"url":"..."}</c>; the <c>url</c>
-        /// field becomes the ingestion host for SDK statistics. If the fetch fails or
-        /// <c>enabled</c> is <c>false</c>, SDK statistics are not emitted.
+        /// field becomes the ingestion host for SDK statistics. If the fetch fails, the
+        /// legacy regional Breeze endpoints are used; <c>enabled: false</c> disables emission.
         /// </summary>
         internal const string SdkStatsConfigUrl_NonEU = "https://data.stats.monitor.azure.com/cfg/v1.json";
-
-        /// <summary>
-        /// Configuration endpoint queried at startup when the
-        /// <see cref="RouteSdkStatsToDistroEndpointSwitchName"/> AppContext switch is enabled
-        /// and the customer's connection string maps to an EU region. Same shape as
-        /// <see cref="SdkStatsConfigUrl_NonEU"/>.
-        /// </summary>
-        internal const string SdkStatsConfigUrl_EU = "https://eu-data.stats.monitor.azure.com/cfg/v1.json";
 
         /// <summary>The only config schema version currently understood by this client.</summary>
         internal const int SdkStatsConfigVersion = 1;
@@ -48,11 +40,12 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat
         /// <summary>
         /// Process-wide <see cref="System.AppContext"/> switch name. When set to <c>true</c>,
         /// every <see cref="AzureMonitorStatsbeat"/> instance fetches the SDK statistics
-        /// configuration from the distro-owned endpoint
-        /// (<see cref="SdkStatsConfigUrl_NonEU"/> / <see cref="SdkStatsConfigUrl_EU"/>) at
+        /// configuration from the standard distro-owned endpoint
+        /// (<see cref="SdkStatsConfigUrl_NonEU"/>) at
         /// startup. If the config returns <c>enabled: true</c>, SDK statistics are emitted
         /// to the <c>url</c> from the response (with the standard
-        /// <c>/v2.1/track</c> path appended by the existing transmitter). If the fetch
+        /// <c>/v2.1/track</c> path appended by the existing transmitter), retaining the
+        /// EU/non-EU SDK statistics instrumentation key on each envelope. If the fetch
         /// fails or returns a malformed response, SDK statistics fall back to the existing
         /// region-derived ingestion endpoint; if the config returns <c>enabled: false</c>,
         /// SDK statistics are disabled for the process.
@@ -70,6 +63,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat
         {
             "francecentral",
             "francesouth",
+            "germanynorth",
             "germanywestcentral",
             "northeurope",
             "norwayeast",

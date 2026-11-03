@@ -57,6 +57,22 @@ namespace Azure.ResourceManager.Network.Models
         [WirePath("vpnConnectionId")]
         public string VpnConnectionId { get; }
 
+        /// <summary> The duration time of a connected vpn client. </summary>
+        [WirePath("vpnConnectionDuration")]
+        public long? VpnConnectionDurationInSeconds { get; }
+
+        /// <summary> The start time of a connected vpn client. </summary>
+        [WirePath("vpnConnectionTime")]
+        public DateTimeOffset? VpnConnectionOn { get; }
+
+        /// <summary> The public Ip of a connected vpn client. </summary>
+        [WirePath("publicIpAddress")]
+        public string PublicIPAddress { get; }
+
+        /// <summary> The assigned private Ip of a connected vpn client. </summary>
+        [WirePath("privateIpAddress")]
+        public string PrivateIPAddress { get; }
+
         /// <summary> The user name of a connected vpn client. </summary>
         [WirePath("vpnUserName")]
         public string VpnUserName { get; }

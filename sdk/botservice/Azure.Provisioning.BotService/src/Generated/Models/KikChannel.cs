@@ -18,13 +18,18 @@ namespace Azure.Provisioning.BotService
             ChannelName.Assign("KikChannel");
         }
 
-        /// <summary> Gets the Properties. </summary>
+        /// <summary> Gets or sets the Properties. </summary>
         public KikChannelProperties Properties
         {
             get
             {
                 Initialize();
                 return _properties;
+            }
+            set
+            {
+                Initialize();
+                AssignOrReplace(ref _properties, value);
             }
         }
 

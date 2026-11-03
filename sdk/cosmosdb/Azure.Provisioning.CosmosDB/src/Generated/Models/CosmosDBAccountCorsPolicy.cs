@@ -24,7 +24,7 @@ namespace Azure.Provisioning.CosmosDB
         {
         }
 
-        /// <summary> Gets the AllowedOrigins. </summary>
+        /// <summary> Gets or sets the AllowedOrigins. </summary>
         public BicepValue<string> AllowedOrigins
         {
             get
@@ -32,9 +32,14 @@ namespace Azure.Provisioning.CosmosDB
                 Initialize();
                 return _allowedOrigins;
             }
+            set
+            {
+                Initialize();
+                _allowedOrigins.Assign(value);
+            }
         }
 
-        /// <summary> Gets the AllowedMethods. </summary>
+        /// <summary> Gets or sets the AllowedMethods. </summary>
         public BicepValue<string> AllowedMethods
         {
             get
@@ -42,9 +47,14 @@ namespace Azure.Provisioning.CosmosDB
                 Initialize();
                 return _allowedMethods;
             }
+            set
+            {
+                Initialize();
+                _allowedMethods.Assign(value);
+            }
         }
 
-        /// <summary> Gets the AllowedHeaders. </summary>
+        /// <summary> Gets or sets the AllowedHeaders. </summary>
         public BicepValue<string> AllowedHeaders
         {
             get
@@ -52,9 +62,14 @@ namespace Azure.Provisioning.CosmosDB
                 Initialize();
                 return _allowedHeaders;
             }
+            set
+            {
+                Initialize();
+                _allowedHeaders.Assign(value);
+            }
         }
 
-        /// <summary> Gets the ExposedHeaders. </summary>
+        /// <summary> Gets or sets the ExposedHeaders. </summary>
         public BicepValue<string> ExposedHeaders
         {
             get
@@ -62,9 +77,14 @@ namespace Azure.Provisioning.CosmosDB
                 Initialize();
                 return _exposedHeaders;
             }
+            set
+            {
+                Initialize();
+                _exposedHeaders.Assign(value);
+            }
         }
 
-        /// <summary> Gets the MaxAgeInSeconds. </summary>
+        /// <summary> Gets or sets the MaxAgeInSeconds. </summary>
         public BicepValue<long> MaxAgeInSeconds
         {
             get
@@ -72,13 +92,18 @@ namespace Azure.Provisioning.CosmosDB
                 Initialize();
                 return _maxAgeInSeconds;
             }
+            set
+            {
+                Initialize();
+                _maxAgeInSeconds.Assign(value);
+            }
         }
 
         /// <summary> Define all the provisionable properties for CosmosDBAccountCorsPolicy. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            _allowedOrigins = DefineProperty<string>(nameof(AllowedOrigins), new string[] { "allowedOrigins" });
+            _allowedOrigins = DefineProperty<string>(nameof(AllowedOrigins), new string[] { "allowedOrigins" }, isRequired: true);
             _allowedMethods = DefineProperty<string>(nameof(AllowedMethods), new string[] { "allowedMethods" });
             _allowedHeaders = DefineProperty<string>(nameof(AllowedHeaders), new string[] { "allowedHeaders" });
             _exposedHeaders = DefineProperty<string>(nameof(ExposedHeaders), new string[] { "exposedHeaders" });

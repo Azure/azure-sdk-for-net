@@ -24,7 +24,7 @@ namespace Azure.Provisioning.CosmosDB
         /// <summary> Creates a new NotebookWorkspace. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
         /// <param name="resourceVersion"> The resource API version. </param>
-        internal NotebookWorkspace(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.DocumentDB/databaseAccounts/notebookWorkspaces", resourceVersion ?? "2026-03-15")
+        public NotebookWorkspace(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.DocumentDB/databaseAccounts/notebookWorkspaces", resourceVersion ?? "2026-03-15")
         {
         }
 
@@ -63,13 +63,18 @@ namespace Azure.Provisioning.CosmosDB
             }
         }
 
-        /// <summary> Gets the Properties. </summary>
+        /// <summary> Gets or sets the Properties. </summary>
         internal NotebookWorkspaceProperties Properties
         {
             get
             {
                 Initialize();
                 return _properties;
+            }
+            set
+            {
+                Initialize();
+                AssignOrReplace(ref _properties, value);
             }
         }
 
@@ -93,7 +98,11 @@ namespace Azure.Provisioning.CosmosDB
         {
             get
             {
-                return Properties is null ? default : Properties.NotebookServerEndpoint;
+                if (Properties is null)
+                {
+                    Properties = new NotebookWorkspaceProperties();
+                }
+                return Properties.NotebookServerEndpoint;
             }
         }
 
@@ -102,7 +111,11 @@ namespace Azure.Provisioning.CosmosDB
         {
             get
             {
-                return Properties is null ? default : Properties.Status;
+                if (Properties is null)
+                {
+                    Properties = new NotebookWorkspaceProperties();
+                }
+                return Properties.Status;
             }
         }
 
@@ -114,7 +127,7 @@ namespace Azure.Provisioning.CosmosDB
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _properties = DefineModelProperty<NotebookWorkspaceProperties>(nameof(Properties), new string[] { "properties" });
-            _parent = DefineResource<CosmosDBAccount>(nameof(Parent), new string[] { "parent" }, isRequired: true);
+            _parent = DefineResource<CosmosDBAccount>(nameof(Parent), new string[] { "parent" });
             DefineAdditionalProperties();
         }
 

@@ -156,7 +156,6 @@
             "$id": "15",
             "name": "test",
             "isExactName": false,
-            "resourceName": "ReturnTypeChangedFrom",
             "accessibility": "public",
             "parameters": [
               {

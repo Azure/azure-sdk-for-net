@@ -20,13 +20,18 @@ namespace Azure.Provisioning.CosmosDB
         {
         }
 
-        /// <summary> Gets the ServerVersion. </summary>
+        /// <summary> Gets or sets the ServerVersion. </summary>
         public BicepValue<CosmosDBServerVersion> ServerVersion
         {
             get
             {
                 Initialize();
                 return _serverVersion;
+            }
+            set
+            {
+                Initialize();
+                _serverVersion.Assign(value);
             }
         }
 

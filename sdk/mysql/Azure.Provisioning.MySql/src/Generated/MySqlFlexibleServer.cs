@@ -434,7 +434,7 @@ namespace Azure.Provisioning.MySql
         }
 
         /// <summary> Gets the ServerPrivateEndpointConnections. </summary>
-        public BicepList<MySqlFlexibleServerMySqlFlexibleServersPrivateEndpointConnection> ServerPrivateEndpointConnections
+        public BicepList<MySqlFlexibleServersPrivateEndpointConnection> ServerPrivateEndpointConnections
         {
             get
             {

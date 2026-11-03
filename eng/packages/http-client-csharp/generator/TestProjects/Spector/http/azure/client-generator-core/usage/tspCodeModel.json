@@ -518,7 +518,6 @@
                 "$id": "41",
                 "name": "inputToInputOutput",
                 "isExactName": false,
-                "resourceName": "ModelInOperation",
                 "doc": "Expected body parameter:\n```json\n{\n  \"name\": \"Madge\"\n}\n```",
                 "accessibility": "public",
                 "parameters": [
@@ -656,7 +655,6 @@
                 "$id": "47",
                 "name": "outputToInputOutput",
                 "isExactName": false,
-                "resourceName": "ModelInOperation",
                 "doc": "Expected response body:\n```json\n{\n  \"name\": \"Madge\"\n}\n```",
                 "accessibility": "public",
                 "parameters": [
@@ -755,7 +753,6 @@
                 "$id": "51",
                 "name": "modelInReadOnlyProperty",
                 "isExactName": false,
-                "resourceName": "ModelInOperation",
                 "doc": "\"ResultModel\" should be usage=output, as it is read-only and does not exist in request body.\n\nExpected body parameter:\n```json\n{\n}\n```\n\nExpected response body:\n```json\n{\n  \"result\": {\n    \"name\": \"Madge\"\n  }\n}\n```",
                 "accessibility": "public",
                 "parameters": [
@@ -947,7 +944,6 @@
                 "$id": "59",
                 "name": "orphanModelSerializable",
                 "isExactName": false,
-                "resourceName": "ModelInOperation",
                 "doc": "Serialize the 'OrphanModel' as request body.\n\nExpected body parameter:\n```json\n{\n  \"name\": \"name\",\n  \"desc\": \"desc\"\n}\n```",
                 "accessibility": "public",
                 "parameters": [
@@ -1143,7 +1139,6 @@
                 "$id": "71",
                 "name": "namespaceModelSerializable",
                 "isExactName": false,
-                "resourceName": "NamespaceUsage",
                 "doc": "Serialize the 'NamespaceModel' as request body.\n\nExpected body parameter:\n```json\n{\n  \"name\": \"test\"\n}\n```",
                 "accessibility": "public",
                 "parameters": [

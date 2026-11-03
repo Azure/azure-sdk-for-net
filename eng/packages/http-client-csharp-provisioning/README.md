@@ -58,3 +58,14 @@ Provisioning uses `resolveArmResources` by default, including API-version
 projection and client-name customization. To opt back into legacy resource
 detection, set `use-legacy-resource-detection: true` in the provisioning emitter
 options. The management emitter's default is unchanged.
+
+## Development
+
+Keep all three generator dependencies in `package.json` aligned with
+`eng/centralpackagemanagement/Directory.Generation.Packages.props` and compatible
+with each other, except for the temporary local management emitter reference
+described above. The ARM resolver uses the published
+`@azure-tools/typespec-azure-resource-manager` version `0.74.0-dev.8`, which
+includes the versioned resource resolution changes from TypeSpec Azure PR #5431.
+After updating the pins, run `npm install` in this directory,
+then run `eng/scripts/Generate.ps1` to regenerate and build both local fixtures.

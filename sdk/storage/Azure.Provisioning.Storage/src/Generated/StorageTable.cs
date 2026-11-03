@@ -25,7 +25,7 @@ namespace Azure.Provisioning.Storage
         /// <summary> Creates a new StorageTable. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
         /// <param name="resourceVersion"> The resource API version. </param>
-        internal StorageTable(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.Storage/storageAccounts/tableServices/tables", resourceVersion ?? "2026-06-01")
+        public StorageTable(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.Storage/storageAccounts/tableServices/tables", resourceVersion ?? "2026-06-01")
         {
         }
 
@@ -64,13 +64,18 @@ namespace Azure.Provisioning.Storage
             }
         }
 
-        /// <summary> Gets the TableProperties. </summary>
+        /// <summary> Gets or sets the TableProperties. </summary>
         internal TableProperties TableProperties
         {
             get
             {
                 Initialize();
                 return _tableProperties;
+            }
+            set
+            {
+                Initialize();
+                AssignOrReplace(ref _tableProperties, value);
             }
         }
 
@@ -94,16 +99,28 @@ namespace Azure.Provisioning.Storage
         {
             get
             {
-                return TableProperties is null ? default : TableProperties.TableName;
+                if (TableProperties is null)
+                {
+                    TableProperties = new TableProperties();
+                }
+                return TableProperties.TableName;
             }
         }
 
-        /// <summary> Gets the SignedIdentifiers. </summary>
+        /// <summary> Gets or sets the SignedIdentifiers. </summary>
         public BicepList<StorageTableSignedIdentifier> SignedIdentifiers
         {
             get
             {
                 return TableProperties is null ? default : TableProperties.SignedIdentifiers;
+            }
+            set
+            {
+                if (TableProperties is null)
+                {
+                    TableProperties = new TableProperties();
+                }
+                TableProperties.SignedIdentifiers = value;
             }
         }
 
@@ -115,7 +132,7 @@ namespace Azure.Provisioning.Storage
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _tableProperties = DefineModelProperty<TableProperties>(nameof(TableProperties), new string[] { "properties" });
-            _parent = DefineResource<TableService>(nameof(Parent), new string[] { "parent" }, isRequired: true);
+            _parent = DefineResource<TableService>(nameof(Parent), new string[] { "parent" });
             DefineAdditionalProperties();
         }
 

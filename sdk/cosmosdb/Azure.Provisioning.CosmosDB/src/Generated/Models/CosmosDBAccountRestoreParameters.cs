@@ -26,7 +26,7 @@ namespace Azure.Provisioning.CosmosDB
         {
         }
 
-        /// <summary> Gets the RestoreMode. </summary>
+        /// <summary> Gets or sets the RestoreMode. </summary>
         public BicepValue<CosmosDBAccountRestoreMode> RestoreMode
         {
             get
@@ -34,9 +34,14 @@ namespace Azure.Provisioning.CosmosDB
                 Initialize();
                 return _restoreMode;
             }
+            set
+            {
+                Initialize();
+                _restoreMode.Assign(value);
+            }
         }
 
-        /// <summary> Gets the RestoreSource. </summary>
+        /// <summary> Gets or sets the RestoreSource. </summary>
         public new BicepValue<string> RestoreSource
         {
             get
@@ -44,9 +49,14 @@ namespace Azure.Provisioning.CosmosDB
                 Initialize();
                 return _restoreSource;
             }
+            set
+            {
+                Initialize();
+                _restoreSource.Assign(value);
+            }
         }
 
-        /// <summary> Gets the RestoreTimestampInUtc. </summary>
+        /// <summary> Gets or sets the RestoreTimestampInUtc. </summary>
         public new BicepValue<DateTimeOffset> RestoreTimestampInUtc
         {
             get
@@ -54,9 +64,14 @@ namespace Azure.Provisioning.CosmosDB
                 Initialize();
                 return _restoreTimestampInUtc;
             }
+            set
+            {
+                Initialize();
+                _restoreTimestampInUtc.Assign(value);
+            }
         }
 
-        /// <summary> Gets the DatabasesToRestore. </summary>
+        /// <summary> Gets or sets the DatabasesToRestore. </summary>
         public BicepList<DatabaseRestoreResourceInfo> DatabasesToRestore
         {
             get
@@ -64,9 +79,14 @@ namespace Azure.Provisioning.CosmosDB
                 Initialize();
                 return _databasesToRestore;
             }
+            set
+            {
+                Initialize();
+                _databasesToRestore.Assign(value);
+            }
         }
 
-        /// <summary> Gets the GremlinDatabasesToRestore. </summary>
+        /// <summary> Gets or sets the GremlinDatabasesToRestore. </summary>
         public BicepList<GremlinDatabaseRestoreResourceInfo> GremlinDatabasesToRestore
         {
             get
@@ -74,9 +94,14 @@ namespace Azure.Provisioning.CosmosDB
                 Initialize();
                 return _gremlinDatabasesToRestore;
             }
+            set
+            {
+                Initialize();
+                _gremlinDatabasesToRestore.Assign(value);
+            }
         }
 
-        /// <summary> Gets the TablesToRestore. </summary>
+        /// <summary> Gets or sets the TablesToRestore. </summary>
         public BicepList<string> TablesToRestore
         {
             get
@@ -84,15 +109,25 @@ namespace Azure.Provisioning.CosmosDB
                 Initialize();
                 return _tablesToRestore;
             }
+            set
+            {
+                Initialize();
+                _tablesToRestore.Assign(value);
+            }
         }
 
-        /// <summary> Gets the SourceBackupLocation. </summary>
+        /// <summary> Gets or sets the SourceBackupLocation. </summary>
         public BicepValue<string> SourceBackupLocation
         {
             get
             {
                 Initialize();
                 return _sourceBackupLocation;
+            }
+            set
+            {
+                Initialize();
+                _sourceBackupLocation.Assign(value);
             }
         }
 

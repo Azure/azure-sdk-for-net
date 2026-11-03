@@ -23,14 +23,16 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
         /// <param name="type"> Type of the solution setting property, represented as a string. </param>
         /// <param name="description"> Description of solution setting property. </param>
         /// <param name="allowedValues"> Array of allowed values for this solution settings property. </param>
+        /// <param name="hostTypes"> The supported host types for the current solution setting. </param>
         /// <param name="defaultValue"> Default value for this solution settings property. </param>
-        internal PublicCloudConnectorSolutionTypeSettingsProperties(string name, string displayName, string @type, string description, IEnumerable<string> allowedValues, string defaultValue)
+        internal PublicCloudConnectorSolutionTypeSettingsProperties(string name, string displayName, string @type, string description, IEnumerable<string> allowedValues, IEnumerable<PublicCloudHostType> hostTypes, string defaultValue)
         {
             Name = name;
             DisplayName = displayName;
             Type = @type;
             Description = description;
             AllowedValues = allowedValues.ToList();
+            HostTypes = hostTypes.ToList();
             DefaultValue = defaultValue;
         }
 
@@ -40,15 +42,17 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
         /// <param name="type"> Type of the solution setting property, represented as a string. </param>
         /// <param name="description"> Description of solution setting property. </param>
         /// <param name="allowedValues"> Array of allowed values for this solution settings property. </param>
+        /// <param name="hostTypes"> The supported host types for the current solution setting. </param>
         /// <param name="defaultValue"> Default value for this solution settings property. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PublicCloudConnectorSolutionTypeSettingsProperties(string name, string displayName, string @type, string description, IReadOnlyList<string> allowedValues, string defaultValue, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PublicCloudConnectorSolutionTypeSettingsProperties(string name, string displayName, string @type, string description, IReadOnlyList<string> allowedValues, IList<PublicCloudHostType> hostTypes, string defaultValue, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             DisplayName = displayName;
             Type = @type;
             Description = description;
             AllowedValues = allowedValues;
+            HostTypes = hostTypes;
             DefaultValue = defaultValue;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -67,6 +71,9 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
 
         /// <summary> Array of allowed values for this solution settings property. </summary>
         public IReadOnlyList<string> AllowedValues { get; }
+
+        /// <summary> The supported host types for the current solution setting. </summary>
+        public IList<PublicCloudHostType> HostTypes { get; }
 
         /// <summary> Default value for this solution settings property. </summary>
         public string DefaultValue { get; }

@@ -31,13 +31,18 @@ namespace Azure.Provisioning.Storage
             }
         }
 
-        /// <summary> Gets the SignedIdentifiers. </summary>
+        /// <summary> Gets or sets the SignedIdentifiers. </summary>
         public BicepList<StorageTableSignedIdentifier> SignedIdentifiers
         {
             get
             {
                 Initialize();
                 return _signedIdentifiers;
+            }
+            set
+            {
+                Initialize();
+                _signedIdentifiers.Assign(value);
             }
         }
 

@@ -48,7 +48,7 @@ namespace Azure.Security.Attestation
         /// A monotonically increasing sequence number changed when Intel updates the
         /// content of the TCB evaluation data set. SGX TEE specific property
         /// </param>
-        /// <param name="tcbReleaseOn"> Date and time when the Tcb is released. SGX TEE specific property. </param>
+        /// <param name="tcbReleasedOn"> Date and time when the Tcb is released. SGX TEE specific property. </param>
         /// <param name="minimumPswLinuxVersion">
         /// Minimum Linux PSW version required to support the corresponding Tcb baseline.
         /// SGX TEE specific property
@@ -62,12 +62,12 @@ namespace Azure.Security.Attestation
         /// attestation request if set to true
         /// </param>
         /// <returns> A new <see cref="Attestation.TcbBaseline"/> instance for mocking. </returns>
-        public static TcbBaseline TcbBaseline(string tcbIdentifier = default, int? tcbEvaluationDataNumber = default, DateTimeOffset? tcbReleaseOn = default, string minimumPswLinuxVersion = default, string minimumPswWindowsVersion = default, bool? isSelectedTcb = default)
+        public static TcbBaseline TcbBaseline(string tcbIdentifier = default, int? tcbEvaluationDataNumber = default, DateTimeOffset? tcbReleasedOn = default, string minimumPswLinuxVersion = default, string minimumPswWindowsVersion = default, bool? isSelectedTcb = default)
         {
             return new TcbBaseline(
                 tcbIdentifier,
                 tcbEvaluationDataNumber,
-                tcbReleaseOn,
+                tcbReleasedOn,
                 minimumPswLinuxVersion,
                 minimumPswWindowsVersion,
                 isSelectedTcb,

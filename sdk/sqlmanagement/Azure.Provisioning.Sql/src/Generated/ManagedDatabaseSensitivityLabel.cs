@@ -58,18 +58,13 @@ namespace Azure.Provisioning.Sql
             }
         }
 
-        /// <summary> Gets or sets the Properties. </summary>
+        /// <summary> Gets the Properties. </summary>
         internal SensitivityLabelProperties Properties
         {
             get
             {
                 Initialize();
                 return _properties;
-            }
-            set
-            {
-                Initialize();
-                AssignOrReplace(ref _properties, value);
             }
         }
 
@@ -103,11 +98,7 @@ namespace Azure.Provisioning.Sql
         {
             get
             {
-                if (Properties is null)
-                {
-                    Properties = new SensitivityLabelProperties();
-                }
-                return Properties.SchemaName;
+                return Properties is null ? default : Properties.SchemaName;
             }
         }
 
@@ -116,11 +107,7 @@ namespace Azure.Provisioning.Sql
         {
             get
             {
-                if (Properties is null)
-                {
-                    Properties = new SensitivityLabelProperties();
-                }
-                return Properties.TableName;
+                return Properties is null ? default : Properties.TableName;
             }
         }
 
@@ -129,11 +116,7 @@ namespace Azure.Provisioning.Sql
         {
             get
             {
-                if (Properties is null)
-                {
-                    Properties = new SensitivityLabelProperties();
-                }
-                return Properties.ColumnName;
+                return Properties is null ? default : Properties.ColumnName;
             }
         }
 
@@ -142,11 +125,7 @@ namespace Azure.Provisioning.Sql
         {
             get
             {
-                if (Properties is null)
-                {
-                    Properties = new SensitivityLabelProperties();
-                }
-                return Properties.IsDisabled;
+                return Properties is null ? default : Properties.IsDisabled;
             }
         }
 
@@ -159,7 +138,7 @@ namespace Azure.Provisioning.Sql
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _properties = DefineModelProperty<SensitivityLabelProperties>(nameof(Properties), new string[] { "properties" });
             _managedBy = DefineProperty<string>(nameof(ManagedBy), new string[] { "managedBy" }, isOutput: true);
-            _parent = DefineResource<ManagedDatabaseColumn>(nameof(Parent), new string[] { "parent" }, isRequired: true);
+            _parent = DefineResource<ManagedDatabaseColumn>(nameof(Parent), new string[] { "parent" });
             DefineAdditionalProperties();
         }
 

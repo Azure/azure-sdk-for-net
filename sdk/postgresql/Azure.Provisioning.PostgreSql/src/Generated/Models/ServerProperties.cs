@@ -33,7 +33,7 @@ namespace Azure.Provisioning.PostgreSql
         private BicepValue<PostgreSqlFlexibleServerReplicationRole> _replicationRole;
         private PostgreSqlFlexibleServersReplica _replica;
         private BicepValue<PostgreSqlFlexibleServerCreateMode> _createMode;
-        private BicepList<PostgreSqlFlexibleServerPostgreSqlFlexibleServersPrivateEndpointConnection> _privateEndpointConnections;
+        private BicepList<PostgreSqlFlexibleServersPrivateEndpointConnection> _privateEndpointConnections;
         private PostgreSqlFlexibleServerClusterProperties _cluster;
 
         /// <summary> Creates a new ServerProperties. </summary>
@@ -312,7 +312,7 @@ namespace Azure.Provisioning.PostgreSql
         }
 
         /// <summary> Gets the PrivateEndpointConnections. </summary>
-        public BicepList<PostgreSqlFlexibleServerPostgreSqlFlexibleServersPrivateEndpointConnection> PrivateEndpointConnections
+        public BicepList<PostgreSqlFlexibleServersPrivateEndpointConnection> PrivateEndpointConnections
         {
             get
             {

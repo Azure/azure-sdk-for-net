@@ -26,7 +26,7 @@ namespace Azure.Provisioning.BotService
         {
         }
 
-        /// <summary> Gets the Id. </summary>
+        /// <summary> Gets or sets the Id. </summary>
         public BicepValue<string> Id
         {
             get
@@ -34,9 +34,14 @@ namespace Azure.Provisioning.BotService
                 Initialize();
                 return _id;
             }
+            set
+            {
+                Initialize();
+                _id.Assign(value);
+            }
         }
 
-        /// <summary> Gets the ProviderName. </summary>
+        /// <summary> Gets or sets the ProviderName. </summary>
         public BicepValue<string> ProviderName
         {
             get
@@ -44,9 +49,14 @@ namespace Azure.Provisioning.BotService
                 Initialize();
                 return _providerName;
             }
+            set
+            {
+                Initialize();
+                _providerName.Assign(value);
+            }
         }
 
-        /// <summary> Gets the CognitiveServiceSubscriptionKey. </summary>
+        /// <summary> Gets or sets the CognitiveServiceSubscriptionKey. </summary>
         public BicepValue<string> CognitiveServiceSubscriptionKey
         {
             get
@@ -54,9 +64,14 @@ namespace Azure.Provisioning.BotService
                 Initialize();
                 return _cognitiveServiceSubscriptionKey;
             }
+            set
+            {
+                Initialize();
+                _cognitiveServiceSubscriptionKey.Assign(value);
+            }
         }
 
-        /// <summary> Gets the CognitiveServiceRegion. </summary>
+        /// <summary> Gets or sets the CognitiveServiceRegion. </summary>
         public BicepValue<string> CognitiveServiceRegion
         {
             get
@@ -64,9 +79,14 @@ namespace Azure.Provisioning.BotService
                 Initialize();
                 return _cognitiveServiceRegion;
             }
+            set
+            {
+                Initialize();
+                _cognitiveServiceRegion.Assign(value);
+            }
         }
 
-        /// <summary> Gets the CognitiveServiceResourceId. </summary>
+        /// <summary> Gets or sets the CognitiveServiceResourceId. </summary>
         public BicepValue<ResourceIdentifier> CognitiveServiceResourceId
         {
             get
@@ -74,15 +94,25 @@ namespace Azure.Provisioning.BotService
                 Initialize();
                 return _cognitiveServiceResourceId;
             }
+            set
+            {
+                Initialize();
+                _cognitiveServiceResourceId.Assign(value);
+            }
         }
 
-        /// <summary> Gets the DefaultLocale. </summary>
+        /// <summary> Gets or sets the DefaultLocale. </summary>
         public BicepValue<string> DefaultLocale
         {
             get
             {
                 Initialize();
                 return _defaultLocale;
+            }
+            set
+            {
+                Initialize();
+                _defaultLocale.Assign(value);
             }
         }
 

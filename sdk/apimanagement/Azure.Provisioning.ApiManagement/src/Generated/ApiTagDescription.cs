@@ -22,12 +22,12 @@ namespace Azure.Provisioning.ApiManagement
         private BicepValue<string> _name;
         private SystemData _systemData;
         private TagDescriptionContractProperties _properties;
-        private ResourceReference<ServiceApis> _parent;
+        private ResourceReference<ApiManagementApi> _parent;
 
         /// <summary> Creates a new ApiTagDescription. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
         /// <param name="resourceVersion"> The resource API version. </param>
-        internal ApiTagDescription(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.ApiManagement/service/apis/tagDescriptions", resourceVersion ?? "2025-09-01-preview")
+        public ApiTagDescription(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.ApiManagement/service/apis/tagDescriptions", resourceVersion ?? "2025-09-01-preview")
         {
         }
 
@@ -66,7 +66,7 @@ namespace Azure.Provisioning.ApiManagement
             }
         }
 
-        /// <summary> Gets the Properties. </summary>
+        /// <summary> Gets or sets the Properties. </summary>
         internal TagDescriptionContractProperties Properties
         {
             get
@@ -74,10 +74,15 @@ namespace Azure.Provisioning.ApiManagement
                 Initialize();
                 return _properties;
             }
+            set
+            {
+                Initialize();
+                AssignOrReplace(ref _properties, value);
+            }
         }
 
         /// <summary> Gets or sets the Parent. </summary>
-        public ServiceApis Parent
+        public ApiManagementApi Parent
         {
             get
             {
@@ -91,48 +96,88 @@ namespace Azure.Provisioning.ApiManagement
             }
         }
 
-        /// <summary> Gets the Description. </summary>
+        /// <summary> Gets or sets the Description. </summary>
         public BicepValue<string> Description
         {
             get
             {
                 return Properties is null ? default : Properties.Description;
             }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new TagDescriptionContractProperties();
+                }
+                Properties.Description = value;
+            }
         }
 
-        /// <summary> Gets the ExternalDocsUri. </summary>
+        /// <summary> Gets or sets the ExternalDocsUri. </summary>
         public BicepValue<Uri> ExternalDocsUri
         {
             get
             {
                 return Properties is null ? default : Properties.ExternalDocsUri;
             }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new TagDescriptionContractProperties();
+                }
+                Properties.ExternalDocsUri = value;
+            }
         }
 
-        /// <summary> Gets the ExternalDocsDescription. </summary>
+        /// <summary> Gets or sets the ExternalDocsDescription. </summary>
         public BicepValue<string> ExternalDocsDescription
         {
             get
             {
                 return Properties is null ? default : Properties.ExternalDocsDescription;
             }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new TagDescriptionContractProperties();
+                }
+                Properties.ExternalDocsDescription = value;
+            }
         }
 
-        /// <summary> Gets the TagId. </summary>
+        /// <summary> Gets or sets the TagId. </summary>
         public BicepValue<string> TagId
         {
             get
             {
                 return Properties is null ? default : Properties.TagId;
             }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new TagDescriptionContractProperties();
+                }
+                Properties.TagId = value;
+            }
         }
 
-        /// <summary> Gets the DisplayName. </summary>
+        /// <summary> Gets or sets the DisplayName. </summary>
         public BicepValue<string> DisplayName
         {
             get
             {
                 return Properties is null ? default : Properties.DisplayName;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new TagDescriptionContractProperties();
+                }
+                Properties.DisplayName = value;
             }
         }
 
@@ -144,7 +189,7 @@ namespace Azure.Provisioning.ApiManagement
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _properties = DefineModelProperty<TagDescriptionContractProperties>(nameof(Properties), new string[] { "properties" });
-            _parent = DefineResource<ServiceApis>(nameof(Parent), new string[] { "parent" }, isRequired: true);
+            _parent = DefineResource<ApiManagementApi>(nameof(Parent), new string[] { "parent" });
             DefineAdditionalProperties();
         }
 

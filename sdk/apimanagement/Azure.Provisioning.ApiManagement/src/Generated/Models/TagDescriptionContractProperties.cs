@@ -20,7 +20,7 @@ namespace Azure.Provisioning.ApiManagement
         {
         }
 
-        /// <summary> Gets the TagId. </summary>
+        /// <summary> Gets or sets the TagId. </summary>
         public BicepValue<string> TagId
         {
             get
@@ -28,15 +28,25 @@ namespace Azure.Provisioning.ApiManagement
                 Initialize();
                 return _tagId;
             }
+            set
+            {
+                Initialize();
+                _tagId.Assign(value);
+            }
         }
 
-        /// <summary> Gets the DisplayName. </summary>
+        /// <summary> Gets or sets the DisplayName. </summary>
         public BicepValue<string> DisplayName
         {
             get
             {
                 Initialize();
                 return _displayName;
+            }
+            set
+            {
+                Initialize();
+                _displayName.Assign(value);
             }
         }
 

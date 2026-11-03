@@ -7846,7 +7846,6 @@
             "$id": "535",
             "name": "sayHi",
             "isExactName": false,
-            "resourceName": "BasicTypeSpec",
             "doc": "Return hi",
             "accessibility": "public",
             "parameters": [
@@ -8092,7 +8091,6 @@
             "$id": "551",
             "name": "helloAgain",
             "isExactName": false,
-            "resourceName": "BasicTypeSpec",
             "doc": "Return hi again",
             "accessibility": "public",
             "parameters": [
@@ -8380,7 +8378,6 @@
             "$id": "567",
             "name": "noContentType",
             "isExactName": false,
-            "resourceName": "BasicTypeSpec",
             "doc": "Return hi again",
             "accessibility": "public",
             "parameters": [
@@ -8674,7 +8671,6 @@
             "$id": "583",
             "name": "helloDemo2",
             "isExactName": false,
-            "resourceName": "BasicTypeSpec",
             "doc": "Return hi in demo2",
             "accessibility": "public",
             "parameters": [
@@ -8776,7 +8772,6 @@
             "$id": "587",
             "name": "createLiteral",
             "isExactName": false,
-            "resourceName": "BasicTypeSpec",
             "doc": "Create with literal value",
             "accessibility": "public",
             "parameters": [
@@ -8971,7 +8966,6 @@
             "$id": "595",
             "name": "helloLiteral",
             "isExactName": false,
-            "resourceName": "BasicTypeSpec",
             "doc": "Send literal parameters",
             "accessibility": "public",
             "parameters": [
@@ -9196,7 +9190,6 @@
             "$id": "605",
             "name": "topAction",
             "isExactName": false,
-            "resourceName": "BasicTypeSpec",
             "doc": "top level method",
             "accessibility": "public",
             "parameters": [
@@ -9365,7 +9358,6 @@
             "$id": "615",
             "name": "topAction2",
             "isExactName": false,
-            "resourceName": "BasicTypeSpec",
             "doc": "top level method2",
             "accessibility": "public",
             "parameters": [
@@ -9467,7 +9459,6 @@
             "$id": "619",
             "name": "patchAction",
             "isExactName": false,
-            "resourceName": "BasicTypeSpec",
             "doc": "top level patch",
             "accessibility": "public",
             "parameters": [
@@ -9662,7 +9653,6 @@
             "$id": "627",
             "name": "anonymousBody",
             "isExactName": false,
-            "resourceName": "BasicTypeSpec",
             "doc": "body parameter without body decorator",
             "accessibility": "public",
             "parameters": [
@@ -10208,7 +10198,6 @@
             "$id": "661",
             "name": "friendlyModel",
             "isExactName": false,
-            "resourceName": "BasicTypeSpec",
             "doc": "Model can have its friendly name",
             "accessibility": "public",
             "parameters": [
@@ -10407,7 +10396,6 @@
             "$id": "670",
             "name": "addTimeHeader",
             "isExactName": false,
-            "resourceName": "BasicTypeSpec",
             "accessibility": "public",
             "parameters": [
               {
@@ -10518,7 +10506,6 @@
             "$id": "678",
             "name": "projectedNameModel",
             "isExactName": false,
-            "resourceName": "BasicTypeSpec",
             "doc": "Model can have its projected name",
             "accessibility": "public",
             "parameters": [
@@ -10718,7 +10705,6 @@
             "$id": "687",
             "name": "returnsAnonymousModel",
             "isExactName": false,
-            "resourceName": "BasicTypeSpec",
             "doc": "return anonymous model",
             "accessibility": "public",
             "parameters": [
@@ -10820,7 +10806,6 @@
             "$id": "691",
             "name": "getUnknownValue",
             "isExactName": false,
-            "resourceName": "BasicTypeSpec",
             "doc": "get extensible enum",
             "accessibility": "public",
             "parameters": [
@@ -10918,7 +10903,6 @@
             "$id": "695",
             "name": "internalProtocol",
             "isExactName": false,
-            "resourceName": "BasicTypeSpec",
             "doc": "When set protocol false and convenient true, then the protocol method should be internal",
             "accessibility": "public",
             "parameters": [
@@ -11113,7 +11097,6 @@
             "$id": "703",
             "name": "stillConvenient",
             "isExactName": false,
-            "resourceName": "BasicTypeSpec",
             "doc": "When set protocol false and convenient true, the convenient method should be generated even it has the same signature as protocol one",
             "accessibility": "public",
             "parameters": [],
@@ -11159,7 +11142,6 @@
             "$id": "705",
             "name": "headAsBoolean",
             "isExactName": false,
-            "resourceName": "BasicTypeSpec",
             "doc": "head as boolean.",
             "accessibility": "public",
             "parameters": [
@@ -11258,7 +11240,6 @@
             "$id": "711",
             "name": "ListWithNextLink",
             "isExactName": false,
-            "resourceName": "BasicTypeSpec",
             "doc": "List things with nextlink",
             "accessibility": "public",
             "parameters": [
@@ -11376,7 +11357,6 @@
             "$id": "715",
             "name": "ListWithStringNextLink",
             "isExactName": false,
-            "resourceName": "BasicTypeSpec",
             "doc": "List things with nextlink",
             "accessibility": "public",
             "parameters": [
@@ -11494,7 +11474,6 @@
             "$id": "719",
             "name": "ListWithHeaderNextLink",
             "isExactName": false,
-            "resourceName": "BasicTypeSpec",
             "doc": "List things with nextlink",
             "accessibility": "public",
             "parameters": [
@@ -11624,7 +11603,6 @@
             "$id": "724",
             "name": "ListWithHeaderNextLinkWithMaxPage",
             "isExactName": false,
-            "resourceName": "BasicTypeSpec",
             "doc": "List things with nextlink",
             "accessibility": "public",
             "parameters": [
@@ -11804,7 +11782,6 @@
             "$id": "733",
             "name": "ListWithContinuationToken",
             "isExactName": false,
-            "resourceName": "BasicTypeSpec",
             "doc": "List things with continuation token",
             "accessibility": "public",
             "parameters": [
@@ -11972,7 +11949,6 @@
             "$id": "741",
             "name": "ListWithContinuationTokenWithMaxPage",
             "isExactName": false,
-            "resourceName": "BasicTypeSpec",
             "doc": "List things with continuation token",
             "accessibility": "public",
             "parameters": [
@@ -12190,7 +12166,6 @@
             "$id": "753",
             "name": "ListWithContinuationTokenHeaderResponse",
             "isExactName": false,
-            "resourceName": "BasicTypeSpec",
             "doc": "List things with continuation token header response",
             "accessibility": "public",
             "parameters": [
@@ -12370,7 +12345,6 @@
             "$id": "762",
             "name": "ListWithPaging",
             "isExactName": false,
-            "resourceName": "BasicTypeSpec",
             "doc": "List things with paging",
             "accessibility": "public",
             "parameters": [
@@ -12481,7 +12455,6 @@
             "$id": "766",
             "name": "ConditionalRequest",
             "isExactName": false,
-            "resourceName": "BasicTypeSpec",
             "doc": "A sample operation with conditional requests",
             "accessibility": "public",
             "parameters": [
@@ -12625,7 +12598,6 @@
             "$id": "776",
             "name": "ConditionalRequestDate",
             "isExactName": false,
-            "resourceName": "BasicTypeSpec",
             "doc": "A sample operation with conditional requests",
             "accessibility": "public",
             "parameters": [
@@ -12817,7 +12789,6 @@
             "$id": "790",
             "name": "MultipartRequest",
             "isExactName": false,
-            "resourceName": "BasicTypeSpec",
             "doc": "A sample operation with multipart request",
             "accessibility": "public",
             "parameters": [
@@ -12952,7 +12923,6 @@
             "$id": "796",
             "name": "CreateDataFactoryModel",
             "isExactName": false,
-            "resourceName": "BasicTypeSpec",
             "doc": "Create a model with DataFactoryElement properties",
             "accessibility": "public",
             "parameters": [
@@ -13147,7 +13117,6 @@
             "$id": "804",
             "name": "GetDataFactoryModel",
             "isExactName": false,
-            "resourceName": "BasicTypeSpec",
             "doc": "Get a model with DataFactoryElement properties",
             "accessibility": "public",
             "parameters": [
@@ -13300,7 +13269,6 @@
             "$id": "812",
             "name": "GetXmlAdvancedModel",
             "isExactName": false,
-            "resourceName": "BasicTypeSpec",
             "doc": "Get an advanced XML model with various property types",
             "accessibility": "public",
             "parameters": [
@@ -13410,7 +13378,6 @@
             "$id": "816",
             "name": "UpdateXmlAdvancedModel",
             "isExactName": false,
-            "resourceName": "BasicTypeSpec",
             "doc": "Update an advanced XML model with various property types",
             "accessibility": "public",
             "parameters": [
@@ -13610,7 +13577,6 @@
             "$id": "824",
             "name": "uploadCat",
             "isExactName": false,
-            "resourceName": "BasicTypeSpec",
             "accessibility": "public",
             "parameters": [
               {
@@ -13743,7 +13709,6 @@
             "$id": "830",
             "name": "sendJsonLines",
             "isExactName": false,
-            "resourceName": "BasicTypeSpec",
             "accessibility": "public",
             "parameters": [
               {
@@ -13918,7 +13883,6 @@
             "$id": "839",
             "name": "receiveJsonLines",
             "isExactName": false,
-            "resourceName": "BasicTypeSpec",
             "accessibility": "public",
             "parameters": [
               {
@@ -14046,7 +14010,6 @@
             "$id": "845",
             "name": "receiveSse",
             "isExactName": false,
-            "resourceName": "BasicTypeSpec",
             "accessibility": "public",
             "parameters": [
               {
@@ -14185,7 +14148,6 @@
             "$id": "852",
             "name": "getOptionalResponse",
             "isExactName": false,
-            "resourceName": "BasicTypeSpec",
             "accessibility": "public",
             "parameters": [
               {
@@ -14293,7 +14255,6 @@
             "$id": "856",
             "name": "roundTripResourceIdentifiers",
             "isExactName": false,
-            "resourceName": "BasicTypeSpec",
             "accessibility": "public",
             "parameters": [
               {
@@ -14675,7 +14636,6 @@
             "$id": "882",
             "name": "getResourceIdentifiersXml",
             "isExactName": false,
-            "resourceName": "BasicTypeSpec",
             "accessibility": "public",
             "parameters": [
               {
@@ -14823,7 +14783,6 @@
                 "$id": "889",
                 "name": "getTree",
                 "isExactName": false,
-                "resourceName": "PlantOperations",
                 "doc": "Get a tree as a plant",
                 "accessibility": "public",
                 "parameters": [
@@ -14933,7 +14892,6 @@
                 "$id": "893",
                 "name": "getTreeAsJson",
                 "isExactName": false,
-                "resourceName": "PlantOperations",
                 "doc": "Get a tree as a plant",
                 "accessibility": "public",
                 "parameters": [
@@ -15043,7 +15001,6 @@
                 "$id": "897",
                 "name": "updateTree",
                 "isExactName": false,
-                "resourceName": "PlantOperations",
                 "doc": "Update a tree as a plant",
                 "accessibility": "public",
                 "parameters": [
@@ -15244,7 +15201,6 @@
                 "$id": "905",
                 "name": "updateTreeAsJson",
                 "isExactName": false,
-                "resourceName": "PlantOperations",
                 "doc": "Update a tree as a plant",
                 "accessibility": "public",
                 "parameters": [

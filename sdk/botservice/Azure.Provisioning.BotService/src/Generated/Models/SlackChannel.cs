@@ -18,13 +18,18 @@ namespace Azure.Provisioning.BotService
             ChannelName.Assign("SlackChannel");
         }
 
-        /// <summary> Gets the Properties. </summary>
+        /// <summary> Gets or sets the Properties. </summary>
         public SlackChannelProperties Properties
         {
             get
             {
                 Initialize();
                 return _properties;
+            }
+            set
+            {
+                Initialize();
+                AssignOrReplace(ref _properties, value);
             }
         }
 

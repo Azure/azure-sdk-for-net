@@ -20,7 +20,7 @@ namespace Azure.Provisioning.Sql
         private BicepValue<string> _name;
         private SystemData _systemData;
         private JobStepProperties _properties;
-        private ResourceReference<JobsVersions> _parent;
+        private ResourceReference<SqlServerJobVersion> _parent;
 
         /// <summary> Creates a new SqlServerJobVersionStep. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -80,7 +80,7 @@ namespace Azure.Provisioning.Sql
         }
 
         /// <summary> Gets or sets the Parent. </summary>
-        public JobsVersions Parent
+        public SqlServerJobVersion Parent
         {
             get
             {
@@ -204,7 +204,7 @@ namespace Azure.Provisioning.Sql
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _properties = DefineModelProperty<JobStepProperties>(nameof(Properties), new string[] { "properties" });
-            _parent = DefineResource<JobsVersions>(nameof(Parent), new string[] { "parent" }, isRequired: true);
+            _parent = DefineResource<SqlServerJobVersion>(nameof(Parent), new string[] { "parent" });
             DefineAdditionalProperties();
         }
 

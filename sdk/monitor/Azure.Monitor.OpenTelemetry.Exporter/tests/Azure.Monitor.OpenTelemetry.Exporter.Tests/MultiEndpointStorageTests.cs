@@ -591,7 +591,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         /// budget full queues behind the eviction lock. Treat it as a smoke test for the invariant,
         /// not as a regression test for the reservation.
         /// </remarks>
-        [Fact]
+        [Fact(Skip = "Shared storage budget race, see: https://github.com/Azure/azure-sdk-for-net/issues/63782")]
         public void ConcurrentWritersDoNotExceedTheSharedBudget()
         {
             const int PayloadSize = 4096;

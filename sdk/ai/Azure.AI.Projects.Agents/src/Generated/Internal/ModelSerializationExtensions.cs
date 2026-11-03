@@ -6,6 +6,7 @@ using System;
 using System.Buffers;
 using System.Buffers.Text;
 using System.ClientModel.Primitives;
+using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
@@ -299,7 +300,7 @@ namespace Azure.AI.Projects.Agents
                     }
                     writer.WriteEndObject();
                     break;
-                case IEnumerable<object> objectEnumerable:
+                case IEnumerable objectEnumerable:
                     writer.WriteStartArray();
                     foreach (var item in objectEnumerable)
                     {

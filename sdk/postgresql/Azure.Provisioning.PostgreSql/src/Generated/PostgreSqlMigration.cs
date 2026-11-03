@@ -234,30 +234,30 @@ namespace Azure.Provisioning.PostgreSql
             }
         }
 
-        /// <summary> Gets the SourceDBServerMetadata. </summary>
-        public PostgreSqlServerMetadata SourceDBServerMetadata
+        /// <summary> Gets the SourceDbServerMetadata. </summary>
+        public PostgreSqlServerMetadata SourceDbServerMetadata
         {
             get
             {
-                return Properties is null ? default : Properties.SourceDBServerMetadata;
+                return Properties is null ? default : Properties.SourceDbServerMetadata;
             }
         }
 
-        /// <summary> Gets the TargetDBServerMetadata. </summary>
-        public PostgreSqlServerMetadata TargetDBServerMetadata
+        /// <summary> Gets the TargetDbServerMetadata. </summary>
+        public PostgreSqlServerMetadata TargetDbServerMetadata
         {
             get
             {
-                return Properties is null ? default : Properties.TargetDBServerMetadata;
+                return Properties is null ? default : Properties.TargetDbServerMetadata;
             }
         }
 
-        /// <summary> Gets or sets the SourceDBServerResourceId. </summary>
-        public BicepValue<ResourceIdentifier> SourceDBServerResourceId
+        /// <summary> Gets or sets the SourceDbServerResourceId. </summary>
+        public BicepValue<ResourceIdentifier> SourceDbServerResourceId
         {
             get
             {
-                return Properties is null ? default : Properties.SourceDBServerResourceId;
+                return Properties is null ? default : Properties.SourceDbServerResourceId;
             }
             set
             {
@@ -265,16 +265,16 @@ namespace Azure.Provisioning.PostgreSql
                 {
                     Properties = new MigrationProperties();
                 }
-                Properties.SourceDBServerResourceId = value;
+                Properties.SourceDbServerResourceId = value;
             }
         }
 
-        /// <summary> Gets or sets the SourceDBServerFullyQualifiedDomainName. </summary>
-        public BicepValue<string> SourceDBServerFullyQualifiedDomainName
+        /// <summary> Gets or sets the SourceDbServerFullyQualifiedDomainName. </summary>
+        public BicepValue<string> SourceDbServerFullyQualifiedDomainName
         {
             get
             {
-                return Properties is null ? default : Properties.SourceDBServerFullyQualifiedDomainName;
+                return Properties is null ? default : Properties.SourceDbServerFullyQualifiedDomainName;
             }
             set
             {
@@ -282,12 +282,12 @@ namespace Azure.Provisioning.PostgreSql
                 {
                     Properties = new MigrationProperties();
                 }
-                Properties.SourceDBServerFullyQualifiedDomainName = value;
+                Properties.SourceDbServerFullyQualifiedDomainName = value;
             }
         }
 
-        /// <summary> Gets the TargetDBServerResourceId. </summary>
-        public BicepValue<ResourceIdentifier> TargetDBServerResourceId
+        /// <summary> Gets the TargetDbServerResourceId. </summary>
+        public BicepValue<ResourceIdentifier> TargetDbServerResourceId
         {
             get
             {
@@ -295,16 +295,16 @@ namespace Azure.Provisioning.PostgreSql
                 {
                     Properties = new MigrationProperties();
                 }
-                return Properties.TargetDBServerResourceId;
+                return Properties.TargetDbServerResourceId;
             }
         }
 
-        /// <summary> Gets or sets the TargetDBServerFullyQualifiedDomainName. </summary>
-        public BicepValue<string> TargetDBServerFullyQualifiedDomainName
+        /// <summary> Gets or sets the TargetDbServerFullyQualifiedDomainName. </summary>
+        public BicepValue<string> TargetDbServerFullyQualifiedDomainName
         {
             get
             {
-                return Properties is null ? default : Properties.TargetDBServerFullyQualifiedDomainName;
+                return Properties is null ? default : Properties.TargetDbServerFullyQualifiedDomainName;
             }
             set
             {
@@ -312,7 +312,7 @@ namespace Azure.Provisioning.PostgreSql
                 {
                     Properties = new MigrationProperties();
                 }
-                Properties.TargetDBServerFullyQualifiedDomainName = value;
+                Properties.TargetDbServerFullyQualifiedDomainName = value;
             }
         }
 
@@ -350,12 +350,12 @@ namespace Azure.Provisioning.PostgreSql
             }
         }
 
-        /// <summary> Gets or sets the SetupLogicalReplicationOnSourceDBIfNeeded. </summary>
-        public BicepValue<PostgreSqlMigrationLogicalReplicationOnSourceDb> SetupLogicalReplicationOnSourceDBIfNeeded
+        /// <summary> Gets or sets the SetupLogicalReplicationOnSourceDbIfNeeded. </summary>
+        public BicepValue<PostgreSqlMigrationLogicalReplicationOnSourceDb> SetupLogicalReplicationOnSourceDbIfNeeded
         {
             get
             {
-                return Properties is null ? default : Properties.SetupLogicalReplicationOnSourceDBIfNeeded;
+                return Properties is null ? default : Properties.SetupLogicalReplicationOnSourceDbIfNeeded;
             }
             set
             {
@@ -363,7 +363,7 @@ namespace Azure.Provisioning.PostgreSql
                 {
                     Properties = new MigrationProperties();
                 }
-                Properties.SetupLogicalReplicationOnSourceDBIfNeeded = value;
+                Properties.SetupLogicalReplicationOnSourceDbIfNeeded = value;
             }
         }
 
@@ -530,7 +530,7 @@ namespace Azure.Provisioning.PostgreSql
             _tags = DefineDictionaryProperty<string>(nameof(Tags), new string[] { "tags" });
             _location = DefineProperty<AzureLocation>(nameof(Location), new string[] { "location" }, isRequired: true);
             _properties = DefineModelProperty<MigrationProperties>(nameof(Properties), new string[] { "properties" });
-            _parent = DefineResource<PostgreSqlFlexibleServer>(nameof(Parent), new string[] { "parent" }, isRequired: true);
+            _parent = DefineResource<PostgreSqlFlexibleServer>("Parent", new string[] { "parent" }, isRequired: true);
             DefineAdditionalProperties();
         }
 

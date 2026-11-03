@@ -81,7 +81,7 @@ namespace Azure.Provisioning.CosmosDB
             }
         }
 
-        /// <summary> Gets the IPRules. </summary>
+        /// <summary> Gets or sets the IPRules. </summary>
         public BicepList<CosmosDBIPAddressOrRange> IPRules
         {
             get
@@ -89,9 +89,14 @@ namespace Azure.Provisioning.CosmosDB
                 Initialize();
                 return _ipRules;
             }
+            set
+            {
+                Initialize();
+                _ipRules.Assign(value);
+            }
         }
 
-        /// <summary> Gets the IsVirtualNetworkFilterEnabled. </summary>
+        /// <summary> Gets or sets the IsVirtualNetworkFilterEnabled. </summary>
         public BicepValue<bool> IsVirtualNetworkFilterEnabled
         {
             get
@@ -99,9 +104,14 @@ namespace Azure.Provisioning.CosmosDB
                 Initialize();
                 return _isVirtualNetworkFilterEnabled;
             }
+            set
+            {
+                Initialize();
+                _isVirtualNetworkFilterEnabled.Assign(value);
+            }
         }
 
-        /// <summary> Gets the EnableAutomaticFailover. </summary>
+        /// <summary> Gets or sets the EnableAutomaticFailover. </summary>
         public BicepValue<bool> EnableAutomaticFailover
         {
             get
@@ -109,9 +119,14 @@ namespace Azure.Provisioning.CosmosDB
                 Initialize();
                 return _enableAutomaticFailover;
             }
+            set
+            {
+                Initialize();
+                _enableAutomaticFailover.Assign(value);
+            }
         }
 
-        /// <summary> Gets the ConsistencyPolicy. </summary>
+        /// <summary> Gets or sets the ConsistencyPolicy. </summary>
         public ConsistencyPolicy ConsistencyPolicy
         {
             get
@@ -119,15 +134,25 @@ namespace Azure.Provisioning.CosmosDB
                 Initialize();
                 return _consistencyPolicy;
             }
+            set
+            {
+                Initialize();
+                AssignOrReplace(ref _consistencyPolicy, value);
+            }
         }
 
-        /// <summary> Gets the Capabilities. </summary>
+        /// <summary> Gets or sets the Capabilities. </summary>
         public BicepList<CosmosDBAccountCapability> Capabilities
         {
             get
             {
                 Initialize();
                 return _capabilities;
+            }
+            set
+            {
+                Initialize();
+                _capabilities.Assign(value);
             }
         }
 
@@ -161,7 +186,7 @@ namespace Azure.Provisioning.CosmosDB
             }
         }
 
-        /// <summary> Gets the VirtualNetworkRules. </summary>
+        /// <summary> Gets or sets the VirtualNetworkRules. </summary>
         public BicepList<CosmosDBVirtualNetworkRule> VirtualNetworkRules
         {
             get
@@ -169,9 +194,14 @@ namespace Azure.Provisioning.CosmosDB
                 Initialize();
                 return _virtualNetworkRules;
             }
+            set
+            {
+                Initialize();
+                _virtualNetworkRules.Assign(value);
+            }
         }
 
-        /// <summary> Gets the EnableMultipleWriteLocations. </summary>
+        /// <summary> Gets or sets the EnableMultipleWriteLocations. </summary>
         public BicepValue<bool> EnableMultipleWriteLocations
         {
             get
@@ -179,9 +209,14 @@ namespace Azure.Provisioning.CosmosDB
                 Initialize();
                 return _enableMultipleWriteLocations;
             }
+            set
+            {
+                Initialize();
+                _enableMultipleWriteLocations.Assign(value);
+            }
         }
 
-        /// <summary> Gets the EnableCassandraConnector. </summary>
+        /// <summary> Gets or sets the EnableCassandraConnector. </summary>
         public BicepValue<bool> EnableCassandraConnector
         {
             get
@@ -189,9 +224,14 @@ namespace Azure.Provisioning.CosmosDB
                 Initialize();
                 return _enableCassandraConnector;
             }
+            set
+            {
+                Initialize();
+                _enableCassandraConnector.Assign(value);
+            }
         }
 
-        /// <summary> Gets the ConnectorOffer. </summary>
+        /// <summary> Gets or sets the ConnectorOffer. </summary>
         public BicepValue<ConnectorOffer> ConnectorOffer
         {
             get
@@ -199,9 +239,14 @@ namespace Azure.Provisioning.CosmosDB
                 Initialize();
                 return _connectorOffer;
             }
+            set
+            {
+                Initialize();
+                _connectorOffer.Assign(value);
+            }
         }
 
-        /// <summary> Gets the DisableKeyBasedMetadataWriteAccess. </summary>
+        /// <summary> Gets or sets the DisableKeyBasedMetadataWriteAccess. </summary>
         public BicepValue<bool> DisableKeyBasedMetadataWriteAccess
         {
             get
@@ -209,9 +254,14 @@ namespace Azure.Provisioning.CosmosDB
                 Initialize();
                 return _disableKeyBasedMetadataWriteAccess;
             }
+            set
+            {
+                Initialize();
+                _disableKeyBasedMetadataWriteAccess.Assign(value);
+            }
         }
 
-        /// <summary> Gets the KeyVaultKeyUri. </summary>
+        /// <summary> Gets or sets the KeyVaultKeyUri. </summary>
         public BicepValue<Uri> KeyVaultKeyUri
         {
             get
@@ -219,9 +269,14 @@ namespace Azure.Provisioning.CosmosDB
                 Initialize();
                 return _keyVaultKeyUri;
             }
+            set
+            {
+                Initialize();
+                _keyVaultKeyUri.Assign(value);
+            }
         }
 
-        /// <summary> Gets the DefaultIdentity. </summary>
+        /// <summary> Gets or sets the DefaultIdentity. </summary>
         public BicepValue<string> DefaultIdentity
         {
             get
@@ -229,9 +284,14 @@ namespace Azure.Provisioning.CosmosDB
                 Initialize();
                 return _defaultIdentity;
             }
+            set
+            {
+                Initialize();
+                _defaultIdentity.Assign(value);
+            }
         }
 
-        /// <summary> Gets the PublicNetworkAccess. </summary>
+        /// <summary> Gets or sets the PublicNetworkAccess. </summary>
         public BicepValue<CosmosDBPublicNetworkAccess> PublicNetworkAccess
         {
             get
@@ -239,9 +299,14 @@ namespace Azure.Provisioning.CosmosDB
                 Initialize();
                 return _publicNetworkAccess;
             }
+            set
+            {
+                Initialize();
+                _publicNetworkAccess.Assign(value);
+            }
         }
 
-        /// <summary> Gets the IsFreeTierEnabled. </summary>
+        /// <summary> Gets or sets the IsFreeTierEnabled. </summary>
         public BicepValue<bool> IsFreeTierEnabled
         {
             get
@@ -249,9 +314,14 @@ namespace Azure.Provisioning.CosmosDB
                 Initialize();
                 return _isFreeTierEnabled;
             }
+            set
+            {
+                Initialize();
+                _isFreeTierEnabled.Assign(value);
+            }
         }
 
-        /// <summary> Gets the ApiProperties. </summary>
+        /// <summary> Gets or sets the ApiProperties. </summary>
         internal ApiProperties ApiProperties
         {
             get
@@ -259,9 +329,14 @@ namespace Azure.Provisioning.CosmosDB
                 Initialize();
                 return _apiProperties;
             }
+            set
+            {
+                Initialize();
+                AssignOrReplace(ref _apiProperties, value);
+            }
         }
 
-        /// <summary> Gets the IsAnalyticalStorageEnabled. </summary>
+        /// <summary> Gets or sets the IsAnalyticalStorageEnabled. </summary>
         public BicepValue<bool> IsAnalyticalStorageEnabled
         {
             get
@@ -269,15 +344,25 @@ namespace Azure.Provisioning.CosmosDB
                 Initialize();
                 return _isAnalyticalStorageEnabled;
             }
+            set
+            {
+                Initialize();
+                _isAnalyticalStorageEnabled.Assign(value);
+            }
         }
 
-        /// <summary> Gets the AnalyticalStorageConfiguration. </summary>
+        /// <summary> Gets or sets the AnalyticalStorageConfiguration. </summary>
         internal AnalyticalStorageConfiguration AnalyticalStorageConfiguration
         {
             get
             {
                 Initialize();
                 return _analyticalStorageConfiguration;
+            }
+            set
+            {
+                Initialize();
+                AssignOrReplace(ref _analyticalStorageConfiguration, value);
             }
         }
 
@@ -291,7 +376,7 @@ namespace Azure.Provisioning.CosmosDB
             }
         }
 
-        /// <summary> Gets the CreateMode. </summary>
+        /// <summary> Gets or sets the CreateMode. </summary>
         public BicepValue<CosmosDBAccountCreateMode> CreateMode
         {
             get
@@ -299,9 +384,14 @@ namespace Azure.Provisioning.CosmosDB
                 Initialize();
                 return _createMode;
             }
+            set
+            {
+                Initialize();
+                _createMode.Assign(value);
+            }
         }
 
-        /// <summary> Gets the RestoreParameters. </summary>
+        /// <summary> Gets or sets the RestoreParameters. </summary>
         public CosmosDBAccountRestoreParameters RestoreParameters
         {
             get
@@ -309,9 +399,14 @@ namespace Azure.Provisioning.CosmosDB
                 Initialize();
                 return _restoreParameters;
             }
+            set
+            {
+                Initialize();
+                AssignOrReplace(ref _restoreParameters, value);
+            }
         }
 
-        /// <summary> Gets the BackupPolicy. </summary>
+        /// <summary> Gets or sets the BackupPolicy. </summary>
         public CosmosDBAccountBackupPolicy BackupPolicy
         {
             get
@@ -319,9 +414,14 @@ namespace Azure.Provisioning.CosmosDB
                 Initialize();
                 return _backupPolicy;
             }
+            set
+            {
+                Initialize();
+                AssignOrReplace(ref _backupPolicy, value);
+            }
         }
 
-        /// <summary> Gets the Cors. </summary>
+        /// <summary> Gets or sets the Cors. </summary>
         public BicepList<CosmosDBAccountCorsPolicy> Cors
         {
             get
@@ -329,9 +429,14 @@ namespace Azure.Provisioning.CosmosDB
                 Initialize();
                 return _cors;
             }
+            set
+            {
+                Initialize();
+                _cors.Assign(value);
+            }
         }
 
-        /// <summary> Gets the NetworkAclBypass. </summary>
+        /// <summary> Gets or sets the NetworkAclBypass. </summary>
         public BicepValue<NetworkAclBypass> NetworkAclBypass
         {
             get
@@ -339,9 +444,14 @@ namespace Azure.Provisioning.CosmosDB
                 Initialize();
                 return _networkAclBypass;
             }
+            set
+            {
+                Initialize();
+                _networkAclBypass.Assign(value);
+            }
         }
 
-        /// <summary> Gets the NetworkAclBypassResourceIds. </summary>
+        /// <summary> Gets or sets the NetworkAclBypassResourceIds. </summary>
         public BicepList<ResourceIdentifier> NetworkAclBypassResourceIds
         {
             get
@@ -349,9 +459,14 @@ namespace Azure.Provisioning.CosmosDB
                 Initialize();
                 return _networkAclBypassResourceIds;
             }
+            set
+            {
+                Initialize();
+                _networkAclBypassResourceIds.Assign(value);
+            }
         }
 
-        /// <summary> Gets the DisableLocalAuth. </summary>
+        /// <summary> Gets or sets the DisableLocalAuth. </summary>
         public BicepValue<bool> DisableLocalAuth
         {
             get
@@ -359,15 +474,25 @@ namespace Azure.Provisioning.CosmosDB
                 Initialize();
                 return _disableLocalAuth;
             }
+            set
+            {
+                Initialize();
+                _disableLocalAuth.Assign(value);
+            }
         }
 
-        /// <summary> Gets the Capacity. </summary>
+        /// <summary> Gets or sets the Capacity. </summary>
         internal CosmosDBAccountCapacity Capacity
         {
             get
             {
                 Initialize();
                 return _capacity;
+            }
+            set
+            {
+                Initialize();
+                AssignOrReplace(ref _capacity, value);
             }
         }
 
@@ -381,7 +506,7 @@ namespace Azure.Provisioning.CosmosDB
             }
         }
 
-        /// <summary> Gets the EnablePartitionMerge. </summary>
+        /// <summary> Gets or sets the EnablePartitionMerge. </summary>
         public BicepValue<bool> EnablePartitionMerge
         {
             get
@@ -389,9 +514,14 @@ namespace Azure.Provisioning.CosmosDB
                 Initialize();
                 return _enablePartitionMerge;
             }
+            set
+            {
+                Initialize();
+                _enablePartitionMerge.Assign(value);
+            }
         }
 
-        /// <summary> Gets the EnableBurstCapacity. </summary>
+        /// <summary> Gets or sets the EnableBurstCapacity. </summary>
         public BicepValue<bool> EnableBurstCapacity
         {
             get
@@ -399,9 +529,14 @@ namespace Azure.Provisioning.CosmosDB
                 Initialize();
                 return _enableBurstCapacity;
             }
+            set
+            {
+                Initialize();
+                _enableBurstCapacity.Assign(value);
+            }
         }
 
-        /// <summary> Gets the MinimalTlsVersion. </summary>
+        /// <summary> Gets or sets the MinimalTlsVersion. </summary>
         public BicepValue<CosmosDBMinimalTlsVersion> MinimalTlsVersion
         {
             get
@@ -409,15 +544,25 @@ namespace Azure.Provisioning.CosmosDB
                 Initialize();
                 return _minimalTlsVersion;
             }
+            set
+            {
+                Initialize();
+                _minimalTlsVersion.Assign(value);
+            }
         }
 
-        /// <summary> Gets the CustomerManagedKeyStatus. </summary>
+        /// <summary> Gets or sets the CustomerManagedKeyStatus. </summary>
         public BicepValue<string> CustomerManagedKeyStatus
         {
             get
             {
                 Initialize();
                 return _customerManagedKeyStatus;
+            }
+            set
+            {
+                Initialize();
+                _customerManagedKeyStatus.Assign(value);
             }
         }
 
@@ -431,7 +576,7 @@ namespace Azure.Provisioning.CosmosDB
             }
         }
 
-        /// <summary> Gets the EnablePriorityBasedExecution. </summary>
+        /// <summary> Gets or sets the EnablePriorityBasedExecution. </summary>
         public BicepValue<bool> EnablePriorityBasedExecution
         {
             get
@@ -439,9 +584,14 @@ namespace Azure.Provisioning.CosmosDB
                 Initialize();
                 return _enablePriorityBasedExecution;
             }
+            set
+            {
+                Initialize();
+                _enablePriorityBasedExecution.Assign(value);
+            }
         }
 
-        /// <summary> Gets the DefaultPriorityLevel. </summary>
+        /// <summary> Gets or sets the DefaultPriorityLevel. </summary>
         public BicepValue<DefaultPriorityLevel> DefaultPriorityLevel
         {
             get
@@ -449,9 +599,14 @@ namespace Azure.Provisioning.CosmosDB
                 Initialize();
                 return _defaultPriorityLevel;
             }
+            set
+            {
+                Initialize();
+                _defaultPriorityLevel.Assign(value);
+            }
         }
 
-        /// <summary> Gets the EnablePerRegionPerPartitionAutoscale. </summary>
+        /// <summary> Gets or sets the EnablePerRegionPerPartitionAutoscale. </summary>
         public BicepValue<bool> EnablePerRegionPerPartitionAutoscale
         {
             get
@@ -459,9 +614,14 @@ namespace Azure.Provisioning.CosmosDB
                 Initialize();
                 return _enablePerRegionPerPartitionAutoscale;
             }
+            set
+            {
+                Initialize();
+                _enablePerRegionPerPartitionAutoscale.Assign(value);
+            }
         }
 
-        /// <summary> Gets the IsHierarchicalPartitionKeyIdLastLevelEnforced. </summary>
+        /// <summary> Gets or sets the IsHierarchicalPartitionKeyIdLastLevelEnforced. </summary>
         public BicepValue<bool> IsHierarchicalPartitionKeyIdLastLevelEnforced
         {
             get
@@ -469,32 +629,61 @@ namespace Azure.Provisioning.CosmosDB
                 Initialize();
                 return _isHierarchicalPartitionKeyIdLastLevelEnforced;
             }
+            set
+            {
+                Initialize();
+                _isHierarchicalPartitionKeyIdLastLevelEnforced.Assign(value);
+            }
         }
 
-        /// <summary> Gets the ServerVersion. </summary>
+        /// <summary> Gets or sets the ServerVersion. </summary>
         public BicepValue<CosmosDBServerVersion> ApiServerVersion
         {
             get
             {
                 return ApiProperties is null ? default : ApiProperties.ServerVersion;
             }
+            set
+            {
+                if (ApiProperties is null)
+                {
+                    ApiProperties = new ApiProperties();
+                }
+                ApiProperties.ServerVersion = value;
+            }
         }
 
-        /// <summary> Gets the SchemaType. </summary>
+        /// <summary> Gets or sets the SchemaType. </summary>
         public BicepValue<AnalyticalStorageSchemaType> AnalyticalStorageSchemaType
         {
             get
             {
                 return AnalyticalStorageConfiguration is null ? default : AnalyticalStorageConfiguration.SchemaType;
             }
+            set
+            {
+                if (AnalyticalStorageConfiguration is null)
+                {
+                    AnalyticalStorageConfiguration = new AnalyticalStorageConfiguration();
+                }
+                AnalyticalStorageConfiguration.SchemaType = value;
+            }
         }
 
-        /// <summary> Gets the TotalThroughputLimit. </summary>
+        /// <summary> Gets or sets the TotalThroughputLimit. </summary>
         public BicepValue<int> CapacityTotalThroughputLimit
         {
             get
             {
                 return Capacity is null ? default : Capacity.TotalThroughputLimit;
+            }
+            set
+            {
+                if (Capacity is null)
+                {
+                    Capacity = new CosmosDBAccountCapacity();
+                }
+                Capacity.TotalThroughputLimit = value;
             }
         }
 

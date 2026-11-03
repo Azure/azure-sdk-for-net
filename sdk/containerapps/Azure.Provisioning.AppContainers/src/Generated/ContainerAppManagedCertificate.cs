@@ -26,7 +26,7 @@ namespace Azure.Provisioning.AppContainers
         /// <summary> Creates a new ContainerAppManagedCertificate. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
         /// <param name="resourceVersion"> The resource API version. </param>
-        internal ContainerAppManagedCertificate(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.App/managedEnvironments/managedCertificates", resourceVersion ?? "2026-07-01")
+        public ContainerAppManagedCertificate(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.App/managedEnvironments/managedCertificates", resourceVersion ?? "2026-07-01")
         {
         }
 
@@ -65,7 +65,7 @@ namespace Azure.Provisioning.AppContainers
             }
         }
 
-        /// <summary> Gets the Tags. </summary>
+        /// <summary> Gets or sets the Tags. </summary>
         public BicepDictionary<string> Tags
         {
             get
@@ -73,9 +73,14 @@ namespace Azure.Provisioning.AppContainers
                 Initialize();
                 return _tags;
             }
+            set
+            {
+                Initialize();
+                _tags.Assign(value);
+            }
         }
 
-        /// <summary> Gets the Location. </summary>
+        /// <summary> Gets or sets the Location. </summary>
         public BicepValue<AzureLocation> Location
         {
             get
@@ -83,15 +88,25 @@ namespace Azure.Provisioning.AppContainers
                 Initialize();
                 return _location;
             }
+            set
+            {
+                Initialize();
+                _location.Assign(value);
+            }
         }
 
-        /// <summary> Gets the Properties. </summary>
+        /// <summary> Gets or sets the Properties. </summary>
         public ManagedCertificateProperties Properties
         {
             get
             {
                 Initialize();
                 return _properties;
+            }
+            set
+            {
+                Initialize();
+                AssignOrReplace(ref _properties, value);
             }
         }
 
@@ -118,9 +133,9 @@ namespace Azure.Provisioning.AppContainers
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _tags = DefineDictionaryProperty<string>(nameof(Tags), new string[] { "tags" });
-            _location = DefineProperty<AzureLocation>(nameof(Location), new string[] { "location" });
+            _location = DefineProperty<AzureLocation>(nameof(Location), new string[] { "location" }, isRequired: true);
             _properties = DefineModelProperty<ManagedCertificateProperties>(nameof(Properties), new string[] { "properties" });
-            _parent = DefineResource<ContainerAppManagedEnvironment>(nameof(Parent), new string[] { "parent" }, isRequired: true);
+            _parent = DefineResource<ContainerAppManagedEnvironment>(nameof(Parent), new string[] { "parent" });
             DefineAdditionalProperties();
         }
 

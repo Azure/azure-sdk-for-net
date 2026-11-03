@@ -53,7 +53,7 @@ namespace Azure.Provisioning.Storage
             }
         }
 
-        /// <summary> Gets the ImmutabilityPeriodSinceCreationInDays. </summary>
+        /// <summary> Gets or sets the ImmutabilityPeriodSinceCreationInDays. </summary>
         public BicepValue<int> ImmutabilityPeriodSinceCreationInDays
         {
             get
@@ -71,7 +71,7 @@ namespace Azure.Provisioning.Storage
             }
         }
 
-        /// <summary> Gets the AllowProtectedAppendWrites. </summary>
+        /// <summary> Gets or sets the AllowProtectedAppendWrites. </summary>
         public BicepValue<bool> AllowProtectedAppendWrites
         {
             get
@@ -80,7 +80,7 @@ namespace Azure.Provisioning.Storage
             }
         }
 
-        /// <summary> Gets the AllowProtectedAppendWritesAll. </summary>
+        /// <summary> Gets or sets the AllowProtectedAppendWritesAll. </summary>
         public BicepValue<bool> AllowProtectedAppendWritesAll
         {
             get

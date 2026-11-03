@@ -27,7 +27,7 @@ namespace Azure.Provisioning.BotService
         {
         }
 
-        /// <summary> Gets the CognitiveServiceResourceId. </summary>
+        /// <summary> Gets or sets the CognitiveServiceResourceId. </summary>
         public BicepValue<ResourceIdentifier> CognitiveServiceResourceId
         {
             get
@@ -35,9 +35,14 @@ namespace Azure.Provisioning.BotService
                 Initialize();
                 return _cognitiveServiceResourceId;
             }
+            set
+            {
+                Initialize();
+                _cognitiveServiceResourceId.Assign(value);
+            }
         }
 
-        /// <summary> Gets the CognitiveServiceRegion. </summary>
+        /// <summary> Gets or sets the CognitiveServiceRegion. </summary>
         public BicepValue<string> CognitiveServiceRegion
         {
             get
@@ -45,9 +50,14 @@ namespace Azure.Provisioning.BotService
                 Initialize();
                 return _cognitiveServiceRegion;
             }
+            set
+            {
+                Initialize();
+                _cognitiveServiceRegion.Assign(value);
+            }
         }
 
-        /// <summary> Gets the CognitiveServiceSubscriptionKey. </summary>
+        /// <summary> Gets or sets the CognitiveServiceSubscriptionKey. </summary>
         public BicepValue<string> CognitiveServiceSubscriptionKey
         {
             get
@@ -55,9 +65,14 @@ namespace Azure.Provisioning.BotService
                 Initialize();
                 return _cognitiveServiceSubscriptionKey;
             }
+            set
+            {
+                Initialize();
+                _cognitiveServiceSubscriptionKey.Assign(value);
+            }
         }
 
-        /// <summary> Gets the IsEnabled. </summary>
+        /// <summary> Gets or sets the IsEnabled. </summary>
         public BicepValue<bool> IsEnabled
         {
             get
@@ -65,9 +80,14 @@ namespace Azure.Provisioning.BotService
                 Initialize();
                 return _isEnabled;
             }
+            set
+            {
+                Initialize();
+                _isEnabled.Assign(value);
+            }
         }
 
-        /// <summary> Gets the CustomVoiceDeploymentId. </summary>
+        /// <summary> Gets or sets the CustomVoiceDeploymentId. </summary>
         public BicepValue<string> CustomVoiceDeploymentId
         {
             get
@@ -75,9 +95,14 @@ namespace Azure.Provisioning.BotService
                 Initialize();
                 return _customVoiceDeploymentId;
             }
+            set
+            {
+                Initialize();
+                _customVoiceDeploymentId.Assign(value);
+            }
         }
 
-        /// <summary> Gets the CustomSpeechModelId. </summary>
+        /// <summary> Gets or sets the CustomSpeechModelId. </summary>
         public BicepValue<string> CustomSpeechModelId
         {
             get
@@ -85,15 +110,25 @@ namespace Azure.Provisioning.BotService
                 Initialize();
                 return _customSpeechModelId;
             }
+            set
+            {
+                Initialize();
+                _customSpeechModelId.Assign(value);
+            }
         }
 
-        /// <summary> Gets the IsDefaultBotForCogSvcAccount. </summary>
+        /// <summary> Gets or sets the IsDefaultBotForCogSvcAccount. </summary>
         public BicepValue<bool> IsDefaultBotForCogSvcAccount
         {
             get
             {
                 Initialize();
                 return _isDefaultBotForCogSvcAccount;
+            }
+            set
+            {
+                Initialize();
+                _isDefaultBotForCogSvcAccount.Assign(value);
             }
         }
 

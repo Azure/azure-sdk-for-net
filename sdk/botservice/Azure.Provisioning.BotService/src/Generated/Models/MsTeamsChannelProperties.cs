@@ -25,7 +25,7 @@ namespace Azure.Provisioning.BotService
         {
         }
 
-        /// <summary> Gets the IsCallingEnabled. </summary>
+        /// <summary> Gets or sets the IsCallingEnabled. </summary>
         public BicepValue<bool> IsCallingEnabled
         {
             get
@@ -33,9 +33,14 @@ namespace Azure.Provisioning.BotService
                 Initialize();
                 return _isCallingEnabled;
             }
+            set
+            {
+                Initialize();
+                _isCallingEnabled.Assign(value);
+            }
         }
 
-        /// <summary> Gets the CallingWebhook. </summary>
+        /// <summary> Gets or sets the CallingWebhook. </summary>
         public BicepValue<string> CallingWebhook
         {
             get
@@ -43,9 +48,14 @@ namespace Azure.Provisioning.BotService
                 Initialize();
                 return _callingWebhook;
             }
+            set
+            {
+                Initialize();
+                _callingWebhook.Assign(value);
+            }
         }
 
-        /// <summary> Gets the IsEnabled. </summary>
+        /// <summary> Gets or sets the IsEnabled. </summary>
         public BicepValue<bool> IsEnabled
         {
             get
@@ -53,9 +63,14 @@ namespace Azure.Provisioning.BotService
                 Initialize();
                 return _isEnabled;
             }
+            set
+            {
+                Initialize();
+                _isEnabled.Assign(value);
+            }
         }
 
-        /// <summary> Gets the IncomingCallRoute. </summary>
+        /// <summary> Gets or sets the IncomingCallRoute. </summary>
         public BicepValue<string> IncomingCallRoute
         {
             get
@@ -63,9 +78,14 @@ namespace Azure.Provisioning.BotService
                 Initialize();
                 return _incomingCallRoute;
             }
+            set
+            {
+                Initialize();
+                _incomingCallRoute.Assign(value);
+            }
         }
 
-        /// <summary> Gets the DeploymentEnvironment. </summary>
+        /// <summary> Gets or sets the DeploymentEnvironment. </summary>
         public BicepValue<string> DeploymentEnvironment
         {
             get
@@ -73,15 +93,25 @@ namespace Azure.Provisioning.BotService
                 Initialize();
                 return _deploymentEnvironment;
             }
+            set
+            {
+                Initialize();
+                _deploymentEnvironment.Assign(value);
+            }
         }
 
-        /// <summary> Gets the AcceptedTerms. </summary>
+        /// <summary> Gets or sets the AcceptedTerms. </summary>
         public BicepValue<bool> AcceptedTerms
         {
             get
             {
                 Initialize();
                 return _acceptedTerms;
+            }
+            set
+            {
+                Initialize();
+                _acceptedTerms.Assign(value);
             }
         }
 
@@ -91,7 +121,7 @@ namespace Azure.Provisioning.BotService
             base.DefineProvisionableProperties();
             _isCallingEnabled = DefineProperty<bool>(nameof(IsCallingEnabled), new string[] { "enableCalling" });
             _callingWebhook = DefineProperty<string>(nameof(CallingWebhook), new string[] { "callingWebhook" });
-            _isEnabled = DefineProperty<bool>(nameof(IsEnabled), new string[] { "isEnabled" });
+            _isEnabled = DefineProperty<bool>(nameof(IsEnabled), new string[] { "isEnabled" }, isRequired: true);
             _incomingCallRoute = DefineProperty<string>(nameof(IncomingCallRoute), new string[] { "incomingCallRoute" });
             _deploymentEnvironment = DefineProperty<string>(nameof(DeploymentEnvironment), new string[] { "deploymentEnvironment" });
             _acceptedTerms = DefineProperty<bool>(nameof(AcceptedTerms), new string[] { "acceptedTerms" });

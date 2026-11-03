@@ -24,13 +24,18 @@ namespace Azure.Provisioning.BotService
         {
         }
 
-        /// <summary> Gets the AlexaSkillId. </summary>
+        /// <summary> Gets or sets the AlexaSkillId. </summary>
         public BicepValue<string> AlexaSkillId
         {
             get
             {
                 Initialize();
                 return _alexaSkillId;
+            }
+            set
+            {
+                Initialize();
+                _alexaSkillId.Assign(value);
             }
         }
 
@@ -54,7 +59,7 @@ namespace Azure.Provisioning.BotService
             }
         }
 
-        /// <summary> Gets the IsEnabled. </summary>
+        /// <summary> Gets or sets the IsEnabled. </summary>
         public BicepValue<bool> IsEnabled
         {
             get
@@ -62,16 +67,21 @@ namespace Azure.Provisioning.BotService
                 Initialize();
                 return _isEnabled;
             }
+            set
+            {
+                Initialize();
+                _isEnabled.Assign(value);
+            }
         }
 
         /// <summary> Define all the provisionable properties for AlexaChannelProperties. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            _alexaSkillId = DefineProperty<string>(nameof(AlexaSkillId), new string[] { "alexaSkillId" });
+            _alexaSkillId = DefineProperty<string>(nameof(AlexaSkillId), new string[] { "alexaSkillId" }, isRequired: true);
             _uriFragment = DefineProperty<string>(nameof(UriFragment), new string[] { "urlFragment" }, isOutput: true);
             _serviceEndpointUri = DefineProperty<Uri>(nameof(ServiceEndpointUri), new string[] { "serviceEndpointUri" }, isOutput: true);
-            _isEnabled = DefineProperty<bool>(nameof(IsEnabled), new string[] { "isEnabled" });
+            _isEnabled = DefineProperty<bool>(nameof(IsEnabled), new string[] { "isEnabled" }, isRequired: true);
             DefineAdditionalProperties();
         }
 

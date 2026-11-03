@@ -59,7 +59,7 @@ namespace Azure.Provisioning.Sql
             }
         }
 
-        /// <summary> Gets or sets the LabelName. </summary>
+        /// <summary> Gets the LabelName. </summary>
         public BicepValue<string> LabelName
         {
             get
@@ -67,14 +67,9 @@ namespace Azure.Provisioning.Sql
                 Initialize();
                 return _labelName;
             }
-            set
-            {
-                Initialize();
-                _labelName.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the LabelId. </summary>
+        /// <summary> Gets the LabelId. </summary>
         public BicepValue<string> LabelId
         {
             get
@@ -82,14 +77,9 @@ namespace Azure.Provisioning.Sql
                 Initialize();
                 return _labelId;
             }
-            set
-            {
-                Initialize();
-                _labelId.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the InformationType. </summary>
+        /// <summary> Gets the InformationType. </summary>
         public BicepValue<string> InformationType
         {
             get
@@ -97,25 +87,15 @@ namespace Azure.Provisioning.Sql
                 Initialize();
                 return _informationType;
             }
-            set
-            {
-                Initialize();
-                _informationType.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the InformationTypeId. </summary>
+        /// <summary> Gets the InformationTypeId. </summary>
         public BicepValue<string> InformationTypeId
         {
             get
             {
                 Initialize();
                 return _informationTypeId;
-            }
-            set
-            {
-                Initialize();
-                _informationTypeId.Assign(value);
             }
         }
 
@@ -129,7 +109,7 @@ namespace Azure.Provisioning.Sql
             }
         }
 
-        /// <summary> Gets or sets the Rank. </summary>
+        /// <summary> Gets the Rank. </summary>
         public BicepValue<SensitivityLabelRank> Rank
         {
             get
@@ -137,25 +117,15 @@ namespace Azure.Provisioning.Sql
                 Initialize();
                 return _rank;
             }
-            set
-            {
-                Initialize();
-                _rank.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the ClientClassificationSource. </summary>
+        /// <summary> Gets the ClientClassificationSource. </summary>
         public BicepValue<ClientClassificationSource> ClientClassificationSource
         {
             get
             {
                 Initialize();
                 return _clientClassificationSource;
-            }
-            set
-            {
-                Initialize();
-                _clientClassificationSource.Assign(value);
             }
         }
 

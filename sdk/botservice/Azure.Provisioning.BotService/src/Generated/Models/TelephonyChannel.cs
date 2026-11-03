@@ -18,13 +18,18 @@ namespace Azure.Provisioning.BotService
             ChannelName.Assign("TelephonyChannel");
         }
 
-        /// <summary> Gets the Properties. </summary>
+        /// <summary> Gets or sets the Properties. </summary>
         public TelephonyChannelProperties Properties
         {
             get
             {
                 Initialize();
                 return _properties;
+            }
+            set
+            {
+                Initialize();
+                AssignOrReplace(ref _properties, value);
             }
         }
 

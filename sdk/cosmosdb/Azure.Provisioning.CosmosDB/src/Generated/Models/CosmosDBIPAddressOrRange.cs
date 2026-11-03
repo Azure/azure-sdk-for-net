@@ -20,13 +20,18 @@ namespace Azure.Provisioning.CosmosDB
         {
         }
 
-        /// <summary> Gets the IPAddressOrRange. </summary>
+        /// <summary> Gets or sets the IPAddressOrRange. </summary>
         public BicepValue<string> IPAddressOrRange
         {
             get
             {
                 Initialize();
                 return _ipAddressOrRange;
+            }
+            set
+            {
+                Initialize();
+                _ipAddressOrRange.Assign(value);
             }
         }
 

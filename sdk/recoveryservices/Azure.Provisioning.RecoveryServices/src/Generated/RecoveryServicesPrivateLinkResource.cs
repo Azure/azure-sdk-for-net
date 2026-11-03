@@ -19,7 +19,7 @@ namespace Azure.Provisioning.RecoveryServices
         private BicepValue<string> _name;
         private SystemData _systemData;
         private RecoveryServicesPrivateLinkResourceProperties _properties;
-        private ResourceReference<Vaults> _parent;
+        private ResourceReference<RecoveryServicesVault> _parent;
 
         /// <summary> Creates a new RecoveryServicesPrivateLinkResource. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -74,7 +74,7 @@ namespace Azure.Provisioning.RecoveryServices
         }
 
         /// <summary> Gets or sets the Parent. </summary>
-        public Vaults Parent
+        public RecoveryServicesVault Parent
         {
             get
             {
@@ -123,7 +123,7 @@ namespace Azure.Provisioning.RecoveryServices
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _properties = DefineModelProperty<RecoveryServicesPrivateLinkResourceProperties>(nameof(Properties), new string[] { "properties" });
-            _parent = DefineResource<Vaults>(nameof(Parent), new string[] { "parent" }, isRequired: true);
+            _parent = DefineResource<RecoveryServicesVault>(nameof(Parent), new string[] { "parent" });
             DefineAdditionalProperties();
         }
 

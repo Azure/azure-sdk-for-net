@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.Security.Attestation
@@ -13,5 +14,8 @@ namespace Azure.Security.Attestation
     [CodeGenType("TcbBaseline")]
     public partial class TcbBaseline
     {
+        /// <summary> Date and time when the Tcb is released. SGX TEE specific property. </summary>
+        [CodeGenMember("TcbReleaseOn")]
+        public DateTimeOffset? TcbReleasedOn { get; }
     }
 }

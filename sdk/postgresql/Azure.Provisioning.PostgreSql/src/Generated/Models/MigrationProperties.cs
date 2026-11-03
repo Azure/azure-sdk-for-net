@@ -22,15 +22,15 @@ namespace Azure.Provisioning.PostgreSql
         private BicepValue<MigrationOption> _migrationOption;
         private BicepValue<PostgreSqlFlexibleServersSourceType> _sourceType;
         private BicepValue<PostgreSqlFlexibleServersSslMode> _sslMode;
-        private PostgreSqlServerMetadata _sourceDBServerMetadata;
-        private PostgreSqlServerMetadata _targetDBServerMetadata;
-        private BicepValue<ResourceIdentifier> _sourceDBServerResourceId;
-        private BicepValue<string> _sourceDBServerFullyQualifiedDomainName;
-        private BicepValue<ResourceIdentifier> _targetDBServerResourceId;
-        private BicepValue<string> _targetDBServerFullyQualifiedDomainName;
+        private PostgreSqlServerMetadata _sourceDbServerMetadata;
+        private PostgreSqlServerMetadata _targetDbServerMetadata;
+        private BicepValue<ResourceIdentifier> _sourceDbServerResourceId;
+        private BicepValue<string> _sourceDbServerFullyQualifiedDomainName;
+        private BicepValue<ResourceIdentifier> _targetDbServerResourceId;
+        private BicepValue<string> _targetDbServerFullyQualifiedDomainName;
         private PostgreSqlMigrationSecretParameters _secretParameters;
         private BicepList<string> _dbsToMigrate;
-        private BicepValue<PostgreSqlMigrationLogicalReplicationOnSourceDb> _setupLogicalReplicationOnSourceDBIfNeeded;
+        private BicepValue<PostgreSqlMigrationLogicalReplicationOnSourceDb> _setupLogicalReplicationOnSourceDbIfNeeded;
         private BicepValue<PostgreSqlMigrationOverwriteDbsInTarget> _overwriteDbsInTarget;
         private BicepValue<DateTimeOffset> _migrationWindowStartTimeInUtc;
         private BicepValue<DateTimeOffset> _migrationWindowEndTimeInUtc;
@@ -141,78 +141,78 @@ namespace Azure.Provisioning.PostgreSql
             }
         }
 
-        /// <summary> Gets the SourceDBServerMetadata. </summary>
-        public PostgreSqlServerMetadata SourceDBServerMetadata
+        /// <summary> Gets the SourceDbServerMetadata. </summary>
+        public PostgreSqlServerMetadata SourceDbServerMetadata
         {
             get
             {
                 Initialize();
-                return _sourceDBServerMetadata;
+                return _sourceDbServerMetadata;
             }
         }
 
-        /// <summary> Gets the TargetDBServerMetadata. </summary>
-        public PostgreSqlServerMetadata TargetDBServerMetadata
+        /// <summary> Gets the TargetDbServerMetadata. </summary>
+        public PostgreSqlServerMetadata TargetDbServerMetadata
         {
             get
             {
                 Initialize();
-                return _targetDBServerMetadata;
+                return _targetDbServerMetadata;
             }
         }
 
-        /// <summary> Gets or sets the SourceDBServerResourceId. </summary>
-        public BicepValue<ResourceIdentifier> SourceDBServerResourceId
+        /// <summary> Gets or sets the SourceDbServerResourceId. </summary>
+        public BicepValue<ResourceIdentifier> SourceDbServerResourceId
         {
             get
             {
                 Initialize();
-                return _sourceDBServerResourceId;
+                return _sourceDbServerResourceId;
             }
             set
             {
                 Initialize();
-                _sourceDBServerResourceId.Assign(value);
+                _sourceDbServerResourceId.Assign(value);
             }
         }
 
-        /// <summary> Gets or sets the SourceDBServerFullyQualifiedDomainName. </summary>
-        public BicepValue<string> SourceDBServerFullyQualifiedDomainName
+        /// <summary> Gets or sets the SourceDbServerFullyQualifiedDomainName. </summary>
+        public BicepValue<string> SourceDbServerFullyQualifiedDomainName
         {
             get
             {
                 Initialize();
-                return _sourceDBServerFullyQualifiedDomainName;
+                return _sourceDbServerFullyQualifiedDomainName;
             }
             set
             {
                 Initialize();
-                _sourceDBServerFullyQualifiedDomainName.Assign(value);
+                _sourceDbServerFullyQualifiedDomainName.Assign(value);
             }
         }
 
-        /// <summary> Gets the TargetDBServerResourceId. </summary>
-        public BicepValue<ResourceIdentifier> TargetDBServerResourceId
+        /// <summary> Gets the TargetDbServerResourceId. </summary>
+        public BicepValue<ResourceIdentifier> TargetDbServerResourceId
         {
             get
             {
                 Initialize();
-                return _targetDBServerResourceId;
+                return _targetDbServerResourceId;
             }
         }
 
-        /// <summary> Gets or sets the TargetDBServerFullyQualifiedDomainName. </summary>
-        public BicepValue<string> TargetDBServerFullyQualifiedDomainName
+        /// <summary> Gets or sets the TargetDbServerFullyQualifiedDomainName. </summary>
+        public BicepValue<string> TargetDbServerFullyQualifiedDomainName
         {
             get
             {
                 Initialize();
-                return _targetDBServerFullyQualifiedDomainName;
+                return _targetDbServerFullyQualifiedDomainName;
             }
             set
             {
                 Initialize();
-                _targetDBServerFullyQualifiedDomainName.Assign(value);
+                _targetDbServerFullyQualifiedDomainName.Assign(value);
             }
         }
 
@@ -246,18 +246,18 @@ namespace Azure.Provisioning.PostgreSql
             }
         }
 
-        /// <summary> Gets or sets the SetupLogicalReplicationOnSourceDBIfNeeded. </summary>
-        public BicepValue<PostgreSqlMigrationLogicalReplicationOnSourceDb> SetupLogicalReplicationOnSourceDBIfNeeded
+        /// <summary> Gets or sets the SetupLogicalReplicationOnSourceDbIfNeeded. </summary>
+        public BicepValue<PostgreSqlMigrationLogicalReplicationOnSourceDb> SetupLogicalReplicationOnSourceDbIfNeeded
         {
             get
             {
                 Initialize();
-                return _setupLogicalReplicationOnSourceDBIfNeeded;
+                return _setupLogicalReplicationOnSourceDbIfNeeded;
             }
             set
             {
                 Initialize();
-                _setupLogicalReplicationOnSourceDBIfNeeded.Assign(value);
+                _setupLogicalReplicationOnSourceDbIfNeeded.Assign(value);
             }
         }
 
@@ -407,15 +407,15 @@ namespace Azure.Provisioning.PostgreSql
             _migrationOption = DefineProperty<MigrationOption>(nameof(MigrationOption), new string[] { "migrationOption" });
             _sourceType = DefineProperty<PostgreSqlFlexibleServersSourceType>(nameof(SourceType), new string[] { "sourceType" });
             _sslMode = DefineProperty<PostgreSqlFlexibleServersSslMode>(nameof(SslMode), new string[] { "sslMode" });
-            _sourceDBServerMetadata = DefineModelProperty<PostgreSqlServerMetadata>(nameof(SourceDBServerMetadata), new string[] { "sourceDbServerMetadata" }, isOutput: true);
-            _targetDBServerMetadata = DefineModelProperty<PostgreSqlServerMetadata>(nameof(TargetDBServerMetadata), new string[] { "targetDbServerMetadata" }, isOutput: true);
-            _sourceDBServerResourceId = DefineProperty<ResourceIdentifier>(nameof(SourceDBServerResourceId), new string[] { "sourceDbServerResourceId" });
-            _sourceDBServerFullyQualifiedDomainName = DefineProperty<string>(nameof(SourceDBServerFullyQualifiedDomainName), new string[] { "sourceDbServerFullyQualifiedDomainName" });
-            _targetDBServerResourceId = DefineProperty<ResourceIdentifier>(nameof(TargetDBServerResourceId), new string[] { "targetDbServerResourceId" }, isOutput: true);
-            _targetDBServerFullyQualifiedDomainName = DefineProperty<string>(nameof(TargetDBServerFullyQualifiedDomainName), new string[] { "targetDbServerFullyQualifiedDomainName" });
+            _sourceDbServerMetadata = DefineModelProperty<PostgreSqlServerMetadata>(nameof(SourceDbServerMetadata), new string[] { "sourceDbServerMetadata" }, isOutput: true);
+            _targetDbServerMetadata = DefineModelProperty<PostgreSqlServerMetadata>(nameof(TargetDbServerMetadata), new string[] { "targetDbServerMetadata" }, isOutput: true);
+            _sourceDbServerResourceId = DefineProperty<ResourceIdentifier>(nameof(SourceDbServerResourceId), new string[] { "sourceDbServerResourceId" });
+            _sourceDbServerFullyQualifiedDomainName = DefineProperty<string>(nameof(SourceDbServerFullyQualifiedDomainName), new string[] { "sourceDbServerFullyQualifiedDomainName" });
+            _targetDbServerResourceId = DefineProperty<ResourceIdentifier>(nameof(TargetDbServerResourceId), new string[] { "targetDbServerResourceId" }, isOutput: true);
+            _targetDbServerFullyQualifiedDomainName = DefineProperty<string>(nameof(TargetDbServerFullyQualifiedDomainName), new string[] { "targetDbServerFullyQualifiedDomainName" });
             _secretParameters = DefineModelProperty<PostgreSqlMigrationSecretParameters>(nameof(SecretParameters), new string[] { "secretParameters" });
             _dbsToMigrate = DefineListProperty<string>(nameof(DbsToMigrate), new string[] { "dbsToMigrate" });
-            _setupLogicalReplicationOnSourceDBIfNeeded = DefineProperty<PostgreSqlMigrationLogicalReplicationOnSourceDb>(nameof(SetupLogicalReplicationOnSourceDBIfNeeded), new string[] { "setupLogicalReplicationOnSourceDbIfNeeded" });
+            _setupLogicalReplicationOnSourceDbIfNeeded = DefineProperty<PostgreSqlMigrationLogicalReplicationOnSourceDb>(nameof(SetupLogicalReplicationOnSourceDbIfNeeded), new string[] { "setupLogicalReplicationOnSourceDbIfNeeded" });
             _overwriteDbsInTarget = DefineProperty<PostgreSqlMigrationOverwriteDbsInTarget>(nameof(OverwriteDbsInTarget), new string[] { "overwriteDbsInTarget" });
             _migrationWindowStartTimeInUtc = DefineProperty<DateTimeOffset>(nameof(MigrationWindowStartTimeInUtc), new string[] { "migrationWindowStartTimeInUtc" }, format: "O");
             _migrationWindowEndTimeInUtc = DefineProperty<DateTimeOffset>(nameof(MigrationWindowEndTimeInUtc), new string[] { "migrationWindowEndTimeInUtc" }, format: "O");
