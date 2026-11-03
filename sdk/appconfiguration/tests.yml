@@ -4,7 +4,7 @@ extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-tests.yml
   parameters:
     ServiceDirectory: appconfiguration
-    PostSteps:
+    PlatformPostSteps:
       - task: CopyFiles@2
         condition: and(succeededOrFailed(), eq(variables.TestMode, 'Record'))
         displayName: Copy external App Configuration test recordings
