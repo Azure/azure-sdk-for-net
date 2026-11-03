@@ -55,6 +55,9 @@ extends:
     MaxParallel: ${{ parameters.testQueueCount }}
     DeployTestResources: false
     UseFederatedAuth: false
+    EnvVars:
+      AZURE_TEST_MODE: Live
+      CLIENTMODEL_TEST_MODE: Live
     MatrixFilters:
       - AdditionalTestArguments=^(?!.*UseProjectReferenceToAzureClients=true)
     PreSteps:
