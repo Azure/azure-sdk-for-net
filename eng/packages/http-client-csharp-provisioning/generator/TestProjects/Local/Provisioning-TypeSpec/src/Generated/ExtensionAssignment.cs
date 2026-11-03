@@ -78,6 +78,21 @@ namespace Azure.Provisioning.ProvisioningTypeSpec
             }
         }
 
+        /// <summary> Gets or sets the Scope. </summary>
+        public ProvisionableResource Scope
+        {
+            get
+            {
+                Initialize();
+                return _scope.Value;
+            }
+            set
+            {
+                Initialize();
+                _scope.Value = value;
+            }
+        }
+
         /// <summary> Gets or sets the DisplayName. </summary>
         public BicepValue<string> ExtensionAssignmentDisplayName
         {

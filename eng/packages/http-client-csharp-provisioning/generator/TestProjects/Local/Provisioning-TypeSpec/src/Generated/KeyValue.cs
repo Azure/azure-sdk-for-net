@@ -79,6 +79,21 @@ namespace Azure.Provisioning.ProvisioningTypeSpec
             }
         }
 
+        /// <summary> Gets or sets the Parent. </summary>
+        public ConfigurationStore Parent
+        {
+            get
+            {
+                Initialize();
+                return _parent.Value;
+            }
+            set
+            {
+                Initialize();
+                _parent.Value = value;
+            }
+        }
+
         /// <summary> Define all the provisionable properties for KeyValue. </summary>
         protected override void DefineProvisionableProperties()
         {
