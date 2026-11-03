@@ -97,10 +97,13 @@ namespace Azure.Developer.LoadTesting
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(TestProfileId))
+            if (LifecycleModelReaderWriterOptions.IsVisible(options, LifecycleVisibility.Read | LifecycleVisibility.Create))
             {
-                writer.WritePropertyName("testProfileId"u8);
-                writer.WriteStringValue(TestProfileId);
+                if (Optional.IsDefined(TestProfileId))
+                {
+                    writer.WritePropertyName("testProfileId"u8);
+                    writer.WriteStringValue(TestProfileId);
+                }
             }
             if (options.Format != "W" && Optional.IsDefined(TargetResourceId))
             {
