@@ -63,7 +63,10 @@ namespace Azure.Search.Documents.Tests.Samples.VectorSearch
             }
             finally
             {
-                await indexClient.DeleteIndexAsync(indexName);
+                if (indexClient != null)
+                {
+                    await indexClient.DeleteIndexAsync(indexName);
+                }
             }
         }
 
