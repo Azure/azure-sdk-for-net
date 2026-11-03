@@ -5,89 +5,36 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using System.Text.Json;
 
 namespace Azure.AI.Projects.Agents
 {
-    /// <summary> The LiveDecisionStoredInputItemParam. </summary>
+    /// <summary>
+    /// The LiveDecisionStoredInputItemParam.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="LiveDecisionStoredCustomToolCallOutputParam"/>, <see cref="LiveDecisionStoredCustomToolCallParam"/>, <see cref="LiveDecisionStoredFunctionCallOutputParam"/>, <see cref="LiveDecisionStoredFunctionCallParam"/>, and <see cref="LiveDecisionStoredInputItemParamMessage"/>.
+    /// </summary>
     [Experimental("AAIP001")]
-    public partial class LiveDecisionStoredInputItemParam
+    public abstract partial class LiveDecisionStoredInputItemParam
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="LiveDecisionStoredInputItemParam"/>. </summary>
-        /// <param name="id"> The ID of the stored Decision input item. </param>
-        /// <param name="content"></param>
-        internal LiveDecisionStoredInputItemParam(string id, BinaryData content)
+        /// <param name="type"></param>
+        private protected LiveDecisionStoredInputItemParam(LiveDecisionStoredInputItemParamType @type)
         {
-            Id = id;
-            Content = content;
+            Type = @type;
         }
 
         /// <summary> Initializes a new instance of <see cref="LiveDecisionStoredInputItemParam"/>. </summary>
-        /// <param name="id"> The ID of the stored Decision input item. </param>
         /// <param name="type"></param>
-        /// <param name="role"> The message role. Always `user`. </param>
-        /// <param name="content"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal LiveDecisionStoredInputItemParam(string id, LiveDecisionStoredInputItemParamType? @type, string role, BinaryData content, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal LiveDecisionStoredInputItemParam(LiveDecisionStoredInputItemParamType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Id = id;
             Type = @type;
-            Role = role;
-            Content = content;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> The ID of the stored Decision input item. </summary>
-        public string Id { get; }
-
-        /// <summary> Gets the Type. </summary>
-        public LiveDecisionStoredInputItemParamType? Type { get; }
-
-        /// <summary> The message role. Always `user`. </summary>
-        public string Role { get; } = "user";
-
-        /// <summary>
-        /// Gets the Content.
-        /// <para> To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
-        /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
-        /// <para>
-        /// <remarks>
-        /// Supported types:
-        /// <list type="bullet">
-        /// <item>
-        /// <description> <see cref="string"/>. </description>
-        /// </item>
-        /// <item>
-        /// <description> <see cref="IList{T}"/> where <c>T</c> is of type <see cref="BinaryData"/>. </description>
-        /// </item>
-        /// </list>
-        /// </remarks>
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term> BinaryData.FromObjectAsJson("foo"). </term>
-        /// <description> Creates a payload of "foo". </description>
-        /// </item>
-        /// <item>
-        /// <term> BinaryData.FromString("\"foo\""). </term>
-        /// <description> Creates a payload of "foo". </description>
-        /// </item>
-        /// <item>
-        /// <term> BinaryData.FromObjectAsJson(new { key = "value" }). </term>
-        /// <description> Creates a payload of { "key": "value" }. </description>
-        /// </item>
-        /// <item>
-        /// <term> BinaryData.FromString("{\"key\": \"value\"}"). </term>
-        /// <description> Creates a payload of { "key": "value" }. </description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        public BinaryData Content { get; }
+        /// <summary> Gets or sets the Type. </summary>
+        internal LiveDecisionStoredInputItemParamType Type { get; set; }
     }
 }

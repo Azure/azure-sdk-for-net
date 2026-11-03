@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Network
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Network/privateLinkServices/", false);
             uri.AppendPath(serviceName, true);
-            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Network/privateLinkServices") ?? "2026-01-01", true);
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Network/privateLinkServices") ?? "2026-03-01", true);
             if (expand != null)
             {
                 uri.AppendQuery("$expand", expand, true);
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Network
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Network/privateLinkServices/", false);
             uri.AppendPath(serviceName, true);
-            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Network/privateLinkServices") ?? "2026-01-01", true);
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Network/privateLinkServices") ?? "2026-03-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Network
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Network/privateLinkServices/", false);
             uri.AppendPath(serviceName, true);
-            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Network/privateLinkServices") ?? "2026-01-01", true);
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Network/privateLinkServices") ?? "2026-03-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Network
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Network/privateLinkServices", false);
-            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Network/privateLinkServices") ?? "2026-01-01", true);
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Network/privateLinkServices") ?? "2026-03-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.Network
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            uri.UpdateQuery("api-version", _getApiVersion?.Invoke("Microsoft.Network/privateLinkServices") ?? "2026-01-01");
+            uri.UpdateQuery("api-version", _getApiVersion?.Invoke("Microsoft.Network/privateLinkServices") ?? "2026-03-01");
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.Network
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/providers/Microsoft.Network/privateLinkServices", false);
-            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Network/privateLinkServices") ?? "2026-01-01", true);
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Network/privateLinkServices") ?? "2026-03-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.Network
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            uri.UpdateQuery("api-version", _getApiVersion?.Invoke("Microsoft.Network/privateLinkServices") ?? "2026-01-01");
+            uri.UpdateQuery("api-version", _getApiVersion?.Invoke("Microsoft.Network/privateLinkServices") ?? "2026-03-01");
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.Network
             uri.AppendPath(serviceName, true);
             uri.AppendPath("/privateEndpointConnections/", false);
             uri.AppendPath(peConnectionName, true);
-            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Network/privateLinkServices/privateEndpointConnections") ?? "2026-01-01", true);
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Network/privateLinkServices/privateEndpointConnections") ?? "2026-03-01", true);
             if (expand != null)
             {
                 uri.AppendQuery("$expand", expand, true);
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.Network
             uri.AppendPath(serviceName, true);
             uri.AppendPath("/privateEndpointConnections/", false);
             uri.AppendPath(peConnectionName, true);
-            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Network/privateLinkServices/privateEndpointConnections") ?? "2026-01-01", true);
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Network/privateLinkServices/privateEndpointConnections") ?? "2026-03-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.Network
             uri.AppendPath(serviceName, true);
             uri.AppendPath("/privateEndpointConnections/", false);
             uri.AppendPath(peConnectionName, true);
-            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Network/privateLinkServices/privateEndpointConnections") ?? "2026-01-01", true);
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Network/privateLinkServices/privateEndpointConnections") ?? "2026-03-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -272,7 +272,7 @@ namespace Azure.ResourceManager.Network
             uri.AppendPath("/providers/Microsoft.Network/privateLinkServices/", false);
             uri.AppendPath(serviceName, true);
             uri.AppendPath("/privateEndpointConnections", false);
-            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Network/privateLinkServices/privateEndpointConnections") ?? "2026-01-01", true);
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Network/privateLinkServices/privateEndpointConnections") ?? "2026-03-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.Network
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            uri.UpdateQuery("api-version", _getApiVersion?.Invoke("Microsoft.Network/privateLinkServices/privateEndpointConnections") ?? "2026-01-01");
+            uri.UpdateQuery("api-version", _getApiVersion?.Invoke("Microsoft.Network/privateLinkServices/privateEndpointConnections") ?? "2026-03-01");
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;

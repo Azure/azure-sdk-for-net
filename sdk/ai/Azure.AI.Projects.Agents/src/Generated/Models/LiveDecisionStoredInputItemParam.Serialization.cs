@@ -4,13 +4,16 @@
 
 using System;
 using System.ClientModel.Primitives;
-using System.Collections.Generic;
 using System.Text.Json;
 
 namespace Azure.AI.Projects.Agents
 {
-    /// <summary> The LiveDecisionStoredInputItemParam. </summary>
-    public partial class LiveDecisionStoredInputItemParam : IJsonModel<LiveDecisionStoredInputItemParam>
+    /// <summary>
+    /// The LiveDecisionStoredInputItemParam.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="LiveDecisionStoredCustomToolCallOutputParam"/>, <see cref="LiveDecisionStoredCustomToolCallParam"/>, <see cref="LiveDecisionStoredFunctionCallOutputParam"/>, <see cref="LiveDecisionStoredFunctionCallParam"/>, and <see cref="LiveDecisionStoredInputItemParamMessage"/>.
+    /// </summary>
+    [PersistableModelProxy(typeof(UnknownLiveDecisionStoredInputItemParam))]
+    public abstract partial class LiveDecisionStoredInputItemParam : IJsonModel<LiveDecisionStoredInputItemParam>
     {
         /// <summary> Initializes a new instance of <see cref="LiveDecisionStoredInputItemParam"/> for deserialization. </summary>
         internal LiveDecisionStoredInputItemParam()
@@ -75,24 +78,8 @@ namespace Azure.AI.Projects.Agents
             {
                 throw new FormatException($"The model {nameof(LiveDecisionStoredInputItemParam)} does not support writing '{format}' format.");
             }
-            writer.WritePropertyName("id"u8);
-            writer.WriteStringValue(Id);
-            if (Optional.IsDefined(Type))
-            {
-                writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(Type.Value.ToString());
-            }
-            writer.WritePropertyName("role"u8);
-            writer.WriteStringValue(Role);
-            writer.WritePropertyName("content"u8);
-#if NET6_0_OR_GREATER
-            writer.WriteRawValue(Content);
-#else
-            using (JsonDocument document = JsonDocument.Parse(Content))
-            {
-                JsonSerializer.Serialize(writer, document.RootElement);
-            }
-#endif
+            writer.WritePropertyName("type"u8);
+            writer.WriteStringValue(Type.ToString());
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -135,43 +122,23 @@ namespace Azure.AI.Projects.Agents
             {
                 return null;
             }
-            string id = default;
-            LiveDecisionStoredInputItemParamType? @type = default;
-            string role = default;
-            BinaryData content = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            foreach (var prop in element.EnumerateObject())
+            if (element.TryGetProperty("type"u8, out JsonElement discriminator))
             {
-                if (prop.NameEquals("id"u8))
+                switch (discriminator.GetString())
                 {
-                    id = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("type"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    @type = new LiveDecisionStoredInputItemParamType(prop.Value.GetString());
-                    continue;
-                }
-                if (prop.NameEquals("role"u8))
-                {
-                    role = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("content"u8))
-                {
-                    content = prop.Value.GetUtf8Bytes();
-                    continue;
-                }
-                if (options.Format != "W")
-                {
-                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
+                    case "custom_tool_call_output":
+                        return LiveDecisionStoredCustomToolCallOutputParam.DeserializeLiveDecisionStoredCustomToolCallOutputParam(element, options);
+                    case "custom_tool_call":
+                        return LiveDecisionStoredCustomToolCallParam.DeserializeLiveDecisionStoredCustomToolCallParam(element, options);
+                    case "function_call_output":
+                        return LiveDecisionStoredFunctionCallOutputParam.DeserializeLiveDecisionStoredFunctionCallOutputParam(element, options);
+                    case "function_call":
+                        return LiveDecisionStoredFunctionCallParam.DeserializeLiveDecisionStoredFunctionCallParam(element, options);
+                    case "message":
+                        return LiveDecisionStoredInputItemParamMessage.DeserializeLiveDecisionStoredInputItemParamMessage(element, options);
                 }
             }
-            return new LiveDecisionStoredInputItemParam(id, @type, role, content, additionalBinaryDataProperties);
+            return UnknownLiveDecisionStoredInputItemParam.DeserializeUnknownLiveDecisionStoredInputItemParam(element, options);
         }
     }
 }

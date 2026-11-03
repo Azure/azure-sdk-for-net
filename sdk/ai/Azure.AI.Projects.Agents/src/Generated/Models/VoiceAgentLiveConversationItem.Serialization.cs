@@ -88,7 +88,7 @@ namespace Azure.AI.Projects.Agents
                 throw new FormatException($"The model {nameof(VoiceAgentLiveConversationItem)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(Type.ToSerialString());
+            writer.WriteStringValue(Type.ToString());
             writer.WritePropertyName("id"u8);
             writer.WriteStringValue(Id);
             if (options.Format != "W" && _additionalBinaryDataProperties != null)

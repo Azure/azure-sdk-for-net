@@ -5,7 +5,6 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using System.Text.Json;
 
 namespace Azure.AI.Projects.Agents
 {
@@ -17,7 +16,7 @@ namespace Azure.AI.Projects.Agents
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
         private string _instructions;
         private bool _instructionsIsDefined;
-        private BinaryData _delegation;
+        private VoiceAgentLiveDelegation _delegation;
         private bool _delegationIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="VoiceAgentLiveSessionResource"/>. </summary>
@@ -28,7 +27,7 @@ namespace Azure.AI.Projects.Agents
         {
             Model = model;
             Input = new ChangeTrackingList<LiveInitialItem>();
-            Triggers = new ChangeTrackingList<LiveDecisionTriggerInputParam2>();
+            Triggers = new ChangeTrackingList<LiveDecisionTriggerInputParam>();
             Id = id;
             ExpiresAt = expiresAt;
         }
@@ -46,7 +45,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="status"> The status of the session snapshot. Always `active`, including the final snapshot in session.closed; use the event type to determine that the session has closed. </param>
         /// <param name="delegation"> Delegation owner. foundry_managed_agent sessions report the pinned target, including the resolved agent_version. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VoiceAgentLiveSessionResource(ModelIdsLive model, string instructions, IList<LiveInitialItem> input, LiveInitialSessionAudioParam audio, IList<LiveDecisionTriggerInputParam2> triggers, bool? store, LiveClientConfigParam client, string id, long expiresAt, string status, BinaryData delegation, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VoiceAgentLiveSessionResource(ModelIdsLive model, string instructions, IList<LiveInitialItem> input, LiveInitialSessionAudioParam audio, IList<LiveDecisionTriggerInputParam> triggers, bool? store, LiveClientConfigParam client, string id, long expiresAt, string status, VoiceAgentLiveDelegation delegation, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Model = model;
             _instructions = instructions;
@@ -81,7 +80,7 @@ namespace Azure.AI.Projects.Agents
         public LiveInitialSessionAudioParam Audio { get; }
 
         /// <summary> At most one Decisions trigger per transcript event type. Triggers run independently of delegation. On update, omit triggers to keep the current configuration, send a list to replace it, or send an empty list to disable triggers. </summary>
-        public IList<LiveDecisionTriggerInputParam2> Triggers { get; }
+        public IList<LiveDecisionTriggerInputParam> Triggers { get; }
 
         /// <summary> Whether to store the session for later forking and recording download. Defaults to false for new sessions. </summary>
         public bool? Store { get; }
@@ -98,49 +97,8 @@ namespace Azure.AI.Projects.Agents
         /// <summary> The status of the session snapshot. Always `active`, including the final snapshot in session.closed; use the event type to determine that the session has closed. </summary>
         public string Status { get; } = "active";
 
-        /// <summary>
-        /// Delegation owner. foundry_managed_agent sessions report the pinned target, including the resolved agent_version.
-        /// <para> To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
-        /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
-        /// <para>
-        /// <remarks>
-        /// Supported types:
-        /// <list type="bullet">
-        /// <item>
-        /// <description> <see cref="LiveClientDelegationParam"/>. </description>
-        /// </item>
-        /// <item>
-        /// <description> <see cref="LiveResponsesDelegationParam"/>. </description>
-        /// </item>
-        /// <item>
-        /// <description> <see cref="VoiceAgentLiveManagedAgentDelegation"/>. </description>
-        /// </item>
-        /// </list>
-        /// </remarks>
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term> BinaryData.FromObjectAsJson("foo"). </term>
-        /// <description> Creates a payload of "foo". </description>
-        /// </item>
-        /// <item>
-        /// <term> BinaryData.FromString("\"foo\""). </term>
-        /// <description> Creates a payload of "foo". </description>
-        /// </item>
-        /// <item>
-        /// <term> BinaryData.FromObjectAsJson(new { key = "value" }). </term>
-        /// <description> Creates a payload of { "key": "value" }. </description>
-        /// </item>
-        /// <item>
-        /// <term> BinaryData.FromString("{\"key\": \"value\"}"). </term>
-        /// <description> Creates a payload of { "key": "value" }. </description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        public BinaryData Delegation
+        /// <summary> Delegation owner. foundry_managed_agent sessions report the pinned target, including the resolved agent_version. </summary>
+        public VoiceAgentLiveDelegation Delegation
         {
             get
             {

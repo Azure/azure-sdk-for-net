@@ -96,6 +96,16 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsCollectionDefined(MitigationRules))
+            {
+                writer.WritePropertyName("mitigationRules"u8);
+                writer.WriteStartArray();
+                foreach (DdosMitigationRule item in MitigationRules)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
             if (Optional.IsCollectionDefined(FrontEndIPConfiguration))
             {
                 writer.WritePropertyName("frontEndIpConfiguration"u8);
@@ -171,6 +181,7 @@ namespace Azure.ResourceManager.Network.Models
             Guid? resourceGuid = default;
             NetworkProvisioningState? provisioningState = default;
             IList<DdosDetectionRule> detectionRules = default;
+            IList<DdosMitigationRule> mitigationRules = default;
             IList<WritableSubResource> frontEndIPConfiguration = default;
             IReadOnlyList<WritableSubResource> publicIPAddresses = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -206,6 +217,20 @@ namespace Azure.ResourceManager.Network.Models
                         array.Add(DdosDetectionRule.DeserializeDdosDetectionRule(item, options));
                     }
                     detectionRules = array;
+                    continue;
+                }
+                if (prop.NameEquals("mitigationRules"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<DdosMitigationRule> array = new List<DdosMitigationRule>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        array.Add(DdosMitigationRule.DeserializeDdosMitigationRule(item, options));
+                    }
+                    mitigationRules = array;
                     continue;
                 }
                 if (prop.NameEquals("frontEndIpConfiguration"u8))
@@ -259,6 +284,7 @@ namespace Azure.ResourceManager.Network.Models
                 resourceGuid,
                 provisioningState,
                 detectionRules ?? new ChangeTrackingList<DdosDetectionRule>(),
+                mitigationRules ?? new ChangeTrackingList<DdosMitigationRule>(),
                 frontEndIPConfiguration ?? new ChangeTrackingList<WritableSubResource>(),
                 publicIPAddresses ?? new ChangeTrackingList<WritableSubResource>(),
                 additionalBinaryDataProperties);

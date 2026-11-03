@@ -17,6 +17,7 @@ public class AgentTelephonyTests : AgentsTestBase
 {
     public AgentTelephonyTests(bool isAsync) : base(isAsync)
     {
+        ProjectsTestSanitizers.ApplyLegacyRealtimeVoiceRecordingDefaults(this);
     }
 
     private async Task<string> EnsureTelephonyAgentAsync(AgentAdministrationClient agentsClient)

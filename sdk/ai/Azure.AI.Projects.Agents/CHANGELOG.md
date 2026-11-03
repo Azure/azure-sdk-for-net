@@ -1,17 +1,37 @@
 # Release History
 
-## 3.0.0-beta.6 (Unreleased)
+## 3.0.0-beta.7 (Unreleased)
 
 ### Features Added
 - Added experimental Live voice agent definitions, native client/server event models, and `BetaVoiceAgentsLiveConversations` for stored Live history and recordings.
 - Added Foundry-aware Live session snapshots and delegation trigger metadata, including `foundry_managed_agent` ownership with the pinned agent name and resolved version.
 - Live definitions preserve typed Realtime/Live dispatch and existing Realtime model-factory parameter order. Stored Live history pagination honors `has_more` even when a terminal page retains `last_id`.
-- Enriched existing Foundry GenAI agent-creation traces with privacy-safe Voice Agent metadata and bounded instruction content under the existing opt-in setting. Other Voice Agent REST operations retain their existing SDK diagnostics.
-- Added experimental soundscape configuration for voice-agent telephony calls. Soundscapes are not rendered over direct WebSocket or browser WebRTC connections.
 
 ### Breaking Changes
 - Live lifecycle events now expose `VoiceAgentLiveSessionResource`, and delegation-created events expose `VoiceAgentLiveDelegationItem` with `VoiceAgentLiveDelegationTarget`, replacing the corresponding native-only snapshot and trigger types.
 - Renamed the experimental `LiveTransportRinging`, `LiveTransportAnswered`, and `LiveTransportFailed` models to `LiveServerEventLiveTransportRinging`, `LiveServerEventLiveTransportAnswered`, and `LiveServerEventLiveTransportFailed`. Their wire event names are unchanged.
+- Aligned experimental native Live models with OpenAI TypeSpec 1.34.0, including Live-specific Decision question models and the `transport.dtmf.sent` server event.
+- Voice definitions now emit the required `sub_protocol` discriminator, including `realtime` for Realtime definitions. Live delegation configuration and session snapshots now use the typed experimental `VoiceAgentLiveDelegation` hierarchy.
+
+### Bugs Fixed
+- Fixed the Realtime model factory to preserve newly added fields, including `Soundscape` and `PostCall`, without changing the order of its existing parameters.
+- Kept Live-only decision helper models and their model-factory methods behind the `AAIP001` experimental opt-in without changing shared stable models.
+
+### Other Changes
+- Regenerated from the published Foundry definitions in [Azure/azure-rest-api-specs#47196](https://github.com/Azure/azure-rest-api-specs/pull/47196) at `a8ba157506e523c4274cd5f5d3288a2ae45235ab`, using OpenAI TypeSpec 1.34.0.
+
+## 3.0.0-beta.6 (2026-10-30)
+
+### Features Added
+- Added experimental Voice Agent post-call delivery to Event Grid connections and routines.
+- Added experimental Voice Agent soundscapes for telephony ambience and event cues.
+- Added Azure Speech streaming transcription and headset/personal noise suppression modes.
+- Added `ProjectsAgentProtocol.VoiceConversationEngine` for hosted voice conversation engines.
+- Enriched existing Foundry GenAI agent-creation traces with privacy-safe Voice Agent metadata and bounded instruction content under the existing opt-in setting. Other Voice Agent REST operations retain their existing SDK diagnostics.
+
+### Breaking Changes
+- Added the `postCall` parameter before `store` in `ProjectsAgentsModelFactory.VoiceAgentDefinition`, affecting positional arguments.
+- Added the `soundscape` parameter before `outputModalities` in `ProjectsAgentsModelFactory.VoiceAgentDefinition`, affecting positional arguments.
 - `VoiceAgentAvatarVideoCrop.BottomRight` and `VoiceAgentAvatarVideoCrop.TopLeft` types were changed from `IList<object>` to `IList<uint>`.
 - `VoiceAgentAzureSemanticVadEnTurnDetection.IdleTimeoutMs` was renamed to `VoiceAgentAzureSemanticVadEnTurnDetection.IdleTimeout`.
 - `VoiceAgentAzureSemanticVadMultilingualTurnDetection.IdleTimeoutMs` was renamed to `VoiceAgentAzureSemanticVadMultilingualTurnDetection.IdleTimeout`.
@@ -21,13 +41,8 @@
 - `VoiceAgentMcpTool.AllowedTools` and `MCPToolboxTool.AllowedTools`, along with their model-factory parameters, now use `OpenAI.Responses.McpToolFilter` instead of `BinaryData`. `MCPToolboxTool.AllowedTools` now requires the `AAIP002` experimental opt-in.
 - `VoiceResult.Metadata` now uses `IDictionary<string, BinaryData>` instead of `OpenAI.InternalMetadataContainer`. The public `OpenAI.InternalMetadataContainer` type was removed.
 - `BrowserAutomationPreviewToolboxTool` is deprecated and hidden from IntelliSense. Please use `BrowserAutomationToolboxTool` instead.
-
-### Bugs Fixed
-- Fixed the Realtime model factory to preserve newly added fields, including `Soundscape`, without changing the order of its existing parameters.
-- Kept Live-only decision helper models and their model-factory methods behind the `AAIP001` experimental opt-in without changing shared stable models.
-
-### Other Changes
-- Regenerated from the latest Foundry definitions in [Azure/azure-rest-api-specs#47196](https://github.com/Azure/azure-rest-api-specs/pull/47196), using OpenAI TypeSpec 1.32.0.
+- `VoiceAgentSoundscapeSound` was converted from enumeration to structure allowing extensibility from the service side.
+- The `VoiceAgentSoundscapeWorkingTrackConfig` property `DelayMs` was renamed to `Delay`.
 
 ## 3.0.0-beta.5 (2026-10-16)
 

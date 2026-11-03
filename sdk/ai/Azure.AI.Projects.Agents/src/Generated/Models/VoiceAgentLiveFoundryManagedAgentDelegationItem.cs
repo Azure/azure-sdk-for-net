@@ -6,7 +6,6 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using System.Text.Json;
 
 namespace Azure.AI.Projects.Agents
 {
@@ -22,7 +21,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="offsetMs"> Native delegation offset from session start, in milliseconds. </param>
         /// <param name="output"> Accepted guidance in order; empty until a result is accepted. Entries have no individual IDs, are noncumulative, and are independent of backend output_index. Partial results survive failure or cancellation. </param>
         /// <param name="status"> The persisted delegation outcome. </param>
-        internal VoiceAgentLiveFoundryManagedAgentDelegationItem(string id, DateTimeOffset createdOn, string agentName, string agentVersion, long offsetMs, IEnumerable<BinaryData> output, VoiceAgentLiveDelegationStatus status) : base(id, VoiceAgentLiveDelegationTarget.FoundryManagedAgent, createdOn)
+        internal VoiceAgentLiveFoundryManagedAgentDelegationItem(string id, DateTimeOffset createdOn, string agentName, string agentVersion, TimeSpan offsetMs, IEnumerable<VoiceAgentLiveDelegationResultItem> output, VoiceAgentLiveDelegationStatus status) : base(id, VoiceAgentLiveDelegationTarget.FoundryManagedAgent, createdOn)
         {
             AgentName = agentName;
             AgentVersion = agentVersion;
@@ -45,7 +44,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="output"> Accepted guidance in order; empty until a result is accepted. Entries have no individual IDs, are noncumulative, and are independent of backend output_index. Partial results survive failure or cancellation. </param>
         /// <param name="delegationContext"> Task context sent to the target agent, not the full request body. </param>
         /// <param name="status"> The persisted delegation outcome. </param>
-        internal VoiceAgentLiveFoundryManagedAgentDelegationItem(VoiceAgentLiveConversationItemType @type, string id, IDictionary<string, BinaryData> additionalBinaryDataProperties, string responseId, VoiceAgentLiveDelegationTarget target, DateTimeOffset createdOn, string agentName, string agentVersion, long offsetMs, string backendConversationId, IList<BinaryData> output, string delegationContext, VoiceAgentLiveDelegationStatus status) : base(@type, id, additionalBinaryDataProperties, responseId, target, createdOn)
+        internal VoiceAgentLiveFoundryManagedAgentDelegationItem(VoiceAgentLiveConversationItemType @type, string id, IDictionary<string, BinaryData> additionalBinaryDataProperties, string responseId, VoiceAgentLiveDelegationTarget target, DateTimeOffset createdOn, string agentName, string agentVersion, TimeSpan offsetMs, string backendConversationId, IList<VoiceAgentLiveDelegationResultItem> output, string delegationContext, VoiceAgentLiveDelegationStatus status) : base(@type, id, additionalBinaryDataProperties, responseId, target, createdOn)
         {
             AgentName = agentName;
             AgentVersion = agentVersion;
@@ -63,51 +62,13 @@ namespace Azure.AI.Projects.Agents
         public string AgentVersion { get; }
 
         /// <summary> Native delegation offset from session start, in milliseconds. </summary>
-        public long OffsetMs { get; }
+        public TimeSpan OffsetMs { get; }
 
         /// <summary> Backend conversation ID, distinct from the voice conversation and Live session IDs. </summary>
         public string BackendConversationId { get; }
 
-        /// <summary>
-        /// Accepted guidance in order; empty until a result is accepted. Entries have no individual IDs, are noncumulative, and are independent of backend output_index. Partial results survive failure or cancellation.
-        /// <para> To assign an object to the element of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
-        /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
-        /// <para>
-        /// <remarks>
-        /// Supported types:
-        /// <list type="bullet">
-        /// <item>
-        /// <description> <see cref="VoiceAgentLiveDelegationResultItem2"/>. </description>
-        /// </item>
-        /// <item>
-        /// <description> <see cref="VoiceAgentLiveDelegationResultItem1"/>. </description>
-        /// </item>
-        /// </list>
-        /// </remarks>
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term> BinaryData.FromObjectAsJson("foo"). </term>
-        /// <description> Creates a payload of "foo". </description>
-        /// </item>
-        /// <item>
-        /// <term> BinaryData.FromString("\"foo\""). </term>
-        /// <description> Creates a payload of "foo". </description>
-        /// </item>
-        /// <item>
-        /// <term> BinaryData.FromObjectAsJson(new { key = "value" }). </term>
-        /// <description> Creates a payload of { "key": "value" }. </description>
-        /// </item>
-        /// <item>
-        /// <term> BinaryData.FromString("{\"key\": \"value\"}"). </term>
-        /// <description> Creates a payload of { "key": "value" }. </description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        public IList<BinaryData> Output { get; }
+        /// <summary> Accepted guidance in order; empty until a result is accepted. Entries have no individual IDs, are noncumulative, and are independent of backend output_index. Partial results survive failure or cancellation. </summary>
+        public IList<VoiceAgentLiveDelegationResultItem> Output { get; }
 
         /// <summary> Task context sent to the target agent, not the full request body. </summary>
         public string DelegationContext { get; }

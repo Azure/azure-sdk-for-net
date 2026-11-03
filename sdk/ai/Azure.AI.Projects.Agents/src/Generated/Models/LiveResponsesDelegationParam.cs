@@ -25,13 +25,18 @@ namespace Azure.AI.Projects.Agents
         /// <summary> Initializes a new instance of <see cref="LiveResponsesDelegationParam"/>. </summary>
         /// <param name="type"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="acknowledgementDelayMs"> Milliseconds to wait before requesting an automatic spoken acknowledgement for a delegation. The model may still speak before this delay. Any commentary or thinking appended to the session cancels all pending acknowledgements, including those for other delegations. Defaults to 400 for Decisions sessions and 0 (request immediately) for other sessions. Omission in a session update preserves the current value. Updates apply to subsequent delegations. </param>
         /// <param name="responses"> Backend model, prompt, and tools used when the Live session delegates a task to Responses. </param>
-        internal LiveResponsesDelegationParam(DelegationType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, LiveResponsesDelegationSettingsInputParam responses) : base(@type, additionalBinaryDataProperties)
+        internal LiveResponsesDelegationParam(DelegationType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, long? acknowledgementDelayMs, LiveResponsesDelegationSettingsInputParam responses) : base(@type, additionalBinaryDataProperties)
         {
+            AcknowledgementDelayMs = acknowledgementDelayMs;
             Responses = responses;
         }
 
+        /// <summary> Milliseconds to wait before requesting an automatic spoken acknowledgement for a delegation. The model may still speak before this delay. Any commentary or thinking appended to the session cancels all pending acknowledgements, including those for other delegations. Defaults to 400 for Decisions sessions and 0 (request immediately) for other sessions. Omission in a session update preserves the current value. Updates apply to subsequent delegations. </summary>
+        public long? AcknowledgementDelayMs { get; set; }
+
         /// <summary> Backend model, prompt, and tools used when the Live session delegates a task to Responses. </summary>
-        public LiveResponsesDelegationSettingsInputParam Responses { get; set; }
+        public LiveResponsesDelegationSettingsInputParam Responses { get; }
     }
 }

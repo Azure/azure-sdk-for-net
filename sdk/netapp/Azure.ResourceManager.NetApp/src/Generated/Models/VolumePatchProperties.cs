@@ -29,7 +29,11 @@ namespace Azure.ResourceManager.NetApp.Models
 
         /// <summary> Initializes a new instance of <see cref="VolumePatchProperties"/>. </summary>
         /// <param name="serviceLevel"> The service level of the file system. </param>
-        /// <param name="usageThreshold"> Maximum storage quota allowed for a file system in bytes. This is a soft quota used for alerting only. For regular volumes, valid values are in the range 50GiB to 100TiB. For large volumes, valid values are in the range 100TiB to 500TiB, and on an exceptional basis, from to 2400GiB to 2400TiB. Values expressed in bytes as multiples of 1 GiB. </param>
+        /// <param name="usageThreshold">
+        /// Maximum storage quota allowed for a file system in bytes. This is a soft quota used for alerting only. For regular volumes, valid values are in the range 50GiB to 100TiB.
+        /// For large volumes, valid values are in the range 100TiB to 500TiB, and on an exceptional basis, from to 2400GiB to 2400TiB.
+        /// For extra large volumes, valid values are in the range 2400GiB to 7200TiB. Values expressed in bytes as multiples of 1 GiB.
+        /// </param>
         /// <param name="exportPolicy"> Set of export policy rules. </param>
         /// <param name="protocolTypes">
         /// Specify the protocol types for the volume. Supported values are NFSv3, NFSv4.1, and CIFS. For SMB volumes, specify CIFS.
@@ -38,6 +42,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="throughputMibps"> Maximum throughput in MiB/s that can be achieved by this volume and this will be accepted as input only for manual qosType volume. </param>
         /// <param name="dataProtection"> DataProtection type volumes include an object containing details of the replication. </param>
         /// <param name="isDefaultQuotaEnabled"> Specifies if default quota is enabled for the volume. </param>
+        /// <param name="asyncDirectoryDelete"> Async Directory Delete configuration for the volume. </param>
         /// <param name="defaultUserQuotaInKiBs"> Default user quota for volume in KiBs. If isDefaultQuotaEnabled is set, the minimum value of 4 KiBs applies . </param>
         /// <param name="defaultGroupQuotaInKiBs"> Default group quota for volume in KiBs. If isDefaultQuotaEnabled is set, the minimum value of 4 KiBs applies. </param>
         /// <param name="unixPermissions"> UNIX permissions for NFS volume accepted in octal 4 digit format. First digit selects the set user ID(4), set group ID (2) and sticky (1) attributes. Second digit selects permission for the owner of the file: read (4), write (2) and execute (1). Third selects permissions for other users in the same group. the fourth for other users not in the group. 0755 - gives read/write/execute permissions to owner and read/execute to group and other users. </param>
@@ -53,8 +58,10 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="isSnapshotDirectoryVisible"> If enabled (true) the volume will contain a read-only snapshot directory which provides access to each of the volume's snapshots. </param>
         /// <param name="smbAccessBasedEnumeration"> Enables access-based enumeration share property for SMB Shares. Only applicable for SMB/DualProtocol volume. </param>
         /// <param name="smbNonBrowsable"> Enables non-browsable property for SMB Shares. Only applicable for SMB/DualProtocol volume. </param>
+        /// <param name="smbOplocks"> Enables or disables SMB opportunistic lock property for SMB Shares. Only applicable for SMB/DualProtocol volume. </param>
+        /// <param name="geoNamespaceProperties"> Geographic namespace properties for this volume. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VolumePatchProperties(NetAppFileServiceLevel? serviceLevel, long? usageThreshold, VolumePatchPropertiesExportPolicy exportPolicy, IList<string> protocolTypes, float? throughputMibps, NetAppVolumePatchDataProtection dataProtection, bool? isDefaultQuotaEnabled, long? defaultUserQuotaInKiBs, long? defaultGroupQuotaInKiBs, string unixPermissions, bool? isCoolAccessEnabled, int? coolnessPeriod, CoolAccessRetrievalPolicy? coolAccessRetrievalPolicy, CoolAccessTieringPolicy? coolAccessTieringPolicy, bool? isSnapshotDirectoryVisible, SmbAccessBasedEnumeration? smbAccessBasedEnumeration, SmbNonBrowsable? smbNonBrowsable, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VolumePatchProperties(NetAppFileServiceLevel? serviceLevel, long? usageThreshold, VolumePatchPropertiesExportPolicy exportPolicy, IList<string> protocolTypes, float? throughputMibps, NetAppVolumePatchDataProtection dataProtection, bool? isDefaultQuotaEnabled, AsyncDirectoryDelete asyncDirectoryDelete, long? defaultUserQuotaInKiBs, long? defaultGroupQuotaInKiBs, string unixPermissions, bool? isCoolAccessEnabled, int? coolnessPeriod, CoolAccessRetrievalPolicy? coolAccessRetrievalPolicy, CoolAccessTieringPolicy? coolAccessTieringPolicy, bool? isSnapshotDirectoryVisible, SmbAccessBasedEnumeration? smbAccessBasedEnumeration, SmbNonBrowsable? smbNonBrowsable, SmbOplocks? smbOplocks, VolumePatchNamespaceProperties geoNamespaceProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ServiceLevel = serviceLevel;
             UsageThreshold = usageThreshold;
@@ -63,6 +70,7 @@ namespace Azure.ResourceManager.NetApp.Models
             ThroughputMibps = throughputMibps;
             DataProtection = dataProtection;
             IsDefaultQuotaEnabled = isDefaultQuotaEnabled;
+            AsyncDirectoryDelete = asyncDirectoryDelete;
             DefaultUserQuotaInKiBs = defaultUserQuotaInKiBs;
             DefaultGroupQuotaInKiBs = defaultGroupQuotaInKiBs;
             _unixPermissions = unixPermissions;
@@ -73,13 +81,19 @@ namespace Azure.ResourceManager.NetApp.Models
             IsSnapshotDirectoryVisible = isSnapshotDirectoryVisible;
             _smbAccessBasedEnumeration = smbAccessBasedEnumeration;
             SmbNonBrowsable = smbNonBrowsable;
+            SmbOplocks = smbOplocks;
+            GeoNamespaceProperties = geoNamespaceProperties;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The service level of the file system. </summary>
         public NetAppFileServiceLevel? ServiceLevel { get; set; }
 
-        /// <summary> Maximum storage quota allowed for a file system in bytes. This is a soft quota used for alerting only. For regular volumes, valid values are in the range 50GiB to 100TiB. For large volumes, valid values are in the range 100TiB to 500TiB, and on an exceptional basis, from to 2400GiB to 2400TiB. Values expressed in bytes as multiples of 1 GiB. </summary>
+        /// <summary>
+        /// Maximum storage quota allowed for a file system in bytes. This is a soft quota used for alerting only. For regular volumes, valid values are in the range 50GiB to 100TiB.
+        /// For large volumes, valid values are in the range 100TiB to 500TiB, and on an exceptional basis, from to 2400GiB to 2400TiB.
+        /// For extra large volumes, valid values are in the range 2400GiB to 7200TiB. Values expressed in bytes as multiples of 1 GiB.
+        /// </summary>
         public long? UsageThreshold { get; set; }
 
         /// <summary> Set of export policy rules. </summary>
@@ -99,6 +113,9 @@ namespace Azure.ResourceManager.NetApp.Models
 
         /// <summary> Specifies if default quota is enabled for the volume. </summary>
         public bool? IsDefaultQuotaEnabled { get; set; }
+
+        /// <summary> Async Directory Delete configuration for the volume. </summary>
+        public AsyncDirectoryDelete AsyncDirectoryDelete { get; set; }
 
         /// <summary> Default user quota for volume in KiBs. If isDefaultQuotaEnabled is set, the minimum value of 4 KiBs applies . </summary>
         public long? DefaultUserQuotaInKiBs { get; set; }
@@ -157,6 +174,12 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <summary> Enables non-browsable property for SMB Shares. Only applicable for SMB/DualProtocol volume. </summary>
         public SmbNonBrowsable? SmbNonBrowsable { get; set; }
 
+        /// <summary> Enables or disables SMB opportunistic lock property for SMB Shares. Only applicable for SMB/DualProtocol volume. </summary>
+        public SmbOplocks? SmbOplocks { get; set; }
+
+        /// <summary> Geographic namespace properties for this volume. </summary>
+        internal VolumePatchNamespaceProperties GeoNamespaceProperties { get; set; }
+
         /// <summary> Export policy rule. </summary>
         public IList<NetAppVolumeExportPolicyRule> ExportRules
         {
@@ -167,6 +190,23 @@ namespace Azure.ResourceManager.NetApp.Models
                     ExportPolicy = new VolumePatchPropertiesExportPolicy();
                 }
                 return ExportPolicy.Rules;
+            }
+        }
+
+        /// <summary> Indicates whether this volume is designated as an origin for cache volumes. </summary>
+        public OriginVolume? GeoNamespaceOriginVolume
+        {
+            get
+            {
+                return GeoNamespaceProperties is null ? default : GeoNamespaceProperties.OriginVolume;
+            }
+            set
+            {
+                if (GeoNamespaceProperties is null)
+                {
+                    GeoNamespaceProperties = new VolumePatchNamespaceProperties();
+                }
+                GeoNamespaceProperties.OriginVolume = value;
             }
         }
     }

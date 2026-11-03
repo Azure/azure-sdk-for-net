@@ -177,24 +177,6 @@ namespace Azure.ResourceManager.Cdn
             }
         }
 
-        /// <summary> Origin capacity settings for an origin. </summary>
-        [WirePath("properties.originCapacityResource")]
-        public FrontDoorOriginCapacitySettings OriginCapacityResource
-        {
-            get
-            {
-                return Properties is null ? default : Properties.OriginCapacityResource;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new FrontDoorOriginProperties();
-                }
-                Properties.OriginCapacityResource = value;
-            }
-        }
-
         /// <summary> Whether to enable health probes to be made against backends defined under backendPools. Health probes can only be disabled if there is a single enabled backend in single enabled backend pool. </summary>
         [WirePath("properties.enabledState")]
         public EnabledState? EnabledState
@@ -228,6 +210,38 @@ namespace Azure.ResourceManager.Cdn
                     Properties = new FrontDoorOriginProperties();
                 }
                 Properties.EnforceCertificateNameCheck = value;
+            }
+        }
+
+        /// <summary> The validation mode for certificate name check. Only applicable when enforceCertificateNameCheck is true. </summary>
+        [WirePath("properties.certificateNameCheckValidationMode")]
+        public CertificateNameCheckValidationMode? CertificateNameCheckValidationMode
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CertificateNameCheckValidationMode;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new FrontDoorOriginProperties();
+                }
+                Properties.CertificateNameCheckValidationMode = value;
+            }
+        }
+
+        /// <summary> The list of custom certificate subjects to validate against. Only applicable when certificateNameCheckValidationMode is 'CustomCertificateSubject'. Must contain 1 or 2 entries. </summary>
+        [WirePath("properties.customCertificateSubjects")]
+        public IList<string> CustomCertificateSubjects
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new FrontDoorOriginProperties();
+                }
+                return Properties.CustomCertificateSubjects;
             }
         }
 

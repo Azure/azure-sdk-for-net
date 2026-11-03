@@ -10,7 +10,7 @@ using System.Text.Json;
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> Delegates to a same-project prompt agent using native client delegation. Requires [thinking] and/or [commentary] output sections. </summary>
-    public partial class VoiceAgentLiveManagedAgentDelegation : IJsonModel<VoiceAgentLiveManagedAgentDelegation>
+    public partial class VoiceAgentLiveManagedAgentDelegation : VoiceAgentLiveDelegation, IJsonModel<VoiceAgentLiveManagedAgentDelegation>
     {
         /// <summary> Initializes a new instance of <see cref="VoiceAgentLiveManagedAgentDelegation"/> for deserialization. </summary>
         internal VoiceAgentLiveManagedAgentDelegation()
@@ -19,7 +19,7 @@ namespace Azure.AI.Projects.Agents
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual VoiceAgentLiveManagedAgentDelegation PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override VoiceAgentLiveDelegation PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<VoiceAgentLiveManagedAgentDelegation>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -35,7 +35,7 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<VoiceAgentLiveManagedAgentDelegation>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -52,7 +52,7 @@ namespace Azure.AI.Projects.Agents
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        VoiceAgentLiveManagedAgentDelegation IPersistableModel<VoiceAgentLiveManagedAgentDelegation>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        VoiceAgentLiveManagedAgentDelegation IPersistableModel<VoiceAgentLiveManagedAgentDelegation>.Create(BinaryData data, ModelReaderWriterOptions options) => (VoiceAgentLiveManagedAgentDelegation)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<VoiceAgentLiveManagedAgentDelegation>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
@@ -68,15 +68,14 @@ namespace Azure.AI.Projects.Agents
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<VoiceAgentLiveManagedAgentDelegation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(VoiceAgentLiveManagedAgentDelegation)} does not support writing '{format}' format.");
             }
-            writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(Type);
+            base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("agent_name"u8);
             writer.WriteStringValue(AgentName);
             if (Optional.IsDefined(AgentVersion))
@@ -84,30 +83,15 @@ namespace Azure.AI.Projects.Agents
                 writer.WritePropertyName("agent_version"u8);
                 writer.WriteStringValue(AgentVersion);
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
-            {
-                foreach (var item in _additionalBinaryDataProperties)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        VoiceAgentLiveManagedAgentDelegation IJsonModel<VoiceAgentLiveManagedAgentDelegation>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        VoiceAgentLiveManagedAgentDelegation IJsonModel<VoiceAgentLiveManagedAgentDelegation>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (VoiceAgentLiveManagedAgentDelegation)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual VoiceAgentLiveManagedAgentDelegation JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override VoiceAgentLiveDelegation JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<VoiceAgentLiveManagedAgentDelegation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -126,15 +110,15 @@ namespace Azure.AI.Projects.Agents
             {
                 return null;
             }
-            string @type = default;
+            VoiceAgentLiveDelegationType @type = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string agentName = default;
             string agentVersion = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = prop.Value.GetString();
+                    @type = prop.Value.GetString().ToVoiceAgentLiveDelegationType();
                     continue;
                 }
                 if (prop.NameEquals("agent_name"u8))
@@ -152,7 +136,7 @@ namespace Azure.AI.Projects.Agents
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new VoiceAgentLiveManagedAgentDelegation(@type, agentName, agentVersion, additionalBinaryDataProperties);
+            return new VoiceAgentLiveManagedAgentDelegation(@type, additionalBinaryDataProperties, agentName, agentVersion);
         }
     }
 }

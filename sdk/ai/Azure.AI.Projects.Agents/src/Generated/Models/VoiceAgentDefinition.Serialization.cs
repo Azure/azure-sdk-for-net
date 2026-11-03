@@ -75,11 +75,6 @@ namespace Azure.AI.Projects.Agents
                 throw new FormatException($"The model {nameof(VoiceAgentDefinition)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsDefined(SubProtocol))
-            {
-                writer.WritePropertyName("sub_protocol"u8);
-                writer.WriteStringValue(SubProtocol.Value.ToString());
-            }
             if (Optional.IsDefined(ModelType))
             {
                 writer.WritePropertyName("model_type"u8);
@@ -184,6 +179,11 @@ namespace Azure.AI.Projects.Agents
                 writer.WritePropertyName("subagent_config"u8);
                 writer.WriteObjectValue(SubagentConfig, options);
             }
+            if (Optional.IsDefined(PostCall))
+            {
+                writer.WritePropertyName("post_call"u8);
+                writer.WriteObjectValue(PostCall, options);
+            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -214,10 +214,10 @@ namespace Azure.AI.Projects.Agents
             ProjectsAgentKind kind = default;
             ContentFilterConfiguration contentFilterConfiguration = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            VoiceAgentSubProtocol subProtocol = default;
             string instructions = default;
             IDictionary<string, StructuredInputDefinition> structuredInputs = default;
             bool? store = default;
-            VoiceAgentDefinitionSubProtocol? subProtocol = default;
             VoiceModelType? modelType = default;
             string model = default;
             VoiceConversationEngine conversationEngine = default;
@@ -233,6 +233,7 @@ namespace Azure.AI.Projects.Agents
             BinaryData internalToolChoice = default;
             bool? parallelToolCalls = default;
             VoiceAgentSubagentConfig subagentConfig = default;
+            VoiceAgentPostCallConfig postCall = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("kind"u8))
@@ -247,6 +248,11 @@ namespace Azure.AI.Projects.Agents
                         continue;
                     }
                     contentFilterConfiguration = ContentFilterConfiguration.DeserializeContentFilterConfiguration(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("sub_protocol"u8))
+                {
+                    subProtocol = prop.Value.GetString().ToVoiceAgentSubProtocol();
                     continue;
                 }
                 if (prop.NameEquals("instructions"u8))
@@ -275,15 +281,6 @@ namespace Azure.AI.Projects.Agents
                         continue;
                     }
                     store = prop.Value.GetBoolean();
-                    continue;
-                }
-                if (prop.NameEquals("sub_protocol"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    subProtocol = new VoiceAgentDefinitionSubProtocol(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("model_type"u8))
@@ -432,6 +429,15 @@ namespace Azure.AI.Projects.Agents
                     subagentConfig = VoiceAgentSubagentConfig.DeserializeVoiceAgentSubagentConfig(prop.Value, options);
                     continue;
                 }
+                if (prop.NameEquals("post_call"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    postCall = VoiceAgentPostCallConfig.DeserializeVoiceAgentPostCallConfig(prop.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
@@ -441,10 +447,10 @@ namespace Azure.AI.Projects.Agents
                 kind,
                 contentFilterConfiguration,
                 additionalBinaryDataProperties,
+                subProtocol,
                 instructions,
                 structuredInputs ?? new ChangeTrackingDictionary<string, StructuredInputDefinition>(),
                 store,
-                subProtocol,
                 modelType,
                 model,
                 conversationEngine,
@@ -459,7 +465,8 @@ namespace Azure.AI.Projects.Agents
                 tools ?? new ChangeTrackingList<VoiceAgentTool>(),
                 internalToolChoice,
                 parallelToolCalls,
-                subagentConfig);
+                subagentConfig,
+                postCall);
         }
     }
 }

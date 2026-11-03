@@ -12,6 +12,24 @@ namespace Azure.AI.Projects.Agents.Tests
     /// </summary>
     public static class ProjectsTestSanitizers
     {
+        internal const string LegacyRealtimeVoiceDefinitionPattern = @"(""definition""\s*:\s*\{\s*""kind""\s*:\s*""voice""\s*,)(?![^{}]*""sub_protocol""\s*:)";
+        internal const string LegacyRealtimeVoiceDefinitionReplacement = "${1}\"sub_protocol\":\"realtime\",";
+
+        internal static void ApplyLegacyRealtimeVoiceRecordingDefaults<TEnvironment>(RecordedTestBase<TEnvironment> testBase)
+            where TEnvironment : TestEnvironment, new()
+        {
+            if (testBase.Mode == RecordedTestMode.Playback)
+            {
+                // Older Realtime recordings omit the now-required default discriminator. Keep explicit protocols and body matching intact.
+                testBase.BodyRegexSanitizers.Add(new BodyRegexSanitizer(new()
+                {
+                    Regex = LegacyRealtimeVoiceDefinitionPattern,
+                    Value = LegacyRealtimeVoiceDefinitionReplacement,
+                    Condition = new(@"/agents/[^/?]+/versions(?:/[^/?]+)?\?")
+                }));
+            }
+        }
+
         // Replacement values
         public const string SANITIZED_SUBSCRIPTION = "00000000-0000-0000-0000-000000000000";
         public const string SANITIZED_HOST = "sanitized-host";

@@ -23,7 +23,6 @@
 
 ### Other Changes
 
-- Reference the published `Azure.AI.AgentServer.Core` 1.0.0-beta.30 package instead of the current Core project, so this release does not require publishing Core 1.0.0-beta.31.
 - Updated resilient task samples to call `SetResilientTasksEnabled()` explicitly; task
   registration alone no longer activates storage or recovery.
 - Updated the resilient research sample to use constructor-injected task handlers and

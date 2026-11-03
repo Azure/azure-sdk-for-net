@@ -93,7 +93,7 @@ namespace Azure.AI.Projects.Agents
             {
                 writer.WritePropertyName("triggers"u8);
                 writer.WriteStartArray();
-                foreach (LiveDecisionTriggerInputParam2 item in Triggers)
+                foreach (LiveDecisionTriggerInputParam item in Triggers)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -143,7 +143,7 @@ namespace Azure.AI.Projects.Agents
             }
             bool delegationIsDefined = false;
             BinaryData delegation = default;
-            IList<LiveDecisionTriggerInputParam2> triggers = default;
+            IList<LiveDecisionTriggerInputParam> triggers = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -164,10 +164,10 @@ namespace Azure.AI.Projects.Agents
                     {
                         continue;
                     }
-                    List<LiveDecisionTriggerInputParam2> array = new List<LiveDecisionTriggerInputParam2>();
+                    List<LiveDecisionTriggerInputParam> array = new List<LiveDecisionTriggerInputParam>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(LiveDecisionTriggerInputParam2.DeserializeLiveDecisionTriggerInputParam2(item, options));
+                        array.Add(LiveDecisionTriggerInputParam.DeserializeLiveDecisionTriggerInputParam(item, options));
                     }
                     triggers = array;
                     continue;
@@ -177,7 +177,7 @@ namespace Azure.AI.Projects.Agents
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new LiveSessionUpdateParams(delegation, triggers ?? new ChangeTrackingList<LiveDecisionTriggerInputParam2>(), additionalBinaryDataProperties)
+            return new LiveSessionUpdateParams(delegation, triggers ?? new ChangeTrackingList<LiveDecisionTriggerInputParam>(), additionalBinaryDataProperties)
             {
                 _delegationIsDefined = delegationIsDefined
             };

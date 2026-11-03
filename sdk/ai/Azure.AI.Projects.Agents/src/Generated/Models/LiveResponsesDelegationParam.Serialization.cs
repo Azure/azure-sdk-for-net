@@ -76,6 +76,11 @@ namespace Azure.AI.Projects.Agents
                 throw new FormatException($"The model {nameof(LiveResponsesDelegationParam)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
+            if (Optional.IsDefined(AcknowledgementDelayMs))
+            {
+                writer.WritePropertyName("acknowledgement_delay_ms"u8);
+                writer.WriteNumberValue(AcknowledgementDelayMs.Value);
+            }
             writer.WritePropertyName("responses"u8);
             writer.WriteObjectValue(Responses, options);
         }
@@ -107,12 +112,22 @@ namespace Azure.AI.Projects.Agents
             }
             DelegationType @type = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            long? acknowledgementDelayMs = default;
             LiveResponsesDelegationSettingsInputParam responses = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
                 {
                     @type = new DelegationType(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("acknowledgement_delay_ms"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    acknowledgementDelayMs = prop.Value.GetInt64();
                     continue;
                 }
                 if (prop.NameEquals("responses"u8))
@@ -125,7 +140,7 @@ namespace Azure.AI.Projects.Agents
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new LiveResponsesDelegationParam(@type, additionalBinaryDataProperties, responses);
+            return new LiveResponsesDelegationParam(@type, additionalBinaryDataProperties, acknowledgementDelayMs, responses);
         }
     }
 }

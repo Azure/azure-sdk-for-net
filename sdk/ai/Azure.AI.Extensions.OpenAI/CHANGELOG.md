@@ -1,6 +1,18 @@
 # Release History
 
-## 3.0.0-beta.6 (Unreleased)
+## 3.0.0-beta.7 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+- Regenerated from the published Foundry definitions in [Azure/azure-rest-api-specs#47196](https://github.com/Azure/azure-rest-api-specs/pull/47196) at `a8ba157506e523c4274cd5f5d3288a2ae45235ab`, using OpenAI TypeSpec 1.34.0.
+
+## 3.0.0-beta.6 (2026-10-30)
 
 ### Features Added
 - Exposed the constructors of `GitHubCopilotToolsetPreview`, `GitHubCopilotToolsetDefaultConfig` `GitHubCopilotToolsetConfig`, `MicrosoftCopilotToolsetPreview`, `MicrosoftCopilotToolsetDefaultConfig` and `MicrosoftCopilotToolsetConfig`.
@@ -8,12 +20,6 @@
 ### Breaking Changes
 - `BrowserAutomationPreviewTool` is deprecated and hidden from IntelliSense. Please use `BrowserAutomationTool` instead.
 - Removed the `type` parameter from response-item methods on `ExtensionsOpenAIModelFactory`. Each factory now uses the discriminator value for its concrete response-item type.
-
-### Bugs Fixed
-
-### Other Changes
-
-- Regenerated from the latest Foundry definitions in [Azure/azure-rest-api-specs#47196](https://github.com/Azure/azure-rest-api-specs/pull/47196), using OpenAI TypeSpec 1.32.0.
 
 ### Sample Updates
 - Added sample for Hosted Agent identity isolation.

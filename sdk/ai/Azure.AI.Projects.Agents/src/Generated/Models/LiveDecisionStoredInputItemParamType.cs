@@ -8,10 +8,14 @@ using System.ComponentModel;
 namespace Azure.AI.Projects.Agents
 {
     /// <summary></summary>
-    public readonly partial struct LiveDecisionStoredInputItemParamType : IEquatable<LiveDecisionStoredInputItemParamType>
+    internal readonly partial struct LiveDecisionStoredInputItemParamType : IEquatable<LiveDecisionStoredInputItemParamType>
     {
         private readonly string _value;
         private const string MessageValue = "message";
+        private const string FunctionCallValue = "function_call";
+        private const string FunctionCallOutputValue = "function_call_output";
+        private const string CustomToolCallValue = "custom_tool_call";
+        private const string CustomToolCallOutputValue = "custom_tool_call_output";
 
         /// <summary> Initializes a new instance of <see cref="LiveDecisionStoredInputItemParamType"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -25,6 +29,18 @@ namespace Azure.AI.Projects.Agents
 
         /// <summary> Gets the Message. </summary>
         public static LiveDecisionStoredInputItemParamType Message { get; } = new LiveDecisionStoredInputItemParamType(MessageValue);
+
+        /// <summary> Gets the FunctionCall. </summary>
+        public static LiveDecisionStoredInputItemParamType FunctionCall { get; } = new LiveDecisionStoredInputItemParamType(FunctionCallValue);
+
+        /// <summary> Gets the FunctionCallOutput. </summary>
+        public static LiveDecisionStoredInputItemParamType FunctionCallOutput { get; } = new LiveDecisionStoredInputItemParamType(FunctionCallOutputValue);
+
+        /// <summary> Gets the CustomToolCall. </summary>
+        public static LiveDecisionStoredInputItemParamType CustomToolCall { get; } = new LiveDecisionStoredInputItemParamType(CustomToolCallValue);
+
+        /// <summary> Gets the CustomToolCallOutput. </summary>
+        public static LiveDecisionStoredInputItemParamType CustomToolCallOutput { get; } = new LiveDecisionStoredInputItemParamType(CustomToolCallOutputValue);
 
         /// <summary> Determines if two <see cref="LiveDecisionStoredInputItemParamType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

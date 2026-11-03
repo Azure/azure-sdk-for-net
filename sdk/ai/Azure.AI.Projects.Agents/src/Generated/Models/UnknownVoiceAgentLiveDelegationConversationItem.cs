@@ -18,7 +18,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="responseId"> The ID of the Responses API response associated with a Responses delegation. Omitted for client delegations. </param>
         /// <param name="target"> The configured delegation owner. </param>
         /// <param name="createdOn"> Observed delegation creation time, in Unix seconds. </param>
-        internal UnknownVoiceAgentLiveDelegationConversationItem(VoiceAgentLiveConversationItemType @type, string id, IDictionary<string, BinaryData> additionalBinaryDataProperties, string responseId, VoiceAgentLiveDelegationTarget target, DateTimeOffset createdOn) : base(@type, id, additionalBinaryDataProperties, responseId, target != default ? target : "unknown", createdOn)
+        internal UnknownVoiceAgentLiveDelegationConversationItem(VoiceAgentLiveConversationItemType @type, string id, IDictionary<string, BinaryData> additionalBinaryDataProperties, string responseId, VoiceAgentLiveDelegationTarget target, DateTimeOffset createdOn) : base(@type != default ? @type : "unknown", id, additionalBinaryDataProperties, responseId, target != default ? target : "unknown", createdOn)
         {
         }
     }

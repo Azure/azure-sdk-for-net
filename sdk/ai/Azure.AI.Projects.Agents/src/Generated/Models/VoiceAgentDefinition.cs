@@ -17,7 +17,7 @@ namespace Azure.AI.Projects.Agents
     public partial class VoiceAgentDefinition : VoiceAgentBaseDefinition
     {
         /// <summary> Initializes a new instance of <see cref="VoiceAgentDefinition"/>. </summary>
-        public VoiceAgentDefinition()
+        public VoiceAgentDefinition() : base(VoiceAgentSubProtocol.Realtime)
         {
             OutputModalities = new ChangeTrackingList<VoiceOutputModality>();
             Include = new ChangeTrackingList<VoiceAgentSessionIncludeOption>();
@@ -28,10 +28,10 @@ namespace Azure.AI.Projects.Agents
         /// <param name="kind"></param>
         /// <param name="contentFilterConfiguration"> Configuration for Responsible AI (RAI) content filtering and safety features. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="subProtocol"> The voice protocol for this agent version. Null and unknown values are invalid. </param>
         /// <param name="instructions"> Frontend instructions, templated with structured_inputs. Backend instructions belong in delegation.responses. </param>
         /// <param name="structuredInputs"> Template inputs for session instructions and supported greetings. </param>
         /// <param name="store"> Persists conversation content and audio in Foundry, not native Live recordings. Defaults to false. </param>
-        /// <param name="subProtocol"> Selects Realtime. May be omitted for legacy agents. </param>
         /// <param name="modelType"> How the model backing this voice agent is served. Required with `model` for a model-backed voice agent and omitted when `conversation_engine` is provided. This is independent of the architecture (realtime or cascaded), which the service derives from the selected model. </param>
         /// <param name="model"> The model to use for this agent. Required with `model_type` for a model-backed voice agent and omitted when `conversation_engine` is provided. The model must support realtime or cascaded voice. </param>
         /// <param name="conversationEngine"> The engine that owns conversation handling for this voice agent. Exactly one of this property and the model-backed configuration (`model_type` with `model`) must be provided. When this property is provided, `model_type`, `model`, `instructions`, `tools`, and `tool_choice` must be omitted, and `greeting.tool_choice` cannot be `required`, because the engine owns the conversation logic. The initial implementation supports a hosted-agent engine. </param>
@@ -61,9 +61,9 @@ namespace Azure.AI.Projects.Agents
         /// </param>
         /// <param name="parallelToolCalls"> Whether the model may call multiple tools in parallel. </param>
         /// <param name="subagentConfig"> Optional configuration for sibling Foundry text agents that this voice agent may consult as background specialists. </param>
-        internal VoiceAgentDefinition(ProjectsAgentKind kind, ContentFilterConfiguration contentFilterConfiguration, IDictionary<string, BinaryData> additionalBinaryDataProperties, string instructions, IDictionary<string, StructuredInputDefinition> structuredInputs, bool? store, VoiceAgentDefinitionSubProtocol? subProtocol, VoiceModelType? modelType, string model, VoiceConversationEngine conversationEngine, VoiceAgentGreetingConfig greeting, VoiceAgentAudioConfig audio, VoiceAgentSoundscapeConfig soundscape, IList<VoiceOutputModality> outputModalities, BinaryData internalMaxOutputTokens, IList<VoiceAgentSessionIncludeOption> include, VoiceAgentInterimResponseConfig interimResponse, VoiceAgentAvatarConfig avatar, IList<VoiceAgentTool> tools, BinaryData internalToolChoice, bool? parallelToolCalls, VoiceAgentSubagentConfig subagentConfig) : base(kind, contentFilterConfiguration, additionalBinaryDataProperties, instructions, structuredInputs, store)
+        /// <param name="postCall"> Optional post-call delivery configuration. After each session ends, the service notifies the configured destinations. </param>
+        internal VoiceAgentDefinition(ProjectsAgentKind kind, ContentFilterConfiguration contentFilterConfiguration, IDictionary<string, BinaryData> additionalBinaryDataProperties, VoiceAgentSubProtocol subProtocol, string instructions, IDictionary<string, StructuredInputDefinition> structuredInputs, bool? store, VoiceModelType? modelType, string model, VoiceConversationEngine conversationEngine, VoiceAgentGreetingConfig greeting, VoiceAgentAudioConfig audio, VoiceAgentSoundscapeConfig soundscape, IList<VoiceOutputModality> outputModalities, BinaryData internalMaxOutputTokens, IList<VoiceAgentSessionIncludeOption> include, VoiceAgentInterimResponseConfig interimResponse, VoiceAgentAvatarConfig avatar, IList<VoiceAgentTool> tools, BinaryData internalToolChoice, bool? parallelToolCalls, VoiceAgentSubagentConfig subagentConfig, VoiceAgentPostCallConfig postCall) : base(kind, contentFilterConfiguration, additionalBinaryDataProperties, subProtocol, instructions, structuredInputs, store)
         {
-            SubProtocol = subProtocol;
             ModelType = modelType;
             Model = model;
             ConversationEngine = conversationEngine;
@@ -79,10 +79,8 @@ namespace Azure.AI.Projects.Agents
             InternalToolChoice = internalToolChoice;
             ParallelToolCalls = parallelToolCalls;
             SubagentConfig = subagentConfig;
+            PostCall = postCall;
         }
-
-        /// <summary> Selects Realtime. May be omitted for legacy agents. </summary>
-        public VoiceAgentDefinitionSubProtocol? SubProtocol { get; set; }
 
         /// <summary> How the model backing this voice agent is served. Required with `model` for a model-backed voice agent and omitted when `conversation_engine` is provided. This is independent of the architecture (realtime or cascaded), which the service derives from the selected model. </summary>
         public VoiceModelType? ModelType { get; set; }
@@ -132,5 +130,8 @@ namespace Azure.AI.Projects.Agents
 
         /// <summary> Optional configuration for sibling Foundry text agents that this voice agent may consult as background specialists. </summary>
         public VoiceAgentSubagentConfig SubagentConfig { get; set; }
+
+        /// <summary> Optional post-call delivery configuration. After each session ends, the service notifies the configured destinations. </summary>
+        public VoiceAgentPostCallConfig PostCall { get; set; }
     }
 }

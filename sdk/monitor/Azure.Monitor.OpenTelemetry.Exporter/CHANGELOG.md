@@ -4,6 +4,7 @@
 
 ### Features Added
 
+- Added Attach SDK statistics per customer connection string observed in newly exported telemetry for multi-endpoint routing. A configured connection string alone no longer produces Attach in this mode, and offline-storage replays do not create or refresh Attach associations. Single-endpoint Attach is unchanged.
 - Multi-endpoint routing reads a new `microsoft.ingestion_auth` attribute. Telemetry marked `"aad"` is sent and stored separately from instrumentation-key telemetry for the same endpoint, in preparation for Microsoft Entra ID support.
 - Multi-endpoint routing can now be used with `AzureMonitorExporterOptions.Credential`. Only telemetry marked `"aad"` is sent with a token, scoped to the audience in the `Azure.Monitor.OpenTelemetry.Exporter.MultiEndpointAadAudience` AppContext value (public cloud by default). Without a credential, telemetry marked `"aad"` is dropped.
 - Added the experimental `Azure.Monitor.OpenTelemetry.Exporter.Experimental.gen_ai_input_output_limit_increase` AppContext switch. When enabled, the custom property truncation limit for `gen_ai.input.messages` and `gen_ai.output.messages` increases from 256 KiB to 4 MiB (characters) to support GenAI multimodal content. Limits are unchanged by default: 256 KiB for GenAI attributes and 8 KiB for all other custom properties.
@@ -12,11 +13,16 @@
 
 ### Bugs Fixed
 
+- Multi-endpoint Attach SDK statistics refresh version and attachment mode after late resource initialization.
+- Attach SDK statistics use monotonic time for reporting intervals and association expiry, avoiding delays caused by system clock adjustments.
+- Microsoft OpenTelemetry SDK statistics use the standard collector endpoint for all customer regions while retaining each item's EU/non-EU SDK statistics instrumentation key and customer key. Non-distro Breeze routing is unchanged.
 - Uploading telemetry from offline storage (at startup, on retry, and at shutdown) is no longer recorded as an HTTP dependency by HttpClient instrumentation.
   ([#63821](https://github.com/Azure/azure-sdk-for-net/issues/63821))
 - Fixed `LogFilteringProcessor` behavior in .net 11 when `RandomTraceId` is set. ([64084](https://github.com/Azure/azure-sdk-for-net/pull/64084))
 
 ### Other Changes
+
+- Removed registry-owned locks from multi-endpoint Attach SDK statistics observation and collection. Endpoint regions are cached, and observation is skipped when both stats regions are disabled.
 
 ## 1.10.0 (2026-10-05)
 

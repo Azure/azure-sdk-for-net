@@ -91,6 +91,14 @@ interface PrivateEndpointConnections {
 
 **Effect:** The override is applied as a final, name-only transformation after expansion, parent inference, and post-processing. It only changes the `resourceName` field of the resource metadata, so it affects the generated SDK class names (`<Name>Resource`, `<Name>Collection`, mockable extensions, etc.) without renaming the underlying model or changing the schema in any other way.
 
+A model-level `@clientName` supplies the resource stem only when the model backs a single resource path. Shared models retain path-specific stems; use an interface `@clientName` or a Read operation's `resource-name` option to customize an individual path.
+
+`@clientName(exact("IpWidget"), "csharp")` also supplies an explicit resource stem. The `exact()` marker is removed before constructing resource metadata; it is not part of the generated resource name. Resource-name provenance is separate from the model's `isExactName` flag because resource names can also come from lifecycle decorators or `resource-name` options.
+
+Explicit resource-name arguments on the public `@armResourceRead`, `@armResourceCreateOrUpdate`, `@armResourceUpdate`, and `@armResourceDelete` decorators retain their spelling in both resource detectors, including the default legacy detector. Omitting the argument leaves the stem automatically derived.
+
+Automatically derived stems use the shared C# acronym rules. Regeneration retains the casing of published collection accessors by inspecting the parent resource's or mockable scope's last-contract method. The match includes the instance method shape and collection path parameter types; the selected accessor also supplies historical parameter spellings before casing is finalized. Exact parameter-name overrides still take precedence and do not change the selected accessor. If both accessor names match, current customizations distinguish retained aliases from the accessor that must still be generated. Both newer names such as `GetAllOS` and legacy names such as `GetOs` remain stable, including historical parameter spellings such as `iPv4Name`.
+
 **Diagnostics:** The emitter reports warnings for:
 
 - a plain `string` value on a Read operation that produces multiple resources (use the map form instead);

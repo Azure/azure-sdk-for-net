@@ -10,15 +10,12 @@ namespace Azure.AI.Projects.Agents
 {
     /// <summary> Delegates to a same-project prompt agent using native client delegation. Requires [thinking] and/or [commentary] output sections. </summary>
     [Experimental("AAIP001")]
-    public partial class VoiceAgentLiveManagedAgentDelegation
+    public partial class VoiceAgentLiveManagedAgentDelegation : VoiceAgentLiveDelegation
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
-
         /// <summary> Initializes a new instance of <see cref="VoiceAgentLiveManagedAgentDelegation"/>. </summary>
         /// <param name="agentName"> Name of a prompt agent in the same project. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> is null. </exception>
-        public VoiceAgentLiveManagedAgentDelegation(string agentName)
+        public VoiceAgentLiveManagedAgentDelegation(string agentName) : base(VoiceAgentLiveDelegationType.FoundryManagedAgent)
         {
             Argument.AssertNotNull(agentName, nameof(agentName));
 
@@ -26,20 +23,15 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <summary> Initializes a new instance of <see cref="VoiceAgentLiveManagedAgentDelegation"/>. </summary>
-        /// <param name="type"> Canonical delegation type; legacy managed_prompt_agent values are returned as foundry_managed_agent. </param>
+        /// <param name="type"> The delegation owner. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="agentName"> Name of a prompt agent in the same project. </param>
         /// <param name="agentVersion"> Agent version, pinned per connection. Omit to select the active version. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VoiceAgentLiveManagedAgentDelegation(string @type, string agentName, string agentVersion, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VoiceAgentLiveManagedAgentDelegation(VoiceAgentLiveDelegationType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string agentName, string agentVersion) : base(@type, additionalBinaryDataProperties)
         {
-            Type = @type;
             AgentName = agentName;
             AgentVersion = agentVersion;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
-
-        /// <summary> Canonical delegation type; legacy managed_prompt_agent values are returned as foundry_managed_agent. </summary>
-        public string Type { get; } = "foundry_managed_agent";
 
         /// <summary> Name of a prompt agent in the same project. </summary>
         public string AgentName { get; set; }

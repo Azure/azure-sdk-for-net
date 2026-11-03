@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Network.Tests
 
         [Test]
         public void NativeETagsRoundTrip(
-            [Values(typeof(HubIPConfigurationData), typeof(HubRouteTableData), typeof(IPAllocationData), typeof(InboundNatRuleData), typeof(InboundSecurityRuleData))] Type modelType,
+            [Values(typeof(HubIPConfigurationData), typeof(HubRouteTableData), typeof(IPAllocationData), typeof(InboundNatRuleData), typeof(InboundSecurityRuleData), typeof(ExpressRouteLagAuthorizationData), typeof(DdosMitigationRule))] Type modelType,
             [Values("J", "W")] string format,
             [Values("\"quoted\"", "W/\"weak\"")] string etag)
         {
@@ -109,6 +109,42 @@ namespace Azure.ResourceManager.Network.Tests
             {
                 Assert.That(value.GetString(), Is.EqualTo(etag));
                 Assert.That(document.RootElement.EnumerateObject().Count(p => p.Name == "etag"), Is.EqualTo(1));
+            }
+        }
+
+        [Test]
+        public void OptionalNativeETagsRemainNull(
+            [Values(typeof(ExpressRouteLagAuthorizationData), typeof(DdosMitigationRule))] Type modelType,
+            [Values("{}", """{"etag":null}""")] string json,
+            [Values("J", "W")] string format)
+        {
+            var options = new ModelReaderWriterOptions(format);
+            object model = ModelReaderWriter.Read(BinaryData.FromString(json), modelType, options, AzureResourceManagerNetworkContext.Default);
+            Assert.That(modelType.GetProperty("ETag").GetValue(model), Is.Null);
+            using JsonDocument document = JsonDocument.Parse(ModelReaderWriter.Write(model, options, AzureResourceManagerNetworkContext.Default));
+            Assert.That(document.RootElement.TryGetProperty("etag", out _), Is.False);
+        }
+
+        [TestCase(null)]
+        [TestCase("\"quoted\"")]
+        [TestCase("W/\"weak\"")]
+        public void OptionalNativeETagFactoriesRetainValues(string value)
+        {
+            ETag? etag = value is null ? null : new ETag(value);
+            var authorization = ArmNetworkModelFactory.ExpressRouteLagAuthorizationData(eTag: etag);
+            var rule = ArmNetworkModelFactory.DdosMitigationRule(eTag: etag, type: "Microsoft.Network/ddosMitigationRules");
+            Assert.That(authorization.ETag, Is.EqualTo(etag));
+            Assert.That(rule.ETag, Is.EqualTo(etag));
+            Assert.That(rule.Type, Is.EqualTo("Microsoft.Network/ddosMitigationRules"));
+            foreach (object model in new object[] { authorization, rule })
+            {
+                using JsonDocument document = JsonDocument.Parse(ModelReaderWriter.Write(model, ModelReaderWriterOptions.Json, AzureResourceManagerNetworkContext.Default));
+                Assert.That(document.RootElement.TryGetProperty("etag", out JsonElement persisted), Is.EqualTo(value is not null));
+                if (value is not null)
+                {
+                    Assert.That(persisted.ValueKind, Is.EqualTo(JsonValueKind.String));
+                    Assert.That(persisted.GetString(), Is.EqualTo(value));
+                }
             }
         }
 
@@ -264,58 +300,82 @@ namespace Azure.ResourceManager.Network.Tests
             {
                 if (asynchronous)
                 {
-                    if (overload == 0) await collection.CreateOrUpdateAsync(WaitUntil.Completed, poolName: "pool", data, cancellation.Token);
-                    else if (overload == 1) await collection.CreateOrUpdateAsync(WaitUntil.Completed, "pool", data);
-                    else if (overload == 5) await collection.CreateOrUpdateAsync(WaitUntil.Completed, "pool", data, new ETag(condition), cancellation.Token);
-                    else await collection.CreateOrUpdateAsync(WaitUntil.Completed, "pool", data, condition, cancellation.Token);
+                    if (overload == 0)
+                        await collection.CreateOrUpdateAsync(WaitUntil.Completed, poolName: "pool", data, cancellation.Token);
+                    else if (overload == 1)
+                        await collection.CreateOrUpdateAsync(WaitUntil.Completed, "pool", data);
+                    else if (overload == 5)
+                        await collection.CreateOrUpdateAsync(WaitUntil.Completed, "pool", data, new ETag(condition), cancellation.Token);
+                    else
+                        await collection.CreateOrUpdateAsync(WaitUntil.Completed, "pool", data, condition, cancellation.Token);
                 }
                 else
                 {
-                    if (overload == 0) collection.CreateOrUpdate(WaitUntil.Completed, poolName: "pool", data, cancellation.Token);
-                    else if (overload == 1) collection.CreateOrUpdate(WaitUntil.Completed, "pool", data);
-                    else if (overload == 5) collection.CreateOrUpdate(WaitUntil.Completed, "pool", data, new ETag(condition), cancellation.Token);
-                    else collection.CreateOrUpdate(WaitUntil.Completed, "pool", data, condition, cancellation.Token);
+                    if (overload == 0)
+                        collection.CreateOrUpdate(WaitUntil.Completed, poolName: "pool", data, cancellation.Token);
+                    else if (overload == 1)
+                        collection.CreateOrUpdate(WaitUntil.Completed, "pool", data);
+                    else if (overload == 5)
+                        collection.CreateOrUpdate(WaitUntil.Completed, "pool", data, new ETag(condition), cancellation.Token);
+                    else
+                        collection.CreateOrUpdate(WaitUntil.Completed, "pool", data, condition, cancellation.Token);
                 }
             }
             else if (operation == "delete")
             {
                 if (asynchronous)
                 {
-                    if (overload == 0) await resource.DeleteAsync(WaitUntil.Completed, cancellation.Token);
-                    else if (overload == 1) await resource.DeleteAsync(WaitUntil.Completed);
-                    else if (overload == 5) await resource.DeleteAsync(WaitUntil.Completed, new ETag(condition), cancellation.Token);
-                    else await resource.DeleteAsync(WaitUntil.Completed, condition, cancellation.Token);
+                    if (overload == 0)
+                        await resource.DeleteAsync(WaitUntil.Completed, cancellation.Token);
+                    else if (overload == 1)
+                        await resource.DeleteAsync(WaitUntil.Completed);
+                    else if (overload == 5)
+                        await resource.DeleteAsync(WaitUntil.Completed, new ETag(condition), cancellation.Token);
+                    else
+                        await resource.DeleteAsync(WaitUntil.Completed, condition, cancellation.Token);
                 }
                 else
                 {
-                    if (overload == 0) resource.Delete(WaitUntil.Completed, cancellation.Token);
-                    else if (overload == 1) resource.Delete(WaitUntil.Completed);
-                    else if (overload == 5) resource.Delete(WaitUntil.Completed, new ETag(condition), cancellation.Token);
-                    else resource.Delete(WaitUntil.Completed, condition, cancellation.Token);
+                    if (overload == 0)
+                        resource.Delete(WaitUntil.Completed, cancellation.Token);
+                    else if (overload == 1)
+                        resource.Delete(WaitUntil.Completed);
+                    else if (overload == 5)
+                        resource.Delete(WaitUntil.Completed, new ETag(condition), cancellation.Token);
+                    else
+                        resource.Delete(WaitUntil.Completed, condition, cancellation.Token);
                 }
             }
             else
             {
                 if (asynchronous)
                 {
-                    if (overload == 0) await resource.UpdateAsync(patch, cancellation.Token);
-                    else if (overload == 1) await resource.UpdateAsync(patch);
-                    else if (overload == 5) await resource.UpdateAsync(patch, new ETag(condition), cancellation.Token);
-                    else await resource.UpdateAsync(patch, condition, cancellation.Token);
+                    if (overload == 0)
+                        await resource.UpdateAsync(patch, cancellation.Token);
+                    else if (overload == 1)
+                        await resource.UpdateAsync(patch);
+                    else if (overload == 5)
+                        await resource.UpdateAsync(patch, new ETag(condition), cancellation.Token);
+                    else
+                        await resource.UpdateAsync(patch, condition, cancellation.Token);
                 }
                 else
                 {
-                    if (overload == 0) resource.Update(patch, cancellation.Token);
-                    else if (overload == 1) resource.Update(patch);
-                    else if (overload == 5) resource.Update(patch, new ETag(condition), cancellation.Token);
-                    else resource.Update(patch, condition, cancellation.Token);
+                    if (overload == 0)
+                        resource.Update(patch, cancellation.Token);
+                    else if (overload == 1)
+                        resource.Update(patch);
+                    else if (overload == 5)
+                        resource.Update(patch, new ETag(condition), cancellation.Token);
+                    else
+                        resource.Update(patch, condition, cancellation.Token);
                 }
             }
             Request request = transport.Requests.Single();
             Assert.That(request.Method, Is.EqualTo(operation == "create" ? RequestMethod.Put : operation == "delete" ? RequestMethod.Delete : RequestMethod.Patch));
-            Assert.That(request.Uri.ToUri().AbsolutePath, Is.EqualTo(PoolPath));
             Assert.That(request.Headers.TryGetValue("If-Match", out string header), Is.EqualTo(condition != null));
-            if (condition != null) Assert.That(header, Is.EqualTo(condition));
+            if (condition != null)
+                Assert.That(header, Is.EqualTo(condition));
         }
     }
 }

@@ -68,11 +68,12 @@ public sealed class ResilientTaskOptInProtocolTests
     }
 
     [Test]
-    public async Task ExplicitCoreOptIn_EnablesTasksWithoutResilientBackground()
+    public async Task ExplicitCoreOptIn_DoesNotEnableResponsesWithoutFeatureFlags()
     {
         await AssertTaskRuntimeUsedAsync(
             configureOptions: null,
-            configureServices: services => services.SetResilientTasksEnabled());
+            configureServices: services => services.SetResilientTasksEnabled(),
+            expectTaskRuntime: false);
     }
 
     [TestCase(false)]
@@ -96,7 +97,8 @@ public sealed class ResilientTaskOptInProtocolTests
     private static async Task AssertTaskRuntimeUsedAsync(
         Action<ResponsesServerOptions>? configureOptions,
         Action<IServiceCollection>? configureServices,
-        bool stream = false)
+        bool stream = false,
+        bool expectTaskRuntime = true)
     {
         string root = Path.Combine(
             Path.GetTempPath(),
@@ -124,7 +126,9 @@ public sealed class ResilientTaskOptInProtocolTests
             Assert.Multiple(() =>
             {
                 Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK), body);
-                Assert.That(store.CreateCallCount, Is.GreaterThan(0));
+                Assert.That(
+                    store.CreateCallCount,
+                    expectTaskRuntime ? Is.GreaterThan(0) : Is.Zero);
                 Assert.That(
                     factory.Services.GetRequiredService<IOptions<ResilientTaskOptions>>().Value.Enabled,
                     Is.True);

@@ -1170,5 +1170,42 @@ namespace Azure.Storage.Files.Shares
             }
             return message;
         }
+
+        internal HttpMessage CreateGetHardLinksRequest(string sharesnapshot, int? timeout, string leaseId, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendQuery("comp", "hardlinks", true);
+            if (sharesnapshot != null)
+            {
+                uri.AppendQuery("sharesnapshot", sharesnapshot, true);
+            }
+            if (timeout != null)
+            {
+                uri.AppendQuery("timeout", TypeFormatters.ConvertToString(timeout), true);
+            }
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Get;
+            if (_version != null)
+            {
+                request.Headers.SetValue("x-ms-version", _version);
+            }
+            if (leaseId != null)
+            {
+                request.Headers.SetValue("x-ms-lease-id", leaseId);
+            }
+            if (_allowTrailingDot != null)
+            {
+                request.Headers.SetValue("x-ms-allow-trailing-dot", TypeFormatters.ConvertToString(_allowTrailingDot));
+            }
+            if (_fileRequestIntent?.ToString() != null)
+            {
+                request.Headers.SetValue("x-ms-file-request-intent", TypeFormatters.ConvertToString(_fileRequestIntent?.ToString()));
+            }
+            request.Headers.SetValue("Accept", "application/xml");
+            return message;
+        }
     }
 }

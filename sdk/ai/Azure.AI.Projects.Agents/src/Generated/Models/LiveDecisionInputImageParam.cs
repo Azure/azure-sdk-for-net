@@ -18,7 +18,7 @@ namespace Azure.AI.Projects.Agents
         private bool _detailIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="LiveDecisionInputImageParam"/>. </summary>
-        /// <param name="imageUrl"> An inline image encoded as a data URL. </param>
+        /// <param name="imageUrl"> A base64-encoded image data URL or a publicly accessible HTTP(S) image URL. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="imageUrl"/> is null. </exception>
         public LiveDecisionInputImageParam(Uri imageUrl)
         {
@@ -28,8 +28,8 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <summary> Initializes a new instance of <see cref="LiveDecisionInputImageParam"/>. </summary>
-        /// <param name="type"> The type of the input item. Always `input_image`. </param>
-        /// <param name="imageUrl"> An inline image encoded as a data URL. </param>
+        /// <param name="type"></param>
+        /// <param name="imageUrl"> A base64-encoded image data URL or a publicly accessible HTTP(S) image URL. </param>
         /// <param name="detail"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal LiveDecisionInputImageParam(string @type, Uri imageUrl, LiveDetailEnum? detail, IDictionary<string, BinaryData> additionalBinaryDataProperties)
@@ -40,10 +40,10 @@ namespace Azure.AI.Projects.Agents
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> The type of the input item. Always `input_image`. </summary>
+        /// <summary> Gets the Type. </summary>
         public string Type { get; } = "input_image";
 
-        /// <summary> An inline image encoded as a data URL. </summary>
+        /// <summary> A base64-encoded image data URL or a publicly accessible HTTP(S) image URL. </summary>
         public Uri ImageUrl { get; set; }
 
         /// <summary> Gets or sets the Detail. </summary>
