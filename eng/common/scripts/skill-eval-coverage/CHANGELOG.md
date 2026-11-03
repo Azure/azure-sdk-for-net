@@ -2,9 +2,6 @@
 
 ## Unreleased
 
-- Keep Tools-only workflow tests outside the synced package and run the complete
-  shared test suite in an isolated consumer without Tools workflows or Git history.
-- Clarify consumer-owned configuration and remove Tools-relative documentation links.
 - Use the verified `aka.ms/azsdk/eval-dashboard` short link in coverage comments.
 - Add a deterministic warning-only check for changed skills and associated
   skill-local Evals, including nested benchmark suites without pipeline configuration.
