@@ -494,17 +494,6 @@ namespace Azure.ResourceManager.Purview.Models
                 default);
         }
 
-        /// <summary> The account endpoints. </summary>
-        /// <param name="catalog"> Gets the catalog endpoint. </param>
-        /// <param name="guardian"></param>
-        /// <param name="scan"> Gets the scan endpoint. </param>
-        /// <returns> A new <see cref="Models.PurviewAccountEndpoint"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static PurviewAccountEndpoint PurviewAccountEndpoint(string catalog, string guardian, string scan)
-        {
-            return new PurviewAccountEndpoint(catalog, scan, default);
-        }
-
         /// <summary> A privately linkable resource. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>

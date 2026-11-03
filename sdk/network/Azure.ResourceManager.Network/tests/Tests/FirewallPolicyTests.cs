@@ -85,14 +85,11 @@ namespace Azure.ResourceManager.Network.Tests
             firewallData.IPConfigurations.Add(
                 new AzureFirewallIPConfiguration()
                 {
-                    PublicIPAddress = new WritableSubResource() { Id = _publicIPAddressIdentifier },
-                    Subnet = new WritableSubResource()
-                    {
-                        Id = _networkIdentifier.AppendChildResource(
+                    PublicIPAddressId = _publicIPAddressIdentifier,
+                    SubnetId = _networkIdentifier.AppendChildResource(
                             "subnets",
                             "AzureFirewallSubnet"
-                        )
-                    },
+                        ),
                 }
             );
             var firewallLro = await rg.GetAzureFirewalls()

@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
@@ -17,11 +16,6 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> ExpressRoute gateway resource properties. </summary>
     internal partial class ExpressRouteGatewayProperties : IJsonModel<ExpressRouteGatewayProperties>
     {
-        /// <summary> Initializes a new instance of <see cref="ExpressRouteGatewayProperties"/> for deserialization. </summary>
-        internal ExpressRouteGatewayProperties()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ExpressRouteGatewayProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
@@ -85,11 +79,11 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("autoScaleConfiguration"u8);
                 writer.WriteObjectValue(AutoScaleConfiguration, options);
             }
-            if (Optional.IsCollectionDefined(ExpressRouteConnections))
+            if (Optional.IsCollectionDefined(ExpressRouteConnectionList))
             {
                 writer.WritePropertyName("expressRouteConnections"u8);
                 writer.WriteStartArray();
-                foreach (ExpressRouteConnectionData item in ExpressRouteConnections)
+                foreach (ExpressRouteConnectionData item in ExpressRouteConnectionList)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -101,7 +95,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
             writer.WritePropertyName("virtualHub"u8);
-            writer.WriteStringValue(VirtualHub);
+            writer.WriteObjectValue(VirtualHub, options);
             if (Optional.IsDefined(AllowNonVirtualWanTraffic))
             {
                 writer.WritePropertyName("allowNonVirtualWanTraffic"u8);
@@ -150,9 +144,9 @@ namespace Azure.ResourceManager.Network.Models
                 return null;
             }
             ExpressRouteGatewayPropertiesAutoScaleConfiguration autoScaleConfiguration = default;
-            IList<ExpressRouteConnectionData> expressRouteConnections = default;
+            IList<ExpressRouteConnectionData> expressRouteConnectionList = default;
             NetworkProvisioningState? provisioningState = default;
-            ResourceIdentifier virtualHub = default;
+            VirtualHubId virtualHub = default;
             bool? allowNonVirtualWanTraffic = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -177,7 +171,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         array.Add(ExpressRouteConnectionData.DeserializeExpressRouteConnectionData(item, options));
                     }
-                    expressRouteConnections = array;
+                    expressRouteConnectionList = array;
                     continue;
                 }
                 if (prop.NameEquals("provisioningState"u8))
@@ -191,7 +185,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (prop.NameEquals("virtualHub"u8))
                 {
-                    virtualHub = new ResourceIdentifier(prop.Value.GetString());
+                    virtualHub = Models.VirtualHubId.DeserializeVirtualHubId(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("allowNonVirtualWanTraffic"u8))
@@ -210,7 +204,7 @@ namespace Azure.ResourceManager.Network.Models
             }
             return new ExpressRouteGatewayProperties(
                 autoScaleConfiguration,
-                expressRouteConnections ?? new ChangeTrackingList<ExpressRouteConnectionData>(),
+                expressRouteConnectionList ?? new ChangeTrackingList<ExpressRouteConnectionData>(),
                 provisioningState,
                 virtualHub,
                 allowNonVirtualWanTraffic,

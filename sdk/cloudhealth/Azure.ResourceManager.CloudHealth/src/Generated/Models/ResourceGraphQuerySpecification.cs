@@ -12,7 +12,7 @@ using Azure.ResourceManager.CloudHealth;
 namespace Azure.ResourceManager.CloudHealth.Models
 {
     /// <summary> Discovery rule specification for an Azure Resource Graph query. </summary>
-    public partial class ResourceGraphQuerySpecification : DiscoveryRuleSpecification
+    public partial class ResourceGraphQuerySpecification : HealthModelDiscoveryRuleSpecification
     {
         /// <summary> Initializes a new instance of <see cref="ResourceGraphQuerySpecification"/>. </summary>
         /// <param name="resourceGraphQuery"> Azure Resource Graph query text in KQL syntax. The query must return at least a column named 'id' which contains the resource ID of the discovered resources. </param>

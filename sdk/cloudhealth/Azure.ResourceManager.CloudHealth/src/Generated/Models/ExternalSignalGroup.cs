@@ -20,19 +20,19 @@ namespace Azure.ResourceManager.CloudHealth.Models
         /// <summary> Initializes a new instance of <see cref="ExternalSignalGroup"/>. </summary>
         internal ExternalSignalGroup()
         {
-            Signals = new ChangeTrackingList<ExternalSignal>();
+            Signals = new ChangeTrackingList<HealthModelExternalSignal>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ExternalSignalGroup"/>. </summary>
         /// <param name="signals"> Signals assigned to this signal group. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ExternalSignalGroup(IReadOnlyList<ExternalSignal> signals, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ExternalSignalGroup(IReadOnlyList<HealthModelExternalSignal> signals, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Signals = signals;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Signals assigned to this signal group. </summary>
-        public IReadOnlyList<ExternalSignal> Signals { get; } = new ChangeTrackingList<ExternalSignal>();
+        public IReadOnlyList<HealthModelExternalSignal> Signals { get; } = new ChangeTrackingList<HealthModelExternalSignal>();
     }
 }

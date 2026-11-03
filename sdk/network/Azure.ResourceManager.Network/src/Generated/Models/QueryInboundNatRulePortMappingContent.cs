@@ -27,19 +27,37 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="ipConfiguration"> NetworkInterfaceIPConfiguration set in load balancer backend address. </param>
         /// <param name="ipAddress"> IP address set in load balancer backend address. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal QueryInboundNatRulePortMappingContent(ResourceIdentifier ipConfiguration, string ipAddress, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal QueryInboundNatRulePortMappingContent(NetworkSubResource ipConfiguration, string ipAddress, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            IpConfiguration = ipConfiguration;
+            IPConfiguration = ipConfiguration;
             IPAddress = ipAddress;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> NetworkInterfaceIPConfiguration set in load balancer backend address. </summary>
         [WirePath("ipConfiguration")]
-        public ResourceIdentifier IpConfiguration { get; set; }
+        internal NetworkSubResource IPConfiguration { get; set; }
 
         /// <summary> IP address set in load balancer backend address. </summary>
         [WirePath("ipAddress")]
         public string IPAddress { get; set; }
+
+        /// <summary> Resource ID. </summary>
+        [WirePath("ipConfiguration.id")]
+        public ResourceIdentifier IPConfigurationId
+        {
+            get
+            {
+                return IPConfiguration is null ? default : IPConfiguration.Id;
+            }
+            set
+            {
+                if (IPConfiguration is null)
+                {
+                    IPConfiguration = new NetworkSubResource();
+                }
+                IPConfiguration.Id = value;
+            }
+        }
     }
 }

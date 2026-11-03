@@ -18,6 +18,7 @@ namespace Azure.Provisioning.Compute
         private BicepValue<bool> _primary;
         private VirtualMachinePublicIPAddressConfiguration _publicIPAddressConfiguration;
         private BicepValue<IPVersion> _privateIPAddressVersion;
+        private BicepValue<int> _privateIPAddressPrefixLength;
         private BicepList<ComputeWriteableSubResourceData> _applicationSecurityGroupResources;
         private BicepList<ComputeWriteableSubResourceData> _applicationGatewayBackendAddressPoolResources;
         private BicepList<ComputeWriteableSubResourceData> _loadBalancerBackendAddressPoolResources;
@@ -84,6 +85,21 @@ namespace Azure.Provisioning.Compute
             {
                 Initialize();
                 _privateIPAddressVersion.Assign(value);
+            }
+        }
+
+        /// <summary> Gets or sets the PrivateIPAddressPrefixLength. </summary>
+        public BicepValue<int> PrivateIPAddressPrefixLength
+        {
+            get
+            {
+                Initialize();
+                return _privateIPAddressPrefixLength;
+            }
+            set
+            {
+                Initialize();
+                _privateIPAddressPrefixLength.Assign(value);
             }
         }
 
@@ -157,6 +173,7 @@ namespace Azure.Provisioning.Compute
             _primary = DefineProperty<bool>(nameof(Primary), new string[] { "primary" });
             _publicIPAddressConfiguration = DefineModelProperty<VirtualMachinePublicIPAddressConfiguration>(nameof(PublicIPAddressConfiguration), new string[] { "publicIPAddressConfiguration" });
             _privateIPAddressVersion = DefineProperty<IPVersion>(nameof(PrivateIPAddressVersion), new string[] { "privateIPAddressVersion" });
+            _privateIPAddressPrefixLength = DefineProperty<int>(nameof(PrivateIPAddressPrefixLength), new string[] { "privateIPAddressPrefixLength" });
             _applicationSecurityGroupResources = DefineListProperty<ComputeWriteableSubResourceData>(nameof(ApplicationSecurityGroupResources), new string[] { "applicationSecurityGroups" });
             _applicationGatewayBackendAddressPoolResources = DefineListProperty<ComputeWriteableSubResourceData>(nameof(ApplicationGatewayBackendAddressPoolResources), new string[] { "applicationGatewayBackendAddressPools" });
             _loadBalancerBackendAddressPoolResources = DefineListProperty<ComputeWriteableSubResourceData>(nameof(LoadBalancerBackendAddressPoolResources), new string[] { "loadBalancerBackendAddressPools" });

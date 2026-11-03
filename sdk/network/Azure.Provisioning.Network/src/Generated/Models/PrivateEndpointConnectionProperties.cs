@@ -14,7 +14,7 @@ namespace Azure.Provisioning.Network
     internal partial class PrivateEndpointConnectionProperties : ProvisionableConstruct
     {
         private PrivateEndpoint _privateEndpoint;
-        private NetworkPrivateLinkServiceConnectionState _privateLinkServiceConnectionState;
+        private NetworkPrivateLinkServiceConnectionState _connectionState;
         private BicepValue<NetworkProvisioningState> _provisioningState;
         private BicepValue<string> _linkIdentifier;
         private BicepValue<string> _privateEndpointLocation;
@@ -34,18 +34,18 @@ namespace Azure.Provisioning.Network
             }
         }
 
-        /// <summary> Gets or sets the PrivateLinkServiceConnectionState. </summary>
-        public NetworkPrivateLinkServiceConnectionState PrivateLinkServiceConnectionState
+        /// <summary> Gets or sets the ConnectionState. </summary>
+        public NetworkPrivateLinkServiceConnectionState ConnectionState
         {
             get
             {
                 Initialize();
-                return _privateLinkServiceConnectionState;
+                return _connectionState;
             }
             set
             {
                 Initialize();
-                AssignOrReplace(ref _privateLinkServiceConnectionState, value);
+                AssignOrReplace(ref _connectionState, value);
             }
         }
 
@@ -84,7 +84,7 @@ namespace Azure.Provisioning.Network
         {
             base.DefineProvisionableProperties();
             _privateEndpoint = DefineModelProperty(nameof(PrivateEndpoint), new string[] { "privateEndpoint" }, new PrivateEndpoint("privateEndpoint"), isOutput: true);
-            _privateLinkServiceConnectionState = DefineModelProperty<NetworkPrivateLinkServiceConnectionState>(nameof(PrivateLinkServiceConnectionState), new string[] { "privateLinkServiceConnectionState" });
+            _connectionState = DefineModelProperty<NetworkPrivateLinkServiceConnectionState>(nameof(ConnectionState), new string[] { "privateLinkServiceConnectionState" });
             _provisioningState = DefineProperty<NetworkProvisioningState>(nameof(ProvisioningState), new string[] { "provisioningState" }, isOutput: true);
             _linkIdentifier = DefineProperty<string>(nameof(LinkIdentifier), new string[] { "linkIdentifier" }, isOutput: true);
             _privateEndpointLocation = DefineProperty<string>(nameof(PrivateEndpointLocation), new string[] { "privateEndpointLocation" }, isOutput: true);

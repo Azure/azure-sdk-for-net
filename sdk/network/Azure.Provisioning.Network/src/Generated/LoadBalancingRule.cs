@@ -9,8 +9,6 @@ using Azure;
 using Azure.Core;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
-using Azure.Provisioning.Resources;
-using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.Provisioning.Network
 {
@@ -25,7 +23,7 @@ namespace Azure.Provisioning.Network
         /// <summary> Creates a new LoadBalancingRule. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
         /// <param name="resourceVersion"> The resource API version. </param>
-        public LoadBalancingRule(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.Network/loadBalancers/loadBalancingRules", resourceVersion ?? "2026-01-01")
+        public LoadBalancingRule(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.Network/loadBalancers/loadBalancingRules", resourceVersion ?? "2026-03-01")
         {
         }
 
@@ -79,241 +77,6 @@ namespace Azure.Provisioning.Network
             }
         }
 
-        /// <summary> An array of references to pool of DIPs. </summary>
-        [CodeGenMember("BackendAddressPools")]
-        public BicepList<WritableSubResource> BackendAddressPools
-        {
-            get
-            {
-                return Properties is null ? default : Properties.BackendAddressPools;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new LoadBalancingRuleProperties();
-                }
-                Properties.BackendAddressPools = value;
-            }
-        }
-
-        /// <summary> Gets or sets the Protocol. </summary>
-        public BicepValue<LoadBalancingTransportProtocol> Protocol
-        {
-            get
-            {
-                return Properties is null ? default : Properties.Protocol;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new LoadBalancingRuleProperties();
-                }
-                Properties.Protocol = value;
-            }
-        }
-
-        /// <summary> Gets or sets the LoadDistribution. </summary>
-        public BicepValue<LoadDistribution> LoadDistribution
-        {
-            get
-            {
-                return Properties is null ? default : Properties.LoadDistribution;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new LoadBalancingRuleProperties();
-                }
-                Properties.LoadDistribution = value;
-            }
-        }
-
-        /// <summary> Gets or sets the FrontendPort. </summary>
-        public BicepValue<int> FrontendPort
-        {
-            get
-            {
-                return Properties is null ? default : Properties.FrontendPort;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new LoadBalancingRuleProperties();
-                }
-                Properties.FrontendPort = value;
-            }
-        }
-
-        /// <summary> Gets or sets the BackendPort. </summary>
-        public BicepValue<int> BackendPort
-        {
-            get
-            {
-                return Properties is null ? default : Properties.BackendPort;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new LoadBalancingRuleProperties();
-                }
-                Properties.BackendPort = value;
-            }
-        }
-
-        /// <summary> Gets or sets the IdleTimeoutInMinutes. </summary>
-        public BicepValue<int> IdleTimeoutInMinutes
-        {
-            get
-            {
-                return Properties is null ? default : Properties.IdleTimeoutInMinutes;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new LoadBalancingRuleProperties();
-                }
-                Properties.IdleTimeoutInMinutes = value;
-            }
-        }
-
-        /// <summary> Gets or sets the EnableFloatingIP. </summary>
-        public BicepValue<bool> EnableFloatingIP
-        {
-            get
-            {
-                return Properties is null ? default : Properties.EnableFloatingIP;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new LoadBalancingRuleProperties();
-                }
-                Properties.EnableFloatingIP = value;
-            }
-        }
-
-        /// <summary> Gets or sets the EnableTcpReset. </summary>
-        public BicepValue<bool> EnableTcpReset
-        {
-            get
-            {
-                return Properties is null ? default : Properties.EnableTcpReset;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new LoadBalancingRuleProperties();
-                }
-                Properties.EnableTcpReset = value;
-            }
-        }
-
-        /// <summary> Gets or sets the DisableOutboundSnat. </summary>
-        public BicepValue<bool> DisableOutboundSnat
-        {
-            get
-            {
-                return Properties is null ? default : Properties.DisableOutboundSnat;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new LoadBalancingRuleProperties();
-                }
-                Properties.DisableOutboundSnat = value;
-            }
-        }
-
-        /// <summary> Gets or sets the EnableConnectionTracking. </summary>
-        public BicepValue<bool> EnableConnectionTracking
-        {
-            get
-            {
-                return Properties is null ? default : Properties.EnableConnectionTracking;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new LoadBalancingRuleProperties();
-                }
-                Properties.EnableConnectionTracking = value;
-            }
-        }
-
-        /// <summary> Gets the ProvisioningState. </summary>
-        public BicepValue<NetworkProvisioningState> ProvisioningState
-        {
-            get
-            {
-                if (Properties is null)
-                {
-                    Properties = new LoadBalancingRuleProperties();
-                }
-                return Properties.ProvisioningState;
-            }
-        }
-
-        /// <summary> Gets or sets the Id. </summary>
-        public BicepValue<ResourceIdentifier> FrontendIPConfigurationId
-        {
-            get
-            {
-                return Properties is null ? default : Properties.FrontendIPConfigurationId;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new LoadBalancingRuleProperties();
-                }
-                Properties.FrontendIPConfigurationId = value;
-            }
-        }
-
-        /// <summary> Gets or sets the Id. </summary>
-        public BicepValue<ResourceIdentifier> BackendAddressPoolId
-        {
-            get
-            {
-                return Properties is null ? default : Properties.BackendAddressPoolId;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new LoadBalancingRuleProperties();
-                }
-                Properties.BackendAddressPoolId = value;
-            }
-        }
-
-        /// <summary> Gets or sets the Id. </summary>
-        public BicepValue<ResourceIdentifier> ProbeId
-        {
-            get
-            {
-                return Properties is null ? default : Properties.ProbeId;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new LoadBalancingRuleProperties();
-                }
-                Properties.ProbeId = value;
-            }
-        }
-
         /// <summary> Define all the provisionable properties for LoadBalancingRule. </summary>
         protected override void DefineProvisionableProperties()
         {
@@ -321,7 +84,7 @@ namespace Azure.Provisioning.Network
             _id = DefineProperty<ResourceIdentifier>(nameof(Id), new string[] { "id" }, isOutput: true);
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _eTag = DefineProperty<ETag>(nameof(ETag), new string[] { "etag" }, isOutput: true);
-            _parent = DefineResource<LoadBalancer>(nameof(Parent), new string[] { "parent" }, isRequired: true);
+            _parent = DefineResource<LoadBalancer>(nameof(Parent), new string[] { "parent" });
             DefineAdditionalProperties();
         }
 
@@ -341,6 +104,8 @@ namespace Azure.Provisioning.Network
         /// <summary></summary>
         public static partial class ResourceVersions
         {
+            /// <summary> API version "2026-03-01". </summary>
+            public static readonly string V2026_03_01 = "2026-03-01";
             /// <summary> API version "2026-01-01". </summary>
             public static readonly string V2026_01_01 = "2026-01-01";
             /// <summary> API version "2025-09-01". </summary>

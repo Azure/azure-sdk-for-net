@@ -63,12 +63,12 @@ namespace Azure.ResourceManager.Cdn
                 Pipeline,
                 Diagnostics.ApplicationId,
                 Endpoint,
-                profileApiVersion ?? "2025-09-01-preview",
+                profileApiVersion ?? "2026-10-01",
                 resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             _afdProfilesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Cdn", ResourceType.Namespace, Diagnostics);
-            _afdProfilesRestClient = new AFDProfiles(_afdProfilesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, profileApiVersion ?? "2025-09-01-preview");
+            _afdProfilesRestClient = new AFDProfiles(_afdProfilesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, profileApiVersion ?? "2026-10-01");
             _logAnalyticsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Cdn", ResourceType.Namespace, Diagnostics);
-            _logAnalyticsRestClient = new LogAnalytics(_logAnalyticsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, profileApiVersion ?? "2025-09-01-preview");
+            _logAnalyticsRestClient = new LogAnalytics(_logAnalyticsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, profileApiVersion ?? "2026-10-01");
             ValidateResourceId(id);
         }
 
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -276,7 +276,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -335,7 +335,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -384,7 +384,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -433,7 +433,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -488,7 +488,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -543,7 +543,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -602,7 +602,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -661,7 +661,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -713,7 +713,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -765,7 +765,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -817,7 +817,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -869,7 +869,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -917,7 +917,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -965,7 +965,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -1013,7 +1013,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -1061,7 +1061,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -1123,7 +1123,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -1185,7 +1185,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -1243,7 +1243,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -1301,7 +1301,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -1349,7 +1349,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -1397,7 +1397,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -1455,7 +1455,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -1513,7 +1513,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -1572,7 +1572,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -1631,7 +1631,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -1669,7 +1669,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -1707,7 +1707,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -1755,7 +1755,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -1803,7 +1803,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -1852,7 +1852,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -1901,7 +1901,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -1950,7 +1950,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -1999,7 +1999,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -2037,7 +2037,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -2075,7 +2075,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -2134,7 +2134,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -2193,7 +2193,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -2245,7 +2245,7 @@ namespace Azure.ResourceManager.Cdn
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -2721,72 +2721,6 @@ namespace Azure.ResourceManager.Cdn
             return GetFrontDoorSecrets().Get(secretName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of CdnKeyGroups in the <see cref="ProfileResource"/>. </summary>
-        /// <returns> An object representing collection of CdnKeyGroups and their operations over a CdnKeyGroupResource. </returns>
-        public virtual CdnKeyGroupCollection GetCdnKeyGroups()
-        {
-            return GetCachedClient(client => new CdnKeyGroupCollection(client, Id));
-        }
-
-        /// <summary> Gets an existing KeyGroup within a profile. </summary>
-        /// <param name="keyGroupName"> Name of the KeyGroup under the profile. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="keyGroupName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="keyGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<CdnKeyGroupResource>> GetCdnKeyGroupAsync(string keyGroupName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(keyGroupName, nameof(keyGroupName));
-
-            return await GetCdnKeyGroups().GetAsync(keyGroupName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary> Gets an existing KeyGroup within a profile. </summary>
-        /// <param name="keyGroupName"> Name of the KeyGroup under the profile. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="keyGroupName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="keyGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<CdnKeyGroupResource> GetCdnKeyGroup(string keyGroupName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(keyGroupName, nameof(keyGroupName));
-
-            return GetCdnKeyGroups().Get(keyGroupName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of CdnDeploymentVersions in the <see cref="ProfileResource"/>. </summary>
-        /// <returns> An object representing collection of CdnDeploymentVersions and their operations over a CdnDeploymentVersionResource. </returns>
-        public virtual CdnDeploymentVersionCollection GetCdnDeploymentVersions()
-        {
-            return GetCachedClient(client => new CdnDeploymentVersionCollection(client, Id));
-        }
-
-        /// <summary> Get an existing DeploymentVersion with the specified version name under the specified subscription, resource group and profile. </summary>
-        /// <param name="versionName"> Name of the DeploymentVersion under the profile. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="versionName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="versionName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<CdnDeploymentVersionResource>> GetCdnDeploymentVersionAsync(string versionName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(versionName, nameof(versionName));
-
-            return await GetCdnDeploymentVersions().GetAsync(versionName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary> Get an existing DeploymentVersion with the specified version name under the specified subscription, resource group and profile. </summary>
-        /// <param name="versionName"> Name of the DeploymentVersion under the profile. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="versionName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="versionName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<CdnDeploymentVersionResource> GetCdnDeploymentVersion(string versionName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(versionName, nameof(versionName));
-
-            return GetCdnDeploymentVersions().Get(versionName, cancellationToken);
-        }
-
         /// <summary> Gets a collection of CdnEndpoints in the <see cref="ProfileResource"/>. </summary>
         /// <returns> An object representing collection of CdnEndpoints and their operations over a CdnEndpointResource. </returns>
         public virtual CdnEndpointCollection GetCdnEndpoints()
@@ -2818,39 +2752,6 @@ namespace Azure.ResourceManager.Cdn
             Argument.AssertNotNullOrEmpty(endpointName, nameof(endpointName));
 
             return GetCdnEndpoints().Get(endpointName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of CdnProfileAgents in the <see cref="ProfileResource"/>. </summary>
-        /// <returns> An object representing collection of CdnProfileAgents and their operations over a CdnProfileAgentResource. </returns>
-        public virtual CdnProfileAgentCollection GetCdnProfileAgents()
-        {
-            return GetCachedClient(client => new CdnProfileAgentCollection(client, Id));
-        }
-
-        /// <summary> Gets an agent link (web agent association) within a CDN profile. </summary>
-        /// <param name="agentName"> Name of the web agent association. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="agentName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<CdnProfileAgentResource>> GetCdnProfileAgentAsync(string agentName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
-
-            return await GetCdnProfileAgents().GetAsync(agentName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary> Gets an agent link (web agent association) within a CDN profile. </summary>
-        /// <param name="agentName"> Name of the web agent association. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="agentName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<CdnProfileAgentResource> GetCdnProfileAgent(string agentName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
-
-            return GetCdnProfileAgents().Get(agentName, cancellationToken);
         }
 
         /// <summary> Gets a collection of FrontDoorCustomDomains in the <see cref="ProfileResource"/>. </summary>
