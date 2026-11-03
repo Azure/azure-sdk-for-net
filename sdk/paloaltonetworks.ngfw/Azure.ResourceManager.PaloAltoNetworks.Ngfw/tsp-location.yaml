@@ -1,5 +1,5 @@
 directory: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/Cloudngfw
-commit: 5c19fef87ee5b0182883a2c5c0422738ad5b3866
+commit: 8e180ed1f4370c9b7fe743efd972912f89d92458
 repo: Azure/azure-rest-api-specs
 additionalDirectories: 
 

@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         public FirewallPanoramaConfiguration PanoramaConfig { get; set; }
 
         /// <summary> Strata Cloud Manager Configuration, only applicable if Strata Cloud Manager is selected. </summary>
-        internal StrataCloudManagerConfig StrataCloudManagerConfig { get; set; }
+        public StrataCloudManagerConfig StrataCloudManagerConfig { get; set; }
 
         /// <summary> Associated Rulestack. </summary>
         public RulestackDetails AssociatedRulestack { get; set; }
@@ -85,18 +85,5 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
 
         /// <summary> Marketplace details. </summary>
         public PanFirewallMarketplaceDetails MarketplaceDetails { get; set; }
-
-        /// <summary> Strata Cloud Manager name which is intended to manage the policy for this firewall. </summary>
-        public string CloudManagerName
-        {
-            get
-            {
-                return StrataCloudManagerConfig is null ? default : StrataCloudManagerConfig.CloudManagerName;
-            }
-            set
-            {
-                StrataCloudManagerConfig = new StrataCloudManagerConfig(value);
-            }
-        }
     }
 }

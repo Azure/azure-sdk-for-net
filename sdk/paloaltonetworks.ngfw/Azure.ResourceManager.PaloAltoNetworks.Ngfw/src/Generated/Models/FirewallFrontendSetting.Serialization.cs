@@ -87,6 +87,21 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             writer.WriteObjectValue(FrontendConfiguration, options);
             writer.WritePropertyName("backendConfiguration"u8);
             writer.WriteObjectValue(BackendConfiguration, options);
+            if (Optional.IsDefined(IdleTimeoutInMinutes))
+            {
+                writer.WritePropertyName("idleTimeoutInMinutes"u8);
+                writer.WriteNumberValue(IdleTimeoutInMinutes.Value);
+            }
+            if (Optional.IsDefined(TcpReset))
+            {
+                writer.WritePropertyName("tcpReset"u8);
+                writer.WriteStringValue(TcpReset.Value.ToString());
+            }
+            if (Optional.IsDefined(LoadDistribution))
+            {
+                writer.WritePropertyName("loadDistribution"u8);
+                writer.WriteStringValue(LoadDistribution.Value.ToString());
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -133,6 +148,9 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             FirewallProtocolType protocol = default;
             FirewallEndpointConfiguration frontendConfiguration = default;
             FirewallEndpointConfiguration backendConfiguration = default;
+            int? idleTimeoutInMinutes = default;
+            FirewallTcpReset? tcpReset = default;
+            FirewallLoadDistribution? loadDistribution = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -156,12 +174,47 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                     backendConfiguration = FirewallEndpointConfiguration.DeserializeFirewallEndpointConfiguration(prop.Value, options);
                     continue;
                 }
+                if (prop.NameEquals("idleTimeoutInMinutes"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    idleTimeoutInMinutes = prop.Value.GetInt32();
+                    continue;
+                }
+                if (prop.NameEquals("tcpReset"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    tcpReset = new FirewallTcpReset(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("loadDistribution"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    loadDistribution = new FirewallLoadDistribution(prop.Value.GetString());
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new FirewallFrontendSetting(name, protocol, frontendConfiguration, backendConfiguration, additionalBinaryDataProperties);
+            return new FirewallFrontendSetting(
+                name,
+                protocol,
+                frontendConfiguration,
+                backendConfiguration,
+                idleTimeoutInMinutes,
+                tcpReset,
+                loadDistribution,
+                additionalBinaryDataProperties);
         }
     }
 }

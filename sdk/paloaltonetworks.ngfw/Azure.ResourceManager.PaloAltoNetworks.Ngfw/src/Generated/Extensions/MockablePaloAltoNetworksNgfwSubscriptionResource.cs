@@ -25,6 +25,8 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Mocking
         private Firewalls _firewallsRestClient;
         private ClientDiagnostics _localRulestacksClientDiagnostics;
         private LocalRulestacks _localRulestacksRestClient;
+        private ClientDiagnostics _paloAltoNetworksCloudngfwOperationsOperationGroupClientDiagnostics;
+        private PaloAltoNetworksCloudngfwOperationsOperationGroup _paloAltoNetworksCloudngfwOperationsOperationGroupRestClient;
         private ClientDiagnostics _paloAltoNetworksCloudngfwOperationsClientDiagnostics;
         private PaloAltoNetworksCloudngfwOperations _paloAltoNetworksCloudngfwOperationsRestClient;
 
@@ -42,15 +44,84 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Mocking
 
         private ClientDiagnostics FirewallsClientDiagnostics => _firewallsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.PaloAltoNetworks.Ngfw.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Firewalls FirewallsRestClient => _firewallsRestClient ??= new Firewalls(FirewallsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("PaloAltoNetworks.Cloudngfw/firewalls", out string apiVersion) ? apiVersion : "2026-07-29-preview");
+        private Firewalls FirewallsRestClient => _firewallsRestClient ??= new Firewalls(FirewallsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("PaloAltoNetworks.Cloudngfw/firewalls", out string apiVersion) ? apiVersion : "2026-09-25-preview");
 
         private ClientDiagnostics LocalRulestacksClientDiagnostics => _localRulestacksClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.PaloAltoNetworks.Ngfw.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private LocalRulestacks LocalRulestacksRestClient => _localRulestacksRestClient ??= new LocalRulestacks(LocalRulestacksClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("PaloAltoNetworks.Cloudngfw/localRulestacks", out string apiVersion0) ? apiVersion0 : "2026-07-29-preview");
+        private LocalRulestacks LocalRulestacksRestClient => _localRulestacksRestClient ??= new LocalRulestacks(LocalRulestacksClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("PaloAltoNetworks.Cloudngfw/localRulestacks", out string apiVersion0) ? apiVersion0 : "2026-09-25-preview");
+
+        private ClientDiagnostics PaloAltoNetworksCloudngfwOperationsOperationGroupClientDiagnostics => _paloAltoNetworksCloudngfwOperationsOperationGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.PaloAltoNetworks.Ngfw.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private PaloAltoNetworksCloudngfwOperationsOperationGroup PaloAltoNetworksCloudngfwOperationsOperationGroupRestClient => _paloAltoNetworksCloudngfwOperationsOperationGroupRestClient ??= new PaloAltoNetworksCloudngfwOperationsOperationGroup(PaloAltoNetworksCloudngfwOperationsOperationGroupClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-09-25-preview");
 
         private ClientDiagnostics PaloAltoNetworksCloudngfwOperationsClientDiagnostics => _paloAltoNetworksCloudngfwOperationsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.PaloAltoNetworks.Ngfw.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private PaloAltoNetworksCloudngfwOperations PaloAltoNetworksCloudngfwOperationsRestClient => _paloAltoNetworksCloudngfwOperationsRestClient ??= new PaloAltoNetworksCloudngfwOperations(PaloAltoNetworksCloudngfwOperationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-07-29-preview");
+        private PaloAltoNetworksCloudngfwOperations PaloAltoNetworksCloudngfwOperationsRestClient => _paloAltoNetworksCloudngfwOperationsRestClient ??= new PaloAltoNetworksCloudngfwOperations(PaloAltoNetworksCloudngfwOperationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-09-25-preview");
+
+        /// <summary> Gets a collection of OfferPlanGroups in the <see cref="SubscriptionResource"/>. </summary>
+        /// <returns> An object representing collection of OfferPlanGroups and their operations over a OfferPlanGroupResource. </returns>
+        public virtual OfferPlanGroupCollection GetOfferPlanGroups()
+        {
+            return GetCachedClient(client => new OfferPlanGroupCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Get a single Marketplace offer and the plans visible to the subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/PaloAltoNetworks.Cloudngfw/marketplaceOffers/{offerName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> MarketplaceOffers_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-09-25-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="offerName"> The Marketplace offer identifier. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="offerName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="offerName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<OfferPlanGroupResource>> GetOfferPlanGroupAsync(string offerName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(offerName, nameof(offerName));
+
+            return await GetOfferPlanGroups().GetAsync(offerName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get a single Marketplace offer and the plans visible to the subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/PaloAltoNetworks.Cloudngfw/marketplaceOffers/{offerName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> MarketplaceOffers_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-09-25-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="offerName"> The Marketplace offer identifier. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="offerName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="offerName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<OfferPlanGroupResource> GetOfferPlanGroup(string offerName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(offerName, nameof(offerName));
+
+            return GetOfferPlanGroups().Get(offerName, cancellationToken);
+        }
 
         /// <summary>
         /// List FirewallResource resources by subscription ID
@@ -65,7 +136,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-29-preview. </description>
+        /// <description> 2026-09-25-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -93,7 +164,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-29-preview. </description>
+        /// <description> 2026-09-25-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -121,7 +192,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-29-preview. </description>
+        /// <description> 2026-09-25-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -149,7 +220,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-29-preview. </description>
+        /// <description> 2026-09-25-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -165,6 +236,104 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Mocking
         }
 
         /// <summary>
+        /// Resolve a Strata Cloud Manager link code into the Strata Cloud Manager instance it is bound to,
+        /// so the instance can be shown to the customer before it is committed onto a firewall.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/PaloAltoNetworks.Cloudngfw/resolveStrataCloudManager. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> PaloAltoNetworksCloudngfwOperationsOperationGroup_ResolveStrataCloudManager. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-09-25-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The request body. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<Response<StrataCloudManagerInstance>> ResolveStrataCloudManagerAsync(ScmLinkCodeContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using DiagnosticScope scope = PaloAltoNetworksCloudngfwOperationsOperationGroupClientDiagnostics.CreateScope("MockablePaloAltoNetworksNgfwSubscriptionResource.ResolveStrataCloudManager");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = PaloAltoNetworksCloudngfwOperationsOperationGroupRestClient.CreateResolveStrataCloudManagerRequest(Id.SubscriptionId, ScmLinkCodeContent.ToRequestContent(content), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<StrataCloudManagerInstance> response = Response.FromValue(StrataCloudManagerInstance.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Resolve a Strata Cloud Manager link code into the Strata Cloud Manager instance it is bound to,
+        /// so the instance can be shown to the customer before it is committed onto a firewall.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/PaloAltoNetworks.Cloudngfw/resolveStrataCloudManager. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> PaloAltoNetworksCloudngfwOperationsOperationGroup_ResolveStrataCloudManager. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-09-25-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The request body. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual Response<StrataCloudManagerInstance> ResolveStrataCloudManager(ScmLinkCodeContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using DiagnosticScope scope = PaloAltoNetworksCloudngfwOperationsOperationGroupClientDiagnostics.CreateScope("MockablePaloAltoNetworksNgfwSubscriptionResource.ResolveStrataCloudManager");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = PaloAltoNetworksCloudngfwOperationsOperationGroupRestClient.CreateResolveStrataCloudManagerRequest(Id.SubscriptionId, ScmLinkCodeContent.ToRequestContent(content), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<StrataCloudManagerInstance> response = Response.FromValue(StrataCloudManagerInstance.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
         /// A long-running provider action.
         /// <list type="bullet">
         /// <item>
@@ -177,7 +346,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-29-preview. </description>
+        /// <description> 2026-09-25-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -221,7 +390,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-29-preview. </description>
+        /// <description> 2026-09-25-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -265,7 +434,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-29-preview. </description>
+        /// <description> 2026-09-25-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -309,7 +478,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-29-preview. </description>
+        /// <description> 2026-09-25-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -353,7 +522,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-29-preview. </description>
+        /// <description> 2026-09-25-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -397,7 +566,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-29-preview. </description>
+        /// <description> 2026-09-25-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -441,7 +610,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-29-preview. </description>
+        /// <description> 2026-09-25-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -485,7 +654,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-29-preview. </description>
+        /// <description> 2026-09-25-preview. </description>
         /// </item>
         /// </list>
         /// </summary>

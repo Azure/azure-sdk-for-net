@@ -140,6 +140,16 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsDefined(OutboundIdleTimeoutInMinutes))
+            {
+                writer.WritePropertyName("outboundIdleTimeoutInMinutes"u8);
+                writer.WriteNumberValue(OutboundIdleTimeoutInMinutes.Value);
+            }
+            if (Optional.IsDefined(OutboundTcpReset))
+            {
+                writer.WritePropertyName("outboundTcpReset"u8);
+                writer.WriteStringValue(OutboundTcpReset.Value.ToString());
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -190,6 +200,8 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             IList<IPAddressInfo> egressNatIP = default;
             IList<string> trustedRanges = default;
             IList<string> privateSourceNatRulesDestination = default;
+            int? outboundIdleTimeoutInMinutes = default;
+            FirewallTcpReset? outboundTcpReset = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -287,6 +299,24 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                     privateSourceNatRulesDestination = array;
                     continue;
                 }
+                if (prop.NameEquals("outboundIdleTimeoutInMinutes"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    outboundIdleTimeoutInMinutes = prop.Value.GetInt32();
+                    continue;
+                }
+                if (prop.NameEquals("outboundTcpReset"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    outboundTcpReset = new FirewallTcpReset(prop.Value.GetString());
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
@@ -301,6 +331,8 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                 egressNatIP ?? new ChangeTrackingList<IPAddressInfo>(),
                 trustedRanges ?? new ChangeTrackingList<string>(),
                 privateSourceNatRulesDestination ?? new ChangeTrackingList<string>(),
+                outboundIdleTimeoutInMinutes,
+                outboundTcpReset,
                 additionalBinaryDataProperties);
         }
     }
