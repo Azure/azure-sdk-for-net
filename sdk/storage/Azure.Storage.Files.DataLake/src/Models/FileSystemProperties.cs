@@ -82,6 +82,11 @@ namespace Azure.Storage.Files.DataLake.Models
         public bool? PreventEncryptionScopeOverride { get; internal set; }
 
         /// <summary>
+        /// Indicates whether blob level immutable storage is enabled on the file system.
+        /// </summary>
+        public bool? HasBlobLevelImmutableStorage { get; internal set; }
+
+        /// <summary>
         /// Prevent direct instantiation of FileSystemProperties instances.
         /// You can use BlobsModelFactory.FileSystemProperties instead.
         /// </summary>

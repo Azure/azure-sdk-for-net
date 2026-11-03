@@ -342,7 +342,40 @@ namespace Azure.Storage.Files.DataLake.Models
             ETag eTag = default,
             IDictionary<string, string> metadata = default,
             DateTimeOffset? deletedOn = default,
-            int? remainingRetentionDays = default)
+            int? remainingRetentionDays = default,
+            bool? hasBlobLevelImmutableStorage = default)
+            => new FileSystemProperties()
+            {
+                LastModified = lastModified,
+                LeaseStatus = leaseStatus,
+                LeaseState = leaseState,
+                LeaseDuration = leaseDuration,
+                PublicAccess = publicAccess,
+                HasImmutabilityPolicy = hasImmutabilityPolicy,
+                HasLegalHold = hasLegalHold,
+                ETag = eTag,
+                Metadata = metadata,
+                DeletedOn = deletedOn,
+                RemainingRetentionDays = remainingRetentionDays,
+                HasBlobLevelImmutableStorage = hasBlobLevelImmutableStorage
+            };
+
+        /// <summary>
+        /// Creates a new FileSystemProperties instance for mocking.
+        /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static FileSystemProperties FileSystemProperties(
+            DateTimeOffset lastModified,
+            DataLakeLeaseStatus? leaseStatus,
+            DataLakeLeaseState? leaseState,
+            DataLakeLeaseDuration? leaseDuration,
+            PublicAccessType? publicAccess,
+            bool? hasImmutabilityPolicy,
+            bool? hasLegalHold,
+            ETag eTag,
+            IDictionary<string, string> metadata,
+            DateTimeOffset? deletedOn,
+            int? remainingRetentionDays)
             => new FileSystemProperties()
             {
                 LastModified = lastModified,

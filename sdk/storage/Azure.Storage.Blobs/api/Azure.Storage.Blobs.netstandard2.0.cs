@@ -463,6 +463,7 @@ namespace Azure.Storage.Blobs.Models
         public string DefaultEncryptionScope { get { throw null; } }
         public System.DateTimeOffset? DeletedOn { get { throw null; } }
         public Azure.ETag ETag { get { throw null; } }
+        public bool? HasBlobLevelImmutableStorage { get { throw null; } }
         public bool? HasImmutabilityPolicy { get { throw null; } }
         public bool HasImmutableStorageWithVersioning { get { throw null; } }
         public bool? HasLegalHold { get { throw null; } }
@@ -676,6 +677,7 @@ namespace Azure.Storage.Blobs.Models
         public static Azure.Storage.Blobs.Models.BlobErrorCode CopyAcrossAccountsNotSupported { get { throw null; } }
         public static Azure.Storage.Blobs.Models.BlobErrorCode CopyIdMismatch { get { throw null; } }
         public static Azure.Storage.Blobs.Models.BlobErrorCode EmptyMetadataKey { get { throw null; } }
+        public static Azure.Storage.Blobs.Models.BlobErrorCode FeatureNotEnabled { get { throw null; } }
         public static Azure.Storage.Blobs.Models.BlobErrorCode FeatureVersionMismatch { get { throw null; } }
         public static Azure.Storage.Blobs.Models.BlobErrorCode IncrementalCopyBlobMismatch { get { throw null; } }
         public static Azure.Storage.Blobs.Models.BlobErrorCode IncrementalCopyOfEarlierSnapshotNotAllowed { get { throw null; } }

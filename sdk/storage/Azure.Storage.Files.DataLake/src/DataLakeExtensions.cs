@@ -42,8 +42,22 @@ namespace Azure.Storage.Files.DataLake
                     DeletedOn = containerProperties.DeletedOn,
                     RemainingRetentionDays = containerProperties.RemainingRetentionDays,
                     DefaultEncryptionScope = containerProperties.DefaultEncryptionScope,
-                    PreventEncryptionScopeOverride = containerProperties.PreventEncryptionScopeOverride
+                    PreventEncryptionScopeOverride = containerProperties.PreventEncryptionScopeOverride,
+                    HasBlobLevelImmutableStorage = containerProperties.HasBlobLevelImmutableStorage
                 };
+
+        internal static FileSystemProperties ToFileSystemProperties(this Response<BlobContainerProperties> containerPropertiesResponse)
+        {
+            FileSystemProperties fileSystemProperties = containerPropertiesResponse.Value.ToFileSystemProperties();
+            // Blobs does not surface this header on Get Container Properties.
+            if (containerPropertiesResponse.GetRawResponse().Headers.TryGetValue(
+                Constants.DataLake.BlobLevelImmutableStorageEnabledHeaderName,
+                out bool? hasBlobLevelImmutableStorage))
+            {
+                fileSystemProperties.HasBlobLevelImmutableStorage = hasBlobLevelImmutableStorage;
+            }
+            return fileSystemProperties;
+        }
 
         internal static FileDownloadDetails ToFileDownloadDetails(this BlobDownloadDetails blobDownloadProperties, string encryptionContext, string accessControlList) =>
             new FileDownloadDetails()
