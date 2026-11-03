@@ -1,0 +1,44 @@
+# Before eval: clean active test plans for the specified project.
+# After eval: clean only trajectory-discovered plans and newly generated PRs.
+
+parameters:
+  - name: typeSpecProject
+    type: string
+    default: ''
+
+steps:
+  - task: AzureCLI@2
+    displayName: 'Login to GitHub for live eval cleanup'
+    condition: always()
+    inputs:
+      azureSubscription: 'AzureSDKEngKeyVault Secrets'
+      scriptType: pscore
+      scriptLocation: scriptPath
+      scriptPath: $(Build.SourcesDirectory)/eng/common/scripts/login-to-github.ps1
+      arguments: >
+        -InstallationTokenOwners 'Azure'
+        -VariableNamePrefix 'LIVE_EVAL_GITHUB_TOKEN'
+    env:
+      GITHUB_TOKEN_REQUEST: '{"repositories":["azure-sdk-for-net","azure-sdk-for-js","azure-sdk-for-python","azure-sdk-for-java","azure-sdk-for-go"],"permissions":{"pull_requests":"write","contents":"read"}}'
+
+  - task: AzureCLI@2
+    displayName: 'Cleanup live eval release plans and SDK PRs'
+    condition: always()
+    inputs:
+      azureSubscription: opensource-api-connection
+      scriptType: bash
+      scriptLocation: inlineScript
+      workingDirectory: $(Build.SourcesDirectory)
+      inlineScript: |
+        args=(--results-dir "$(Build.SourcesDirectory)/artifacts/vally-results/$(shardName)")
+        if [ -n "$TYPESPEC_PROJECT" ]; then
+          args=(--typespec-project "$TYPESPEC_PROJECT")
+        fi
+        node --experimental-strip-types \
+          "$(Build.SourcesDirectory)/eng/common/scripts/eval/cleanup-live-eval.ts" \
+          "${args[@]}" \
+          --azsdk "$(Build.SourcesDirectory)/artifacts/mcp/cli/azsdk.dll"
+    env:
+      AZSDKTOOLS_AGENT_TESTING: 'true'
+      GITHUB_TOKEN: $(LIVE_EVAL_GITHUB_TOKEN)
+      TYPESPEC_PROJECT: ${{ parameters.typeSpecProject }}
