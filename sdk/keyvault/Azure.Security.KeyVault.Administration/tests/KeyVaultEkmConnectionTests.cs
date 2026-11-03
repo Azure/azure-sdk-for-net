@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using NUnit.Framework;
 
 namespace Azure.Security.KeyVault.Administration.Tests
@@ -31,8 +32,43 @@ namespace Azure.Security.KeyVault.Administration.Tests
         public void NewServerCaCertificatesNullThrows()
         {
             ArgumentException ex = Assert.Throws<ArgumentNullException>(
-                () => new KeyVaultEkmConnection("ekm.contoso.com", null));
+                () => new KeyVaultEkmConnection("ekm.contoso.com", (IEnumerable<byte[]>)null));
             Assert.That(ex.ParamName, Is.EqualTo("serverCaCertificates"));
+        }
+
+        [Test]
+        public void NewBinaryDataHostNullThrows()
+        {
+            ArgumentException ex = Assert.Throws<ArgumentNullException>(
+                () => new KeyVaultEkmConnection(null, new[] { BinaryData.FromBytes(s_cert1) }));
+            Assert.That(ex.ParamName, Is.EqualTo("hostName"));
+        }
+
+        [Test]
+        public void NewBinaryDataHostEmptyThrows()
+        {
+            ArgumentException ex = Assert.Throws<ArgumentException>(
+                () => new KeyVaultEkmConnection(string.Empty, new[] { BinaryData.FromBytes(s_cert1) }));
+            Assert.That(ex.ParamName, Is.EqualTo("hostName"));
+        }
+
+        [Test]
+        public void NewBinaryDataServerCaCertificatesNullThrows()
+        {
+            ArgumentException ex = Assert.Throws<ArgumentNullException>(
+                () => new KeyVaultEkmConnection("ekm.contoso.com", (IEnumerable<BinaryData>)null));
+            Assert.That(ex.ParamName, Is.EqualTo("serverCaCertificates"));
+        }
+
+        [Test]
+        public void CtorBinaryData_PopulatesProperties()
+        {
+            KeyVaultEkmConnection connection = new("ekm.contoso.com", new[] { BinaryData.FromBytes(s_cert1), BinaryData.FromBytes(s_cert2) });
+
+            Assert.That(connection.HostName, Is.EqualTo("ekm.contoso.com"));
+            Assert.That(connection.ServerCaCertificates, Has.Count.EqualTo(2));
+            CollectionAssert.AreEqual(s_cert1, connection.ServerCaCertificates[0].ToArray());
+            CollectionAssert.AreEqual(s_cert2, connection.ServerCaCertificates[1].ToArray());
         }
 
         [Test]
