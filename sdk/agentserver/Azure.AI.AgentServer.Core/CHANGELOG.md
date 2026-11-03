@@ -4,6 +4,7 @@
 
 ### Features Added
 
+- Added the `microsoft.foundry = "True"` string attribute to all collected spans and log records. The default telemetry processors override conflicting marker values without changing `gen_ai.provider.name`.
 - Added protocol-scoped task access for composed hosts and per-task activation
   checks, stamping the owning protocol on new task records so a disabled
   protocol cannot start or recover its tasks merely because another protocol
