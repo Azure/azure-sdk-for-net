@@ -542,60 +542,6 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
-        /// <summary> Indicates the capacityMode of the Cosmos DB account. </summary>
-        [WirePath("properties.capacityMode")]
-        public CapacityMode? CapacityMode
-        {
-            get
-            {
-                return Properties is null ? default : Properties.CapacityMode;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new CosmosDBAccountProperties();
-                }
-                Properties.CapacityMode = value;
-            }
-        }
-
-        /// <summary> The object that represents the migration state for the CapacityMode of the Cosmos DB account. </summary>
-        [WirePath("properties.capacityModeChangeTransitionState")]
-        public CapacityModeChangeTransitionState CapacityModeChangeTransitionState
-        {
-            get
-            {
-                return Properties is null ? default : Properties.CapacityModeChangeTransitionState;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new CosmosDBAccountProperties();
-                }
-                Properties.CapacityModeChangeTransitionState = value;
-            }
-        }
-
-        /// <summary> Flag to indicate whether to enable MaterializedViews on the Cosmos DB account. </summary>
-        [WirePath("properties.enableMaterializedViews")]
-        public bool? EnableMaterializedViews
-        {
-            get
-            {
-                return Properties is null ? default : Properties.EnableMaterializedViews;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new CosmosDBAccountProperties();
-                }
-                Properties.EnableMaterializedViews = value;
-            }
-        }
-
         /// <summary> The object that represents the metadata for the Account Keys of the Cosmos DB account. </summary>
         [WirePath("properties.keysMetadata")]
         public DatabaseAccountKeysMetadata KeysMetadata
@@ -742,78 +688,6 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
-        /// <summary> Flag to indicate if All Versions and Deletes Change feed feature is enabled on the account. </summary>
-        [WirePath("properties.enableAllVersionsAndDeletesChangeFeed")]
-        public bool? EnableAllVersionsAndDeletesChangeFeed
-        {
-            get
-            {
-                return Properties is null ? default : Properties.EnableAllVersionsAndDeletesChangeFeed;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new CosmosDBAccountProperties();
-                }
-                Properties.EnableAllVersionsAndDeletesChangeFeed = value;
-            }
-        }
-
-        /// <summary> The configuration for soft delete on the Cosmos DB account. </summary>
-        [WirePath("properties.softDeleteConfiguration")]
-        public SoftDeleteConfiguration SoftDeleteConfiguration
-        {
-            get
-            {
-                return Properties is null ? default : Properties.SoftDeleteConfiguration;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new CosmosDBAccountProperties();
-                }
-                Properties.SoftDeleteConfiguration = value;
-            }
-        }
-
-        /// <summary> Total dedicated throughput (RU/s) for database account. Represents the sum of all manual provisioned throughput and all autoscale max RU/s across all shared throughput databases and dedicated throughput containers in the account for 1 region. READ ONLY. </summary>
-        [WirePath("properties.throughputPoolDedicatedRUs")]
-        public long? ThroughputPoolDedicatedRUs
-        {
-            get
-            {
-                return Properties is null ? default : Properties.ThroughputPoolDedicatedRUs;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new CosmosDBAccountProperties();
-                }
-                Properties.ThroughputPoolDedicatedRUs = value;
-            }
-        }
-
-        /// <summary> When this account is part of a fleetspace with throughput pooling enabled, this is the maximum additional throughput (RU/s) that can be consumed from the pool, summed across all shared throughput databases and dedicated throughput containers in the account for 1 region.  READ ONLY. </summary>
-        [WirePath("properties.throughputPoolMaxConsumableRUs")]
-        public long? ThroughputPoolMaxConsumableRUs
-        {
-            get
-            {
-                return Properties is null ? default : Properties.ThroughputPoolMaxConsumableRUs;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new CosmosDBAccountProperties();
-                }
-                Properties.ThroughputPoolMaxConsumableRUs = value;
-            }
-        }
-
         /// <summary> Flag to indicate enabling/disabling of hierarchical partition key ID last level enforcement on the account. </summary>
         [WirePath("properties.enforceHierarchicalPartitionKeyIdLastLevel")]
         public bool? IsHierarchicalPartitionKeyIdLastLevelEnforced
@@ -829,6 +703,24 @@ namespace Azure.ResourceManager.CosmosDB
                     Properties = new CosmosDBAccountProperties();
                 }
                 Properties.IsHierarchicalPartitionKeyIdLastLevelEnforced = value;
+            }
+        }
+
+        /// <summary> Flag to indicate enabling/disabling of per-partition automatic failover on the account, which automatically fails over individual partitions to available regions during a regional outage. Opt-in; defaults to false. </summary>
+        [WirePath("properties.perPartitionAutomaticFailoverEnabled")]
+        public bool? PerPartitionAutomaticFailoverEnabled
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PerPartitionAutomaticFailoverEnabled;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new CosmosDBAccountProperties();
+                }
+                Properties.PerPartitionAutomaticFailoverEnabled = value;
             }
         }
 
@@ -865,24 +757,6 @@ namespace Azure.ResourceManager.CosmosDB
                     Properties = new CosmosDBAccountProperties();
                 }
                 Properties.AnalyticalStorageSchemaType = value;
-            }
-        }
-
-        /// <summary> Describe the level of detail with which queries are to be logged. </summary>
-        [WirePath("properties.diagnosticLogSettings.enableFullTextQuery")]
-        public CosmosDBFullTextQueryState? DiagnosticLogEnableFullTextQuery
-        {
-            get
-            {
-                return Properties is null ? default : Properties.DiagnosticLogEnableFullTextQuery;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new CosmosDBAccountProperties();
-                }
-                Properties.DiagnosticLogEnableFullTextQuery = value;
             }
         }
 

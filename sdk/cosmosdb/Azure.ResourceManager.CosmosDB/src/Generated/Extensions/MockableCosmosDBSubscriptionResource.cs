@@ -22,12 +22,8 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
     {
         private ClientDiagnostics _databaseAccountsClientDiagnostics;
         private DatabaseAccounts _databaseAccountsRestClient;
-        private ClientDiagnostics _garnetClustersClientDiagnostics;
-        private GarnetClusters _garnetClustersRestClient;
         private ClientDiagnostics _cassandraClustersClientDiagnostics;
         private CassandraClusters _cassandraClustersRestClient;
-        private ClientDiagnostics _throughputPoolsClientDiagnostics;
-        private ThroughputPools _throughputPoolsRestClient;
         private ClientDiagnostics _fleetClientDiagnostics;
         private Fleet _fleetRestClient;
         private ClientDiagnostics _restorableDatabaseAccountsClientDiagnostics;
@@ -52,28 +48,20 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
             Pipeline,
             Diagnostics.ApplicationId,
             Endpoint,
-            "2026-04-01-preview",
+            "2026-07-15",
             resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
-
-        private ClientDiagnostics GarnetClustersClientDiagnostics => _garnetClustersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CosmosDB.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-
-        private GarnetClusters GarnetClustersRestClient => _garnetClustersRestClient ??= new GarnetClusters(GarnetClustersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.DocumentDB/garnetClusters", out string apiVersion0) ? apiVersion0 : "2026-04-01-preview");
 
         private ClientDiagnostics CassandraClustersClientDiagnostics => _cassandraClustersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CosmosDB.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private CassandraClusters CassandraClustersRestClient => _cassandraClustersRestClient ??= new CassandraClusters(CassandraClustersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.DocumentDB/cassandraClusters", out string apiVersion1) ? apiVersion1 : "2026-04-01-preview");
-
-        private ClientDiagnostics ThroughputPoolsClientDiagnostics => _throughputPoolsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CosmosDB.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-
-        private ThroughputPools ThroughputPoolsRestClient => _throughputPoolsRestClient ??= new ThroughputPools(ThroughputPoolsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.DocumentDB/throughputPools", out string apiVersion2) ? apiVersion2 : "2026-04-01-preview");
+        private CassandraClusters CassandraClustersRestClient => _cassandraClustersRestClient ??= new CassandraClusters(CassandraClustersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.DocumentDB/cassandraClusters", out string apiVersion0) ? apiVersion0 : "2026-07-15");
 
         private ClientDiagnostics FleetClientDiagnostics => _fleetClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CosmosDB.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Fleet FleetRestClient => _fleetRestClient ??= new Fleet(FleetClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.DocumentDB/fleets", out string apiVersion3) ? apiVersion3 : "2026-04-01-preview");
+        private Fleet FleetRestClient => _fleetRestClient ??= new Fleet(FleetClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.DocumentDB/fleets", out string apiVersion1) ? apiVersion1 : "2026-07-15");
 
         private ClientDiagnostics RestorableDatabaseAccountsClientDiagnostics => _restorableDatabaseAccountsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CosmosDB.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private RestorableDatabaseAccounts RestorableDatabaseAccountsRestClient => _restorableDatabaseAccountsRestClient ??= new RestorableDatabaseAccounts(RestorableDatabaseAccountsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-04-01-preview");
+        private RestorableDatabaseAccounts RestorableDatabaseAccountsRestClient => _restorableDatabaseAccountsRestClient ??= new RestorableDatabaseAccounts(RestorableDatabaseAccountsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-07-15");
 
         /// <summary> Gets a collection of CosmosDBLocations in the <see cref="SubscriptionResource"/>. </summary>
         /// <returns> An object representing collection of CosmosDBLocations and their operations over a CosmosDBLocationResource. </returns>
@@ -95,7 +83,7 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
+        /// <description> 2026-07-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -120,7 +108,7 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
+        /// <description> 2026-07-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -145,7 +133,7 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
+        /// <description> 2026-07-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -173,7 +161,7 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
+        /// <description> 2026-07-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -189,62 +177,6 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
         }
 
         /// <summary>
-        /// List all Garnet clusters in this subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.DocumentDB/garnetClusters. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> GarnetClusters_ListBySubscription. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="GarnetClusterResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<GarnetClusterResource> GetGarnetClustersAsync(CancellationToken cancellationToken = default)
-        {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new AsyncPageableWrapper<GarnetClusterData, GarnetClusterResource>(new GarnetClusterDataAsync0CollectionResultOfT(GarnetClustersRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableCosmosDBSubscriptionResource.GetGarnetClusters"), data => new GarnetClusterResource(Client, data));
-        }
-
-        /// <summary>
-        /// List all Garnet clusters in this subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.DocumentDB/garnetClusters. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> GarnetClusters_ListBySubscription. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="GarnetClusterResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<GarnetClusterResource> GetGarnetClusters(CancellationToken cancellationToken = default)
-        {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new PageableWrapper<GarnetClusterData, GarnetClusterResource>(new GarnetClusterData0CollectionResultOfT(GarnetClustersRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableCosmosDBSubscriptionResource.GetGarnetClusters"), data => new GarnetClusterResource(Client, data));
-        }
-
-        /// <summary>
         /// List all managed Cassandra clusters in this subscription.
         /// <list type="bullet">
         /// <item>
@@ -257,7 +189,7 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
+        /// <description> 2026-07-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -285,7 +217,7 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
+        /// <description> 2026-07-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -301,62 +233,6 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
         }
 
         /// <summary>
-        /// Lists all the Azure Cosmos DB Throughput Pools available under the subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.DocumentDB/throughputPools. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ThroughputPoolResources_List. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="CosmosDBThroughputPoolResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<CosmosDBThroughputPoolResource> GetCosmosDBThroughputPoolsAsync(CancellationToken cancellationToken = default)
-        {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new AsyncPageableWrapper<CosmosDBThroughputPoolData, CosmosDBThroughputPoolResource>(new CosmosDBThroughputPoolDataAsync0CollectionResultOfT(ThroughputPoolsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableCosmosDBSubscriptionResource.GetCosmosDBThroughputPools"), data => new CosmosDBThroughputPoolResource(Client, data));
-        }
-
-        /// <summary>
-        /// Lists all the Azure Cosmos DB Throughput Pools available under the subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.DocumentDB/throughputPools. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ThroughputPoolResources_List. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="CosmosDBThroughputPoolResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<CosmosDBThroughputPoolResource> GetCosmosDBThroughputPools(CancellationToken cancellationToken = default)
-        {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new PageableWrapper<CosmosDBThroughputPoolData, CosmosDBThroughputPoolResource>(new CosmosDBThroughputPoolData0CollectionResultOfT(ThroughputPoolsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableCosmosDBSubscriptionResource.GetCosmosDBThroughputPools"), data => new CosmosDBThroughputPoolResource(Client, data));
-        }
-
-        /// <summary>
         /// Lists all the fleets under the subscription.
         /// <list type="bullet">
         /// <item>
@@ -369,7 +245,7 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
+        /// <description> 2026-07-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -397,7 +273,7 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
+        /// <description> 2026-07-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -425,7 +301,7 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
+        /// <description> 2026-07-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -453,7 +329,7 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
+        /// <description> 2026-07-15. </description>
         /// </item>
         /// </list>
         /// </summary>

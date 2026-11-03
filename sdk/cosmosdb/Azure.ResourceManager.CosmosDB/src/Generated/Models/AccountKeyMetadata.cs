@@ -12,7 +12,7 @@ using Azure.ResourceManager.CosmosDB;
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     /// <summary> The metadata related to an access key for a given database account. </summary>
-    public partial class AccountKeyMetadata
+    internal partial class AccountKeyMetadata
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
@@ -24,29 +24,15 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         /// <summary> Initializes a new instance of <see cref="AccountKeyMetadata"/>. </summary>
         /// <param name="generatedOn"> Generation time in UTC of the key in ISO-8601 format. If the value is missing from the object, it means that the last key regeneration was triggered before 2022-06-18. </param>
-        /// <param name="approximateLastUsageOn">
-        /// Approximate time in UTC of the most recent usage of the key in ISO-8601 format.
-        /// If the value is missing from the object, it means there is no recorded data plane
-        /// usage for this key.
-        /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AccountKeyMetadata(DateTimeOffset? generatedOn, DateTimeOffset? approximateLastUsageOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AccountKeyMetadata(DateTimeOffset? generatedOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             GeneratedOn = generatedOn;
-            ApproximateLastUsageOn = approximateLastUsageOn;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Generation time in UTC of the key in ISO-8601 format. If the value is missing from the object, it means that the last key regeneration was triggered before 2022-06-18. </summary>
         [WirePath("generationTime")]
         public DateTimeOffset? GeneratedOn { get; }
-
-        /// <summary>
-        /// Approximate time in UTC of the most recent usage of the key in ISO-8601 format.
-        /// If the value is missing from the object, it means there is no recorded data plane
-        /// usage for this key.
-        /// </summary>
-        [WirePath("approximateLastUsageTime")]
-        public DateTimeOffset? ApproximateLastUsageOn { get; }
     }
 }
