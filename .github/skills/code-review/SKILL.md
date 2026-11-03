@@ -87,6 +87,7 @@ Use the changed paths and symbols to select sections from
 | Management library | Applicable sections above; management clauses in Naming and Packaging, Versioning, Dependencies |
 | Tests, test projects, test infrastructure | Analyzer Warnings and Suppressions; Testing |
 | `.csproj`, package versions, references, feeds, CPM files | Shared Configuration; Packaging, Versioning, Dependencies |
+| `CHANGELOG.md` | Packaging, Versioning, Dependencies |
 | README, samples, snippets, doc settings, links | Docs & Samples; Broken-Link Ignores |
 | Generated output, TypeSpec/AutoRest configuration | Generated Code; Breaking Changes; Naming; Semantic Value Types |
 

@@ -645,9 +645,16 @@ review.
 - **A library's first `<Version>` is a prerelease.** A new package introduced at a stable
   `1.0.0` skips the beta period that exists to let its public surface change without a
   breaking-change process. If nothing is published under that package id yet, the version in
-  the PR should carry a `-beta.N` suffix 🟡. The changelog heading is already forced to match
-  `<Version>` at build time by the `ValidateReleaseNotes` target, so the csproj version is the
-  only part left to judge
+  the PR should carry a `-beta.N` suffix 🟡. The `ValidateReleaseNotes` build target already
+  fails a changelog heading that does not match `<Version>`, so judge the version, not the
+  heading
+- **A new library's first `CHANGELOG.md` entry needs release notes.** SDK generation creates
+  it with only empty `### Features Added`, `### Breaking Changes`, `### Bugs Fixed`, and
+  `### Other Changes` headings. A passing PR build does not cover this: for an `(Unreleased)`
+  entry, `ValidateReleaseNotes` checks only that the entry exists, and the empty-content and
+  empty-section checks run only in the release pipeline, which then rejects the release. Ask
+  for an initial-release note under `### Features Added` and removal of the empty headings 🟡.
+  The same empty entry added by a post-release version increment is expected, not a finding
 - **`<Description>` and `<AssemblyTitle>` are customer-facing** — the description is what
   renders on the package's nuget.org page. The template ships `Azure Widget Analytics client
   library for .NET`; a library still carrying that text, or a description auto-generated from

@@ -88,4 +88,51 @@ function Assert-PrReReviewOutput {
     return "Re-review coverage is complete: $line"
 }
 
-Export-ModuleMember -Function ConvertFrom-PrReReviewJson, Get-PrReReviewCoverageTemplate, Assert-PrReReviewOutput
+function Assert-PrReReviewReadCoverage {
+    param(
+        [AllowNull()]$AgentOutput,
+        [Parameter(Mandatory)][AllowEmptyString()][string]$MarkersPath,
+        [Parameter(Mandatory)][AllowEmptyString()][string]$SessionLogPath
+    )
+
+    if (@($AgentOutput.items | Where-Object { $_.type -ceq 'submit_pull_request_review' }).Count -eq 0) {
+        return 'No review was submitted, so there is no read coverage to verify.'
+    }
+    if (!$MarkersPath -or ![IO.File]::Exists($MarkersPath)) {
+        throw "The guard cannot verify read coverage without the exported-patch markers at '$MarkersPath'."
+    }
+    if (!$SessionLogPath -or ![IO.File]::Exists($SessionLogPath)) {
+        throw "The guard cannot verify read coverage without the agent's tool log at '$SessionLogPath'."
+    }
+
+    $files = @((ConvertFrom-PrReReviewJson ([IO.File]::ReadAllText($MarkersPath))).files)
+    foreach ($file in $files) {
+        if ($file -isnot [System.Collections.IDictionary] -or $file.marker -isnot [string] -or $file.marker.Length -lt 16) {
+            throw 'The guard cannot verify read coverage because the exported-patch markers are malformed.'
+        }
+    }
+
+    # Only tool results reached the model. A read the CLI cut off as too large returns a notice instead of
+    # the content, so it never contains the end-of-patch marker.
+    $seen = [System.Text.StringBuilder]::new()
+    foreach ($line in [IO.File]::ReadLines($SessionLogPath)) {
+        if (!$line.Contains('"tool.execution_complete"', [StringComparison]::Ordinal)) { continue }
+        try { $event = ConvertFrom-PrReReviewJson $line } catch { continue }
+        if ($event -isnot [System.Collections.IDictionary] -or $event.type -cne 'tool.execution_complete') { continue }
+        $content = $event.data.result.content
+        if ($null -eq $content) { continue }
+        $text = if ($content -is [string]) { $content } else { ConvertTo-Json -InputObject $content -Depth 20 -Compress }
+        [void]$seen.Append($text).Append("`n")
+    }
+    $results = $seen.ToString()
+
+    $unread = @($files | Where-Object { !$results.Contains($_.marker, [StringComparison]::Ordinal) } | ForEach-Object { [string]$_.path })
+    if ($unread.Count -gt 0) {
+        $listed = ($unread | Select-Object -First 10) -join ', '
+        if ($unread.Count -gt 10) { $listed += ", and $($unread.Count - 10) more" }
+        throw "The agent's tool log shows it read $($files.Count - $unread.Count) of $($files.Count) exported patches in full; unread: $listed. A re-review that did not read every changed file must call report_incomplete instead of submitting a review."
+    }
+    return "Read coverage verified from the tool log: all $($files.Count) exported patches were read in full."
+}
+
+Export-ModuleMember -Function ConvertFrom-PrReReviewJson, Get-PrReReviewCoverageTemplate, Assert-PrReReviewOutput, Assert-PrReReviewReadCoverage
