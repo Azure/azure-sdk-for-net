@@ -2555,7 +2555,11 @@ namespace Azure.AI.Projects.Agents
         /// </param>
         /// <param name="externalWebAccess"> Allow live internet access for web search. Defaults to true when omitted. When false, the web search tool runs in offline/cache-only mode and will not fetch new external content. </param>
         /// <param name="filters"></param>
-        /// <param name="userLocation"></param>
+        /// <param name="userLocation">
+        /// The approximate location of the user. If omitted or null, defaults to the
+        ///   United States. To avoid this fallback, pass `{"type": "approximate"}` without
+        ///   location fields. To localize results, provide the relevant location fields.
+        /// </param>
         /// <param name="searchContextSize"> High level guidance for the amount of context window space to use for the search. One of `low`, `medium`, or `high`. `medium` is the default. </param>
         /// <param name="customSearchConfiguration">
         /// The project connections attached to this tool. There can be a maximum of 1 connection
