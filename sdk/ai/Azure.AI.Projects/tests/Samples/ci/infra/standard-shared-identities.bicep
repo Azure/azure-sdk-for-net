@@ -16,12 +16,12 @@ targetScope = 'resourceGroup'
 @minLength(1)
 param location string
 
-@description('Foundry account prefix, followed by the pinned four-character suffix.')
+@description('Foundry account prefix, followed by the full 13-character run hash.')
 @minLength(1)
 @maxLength(9)
 param accountPrefix string = 'foundy'
 
-@description('Foundry project prefix, followed by the same four-character suffix.')
+@description('Foundry project prefix, followed by the same 13-character run hash.')
 @minLength(1)
 param projectPrefix string = 'project'
 
@@ -54,8 +54,8 @@ var invalidPrincipalPositions = filter(range(0, 36), position => contains([8, 13
 var principalValidationIndex = length(invalidPrincipalPositions) + (sharedProjectPrincipalId == '00000000-0000-0000-0000-000000000000' ? 1 : 0)
 var validatedProjectPrincipalId = [sharedProjectPrincipalId][principalValidationIndex]
 
-// Preserve the official uniqueString seed, suffix length, and dependent names.
-var uniqueSuffix = substring(uniqueString('${resourceGroup().id}-${deploymentTimestamp}'), 0, 4)
+// Keep the full run hash to avoid collisions in globally unique resource names.
+var uniqueSuffix = uniqueString('${resourceGroup().id}-${deploymentTimestamp}')
 var accountName = toLower('${accountPrefix}${uniqueSuffix}')
 var projectName = toLower('${projectPrefix}${uniqueSuffix}')
 var cosmosDBName = toLower('${uniqueSuffix}cosmosdb')
