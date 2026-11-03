@@ -5,7 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Diagnostics.Tracing;
-using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
@@ -291,7 +290,7 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
         {
             if (IsEnabled())
             {
-                ReceiveMessageCompleteCore(identifier, messages.Count, StringUtility.GetFormattedLockTokens(messages.Select(m => m.LockTokenGuid)));
+                ReceiveMessageCompleteCore(identifier, messages.Count, StringUtility.GetFormattedLockTokens(messages));
             }
         }
 
