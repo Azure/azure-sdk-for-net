@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 
 namespace Azure.Storage.Blobs.Models
 {
@@ -80,6 +81,13 @@ namespace Azure.Storage.Blobs.Models
         /// If immutable storage with vesrioning is enabled on this container.
         /// </summary>
         public bool HasImmutableStorageWithVersioning { get; internal set; }
+
+        /// <summary>
+        /// Indicates whether blob level immutable storage is enabled on this container.
+        /// Only returned for hierarchical namespace enabled accounts.
+        /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public bool? HasBlobLevelImmutableStorage { get; internal set; }
 
         /// <summary>
         /// Creates a new BlobContainerProperties instance.

@@ -1335,6 +1335,7 @@ namespace Azure.Storage.Blobs
                 ETag = new ETag(containerPropertiesInternal.ETag),
                 Metadata = metadata.ToMetadata(),
                 HasImmutableStorageWithVersioning = containerPropertiesInternal.IsImmutableStorageWithVersioningEnabled.GetValueOrDefault(),
+                HasBlobLevelImmutableStorage = containerPropertiesInternal.IsBlobLevelImmutableStorageEnabled,
             };
         }
 

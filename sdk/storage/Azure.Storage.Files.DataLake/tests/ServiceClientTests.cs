@@ -376,6 +376,50 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [RecordedTest]
+        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2026_12_06)]
+        public async Task GetFileSystemsAsync_BlobLevelImmutableStorage()
+        {
+            // Arrange
+            DataLakeServiceClient service = GetServiceClient_OAuth();
+            await using DisposingFileSystem test = await GetNewFileSystem(service: service);
+
+            // Act
+            IList<FileSystemItem> fileSystems = await service.GetFileSystemsAsync().ToListAsync();
+            FileSystemItem fileSystemItem = fileSystems.Single(r => r.Name == test.FileSystem.Name);
+
+            // Assert
+            Assert.IsNotNull(fileSystemItem.Properties.HasBlobLevelImmutableStorage);
+        }
+
+        [Test]
+        public async Task GetFileSystemsAsync_BlobLevelImmutableStorage_Mock()
+        {
+            // Arrange
+            MockResponse mockResponse = new MockResponse(200);
+            mockResponse.AddHeader("Content-Type", "application/xml");
+            mockResponse.SetContent(
+                "<?xml version=\"1.0\" encoding=\"utf-8\"?>" +
+                "<EnumerationResults ServiceEndpoint=\"https://account.blob.core.windows.net/\">" +
+                "<Containers><Container><Name>filesystem</Name><Properties>" +
+                "<Last-Modified>Mon, 02 Nov 2026 00:00:00 GMT</Last-Modified>" +
+                "<Etag>\"0x8D0000000000000\"</Etag>" +
+                "<BlobLevelImmutableStorageEnabled>true</BlobLevelImmutableStorageEnabled>" +
+                "</Properties></Container></Containers>" +
+                "</EnumerationResults>");
+            DataLakeClientOptions options = new DataLakeClientOptions { Transport = new MockTransport(mockResponse) };
+            DataLakeServiceClient service = new DataLakeServiceClient(
+                new Uri("https://account.blob.core.windows.net"),
+                options);
+
+            // Act
+            IList<FileSystemItem> fileSystems = await service.GetFileSystemsAsync().ToListAsync();
+
+            // Assert
+            Assert.AreEqual(1, fileSystems.Count);
+            Assert.IsTrue(fileSystems[0].Properties.HasBlobLevelImmutableStorage);
+        }
+
+        [RecordedTest]
         public async Task GetFileSystemsAsync_Marker()
         {
             DataLakeServiceClient service = DataLakeClientBuilder.GetServiceClient_Hns();

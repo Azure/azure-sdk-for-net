@@ -444,6 +444,8 @@ namespace Azure.Storage
             public const string PermissionsHeaderName = "x-ms-permissions";
 
             public const string AclHeaderName = "x-ms-acl";
+
+            public const string BlobLevelImmutableStorageEnabledHeaderName = "x-ms-blob-level-immutable-storage-enabled";
         }
 
         /// <summary>

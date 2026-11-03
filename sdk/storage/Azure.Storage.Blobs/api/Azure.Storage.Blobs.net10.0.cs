@@ -465,6 +465,7 @@ namespace Azure.Storage.Blobs.Models
         public string DefaultEncryptionScope { get { throw null; } }
         public System.DateTimeOffset? DeletedOn { get { throw null; } }
         public Azure.ETag ETag { get { throw null; } }
+        public bool? HasBlobLevelImmutableStorage { get { throw null; } }
         public bool? HasImmutabilityPolicy { get { throw null; } }
         public bool HasImmutableStorageWithVersioning { get { throw null; } }
         public bool? HasLegalHold { get { throw null; } }

@@ -1191,6 +1191,39 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [RecordedTest]
+        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2026_12_06)]
+        public async Task GetPropertiesAsync_BlobLevelImmutableStorage()
+        {
+            await using DisposingFileSystem test = await GetNewFileSystem(service: GetServiceClient_OAuth());
+
+            // Act
+            Response<FileSystemProperties> response = await test.FileSystem.GetPropertiesAsync();
+
+            // Assert
+            Assert.IsNotNull(response.Value.HasBlobLevelImmutableStorage);
+        }
+
+        [Test]
+        public async Task GetPropertiesAsync_BlobLevelImmutableStorage_Mock()
+        {
+            // Arrange
+            MockResponse mockResponse = new MockResponse(200);
+            mockResponse.AddHeader("ETag", "\"0x8D0000000000000\"");
+            mockResponse.AddHeader("Last-Modified", "Mon, 02 Nov 2026 00:00:00 GMT");
+            mockResponse.AddHeader("x-ms-blob-level-immutable-storage-enabled", "true");
+            DataLakeClientOptions options = new DataLakeClientOptions { Transport = new MockTransport(mockResponse) };
+            DataLakeFileSystemClient fileSystemClient = new DataLakeFileSystemClient(
+                new Uri("https://account.blob.core.windows.net/filesystem"),
+                options);
+
+            // Act
+            Response<FileSystemProperties> response = await fileSystemClient.GetPropertiesAsync();
+
+            // Assert
+            Assert.IsTrue(response.Value.HasBlobLevelImmutableStorage);
+        }
+
+        [RecordedTest]
         [TestCase(nameof(DataLakeRequestConditions.IfMatch))]
         [TestCase(nameof(DataLakeRequestConditions.IfNoneMatch))]
         [TestCase(nameof(DataLakeRequestConditions.IfModifiedSince))]

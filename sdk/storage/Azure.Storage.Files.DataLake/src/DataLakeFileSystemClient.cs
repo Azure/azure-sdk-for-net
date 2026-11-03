@@ -1602,7 +1602,7 @@ namespace Azure.Storage.Files.DataLake
                     cancellationToken);
 
                 return Response.FromValue(
-                    containerResponse.Value.ToFileSystemProperties(),
+                    containerResponse.ToFileSystemProperties(),
                     containerResponse.GetRawResponse());
             }
             catch (Exception ex)
@@ -1660,7 +1660,7 @@ namespace Azure.Storage.Files.DataLake
                     .ConfigureAwait(false);
 
                 return Response.FromValue(
-                    response.Value.ToFileSystemProperties(),
+                    response.ToFileSystemProperties(),
                     response.GetRawResponse());
             }
             catch (Exception ex)

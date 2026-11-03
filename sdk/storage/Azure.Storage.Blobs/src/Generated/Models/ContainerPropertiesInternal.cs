@@ -34,7 +34,8 @@ namespace Azure.Storage.Blobs.Models
         /// <param name="deletedOn"> The date-time the container was deleted. </param>
         /// <param name="remainingRetentionDays"> The remaining retention days of the container. </param>
         /// <param name="isImmutableStorageWithVersioningEnabled"> Whether immutable storage with versioning is enabled. </param>
-        internal ContainerPropertiesInternal(DateTimeOffset lastModified, string eTag, LeaseStatus? leaseStatus, LeaseState? leaseState, LeaseDurationType? leaseDuration, PublicAccessType? publicAccess, bool? hasImmutabilityPolicy, bool? hasLegalHold, string defaultEncryptionScope, bool? preventEncryptionScopeOverride, DateTimeOffset? deletedOn, int? remainingRetentionDays, bool? isImmutableStorageWithVersioningEnabled)
+        /// <param name="isBlobLevelImmutableStorageEnabled"> Whether blob level immutable storage is enabled. Only returned for hierarchical namespace enabled accounts. </param>
+        internal ContainerPropertiesInternal(DateTimeOffset lastModified, string eTag, LeaseStatus? leaseStatus, LeaseState? leaseState, LeaseDurationType? leaseDuration, PublicAccessType? publicAccess, bool? hasImmutabilityPolicy, bool? hasLegalHold, string defaultEncryptionScope, bool? preventEncryptionScopeOverride, DateTimeOffset? deletedOn, int? remainingRetentionDays, bool? isImmutableStorageWithVersioningEnabled, bool? isBlobLevelImmutableStorageEnabled)
         {
             LastModified = lastModified;
             ETag = eTag;
@@ -49,6 +50,7 @@ namespace Azure.Storage.Blobs.Models
             DeletedOn = deletedOn;
             RemainingRetentionDays = remainingRetentionDays;
             IsImmutableStorageWithVersioningEnabled = isImmutableStorageWithVersioningEnabled;
+            IsBlobLevelImmutableStorageEnabled = isBlobLevelImmutableStorageEnabled;
         }
 
         /// <summary> The date-time that the container was last modified. </summary>
@@ -89,5 +91,8 @@ namespace Azure.Storage.Blobs.Models
 
         /// <summary> Whether immutable storage with versioning is enabled. </summary>
         public bool? IsImmutableStorageWithVersioningEnabled { get; }
+
+        /// <summary> Whether blob level immutable storage is enabled. Only returned for hierarchical namespace enabled accounts. </summary>
+        public bool? IsBlobLevelImmutableStorageEnabled { get; }
     }
 }
