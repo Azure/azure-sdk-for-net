@@ -98,6 +98,15 @@ namespace Azure.ResourceManager.Cdn.Mocking
             return new FrontDoorSecurityPolicyResource(Client, id);
         }
 
+        /// <summary> Gets an object representing a <see cref="AuthPolicyResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="AuthPolicyResource"/> object. </returns>
+        public virtual AuthPolicyResource GetAuthPolicyResource(ResourceIdentifier id)
+        {
+            AuthPolicyResource.ValidateResourceId(id);
+            return new AuthPolicyResource(Client, id);
+        }
+
         /// <summary> Gets an object representing a <see cref="FrontDoorSecretResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="FrontDoorSecretResource"/> object. </returns>

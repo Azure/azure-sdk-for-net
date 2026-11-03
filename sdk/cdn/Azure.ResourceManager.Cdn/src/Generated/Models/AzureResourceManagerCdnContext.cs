@@ -17,6 +17,15 @@ namespace Azure.ResourceManager.Cdn
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
     /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
+    [ModelReaderWriterBuildable(typeof(AuthPolicyAssociation))]
+    [ModelReaderWriterBuildable(typeof(AuthPolicyConfig))]
+    [ModelReaderWriterBuildable(typeof(AuthPolicyData))]
+    [ModelReaderWriterBuildable(typeof(AuthPolicyDomainReference))]
+    [ModelReaderWriterBuildable(typeof(AuthPolicyEntraIDConfig))]
+    [ModelReaderWriterBuildable(typeof(AuthPolicyPatch))]
+    [ModelReaderWriterBuildable(typeof(AuthPolicyProperties))]
+    [ModelReaderWriterBuildable(typeof(AuthPolicyResource))]
+    [ModelReaderWriterBuildable(typeof(AuthPolicyRouteReference))]
     [ModelReaderWriterBuildable(typeof(AzureFirstPartyManagedCertificateProperties))]
     [ModelReaderWriterBuildable(typeof(BatchRuleProperties))]
     [ModelReaderWriterBuildable(typeof(CacheConfiguration))]
@@ -24,6 +33,7 @@ namespace Azure.ResourceManager.Cdn
     [ModelReaderWriterBuildable(typeof(CacheKeyQueryStringActionProperties))]
     [ModelReaderWriterBuildable(typeof(CanMigrateContent))]
     [ModelReaderWriterBuildable(typeof(CanMigrateResult))]
+    [ModelReaderWriterBuildable(typeof(CapacityDistributionSettingsParameters))]
     [ModelReaderWriterBuildable(typeof(CdnCertificateSource))]
     [ModelReaderWriterBuildable(typeof(CdnCustomDomainCreateOrUpdateContent))]
     [ModelReaderWriterBuildable(typeof(CdnCustomDomainData))]
@@ -144,6 +154,9 @@ namespace Azure.ResourceManager.Cdn
     [ModelReaderWriterBuildable(typeof(FrontDoorSecurityPolicyData))]
     [ModelReaderWriterBuildable(typeof(FrontDoorSecurityPolicyPatch))]
     [ModelReaderWriterBuildable(typeof(FrontDoorSecurityPolicyResource))]
+    [ModelReaderWriterBuildable(typeof(FrontDoorStateProperties))]
+    [ModelReaderWriterBuildable(typeof(FrontDoorUrlSigningAction))]
+    [ModelReaderWriterBuildable(typeof(FrontDoorUrlSigningActionContent))]
     [ModelReaderWriterBuildable(typeof(FrontDoorUsage))]
     [ModelReaderWriterBuildable(typeof(FrontDoorUsageResourceName))]
     [ModelReaderWriterBuildable(typeof(GeoFilter))]

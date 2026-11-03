@@ -41,8 +41,9 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="linkToDefaultDomain"> whether this route will be linked to the default endpoint domain. </param>
         /// <param name="httpsRedirect"> Whether to automatically redirect HTTP traffic to HTTPS traffic. Note that this is a easy way to set up this rule and it will be the first rule that gets executed. </param>
         /// <param name="enabledState"> Whether to enable use of this rule. Permitted values are 'Enabled' or 'Disabled'. </param>
+        /// <param name="grpcState"> Whether or not gRPC is enabled on this route. Permitted values are 'Enabled' or 'Disabled'. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RouteUpdatePropertiesParameters(string endpointName, IList<FrontDoorActivatedResourceInfo> customDomains, CdnResourceReference originGroup, string originPath, IList<WritableSubResource> ruleSets, IList<FrontDoorEndpointProtocol> supportedProtocols, IList<string> patternsToMatch, FrontDoorRouteCacheConfiguration cacheConfiguration, ForwardingProtocol? forwardingProtocol, LinkToDefaultDomain? linkToDefaultDomain, HttpsRedirect? httpsRedirect, EnabledState? enabledState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RouteUpdatePropertiesParameters(string endpointName, IList<FrontDoorActivatedResourceInfo> customDomains, CdnResourceReference originGroup, string originPath, IList<WritableSubResource> ruleSets, IList<FrontDoorEndpointProtocol> supportedProtocols, IList<string> patternsToMatch, FrontDoorRouteCacheConfiguration cacheConfiguration, ForwardingProtocol? forwardingProtocol, LinkToDefaultDomain? linkToDefaultDomain, HttpsRedirect? httpsRedirect, EnabledState? enabledState, FrontDoorRouteGrpcState? grpcState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             EndpointName = endpointName;
             CustomDomains = customDomains;
@@ -56,6 +57,7 @@ namespace Azure.ResourceManager.Cdn.Models
             LinkToDefaultDomain = linkToDefaultDomain;
             HttpsRedirect = httpsRedirect;
             EnabledState = enabledState;
+            GrpcState = grpcState;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -106,6 +108,10 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> Whether to enable use of this rule. Permitted values are 'Enabled' or 'Disabled'. </summary>
         [WirePath("enabledState")]
         public EnabledState? EnabledState { get; set; }
+
+        /// <summary> Whether or not gRPC is enabled on this route. Permitted values are 'Enabled' or 'Disabled'. </summary>
+        [WirePath("grpcState")]
+        public FrontDoorRouteGrpcState? GrpcState { get; set; }
 
         /// <summary> Resource ID. </summary>
         [WirePath("originGroup.id")]

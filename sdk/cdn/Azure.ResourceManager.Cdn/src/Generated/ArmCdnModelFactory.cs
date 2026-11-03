@@ -421,10 +421,20 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="sampleSize"> The number of samples to consider for load balancing decisions. </param>
         /// <param name="successfulSamplesRequired"> The number of samples within the sample period that must succeed. </param>
         /// <param name="additionalLatencyInMilliseconds"> The additional latency in milliseconds for probes to fall into the lowest latency bucket. </param>
+        /// <param name="capacityDistributionSettings"> Capacity based round-robin load balancing settings. </param>
         /// <returns> A new <see cref="Models.LoadBalancingSettings"/> instance for mocking. </returns>
-        public static LoadBalancingSettings LoadBalancingSettings(int? sampleSize = default, int? successfulSamplesRequired = default, int? additionalLatencyInMilliseconds = default)
+        public static LoadBalancingSettings LoadBalancingSettings(int? sampleSize = default, int? successfulSamplesRequired = default, int? additionalLatencyInMilliseconds = default, CapacityDistributionSettingsParameters capacityDistributionSettings = default)
         {
-            return new LoadBalancingSettings(sampleSize, successfulSamplesRequired, additionalLatencyInMilliseconds, default);
+            return new LoadBalancingSettings(sampleSize, successfulSamplesRequired, additionalLatencyInMilliseconds, capacityDistributionSettings, default);
+        }
+
+        /// <summary> Capacity based round-robin load balancing settings for a backend pool. </summary>
+        /// <param name="capacityConsciousThreshold"> Threshold at which additional backends are added for capacity based load balancing. Default is 80 percent. </param>
+        /// <param name="distributionType"> Type of distribution used in capacity based load balancing. </param>
+        /// <returns> A new <see cref="Models.CapacityDistributionSettingsParameters"/> instance for mocking. </returns>
+        public static CapacityDistributionSettingsParameters CapacityDistributionSettingsParameters(int? capacityConsciousThreshold = default, DistributionType? distributionType = default)
+        {
+            return new CapacityDistributionSettingsParameters(capacityConsciousThreshold, distributionType, default);
         }
 
         /// <summary> The JSON object that contains the properties to send health probes to origin. </summary>
@@ -579,18 +589,19 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="linkToDefaultDomain"> whether this route will be linked to the default endpoint domain. </param>
         /// <param name="httpsRedirect"> Whether to automatically redirect HTTP traffic to HTTPS traffic. Note that this is a easy way to set up this rule and it will be the first rule that gets executed. </param>
         /// <param name="enabledState"> Whether to enable use of this rule. Permitted values are 'Enabled' or 'Disabled'. </param>
+        /// <param name="grpcState"> Whether or not gRPC is enabled on this route. Permitted values are 'Enabled' or 'Disabled'. </param>
         /// <param name="provisioningState"> Provisioning status. </param>
         /// <param name="deploymentStatus"> Gets the DeploymentStatus. </param>
         /// <param name="originGroupId"> Resource ID. </param>
         /// <returns> A new <see cref="Cdn.FrontDoorRouteData"/> instance for mocking. </returns>
-        public static FrontDoorRouteData FrontDoorRouteData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string endpointName = default, IEnumerable<FrontDoorActivatedResourceInfo> customDomains = default, string originPath = default, IEnumerable<WritableSubResource> ruleSets = default, IEnumerable<FrontDoorEndpointProtocol> supportedProtocols = default, IEnumerable<string> patternsToMatch = default, FrontDoorRouteCacheConfiguration cacheConfiguration = default, ForwardingProtocol? forwardingProtocol = default, LinkToDefaultDomain? linkToDefaultDomain = default, HttpsRedirect? httpsRedirect = default, EnabledState? enabledState = default, FrontDoorProvisioningState? provisioningState = default, FrontDoorDeploymentStatus? deploymentStatus = default, ResourceIdentifier originGroupId = default)
+        public static FrontDoorRouteData FrontDoorRouteData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string endpointName = default, IEnumerable<FrontDoorActivatedResourceInfo> customDomains = default, string originPath = default, IEnumerable<WritableSubResource> ruleSets = default, IEnumerable<FrontDoorEndpointProtocol> supportedProtocols = default, IEnumerable<string> patternsToMatch = default, FrontDoorRouteCacheConfiguration cacheConfiguration = default, ForwardingProtocol? forwardingProtocol = default, LinkToDefaultDomain? linkToDefaultDomain = default, HttpsRedirect? httpsRedirect = default, EnabledState? enabledState = default, FrontDoorRouteGrpcState? grpcState = default, FrontDoorProvisioningState? provisioningState = default, FrontDoorDeploymentStatus? deploymentStatus = default, ResourceIdentifier originGroupId = default)
         {
             return new FrontDoorRouteData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                endpointName is null && customDomains is null && originGroupId is null && originPath is null && ruleSets is null && supportedProtocols is null && patternsToMatch is null && cacheConfiguration is null && forwardingProtocol is null && linkToDefaultDomain is null && httpsRedirect is null && enabledState is null && provisioningState is null && deploymentStatus is null ? default : new CdnRouteProperties(
+                endpointName is null && customDomains is null && originGroupId is null && originPath is null && ruleSets is null && supportedProtocols is null && patternsToMatch is null && cacheConfiguration is null && forwardingProtocol is null && linkToDefaultDomain is null && httpsRedirect is null && enabledState is null && grpcState is null && provisioningState is null && deploymentStatus is null ? default : new CdnRouteProperties(
                     endpointName,
                     (customDomains ?? new ChangeTrackingList<FrontDoorActivatedResourceInfo>()).ToList(),
                     originGroupId is null ? default : new CdnResourceReference(originGroupId, default),
@@ -603,6 +614,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     linkToDefaultDomain,
                     httpsRedirect,
                     enabledState,
+                    grpcState,
                     provisioningState,
                     deploymentStatus,
                     default),
@@ -650,11 +662,12 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="linkToDefaultDomain"> whether this route will be linked to the default endpoint domain. </param>
         /// <param name="httpsRedirect"> Whether to automatically redirect HTTP traffic to HTTPS traffic. Note that this is a easy way to set up this rule and it will be the first rule that gets executed. </param>
         /// <param name="enabledState"> Whether to enable use of this rule. Permitted values are 'Enabled' or 'Disabled'. </param>
+        /// <param name="grpcState"> Whether or not gRPC is enabled on this route. Permitted values are 'Enabled' or 'Disabled'. </param>
         /// <param name="originGroupId"> Resource ID. </param>
         /// <returns> A new <see cref="Models.FrontDoorRoutePatch"/> instance for mocking. </returns>
-        public static FrontDoorRoutePatch FrontDoorRoutePatch(string endpointName = default, IEnumerable<FrontDoorActivatedResourceInfo> customDomains = default, string originPath = default, IEnumerable<WritableSubResource> ruleSets = default, IEnumerable<FrontDoorEndpointProtocol> supportedProtocols = default, IEnumerable<string> patternsToMatch = default, FrontDoorRouteCacheConfiguration cacheConfiguration = default, ForwardingProtocol? forwardingProtocol = default, LinkToDefaultDomain? linkToDefaultDomain = default, HttpsRedirect? httpsRedirect = default, EnabledState? enabledState = default, ResourceIdentifier originGroupId = default)
+        public static FrontDoorRoutePatch FrontDoorRoutePatch(string endpointName = default, IEnumerable<FrontDoorActivatedResourceInfo> customDomains = default, string originPath = default, IEnumerable<WritableSubResource> ruleSets = default, IEnumerable<FrontDoorEndpointProtocol> supportedProtocols = default, IEnumerable<string> patternsToMatch = default, FrontDoorRouteCacheConfiguration cacheConfiguration = default, ForwardingProtocol? forwardingProtocol = default, LinkToDefaultDomain? linkToDefaultDomain = default, HttpsRedirect? httpsRedirect = default, EnabledState? enabledState = default, FrontDoorRouteGrpcState? grpcState = default, ResourceIdentifier originGroupId = default)
         {
-            return new FrontDoorRoutePatch(endpointName is null && customDomains is null && originGroupId is null && originPath is null && ruleSets is null && supportedProtocols is null && patternsToMatch is null && cacheConfiguration is null && forwardingProtocol is null && linkToDefaultDomain is null && httpsRedirect is null && enabledState is null ? default : new RouteUpdatePropertiesParameters(
+            return new FrontDoorRoutePatch(endpointName is null && customDomains is null && originGroupId is null && originPath is null && ruleSets is null && supportedProtocols is null && patternsToMatch is null && cacheConfiguration is null && forwardingProtocol is null && linkToDefaultDomain is null && httpsRedirect is null && enabledState is null && grpcState is null ? default : new RouteUpdatePropertiesParameters(
                 endpointName,
                 (customDomains ?? new ChangeTrackingList<FrontDoorActivatedResourceInfo>()).ToList(),
                 originGroupId is null ? default : new CdnResourceReference(originGroupId, default),
@@ -667,6 +680,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 linkToDefaultDomain,
                 httpsRedirect,
                 enabledState,
+                grpcState,
                 default), default);
         }
 
@@ -695,12 +709,12 @@ namespace Azure.ResourceManager.Cdn.Models
                 name,
                 resourceType,
                 systemData,
-                provisioningState is null && deploymentStatus is null && profileName is null && isBatchMode is null && rules is null ? default : new CdnRuleSetProperties(
+                provisioningState is null && deploymentStatus is null && profileName is null && rules is null ? default : new CdnRuleSetProperties(
                     provisioningState,
                     deploymentStatus,
                     default,
                     profileName,
-                    isBatchMode,
+                    default,
                     (rules ?? new ChangeTrackingList<BatchRuleProperties>()).ToList()),
                 default);
         }
@@ -1290,13 +1304,42 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary>
         /// An action for the delivery rule.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.CdnEdgeAction"/>, <see cref="Models.DeliveryRuleCacheExpirationAction"/>, <see cref="Models.DeliveryRuleCacheKeyQueryStringAction"/>, <see cref="Models.DeliveryRuleRequestHeaderAction"/>, <see cref="Models.DeliveryRuleResponseHeaderAction"/>, <see cref="Models.DeliveryRuleRouteConfigurationOverrideAction"/>, <see cref="Models.OriginGroupOverrideAction"/>, <see cref="Models.UriRedirectAction"/>, <see cref="Models.UriRewriteAction"/>, and <see cref="Models.UriSigningAction"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.CdnEdgeAction"/>, <see cref="Models.DeliveryRuleCacheExpirationAction"/>, <see cref="Models.DeliveryRuleCacheKeyQueryStringAction"/>, <see cref="Models.DeliveryRuleRequestHeaderAction"/>, <see cref="Models.DeliveryRuleResponseHeaderAction"/>, <see cref="Models.DeliveryRuleRouteConfigurationOverrideAction"/>, <see cref="Models.FrontDoorUrlSigningAction"/>, <see cref="Models.OriginGroupOverrideAction"/>, <see cref="Models.UriRedirectAction"/>, <see cref="Models.UriRewriteAction"/>, and <see cref="Models.UriSigningAction"/>.
         /// </summary>
         /// <param name="name"> The name of the action for the delivery rule. </param>
         /// <returns> A new <see cref="Models.DeliveryRuleAction"/> instance for mocking. </returns>
         public static DeliveryRuleAction DeliveryRuleAction(string name = default)
         {
             return new UnknownDeliveryRuleAction(name is null ? default : new DeliveryRuleActionName(name), default);
+        }
+
+        /// <summary> Defines the url signing action for the delivery rule. </summary>
+        /// <param name="parameters"> Defines the parameters for the action. </param>
+        /// <returns> A new <see cref="Models.FrontDoorUrlSigningAction"/> instance for mocking. </returns>
+        public static FrontDoorUrlSigningAction FrontDoorUrlSigningAction(FrontDoorUrlSigningActionContent parameters = default)
+        {
+            return new FrontDoorUrlSigningAction(DeliveryRuleActionName.AfdUrlSigning, default, parameters);
+        }
+
+        /// <param name="typeName"></param>
+        /// <param name="keyGroupReferenceId"> Resource ID. </param>
+        /// <param name="algorithm"> Algorithm to use for URL signing. </param>
+        /// <param name="parameterNameOverride"> Defines which query string parameters in the url to be considered for expires, key id etc. </param>
+        /// <returns> A new <see cref="Models.FrontDoorUrlSigningActionContent"/> instance for mocking. </returns>
+        public static FrontDoorUrlSigningActionContent FrontDoorUrlSigningActionContent(UrlSigningActionTypeName typeName = default, ResourceIdentifier keyGroupReferenceId = default, UriSigningAlgorithm? algorithm = default, IEnumerable<UriSigningParamIdentifier> parameterNameOverride = default)
+        {
+            parameterNameOverride ??= new ChangeTrackingList<UriSigningParamIdentifier>();
+
+            return new FrontDoorUrlSigningActionContent(typeName, keyGroupReferenceId is null ? default : new CdnResourceReference(keyGroupReferenceId, default), algorithm, (parameterNameOverride ?? new ChangeTrackingList<UriSigningParamIdentifier>()).ToList(), default);
+        }
+
+        /// <summary> Defines how to identify a parameter for a specific purpose e.g. expires. </summary>
+        /// <param name="paramIndicator"> Indicates the purpose of the parameter. </param>
+        /// <param name="paramName"> Parameter name. </param>
+        /// <returns> A new <see cref="Models.UriSigningParamIdentifier"/> instance for mocking. </returns>
+        public static UriSigningParamIdentifier UriSigningParamIdentifier(ParamIndicator paramIndicator = default, string paramName = default)
+        {
+            return new UriSigningParamIdentifier(paramIndicator, paramName, default);
         }
 
         /// <summary> Defines the url redirect action for the delivery rule. </summary>
@@ -1348,15 +1391,6 @@ namespace Azure.ResourceManager.Cdn.Models
             parameterNameOverride ??= new ChangeTrackingList<UriSigningParamIdentifier>();
 
             return new UriSigningActionProperties(DeliveryRuleActionParametersType.DeliveryRuleUrlSigningActionParameters, default, algorithm, (parameterNameOverride ?? new ChangeTrackingList<UriSigningParamIdentifier>()).ToList());
-        }
-
-        /// <summary> Defines how to identify a parameter for a specific purpose e.g. expires. </summary>
-        /// <param name="paramIndicator"> Indicates the purpose of the parameter. </param>
-        /// <param name="paramName"> Parameter name. </param>
-        /// <returns> A new <see cref="Models.UriSigningParamIdentifier"/> instance for mocking. </returns>
-        public static UriSigningParamIdentifier UriSigningParamIdentifier(ParamIndicator paramIndicator = default, string paramName = default)
-        {
-            return new UriSigningParamIdentifier(paramIndicator, paramName, default);
         }
 
         /// <param name="originGroupId"> Resource ID. </param>
@@ -1520,6 +1554,15 @@ namespace Azure.ResourceManager.Cdn.Models
             return new DeliveryRuleRouteConfigurationOverrideAction(DeliveryRuleActionName.RouteConfigurationOverride, default, properties);
         }
 
+        /// <summary> The tracking states for afd resources. </summary>
+        /// <param name="provisioningState"> Provisioning status. </param>
+        /// <param name="deploymentStatus"></param>
+        /// <returns> A new <see cref="Models.FrontDoorStateProperties"/> instance for mocking. </returns>
+        public static FrontDoorStateProperties FrontDoorStateProperties(FrontDoorProvisioningState? provisioningState = default, FrontDoorDeploymentStatus? deploymentStatus = default)
+        {
+            return new FrontDoorStateProperties(provisioningState, deploymentStatus, default);
+        }
+
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -1629,6 +1672,116 @@ namespace Azure.ResourceManager.Cdn.Models
         public static FrontDoorSecurityPolicyPatch FrontDoorSecurityPolicyPatch(SecurityPolicyProperties properties = default)
         {
             return new FrontDoorSecurityPolicyPatch(properties is null ? default : new SecurityPolicyUpdateProperties(properties, default), default);
+        }
+
+        /// <summary> An authorization policy that maps authorization configurations to profile, domain, or route associations. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> Properties required to create an authorization policy. </param>
+        /// <returns> A new <see cref="Cdn.AuthPolicyData"/> instance for mocking. </returns>
+        public static AuthPolicyData AuthPolicyData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, AuthPolicyProperties properties = default)
+        {
+            return new AuthPolicyData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                default);
+        }
+
+        /// <summary> Properties of the authorization policy. </summary>
+        /// <param name="provisioningState"> Provisioning status. </param>
+        /// <param name="deploymentStatus"></param>
+        /// <param name="authConfigs"> Authorization configurations for the policy. </param>
+        /// <param name="associations"> Resource associations for the authorization policy. </param>
+        /// <param name="action"> Action to apply when authorization fails. </param>
+        /// <param name="forwardTokenToOrigin"> Whether to forward the authentication token to the origin. Defaults to true. </param>
+        /// <returns> A new <see cref="Models.AuthPolicyProperties"/> instance for mocking. </returns>
+        public static AuthPolicyProperties AuthPolicyProperties(FrontDoorProvisioningState? provisioningState = default, FrontDoorDeploymentStatus? deploymentStatus = default, IEnumerable<AuthPolicyConfig> authConfigs = default, AuthPolicyAssociation associations = default, AuthPolicyAction? action = default, bool? forwardTokenToOrigin = default)
+        {
+            authConfigs ??= new ChangeTrackingList<AuthPolicyConfig>();
+
+            return new AuthPolicyProperties(
+                provisioningState,
+                deploymentStatus,
+                default,
+                (authConfigs ?? new ChangeTrackingList<AuthPolicyConfig>()).ToList(),
+                associations,
+                action,
+                forwardTokenToOrigin);
+        }
+
+        /// <summary>
+        /// Authorization configuration parameters.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.AuthPolicyEntraIDConfig"/>.
+        /// </summary>
+        /// <param name="identityProvider"> Identity provider used by the authorization configuration. </param>
+        /// <returns> A new <see cref="Models.AuthPolicyConfig"/> instance for mocking. </returns>
+        public static AuthPolicyConfig AuthPolicyConfig(string identityProvider = default)
+        {
+            return new UnknownAuthPolicyConfig(identityProvider is null ? default : new AuthPolicyConfigIdentityProvider(identityProvider), default);
+        }
+
+        /// <summary> Microsoft Entra ID authorization policy configuration. </summary>
+        /// <param name="issuer"> Issuer or authority for the identity provider to validate. </param>
+        /// <param name="audiences"> Audiences to validate. </param>
+        /// <param name="authLocation"> Location of the authorization value in the HTTP request. Only Header is supported. </param>
+        /// <param name="authLocationSelector"> Selector within the authorization location used to find the identity. </param>
+        /// <returns> A new <see cref="Models.AuthPolicyEntraIDConfig"/> instance for mocking. </returns>
+        public static AuthPolicyEntraIDConfig AuthPolicyEntraIDConfig(string issuer = default, IEnumerable<string> audiences = default, AuthLocation? authLocation = default, string authLocationSelector = default)
+        {
+            audiences ??= new ChangeTrackingList<string>();
+
+            return new AuthPolicyEntraIDConfig(
+                AuthPolicyConfigIdentityProvider.EntraID,
+                default,
+                issuer,
+                (audiences ?? new ChangeTrackingList<string>()).ToList(),
+                authLocation,
+                authLocationSelector);
+        }
+
+        /// <summary> Resource associations for an authorization policy. </summary>
+        /// <param name="isProfileLevel"> Indicates whether the policy is associated at the profile level. When omitted during creation, the service defaults this value to false. </param>
+        /// <param name="domains"> Domains associated with the authorization policy. </param>
+        /// <param name="routes"> Routes associated with the authorization policy. </param>
+        /// <returns> A new <see cref="Models.AuthPolicyAssociation"/> instance for mocking. </returns>
+        public static AuthPolicyAssociation AuthPolicyAssociation(bool? isProfileLevel = default, IEnumerable<AuthPolicyDomainReference> domains = default, IEnumerable<AuthPolicyRouteReference> routes = default)
+        {
+            domains ??= new ChangeTrackingList<AuthPolicyDomainReference>();
+            routes ??= new ChangeTrackingList<AuthPolicyRouteReference>();
+
+            return new AuthPolicyAssociation(isProfileLevel, (domains ?? new ChangeTrackingList<AuthPolicyDomainReference>()).ToList(), (routes ?? new ChangeTrackingList<AuthPolicyRouteReference>()).ToList(), default);
+        }
+
+        /// <summary> Reference to a domain associated with an authorization policy. </summary>
+        /// <param name="id"> Resource ID of the custom domain or Azure Front Door endpoint. </param>
+        /// <param name="isActive"> Whether the resource is active or inactive. </param>
+        /// <returns> A new <see cref="Models.AuthPolicyDomainReference"/> instance for mocking. </returns>
+        public static AuthPolicyDomainReference AuthPolicyDomainReference(ResourceIdentifier id = default, bool? isActive = default)
+        {
+            return new AuthPolicyDomainReference(id, isActive, default);
+        }
+
+        /// <summary> Reference to a route associated with an authorization policy. </summary>
+        /// <param name="id"> Resource ID of the Azure Front Door route. </param>
+        /// <returns> A new <see cref="Models.AuthPolicyRouteReference"/> instance for mocking. </returns>
+        public static AuthPolicyRouteReference AuthPolicyRouteReference(ResourceIdentifier id = default)
+        {
+            return new AuthPolicyRouteReference(id, default);
+        }
+
+        /// <param name="authConfigs"> Authorization configurations for the policy. </param>
+        /// <param name="associations"> Resource associations for the authorization policy. </param>
+        /// <param name="action"> Action to apply when authorization fails. </param>
+        /// <param name="forwardTokenToOrigin"> Whether to forward the authentication token to the origin. When omitted, the existing value is unchanged. </param>
+        /// <returns> A new <see cref="Models.AuthPolicyPatch"/> instance for mocking. </returns>
+        public static AuthPolicyPatch AuthPolicyPatch(IEnumerable<AuthPolicyConfig> authConfigs = default, AuthPolicyAssociation associations = default, AuthPolicyAction? action = default, bool? forwardTokenToOrigin = default)
+        {
+            return new AuthPolicyPatch(authConfigs is null && associations is null && action is null && forwardTokenToOrigin is null ? default : new AuthPolicyUpdatePropertiesParameters((authConfigs ?? new ChangeTrackingList<AuthPolicyConfig>()).ToList(), associations, action, forwardTokenToOrigin, default), default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -2918,6 +3071,99 @@ namespace Azure.ResourceManager.Cdn.Models
             return new ManagedRuleDefinition(ruleId, description, default);
         }
 
+        /// <summary> Round-Robin load balancing settings for a backend pool. </summary>
+        /// <param name="sampleSize"> The number of samples to consider for load balancing decisions. </param>
+        /// <param name="successfulSamplesRequired"> The number of samples within the sample period that must succeed. </param>
+        /// <param name="additionalLatencyInMilliseconds"> The additional latency in milliseconds for probes to fall into the lowest latency bucket. </param>
+        /// <returns> A new <see cref="Models.LoadBalancingSettings"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static LoadBalancingSettings LoadBalancingSettings(int? sampleSize, int? successfulSamplesRequired, int? additionalLatencyInMilliseconds)
+        {
+            return new LoadBalancingSettings(sampleSize, successfulSamplesRequired, additionalLatencyInMilliseconds, default, default);
+        }
+
+        /// <summary> Friendly Routes name mapping to the any Routes or secret related information. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="endpointName"> The name of the endpoint which holds the route. </param>
+        /// <param name="customDomains"> Domains referenced by this endpoint. </param>
+        /// <param name="originPath"> A directory path on the origin that AzureFrontDoor can use to retrieve content from, e.g. contoso.cloudapp.net/originpath. </param>
+        /// <param name="ruleSets"> rule sets referenced by this endpoint. </param>
+        /// <param name="supportedProtocols"> List of supported protocols for this route. </param>
+        /// <param name="patternsToMatch"> The route patterns of the rule. </param>
+        /// <param name="cacheConfiguration"> The caching configuration for this route. To disable caching, do not provide a cacheConfiguration object. </param>
+        /// <param name="forwardingProtocol"> Protocol this rule will use when forwarding traffic to backends. </param>
+        /// <param name="linkToDefaultDomain"> whether this route will be linked to the default endpoint domain. </param>
+        /// <param name="httpsRedirect"> Whether to automatically redirect HTTP traffic to HTTPS traffic. Note that this is a easy way to set up this rule and it will be the first rule that gets executed. </param>
+        /// <param name="enabledState"> Whether to enable use of this rule. Permitted values are 'Enabled' or 'Disabled'. </param>
+        /// <param name="provisioningState"> Provisioning status. </param>
+        /// <param name="deploymentStatus"></param>
+        /// <param name="originGroupId"> Resource ID. </param>
+        /// <returns> A new <see cref="Cdn.FrontDoorRouteData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static FrontDoorRouteData FrontDoorRouteData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string endpointName, IEnumerable<FrontDoorActivatedResourceInfo> customDomains, string originPath, IEnumerable<WritableSubResource> ruleSets, IEnumerable<FrontDoorEndpointProtocol> supportedProtocols, IEnumerable<string> patternsToMatch, FrontDoorRouteCacheConfiguration cacheConfiguration, ForwardingProtocol? forwardingProtocol, LinkToDefaultDomain? linkToDefaultDomain, HttpsRedirect? httpsRedirect, EnabledState? enabledState, FrontDoorProvisioningState? provisioningState, FrontDoorDeploymentStatus? deploymentStatus, ResourceIdentifier originGroupId)
+        {
+            return new FrontDoorRouteData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                endpointName is null && customDomains is null && originGroupId is null && originPath is null && ruleSets is null && supportedProtocols is null && patternsToMatch is null && cacheConfiguration is null && forwardingProtocol is null && linkToDefaultDomain is null && httpsRedirect is null && enabledState is null && provisioningState is null && deploymentStatus is null ? default : new CdnRouteProperties(
+                    endpointName,
+                    (customDomains ?? new ChangeTrackingList<FrontDoorActivatedResourceInfo>()).ToList(),
+                    originGroupId is null ? default : new CdnResourceReference(originGroupId, default),
+                    originPath,
+                    (ruleSets ?? new ChangeTrackingList<WritableSubResource>()).ToList(),
+                    (supportedProtocols ?? new ChangeTrackingList<FrontDoorEndpointProtocol>()).ToList(),
+                    (patternsToMatch ?? new ChangeTrackingList<string>()).ToList(),
+                    cacheConfiguration,
+                    forwardingProtocol,
+                    linkToDefaultDomain,
+                    httpsRedirect,
+                    enabledState,
+                    default,
+                    provisioningState,
+                    deploymentStatus,
+                    default),
+                default);
+        }
+
+        /// <summary> The domain JSON object required for domain creation or update. </summary>
+        /// <param name="endpointName"> The name of the endpoint which holds the route. </param>
+        /// <param name="customDomains"> Domains referenced by this endpoint. </param>
+        /// <param name="originPath"> A directory path on the origin that AzureFrontDoor can use to retrieve content from, e.g. contoso.cloudapp.net/originpath. </param>
+        /// <param name="ruleSets"> rule sets referenced by this endpoint. </param>
+        /// <param name="supportedProtocols"> List of supported protocols for this route. </param>
+        /// <param name="patternsToMatch"> The route patterns of the rule. </param>
+        /// <param name="cacheConfiguration"> The caching configuration for this route. To disable caching, do not provide a cacheConfiguration object. </param>
+        /// <param name="forwardingProtocol"> Protocol this rule will use when forwarding traffic to backends. </param>
+        /// <param name="linkToDefaultDomain"> whether this route will be linked to the default endpoint domain. </param>
+        /// <param name="httpsRedirect"> Whether to automatically redirect HTTP traffic to HTTPS traffic. Note that this is a easy way to set up this rule and it will be the first rule that gets executed. </param>
+        /// <param name="enabledState"> Whether to enable use of this rule. Permitted values are 'Enabled' or 'Disabled'. </param>
+        /// <param name="originGroupId"> Resource ID. </param>
+        /// <returns> A new <see cref="Models.FrontDoorRoutePatch"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static FrontDoorRoutePatch FrontDoorRoutePatch(string endpointName, IEnumerable<FrontDoorActivatedResourceInfo> customDomains, string originPath, IEnumerable<WritableSubResource> ruleSets, IEnumerable<FrontDoorEndpointProtocol> supportedProtocols, IEnumerable<string> patternsToMatch, FrontDoorRouteCacheConfiguration cacheConfiguration, ForwardingProtocol? forwardingProtocol, LinkToDefaultDomain? linkToDefaultDomain, HttpsRedirect? httpsRedirect, EnabledState? enabledState, ResourceIdentifier originGroupId)
+        {
+            return new FrontDoorRoutePatch(endpointName is null && customDomains is null && originGroupId is null && originPath is null && ruleSets is null && supportedProtocols is null && patternsToMatch is null && cacheConfiguration is null && forwardingProtocol is null && linkToDefaultDomain is null && httpsRedirect is null && enabledState is null ? default : new RouteUpdatePropertiesParameters(
+                endpointName,
+                (customDomains ?? new ChangeTrackingList<FrontDoorActivatedResourceInfo>()).ToList(),
+                originGroupId is null ? default : new CdnResourceReference(originGroupId, default),
+                originPath,
+                (ruleSets ?? new ChangeTrackingList<WritableSubResource>()).ToList(),
+                (supportedProtocols ?? new ChangeTrackingList<FrontDoorEndpointProtocol>()).ToList(),
+                (patternsToMatch ?? new ChangeTrackingList<string>()).ToList(),
+                cacheConfiguration,
+                forwardingProtocol,
+                linkToDefaultDomain,
+                httpsRedirect,
+                enabledState,
+                default,
+                default), default);
+        }
+
         /// <summary> CDN endpoint is the entity within a CDN profile containing configuration information such as origin, protocol, content caching and delivery behavior. The CDN endpoint uses the URL format &lt;endpointname&gt;.azureedge.net. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
@@ -3248,6 +3494,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     linkToDefaultDomain,
                     httpsRedirect,
                     enabledState,
+                    default,
                     provisioningState,
                     deploymentStatus,
                     default),
@@ -3284,6 +3531,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 linkToDefaultDomain,
                 httpsRedirect,
                 enabledState,
+                default,
                 default), default);
         }
 

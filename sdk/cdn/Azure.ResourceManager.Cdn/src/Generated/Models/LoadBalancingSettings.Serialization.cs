@@ -89,6 +89,11 @@ namespace Azure.ResourceManager.Cdn.Models
                 writer.WritePropertyName("additionalLatencyInMilliseconds"u8);
                 writer.WriteNumberValue(AdditionalLatencyInMilliseconds.Value);
             }
+            if (Optional.IsDefined(CapacityDistributionSettings))
+            {
+                writer.WritePropertyName("capacityDistributionSettings"u8);
+                writer.WriteObjectValue(CapacityDistributionSettings, options);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -134,6 +139,7 @@ namespace Azure.ResourceManager.Cdn.Models
             int? sampleSize = default;
             int? successfulSamplesRequired = default;
             int? additionalLatencyInMilliseconds = default;
+            CapacityDistributionSettingsParameters capacityDistributionSettings = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -164,12 +170,21 @@ namespace Azure.ResourceManager.Cdn.Models
                     additionalLatencyInMilliseconds = prop.Value.GetInt32();
                     continue;
                 }
+                if (prop.NameEquals("capacityDistributionSettings"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    capacityDistributionSettings = CapacityDistributionSettingsParameters.DeserializeCapacityDistributionSettingsParameters(prop.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new LoadBalancingSettings(sampleSize, successfulSamplesRequired, additionalLatencyInMilliseconds, additionalBinaryDataProperties);
+            return new LoadBalancingSettings(sampleSize, successfulSamplesRequired, additionalLatencyInMilliseconds, capacityDistributionSettings, additionalBinaryDataProperties);
         }
     }
 }

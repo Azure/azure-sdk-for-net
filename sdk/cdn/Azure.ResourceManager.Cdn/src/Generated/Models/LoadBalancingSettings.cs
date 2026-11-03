@@ -26,12 +26,14 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="sampleSize"> The number of samples to consider for load balancing decisions. </param>
         /// <param name="successfulSamplesRequired"> The number of samples within the sample period that must succeed. </param>
         /// <param name="additionalLatencyInMilliseconds"> The additional latency in milliseconds for probes to fall into the lowest latency bucket. </param>
+        /// <param name="capacityDistributionSettings"> Capacity based round-robin load balancing settings. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal LoadBalancingSettings(int? sampleSize, int? successfulSamplesRequired, int? additionalLatencyInMilliseconds, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal LoadBalancingSettings(int? sampleSize, int? successfulSamplesRequired, int? additionalLatencyInMilliseconds, CapacityDistributionSettingsParameters capacityDistributionSettings, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SampleSize = sampleSize;
             SuccessfulSamplesRequired = successfulSamplesRequired;
             AdditionalLatencyInMilliseconds = additionalLatencyInMilliseconds;
+            CapacityDistributionSettings = capacityDistributionSettings;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -46,5 +48,9 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> The additional latency in milliseconds for probes to fall into the lowest latency bucket. </summary>
         [WirePath("additionalLatencyInMilliseconds")]
         public int? AdditionalLatencyInMilliseconds { get; set; }
+
+        /// <summary> Capacity based round-robin load balancing settings. </summary>
+        [WirePath("capacityDistributionSettings")]
+        public CapacityDistributionSettingsParameters CapacityDistributionSettings { get; set; }
     }
 }
