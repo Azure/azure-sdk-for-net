@@ -3496,24 +3496,21 @@ namespace Azure.ResourceManager.Monitor.Models
             return new TenantActionGroupResourcePatch(tags ?? new ChangeTrackingDictionary<string, string>(), isEnabled is null ? default : new ActionGroupPatchProperties(isEnabled, default), default);
         }
 
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="resourceId"> Azure Resource Manager identifier of the resource whose onboarding status is being represented. </param>
-        /// <param name="onboardingStatus"> The onboarding status for the resource. Note that, a higher level scope, e.g., resource group or subscription, is considered onboarded if at least one resource under it is onboarded. </param>
-        /// <param name="dataStatus"> The status of VM Insights data from the resource. When reported as `present` the data array will contain information about the data containers to which data for the specified resource is being routed. </param>
-        /// <param name="data"> Containers that currently store VM Insights data for the specified resource. </param>
-        /// <returns> A new <see cref="Monitor.VMInsightsOnboardingStatusData"/> instance for mocking. </returns>
-        public static VMInsightsOnboardingStatusData VMInsightsOnboardingStatusData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string resourceId = default, OnboardingStatus? onboardingStatus = default, DataStatus? dataStatus = default, IEnumerable<DataContainer> data = default)
+        /// <summary> Information about a container with data for a given resource. </summary>
+        /// <param name="workspace"> Log Analytics workspace information. </param>
+        /// <returns> A new <see cref="Models.DataContainer"/> instance for mocking. </returns>
+        public static DataContainer DataContainer(DataContainerWorkspace workspace = default)
         {
-            return new VMInsightsOnboardingStatusData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                resourceId is null && onboardingStatus is null && dataStatus is null && data is null ? default : new VMInsightsOnboardingStatusProperties(resourceId, onboardingStatus.GetValueOrDefault(), dataStatus.GetValueOrDefault(), (data ?? new ChangeTrackingList<DataContainer>()).ToList(), default),
-                default);
+            return new DataContainer(workspace, default);
+        }
+
+        /// <param name="id"> Azure Resource Manager identifier of the Log Analytics Workspace. </param>
+        /// <param name="location"> Location of the Log Analytics workspace. </param>
+        /// <param name="customerId"> Log Analytics workspace identifier. </param>
+        /// <returns> A new <see cref="Models.DataContainerWorkspace"/> instance for mocking. </returns>
+        public static DataContainerWorkspace DataContainerWorkspace(ResourceIdentifier id = default, AzureLocation location = default, string customerId = default)
+        {
+            return new DataContainerWorkspace(id, location, customerId is null ? default : new WorkspaceInfoProperties(customerId, default), default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -3571,24 +3568,6 @@ namespace Azure.ResourceManager.Monitor.Models
         public static DiagnosticsLogSettings DiagnosticsLogSettings(string category = default, string categoryGroup = default, bool enabled = default, RetentionPolicy retentionPolicy = default)
         {
             return new DiagnosticsLogSettings(category, categoryGroup, enabled, retentionPolicy, default);
-        }
-
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="categoryType"> The type of the diagnostic settings category. </param>
-        /// <param name="categoryGroups"> the collection of what category groups are supported. </param>
-        /// <returns> A new <see cref="Monitor.DiagnosticSettingsCategoryResourceData"/> instance for mocking. </returns>
-        public static DiagnosticSettingsCategoryResourceData DiagnosticSettingsCategoryResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, CategoryType? categoryType = default, IEnumerable<string> categoryGroups = default)
-        {
-            return new DiagnosticSettingsCategoryResourceData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                categoryType is null && categoryGroups is null ? default : new DiagnosticSettingsCategory(categoryType, (categoryGroups ?? new ChangeTrackingList<string>()).ToList(), default),
-                default);
         }
 
         /// <summary> The autoscale setting resource. </summary>

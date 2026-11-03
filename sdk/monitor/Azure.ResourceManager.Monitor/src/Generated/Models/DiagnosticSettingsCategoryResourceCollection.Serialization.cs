@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
-                foreach (DiagnosticSettingsCategoryResourceData item in Value)
+                foreach (DiagnosticSettingsCategoryData item in Value)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 return null;
             }
-            IList<DiagnosticSettingsCategoryResourceData> value = default;
+            IList<DiagnosticSettingsCategoryData> value = default;
             string nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -150,10 +150,10 @@ namespace Azure.ResourceManager.Monitor.Models
                     {
                         continue;
                     }
-                    List<DiagnosticSettingsCategoryResourceData> array = new List<DiagnosticSettingsCategoryResourceData>();
+                    List<DiagnosticSettingsCategoryData> array = new List<DiagnosticSettingsCategoryData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(DiagnosticSettingsCategoryResourceData.DeserializeDiagnosticSettingsCategoryResourceData(item, options));
+                        array.Add(DiagnosticSettingsCategoryData.DeserializeDiagnosticSettingsCategoryData(item, options));
                     }
                     value = array;
                     continue;
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new DiagnosticSettingsCategoryResourceCollection(value ?? new ChangeTrackingList<DiagnosticSettingsCategoryResourceData>(), nextLink, additionalBinaryDataProperties);
+            return new DiagnosticSettingsCategoryResourceCollection(value ?? new ChangeTrackingList<DiagnosticSettingsCategoryData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

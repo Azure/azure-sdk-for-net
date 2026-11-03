@@ -17,19 +17,19 @@ using Azure.ResourceManager.Monitor.Models;
 
 namespace Azure.ResourceManager.Monitor
 {
-    internal partial class DiagnosticSettingsCategoryResourceDataAsyncCollectionResultOfT : AsyncPageable<DiagnosticSettingsCategoryResourceData>
+    internal partial class DiagnosticSettingsCategoryDataAsyncCollectionResultOfT : AsyncPageable<DiagnosticSettingsCategoryData>
     {
         private readonly DiagnosticSettingsCategory _client;
         private readonly string _resourceUri;
         private readonly RequestContext _context;
         private readonly string _diagnosticScope;
 
-        /// <summary> Initializes a new instance of DiagnosticSettingsCategoryResourceDataAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <summary> Initializes a new instance of DiagnosticSettingsCategoryDataAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The DiagnosticSettingsCategory client used to send requests. </param>
         /// <param name="resourceUri"> The fully qualified Azure Resource manager identifier of the resource. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public DiagnosticSettingsCategoryResourceDataAsyncCollectionResultOfT(DiagnosticSettingsCategory client, string resourceUri, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public DiagnosticSettingsCategoryDataAsyncCollectionResultOfT(DiagnosticSettingsCategory client, string resourceUri, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _resourceUri = resourceUri;
@@ -37,11 +37,11 @@ namespace Azure.ResourceManager.Monitor
             _diagnosticScope = diagnosticScope;
         }
 
-        /// <summary> Gets the pages of DiagnosticSettingsCategoryResourceDataAsyncCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of DiagnosticSettingsCategoryDataAsyncCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of DiagnosticSettingsCategoryResourceDataAsyncCollectionResultOfT as an enumerable collection. </returns>
-        public override IAsyncEnumerable<Page<DiagnosticSettingsCategoryResourceData>> AsPages(string continuationToken, int? pageSizeHint)
+        /// <returns> The pages of DiagnosticSettingsCategoryDataAsyncCollectionResultOfT as an enumerable collection. </returns>
+        public override IAsyncEnumerable<Page<DiagnosticSettingsCategoryData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             return AsPagesAsync(continuationToken, pageSizeHint, _context?.CancellationToken ?? default);
         }
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        private async IAsyncEnumerable<Page<DiagnosticSettingsCategoryResourceData>> AsPagesAsync(string continuationToken, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken)
+        private async IAsyncEnumerable<Page<DiagnosticSettingsCategoryData>> AsPagesAsync(string continuationToken, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken, UriKind.RelativeOrAbsolute) : null;
             while (true)
@@ -59,10 +59,10 @@ namespace Azure.ResourceManager.Monitor
                 {
                     yield break;
                 }
-                Models.DiagnosticSettingsCategoryResourceCollection result = Models.DiagnosticSettingsCategoryResourceCollection.FromResponse(response);
+                DiagnosticSettingsCategoryResourceCollection result = DiagnosticSettingsCategoryResourceCollection.FromResponse(response);
                 string nextPageString = result.NextLink;
                 nextPage = string.IsNullOrEmpty(nextPageString) ? null : new Uri(nextPageString, UriKind.RelativeOrAbsolute);
-                yield return Page<DiagnosticSettingsCategoryResourceData>.FromValues((IReadOnlyList<DiagnosticSettingsCategoryResourceData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                yield return Page<DiagnosticSettingsCategoryData>.FromValues((IReadOnlyList<DiagnosticSettingsCategoryData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

@@ -236,21 +236,21 @@ namespace Azure.ResourceManager.Monitor.Mocking
             return new TenantActionGroupResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="VMInsightsOnboardingStatusResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="VmInsightsOnboardingStatusResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="VMInsightsOnboardingStatusResource"/> object. </returns>
-        public virtual VMInsightsOnboardingStatusResource GetVMInsightsOnboardingStatusResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="VmInsightsOnboardingStatusResource"/> object. </returns>
+        public virtual VmInsightsOnboardingStatusResource GetVmInsightsOnboardingStatusResource(ResourceIdentifier id)
         {
-            VMInsightsOnboardingStatusResource.ValidateResourceId(id);
-            return new VMInsightsOnboardingStatusResource(Client, id);
+            VmInsightsOnboardingStatusResource.ValidateResourceId(id);
+            return new VmInsightsOnboardingStatusResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="VMInsightsOnboardingStatusResource"/> along with the instance operations that can be performed on it in the ArmClient. </summary>
+        /// <summary> Gets an object representing a <see cref="VmInsightsOnboardingStatusResource"/> along with the instance operations that can be performed on it in the ArmClient. </summary>
         /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <returns> Returns a <see cref="VMInsightsOnboardingStatusResource"/> object. </returns>
-        public virtual VMInsightsOnboardingStatusResource GetVMInsightsOnboardingStatus(ResourceIdentifier scope)
+        /// <returns> Returns a <see cref="VmInsightsOnboardingStatusResource"/> object. </returns>
+        public virtual VmInsightsOnboardingStatusResource GetVmInsightsOnboardingStatus(ResourceIdentifier scope)
         {
-            return new VMInsightsOnboardingStatusResource(Client, scope.AppendProviderResource("Microsoft.Insights", "vmInsightsOnboardingStatuses", "default"));
+            return new VmInsightsOnboardingStatusResource(Client, scope.AppendProviderResource("Microsoft.Insights", "vmInsightsOnboardingStatuses", "default"));
         }
 
         /// <summary> Gets an object representing a <see cref="DiagnosticSettingsResource"/> along with the instance operations that can be performed on it but with no data. </summary>
@@ -298,12 +298,21 @@ namespace Azure.ResourceManager.Monitor.Mocking
             return await GetDiagnosticSettingsResources(scope).GetAsync(name, cancellationToken).ConfigureAwait(false);
         }
 
-        /// <summary> Gets a collection of <see cref="DiagnosticSettingsCategoryResourceCollection"/> objects within the specified scope. </summary>
+        /// <summary> Gets an object representing a <see cref="DiagnosticSettingsCategoryResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="DiagnosticSettingsCategoryResource"/> object. </returns>
+        public virtual DiagnosticSettingsCategoryResource GetDiagnosticSettingsCategoryResource(ResourceIdentifier id)
+        {
+            DiagnosticSettingsCategoryResource.ValidateResourceId(id);
+            return new DiagnosticSettingsCategoryResource(Client, id);
+        }
+
+        /// <summary> Gets a collection of <see cref="DiagnosticSettingsCategoryCollection"/> objects within the specified scope. </summary>
         /// <param name="scope"> The scope of the resource collection to get. </param>
         /// <returns> Returns a collection of <see cref="DiagnosticSettingsCategoryResource"/> objects. </returns>
-        public virtual DiagnosticSettingsCategoryResourceCollection GetDiagnosticSettingsCategoryResources(ResourceIdentifier scope)
+        public virtual DiagnosticSettingsCategoryCollection GetDiagnosticSettingsCategories(ResourceIdentifier scope)
         {
-            return new DiagnosticSettingsCategoryResourceCollection(Client, scope);
+            return new DiagnosticSettingsCategoryCollection(Client, scope);
         }
 
         /// <summary> Gets the diagnostic settings category for the specified resource. </summary>
@@ -313,11 +322,11 @@ namespace Azure.ResourceManager.Monitor.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<DiagnosticSettingsCategoryResource> GetDiagnosticSettingsCategoryResource(ResourceIdentifier scope, string name, CancellationToken cancellationToken = default)
+        public virtual Response<DiagnosticSettingsCategoryResource> GetDiagnosticSettingsCategory(ResourceIdentifier scope, string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            return GetDiagnosticSettingsCategoryResources(scope).Get(name, cancellationToken);
+            return GetDiagnosticSettingsCategories(scope).Get(name, cancellationToken);
         }
 
         /// <summary> Gets the diagnostic settings category for the specified resource. </summary>
@@ -327,11 +336,11 @@ namespace Azure.ResourceManager.Monitor.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<DiagnosticSettingsCategoryResource>> GetDiagnosticSettingsCategoryResourceAsync(ResourceIdentifier scope, string name, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DiagnosticSettingsCategoryResource>> GetDiagnosticSettingsCategoryAsync(ResourceIdentifier scope, string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            return await GetDiagnosticSettingsCategoryResources(scope).GetAsync(name, cancellationToken).ConfigureAwait(false);
+            return await GetDiagnosticSettingsCategories(scope).GetAsync(name, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>

@@ -17,59 +17,59 @@ using Azure.ResourceManager.Monitor.Models;
 
 namespace Azure.ResourceManager.Monitor
 {
-    /// <summary> The diagnostic settings category resource. </summary>
-    public partial class DiagnosticSettingsCategoryResourceData : ResourceData, IJsonModel<DiagnosticSettingsCategoryResourceData>
+    /// <summary> VM Insights onboarding status for a resource. </summary>
+    public partial class VmInsightsOnboardingStatusData : ResourceData, IJsonModel<VmInsightsOnboardingStatusData>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DiagnosticSettingsCategoryResourceData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<VmInsightsOnboardingStatusData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeDiagnosticSettingsCategoryResourceData(document.RootElement, options);
+                        return DeserializeVmInsightsOnboardingStatusData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DiagnosticSettingsCategoryResourceData)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VmInsightsOnboardingStatusData)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DiagnosticSettingsCategoryResourceData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<VmInsightsOnboardingStatusData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerMonitorContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(DiagnosticSettingsCategoryResourceData)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VmInsightsOnboardingStatusData)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<DiagnosticSettingsCategoryResourceData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<VmInsightsOnboardingStatusData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        DiagnosticSettingsCategoryResourceData IPersistableModel<DiagnosticSettingsCategoryResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => (DiagnosticSettingsCategoryResourceData)PersistableModelCreateCore(data, options);
+        VmInsightsOnboardingStatusData IPersistableModel<VmInsightsOnboardingStatusData>.Create(BinaryData data, ModelReaderWriterOptions options) => (VmInsightsOnboardingStatusData)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<DiagnosticSettingsCategoryResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<VmInsightsOnboardingStatusData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="DiagnosticSettingsCategoryResourceData"/> from. </param>
-        internal static DiagnosticSettingsCategoryResourceData FromResponse(Response response)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="VmInsightsOnboardingStatusData"/> from. </param>
+        internal static VmInsightsOnboardingStatusData FromResponse(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeDiagnosticSettingsCategoryResourceData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return DeserializeVmInsightsOnboardingStatusData(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<DiagnosticSettingsCategoryResourceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<VmInsightsOnboardingStatusData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -80,10 +80,10 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DiagnosticSettingsCategoryResourceData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<VmInsightsOnboardingStatusData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DiagnosticSettingsCategoryResourceData)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(VmInsightsOnboardingStatusData)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(Properties))
@@ -110,24 +110,24 @@ namespace Azure.ResourceManager.Monitor
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        DiagnosticSettingsCategoryResourceData IJsonModel<DiagnosticSettingsCategoryResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (DiagnosticSettingsCategoryResourceData)JsonModelCreateCore(ref reader, options);
+        VmInsightsOnboardingStatusData IJsonModel<VmInsightsOnboardingStatusData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (VmInsightsOnboardingStatusData)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DiagnosticSettingsCategoryResourceData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<VmInsightsOnboardingStatusData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DiagnosticSettingsCategoryResourceData)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(VmInsightsOnboardingStatusData)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeDiagnosticSettingsCategoryResourceData(document.RootElement, options);
+            return DeserializeVmInsightsOnboardingStatusData(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static DiagnosticSettingsCategoryResourceData DeserializeDiagnosticSettingsCategoryResourceData(JsonElement element, ModelReaderWriterOptions options)
+        internal static VmInsightsOnboardingStatusData DeserializeVmInsightsOnboardingStatusData(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Monitor
             string name = default;
             ResourceType resourceType = default;
             SystemData systemData = default;
-            Models.DiagnosticSettingsCategory properties = default;
+            VMInsightsOnboardingStatusProperties properties = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.Monitor
                     {
                         continue;
                     }
-                    properties = Models.DiagnosticSettingsCategory.DeserializeDiagnosticSettingsCategory(prop.Value, options);
+                    properties = VMInsightsOnboardingStatusProperties.DeserializeVMInsightsOnboardingStatusProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.Monitor
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new DiagnosticSettingsCategoryResourceData(
+            return new VmInsightsOnboardingStatusData(
                 id,
                 name,
                 resourceType,

@@ -31,5 +31,8 @@ namespace Azure.ResourceManager.Monitor.Models
             Workspace = workspace;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+
+        /// <summary> Log Analytics workspace information. </summary>
+        public DataContainerWorkspace Workspace { get; }
     }
 }

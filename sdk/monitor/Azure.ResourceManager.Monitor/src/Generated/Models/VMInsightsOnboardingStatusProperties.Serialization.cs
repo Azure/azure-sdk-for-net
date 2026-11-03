@@ -7,13 +7,11 @@
 
 using System;
 using System.ClientModel.Primitives;
-using System.Collections.Generic;
 using System.Text.Json;
 using Azure.ResourceManager.Monitor;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    /// <summary> Resource properties. </summary>
     internal partial class VMInsightsOnboardingStatusProperties : IJsonModel<VMInsightsOnboardingStatusProperties>
     {
         /// <summary> Initializes a new instance of <see cref="VMInsightsOnboardingStatusProperties"/> for deserialization. </summary>
@@ -70,48 +68,6 @@ namespace Azure.ResourceManager.Monitor.Models
             writer.WriteEndObject();
         }
 
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<VMInsightsOnboardingStatusProperties>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
-            {
-                throw new FormatException($"The model {nameof(VMInsightsOnboardingStatusProperties)} does not support writing '{format}' format.");
-            }
-            writer.WritePropertyName("resourceId"u8);
-            writer.WriteStringValue(ResourceId);
-            writer.WritePropertyName("onboardingStatus"u8);
-            writer.WriteStringValue(OnboardingStatus.ToString());
-            writer.WritePropertyName("dataStatus"u8);
-            writer.WriteStringValue(DataStatus.ToString());
-            if (Optional.IsCollectionDefined(Data))
-            {
-                writer.WritePropertyName("data"u8);
-                writer.WriteStartArray();
-                foreach (DataContainer item in Data)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
-            }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
-            {
-                foreach (var item in _additionalBinaryDataProperties)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-            }
-        }
-
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         VMInsightsOnboardingStatusProperties IJsonModel<VMInsightsOnboardingStatusProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
@@ -127,58 +83,6 @@ namespace Azure.ResourceManager.Monitor.Models
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeVMInsightsOnboardingStatusProperties(document.RootElement, options);
-        }
-
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static VMInsightsOnboardingStatusProperties DeserializeVMInsightsOnboardingStatusProperties(JsonElement element, ModelReaderWriterOptions options)
-        {
-            if (element.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            string resourceId = default;
-            OnboardingStatus onboardingStatus = default;
-            DataStatus dataStatus = default;
-            IList<DataContainer> data = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            foreach (var prop in element.EnumerateObject())
-            {
-                if (prop.NameEquals("resourceId"u8))
-                {
-                    resourceId = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("onboardingStatus"u8))
-                {
-                    onboardingStatus = new OnboardingStatus(prop.Value.GetString());
-                    continue;
-                }
-                if (prop.NameEquals("dataStatus"u8))
-                {
-                    dataStatus = new DataStatus(prop.Value.GetString());
-                    continue;
-                }
-                if (prop.NameEquals("data"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    List<DataContainer> array = new List<DataContainer>();
-                    foreach (var item in prop.Value.EnumerateArray())
-                    {
-                        array.Add(DataContainer.DeserializeDataContainer(item, options));
-                    }
-                    data = array;
-                    continue;
-                }
-                if (options.Format != "W")
-                {
-                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
-                }
-            }
-            return new VMInsightsOnboardingStatusProperties(resourceId, onboardingStatus, dataStatus, data ?? new ChangeTrackingList<DataContainer>(), additionalBinaryDataProperties);
         }
     }
 }

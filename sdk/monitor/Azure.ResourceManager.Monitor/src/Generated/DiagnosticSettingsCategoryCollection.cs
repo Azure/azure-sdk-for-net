@@ -20,26 +20,26 @@ namespace Azure.ResourceManager.Monitor
     /// <summary>
     /// A class representing a collection of <see cref="DiagnosticSettingsCategoryResource"/> and their operations.
     /// Each <see cref="DiagnosticSettingsCategoryResource"/> in the collection will belong to the same instance of <see cref="ArmResource"/>.
-    /// To get a <see cref="DiagnosticSettingsCategoryResourceCollection"/> instance call the GetDiagnosticSettingsCategoryResources method from an instance of <see cref="ArmResource"/>.
+    /// To get a <see cref="DiagnosticSettingsCategoryCollection"/> instance call the GetDiagnosticSettingsCategories method from an instance of <see cref="ArmResource"/>.
     /// </summary>
-    public partial class DiagnosticSettingsCategoryResourceCollection : ArmCollection, IEnumerable<DiagnosticSettingsCategoryResource>, IAsyncEnumerable<DiagnosticSettingsCategoryResource>
+    public partial class DiagnosticSettingsCategoryCollection : ArmCollection, IEnumerable<DiagnosticSettingsCategoryResource>, IAsyncEnumerable<DiagnosticSettingsCategoryResource>
     {
         private readonly ClientDiagnostics _diagnosticSettingsCategoryClientDiagnostics;
         private readonly DiagnosticSettingsCategory _diagnosticSettingsCategoryRestClient;
 
-        /// <summary> Initializes a new instance of DiagnosticSettingsCategoryResourceCollection for mocking. </summary>
-        protected DiagnosticSettingsCategoryResourceCollection()
+        /// <summary> Initializes a new instance of DiagnosticSettingsCategoryCollection for mocking. </summary>
+        protected DiagnosticSettingsCategoryCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="DiagnosticSettingsCategoryResourceCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="DiagnosticSettingsCategoryCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal DiagnosticSettingsCategoryResourceCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal DiagnosticSettingsCategoryCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(DiagnosticSettingsCategoryResource.ResourceType, out string diagnosticSettingsCategoryResourceApiVersion);
+            TryGetApiVersion(DiagnosticSettingsCategoryResource.ResourceType, out string diagnosticSettingsCategoryApiVersion);
             _diagnosticSettingsCategoryClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Monitor", DiagnosticSettingsCategoryResource.ResourceType.Namespace, Diagnostics);
-            _diagnosticSettingsCategoryRestClient = new DiagnosticSettingsCategory(_diagnosticSettingsCategoryClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, diagnosticSettingsCategoryResourceApiVersion ?? "2021-05-01-preview");
+            _diagnosticSettingsCategoryRestClient = new DiagnosticSettingsCategory(_diagnosticSettingsCategoryClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, diagnosticSettingsCategoryApiVersion ?? "2021-05-01-preview");
         }
 
         /// <summary>
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Monitor
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using DiagnosticScope scope = _diagnosticSettingsCategoryClientDiagnostics.CreateScope("DiagnosticSettingsCategoryResourceCollection.Get");
+            using DiagnosticScope scope = _diagnosticSettingsCategoryClientDiagnostics.CreateScope("DiagnosticSettingsCategoryCollection.Get");
             scope.Start();
             try
             {
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Monitor
                 };
                 HttpMessage message = _diagnosticSettingsCategoryRestClient.CreateGetRequest(Id.ToString(), name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<DiagnosticSettingsCategoryResourceData> response = Response.FromValue(DiagnosticSettingsCategoryResourceData.FromResponse(result), result);
+                Response<DiagnosticSettingsCategoryData> response = Response.FromValue(DiagnosticSettingsCategoryData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Monitor
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using DiagnosticScope scope = _diagnosticSettingsCategoryClientDiagnostics.CreateScope("DiagnosticSettingsCategoryResourceCollection.Get");
+            using DiagnosticScope scope = _diagnosticSettingsCategoryClientDiagnostics.CreateScope("DiagnosticSettingsCategoryCollection.Get");
             scope.Start();
             try
             {
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Monitor
                 };
                 HttpMessage message = _diagnosticSettingsCategoryRestClient.CreateGetRequest(Id.ToString(), name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<DiagnosticSettingsCategoryResourceData> response = Response.FromValue(DiagnosticSettingsCategoryResourceData.FromResponse(result), result);
+                Response<DiagnosticSettingsCategoryData> response = Response.FromValue(DiagnosticSettingsCategoryData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.Monitor
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DiagnosticSettingsCategoryResourceData, DiagnosticSettingsCategoryResource>(new DiagnosticSettingsCategoryResourceDataAsyncCollectionResultOfT(_diagnosticSettingsCategoryRestClient, Id.ToString(), context, "DiagnosticSettingsCategoryResourceCollection.GetAll"), data => new DiagnosticSettingsCategoryResource(Client, data));
+            return new AsyncPageableWrapper<DiagnosticSettingsCategoryData, DiagnosticSettingsCategoryResource>(new DiagnosticSettingsCategoryDataAsyncCollectionResultOfT(_diagnosticSettingsCategoryRestClient, Id.ToString(), context, "DiagnosticSettingsCategoryCollection.GetAll"), data => new DiagnosticSettingsCategoryResource(Client, data));
         }
 
         /// <summary>
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.Monitor
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DiagnosticSettingsCategoryResourceData, DiagnosticSettingsCategoryResource>(new DiagnosticSettingsCategoryResourceDataCollectionResultOfT(_diagnosticSettingsCategoryRestClient, Id.ToString(), context, "DiagnosticSettingsCategoryResourceCollection.GetAll"), data => new DiagnosticSettingsCategoryResource(Client, data));
+            return new PageableWrapper<DiagnosticSettingsCategoryData, DiagnosticSettingsCategoryResource>(new DiagnosticSettingsCategoryDataCollectionResultOfT(_diagnosticSettingsCategoryRestClient, Id.ToString(), context, "DiagnosticSettingsCategoryCollection.GetAll"), data => new DiagnosticSettingsCategoryResource(Client, data));
         }
 
         /// <summary>
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.Monitor
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using DiagnosticScope scope = _diagnosticSettingsCategoryClientDiagnostics.CreateScope("DiagnosticSettingsCategoryResourceCollection.Exists");
+            using DiagnosticScope scope = _diagnosticSettingsCategoryClientDiagnostics.CreateScope("DiagnosticSettingsCategoryCollection.Exists");
             scope.Start();
             try
             {
@@ -232,14 +232,14 @@ namespace Azure.ResourceManager.Monitor
                 HttpMessage message = _diagnosticSettingsCategoryRestClient.CreateGetRequest(Id.ToString(), name, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
-                Response<DiagnosticSettingsCategoryResourceData> response = default;
+                Response<DiagnosticSettingsCategoryData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(DiagnosticSettingsCategoryResourceData.FromResponse(result), result);
+                        response = Response.FromValue(DiagnosticSettingsCategoryData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((DiagnosticSettingsCategoryResourceData)null, result);
+                        response = Response.FromValue((DiagnosticSettingsCategoryData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -278,7 +278,7 @@ namespace Azure.ResourceManager.Monitor
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using DiagnosticScope scope = _diagnosticSettingsCategoryClientDiagnostics.CreateScope("DiagnosticSettingsCategoryResourceCollection.Exists");
+            using DiagnosticScope scope = _diagnosticSettingsCategoryClientDiagnostics.CreateScope("DiagnosticSettingsCategoryCollection.Exists");
             scope.Start();
             try
             {
@@ -289,14 +289,14 @@ namespace Azure.ResourceManager.Monitor
                 HttpMessage message = _diagnosticSettingsCategoryRestClient.CreateGetRequest(Id.ToString(), name, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
-                Response<DiagnosticSettingsCategoryResourceData> response = default;
+                Response<DiagnosticSettingsCategoryData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(DiagnosticSettingsCategoryResourceData.FromResponse(result), result);
+                        response = Response.FromValue(DiagnosticSettingsCategoryData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((DiagnosticSettingsCategoryResourceData)null, result);
+                        response = Response.FromValue((DiagnosticSettingsCategoryData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -335,7 +335,7 @@ namespace Azure.ResourceManager.Monitor
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using DiagnosticScope scope = _diagnosticSettingsCategoryClientDiagnostics.CreateScope("DiagnosticSettingsCategoryResourceCollection.GetIfExists");
+            using DiagnosticScope scope = _diagnosticSettingsCategoryClientDiagnostics.CreateScope("DiagnosticSettingsCategoryCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -346,14 +346,14 @@ namespace Azure.ResourceManager.Monitor
                 HttpMessage message = _diagnosticSettingsCategoryRestClient.CreateGetRequest(Id.ToString(), name, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
-                Response<DiagnosticSettingsCategoryResourceData> response = default;
+                Response<DiagnosticSettingsCategoryData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(DiagnosticSettingsCategoryResourceData.FromResponse(result), result);
+                        response = Response.FromValue(DiagnosticSettingsCategoryData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((DiagnosticSettingsCategoryResourceData)null, result);
+                        response = Response.FromValue((DiagnosticSettingsCategoryData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -396,7 +396,7 @@ namespace Azure.ResourceManager.Monitor
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using DiagnosticScope scope = _diagnosticSettingsCategoryClientDiagnostics.CreateScope("DiagnosticSettingsCategoryResourceCollection.GetIfExists");
+            using DiagnosticScope scope = _diagnosticSettingsCategoryClientDiagnostics.CreateScope("DiagnosticSettingsCategoryCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -407,14 +407,14 @@ namespace Azure.ResourceManager.Monitor
                 HttpMessage message = _diagnosticSettingsCategoryRestClient.CreateGetRequest(Id.ToString(), name, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
-                Response<DiagnosticSettingsCategoryResourceData> response = default;
+                Response<DiagnosticSettingsCategoryData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(DiagnosticSettingsCategoryResourceData.FromResponse(result), result);
+                        response = Response.FromValue(DiagnosticSettingsCategoryData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((DiagnosticSettingsCategoryResourceData)null, result);
+                        response = Response.FromValue((DiagnosticSettingsCategoryData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);

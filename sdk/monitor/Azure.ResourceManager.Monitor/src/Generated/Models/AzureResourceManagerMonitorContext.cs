@@ -67,18 +67,15 @@ namespace Azure.ResourceManager.Monitor
     [ModelReaderWriterBuildable(typeof(DataCollectionRuleStorageBlobDestination))]
     [ModelReaderWriterBuildable(typeof(DataCollectionRuleStorageTableDestination))]
     [ModelReaderWriterBuildable(typeof(DataColumnDefinition))]
-#pragma warning disable CS0618 // global::Azure.ResourceManager.Monitor.Models.DataContainer is obsolete and may be removed in future versions.
     [ModelReaderWriterBuildable(typeof(DataContainer))]
-#pragma warning restore CS0618 // global::Azure.ResourceManager.Monitor.Models.DataContainer is obsolete and may be removed in future versions.
+    [ModelReaderWriterBuildable(typeof(DataContainerWorkspace))]
     [ModelReaderWriterBuildable(typeof(DataFlow))]
     [ModelReaderWriterBuildable(typeof(DataImportSourcesEventHub))]
     [ModelReaderWriterBuildable(typeof(DataSourcesSpec))]
     [ModelReaderWriterBuildable(typeof(DataStreamDeclaration))]
     [ModelReaderWriterBuildable(typeof(DestinationsSpec))]
-#pragma warning disable CS0618 // global::Azure.ResourceManager.Monitor.DiagnosticSettingsCategoryResource is obsolete and may be removed in future versions.
+    [ModelReaderWriterBuildable(typeof(DiagnosticSettingsCategoryData))]
     [ModelReaderWriterBuildable(typeof(DiagnosticSettingsCategoryResource))]
-#pragma warning restore CS0618 // global::Azure.ResourceManager.Monitor.DiagnosticSettingsCategoryResource is obsolete and may be removed in future versions.
-    [ModelReaderWriterBuildable(typeof(DiagnosticSettingsCategoryResourceData))]
     [ModelReaderWriterBuildable(typeof(DiagnosticSettingsResource))]
     [ModelReaderWriterBuildable(typeof(DiagnosticSettingsResourceData))]
     [ModelReaderWriterBuildable(typeof(DiagnosticsLogSettings))]
@@ -222,8 +219,8 @@ namespace Azure.ResourceManager.Monitor
     [ModelReaderWriterBuildable(typeof(TenantNotificationRequestBody))]
     [ModelReaderWriterBuildable(typeof(TestNotificationDetailsResult))]
     [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
-    [ModelReaderWriterBuildable(typeof(VMInsightsOnboardingStatusData))]
-    [ModelReaderWriterBuildable(typeof(VMInsightsOnboardingStatusResource))]
+    [ModelReaderWriterBuildable(typeof(VmInsightsOnboardingStatusData))]
+    [ModelReaderWriterBuildable(typeof(VmInsightsOnboardingStatusResource))]
     [ModelReaderWriterBuildable(typeof(WebhookNotification))]
     [ModelReaderWriterBuildable(typeof(WebhookReceiver))]
     [ModelReaderWriterBuildable(typeof(WebtestLocationAvailabilityCriteria))]

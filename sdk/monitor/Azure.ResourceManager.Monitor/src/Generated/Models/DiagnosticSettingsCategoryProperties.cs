@@ -11,31 +11,27 @@ using Azure.ResourceManager.Monitor;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    /// <summary> The diagnostic settings Category. </summary>
-    internal partial class DiagnosticSettingsCategory
+    internal partial class DiagnosticSettingsCategoryProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="DiagnosticSettingsCategory"/>. </summary>
-        internal DiagnosticSettingsCategory()
+        /// <summary> Initializes a new instance of <see cref="DiagnosticSettingsCategoryProperties"/>. </summary>
+        internal DiagnosticSettingsCategoryProperties()
         {
             CategoryGroups = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="DiagnosticSettingsCategory"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="DiagnosticSettingsCategoryProperties"/>. </summary>
         /// <param name="categoryType"> The type of the diagnostic settings category. </param>
         /// <param name="categoryGroups"> the collection of what category groups are supported. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DiagnosticSettingsCategory(CategoryType? categoryType, IList<string> categoryGroups, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DiagnosticSettingsCategoryProperties(MonitorCategoryType? categoryType, IList<string> categoryGroups, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             CategoryType = categoryType;
             CategoryGroups = categoryGroups;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
-
-        /// <summary> The type of the diagnostic settings category. </summary>
-        public CategoryType? CategoryType { get; }
 
         /// <summary> the collection of what category groups are supported. </summary>
         public IList<string> CategoryGroups { get; } = new ChangeTrackingList<string>();

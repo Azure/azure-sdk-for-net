@@ -12,7 +12,7 @@ using Azure.ResourceManager.Monitor;
 namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary> The type of the diagnostic settings category. </summary>
-    public readonly partial struct CategoryType : IEquatable<CategoryType>
+    public readonly partial struct MonitorCategoryType : IEquatable<MonitorCategoryType>
     {
         private readonly string _value;
         /// <summary> Metrics. </summary>
@@ -20,10 +20,10 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <summary> Logs. </summary>
         private const string LogsValue = "Logs";
 
-        /// <summary> Initializes a new instance of <see cref="CategoryType"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="MonitorCategoryType"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public CategoryType(string value)
+        public MonitorCategoryType(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -31,35 +31,35 @@ namespace Azure.ResourceManager.Monitor.Models
         }
 
         /// <summary> Metrics. </summary>
-        public static CategoryType Metrics { get; } = new CategoryType(MetricsValue);
+        public static MonitorCategoryType Metrics { get; } = new MonitorCategoryType(MetricsValue);
 
         /// <summary> Logs. </summary>
-        public static CategoryType Logs { get; } = new CategoryType(LogsValue);
+        public static MonitorCategoryType Logs { get; } = new MonitorCategoryType(LogsValue);
 
-        /// <summary> Determines if two <see cref="CategoryType"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="MonitorCategoryType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(CategoryType left, CategoryType right) => left.Equals(right);
+        public static bool operator ==(MonitorCategoryType left, MonitorCategoryType right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="CategoryType"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="MonitorCategoryType"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(CategoryType left, CategoryType right) => !left.Equals(right);
+        public static bool operator !=(MonitorCategoryType left, MonitorCategoryType right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="CategoryType"/>. </summary>
+        /// <summary> Converts a string to a <see cref="MonitorCategoryType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator CategoryType(string value) => new CategoryType(value);
+        public static implicit operator MonitorCategoryType(string value) => new MonitorCategoryType(value);
 
-        /// <summary> Converts a string to a <see cref="CategoryType"/>. </summary>
+        /// <summary> Converts a string to a <see cref="MonitorCategoryType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator CategoryType?(string value) => value == null ? null : new CategoryType(value);
+        public static implicit operator MonitorCategoryType?(string value) => value == null ? null : new MonitorCategoryType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is CategoryType other && Equals(other);
+        public override bool Equals(object obj) => obj is MonitorCategoryType other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(CategoryType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(MonitorCategoryType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
