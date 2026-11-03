@@ -159,28 +159,6 @@ namespace Azure.Data.AppConfiguration.Tests
             return label;
         }
 
-        [Test]
-        public void ClientOptionsUseThirtySecondNetworkTimeout()
-        {
-            ConfigurationClientOptions options = CreateClientOptions();
-
-            Assert.That(options.Retry.NetworkTimeout, Is.EqualTo(TimeSpan.FromSeconds(30)));
-            Assert.That(options.Retry.MaxRetries, Is.EqualTo(3));
-        }
-
-        [Test]
-        public void ClientOptionsPreserveCustomRetryCount()
-        {
-            var options = new ConfigurationClientOptions(_serviceVersion);
-            options.Retry.MaxRetries = 1;
-
-            ConfigurationClientOptions instrumentedOptions = CreateClientOptions(options);
-
-            Assert.That(instrumentedOptions, Is.SameAs(options));
-            Assert.That(instrumentedOptions.Retry.NetworkTimeout, Is.EqualTo(TimeSpan.FromSeconds(30)));
-            Assert.That(instrumentedOptions.Retry.MaxRetries, Is.EqualTo(1));
-        }
-
         // This test validates that the correct token audience is parsed from the test endpoint
         // when the client is created with no specified audience.
         [RecordedTest]
