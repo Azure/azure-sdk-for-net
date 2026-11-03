@@ -1,6 +1,6 @@
 # Release History
 
-## 4.9.0-beta.4 (Unreleased)
+## 4.9.0-beta.6 (Unreleased)
 
 ### Features Added
 
@@ -12,6 +12,8 @@
 - Improved authentication challenge resource validation.
 
 ### Other Changes
+
+- Updated the `Azure.Core` dependency to `1.65.0-beta.1`.
 
 ## 4.9.0-beta.3 (2026-09-27)
 
