@@ -1,8 +1,9 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
 using System.Collections.Generic;
+using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -25,6 +26,53 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
     [TestFixture]
     public class AmqpReceiverTests
     {
+        [Test]
+        public async Task LostSessionCleanupDoesNotImplyCallerDisposal()
+        {
+            var (receiver, _) = await CreateLostSessionReceiverAsync();
+            Assert.IsTrue(receiver.IsClosed);
+            Assert.IsTrue(receiver.IsSessionLinkClosed);
+            Assert.IsTrue(receiver.IsClosedBySessionLockLoss);
+            Assert.IsTrue(receiver.RequestResponseLockedMessages.IsDisposed);
+        }
+
+        [TestCase(false)]
+        [TestCase(true)]
+        public async Task CallerCloseAfterSessionLossDoesNotReopenTransport(bool canceled)
+        {
+            var (receiver, _) = await CreateLostSessionReceiverAsync();
+            using var cancellation = new CancellationTokenSource();
+            if (canceled)
+            {
+                cancellation.Cancel();
+            }
+
+            await receiver.CloseAsync(cancellation.Token);
+            Assert.IsTrue(receiver.IsClosed);
+            Assert.IsFalse(receiver.IsClosedBySessionLockLoss);
+            Assert.IsTrue(receiver.RequestResponseLockedMessages.IsDisposed);
+            await CloseForSessionLossAsync(receiver);
+            Assert.IsFalse(receiver.IsClosedBySessionLockLoss);
+        }
+
+        internal static async Task<(AmqpReceiver Receiver, ServiceBusException Failure)> CreateLostSessionReceiverAsync()
+        {
+            var receiver = new AmqpReceiver(
+                "queue", ServiceBusReceiveMode.PeekLock, 0,
+                Mock.Of<AmqpConnectionScope>(), new BasicRetryPolicy(new ServiceBusRetryOptions { MaxRetries = 0 }),
+                "receiver", "session", true, false, Mock.Of<AmqpMessageConverter>(), cancellationToken: default);
+            var failure = new ServiceBusException("Established session link was lost.", ServiceBusFailureReason.SessionLockLost);
+            typeof(AmqpReceiver).GetProperty("LinkException", BindingFlags.Instance | BindingFlags.NonPublic)
+                .SetValue(receiver, failure);
+            await CloseForSessionLossAsync(receiver);
+            return (receiver, failure);
+        }
+
+        private static Task CloseForSessionLossAsync(AmqpReceiver receiver) =>
+            (Task)typeof(AmqpReceiver).GetMethod("CloseAsync", BindingFlags.Instance | BindingFlags.NonPublic,
+                null, new[] { typeof(CancellationToken), typeof(bool) }, null)
+                .Invoke(receiver, new object[] { CancellationToken.None, true });
+
         /// <summary>
         ///   The set of test cases for respecting basic retry configuration.
         /// </summary>
