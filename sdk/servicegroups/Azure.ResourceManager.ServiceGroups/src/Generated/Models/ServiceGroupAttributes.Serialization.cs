@@ -13,7 +13,6 @@ using Azure.ResourceManager.ServiceGroups;
 
 namespace Azure.ResourceManager.ServiceGroups.Models
 {
-    /// <summary> The attributes of the serviceGroup. </summary>
     internal partial class ServiceGroupAttributes : IJsonModel<ServiceGroupAttributes>
     {
         /// <param name="data"> The data to parse. </param>
@@ -127,11 +126,7 @@ namespace Azure.ResourceManager.ServiceGroups.Models
             {
                 if (prop.NameEquals("criticality"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    criticality = prop.Value.GetInt32();
+                    ReadCriticality(prop, ref criticality);
                     continue;
                 }
                 if (options.Format != "W")
