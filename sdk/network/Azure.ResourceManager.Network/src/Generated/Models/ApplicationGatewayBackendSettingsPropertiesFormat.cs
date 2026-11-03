@@ -28,24 +28,24 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of <see cref="ApplicationGatewayBackendSettingsPropertiesFormat"/>. </summary>
         /// <param name="port"> The destination port on the backend. </param>
         /// <param name="protocol"> The protocol used to communicate with the backend. </param>
-        /// <param name="timeout"> Connection timeout in seconds. Application Gateway will fail the request if response is not received within ConnectionTimeout. Acceptable values are from 1 second to 86400 seconds. </param>
+        /// <param name="timeoutInSeconds"> Connection timeout in seconds. Application Gateway will fail the request if response is not received within ConnectionTimeout. Acceptable values are from 1 second to 86400 seconds. </param>
         /// <param name="probe"> Probe resource of an application gateway. </param>
         /// <param name="trustedRootCertificates"> Array of references to application gateway trusted root certificates. </param>
         /// <param name="hostName"> Server name indication to be sent to the backend servers for Tls protocol. </param>
         /// <param name="pickHostNameFromBackendAddress"> Whether to pick server name indication from the host name of the backend server for Tls protocol. Default value is false. </param>
-        /// <param name="enableL4ClientIPPreservation"> Whether to send Proxy Protocol header to backend servers over TCP or TLS protocols. Default value is false. </param>
+        /// <param name="isL4ClientIPPreservationEnabled"> Whether to send Proxy Protocol header to backend servers over TCP or TLS protocols. Default value is false. </param>
         /// <param name="provisioningState"> The provisioning state of the backend HTTP settings resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ApplicationGatewayBackendSettingsPropertiesFormat(int? port, ApplicationGatewayProtocol? protocol, int? timeout, NetworkSubResource probe, IList<WritableSubResource> trustedRootCertificates, string hostName, bool? pickHostNameFromBackendAddress, bool? enableL4ClientIPPreservation, NetworkProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ApplicationGatewayBackendSettingsPropertiesFormat(int? port, ApplicationGatewayProtocol? protocol, int? timeoutInSeconds, NetworkSubResource probe, IList<WritableSubResource> trustedRootCertificates, string hostName, bool? pickHostNameFromBackendAddress, bool? isL4ClientIPPreservationEnabled, NetworkProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Port = port;
             Protocol = protocol;
-            Timeout = timeout;
+            TimeoutInSeconds = timeoutInSeconds;
             Probe = probe;
             TrustedRootCertificates = trustedRootCertificates;
             HostName = hostName;
             PickHostNameFromBackendAddress = pickHostNameFromBackendAddress;
-            EnableL4ClientIPPreservation = enableL4ClientIPPreservation;
+            IsL4ClientIPPreservationEnabled = isL4ClientIPPreservationEnabled;
             ProvisioningState = provisioningState;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Connection timeout in seconds. Application Gateway will fail the request if response is not received within ConnectionTimeout. Acceptable values are from 1 second to 86400 seconds. </summary>
         [WirePath("timeout")]
-        public int? Timeout { get; set; }
+        public int? TimeoutInSeconds { get; set; }
 
         /// <summary> Probe resource of an application gateway. </summary>
         [WirePath("probe")]
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Whether to send Proxy Protocol header to backend servers over TCP or TLS protocols. Default value is false. </summary>
         [WirePath("enableL4ClientIpPreservation")]
-        public bool? EnableL4ClientIPPreservation { get; set; }
+        public bool? IsL4ClientIPPreservationEnabled { get; set; }
 
         /// <summary> The provisioning state of the backend HTTP settings resource. </summary>
         [WirePath("provisioningState")]

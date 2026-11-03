@@ -46,7 +46,7 @@ Durable task execution is opt-in. Setting either `ResponsesServerOptions.Resilie
 or `SteerableConversations` to `true` enables the Core task runtime automatically.
 Steering without resilience still uses durable tasks but marks interrupted background
 responses failed rather than re-invoking their handlers. With both options off, stored
-responses run in-process unless the host explicitly calls `SetResilientTasksEnabled()`.
+responses run in-process even when another protocol calls `SetResilientTasksEnabled()`.
 
 Alternatively, use `AgentHost.CreateBuilder()` for more control over service registration and middleware:
 

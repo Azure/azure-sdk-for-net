@@ -140,7 +140,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             Exception? testException = null;
             var thread = new Thread(() =>
             {
-                try {
+                try
+                {
                     var logRecords = new List<LogRecord>();
                     using var loggerFactory = LoggerFactory.Create(builder =>
                         {
@@ -160,7 +161,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
                     Assert.Equal("Price is 2.99.", message); // we should emit a culture invariant number
                     Assert.True(properties.TryGetValue("culturalprice", out string price));
                     Assert.Equal("2.99", price);
-                } catch (Exception e) {
+                }
+                catch (Exception e)
+                {
                     testException = e;
                 }
             })
@@ -169,7 +172,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             };
             thread.Start();
             thread.Join();
-            if (testException != null) {
+            if (testException != null)
+            {
                 throw testException;
             }
         }

@@ -12,6 +12,10 @@ namespace Azure.AI.Projects.Agents
     /// <summary>
     /// Settings for transcribing input audio, including the transcription model, Custom Speech deployments,
     /// and phrase hints.
+    /// When `model` is `azure-speech-streaming`, transcription is supported for cascaded text-model
+    /// conversations only (not realtime speech-to-speech models), requires a nonempty `language` such as
+    /// `en-US` (comma-separated locales are supported), and supports `custom_speech`, `phrase_list`, and
+    /// `profanity_filter`.
     /// </summary>
     public partial class VoiceAgentInputTranscription : IJsonModel<VoiceAgentInputTranscription>
     {

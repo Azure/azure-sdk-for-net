@@ -36,6 +36,7 @@ namespace Azure.AI.Extensions.OpenAI
             [ResponseToolKind.AzureFunction] = (typeof(AzureFunctionTool), AzureFunctionTool.DeserializeAzureFunctionTool),
             [ResponseToolKind.BingCustomSearchPreview] = (typeof(BingCustomSearchPreviewTool), BingCustomSearchPreviewTool.DeserializeBingCustomSearchPreviewTool),
             [ResponseToolKind.BingGrounding] = (typeof(BingGroundingTool), BingGroundingTool.DeserializeBingGroundingTool),
+            [ResponseToolKind.BrowserAutomation] = (typeof(BrowserAutomationTool), BrowserAutomationTool.DeserializeBrowserAutomationTool),
 #pragma warning disable CS0618 // Legacy BrowserAutomationPreviewTool is still deserialized for compatibility.
             [ResponseToolKind.BrowserAutomationPreview] = (typeof(BrowserAutomationPreviewTool), BrowserAutomationPreviewTool.DeserializeBrowserAutomationPreviewTool),
 #pragma warning restore CS0618
@@ -45,6 +46,7 @@ namespace Azure.AI.Extensions.OpenAI
             [ResponseToolKind.FabricDataAgentPreview] = (typeof(MicrosoftFabricPreviewTool), MicrosoftFabricPreviewTool.DeserializeMicrosoftFabricPreviewTool),
             [ResponseToolKind.OpenAPI] = (typeof(OpenApiTool), OpenApiTool.DeserializeOpenApiTool),
             [ResponseToolKind.SharePointGroundingPreview] = (typeof(SharePointPreviewTool), SharePointPreviewTool.DeserializeSharePointPreviewTool),
+            [ResponseToolKind.WebIQPreview] = (typeof(WebIQPreviewTool), WebIQPreviewTool.DeserializeWebIQPreviewTool),
             [ResponseToolKind.WorkIQPreview] = (typeof(WorkIQPreviewTool), WorkIQPreviewTool.DeserializeWorkIQPreviewTool),
             [ResponseToolKind.GitHubCopilotToolsetPreviewValue] = (typeof(GitHubCopilotToolsetPreview), GitHubCopilotToolsetPreview.DeserializeGitHubCopilotToolsetPreview),
             [ResponseToolKind.MicrosoftCopilotToolsetPreview] = (typeof(MicrosoftCopilotToolsetPreview), MicrosoftCopilotToolsetPreview.DeserializeMicrosoftCopilotToolsetPreview),

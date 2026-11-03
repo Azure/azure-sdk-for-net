@@ -409,6 +409,7 @@ namespace Azure.Provisioning.SecurityCenter
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.SecurityCenter.SecurityAssessmentResourceStatus> ResourceStatus { get { throw null; } }
+        public Azure.Provisioning.Primitives.ProvisionableResource Scope { get { throw null; } set { } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
         public static Azure.Provisioning.SecurityCenter.ComplianceResult FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
@@ -986,7 +987,7 @@ namespace Azure.Provisioning.SecurityCenter
     {
         public DevOpsConfiguration(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
-        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.SecurityCenter.SecurityConnector Parent { get { throw null; } set { } }
         public Azure.Provisioning.SecurityCenter.DevOpsConfigurationProperties Properties { get { throw null; } set { } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
@@ -1261,9 +1262,9 @@ namespace Azure.Provisioning.SecurityCenter
         public Azure.Provisioning.BicepValue<bool> IsGracePeriod { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Owner { get { throw null; } set { } }
+        public Azure.Provisioning.SecurityCenter.SecurityAssessment Parent { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<System.DateTimeOffset> RemediationDueOn { get { throw null; } set { } }
         public Azure.Provisioning.SecurityCenter.RemediationEta RemediationEta { get { throw null; } set { } }
-        public Azure.Provisioning.Primitives.ProvisionableResource Scope { get { throw null; } set { } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
         public static Azure.Provisioning.SecurityCenter.GovernanceAssignment FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
@@ -1373,6 +1374,7 @@ namespace Azure.Provisioning.SecurityCenter
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.BicepDictionary<string> ReportAdditionalData { get { throw null; } }
         public Azure.Provisioning.SecurityCenter.SecurityCloudResourceDetails ResourceDetails { get { throw null; } }
+        public Azure.Provisioning.Primitives.ProvisionableResource Scope { get { throw null; } set { } }
         public Azure.Provisioning.SecurityCenter.HealthReportStatus Status { get { throw null; } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
@@ -1640,7 +1642,7 @@ namespace Azure.Provisioning.SecurityCenter
         public Azure.Provisioning.SecurityCenter.IotSeverityMetrics Metrics { get { throw null; } }
         public Azure.Provisioning.BicepList<Azure.Provisioning.SecurityCenter.IotSecurityDeviceAlert> MostPrevalentDeviceAlerts { get { throw null; } }
         public Azure.Provisioning.BicepList<Azure.Provisioning.SecurityCenter.IotSecurityDeviceRecommendation> MostPrevalentDeviceRecommendations { get { throw null; } }
-        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.SecurityCenter.IotSecuritySolution Parent { get { throw null; } set { } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         public Azure.Provisioning.BicepList<Azure.Provisioning.SecurityCenter.IotSecurityAlertedDevice> TopAlertedDevices { get { throw null; } }
@@ -2992,6 +2994,7 @@ namespace Azure.Provisioning.SecurityCenter
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<int> ResourceCount { get { throw null; } }
+        public Azure.Provisioning.Primitives.ProvisionableResource Scope { get { throw null; } set { } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
         public static Azure.Provisioning.SecurityCenter.SecurityCompliance FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
@@ -3472,8 +3475,8 @@ namespace Azure.Provisioning.SecurityCenter
         public SqlVulnerabilityAssessmentBaselineRule(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
+        public Azure.Provisioning.SecurityCenter.SqlVulnerabilityAssessmentSettings Parent { get { throw null; } set { } }
         public Azure.Provisioning.SecurityCenter.RuleResultsProperties Properties { get { throw null; } set { } }
-        public Azure.Provisioning.Primitives.ProvisionableResource Scope { get { throw null; } set { } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
         public static Azure.Provisioning.SecurityCenter.SqlVulnerabilityAssessmentBaselineRule FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }

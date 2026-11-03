@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Network.Models
             if (Optional.IsDefined(LinkedResourceType))
             {
                 writer.WritePropertyName("linkedResourceType"u8);
-                writer.WriteStringValue(LinkedResourceType);
+                writer.WriteStringValue(LinkedResourceType.Value);
             }
             if (Optional.IsDefined(Link))
             {
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            string linkedResourceType = default;
+            ResourceType? linkedResourceType = default;
             ResourceIdentifier link = default;
             NetworkProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -140,7 +140,11 @@ namespace Azure.ResourceManager.Network.Models
             {
                 if (prop.NameEquals("linkedResourceType"u8))
                 {
-                    linkedResourceType = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    linkedResourceType = new ResourceType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("link"u8))

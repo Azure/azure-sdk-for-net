@@ -14,7 +14,7 @@
 
 ### Other Changes
 
-- Updated `Microsoft.Identity.Client` and `Microsoft.Identity.Client.Extensions.Msal` dependencies to `4.90.0`.
+- Updated `Microsoft.Identity.Client` and `Microsoft.Identity.Client.Extensions.Msal` dependencies to version 4.92.0.
 
 ## 1.64.0 (2026-10-26)
 

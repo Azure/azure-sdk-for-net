@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        internal HttpMessage CreateDownloadRequest(Guid subscriptionId, string resourceGroupName, string virtualWANName, RequestContent content, RequestContext context)
+        internal HttpMessage CreateDownloadVpnSitesConfigurationRequest(Guid subscriptionId, string resourceGroupName, string virtualWANName, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);

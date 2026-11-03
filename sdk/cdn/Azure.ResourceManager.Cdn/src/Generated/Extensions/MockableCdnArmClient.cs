@@ -107,24 +107,6 @@ namespace Azure.ResourceManager.Cdn.Mocking
             return new FrontDoorSecretResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="CdnKeyGroupResource"/> along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="CdnKeyGroupResource"/> object. </returns>
-        public virtual CdnKeyGroupResource GetCdnKeyGroupResource(ResourceIdentifier id)
-        {
-            CdnKeyGroupResource.ValidateResourceId(id);
-            return new CdnKeyGroupResource(Client, id);
-        }
-
-        /// <summary> Gets an object representing a <see cref="CdnDeploymentVersionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="CdnDeploymentVersionResource"/> object. </returns>
-        public virtual CdnDeploymentVersionResource GetCdnDeploymentVersionResource(ResourceIdentifier id)
-        {
-            CdnDeploymentVersionResource.ValidateResourceId(id);
-            return new CdnDeploymentVersionResource(Client, id);
-        }
-
         /// <summary> Gets an object representing a <see cref="CdnEndpointResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="CdnEndpointResource"/> object. </returns>
@@ -159,33 +141,6 @@ namespace Azure.ResourceManager.Cdn.Mocking
         {
             CdnCustomDomainResource.ValidateResourceId(id);
             return new CdnCustomDomainResource(Client, id);
-        }
-
-        /// <summary> Gets an object representing a <see cref="CdnProfileAgentResource"/> along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="CdnProfileAgentResource"/> object. </returns>
-        public virtual CdnProfileAgentResource GetCdnProfileAgentResource(ResourceIdentifier id)
-        {
-            CdnProfileAgentResource.ValidateResourceId(id);
-            return new CdnProfileAgentResource(Client, id);
-        }
-
-        /// <summary> Gets an object representing a <see cref="CdnWebAgentResource"/> along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="CdnWebAgentResource"/> object. </returns>
-        public virtual CdnWebAgentResource GetCdnWebAgentResource(ResourceIdentifier id)
-        {
-            CdnWebAgentResource.ValidateResourceId(id);
-            return new CdnWebAgentResource(Client, id);
-        }
-
-        /// <summary> Gets an object representing a <see cref="CdnWebAgentKnowledgeSourceResource"/> along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="CdnWebAgentKnowledgeSourceResource"/> object. </returns>
-        public virtual CdnWebAgentKnowledgeSourceResource GetCdnWebAgentKnowledgeSourceResource(ResourceIdentifier id)
-        {
-            CdnWebAgentKnowledgeSourceResource.ValidateResourceId(id);
-            return new CdnWebAgentKnowledgeSourceResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="FrontDoorCustomDomainResource"/> along with the instance operations that can be performed on it but with no data. </summary>

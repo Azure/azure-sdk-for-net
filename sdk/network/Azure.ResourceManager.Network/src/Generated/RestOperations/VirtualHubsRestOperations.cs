@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Network
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Network/virtualHubs/", false);
             uri.AppendPath(virtualHubName, true);
-            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Network/virtualHubs") ?? "2026-01-01", true);
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Network/virtualHubs") ?? "2026-03-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Network
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Network/virtualHubs/", false);
             uri.AppendPath(virtualHubName, true);
-            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Network/virtualHubs") ?? "2026-01-01", true);
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Network/virtualHubs") ?? "2026-03-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Network
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Network/virtualHubs/", false);
             uri.AppendPath(virtualHubName, true);
-            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Network/virtualHubs") ?? "2026-01-01", true);
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Network/virtualHubs") ?? "2026-03-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.Network
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Network/virtualHubs/", false);
             uri.AppendPath(virtualHubName, true);
-            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Network/virtualHubs") ?? "2026-01-01", true);
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Network/virtualHubs") ?? "2026-03-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Network
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Network/virtualHubs", false);
-            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Network/virtualHubs") ?? "2026-01-01", true);
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Network/virtualHubs") ?? "2026-03-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.Network
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            uri.UpdateQuery("api-version", _getApiVersion?.Invoke("Microsoft.Network/virtualHubs") ?? "2026-01-01");
+            uri.UpdateQuery("api-version", _getApiVersion?.Invoke("Microsoft.Network/virtualHubs") ?? "2026-03-01");
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.Network
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/providers/Microsoft.Network/virtualHubs", false);
-            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Network/virtualHubs") ?? "2026-01-01", true);
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Network/virtualHubs") ?? "2026-03-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.Network
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            uri.UpdateQuery("api-version", _getApiVersion?.Invoke("Microsoft.Network/virtualHubs") ?? "2026-01-01");
+            uri.UpdateQuery("api-version", _getApiVersion?.Invoke("Microsoft.Network/virtualHubs") ?? "2026-03-01");
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.Network
             return message;
         }
 
-        internal HttpMessage CreateGetEffectiveVirtualHubRoutesRequest(Guid subscriptionId, string resourceGroupName, string virtualHubName, RequestContent content, RequestContext context)
+        internal HttpMessage CreateGetVirtualHubEffectiveRoutesRequest(Guid subscriptionId, string resourceGroupName, string virtualHubName, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.Network
             uri.AppendPath("/providers/Microsoft.Network/virtualHubs/", false);
             uri.AppendPath(virtualHubName, true);
             uri.AppendPath("/effectiveRoutes", false);
-            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Network/virtualHubs") ?? "2026-01-01", true);
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Network/virtualHubs") ?? "2026-03-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.Network
             return message;
         }
 
-        internal HttpMessage CreateGetInboundRoutesRequest(Guid subscriptionId, string resourceGroupName, string virtualHubName, RequestContent content, RequestContext context)
+        internal HttpMessage CreateGetVirtualHubInboundRoutesRequest(Guid subscriptionId, string resourceGroupName, string virtualHubName, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -242,7 +242,7 @@ namespace Azure.ResourceManager.Network
             uri.AppendPath("/providers/Microsoft.Network/virtualHubs/", false);
             uri.AppendPath(virtualHubName, true);
             uri.AppendPath("/inboundRoutes", false);
-            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Network/virtualHubs") ?? "2026-01-01", true);
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Network/virtualHubs") ?? "2026-03-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.Network
             return message;
         }
 
-        internal HttpMessage CreateGetOutboundRoutesRequest(Guid subscriptionId, string resourceGroupName, string virtualHubName, RequestContent content, RequestContext context)
+        internal HttpMessage CreateGetVirtualHubOutboundRoutesRequest(Guid subscriptionId, string resourceGroupName, string virtualHubName, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -265,7 +265,7 @@ namespace Azure.ResourceManager.Network
             uri.AppendPath("/providers/Microsoft.Network/virtualHubs/", false);
             uri.AppendPath(virtualHubName, true);
             uri.AppendPath("/outboundRoutes", false);
-            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Network/virtualHubs") ?? "2026-01-01", true);
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Network/virtualHubs") ?? "2026-03-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;

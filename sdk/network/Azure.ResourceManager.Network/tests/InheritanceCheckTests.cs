@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.TestFramework
         [OneTimeSetUp]
         public void SetExceptionList()
         {
-            ExceptionList = new string[] { "ApplicationGatewayPrivateLinkResource", "NetworkChildResource", "NetworkProxyResource", "NetworkSubResource", "NetworkWritableResource", "RoutingConfigurationNfvSubResource" };
+            ExceptionList = new string[] { "ApplicationGatewayPrivateLinkResource", "NetworkChildResourceData", "NetworkProxyResourceData", "NetworkSubResource", "NetworkWritableResourceData", "RoutingConfigurationNfvSubResource" };
         }
     }
 }

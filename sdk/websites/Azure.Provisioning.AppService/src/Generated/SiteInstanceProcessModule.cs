@@ -207,7 +207,7 @@ namespace Azure.Provisioning.AppService
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _properties = DefineModelProperty<ProcessModuleInfoProperties>(nameof(Properties), new string[] { "properties" });
             _kind = DefineProperty<string>(nameof(Kind), new string[] { "kind" });
-            _parent = DefineResource<SiteInstanceProcess>(nameof(Parent), new string[] { "parent" }, isRequired: true);
+            _parent = DefineResource<SiteInstanceProcess>(nameof(Parent), new string[] { "parent" });
             DefineAdditionalProperties();
         }
 

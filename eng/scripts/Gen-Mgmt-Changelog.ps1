@@ -8,14 +8,21 @@ param (
     [string] $ReleaseVersion,
     [Parameter(Position=2, Mandatory=$true, HelpMessage="Release date in format xxxx-xx-xx. i.e. 2023-01-10")]
     [ValidateNotNullOrEmpty()]
-    [string] $ReleaseDate
+    [string] $ReleaseDate,
+    [Parameter(HelpMessage="Exact path to the package API listing. When omitted, the path is resolved from the service name.")]
+    [string] $ApiFilePath
 )
 
-$apiFilePathArray = Resolve-Path "$PSScriptRoot/../../sdk/$ServiceName/Azure.ResourceManager.*/api/Azure.ResourceManager.*.netstandard2.0.cs"
+if ($ApiFilePath) {
+    $apiFilePathArray = @(Resolve-Path $ApiFilePath)
+}
+else {
+    $apiFilePathArray = @(Resolve-Path "$PSScriptRoot/../../sdk/$ServiceName/Azure.ResourceManager.*/api/Azure.ResourceManager.*.netstandard2.0.cs")
+}
 
-if($apiFilePathArray.Length -ne 1)
+if($apiFilePathArray.Count -ne 1)
 {
-    Write-Error "Multiple api files resolved."
+    Write-Error "Expected one API file, but resolved $($apiFilePathArray.Count)."
     $apiFilePathArray | Write-Error
 }
 else {
