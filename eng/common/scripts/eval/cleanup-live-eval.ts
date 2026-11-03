@@ -212,8 +212,9 @@ export async function cleanupLiveEval({
       }
       // The CLI abandons the plan and closes its linked, unmerged SDK PRs.
       const response = runCli(azsdk, ["release-plan", "abandon", "--release-plan-id", String(releasePlanId)]);
-      const warnings = getCaseInsensitiveProperty(response, "warnings");
-      if (warnings?.length) {
+      const details = getCaseInsensitiveProperty(response, "details") ?? [];
+      const warnings = details.filter((detail) => /^Warning:/i.test(detail));
+      if (warnings.length) {
         throw new Error(`Test plan ${workItemId} cleanup needs follow-up: ${warnings.join("; ")}`);
       }
       console.log(`Abandoned test release plan: ${workItemId}`);
