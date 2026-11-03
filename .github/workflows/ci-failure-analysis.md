@@ -148,7 +148,7 @@ From PowerShell 7.5 or newer with Pester 5.3.3 or newer installed, run:
 ```powershell
 Import-Module Pester -MinimumVersion 5.3.3
 Invoke-Pester -Path .github/workflows/ci-failure-analysis -Output Detailed
-gh aw compile ci-failure-analysis provisioning-review
+gh aw compile ci-failure-analysis pr-re-review
 ```
 
-The PowerShell tests use mocked GitHub APIs and execute the provisioning dispatcher's real shell with a mocked `gh`; they never dispatch a workflow or post to GitHub. The focused PR test workflow runs the same suite and fails if no tests are discovered or any test fails.
+The PowerShell tests use mocked GitHub APIs and verify that the retired SDK review endpoints remain absent and provisioning rules are available to the shared reviewer; they never dispatch a workflow or post to GitHub. The focused PR test workflow runs the same suite and fails if no tests are discovered or any test fails.
