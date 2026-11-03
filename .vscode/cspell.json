@@ -120,6 +120,8 @@
     "istio",
     "itsm",
     "keda",
+    "kore",
+    "koreaiartemis",
     "kubelet",
     "kubenet",
     "kubernetes",
