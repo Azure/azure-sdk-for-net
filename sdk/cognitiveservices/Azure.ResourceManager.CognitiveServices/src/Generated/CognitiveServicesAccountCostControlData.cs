@@ -14,7 +14,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.CognitiveServices
 {
-    /// <summary> A cost control owned by a Cognitive Services account. </summary>
+    /// <summary> A budget that measures consumption and optionally alerts or blocks requests within an account. </summary>
     public partial class CognitiveServicesAccountCostControlData : ResourceData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <param name="eTag"> The entity tag used for optimistic concurrency. </param>
+        /// <param name="eTag"> The opaque entity tag used for optimistic concurrency. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal CognitiveServicesAccountCostControlData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, CostControlProperties properties, ETag? eTag, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.CognitiveServices
         [WirePath("properties")]
         public CostControlProperties Properties { get; set; }
 
-        /// <summary> The entity tag used for optimistic concurrency. </summary>
+        /// <summary> The opaque entity tag used for optimistic concurrency. </summary>
         [WirePath("etag")]
         public ETag? ETag { get; }
     }

@@ -79,10 +79,23 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             {
                 throw new FormatException($"The model {nameof(ArcDeploymentModel)} does not support writing '{format}' format.");
             }
-            writer.WritePropertyName("format"u8);
-            writer.WriteStringValue(Format);
-            writer.WritePropertyName("name"u8);
-            writer.WriteStringValue(Name);
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("format"u8);
+                writer.WriteStringValue(Format);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("version"u8);
+                writer.WriteStringValue(Version);
+            }
+            writer.WritePropertyName("assetId"u8);
+            writer.WriteStringValue(AssetId);
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -127,6 +140,8 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             }
             string format = default;
             string name = default;
+            string version = default;
+            string assetId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -140,12 +155,22 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     name = prop.Value.GetString();
                     continue;
                 }
+                if (prop.NameEquals("version"u8))
+                {
+                    version = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("assetId"u8))
+                {
+                    assetId = prop.Value.GetString();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ArcDeploymentModel(format, name, additionalBinaryDataProperties);
+            return new ArcDeploymentModel(format, name, version, assetId, additionalBinaryDataProperties);
         }
     }
 }

@@ -24,6 +24,7 @@ namespace Azure.ResourceManager.CognitiveServices
         private readonly string _offer;
         private readonly string _acceleratorType;
         private readonly string _deploymentId;
+        private readonly string _location;
         private readonly RequestContext _context;
         private readonly string _diagnosticScope;
 
@@ -36,15 +37,25 @@ namespace Azure.ResourceManager.CognitiveServices
         /// Optional deployment resource ID. When provided, returns capacity for the specific region
         /// where the deployment is hosted rather than the best available region.
         /// </param>
+        /// <param name="location">
+        /// Optional Azure location used to select a DataZone scope. Without a deployment ID,
+        /// omitted or blank location returns Global and both US and EU DataZone capacities.
+        /// A supported location returns Global and the matching DataZone capacities; an
+        /// unsupported location returns Global capacity only. With a deployment ID, a
+        /// nonblank location must match the parent account location, ignoring case and
+        /// surrounding whitespace, or the request returns HTTP 400. Capacity is still
+        /// returned for the deployment's backend region.
+        /// </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public CognitiveServicesManagedComputeCapacityAsyncCollectionResultOfT(ManagedComputeCapacities client, string subscriptionId, string offer, string acceleratorType, string deploymentId, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public CognitiveServicesManagedComputeCapacityAsyncCollectionResultOfT(ManagedComputeCapacities client, string subscriptionId, string offer, string acceleratorType, string deploymentId, string location, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
             _offer = offer;
             _acceleratorType = acceleratorType;
             _deploymentId = deploymentId;
+            _location = location;
             _context = context;
             _diagnosticScope = diagnosticScope;
         }
@@ -88,7 +99,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink, CancellationToken cancellationToken)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetAllRequest(nextLink, _subscriptionId, _offer, _acceleratorType, _deploymentId, _context) : _client.CreateGetAllRequest(_subscriptionId, _offer, _acceleratorType, _deploymentId, _context);
+            HttpMessage message = nextLink != null ? _client.CreateNextGetAllRequest(nextLink, _subscriptionId, _offer, _acceleratorType, _deploymentId, _location, _context) : _client.CreateGetAllRequest(_subscriptionId, _offer, _acceleratorType, _deploymentId, _location, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try

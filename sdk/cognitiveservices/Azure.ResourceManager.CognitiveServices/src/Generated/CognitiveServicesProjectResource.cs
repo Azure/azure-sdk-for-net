@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.CognitiveServices
         {
             TryGetApiVersion(ResourceType, out string cognitiveServicesProjectApiVersion);
             _projectsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CognitiveServices", ResourceType.Namespace, Diagnostics);
-            _projectsRestClient = new Projects(_projectsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, cognitiveServicesProjectApiVersion ?? "2026-09-15-preview");
+            _projectsRestClient = new Projects(_projectsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, cognitiveServicesProjectApiVersion ?? "2026-11-15-preview");
             ValidateResourceId(id);
         }
 
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-09-15-preview. </description>
+        /// <description> 2026-11-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-09-15-preview. </description>
+        /// <description> 2026-11-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-09-15-preview. </description>
+        /// <description> 2026-11-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-09-15-preview. </description>
+        /// <description> 2026-11-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-09-15-preview. </description>
+        /// <description> 2026-11-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -370,7 +370,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-09-15-preview. </description>
+        /// <description> 2026-11-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -808,6 +808,41 @@ namespace Azure.ResourceManager.CognitiveServices
             Argument.AssertNotNullOrEmpty(workbenchName, nameof(workbenchName));
 
             return GetCognitiveServicesWorkbenches().Get(workbenchName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of CognitiveServicesProjectCostControls in the <see cref="CognitiveServicesProjectResource"/>. </summary>
+        /// <returns> An object representing collection of CognitiveServicesProjectCostControls and their operations over a CognitiveServicesProjectCostControlResource. </returns>
+        public virtual CognitiveServicesProjectCostControlCollection GetCognitiveServicesProjectCostControls()
+        {
+            return GetCachedClient(client => new CognitiveServicesProjectCostControlCollection(client, Id));
+        }
+
+        /// <summary> Gets a project-owned cost control, or returns 304 when the supplied entity tag matches. </summary>
+        /// <param name="costControlName"> The name of the ProjectCostControl. </param>
+        /// <param name="ifNoneMatch"> Returns 304 without a body when this entity tag matches the selected representation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="costControlName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="costControlName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<CognitiveServicesProjectCostControlResource>> GetCognitiveServicesProjectCostControlAsync(string costControlName, ETag? ifNoneMatch = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(costControlName, nameof(costControlName));
+
+            return await GetCognitiveServicesProjectCostControls().GetAsync(costControlName, ifNoneMatch, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Gets a project-owned cost control, or returns 304 when the supplied entity tag matches. </summary>
+        /// <param name="costControlName"> The name of the ProjectCostControl. </param>
+        /// <param name="ifNoneMatch"> Returns 304 without a body when this entity tag matches the selected representation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="costControlName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="costControlName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<CognitiveServicesProjectCostControlResource> GetCognitiveServicesProjectCostControl(string costControlName, ETag? ifNoneMatch = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(costControlName, nameof(costControlName));
+
+            return GetCognitiveServicesProjectCostControls().Get(costControlName, ifNoneMatch, cancellationToken);
         }
     }
 }

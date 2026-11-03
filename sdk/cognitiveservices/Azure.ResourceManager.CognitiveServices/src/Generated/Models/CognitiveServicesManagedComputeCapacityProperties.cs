@@ -25,13 +25,25 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 
         /// <summary> Initializes a new instance of <see cref="CognitiveServicesManagedComputeCapacityProperties"/>. </summary>
         /// <param name="acceleratorType"> The type of accelerator (e.g., Azure.A100, Azure.H100). </param>
+        /// <param name="offerScope"> The capacity offer scope: Global or DataZone. Omitted for deployment-scoped results. </param>
+        /// <param name="scopeId">
+        /// The identifier within the offer scope: an empty string for Global, or US or EU
+        /// for DataZone. Omitted for deployment-scoped results.
+        /// </param>
         /// <param name="availableAccelerators"> The number of available accelerators in the region. </param>
+        /// <param name="totalAvailableAccelerators">
+        /// The total number of available accelerators summed across regions within the scope.
+        /// Omitted for deployment-scoped results.
+        /// </param>
         /// <param name="deploymentSizeCapacities"> Capacity information broken down by deployment size. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CognitiveServicesManagedComputeCapacityProperties(string acceleratorType, int? availableAccelerators, IReadOnlyList<DeploymentSizeCapacity> deploymentSizeCapacities, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CognitiveServicesManagedComputeCapacityProperties(string acceleratorType, string offerScope, string scopeId, int? availableAccelerators, int? totalAvailableAccelerators, IReadOnlyList<DeploymentSizeCapacity> deploymentSizeCapacities, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AcceleratorType = acceleratorType;
+            OfferScope = offerScope;
+            ScopeId = scopeId;
             AvailableAccelerators = availableAccelerators;
+            TotalAvailableAccelerators = totalAvailableAccelerators;
             DeploymentSizeCapacities = deploymentSizeCapacities;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -40,9 +52,27 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         [WirePath("acceleratorType")]
         public string AcceleratorType { get; }
 
+        /// <summary> The capacity offer scope: Global or DataZone. Omitted for deployment-scoped results. </summary>
+        [WirePath("offerScope")]
+        public string OfferScope { get; }
+
+        /// <summary>
+        /// The identifier within the offer scope: an empty string for Global, or US or EU
+        /// for DataZone. Omitted for deployment-scoped results.
+        /// </summary>
+        [WirePath("scopeId")]
+        public string ScopeId { get; }
+
         /// <summary> The number of available accelerators in the region. </summary>
         [WirePath("availableAccelerators")]
         public int? AvailableAccelerators { get; }
+
+        /// <summary>
+        /// The total number of available accelerators summed across regions within the scope.
+        /// Omitted for deployment-scoped results.
+        /// </summary>
+        [WirePath("totalAvailableAccelerators")]
+        public int? TotalAvailableAccelerators { get; }
 
         /// <summary> Capacity information broken down by deployment size. </summary>
         [WirePath("deploymentSizeCapacities")]

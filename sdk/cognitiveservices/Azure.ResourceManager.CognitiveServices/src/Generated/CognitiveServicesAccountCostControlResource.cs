@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.CognitiveServices
         {
             TryGetApiVersion(ResourceType, out string cognitiveServicesAccountCostControlApiVersion);
             _costControlsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CognitiveServices", ResourceType.Namespace, Diagnostics);
-            _costControlsRestClient = new CostControls(_costControlsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, cognitiveServicesAccountCostControlApiVersion ?? "2026-09-15-preview");
+            _costControlsRestClient = new CostControls(_costControlsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, cognitiveServicesAccountCostControlApiVersion ?? "2026-11-15-preview");
             ValidateResourceId(id);
         }
 
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.CognitiveServices
         }
 
         /// <summary>
-        /// Gets a cost control.
+        /// Gets an account-owned cost control, or returns 304 when the supplied entity tag matches.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-09-15-preview. </description>
+        /// <description> 2026-11-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -113,8 +113,9 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="ifNoneMatch"> Returns 304 without a body when this entity tag matches the selected representation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<CognitiveServicesAccountCostControlResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CognitiveServicesAccountCostControlResource>> GetAsync(ETag? ifNoneMatch = default, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _costControlsClientDiagnostics.CreateScope("CognitiveServicesAccountCostControlResource.Get");
             scope.Start();
@@ -124,7 +125,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _costControlsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _costControlsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifNoneMatch, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<CognitiveServicesAccountCostControlData> response = Response.FromValue(CognitiveServicesAccountCostControlData.FromResponse(result), result);
                 if (response.Value == null)
@@ -141,7 +142,7 @@ namespace Azure.ResourceManager.CognitiveServices
         }
 
         /// <summary>
-        /// Gets a cost control.
+        /// Gets an account-owned cost control, or returns 304 when the supplied entity tag matches.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -153,7 +154,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-09-15-preview. </description>
+        /// <description> 2026-11-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -161,8 +162,9 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="ifNoneMatch"> Returns 304 without a body when this entity tag matches the selected representation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<CognitiveServicesAccountCostControlResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<CognitiveServicesAccountCostControlResource> Get(ETag? ifNoneMatch = default, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _costControlsClientDiagnostics.CreateScope("CognitiveServicesAccountCostControlResource.Get");
             scope.Start();
@@ -172,7 +174,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _costControlsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _costControlsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifNoneMatch, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<CognitiveServicesAccountCostControlData> response = Response.FromValue(CognitiveServicesAccountCostControlData.FromResponse(result), result);
                 if (response.Value == null)
@@ -189,7 +191,7 @@ namespace Azure.ResourceManager.CognitiveServices
         }
 
         /// <summary>
-        /// Updates selected properties of a cost control.
+        /// Updates selected budget properties synchronously. Omitted properties are preserved; an unchanged budget retains its entity tag.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -201,7 +203,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-09-15-preview. </description>
+        /// <description> 2026-11-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -210,10 +212,10 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </list>
         /// </summary>
         /// <param name="patch"> The resource properties to be updated. </param>
-        /// <param name="ifMatch"> Proceeds only when the current entity tag matches this value. </param>
+        /// <param name="ifMatch"> Proceeds only if the current entity tag matches this value. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual async Task<Response<CognitiveServicesAccountCostControlResource>> UpdateAsync(CognitiveServicesAccountCostControlPatch patch, ETag? ifMatch = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CognitiveServicesAccountCostControlResource>> UpdateAsync(CostControlPatch patch, ETag? ifMatch = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
@@ -225,7 +227,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _costControlsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, CognitiveServicesAccountCostControlPatch.ToRequestContent(patch), ifMatch, context);
+                HttpMessage message = _costControlsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, CostControlPatch.ToRequestContent(patch), ifMatch, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<CognitiveServicesAccountCostControlData> response = Response.FromValue(CognitiveServicesAccountCostControlData.FromResponse(result), result);
                 if (response.Value == null)
@@ -242,7 +244,7 @@ namespace Azure.ResourceManager.CognitiveServices
         }
 
         /// <summary>
-        /// Updates selected properties of a cost control.
+        /// Updates selected budget properties synchronously. Omitted properties are preserved; an unchanged budget retains its entity tag.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -254,7 +256,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-09-15-preview. </description>
+        /// <description> 2026-11-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -263,10 +265,10 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </list>
         /// </summary>
         /// <param name="patch"> The resource properties to be updated. </param>
-        /// <param name="ifMatch"> Proceeds only when the current entity tag matches this value. </param>
+        /// <param name="ifMatch"> Proceeds only if the current entity tag matches this value. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual Response<CognitiveServicesAccountCostControlResource> Update(CognitiveServicesAccountCostControlPatch patch, ETag? ifMatch = default, CancellationToken cancellationToken = default)
+        public virtual Response<CognitiveServicesAccountCostControlResource> Update(CostControlPatch patch, ETag? ifMatch = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
@@ -278,7 +280,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _costControlsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, CognitiveServicesAccountCostControlPatch.ToRequestContent(patch), ifMatch, context);
+                HttpMessage message = _costControlsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, CostControlPatch.ToRequestContent(patch), ifMatch, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<CognitiveServicesAccountCostControlData> response = Response.FromValue(CognitiveServicesAccountCostControlData.FromResponse(result), result);
                 if (response.Value == null)
@@ -295,7 +297,7 @@ namespace Azure.ResourceManager.CognitiveServices
         }
 
         /// <summary>
-        /// Deletes a cost control.
+        /// Deletes an account-owned cost control synchronously. An existing legacy attachment must be removed before its control can be deleted.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -307,7 +309,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-09-15-preview. </description>
+        /// <description> 2026-11-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -316,7 +318,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="ifMatch"> Proceeds only when the current entity tag matches this value. </param>
+        /// <param name="ifMatch"> Proceeds only if the current entity tag matches this value. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, ETag? ifMatch = default, CancellationToken cancellationToken = default)
         {
@@ -347,7 +349,7 @@ namespace Azure.ResourceManager.CognitiveServices
         }
 
         /// <summary>
-        /// Deletes a cost control.
+        /// Deletes an account-owned cost control synchronously. An existing legacy attachment must be removed before its control can be deleted.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -359,7 +361,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-09-15-preview. </description>
+        /// <description> 2026-11-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -368,7 +370,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="ifMatch"> Proceeds only when the current entity tag matches this value. </param>
+        /// <param name="ifMatch"> Proceeds only if the current entity tag matches this value. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, ETag? ifMatch = default, CancellationToken cancellationToken = default)
         {

@@ -18,35 +18,44 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ArcDeploymentModel"/>. </summary>
-        /// <param name="format"> Deployment model format. </param>
-        /// <param name="name"> Deployment model name. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="format"/> or <paramref name="name"/> is null. </exception>
-        public ArcDeploymentModel(string format, string name)
+        /// <param name="assetId"> AzureML Registry model asset URI. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="assetId"/> is null. </exception>
+        public ArcDeploymentModel(string assetId)
         {
-            Argument.AssertNotNull(format, nameof(format));
-            Argument.AssertNotNull(name, nameof(name));
+            Argument.AssertNotNull(assetId, nameof(assetId));
 
-            Format = format;
-            Name = name;
+            AssetId = assetId;
         }
 
         /// <summary> Initializes a new instance of <see cref="ArcDeploymentModel"/>. </summary>
-        /// <param name="format"> Deployment model format. </param>
-        /// <param name="name"> Deployment model name. </param>
+        /// <param name="format"> Read-only. Deployment model format resolved from the model asset. </param>
+        /// <param name="name"> Read-only. Deployment model name resolved from the model asset. </param>
+        /// <param name="version"> Read-only. Deployment model version resolved from the model asset. </param>
+        /// <param name="assetId"> AzureML Registry model asset URI. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ArcDeploymentModel(string format, string name, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ArcDeploymentModel(string format, string name, string version, string assetId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Format = format;
             Name = name;
+            Version = version;
+            AssetId = assetId;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Deployment model format. </summary>
+        /// <summary> Read-only. Deployment model format resolved from the model asset. </summary>
         [WirePath("format")]
-        public string Format { get; set; }
+        public string Format { get; }
 
-        /// <summary> Deployment model name. </summary>
+        /// <summary> Read-only. Deployment model name resolved from the model asset. </summary>
         [WirePath("name")]
-        public string Name { get; set; }
+        public string Name { get; }
+
+        /// <summary> Read-only. Deployment model version resolved from the model asset. </summary>
+        [WirePath("version")]
+        public string Version { get; }
+
+        /// <summary> AzureML Registry model asset URI. </summary>
+        [WirePath("assetId")]
+        public string AssetId { get; set; }
     }
 }

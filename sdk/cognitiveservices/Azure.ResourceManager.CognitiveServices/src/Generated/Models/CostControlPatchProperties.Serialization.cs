@@ -13,7 +13,7 @@ using Azure.ResourceManager.CognitiveServices;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
-    /// <summary> The properties that can be changed on a cost control. </summary>
+    /// <summary> Optional edits to a budget. Omitted properties retain their existing values; no defaults are applied. </summary>
     public partial class CostControlPatchProperties : IJsonModel<CostControlPatchProperties>
     {
         /// <param name="data"> The data to parse. </param>
@@ -74,27 +74,82 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             {
                 throw new FormatException($"The model {nameof(CostControlPatchProperties)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(DisplayName, _displayNameIsDefined))
+            if (Optional.IsDefined(Provider))
             {
-                if (DisplayName != null)
-                {
-                    writer.WritePropertyName("displayName"u8);
-                    writer.WriteStringValue(DisplayName);
-                }
-                else
-                {
-                    writer.WriteNull("displayName"u8);
-                }
+                writer.WritePropertyName("provider"u8);
+                writer.WriteStringValue(Provider.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(Rules))
+            if (Optional.IsCollectionDefined(Grouping))
             {
-                writer.WritePropertyName("rules"u8);
+                writer.WritePropertyName("grouping"u8);
                 writer.WriteStartArray();
-                foreach (CostControlRule item in Rules)
+                foreach (CostControlGrouping item in Grouping)
                 {
                     writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(Category))
+            {
+                writer.WritePropertyName("category"u8);
+                writer.WriteStringValue(Category.Value.ToString());
+            }
+            if (Optional.IsDefined(Amount))
+            {
+                writer.WritePropertyName("amount"u8);
+                writer.WriteNumberValue(Amount.Value);
+            }
+            if (Optional.IsDefined(TimeGrain))
+            {
+                writer.WritePropertyName("timeGrain"u8);
+                writer.WriteStringValue(TimeGrain.Value.ToString());
+            }
+            if (Optional.IsDefined(TimePeriod))
+            {
+                writer.WritePropertyName("timePeriod"u8);
+                writer.WriteObjectValue(TimePeriod, options);
+            }
+            if (Optional.IsDefined(Filter, _filterIsDefined))
+            {
+                if (Filter != null)
+                {
+                    writer.WritePropertyName("filter"u8);
+                    writer.WriteObjectValue(Filter, options);
+                }
+                else
+                {
+                    writer.WriteNull("filter"u8);
+                }
+            }
+            if (Optional.IsCollectionDefined(Notifications))
+            {
+                if (Notifications != null)
+                {
+                    writer.WritePropertyName("notifications"u8);
+                    writer.WriteStartObject();
+                    foreach (var item in Notifications)
+                    {
+                        writer.WritePropertyName(item.Key);
+                        writer.WriteObjectValue(item.Value, options);
+                    }
+                    writer.WriteEndObject();
+                }
+                else
+                {
+                    writer.WriteNull("notifications"u8);
+                }
+            }
+            if (Optional.IsDefined(ProviderProperties, _providerPropertiesIsDefined))
+            {
+                if (ProviderProperties != null)
+                {
+                    writer.WritePropertyName("providerProperties"u8);
+                    writer.WriteObjectValue(ProviderProperties, options);
+                }
+                else
+                {
+                    writer.WriteNull("providerProperties"u8);
+                }
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -138,35 +193,114 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             {
                 return null;
             }
-            bool displayNameIsDefined = false;
-            string displayName = default;
-            IList<CostControlRule> rules = default;
+            CostControlPatchPropertiesProvider? provider = default;
+            IList<CostControlGrouping> grouping = default;
+            CostControlCategory? category = default;
+            double? amount = default;
+            CostControlTimeGrain? timeGrain = default;
+            CostControlTimePeriodPatch timePeriod = default;
+            bool filterIsDefined = false;
+            CostControlFilter filter = default;
+            IDictionary<string, CostControlNotificationPatch> notifications = new ChangeTrackingDictionary<string, CostControlNotificationPatch>();
+            bool providerPropertiesIsDefined = false;
+            CostControlProviderPropertiesPatch providerProperties = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("displayName"u8))
+                if (prop.NameEquals("provider"u8))
                 {
-                    displayNameIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        displayName = null;
                         continue;
                     }
-                    displayName = prop.Value.GetString();
+                    provider = new CostControlPatchPropertiesProvider(prop.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("rules"u8))
+                if (prop.NameEquals("grouping"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    List<CostControlRule> array = new List<CostControlRule>();
+                    List<CostControlGrouping> array = new List<CostControlGrouping>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(CostControlRule.DeserializeCostControlRule(item, options));
+                        array.Add(CostControlGrouping.DeserializeCostControlGrouping(item, options));
                     }
-                    rules = array;
+                    grouping = array;
+                    continue;
+                }
+                if (prop.NameEquals("category"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    category = new CostControlCategory(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("amount"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    amount = prop.Value.GetDouble();
+                    continue;
+                }
+                if (prop.NameEquals("timeGrain"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    timeGrain = new CostControlTimeGrain(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("timePeriod"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    timePeriod = CostControlTimePeriodPatch.DeserializeCostControlTimePeriodPatch(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("filter"u8))
+                {
+                    filterIsDefined = true;
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        filter = null;
+                        continue;
+                    }
+                    filter = CostControlFilter.DeserializeCostControlFilter(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("notifications"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        notifications = null;
+                        continue;
+                    }
+                    Dictionary<string, CostControlNotificationPatch> dictionary = new Dictionary<string, CostControlNotificationPatch>();
+                    foreach (var prop0 in prop.Value.EnumerateObject())
+                    {
+                        dictionary.Add(prop0.Name, CostControlNotificationPatch.DeserializeCostControlNotificationPatch(prop0.Value, options));
+                    }
+                    notifications = dictionary;
+                    continue;
+                }
+                if (prop.NameEquals("providerProperties"u8))
+                {
+                    providerPropertiesIsDefined = true;
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        providerProperties = null;
+                        continue;
+                    }
+                    providerProperties = CostControlProviderPropertiesPatch.DeserializeCostControlProviderPropertiesPatch(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -174,9 +308,20 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new CostControlPatchProperties(displayName, rules ?? new ChangeTrackingList<CostControlRule>(), additionalBinaryDataProperties)
+            return new CostControlPatchProperties(
+                provider,
+                grouping ?? new ChangeTrackingList<CostControlGrouping>(),
+                category,
+                amount,
+                timeGrain,
+                timePeriod,
+                filter,
+                notifications,
+                providerProperties,
+                additionalBinaryDataProperties)
             {
-                _displayNameIsDefined = displayNameIsDefined
+                _filterIsDefined = filterIsDefined,
+                _providerPropertiesIsDefined = providerPropertiesIsDefined
             };
         }
     }
