@@ -53,8 +53,8 @@ extends:
     SupportedClouds: 'Public'
     Location: 'East US'
     MaxParallel: ${{ parameters.testQueueCount }}
-    TestResourceDirectories:
-      - ai/Azure.AI.Projects/tests/Samples/ci/infra
+    DeployTestResources: false
+    UseFederatedAuth: false
     MatrixFilters:
       - AdditionalTestArguments=^(?!.*UseProjectReferenceToAzureClients=true)
     PreSteps:
@@ -100,43 +100,12 @@ extends:
 
           $validationEndpoint = $env:LLM_VALIDATION_PROJECT_ENDPOINT
           if ([string]::IsNullOrWhiteSpace($validationEndpoint)) {
-            throw 'Set LLM_VALIDATION_PROJECT_ENDPOINT in the pipeline variables. accountName/projectName are derived from this endpoint and are no longer queue parameters.'
+            throw 'Set LLM_VALIDATION_PROJECT_ENDPOINT in the pipeline variables.'
           }
-
-          $endpointUri = [Uri]$validationEndpoint
-          $accountName = $endpointUri.Host.Split('.')[0]
-          $projectMatch = [System.Text.RegularExpressions.Regex]::Match($endpointUri.AbsolutePath, '/api/projects/(?<project>[^/]+)')
-          if (-not $projectMatch.Success) {
-            throw "Unable to parse project name from endpoint: $validationEndpoint"
-          }
-          $projectName = $projectMatch.Groups['project'].Value
 
           Write-Host "Using AdditionalTestFilters: $additionalTestFilters"
           Write-Host "##vso[task.setvariable variable=AdditionalTestFilters]$additionalTestFilters"
-
-          $armParameters = @{
-            accountName = $accountName
-            projectName = $projectName
-            agentName = 'sample-agent'
-            modelName = '${{ parameters.modelName }}'
-            modelVersion = '${{ parameters.modelVersion }}'
-            modelSku = '${{ parameters.modelSku }}'
-            modelCapacity = [int]${{ parameters.modelCapacity }}
-          }
-
-          $pairs = New-Object System.Collections.Generic.List[string]
-          foreach ($key in $armParameters.Keys) {
-            $value = $armParameters[$key]
-            if ($value -is [int] -or $value -is [long]) {
-              $pairs.Add("$key=$value")
-            }
-            else {
-              $escaped = "$value".Replace("'", "''")
-              $pairs.Add("$key='$escaped'")
-            }
-          }
-
-          $armTemplateParameters = '@{' + ($pairs -join '; ') + '}'
-          Write-Host "Using ArmTemplateParameters: $armTemplateParameters"
-          Write-Host "##vso[task.setvariable variable=ArmTemplateParameters]$armTemplateParameters"
+          Write-Host "##vso[task.setvariable variable=FOUNDRY_PROJECT_ENDPOINT]$validationEndpoint"
+          Write-Host "##vso[task.setvariable variable=FOUNDRY_MODEL_NAME]${{ parameters.modelName }}"
+          Write-Host "##vso[task.setvariable variable=FOUNDRY_AGENT_NAME]sample-agent"
         displayName: 'Prepare sample test filter and deployment parameters'
