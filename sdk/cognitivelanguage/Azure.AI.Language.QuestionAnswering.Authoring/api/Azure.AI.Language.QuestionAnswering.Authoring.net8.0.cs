@@ -168,7 +168,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         public static Azure.AI.Language.QuestionAnswering.Authoring.ProjectSettings ProjectSettings(string defaultAnswer = null) { throw null; }
         public static Azure.AI.Language.QuestionAnswering.Authoring.QnaDialog QnaDialog(bool? isContextOnly = default(bool?), System.Collections.Generic.IEnumerable<Azure.AI.Language.QuestionAnswering.Authoring.QnaPrompt> prompts = null) { throw null; }
         public static Azure.AI.Language.QuestionAnswering.Authoring.QnaPrompt QnaPrompt(int? displayOrder = default(int?), int? qnaId = default(int?), Azure.AI.Language.QuestionAnswering.Authoring.QnaRecord qna = null, string displayText = null) { throw null; }
-        public static Azure.AI.Language.QuestionAnswering.Authoring.QnaRecord QnaRecord(int id = 0, string answer = null, string source = null, System.Collections.Generic.IEnumerable<string> questions = null, System.Collections.Generic.IDictionary<string, string> metadata = null, Azure.AI.Language.QuestionAnswering.Authoring.QnaDialog dialog = null, System.Collections.Generic.IEnumerable<Azure.AI.Language.QuestionAnswering.Authoring.SuggestedQuestionsCluster> activeLearningSuggestions = null) { throw null; }
+        public static Azure.AI.Language.QuestionAnswering.Authoring.QnaRecord QnaRecord(int? id = default(int?), string answer = null, string source = null, System.Collections.Generic.IEnumerable<string> questions = null, System.Collections.Generic.IDictionary<string, string> metadata = null, Azure.AI.Language.QuestionAnswering.Authoring.QnaDialog dialog = null, System.Collections.Generic.IEnumerable<Azure.AI.Language.QuestionAnswering.Authoring.SuggestedQuestionsCluster> activeLearningSuggestions = null) { throw null; }
         public static Azure.AI.Language.QuestionAnswering.Authoring.QnaSourceRecord QnaSourceRecord(string displayName = null, string source = null, System.Uri sourceUri = null, Azure.AI.Language.QuestionAnswering.Authoring.SourceKind sourceKind = default(Azure.AI.Language.QuestionAnswering.Authoring.SourceKind), Azure.AI.Language.QuestionAnswering.Authoring.SourceContentStructureKind? contentStructureKind = default(Azure.AI.Language.QuestionAnswering.Authoring.SourceContentStructureKind?), System.DateTimeOffset? lastUpdatedOn = default(System.DateTimeOffset?)) { throw null; }
         public static Azure.AI.Language.QuestionAnswering.Authoring.QuestionAnsweringAuthoringAssets QuestionAnsweringAuthoringAssets(System.Collections.Generic.IEnumerable<Azure.AI.Language.QuestionAnswering.Authoring.WordAlterations> synonyms = null, System.Collections.Generic.IEnumerable<Azure.AI.Language.QuestionAnswering.Authoring.ImportQnaRecord> qnas = null) { throw null; }
         public static Azure.AI.Language.QuestionAnswering.Authoring.QuestionAnsweringAuthoringExportJobState QuestionAnsweringAuthoringExportJobState(System.DateTimeOffset createdOn = default(System.DateTimeOffset), System.DateTimeOffset? expiresOn = default(System.DateTimeOffset?), string jobId = null, System.DateTimeOffset lastUpdatedOn = default(System.DateTimeOffset), Azure.AI.Language.QuestionAnswering.Authoring.JobStatus status = default(Azure.AI.Language.QuestionAnswering.Authoring.JobStatus), System.Collections.Generic.IEnumerable<Azure.ResponseError> errors = null, string resultUrl = null) { throw null; }
@@ -247,11 +247,11 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
     }
     public partial class QnaRecord : System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.QuestionAnswering.Authoring.QnaRecord>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.QuestionAnswering.Authoring.QnaRecord>
     {
-        public QnaRecord(int id) { }
+        public QnaRecord() { }
         public System.Collections.Generic.IList<Azure.AI.Language.QuestionAnswering.Authoring.SuggestedQuestionsCluster> ActiveLearningSuggestions { get { throw null; } }
         public string Answer { get { throw null; } set { } }
         public Azure.AI.Language.QuestionAnswering.Authoring.QnaDialog Dialog { get { throw null; } set { } }
-        public int Id { get { throw null; } set { } }
+        public int? Id { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Metadata { get { throw null; } }
         public System.Collections.Generic.IList<string> Questions { get { throw null; } }
         public string Source { get { throw null; } set { } }

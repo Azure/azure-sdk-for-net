@@ -4172,6 +4172,7 @@ namespace Azure.Analytics.PlanetaryComputer
     }
     public partial class ManagedIdentityIngestionSource : Azure.Analytics.PlanetaryComputer.IngestionSource, System.ClientModel.Primitives.IJsonModel<Azure.Analytics.PlanetaryComputer.ManagedIdentityIngestionSource>, System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.PlanetaryComputer.ManagedIdentityIngestionSource>
     {
+        public ManagedIdentityIngestionSource(Azure.Analytics.PlanetaryComputer.ManagedIdentityConnection connectionInfo) { }
         public ManagedIdentityIngestionSource(System.Guid id, Azure.Analytics.PlanetaryComputer.ManagedIdentityConnection connectionInfo) { }
         public Azure.Analytics.PlanetaryComputer.ManagedIdentityConnection ConnectionInfo { get { throw null; } set { } }
         protected override Azure.Analytics.PlanetaryComputer.IngestionSource JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -4921,6 +4922,7 @@ namespace Azure.Analytics.PlanetaryComputer
     }
     public partial class SharedAccessSignatureTokenIngestionSource : Azure.Analytics.PlanetaryComputer.IngestionSource, System.ClientModel.Primitives.IJsonModel<Azure.Analytics.PlanetaryComputer.SharedAccessSignatureTokenIngestionSource>, System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.PlanetaryComputer.SharedAccessSignatureTokenIngestionSource>
     {
+        public SharedAccessSignatureTokenIngestionSource(Azure.Analytics.PlanetaryComputer.SharedAccessSignatureTokenConnection connectionInfo) { }
         public SharedAccessSignatureTokenIngestionSource(System.Guid id, Azure.Analytics.PlanetaryComputer.SharedAccessSignatureTokenConnection connectionInfo) { }
         public Azure.Analytics.PlanetaryComputer.SharedAccessSignatureTokenConnection ConnectionInfo { get { throw null; } set { } }
         protected override Azure.Analytics.PlanetaryComputer.IngestionSource JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
