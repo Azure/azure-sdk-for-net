@@ -1,5 +1,21 @@
 namespace Azure.Provisioning.Quota
 {
+    public partial class ApprovalRecord : Azure.Provisioning.Primitives.ProvisionableConstruct
+    {
+        public ApprovalRecord() { }
+        public Azure.Provisioning.BicepValue<string> Actor { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> Comment { get { throw null; } }
+        public Azure.Provisioning.BicepValue<System.DateTimeOffset> OccurredOn { get { throw null; } }
+        protected override void DefineProvisionableProperties() { }
+    }
+    public partial class CancellationRecord : Azure.Provisioning.Primitives.ProvisionableConstruct
+    {
+        public CancellationRecord() { }
+        public Azure.Provisioning.BicepValue<string> Actor { get { throw null; } }
+        public Azure.Provisioning.BicepValue<System.DateTimeOffset> OccurredOn { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> Reason { get { throw null; } }
+        protected override void DefineProvisionableProperties() { }
+    }
     public partial class CurrentQuotaLimitBase : Azure.Provisioning.Primitives.ProvisionableResource
     {
         public CurrentQuotaLimitBase(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
@@ -13,6 +29,7 @@ namespace Azure.Provisioning.Quota
         public static partial class ResourceVersions
         {
             public static readonly string V2025_09_01;
+            public static readonly string V2026_09_01_PREVIEW;
         }
     }
     public partial class CurrentUsagesBase : Azure.Provisioning.Primitives.ProvisionableResource
@@ -21,12 +38,14 @@ namespace Azure.Provisioning.Quota
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.Quota.QuotaUsagesProperties Properties { get { throw null; } }
+        public Azure.Provisioning.Primitives.ProvisionableResource Scope { get { throw null; } set { } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
         public static Azure.Provisioning.Quota.CurrentUsagesBase FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2025_09_01;
+            public static readonly string V2026_09_01_PREVIEW;
         }
     }
     public enum EnforcementState
@@ -61,6 +80,7 @@ namespace Azure.Provisioning.Quota
         public static partial class ResourceVersions
         {
             public static readonly string V2025_09_01;
+            public static readonly string V2026_09_01_PREVIEW;
         }
     }
     public partial class GroupQuotaEntityBase : Azure.Provisioning.Primitives.ProvisionableConstruct
@@ -90,6 +110,7 @@ namespace Azure.Provisioning.Quota
         public static partial class ResourceVersions
         {
             public static readonly string V2025_09_01;
+            public static readonly string V2026_09_01_PREVIEW;
         }
     }
     public partial class GroupQuotaLimitListProperties : Azure.Provisioning.Primitives.ProvisionableConstruct
@@ -128,6 +149,7 @@ namespace Azure.Provisioning.Quota
         public static partial class ResourceVersions
         {
             public static readonly string V2025_09_01;
+            public static readonly string V2026_09_01_PREVIEW;
         }
     }
     public partial class GroupQuotaRequestStatusProperties : Azure.Provisioning.Primitives.ProvisionableConstruct
@@ -152,6 +174,7 @@ namespace Azure.Provisioning.Quota
         public static partial class ResourceVersions
         {
             public static readonly string V2025_09_01;
+            public static readonly string V2026_09_01_PREVIEW;
         }
     }
     public partial class GroupQuotasEnforcementStatusProperties : Azure.Provisioning.Primitives.ProvisionableConstruct
@@ -181,6 +204,7 @@ namespace Azure.Provisioning.Quota
         public static partial class ResourceVersions
         {
             public static readonly string V2025_09_01;
+            public static readonly string V2026_09_01_PREVIEW;
         }
     }
     public partial class GroupQuotaSubscriptionProperties : Azure.Provisioning.Primitives.ProvisionableConstruct
@@ -203,6 +227,7 @@ namespace Azure.Provisioning.Quota
         public static partial class ResourceVersions
         {
             public static readonly string V2025_09_01;
+            public static readonly string V2026_09_01_PREVIEW;
         }
     }
     public partial class GroupQuotaSubscriptionRequestStatusProperties : Azure.Provisioning.Primitives.ProvisionableConstruct
@@ -217,6 +242,40 @@ namespace Azure.Provisioning.Quota
     {
         AllocationGroup = 0,
         EnforcedGroup = 1,
+    }
+    public partial class IncomingQuotaTransfer : Azure.Provisioning.Primitives.ProvisionableResource
+    {
+        internal IncomingQuotaTransfer() : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public Azure.Provisioning.BicepValue<string> ETag { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
+        public Azure.Provisioning.Quota.IncomingQuotaTransferProperties Properties { get { throw null; } }
+        public Azure.Provisioning.Primitives.ProvisionableResource Scope { get { throw null; } set { } }
+        public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
+        protected override void DefineProvisionableProperties() { }
+        public static Azure.Provisioning.Quota.IncomingQuotaTransfer FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
+        public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
+        public static partial class ResourceVersions
+        {
+            public static readonly string V2026_09_01_PREVIEW;
+        }
+    }
+    public partial class IncomingQuotaTransferProperties : Azure.Provisioning.Primitives.ProvisionableConstruct
+    {
+        public IncomingQuotaTransferProperties() { }
+        public Azure.Provisioning.BicepValue<long> Amount { get { throw null; } }
+        public Azure.Provisioning.Quota.ApprovalRecord Approval { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> BillingAccountId { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.Quota.TransferProvisioningState> ProvisioningState { get { throw null; } }
+        public Azure.Provisioning.Quota.RejectionRecord Rejection { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> ResourceName { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> SourceEtag { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> SourceSubscriptionId { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> SourceTenantId { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> TransferId { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> TransferRef { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.Quota.TransferStatus> TransferStatus { get { throw null; } }
+        protected override void DefineProvisionableProperties() { }
     }
     public partial class QuotaAllocationRequestBase : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
@@ -236,12 +295,14 @@ namespace Azure.Provisioning.Quota
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Quota.QuotaRequestStatus> ProvisioningState { get { throw null; } }
         public Azure.Provisioning.Quota.QuotaAllocationRequestBase RequestedResource { get { throw null; } }
         public Azure.Provisioning.BicepValue<System.DateTimeOffset> RequestSubmittedOn { get { throw null; } }
+        public Azure.Provisioning.Primitives.ProvisionableResource Scope { get { throw null; } set { } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
         public static Azure.Provisioning.Quota.QuotaAllocationRequestStatus FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2025_09_01;
+            public static readonly string V2026_09_01_PREVIEW;
         }
     }
     public partial class QuotaLimitJsonObject : Azure.Provisioning.Primitives.ProvisionableConstruct
@@ -282,6 +343,7 @@ namespace Azure.Provisioning.Quota
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Quota.QuotaRequestState> ProvisioningState { get { throw null; } }
         public Azure.Provisioning.BicepValue<System.DateTimeOffset> RequestSubmitOn { get { throw null; } }
+        public Azure.Provisioning.Primitives.ProvisionableResource Scope { get { throw null; } set { } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         public Azure.Provisioning.BicepList<Azure.Provisioning.Quota.QuotaSubRequestDetail> Value { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
@@ -289,6 +351,7 @@ namespace Azure.Provisioning.Quota
         public static partial class ResourceVersions
         {
             public static readonly string V2025_09_01;
+            public static readonly string V2026_09_01_PREVIEW;
         }
     }
     public partial class QuotaRequestResourceName : Azure.Provisioning.Primitives.ProvisionableConstruct
@@ -329,6 +392,44 @@ namespace Azure.Provisioning.Quota
         public Azure.Provisioning.BicepValue<string> Unit { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }
+    public partial class QuotaTransfer : Azure.Provisioning.Primitives.ProvisionableResource
+    {
+        public QuotaTransfer(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public Azure.Provisioning.BicepValue<string> ETag { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
+        public Azure.Provisioning.Quota.QuotaTransferProperties Properties { get { throw null; } set { } }
+        public Azure.Provisioning.Primitives.ProvisionableResource Scope { get { throw null; } set { } }
+        public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
+        protected override void DefineProvisionableProperties() { }
+        public static Azure.Provisioning.Quota.QuotaTransfer FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
+        public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
+        public static partial class ResourceVersions
+        {
+            public static readonly string V2026_09_01_PREVIEW;
+        }
+    }
+    public partial class QuotaTransferProperties : Azure.Provisioning.Primitives.ProvisionableConstruct
+    {
+        public QuotaTransferProperties() { }
+        public Azure.Provisioning.BicepValue<long> Amount { get { throw null; } set { } }
+        public Azure.Provisioning.Quota.ApprovalRecord Approval { get { throw null; } }
+        public Azure.Provisioning.BicepValue<bool> AutoApprove { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> BillingAccountId { get { throw null; } }
+        public Azure.Provisioning.Quota.CancellationRecord Cancellation { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> Comment { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> CreatedBy { get { throw null; } }
+        public Azure.Provisioning.BicepValue<System.DateTimeOffset> CreatedOn { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> DestinationSubscriptionId { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> DestinationTenantId { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> DisplayName { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<System.DateTimeOffset> ExpiresOn { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.Quota.TransferProvisioningState> ProvisioningState { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> ResourceName { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> TransferId { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.Quota.TransferStatus> TransferStatus { get { throw null; } }
+        protected override void DefineProvisionableProperties() { }
+    }
     public partial class QuotaUsagesObject : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public QuotaUsagesObject() { }
@@ -352,6 +453,14 @@ namespace Azure.Provisioning.Quota
     {
         Individual = 0,
         Combined = 1,
+    }
+    public partial class RejectionRecord : Azure.Provisioning.Primitives.ProvisionableConstruct
+    {
+        public RejectionRecord() { }
+        public Azure.Provisioning.BicepValue<string> Actor { get { throw null; } }
+        public Azure.Provisioning.BicepValue<System.DateTimeOffset> OccurredOn { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> Reason { get { throw null; } }
+        protected override void DefineProvisionableProperties() { }
     }
     public partial class ServiceErrorDetail : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
@@ -379,6 +488,7 @@ namespace Azure.Provisioning.Quota
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.Quota.SubscriptionQuotaAllocationsListProperties Properties { get { throw null; } }
+        public Azure.Provisioning.Primitives.ProvisionableResource Scope { get { throw null; } set { } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
         public static Azure.Provisioning.Quota.SubscriptionQuotaAllocationsList FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
@@ -386,6 +496,7 @@ namespace Azure.Provisioning.Quota
         public static partial class ResourceVersions
         {
             public static readonly string V2025_09_01;
+            public static readonly string V2026_09_01_PREVIEW;
         }
     }
     public partial class SubscriptionQuotaAllocationsListProperties : Azure.Provisioning.Primitives.ProvisionableConstruct
@@ -410,5 +521,21 @@ namespace Azure.Provisioning.Quota
         public Azure.Provisioning.BicepValue<long> ShareableQuota { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Value { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
+    }
+    public enum TransferProvisioningState
+    {
+        Succeeded = 0,
+        Failed = 1,
+        Canceled = 2,
+    }
+    public enum TransferStatus
+    {
+        Pending = 0,
+        Accepted = 1,
+        Completed = 2,
+        Cancelled = 3,
+        Rejected = 4,
+        Expired = 5,
+        Failed = 6,
     }
 }

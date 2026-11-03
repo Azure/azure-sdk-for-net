@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
@@ -20,11 +21,12 @@ namespace Azure.Provisioning.Quota
         private BicepValue<string> _name;
         private SystemData _systemData;
         private SubscriptionQuotaAllocationsListProperties _properties;
+        private ResourceReference<ProvisionableResource> _scope;
 
         /// <summary> Creates a new SubscriptionQuotaAllocationsList. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
         /// <param name="resourceVersion"> The resource API version. </param>
-        internal SubscriptionQuotaAllocationsList(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.Quota/groupQuotas/resourceProviders/quotaAllocations", resourceVersion ?? "2025-09-01")
+        internal SubscriptionQuotaAllocationsList(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.Quota/groupQuotas/resourceProviders/quotaAllocations", resourceVersion ?? "2026-09-01-preview")
         {
         }
 
@@ -73,6 +75,21 @@ namespace Azure.Provisioning.Quota
             }
         }
 
+        /// <summary> Gets or sets the Scope. </summary>
+        public ProvisionableResource Scope
+        {
+            get
+            {
+                Initialize();
+                return _scope.Value;
+            }
+            set
+            {
+                Initialize();
+                _scope.Value = value;
+            }
+        }
+
         /// <summary> Define all the provisionable properties for SubscriptionQuotaAllocationsList. </summary>
         protected override void DefineProvisionableProperties()
         {
@@ -81,6 +98,7 @@ namespace Azure.Provisioning.Quota
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _properties = DefineModelProperty<SubscriptionQuotaAllocationsListProperties>(nameof(Properties), new string[] { "properties" });
+            _scope = DefineResource<ProvisionableResource>(nameof(Scope), new string[] { "scope" });
             DefineAdditionalProperties();
         }
 
@@ -105,6 +123,9 @@ namespace Azure.Provisioning.Quota
         /// <summary></summary>
         public static partial class ResourceVersions
         {
+            /// <summary> API version "2026-09-01-preview". </summary>
+            [Experimental("AZPROVISION001")]
+            public static readonly string V2026_09_01_PREVIEW = "2026-09-01-preview";
             /// <summary> API version "2025-09-01". </summary>
             public static readonly string V2025_09_01 = "2025-09-01";
         }

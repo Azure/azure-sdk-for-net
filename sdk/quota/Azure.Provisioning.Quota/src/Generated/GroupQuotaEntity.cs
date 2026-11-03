@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
@@ -24,7 +25,7 @@ namespace Azure.Provisioning.Quota
         /// <summary> Creates a new GroupQuotaEntity. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
         /// <param name="resourceVersion"> The resource API version. </param>
-        public GroupQuotaEntity(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.Quota/groupQuotas", resourceVersion ?? "2025-09-01")
+        public GroupQuotaEntity(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.Quota/groupQuotas", resourceVersion ?? "2026-09-01-preview")
         {
         }
 
@@ -110,6 +111,9 @@ namespace Azure.Provisioning.Quota
         /// <summary></summary>
         public static partial class ResourceVersions
         {
+            /// <summary> API version "2026-09-01-preview". </summary>
+            [Experimental("AZPROVISION001")]
+            public static readonly string V2026_09_01_PREVIEW = "2026-09-01-preview";
             /// <summary> API version "2025-09-01". </summary>
             public static readonly string V2025_09_01 = "2025-09-01";
         }
