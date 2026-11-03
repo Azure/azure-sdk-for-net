@@ -39,17 +39,19 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         /// <param name="planState"> The current state of the recovery orchestration plan. </param>
         /// <param name="planDescription"> A description of the recovery orchestration plan. </param>
         /// <param name="recoveryGroupsSetting"> Settings for the recovery orchestration groups associated with the recovery orchestration plan. </param>
+        /// <param name="resiliencyPlanProperties"> Resiliency-specific properties for the recovery plan. </param>
         /// <param name="latestFailoverStatus"> The status of the most recent failover operation executed. </param>
         /// <param name="latestValidationStatus"> The status of the most recent validation performed. </param>
         /// <param name="errorDetails"> Error details associated with the resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RecoveryPlanProperties(ResilienceManagementProvisioningState? provisioningState, RecoveryPlanType planType, RecoveryPlanState? planState, string planDescription, RecoveryGroupsSetting recoveryGroupsSetting, RecoveryPlanFailoverOperationStatus latestFailoverStatus, RecoveryPlanOperationStatus latestValidationStatus, ResponseError errorDetails, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RecoveryPlanProperties(ResilienceManagementProvisioningState? provisioningState, RecoveryPlanType planType, RecoveryPlanState? planState, string planDescription, RecoveryGroupsSetting recoveryGroupsSetting, RecoveryPlanResiliencyProperties resiliencyPlanProperties, RecoveryPlanFailoverOperationStatus latestFailoverStatus, RecoveryPlanOperationStatus latestValidationStatus, ResponseError errorDetails, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             PlanType = planType;
             PlanState = planState;
             PlanDescription = planDescription;
             RecoveryGroupsSetting = recoveryGroupsSetting;
+            ResiliencyPlanProperties = resiliencyPlanProperties;
             LatestFailoverStatus = latestFailoverStatus;
             LatestValidationStatus = latestValidationStatus;
             ErrorDetails = errorDetails;
@@ -70,6 +72,9 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
 
         /// <summary> Settings for the recovery orchestration groups associated with the recovery orchestration plan. </summary>
         public RecoveryGroupsSetting RecoveryGroupsSetting { get; set; }
+
+        /// <summary> Resiliency-specific properties for the recovery plan. </summary>
+        public RecoveryPlanResiliencyProperties ResiliencyPlanProperties { get; set; }
 
         /// <summary> The status of the most recent failover operation executed. </summary>
         public RecoveryPlanFailoverOperationStatus LatestFailoverStatus { get; }
