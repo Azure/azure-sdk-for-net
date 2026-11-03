@@ -1,0 +1,9 @@
+# Azure.ResourceManager.KoreAIArtemis approved analyzer suppressions.
+# See eng/analyzerallowlist/README.md for the file format and review policy.
+
+# These initial-release names come directly from the merged service TypeSpec. Renaming
+# checked-in generated types locally would diverge from the SDK generation source.
+nowarn:AZC0030 T:Azure.ResourceManager.KoreAIArtemis.Models.ActivateSaaSParameterRequest
+# AZC0032 is emitted as an error and cannot be scoped by Roslyn's diagnostic
+# suppressor; the project currently contains only the generated WorkspaceSaaSData case.
+nowarn:AZC0032
