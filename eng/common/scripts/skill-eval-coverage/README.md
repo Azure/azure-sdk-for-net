@@ -7,10 +7,6 @@ Initial scope is the skill-coverage portion of
 [#16345](https://github.com/Azure/azure-sdk-tools/issues/16345), not MCP-tool or
 mock-handler coverage enforcement.
 
-Azure SDK Tools wires this package into its workflows. Syncing `eng/common` alone
-does not enable the check in another repository; each consumer supplies its own
-configuration and workflows.
-
 ## What happens on a PR
 
 1. The existing **Skill Evaluations** workflow keeps its independent, blocking
@@ -78,10 +74,11 @@ test/                 # Unit tests, real Git fixtures and fake HTTP tests
 pnpm-lock.yaml        # Exactly one frozen runtime dependency: yaml
 ```
 
-The consumer owns its configuration in `.github/skill-eval-coverage.json`; it is
-not included in the shared package. That configuration names the skills root,
-source workflow and approved report links. No deployment addresses are embedded
-in shared code, and no pipeline paths or runner globs are needed.
+The consumer owns its configuration in
+[.github/skill-eval-coverage.json](../../../../.github/skill-eval-coverage.json).
+That configuration names the skills root, source workflow and approved report
+links. No deployment addresses are embedded in shared code, and no pipeline paths
+or runner globs are needed.
 
 For each skill, candidates are `eval.yaml` or `eval.yml` at the skill root, or
 `eval.yaml`, `eval.yml`, `*.eval.yaml` and `*.eval.yml` recursively under `evals/`
@@ -97,13 +94,10 @@ modified report cannot choose the destination or content of a privileged comment
 
 ## Verification and coverage levels
 
-In Azure SDK Tools, `.github/workflows/skill-eval-coverage-tests.yml` tests the
-checker and reporting contracts separately from the workflow that checks actual
-PR skills. Tools-only workflow assertions live in
-`eng/common-tests/skill-eval-coverage/`, outside the synced package. A consumer
-regression runs the entire shared test suite without Tools workflows or Git history.
-Actions use exact commit SHA pins with readable version comments. Checker
-dependency installs use pnpm 12.6.0 with a frozen lockfile, disabled lifecycle
+The dedicated [script-test workflow](../../../../.github/workflows/skill-eval-coverage-tests.yml)
+tests the checker and reporting contracts separately from the workflow that checks
+actual PR skills. Actions use exact commit SHA pins with readable version comments.
+Checker dependency installs use pnpm 12.6.0 with a frozen lockfile, disabled lifecycle
 scripts and isolation from consuming repositories' workspaces.
 
 This PR implements **Eval presence only**. A separate advisory agentic workflow can
@@ -131,13 +125,8 @@ temporary Git repositories and fully fake API transport; they make no live write
 Reporter unit tests isolate Actions reporting variables so synthetic scenarios
 cannot add annotations or fixture reports to the real workflow summary.
 
-In Azure SDK Tools, also run
-`node --test eng/common-tests/skill-eval-coverage/*.test.ts` to check its workflow
-contracts and the isolated consumer regression.
-
 Keep the existing local Vally lint step as documented in
-[eng/skill-eval](https://github.com/Azure/azure-sdk-tools/blob/main/eng/skill-eval/README.md).
-The coverage checker does not
+[eng/skill-eval](../../../skill-eval/README.md). The coverage checker does not
 replace lint or execute the model-backed Eval suites.
 
 ## Comment security and rollout
