@@ -13,14 +13,13 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Text;
-using System.Text.Json;
 
 namespace Extensions.Plugin.Visitors
 {
     /// <summary>
-    /// Adds <see cref="ExperimentalAttribute"/> to declarations with required Foundry preview
-    /// metadata and to members that expose those declarations. Conditional preview values do not
-    /// make a shared GA declaration experimental.
+    /// A visitor that adds <see cref="ExperimentalAttribute"/> to generated public types that are not
+    /// present in the stable-types baseline. This ensures that newly introduced generated types are
+    /// automatically tagged as experimental until explicitly promoted.
     /// </summary>
     /// <remarks>
     /// This visitor mirrors the pattern established by the upstream OpenAI library's codegen plugin
@@ -89,28 +88,12 @@ namespace Extensions.Plugin.Visitors
             return HasExperimentalAncestor(theType);
         }
 
-        private static bool HasExperimentalDecorator(IEnumerable<InputDecoratorInfo> decorators)
-        {
-            foreach (InputDecoratorInfo decorator in decorators)
-            {
-                if (decorator.Name != "TypeSpec.OpenAPI.@extension" ||
-                    !decorator.Arguments.TryGetValue("key", out var key) ||
-                    key?.ToObjectFromJson<string>() != "x-ms-foundry-meta" ||
-                    !decorator.Arguments.TryGetValue("value", out var metadata) || metadata == null)
-                {
-                    continue;
-                }
-
-                using JsonDocument document = JsonDocument.Parse(metadata);
-                // Conditional opt-ins apply to particular request values, not the whole GA type.
-                if (document.RootElement.TryGetProperty("required_previews", out JsonElement required) &&
-                    required.GetArrayLength() > 0)
-                {
-                    return true;
-                }
-            }
-            return false;
-        }
+        private static bool HasExperimentalDecorator(IEnumerable<InputDecoratorInfo> decorators) => decorators
+                .Where(x => string.Equals(x.Name, "TypeSpec.OpenAPI.@extension"))
+                .Where(x => x.Arguments.ContainsKey("key"))
+                .Select(x => x.Arguments["key"])
+                .Where(x => x.ToString().Contains("x-ms-foundry-meta"))
+                .Any();
 
         private static bool IsLiveDecisionDependency(InputModelType modelType, ModelProvider type)
         {
@@ -211,11 +194,6 @@ namespace Extensions.Plugin.Visitors
         /// <inheritdoc />
         protected override TypeProvider VisitType(TypeProvider type)
         {
-            // Building the context here caches model views before their warning scopes are emitted.
-            if (type.Type.BaseType?.Name == "ModelReaderWriterContext")
-            {
-                return type;
-            }
             if (HasCustomExperimentalMark(type))
             {
                 _attributedTypes.Add(type.Type.FullyQualifiedName);

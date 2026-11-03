@@ -4,6 +4,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects.Agents
 {
@@ -11,6 +12,7 @@ namespace Azure.AI.Projects.Agents
     /// Fields shared by interim-response configurations.
     /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="VoiceAgentLlmInterimResponseConfig"/> and <see cref="VoiceAgentStaticInterimResponseConfig"/>.
     /// </summary>
+    [Experimental("AAIP001")]
     public abstract partial class VoiceAgentInterimResponseConfig
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

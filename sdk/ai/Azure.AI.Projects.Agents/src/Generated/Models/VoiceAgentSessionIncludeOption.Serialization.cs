@@ -3,12 +3,14 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects.Agents
 {
     internal static partial class VoiceAgentSessionIncludeOptionExtensions
     {
         /// <param name="value"> The value to serialize. </param>
+        [Experimental("AAIP001")]
         public static string ToSerialString(this VoiceAgentSessionIncludeOption value) => value switch
         {
             VoiceAgentSessionIncludeOption.InputAudioTranscriptionLogprobs => "item.input_audio_transcription.logprobs",
@@ -18,6 +20,7 @@ namespace Azure.AI.Projects.Agents
         };
 
         /// <param name="value"> The value to deserialize. </param>
+        [Experimental("AAIP001")]
         public static VoiceAgentSessionIncludeOption ToVoiceAgentSessionIncludeOption(this string value)
         {
             if (StringComparer.OrdinalIgnoreCase.Equals(value, "item.input_audio_transcription.logprobs"))

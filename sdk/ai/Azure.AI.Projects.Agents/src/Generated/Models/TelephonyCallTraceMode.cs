@@ -4,10 +4,12 @@
 
 using System;
 using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> The mode used to expose a telephony call as a customer-facing Foundry trace. </summary>
+    [Experimental("AAIP001")]
     public readonly partial struct TelephonyCallTraceMode : IEquatable<TelephonyCallTraceMode>
     {
         private readonly string _value;

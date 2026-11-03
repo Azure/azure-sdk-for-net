@@ -132,14 +132,14 @@ namespace Azure.AI.Projects.Evaluation
             {
                 return null;
             }
-            VersionedDatasetReference reference = default;
+            DatasetReference reference = default;
             IList<string> datasetRowKinds = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("dataset"u8))
                 {
-                    reference = VersionedDatasetReference.DeserializeVersionedDatasetReference(prop.Value, options);
+                    reference = DatasetReference.DeserializeDatasetReference(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("kinds"u8))

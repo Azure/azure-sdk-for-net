@@ -4,6 +4,7 @@
 
 using System;
 using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects.Agents
 {
@@ -13,6 +14,7 @@ namespace Azure.AI.Projects.Agents
     /// `azure-speech-streaming` is supported for cascaded text-model conversations only (not realtime speech-to-speech models), requires a nonempty `language` such as `en-US` (comma-separated locales are supported), and supports `custom_speech`, `phrase_list`, and `profanity_filter`.
     /// Additional values may be added over time.
     /// </summary>
+    [Experimental("AAIP001")]
     public readonly partial struct VoiceAgentInputTranscriptionModel : IEquatable<VoiceAgentInputTranscriptionModel>
     {
         private readonly string _value;

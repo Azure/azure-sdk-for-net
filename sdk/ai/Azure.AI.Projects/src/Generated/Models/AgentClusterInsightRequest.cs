@@ -4,11 +4,13 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using Azure.AI.Projects;
 
 namespace Azure.AI.Projects.Evaluation
 {
     /// <summary> Insights on set of Agent Evaluation Results. </summary>
+    [Experimental("AAIP001")]
     public partial class AgentClusterInsightRequest : InsightRequest
     {
         /// <summary> Initializes a new instance of <see cref="AgentClusterInsightRequest"/>. </summary>

@@ -4,10 +4,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> A working-loop track with a delay measured from the first pending non-call-control tool. </summary>
+    [Experimental("AAIP001")]
     public partial class VoiceAgentSoundscapeWorkingTrackConfig
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
@@ -26,13 +28,13 @@ namespace Azure.AI.Projects.Agents
         /// <summary> Initializes a new instance of <see cref="VoiceAgentSoundscapeWorkingTrackConfig"/>. </summary>
         /// <param name="source"> The required audio source for this track. </param>
         /// <param name="gain"> Linear playback gain from 0 to 1, independent of agent speech volume. If omitted, the service defaults to 1. A value of 0 mutes this track. </param>
-        /// <param name="delay"> The delay in milliseconds before working audio starts, from 0 to 10000. If omitted, the service defaults to 1000 milliseconds. This delays only working audio, not tool execution, and is valid only on the working track. </param>
+        /// <param name="delayMs"> The delay in milliseconds before working audio starts, from 0 to 10000. If omitted, the service defaults to 1000 milliseconds. This delays only working audio, not tool execution, and is valid only on the working track. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VoiceAgentSoundscapeWorkingTrackConfig(VoiceAgentSoundscapeSourceConfig source, double? gain, TimeSpan? delay, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VoiceAgentSoundscapeWorkingTrackConfig(VoiceAgentSoundscapeSourceConfig source, double? gain, TimeSpan? delayMs, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Source = source;
             Gain = gain;
-            Delay = delay;
+            DelayMs = delayMs;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -43,6 +45,6 @@ namespace Azure.AI.Projects.Agents
         public double? Gain { get; set; }
 
         /// <summary> The delay in milliseconds before working audio starts, from 0 to 10000. If omitted, the service defaults to 1000 milliseconds. This delays only working audio, not tool execution, and is valid only on the working track. </summary>
-        public TimeSpan? Delay { get; set; }
+        public TimeSpan? DelayMs { get; set; }
     }
 }

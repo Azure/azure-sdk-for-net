@@ -4,6 +4,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects.Agents
 {
@@ -15,6 +16,7 @@ namespace Azure.AI.Projects.Agents
     /// `en-US` (comma-separated locales are supported), and supports `custom_speech`, `phrase_list`, and
     /// `profanity_filter`.
     /// </summary>
+    [Experimental("AAIP001")]
     public partial class VoiceAgentInputTranscription
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

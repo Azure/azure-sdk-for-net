@@ -4,10 +4,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> The role assigned to each channel of a merged stereo voice recording. </summary>
+    [Experimental("AAIP001")]
     public partial class VoiceRecordingChannelLayout
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

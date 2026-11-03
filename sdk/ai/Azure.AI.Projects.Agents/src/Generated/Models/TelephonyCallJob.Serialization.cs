@@ -58,16 +58,6 @@ namespace Azure.AI.Projects.Agents
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<TelephonyCallJob>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="telephonyCallJob"> The <see cref="TelephonyCallJob"/> to serialize into <see cref="BinaryContent"/>. </param>
-        public static implicit operator BinaryContent(TelephonyCallJob telephonyCallJob)
-        {
-            if (telephonyCallJob == null)
-            {
-                return null;
-            }
-            return BinaryContent.Create(telephonyCallJob, ModelSerializationExtensions.WireOptions);
-        }
-
         /// <param name="result"> The <see cref="ClientResult"/> to deserialize the <see cref="TelephonyCallJob"/> from. </param>
         public static explicit operator TelephonyCallJob(ClientResult result)
         {
@@ -98,6 +88,8 @@ namespace Azure.AI.Projects.Agents
             writer.WriteObjectValue(Destination, options);
             writer.WritePropertyName("connection_name"u8);
             writer.WriteStringValue(ConnectionName);
+            writer.WritePropertyName("source"u8);
+            writer.WriteStringValue(Source);
             if (Optional.IsDefined(Purpose))
             {
                 writer.WritePropertyName("purpose"u8);
@@ -131,68 +123,39 @@ namespace Azure.AI.Projects.Agents
                 writer.WritePropertyName("schedule"u8);
                 writer.WriteObjectValue(Schedule, options);
             }
-            if (options.Format != "W")
-            {
-                writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
-            }
-            if (options.Format != "W")
-            {
-                writer.WritePropertyName("agent_name"u8);
-                writer.WriteStringValue(AgentName);
-            }
-            if (options.Format != "W")
-            {
-                writer.WritePropertyName("status"u8);
-                writer.WriteStringValue(Status.ToString());
-            }
-            if (options.Format != "W" && Optional.IsDefined(Cancellation))
+            writer.WritePropertyName("id"u8);
+            writer.WriteStringValue(Id);
+            writer.WritePropertyName("object"u8);
+            writer.WriteStringValue(Object);
+            writer.WritePropertyName("agent_name"u8);
+            writer.WriteStringValue(AgentName);
+            writer.WritePropertyName("status"u8);
+            writer.WriteStringValue(Status.ToString());
+            if (Optional.IsDefined(Cancellation))
             {
                 writer.WritePropertyName("cancellation"u8);
                 writer.WriteObjectValue(Cancellation, options);
             }
-            if (Optional.IsDefined(RetryPolicy))
-            {
-                writer.WritePropertyName("retry_policy"u8);
-                writer.WriteObjectValue(RetryPolicy, options);
-            }
-            if (options.Format != "W")
-            {
-                writer.WritePropertyName("attempt_count"u8);
-                writer.WriteNumberValue(AttemptCount);
-            }
-            if (options.Format != "W" && Optional.IsDefined(NextAttemptOn))
+            writer.WritePropertyName("retry_policy"u8);
+            writer.WriteObjectValue(RetryPolicy, options);
+            writer.WritePropertyName("attempt_count"u8);
+            writer.WriteNumberValue(AttemptCount);
+            if (Optional.IsDefined(NextAttemptOn))
             {
                 writer.WritePropertyName("next_attempt_at"u8);
                 writer.WriteNumberValue(NextAttemptOn.Value, "U");
             }
-            if (options.Format != "W" && Optional.IsDefined(TerminalReason))
+            if (Optional.IsDefined(TerminalReason))
             {
                 writer.WritePropertyName("terminal_reason"u8);
                 writer.WriteStringValue(TerminalReason.Value.ToString());
             }
-            if (options.Format != "W")
-            {
-                writer.WritePropertyName("revision"u8);
-                writer.WriteNumberValue(Revision);
-            }
-            if (options.Format != "W")
-            {
-                writer.WritePropertyName("created_at"u8);
-                writer.WriteNumberValue(CreatedOn, "U");
-            }
-            if (options.Format != "W")
-            {
-                writer.WritePropertyName("updated_at"u8);
-                writer.WriteNumberValue(UpdatedOn, "U");
-            }
-            writer.WritePropertyName("source"u8);
-            writer.WriteObjectValue(Source, options);
-            if (options.Format != "W" && Optional.IsDefined(CampaignName))
-            {
-                writer.WritePropertyName("campaign_name"u8);
-                writer.WriteStringValue(CampaignName);
-            }
+            writer.WritePropertyName("revision"u8);
+            writer.WriteNumberValue(Revision);
+            writer.WritePropertyName("created_at"u8);
+            writer.WriteNumberValue(CreatedOn, "U");
+            writer.WritePropertyName("updated_at"u8);
+            writer.WriteNumberValue(UpdatedOn, "U");
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -235,12 +198,14 @@ namespace Azure.AI.Projects.Agents
             {
                 return null;
             }
-            TelephonyAddress destination = default;
+            TelephonyOutboundDestination destination = default;
             string connectionName = default;
+            string source = default;
             string purpose = default;
             IDictionary<string, BinaryData> structuredInputs = default;
             TelephonyCallJobSchedule schedule = default;
             string id = default;
+            string @object = default;
             string agentName = default;
             TelephonyCallJobStatus status = default;
             TelephonyCallJobCancellation cancellation = default;
@@ -251,19 +216,22 @@ namespace Azure.AI.Projects.Agents
             long revision = default;
             DateTimeOffset createdOn = default;
             DateTimeOffset updatedOn = default;
-            TelephonyAddress source = default;
-            string campaignName = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("destination"u8))
                 {
-                    destination = TelephonyAddress.DeserializeTelephonyAddress(prop.Value, options);
+                    destination = TelephonyOutboundDestination.DeserializeTelephonyOutboundDestination(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("connection_name"u8))
                 {
                     connectionName = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("source"u8))
+                {
+                    source = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("purpose"u8))
@@ -306,6 +274,11 @@ namespace Azure.AI.Projects.Agents
                     id = prop.Value.GetString();
                     continue;
                 }
+                if (prop.NameEquals("object"u8))
+                {
+                    @object = prop.Value.GetString();
+                    continue;
+                }
                 if (prop.NameEquals("agent_name"u8))
                 {
                     agentName = prop.Value.GetString();
@@ -327,10 +300,6 @@ namespace Azure.AI.Projects.Agents
                 }
                 if (prop.NameEquals("retry_policy"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     retryPolicy = TelephonyOutboundRetryPolicy.DeserializeTelephonyOutboundRetryPolicy(prop.Value, options);
                     continue;
                 }
@@ -372,16 +341,6 @@ namespace Azure.AI.Projects.Agents
                     updatedOn = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
                     continue;
                 }
-                if (prop.NameEquals("source"u8))
-                {
-                    source = TelephonyAddress.DeserializeTelephonyAddress(prop.Value, options);
-                    continue;
-                }
-                if (prop.NameEquals("campaign_name"u8))
-                {
-                    campaignName = prop.Value.GetString();
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
@@ -390,10 +349,12 @@ namespace Azure.AI.Projects.Agents
             return new TelephonyCallJob(
                 destination,
                 connectionName,
+                source,
                 purpose,
                 structuredInputs ?? new ChangeTrackingDictionary<string, BinaryData>(),
                 schedule,
                 id,
+                @object,
                 agentName,
                 status,
                 cancellation,
@@ -404,8 +365,6 @@ namespace Azure.AI.Projects.Agents
                 revision,
                 createdOn,
                 updatedOn,
-                source,
-                campaignName,
                 additionalBinaryDataProperties);
         }
     }

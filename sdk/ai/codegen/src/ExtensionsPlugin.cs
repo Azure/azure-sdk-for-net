@@ -23,6 +23,7 @@ namespace Extensions.Plugin
         {
             VoiceAgentLiveVisitor.Configure(generator.InputLibrary.InputNamespace);
             generator.AddVisitor(new VoiceAgentLiveVisitor());
+            generator.AddVisitor(new SerializationOverrideVisitor());
             // ExperimentalAttributeVisitor runs first so our intentional AAIP001 marking (driven by the
             // typespec x-ms-foundry-meta CSV tables) wins for any declaration that is experimental both because
             // we intend it to be and because it exposes OpenAI-experimental surface. OpenAIExperimentalVisitor
@@ -31,7 +32,6 @@ namespace Extensions.Plugin
             // regardless of id, neither ordering requires an assembly-wide NoWarn.
             generator.AddVisitor(new ExperimentalAttributeVisitor());
             generator.AddVisitor(new OpenAIExperimentalVisitor());
-            generator.AddVisitor(new SerializationOverrideVisitor());
             MakeResponseItemDynamic(generator);
         }
 

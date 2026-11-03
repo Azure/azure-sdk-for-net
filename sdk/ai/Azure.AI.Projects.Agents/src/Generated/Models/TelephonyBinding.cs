@@ -4,25 +4,33 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects.Agents
 {
     /// <summary>
     /// A telephony binding owned by a voice agent.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="SipTelephonyBinding"/>, <see cref="TeamsPhoneExtensibilityTelephonyBinding"/>, and <see cref="TwilioTelephonyBinding"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="TeamsPhoneExtensibilityTelephonyBinding"/> and <see cref="TwilioTelephonyBinding"/>.
     /// </summary>
+    [Experimental("AAIP001")]
     public abstract partial class TelephonyBinding
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="TelephonyBinding"/>. </summary>
+        /// <param name="id"> The service-generated binding identifier. </param>
         /// <param name="provider"> The telephony provider. </param>
         /// <param name="connectionName"> The Foundry connection name for the telephony provider. </param>
-        private protected TelephonyBinding(TelephonyProvider provider, string connectionName)
+        /// <param name="status"> The lifecycle status. </param>
+        /// <param name="incomingCallUrl"> The service-generated webhook URL to configure with the telephony provider. </param>
+        private protected TelephonyBinding(string id, TelephonyProvider provider, string connectionName, TelephonyBindingStatus status, Uri incomingCallUrl)
         {
+            Id = id;
             Provider = provider;
             ConnectionName = connectionName;
+            Status = status;
+            IncomingCallUrl = incomingCallUrl;
         }
 
         /// <summary> Initializes a new instance of <see cref="TelephonyBinding"/>. </summary>
@@ -30,14 +38,16 @@ namespace Azure.AI.Projects.Agents
         /// <param name="provider"> The telephony provider. </param>
         /// <param name="connectionName"> The Foundry connection name for the telephony provider. </param>
         /// <param name="label"> The optional display label for the binding. </param>
-        /// <param name="incomingCallUrl"> The service-generated incoming address: an HTTPS webhook for webhook-based providers or a SIP/SIPS ingress URI for SIP. </param>
+        /// <param name="status"> The lifecycle status. </param>
+        /// <param name="incomingCallUrl"> The service-generated webhook URL to configure with the telephony provider. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TelephonyBinding(string id, TelephonyProvider provider, string connectionName, string label, Uri incomingCallUrl, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal TelephonyBinding(string id, TelephonyProvider provider, string connectionName, string label, TelephonyBindingStatus status, Uri incomingCallUrl, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Provider = provider;
             ConnectionName = connectionName;
             Label = label;
+            Status = status;
             IncomingCallUrl = incomingCallUrl;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -49,12 +59,15 @@ namespace Azure.AI.Projects.Agents
         internal TelephonyProvider Provider { get; set; }
 
         /// <summary> The Foundry connection name for the telephony provider. </summary>
-        public string ConnectionName { get; set; }
+        public string ConnectionName { get; }
 
         /// <summary> The optional display label for the binding. </summary>
-        public string Label { get; set; }
+        public string Label { get; }
 
-        /// <summary> The service-generated incoming address: an HTTPS webhook for webhook-based providers or a SIP/SIPS ingress URI for SIP. </summary>
+        /// <summary> The lifecycle status. </summary>
+        public TelephonyBindingStatus Status { get; }
+
+        /// <summary> The service-generated webhook URL to configure with the telephony provider. </summary>
         public Uri IncomingCallUrl { get; }
     }
 }

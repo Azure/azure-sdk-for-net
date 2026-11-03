@@ -4,21 +4,22 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> A Microsoft Teams Phone extensibility binding owned by a voice agent. </summary>
+    [Experimental("AAIP001")]
     public partial class TeamsPhoneExtensibilityTelephonyBinding : TelephonyBinding
     {
         /// <summary> Initializes a new instance of <see cref="TeamsPhoneExtensibilityTelephonyBinding"/>. </summary>
+        /// <param name="id"> The service-generated binding identifier. </param>
         /// <param name="connectionName"> The Foundry connection name for the telephony provider. </param>
+        /// <param name="status"> The lifecycle status. </param>
+        /// <param name="incomingCallUrl"> The service-generated webhook URL to configure with the telephony provider. </param>
         /// <param name="resourceAccountObjectId"> The Microsoft Teams resource-account object identifier as a GUID. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="connectionName"/> or <paramref name="resourceAccountObjectId"/> is null. </exception>
-        public TeamsPhoneExtensibilityTelephonyBinding(string connectionName, string resourceAccountObjectId) : base(TelephonyProvider.TeamsPhoneExtensibility, connectionName)
+        internal TeamsPhoneExtensibilityTelephonyBinding(string id, string connectionName, TelephonyBindingStatus status, Uri incomingCallUrl, string resourceAccountObjectId) : base(id, TelephonyProvider.TeamsPhoneExtensibility, connectionName, status, incomingCallUrl)
         {
-            Argument.AssertNotNull(connectionName, nameof(connectionName));
-            Argument.AssertNotNull(resourceAccountObjectId, nameof(resourceAccountObjectId));
-
             ResourceAccountObjectId = resourceAccountObjectId;
         }
 
@@ -27,20 +28,21 @@ namespace Azure.AI.Projects.Agents
         /// <param name="provider"> The telephony provider. </param>
         /// <param name="connectionName"> The Foundry connection name for the telephony provider. </param>
         /// <param name="label"> The optional display label for the binding. </param>
-        /// <param name="incomingCallUrl"> The service-generated incoming address: an HTTPS webhook for webhook-based providers or a SIP/SIPS ingress URI for SIP. </param>
+        /// <param name="status"> The lifecycle status. </param>
+        /// <param name="incomingCallUrl"> The service-generated webhook URL to configure with the telephony provider. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="phoneNumber"> The optional display phone number for the Teams resource account. </param>
         /// <param name="resourceAccountObjectId"> The Microsoft Teams resource-account object identifier as a GUID. </param>
-        internal TeamsPhoneExtensibilityTelephonyBinding(string id, TelephonyProvider provider, string connectionName, string label, Uri incomingCallUrl, IDictionary<string, BinaryData> additionalBinaryDataProperties, string phoneNumber, string resourceAccountObjectId) : base(id, provider, connectionName, label, incomingCallUrl, additionalBinaryDataProperties)
+        internal TeamsPhoneExtensibilityTelephonyBinding(string id, TelephonyProvider provider, string connectionName, string label, TelephonyBindingStatus status, Uri incomingCallUrl, IDictionary<string, BinaryData> additionalBinaryDataProperties, string phoneNumber, string resourceAccountObjectId) : base(id, provider, connectionName, label, status, incomingCallUrl, additionalBinaryDataProperties)
         {
             PhoneNumber = phoneNumber;
             ResourceAccountObjectId = resourceAccountObjectId;
         }
 
         /// <summary> The optional display phone number for the Teams resource account. </summary>
-        public string PhoneNumber { get; set; }
+        public string PhoneNumber { get; }
 
         /// <summary> The Microsoft Teams resource-account object identifier as a GUID. </summary>
-        public string ResourceAccountObjectId { get; set; }
+        public string ResourceAccountObjectId { get; }
     }
 }

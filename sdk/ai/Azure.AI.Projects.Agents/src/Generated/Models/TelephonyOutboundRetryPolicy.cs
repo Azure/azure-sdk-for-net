@@ -4,13 +4,15 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects.Agents
 {
     /// <summary>
     /// The retry policy for one durable outbound call intent. `max_attempts` includes the first attempt. Strategy-specific settings are defined by the derived policy.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="FixedIntervalRetryPolicy"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="TelephonyOutboundFixedIntervalRetryPolicyResult"/>.
     /// </summary>
+    [Experimental("AAIP001")]
     public abstract partial class TelephonyOutboundRetryPolicy
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

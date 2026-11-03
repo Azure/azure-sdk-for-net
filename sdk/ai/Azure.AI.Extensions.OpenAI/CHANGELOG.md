@@ -10,11 +10,10 @@
 - Removed the `type` parameter from response-item methods on `ExtensionsOpenAIModelFactory`. Each factory now uses the discriminator value for its concrete response-item type.
 
 ### Bugs Fixed
-- Required-preview metadata, rather than conditional-preview values, now determines whether a generated declaration requires `AAIP001`.
 
 ### Other Changes
 
-- Regenerated from [Azure/azure-rest-api-specs#47806](https://github.com/Azure/azure-rest-api-specs/pull/47806) at `94c78273b7207a159a3eb3699be150bed59e4868`, using OpenAI TypeSpec 1.32.0.
+- Regenerated from the latest Foundry definitions in [Azure/azure-rest-api-specs#47196](https://github.com/Azure/azure-rest-api-specs/pull/47196), using OpenAI TypeSpec 1.32.0.
 
 ### Sample Updates
 - Added sample for Hosted Agent identity isolation.

@@ -4,10 +4,12 @@
 
 using System;
 using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> The retry strategy for an outbound call. </summary>
+    [Experimental("AAIP001")]
     internal readonly partial struct TelephonyOutboundRetryPolicyType : IEquatable<TelephonyOutboundRetryPolicyType>
     {
         private readonly string _value;

@@ -2,9 +2,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> Additional fields that a voice-agent session may include in service outputs. </summary>
+    [Experimental("AAIP001")]
     public enum VoiceAgentSessionIncludeOption
     {
         /// <summary> InputAudioTranscriptionLogprobs. </summary>

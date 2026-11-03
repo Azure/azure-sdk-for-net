@@ -4,7 +4,7 @@
 
 using System;
 using System.Collections.Generic;
-using System.Text.Json;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects.Agents
 {
@@ -13,6 +13,7 @@ namespace Azure.AI.Projects.Agents
     /// managed speech-to-speech experience. Establish realtime voice sessions through
     /// `GET /agents/{agent_name}/endpoint/protocols/voice`. Every create or update produces a new immutable version.
     /// </summary>
+    [Experimental("AAIP001")]
     public partial class VoiceAgentDefinition : VoiceAgentBaseDefinition
     {
         /// <summary> Initializes a new instance of <see cref="VoiceAgentDefinition"/>. </summary>
@@ -59,9 +60,8 @@ namespace Azure.AI.Projects.Agents
         /// Defaults to `auto`.
         /// </param>
         /// <param name="parallelToolCalls"> Whether the model may call multiple tools in parallel. </param>
-        /// <param name="subagentConfig"> Optional subagent configuration. Omit `subagent_type` or set it to `delegate` for delegated background specialists; inline voice subagents require `subagent_type: inline`. </param>
-        /// <param name="postCall"> Optional post-call delivery configuration. After each session ends, the service notifies the configured destinations. </param>
-        internal VoiceAgentDefinition(ProjectsAgentKind kind, ContentFilterConfiguration contentFilterConfiguration, IDictionary<string, BinaryData> additionalBinaryDataProperties, string instructions, IDictionary<string, StructuredInputDefinition> structuredInputs, bool? store, VoiceAgentDefinitionSubProtocol? subProtocol, VoiceModelType? modelType, string model, VoiceConversationEngine conversationEngine, VoiceAgentGreetingConfig greeting, VoiceAgentAudioConfig audio, VoiceAgentSoundscapeConfig soundscape, IList<VoiceOutputModality> outputModalities, BinaryData internalMaxOutputTokens, IList<VoiceAgentSessionIncludeOption> include, VoiceAgentInterimResponseConfig interimResponse, VoiceAgentAvatarConfig avatar, IList<VoiceAgentTool> tools, BinaryData internalToolChoice, bool? parallelToolCalls, BinaryData subagentConfig, VoiceAgentPostCallConfig postCall) : base(kind, contentFilterConfiguration, additionalBinaryDataProperties, instructions, structuredInputs, store)
+        /// <param name="subagentConfig"> Optional configuration for sibling Foundry text agents that this voice agent may consult as background specialists. </param>
+        internal VoiceAgentDefinition(ProjectsAgentKind kind, ContentFilterConfiguration contentFilterConfiguration, IDictionary<string, BinaryData> additionalBinaryDataProperties, string instructions, IDictionary<string, StructuredInputDefinition> structuredInputs, bool? store, VoiceAgentDefinitionSubProtocol? subProtocol, VoiceModelType? modelType, string model, VoiceConversationEngine conversationEngine, VoiceAgentGreetingConfig greeting, VoiceAgentAudioConfig audio, VoiceAgentSoundscapeConfig soundscape, IList<VoiceOutputModality> outputModalities, BinaryData internalMaxOutputTokens, IList<VoiceAgentSessionIncludeOption> include, VoiceAgentInterimResponseConfig interimResponse, VoiceAgentAvatarConfig avatar, IList<VoiceAgentTool> tools, BinaryData internalToolChoice, bool? parallelToolCalls, VoiceAgentSubagentConfig subagentConfig) : base(kind, contentFilterConfiguration, additionalBinaryDataProperties, instructions, structuredInputs, store)
         {
             SubProtocol = subProtocol;
             ModelType = modelType;
@@ -79,7 +79,6 @@ namespace Azure.AI.Projects.Agents
             InternalToolChoice = internalToolChoice;
             ParallelToolCalls = parallelToolCalls;
             SubagentConfig = subagentConfig;
-            PostCall = postCall;
         }
 
         /// <summary> Selects Realtime. May be omitted for legacy agents. </summary>
@@ -131,48 +130,7 @@ namespace Azure.AI.Projects.Agents
         /// <summary> Whether the model may call multiple tools in parallel. </summary>
         public bool? ParallelToolCalls { get; set; }
 
-        /// <summary>
-        /// Optional subagent configuration. Omit `subagent_type` or set it to `delegate` for delegated background specialists; inline voice subagents require `subagent_type: inline`.
-        /// <para> To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
-        /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
-        /// <para>
-        /// <remarks>
-        /// Supported types:
-        /// <list type="bullet">
-        /// <item>
-        /// <description> <see cref="VoiceAgentDelegateSubagentConfig"/>. </description>
-        /// </item>
-        /// <item>
-        /// <description> <see cref="VoiceAgentInlineSubagentConfig"/>. </description>
-        /// </item>
-        /// </list>
-        /// </remarks>
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term> BinaryData.FromObjectAsJson("foo"). </term>
-        /// <description> Creates a payload of "foo". </description>
-        /// </item>
-        /// <item>
-        /// <term> BinaryData.FromString("\"foo\""). </term>
-        /// <description> Creates a payload of "foo". </description>
-        /// </item>
-        /// <item>
-        /// <term> BinaryData.FromObjectAsJson(new { key = "value" }). </term>
-        /// <description> Creates a payload of { "key": "value" }. </description>
-        /// </item>
-        /// <item>
-        /// <term> BinaryData.FromString("{\"key\": \"value\"}"). </term>
-        /// <description> Creates a payload of { "key": "value" }. </description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        public BinaryData SubagentConfig { get; set; }
-
-        /// <summary> Optional post-call delivery configuration. After each session ends, the service notifies the configured destinations. </summary>
-        public VoiceAgentPostCallConfig PostCall { get; set; }
+        /// <summary> Optional configuration for sibling Foundry text agents that this voice agent may consult as background specialists. </summary>
+        public VoiceAgentSubagentConfig SubagentConfig { get; set; }
     }
 }

@@ -4,10 +4,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects
 {
     /// <summary> File output configuration for a supervised fine-tuning data generation job. This is a preview feature. </summary>
+    [Experimental("AAIP001")]
     public partial class SupervisedFineTuningDataGenerationJobOutputConfiguration
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

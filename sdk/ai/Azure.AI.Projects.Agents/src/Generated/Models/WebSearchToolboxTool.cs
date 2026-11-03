@@ -23,10 +23,6 @@ namespace Azure.AI.Projects.Agents
         /// <summary> Initializes a new instance of <see cref="WebSearchToolboxTool"/>. </summary>
         public WebSearchToolboxTool() : base(ToolboxToolType.WebSearch)
         {
-#pragma warning disable AAIP001 // Implementation preserves preview variants of GA models.
-#pragma warning disable AAIP002 // Implementation accesses OpenAI-dependent members.
-#pragma warning restore AAIP002 // Implementation accesses OpenAI-dependent members.
-#pragma warning restore AAIP001 // Implementation preserves preview variants of GA models.
         }
 
         /// <summary> Initializes a new instance of <see cref="WebSearchToolboxTool"/>. </summary>

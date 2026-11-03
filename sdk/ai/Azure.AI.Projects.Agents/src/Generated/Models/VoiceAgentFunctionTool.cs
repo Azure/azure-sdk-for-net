@@ -4,10 +4,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> A native function tool executed by the client. </summary>
+    [Experimental("AAIP001")]
     public partial class VoiceAgentFunctionTool : VoiceAgentTool
     {
         /// <summary> Initializes a new instance of <see cref="VoiceAgentFunctionTool"/>. </summary>

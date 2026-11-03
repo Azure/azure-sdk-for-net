@@ -4,9 +4,11 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects
 {
+    [Experimental("AAIP001")]
     internal partial class UnknownRoutineAction : RoutineAction
     {
         /// <summary> Initializes a new instance of <see cref="UnknownRoutineAction"/>. </summary>

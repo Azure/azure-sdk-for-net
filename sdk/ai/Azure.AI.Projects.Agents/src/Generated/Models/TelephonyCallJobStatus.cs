@@ -4,10 +4,12 @@
 
 using System;
 using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> The lifecycle status of a durable outbound call job. </summary>
+    [Experimental("AAIP001")]
     public readonly partial struct TelephonyCallJobStatus : IEquatable<TelephonyCallJobStatus>
     {
         private readonly string _value;

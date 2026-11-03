@@ -4,10 +4,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> The audio configuration for a voice agent. These values are session defaults and may be overridden when connecting. </summary>
+    [Experimental("AAIP001")]
     public partial class VoiceAgentAudioConfig
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

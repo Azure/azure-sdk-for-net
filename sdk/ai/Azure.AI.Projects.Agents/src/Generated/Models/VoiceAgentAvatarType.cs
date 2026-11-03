@@ -4,10 +4,12 @@
 
 using System;
 using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> The avatar type. </summary>
+    [Experimental("AAIP001")]
     public readonly partial struct VoiceAgentAvatarType : IEquatable<VoiceAgentAvatarType>
     {
         private readonly string _value;

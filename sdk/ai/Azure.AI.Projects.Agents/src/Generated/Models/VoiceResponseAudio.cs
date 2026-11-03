@@ -4,10 +4,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> Audio configuration for a response. Follows the OpenAI Realtime GA `audio` object shape. </summary>
+    [Experimental("AAIP001")]
     public partial class VoiceResponseAudio
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
