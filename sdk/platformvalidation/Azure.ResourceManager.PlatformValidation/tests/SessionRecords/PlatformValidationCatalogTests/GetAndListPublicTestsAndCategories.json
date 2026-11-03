@@ -1,12 +1,12 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://eastus2euap.management.azure.com/subscriptions/00000000-0000-0000-0000-000000000000?api-version=2022-12-01",
+      "RequestUri": "https://swedencentral.management.azure.com/subscriptions/00000000-0000-0000-0000-000000000000?api-version=2022-12-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-92e97b35f2e8a2e451cdbb5dc60ec933-5b9c64e7372309ce-00",
+        "traceparent": "00-f2cf362108d668ac1aecf802b2405f06-ea8917f0595ed192-00",
         "User-Agent": "azsdk-net-ResourceManager/1.14.0 (.NET 10.0.14; Microsoft Windows 10.0.26300)",
         "x-ms-client-request-id": "Sanitized",
         "x-ms-return-client-request-id": "true"
@@ -15,20 +15,20 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "617",
+        "Content-Length": "379",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 28 Oct 2026 17:15:13 GMT",
+        "Date": "Tue, 03 Nov 2026 06:34:15 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Cache": "CONFIG_NOCACHE",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "9ad97b30-b505-4a59-a598-395797e2f863",
+        "x-ms-correlation-request-id": "cf0e3610-9016-4c3d-9223-36c4ca521b08",
+        "x-ms-ratelimit-remaining-subscription-global-reads": "16499",
         "x-ms-ratelimit-remaining-subscription-reads": "1099",
-        "x-ms-request-id": "9ad97b30-b505-4a59-a598-395797e2f863",
-        "x-ms-routing-request-id": "EASTUS2EUAP:20261028T171512Z:9ad97b30-b505-4a59-a598-395797e2f863",
-        "x-ms-throttling-version": "v2",
-        "X-MSEdge-Ref": "Ref A: 34C98374C3934DFAB3A033524AFC9388 Ref B: PNQ231110909054 Ref C: 2026-10-28T17:15:12Z"
+        "x-ms-request-id": "cf0e3610-9016-4c3d-9223-36c4ca521b08",
+        "x-ms-routing-request-id": "SWEDENCENTRAL:20261103T063415Z:cf0e3610-9016-4c3d-9223-36c4ca521b08",
+        "X-MSEdge-Ref": "Ref A: EE49C2F0301B400C9B253D3C2CBF642C Ref B: PNQ231110908040 Ref C: 2026-11-03T06:34:14Z"
       },
       "ResponseBody": {
         "id": "/subscriptions/00000000-0000-0000-0000-000000000000",
@@ -47,13 +47,13 @@
       }
     },
     {
-      "RequestUri": "https://eastus2euap.management.azure.com/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.PlatformValidation/validationTests?api-version=2026-08-01-preview",
+      "RequestUri": "https://swedencentral.management.azure.com/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.PlatformValidation/validationTests?api-version=2026-08-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-4a816cf4b9c70862ddf4083568f9d0e1-e4adfaa1878f073d-00",
-        "User-Agent": "azsdk-net-ResourceManager.PlatformValidation/1.0.0-alpha.20261028.1 (.NET 10.0.14; Microsoft Windows 10.0.26300)",
+        "traceparent": "00-cb212c3dc3d30014db12dbfa987e799d-b0a58c4a604a2c96-00",
+        "User-Agent": "azsdk-net-ResourceManager.PlatformValidation/1.0.0-alpha.20261103.1 (.NET 10.0.14; Microsoft Windows 10.0.26300)",
         "x-ms-client-request-id": "Sanitized",
         "x-ms-return-client-request-id": "true"
       },
@@ -61,162 +61,29 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "86223",
+        "Content-Length": "97680",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 28 Oct 2026 17:15:14 GMT",
+        "Date": "Tue, 03 Nov 2026 06:34:17 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Request-Context": "Sanitized",
-        "Set-Cookie": [
-          "Sanitized",
-          "Sanitized",
-          "Sanitized",
-          "Sanitized"
-        ],
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Vary": "Accept-Encoding",
         "X-Cache": "CONFIG_NOCACHE",
         "X-Content-Type-Options": "nosniff",
         "x-ms-client-request-id": "Sanitized",
-        "x-ms-correlation-request-id": "a7321e7b-b4d9-43e1-a9af-a5444311c6c4",
+        "x-ms-correlation-request-id": "3290b941-bdbd-49ed-94f6-2ad071f7c59f",
         "x-ms-operation-identifier": "Sanitized",
         "x-ms-providerhub-traffic": "Sanitized",
         "x-ms-ratelimit-remaining-subscription-resource-requests": "1099",
-        "x-ms-request-id": "b8326aad-02b2-41e8-bb89-c89112282771",
-        "x-ms-routing-request-id": "EASTUS2EUAP:20261028T171514Z:a7321e7b-b4d9-43e1-a9af-a5444311c6c4",
-        "x-ms-throttling-version": "v1",
-        "X-MSEdge-Ref": "Ref A: B54895194D3042CB85D22E82DF20737C Ref B: PNQ231110909054 Ref C: 2026-10-28T17:15:13Z"
+        "x-ms-request-id": "0a082fef-185e-46ae-b806-634fe3f2c1f8",
+        "x-ms-routing-request-id": "SWEDENCENTRAL:20261103T063417Z:3290b941-bdbd-49ed-94f6-2ad071f7c59f",
+        "X-MSEdge-Ref": "Ref A: 9B721D50C7DE4F4191136DB23DDD749C Ref B: PNQ231110908040 Ref C: 2026-11-03T06:34:15Z"
       },
       "ResponseBody": {
         "value": [
           {
-            "id": "/providers/Microsoft.PlatformValidation/validationTests/compute-vmimagevalidation-vm-boot-test",
-            "name": "compute-vmimagevalidation-vm-boot-test",
-            "type": "Microsoft.PlatformValidation/validationTests",
-            "properties": {
-              "description": "Verifies a VM can be successfully provisioned and booted from the image under test within the expected time window. Validated by provisioning a VM from the image and confirming it boots. AzCertify PolicyId: 200.3.1.18. More info: https://aka.ms/VM-Provisioning-Issue.",
-              "displayName": "VM Provisioning and Boot Check",
-              "audience": "Public",
-              "provisioningState": "Succeeded",
-              "categoryIds": [
-                "basic-vm-validation"
-              ],
-              "owners": [
-                "Sanitized"
-              ],
-              "testStoreUri": "tst://Compute/VMImageValidation/vm-boot-test@1.0.0",
-              "currentVersion": "/providers/Microsoft.PlatformValidation/validationTests/compute-vmimagevalidation-vm-boot-test/versions/1.0.0",
-              "latestPublishedVersion": "/providers/Microsoft.PlatformValidation/validationTests/compute-vmimagevalidation-vm-boot-test/versions/1.0.0",
-              "lastPublishedAt": "2026-10-09T10:03:29.5887336Z"
-            }
-          },
-          {
-            "id": "/providers/Microsoft.PlatformValidation/validationTests/compute-vmimagevalidation-data-disk-size",
-            "name": "compute-vmimagevalidation-data-disk-size",
-            "type": "Microsoft.PlatformValidation/validationTests",
-            "properties": {
-              "description": "Verifies each data disk VHD size is within the allowed range (must be less than 8 TB). Validated by reading the disk VHD directly; no VM is provisioned. AzCertify PolicyId: 200.3.2.17. More info: https://learn.microsoft.com/en-us/partner-center/marketplace-offers/azure-vm-certification-faq#data-disk-size-verification.",
-              "displayName": "Data Disk Size Check",
-              "audience": "Public",
-              "provisioningState": "Succeeded",
-              "categoryIds": [
-                "image-file-integrity-validations"
-              ],
-              "owners": [
-                "Sanitized"
-              ],
-              "testStoreUri": "tst://Compute/VMImageValidation/data-disk-size@1.0.0",
-              "currentVersion": "/providers/Microsoft.PlatformValidation/validationTests/compute-vmimagevalidation-data-disk-size/versions/1.0.0",
-              "latestPublishedVersion": "/providers/Microsoft.PlatformValidation/validationTests/compute-vmimagevalidation-data-disk-size/versions/1.0.0",
-              "lastPublishedAt": "2026-10-09T10:03:30.0200053Z"
-            }
-          },
-          {
-            "id": "/providers/Microsoft.PlatformValidation/validationTests/compute-vmimagevalidation-disk-multiple-of-one-mb",
-            "name": "compute-vmimagevalidation-disk-multiple-of-one-mb",
-            "type": "Microsoft.PlatformValidation/validationTests",
-            "properties": {
-              "description": "Verifies the VHD size is an exact multiple of 1 MB for the OS disk and every provided data disk, as required by the VHD specification. Validated by reading each disk VHD directly; no VM is provisioned. AzCertify PolicyId: 200.3.1.13. More info: https://aka.ms/vhd-specifications.",
-              "displayName": "OS Disk Size Multiple of 1 MB Check",
-              "audience": "Public",
-              "provisioningState": "Succeeded",
-              "categoryIds": [
-                "image-file-integrity-validations"
-              ],
-              "owners": [
-                "Sanitized"
-              ],
-              "testStoreUri": "tst://Compute/VMImageValidation/disk-multiple-of-one-mb@1.0.0",
-              "currentVersion": "/providers/Microsoft.PlatformValidation/validationTests/compute-vmimagevalidation-disk-multiple-of-one-mb/versions/1.0.0",
-              "latestPublishedVersion": "/providers/Microsoft.PlatformValidation/validationTests/compute-vmimagevalidation-disk-multiple-of-one-mb/versions/1.0.0",
-              "lastPublishedAt": "2026-10-09T10:03:30.2859171Z"
-            }
-          },
-          {
-            "id": "/providers/Microsoft.PlatformValidation/validationTests/compute-vmimagevalidation-os-disk-size",
-            "name": "compute-vmimagevalidation-os-disk-size",
-            "type": "Microsoft.PlatformValidation/validationTests",
-            "properties": {
-              "description": "Verifies the OS disk VHD size is within the allowed range (limits differ by OS family). Validated by reading the disk VHD directly; no VM is provisioned. AzCertify PolicyId: 200.3.1.12. More info: https://aka.ms/os-disk-size-validation.",
-              "displayName": "OS Disk Size Check",
-              "audience": "Public",
-              "provisioningState": "Succeeded",
-              "categoryIds": [
-                "image-file-integrity-validations"
-              ],
-              "owners": [
-                "Sanitized"
-              ],
-              "testStoreUri": "tst://Compute/VMImageValidation/os-disk-size@1.0.0",
-              "currentVersion": "/providers/Microsoft.PlatformValidation/validationTests/compute-vmimagevalidation-os-disk-size/versions/1.0.0",
-              "latestPublishedVersion": "/providers/Microsoft.PlatformValidation/validationTests/compute-vmimagevalidation-os-disk-size/versions/1.0.0",
-              "lastPublishedAt": "2026-10-09T10:03:31.0079305Z"
-            }
-          },
-          {
-            "id": "/providers/Microsoft.PlatformValidation/validationTests/compute-vmimagevalidation-vhd-first-one-mb",
-            "name": "compute-vmimagevalidation-vhd-first-one-mb",
-            "type": "Microsoft.PlatformValidation/validationTests",
-            "properties": {
-              "description": "Verifies the first 1 MB of the OS disk VHD is reserved and free (offset), as required by the VHD specification. Validated by reading the disk VHD directly; no VM is provisioned. AzCertify PolicyId: 200.3.1.4. More info: https://aka.ms/First-1MB-Offset.",
-              "displayName": "VHD First 1 MB Offset Check",
-              "audience": "Public",
-              "provisioningState": "Succeeded",
-              "categoryIds": [
-                "image-file-integrity-validations"
-              ],
-              "owners": [
-                "Sanitized"
-              ],
-              "testStoreUri": "tst://Compute/VMImageValidation/vhd-first-one-mb@1.0.0",
-              "currentVersion": "/providers/Microsoft.PlatformValidation/validationTests/compute-vmimagevalidation-vhd-first-one-mb/versions/1.0.0",
-              "latestPublishedVersion": "/providers/Microsoft.PlatformValidation/validationTests/compute-vmimagevalidation-vhd-first-one-mb/versions/1.0.0",
-              "lastPublishedAt": "2026-10-09T10:03:31.2897859Z"
-            }
-          },
-          {
-            "id": "/providers/Microsoft.PlatformValidation/validationTests/compute-vmimagevalidation-vhd-footer",
-            "name": "compute-vmimagevalidation-vhd-footer",
-            "type": "Microsoft.PlatformValidation/validationTests",
-            "properties": {
-              "description": "Verifies the VHD footer is well-formed for the OS disk and every provided data disk (the footer cookie is set correctly per the VHD specification). Validated by reading each disk VHD directly; no VM is provisioned. AzCertify PolicyId: 200.3.1.11. More info: https://aka.ms/vhd-specifications.",
-              "displayName": "VHD Footer Check",
-              "audience": "Public",
-              "provisioningState": "Succeeded",
-              "categoryIds": [
-                "image-file-integrity-validations"
-              ],
-              "owners": [
-                "Sanitized"
-              ],
-              "testStoreUri": "tst://Compute/VMImageValidation/vhd-footer@1.0.0",
-              "currentVersion": "/providers/Microsoft.PlatformValidation/validationTests/compute-vmimagevalidation-vhd-footer/versions/1.0.0",
-              "latestPublishedVersion": "/providers/Microsoft.PlatformValidation/validationTests/compute-vmimagevalidation-vhd-footer/versions/1.0.0",
-              "lastPublishedAt": "2026-10-09T10:03:31.5332944Z"
-            }
-          },
-          {
-            "id": "/providers/Microsoft.PlatformValidation/validationTests/compute-vmimagevalidation-linux-quality-validation",
+            "id": "/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.PlatformValidation/validationTests/compute-vmimagevalidation-linux-quality-validation",
             "name": "compute-vmimagevalidation-linux-quality-validation",
             "type": "Microsoft.PlatformValidation/validationTests",
             "properties": {
@@ -225,7 +92,7 @@
               "audience": "Public",
               "provisioningState": "Succeeded",
               "categoryIds": [
-                "linux-quality-validations"
+                "/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.PlatformValidation/validationTestCategories/linux-quality-validations"
               ],
               "owners": [
                 "Sanitized"
@@ -250,34 +117,34 @@
                 }
               ],
               "testStoreUri": "tst://Compute/VMImageValidation/linux-quality-validation@1.0.0",
-              "currentVersion": "/providers/Microsoft.PlatformValidation/validationTests/compute-vmimagevalidation-linux-quality-validation/versions/1.0.0",
-              "latestPublishedVersion": "/providers/Microsoft.PlatformValidation/validationTests/compute-vmimagevalidation-linux-quality-validation/versions/1.0.0",
-              "lastPublishedAt": "2026-10-09T10:03:31.8696748Z"
+              "currentVersion": "/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.PlatformValidation/validationTests/compute-vmimagevalidation-linux-quality-validation/versions/1.0.0",
+              "latestPublishedVersion": "/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.PlatformValidation/validationTests/compute-vmimagevalidation-linux-quality-validation/versions/1.0.0",
+              "lastPublishedAt": "2026-10-27T09:15:32.5243662Z"
             }
           },
           {
-            "id": "/providers/Microsoft.PlatformValidation/validationTests/compute-vmimagevalidation-malware-defender",
-            "name": "compute-vmimagevalidation-malware-defender",
+            "id": "/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.PlatformValidation/validationTests/compute-vmimagevalidation-vm-boot-test",
+            "name": "compute-vmimagevalidation-vm-boot-test",
             "type": "Microsoft.PlatformValidation/validationTests",
             "properties": {
-              "description": "Scans the image for malware using Microsoft Defender for Cloud. Validated by reading the disk VHD directly; no VM is provisioned. More info: https://aka.ms/Certification-Malware-Found.",
-              "displayName": "Malware Scan by Microsoft Defender for Cloud",
+              "description": "Verifies a VM can be successfully provisioned and booted from the image under test within the expected time window. Validated by provisioning a VM from the image and confirming it boots. AzCertify PolicyId: 200.3.1.18. More info: https://aka.ms/VM-Provisioning-Issue.",
+              "displayName": "VM Provisioning and Boot Check",
               "audience": "Public",
               "provisioningState": "Succeeded",
               "categoryIds": [
-                "malware-validation"
+                "/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.PlatformValidation/validationTestCategories/basic-vm-validation"
               ],
               "owners": [
                 "Sanitized"
               ],
-              "testStoreUri": "tst://Compute/VMImageValidation/malware-defender@1.0.0",
-              "currentVersion": "/providers/Microsoft.PlatformValidation/validationTests/compute-vmimagevalidation-malware-defender/versions/1.0.0",
-              "latestPublishedVersion": "/providers/Microsoft.PlatformValidation/validationTests/compute-vmimagevalidation-malware-defender/versions/1.0.0",
-              "lastPublishedAt": "2026-10-09T10:03:32.1252697Z"
+              "testStoreUri": "tst://Compute/VMImageValidation/vm-boot-test@1.0.0",
+              "currentVersion": "/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.PlatformValidation/validationTests/compute-vmimagevalidation-vm-boot-test/versions/1.0.0",
+              "latestPublishedVersion": "/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.PlatformValidation/validationTests/compute-vmimagevalidation-vm-boot-test/versions/1.0.0",
+              "lastPublishedAt": "2026-10-27T09:15:32.8913566Z"
             }
           },
           {
-            "id": "/providers/Microsoft.PlatformValidation/validationTests/compute-vmimagevalidation-malware-esrp",
+            "id": "/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.PlatformValidation/validationTests/compute-vmimagevalidation-malware-esrp",
             "name": "compute-vmimagevalidation-malware-esrp",
             "type": "Microsoft.PlatformValidation/validationTests",
             "properties": {
@@ -286,19 +153,40 @@
               "audience": "Internal",
               "provisioningState": "Succeeded",
               "categoryIds": [
-                "malware-validation"
+                "/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.PlatformValidation/validationTestCategories/malware-validation"
               ],
               "owners": [
                 "Sanitized"
               ],
               "testStoreUri": "tst://Compute/VMImageValidation/malware-esrp@1.0.0",
-              "currentVersion": "/providers/Microsoft.PlatformValidation/validationTests/compute-vmimagevalidation-malware-esrp/versions/1.0.0",
-              "latestPublishedVersion": "/providers/Microsoft.PlatformValidation/validationTests/compute-vmimagevalidation-malware-esrp/versions/1.0.0",
-              "lastPublishedAt": "2026-10-09T10:03:32.377426Z"
+              "currentVersion": "/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.PlatformValidation/validationTests/compute-vmimagevalidation-malware-esrp/versions/1.0.0",
+              "latestPublishedVersion": "/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.PlatformValidation/validationTests/compute-vmimagevalidation-malware-esrp/versions/1.0.0",
+              "lastPublishedAt": "2026-10-27T09:15:32.8972458Z"
             }
           },
           {
-            "id": "/providers/Microsoft.PlatformValidation/validationTests/compute-vmimagevalidation-vulnerability-validation",
+            "id": "/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.PlatformValidation/validationTests/compute-vmimagevalidation-malware-defender",
+            "name": "compute-vmimagevalidation-malware-defender",
+            "type": "Microsoft.PlatformValidation/validationTests",
+            "properties": {
+              "description": "Scans the image for malware using Microsoft Defender for Cloud. Validated by reading the disk VHD directly; no VM is provisioned. More info: https://aka.ms/Certification-Malware-Found.",
+              "displayName": "Malware Scan by Microsoft Defender for Cloud",
+              "audience": "Public",
+              "provisioningState": "Succeeded",
+              "categoryIds": [
+                "/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.PlatformValidation/validationTestCategories/malware-validation"
+              ],
+              "owners": [
+                "Sanitized"
+              ],
+              "testStoreUri": "tst://Compute/VMImageValidation/malware-defender@1.0.0",
+              "currentVersion": "/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.PlatformValidation/validationTests/compute-vmimagevalidation-malware-defender/versions/1.0.0",
+              "latestPublishedVersion": "/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.PlatformValidation/validationTests/compute-vmimagevalidation-malware-defender/versions/1.0.0",
+              "lastPublishedAt": "2026-10-27T09:15:33.2139468Z"
+            }
+          },
+          {
+            "id": "/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.PlatformValidation/validationTests/compute-vmimagevalidation-vulnerability-validation",
             "name": "compute-vmimagevalidation-vulnerability-validation",
             "type": "Microsoft.PlatformValidation/validationTests",
             "properties": {
@@ -307,7 +195,7 @@
               "audience": "Public",
               "provisioningState": "Succeeded",
               "categoryIds": [
-                "vulnerability-validation"
+                "/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.PlatformValidation/validationTestCategories/vulnerability-validation"
               ],
               "owners": [
                 "Sanitized"
@@ -323,13 +211,13 @@
                 }
               ],
               "testStoreUri": "tst://Compute/VMImageValidation/vulnerability-validation@1.0.2",
-              "currentVersion": "/providers/Microsoft.PlatformValidation/validationTests/compute-vmimagevalidation-vulnerability-validation/versions/1.0.2",
-              "latestPublishedVersion": "/providers/Microsoft.PlatformValidation/validationTests/compute-vmimagevalidation-vulnerability-validation/versions/1.0.2",
-              "lastPublishedAt": "2026-10-09T10:03:32.6308146Z"
+              "currentVersion": "/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.PlatformValidation/validationTests/compute-vmimagevalidation-vulnerability-validation/versions/1.0.2",
+              "latestPublishedVersion": "/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.PlatformValidation/validationTests/compute-vmimagevalidation-vulnerability-validation/versions/1.0.2",
+              "lastPublishedAt": "2026-10-27T09:15:33.166386Z"
             }
           },
           {
-            "id": "/providers/Microsoft.PlatformValidation/validationTests/compute-vmimagevalidation-ad-rms-role-not-installed",
+            "id": "/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.PlatformValidation/validationTests/compute-vmimagevalidation-ad-rms-role-not-installed",
             "name": "compute-vmimagevalidation-ad-rms-role-not-installed",
             "type": "Microsoft.PlatformValidation/validationTests",
             "properties": {
@@ -338,19 +226,19 @@
               "audience": "Public",
               "provisioningState": "Succeeded",
               "categoryIds": [
-                "windows-quality-validations"
+                "/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.PlatformValidation/validationTestCategories/windows-quality-validations"
               ],
               "owners": [
                 "Sanitized"
               ],
               "testStoreUri": "tst://Compute/VMImageValidation/ad-rms-role-not-installed@1.0.0",
-              "currentVersion": "/providers/Microsoft.PlatformValidation/validationTests/compute-vmimagevalidation-ad-rms-role-not-installed/versions/1.0.0",
-              "latestPublishedVersion": "/providers/Microsoft.PlatformValidation/validationTests/compute-vmimagevalidation-ad-rms-role-not-installed/versions/1.0.0",
-              "lastPublishedAt": "2026-10-09T10:03:32.8799473Z"
+              "currentVersion": "/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.PlatformValidation/validationTests/compute-vmimagevalidation-ad-rms-role-not-installed/versions/1.0.0",
+              "latestPublishedVersion": "/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.PlatformValidation/validationTests/compute-vmimagevalidation-ad-rms-role-not-installed/versions/1.0.0",
+              "lastPublishedAt": "2026-10-27T09:15:33.3306255Z"
             }
           },
           {
-            "id": "/providers/Microsoft.PlatformValidation/validationTests/compute-vmimagevalidation-azure-windows-agent-version",
+            "id": "/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.PlatformValidation/validationTests/compute-vmimagevalidation-azure-windows-agent-version",
             "name": "compute-vmimagevalidation-azure-windows-agent-version",
             "type": "Microsoft.PlatformValidation/validationTests",
             "properties": {
@@ -359,19 +247,19 @@
               "audience": "Public",
               "provisioningState": "Succeeded",
               "categoryIds": [
-                "windows-quality-validations"
+                "/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.PlatformValidation/validationTestCategories/windows-quality-validations"
               ],
               "owners": [
                 "Sanitized"
               ],
               "testStoreUri": "tst://Compute/VMImageValidation/azure-windows-agent-version@1.0.0",
-              "currentVersion": "/providers/Microsoft.PlatformValidation/validationTests/compute-vmimagevalidation-azure-windows-agent-version/versions/1.0.0",
-              "latestPublishedVersion": "/providers/Microsoft.PlatformValidation/validationTests/compute-vmimagevalidation-azure-windows-agent-version/versions/1.0.0",
-              "lastPublishedAt": "2026-10-09T10:03:33.1692593Z"
+              "currentVersion": "/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.PlatformValidation/validationTests/compute-vmimagevalidation-azure-windows-agent-version/versions/1.0.0",
+              "latestPublishedVersion": "/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.PlatformValidation/validationTests/compute-vmimagevalidation-azure-windows-agent-version/versions/1.0.0",
+              "lastPublishedAt": "2026-10-27T09:15:33.5699457Z"
             }
           },
           {
-            "id": "/providers/Microsoft.PlatformValidation/validationTests/compute-vmimagevalidation-bitlocker-disabled-on-os-disk",
+            "id": "/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.PlatformValidation/validationTests/compute-vmimagevalidation-bitlocker-disabled-on-os-disk",
             "name": "compute-vmimagevalidation-bitlocker-disabled-on-os-disk",
             "type": "Microsoft.PlatformValidation/validationTests",
             "properties": {
@@ -380,19 +268,19 @@
               "audience": "Public",
               "provisioningState": "Succeeded",
               "categoryIds": [
-                "windows-quality-validations"
+                "/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.PlatformValidation/validationTestCategories/windows-quality-validations"
               ],
               "owners": [
                 "Sanitized"
               ],
               "testStoreUri": "tst://Compute/VMImageValidation/bitlocker-disabled-on-os-disk@1.0.0",
-              "currentVersion": "/providers/Microsoft.PlatformValidation/validationTests/compute-vmimagevalidation-bitlocker-disabled-on-os-disk/versions/1.0.0",
-              "latestPublishedVersion": "/providers/Microsoft.PlatformValidation/validationTests/compute-vmimagevalidation-bitlocker-disabled-on-os-disk/versions/1.0.0",
-              "lastPublishedAt": "2026-10-09T10:03:33.4044177Z"
+              "currentVersion": "/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.PlatformValidation/validationTests/compute-vmimagevalidation-bitlocker-disabled-on-os-disk/versions/1.0.0",
+              "latestPublishedVersion": "/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.PlatformValidation/validationTests/compute-vmimagevalidation-bitlocker-disabled-on-os-disk/versions/1.0.0",
+              "lastPublishedAt": "2026-10-27T09:15:33.6136257Z"
             }
           },
           {
-            "id": "/providers/Microsoft.PlatformValidation/validationTests/compute-vmimagevalidation-defender-for-endpoint-not-installed",
+            "id": "/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.PlatformValidation/validationTests/compute-vmimagevalidation-defender-for-endpoint-not-installed",
             "name": "compute-vmimagevalidation-defender-for-endpoint-not-installed",
             "type": "Microsoft.PlatformValidation/validationTests",
             "properties": {
@@ -401,19 +289,19 @@
               "audience": "Public",
               "provisioningState": "Succeeded",
               "categoryIds": [
-                "windows-quality-validations"
+                "/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.PlatformValidation/validationTestCategories/windows-quality-validations"
               ],
               "owners": [
                 "Sanitized"
               ],
               "testStoreUri": "tst://Compute/VMImageValidation/defender-for-endpoint-not-installed@1.0.0",
-              "currentVersion": "/providers/Microsoft.PlatformValidation/validationTests/compute-vmimagevalidation-defender-for-endpoint-not-installed/versions/1.0.0",
-              "latestPublishedVersion": "/providers/Microsoft.PlatformValidation/validationTests/compute-vmimagevalidation-defender-for-endpoint-not-installed/versions/1.0.0",
-              "lastPublishedAt": "2026-10-09T10:03:33.6772469Z"
+              "currentVersion": "/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.PlatformValidation/validationTests/compute-vmimagevalidation-defender-for-endpoint-not-installed/versions/1.0.0",
+              "latestPublishedVersion": "/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.PlatformValidation/validationTests/compute-vmimagevalidation-defender-for-endpoint-not-installed/versions/1.0.0",
+              "lastPublishedAt": "2026-10-27T09:15:33.6567496Z"
             }
           },
           {
-            "id": "/providers/Microsoft.PlatformValidation/validationTests/compute-vmimagevalidation-dhcp-server-role-not-installed",
+            "id": "/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.PlatformValidation/validationTests/compute-vmimagevalidation-dhcp-server-role-not-installed",
             "name": "compute-vmimagevalidation-dhcp-server-role-not-installed",
             "type": "Microsoft.PlatformValidation/validationTests",
             "properties": {
@@ -422,19 +310,19 @@
               "audience": "Public",
               "provisioningState": "Succeeded",
               "categoryIds": [
-                "windows-quality-validations"
+                "/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.PlatformValidation/validationTestCategories/windows-quality-validations"
               ],
               "owners": [
                 "Sanitized"
               ],
               "testStoreUri": "tst://Compute/VMImageValidation/dhcp-server-role-not-installed@1.0.0",
-              "currentVersion": "/providers/Microsoft.PlatformValidation/validationTests/compute-vmimagevalidation-dhcp-server-role-not-installed/versions/1.0.0",
-              "latestPublishedVersion": "/providers/Microsoft.PlatformValidation/validationTests/compute-vmimagevalidation-dhcp-server-role-not-installed/versions/1.0.0",
-              "lastPublishedAt": "2026-10-09T10:03:33.9805426Z"
+              "currentVersion": "/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.PlatformValidation/validationTests/compute-vmimagevalidation-dhcp-server-role-not-installed/versions/1.0.0",
+              "latestPublishedVersion": "/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.PlatformValidation/validationTests/compute-vmimagevalidation-dhcp-server-role-not-installed/versions/1.0.0",
+              "lastPublishedAt": "2026-10-27T09:15:33.8182885Z"
             }
           },
           {
-            "id": "/providers/Microsoft.PlatformValidation/validationTests/compute-vmimagevalidation-failover-clustering-not-installed",
+            "id": "/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.PlatformValidation/validationTests/compute-vmimagevalidation-failover-clustering-not-installed",
             "name": "compute-vmimagevalidation-failover-clustering-not-installed",
             "type": "Microsoft.PlatformValidation/validationTests",
             "properties": {
@@ -443,19 +331,19 @@
               "audience": "Public",
               "provisioningState": "Succeeded",
               "categoryIds": [
-                "windows-quality-validations"
+                "/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.PlatformValidation/validationTestCategories/windows-quality-validations"
               ],
               "owners": [
                 "Sanitized"
               ],
               "testStoreUri": "tst://Compute/VMImageValidation/failover-clustering-not-installed@1.0.0",
-              "currentVersion": "/providers/Microsoft.PlatformValidation/validationTests/compute-vmimagevalidation-failover-clustering-not-installed/versions/1.0.0",
-              "latestPublishedVersion": "/providers/Microsoft.PlatformValidation/validationTests/compute-vmimagevalidation-failover-clustering-not-installed/versions/1.0.0",
-              "lastPublishedAt": "2026-10-09T10:03:34.2689802Z"
+              "currentVersion": "/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.PlatformValidation/validationTests/compute-vmimagevalidation-failover-clustering-not-installed/versions/1.0.0",
+              "latestPublishedVersion": "/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.PlatformValidation/validationTests/compute-vmimagevalidation-failover-clustering-not-installed/versions/1.0.0",
+              "lastPublishedAt": "2026-10-27T09:15:33.9051747Z"
             }
           },
           {
-            "id": "/providers/Microsoft.PlatformValidation/validationTests/compute-vmimagevalidation-isns-feature-not-installed",
+            "id": "/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.PlatformValidation/validationTests/compute-vmimagevalidation-isns-feature-not-installed",
             "name": "compute-vmimagevalidation-isns-feature-not-installed",
             "type": "Microsoft.PlatformValidation/validationTests",
             "properties": {
@@ -464,19 +352,19 @@
               "audience": "Public",
               "provisioningState": "Succeeded",
               "categoryIds": [
-                "windows-quality-validations"
+                "/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.PlatformValidation/validationTestCategories/windows-quality-validations"
               ],
               "owners": [
                 "Sanitized"
               ],
               "testStoreUri": "tst://Compute/VMImageValidation/isns-feature-not-installed@1.0.0",
-              "currentVersion": "/providers/Microsoft.PlatformValidation/validationTests/compute-vmimagevalidation-isns-feature-not-installed/versions/1.0.0",
-              "latestPublishedVersion": "/providers/Microsoft.PlatformValidation/validationTests/compute-vmimagevalidation-isns-feature-not-installed/versions/1.0.0",
-              "lastPublishedAt": "2026-10-09T10:03:34.5612205Z"
+              "currentVersion": "/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.PlatformValidation/validationTests/compute-vmimagevalidation-isns-feature-not-installed/versions/1.0.0",
+              "latestPublishedVersion": "/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.PlatformValidation/validationTests/compute-vmimagevalidation-isns-feature-not-installed/versions/1.0.0",
+              "lastPublishedAt": "2026-10-27T09:15:34.1444098Z"
             }
           },
           {
-            "id": "/providers/Microsoft.PlatformValidation/validationTests/compute-vmimagevalidation-mpio-feature-not-installed",
+            "id": "/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.PlatformValidation/validationTests/compute-vmimagevalidation-mpio-feature-not-installed",
             "name": "compute-vmimagevalidation-mpio-feature-not-installed",
             "type": "Microsoft.PlatformValidation/validationTests",
             "properties": {
@@ -485,19 +373,40 @@
               "audience": "Public",
               "provisioningState": "Succeeded",
               "categoryIds": [
-                "windows-quality-validations"
+                "/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.PlatformValidation/validationTestCategories/windows-quality-validations"
               ],
               "owners": [
                 "Sanitized"
               ],
               "testStoreUri": "tst://Compute/VMImageValidation/mpio-feature-not-installed@1.0.0",
-              "currentVersion": "/providers/Microsoft.PlatformValidation/validationTests/compute-vmimagevalidation-mpio-feature-not-installed/versions/1.0.0",
-              "latestPublishedVersion": "/providers/Microsoft.PlatformValidation/validationTests/compute-vmimagevalidation-mpio-feature-not-installed/versions/1.0.0",
-              "lastPublishedAt": "2026-10-09T10:03:34.7771395Z"
+              "currentVersion": "/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.PlatformValidation/validationTests/compute-vmimagevalidation-mpio-feature-not-installed/versions/1.0.0",
+              "latestPublishedVersion": "/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.PlatformValidation/validationTests/compute-vmimagevalidation-mpio-feature-not-installed/versions/1.0.0",
+              "lastPublishedAt": "2026-10-27T09:15:34.1269818Z"
             }
           },
           {
-            "id": "/providers/Microsoft.PlatformValidation/validationTests/compute-vmimagevalidation-nlb-feature-not-installed",
+            "id": "/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.PlatformValidation/validationTests/compute-vmimagevalidation-data-disk-size",
+            "name": "compute-vmimagevalidation-data-disk-size",
+            "type": "Microsoft.PlatformValidation/validationTests",
+            "properties": {
+              "description": "Verifies each data disk VHD size is within the allowed range (must be less than 8 TB). Validated by reading the disk VHD directly; no VM is provisioned. AzCertify PolicyId: 200.3.2.17. More info: https://learn.microsoft.com/en-us/partner-center/marketplace-offers/azure-vm-certification-faq#data-disk-size-verification.",
+              "displayName": "Data Disk Size Check",
+              "audience": "Public",
+              "provisioningState": "Succeeded",
+              "categoryIds": [
+                "/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.PlatformValidation/validationTestCategories/image-file-integrity-validations"
+              ],
+              "owners": [
+                "Sanitized"
+              ],
+              "testStoreUri": "tst://Compute/VMImageValidation/data-disk-size@1.0.0",
+              "currentVersion": "/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.PlatformValidation/validationTests/compute-vmimagevalidation-data-disk-size/versions/1.0.0",
+              "latestPublishedVersion": "/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.PlatformValidation/validationTests/compute-vmimagevalidation-data-disk-size/versions/1.0.0",
+              "lastPublishedAt": "2026-10-27T09:15:34.2035194Z"
+            }
+          },
+          {
+            "id": "/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.PlatformValidation/validationTests/compute-vmimagevalidation-nlb-feature-not-installed",
             "name": "compute-vmimagevalidation-nlb-feature-not-installed",
             "type": "Microsoft.PlatformValidation/validationTests",
             "properties": {
@@ -506,19 +415,19 @@
               "audience": "Public",
               "provisioningState": "Succeeded",
               "categoryIds": [
-                "windows-quality-validations"
+                "/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.PlatformValidation/validationTestCategories/windows-quality-validations"
               ],
               "owners": [
                 "Sanitized"
               ],
               "testStoreUri": "tst://Compute/VMImageValidation/nlb-feature-not-installed@1.0.0",
-              "currentVersion": "/providers/Microsoft.PlatformValidation/validationTests/compute-vmimagevalidation-nlb-feature-not-installed/versions/1.0.0",
-              "latestPublishedVersion": "/providers/Microsoft.PlatformValidation/validationTests/compute-vmimagevalidation-nlb-feature-not-installed/versions/1.0.0",
-              "lastPublishedAt": "2026-10-09T10:03:35.0138462Z"
+              "currentVersion": "/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.PlatformValidation/validationTests/compute-vmimagevalidation-nlb-feature-not-installed/versions/1.0.0",
+              "latestPublishedVersion": "/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.PlatformValidation/validationTests/compute-vmimagevalidation-nlb-feature-not-installed/versions/1.0.0",
+              "lastPublishedAt": "2026-10-27T09:15:34.3936757Z"
             }
           },
           {
-            "id": "/providers/Microsoft.PlatformValidation/validationTests/compute-vmimagevalidation-os-architecture",
+            "id": "/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.PlatformValidation/validationTests/compute-vmimagevalidation-os-architecture",
             "name": "compute-vmimagevalidation-os-architecture",
             "type": "Microsoft.PlatformValidation/validationTests",
             "properties": {
@@ -527,19 +436,19 @@
               "audience": "Public",
               "provisioningState": "Succeeded",
               "categoryIds": [
-                "windows-quality-validations"
+                "/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.PlatformValidation/validationTestCategories/windows-quality-validations"
               ],
               "owners": [
                 "Sanitized"
               ],
               "testStoreUri": "tst://Compute/VMImageValidation/os-architecture@1.0.0",
-              "currentVersion": "/providers/Microsoft.PlatformValidation/validationTests/compute-vmimagevalidation-os-architecture/versions/1.0.0",
-              "latestPublishedVersion": "/providers/Microsoft.PlatformValidation/validationTests/compute-vmimagevalidation-os-architecture/versions/1.0.0",
-              "lastPublishedAt": "2026-10-09T10:03:35.250008Z"
+              "currentVersion": "/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.PlatformValidation/validationTests/compute-vmimagevalidation-os-architecture/versions/1.0.0",
+              "latestPublishedVersion": "/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.PlatformValidation/validationTests/compute-vmimagevalidation-os-architecture/versions/1.0.0",
+              "lastPublishedAt": "2026-10-27T09:15:34.5330701Z"
             }
           },
           {
-            "id": "/providers/Microsoft.PlatformValidation/validationTests/compute-vmimagevalidation-pnrp-feature-not-installed",
+            "id": "/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.PlatformValidation/validationTests/compute-vmimagevalidation-pnrp-feature-not-installed",
             "name": "compute-vmimagevalidation-pnrp-feature-not-installed",
             "type": "Microsoft.PlatformValidation/validationTests",
             "properties": {
@@ -548,19 +457,19 @@
               "audience": "Public",
               "provisioningState": "Succeeded",
               "categoryIds": [
-                "windows-quality-validations"
+                "/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.PlatformValidation/validationTestCategories/windows-quality-validations"
               ],
               "owners": [
                 "Sanitized"
               ],
               "testStoreUri": "tst://Compute/VMImageValidation/pnrp-feature-not-installed@1.0.0",
-              "currentVersion": "/providers/Microsoft.PlatformValidation/validationTests/compute-vmimagevalidation-pnrp-feature-not-installed/versions/1.0.0",
-              "latestPublishedVersion": "/providers/Microsoft.PlatformValidation/validationTests/compute-vmimagevalidation-pnrp-feature-not-installed/versions/1.0.0",
-              "lastPublishedAt": "2026-10-09T10:03:35.5226169Z"
+              "currentVersion": "/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.PlatformValidation/validationTests/compute-vmimagevalidation-pnrp-feature-not-installed/versions/1.0.0",
+              "latestPublishedVersion": "/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.PlatformValidation/validationTests/compute-vmimagevalidation-pnrp-feature-not-installed/versions/1.0.0",
+              "lastPublishedAt": "2026-10-27T09:15:34.5528577Z"
             }
           },
           {
-            "id": "/providers/Microsoft.PlatformValidation/validationTests/compute-vmimagevalidation-remote-access-role-not-installed",
+            "id": "/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.PlatformValidation/validationTests/compute-vmimagevalidation-remote-access-role-not-installed",
             "name": "compute-vmimagevalidation-remote-access-role-not-installed",
             "type": "Microsoft.PlatformValidation/validationTests",
             "properties": {
@@ -569,40 +478,19 @@
               "audience": "Public",
               "provisioningState": "Succeeded",
               "categoryIds": [
-                "windows-quality-validations"
+                "/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.PlatformValidation/validationTestCategories/windows-quality-validations"
               ],
               "owners": [
                 "Sanitized"
               ],
               "testStoreUri": "tst://Compute/VMImageValidation/remote-access-role-not-installed@1.0.0",
-              "currentVersion": "/providers/Microsoft.PlatformValidation/validationTests/compute-vmimagevalidation-remote-access-role-not-installed/versions/1.0.0",
-              "latestPublishedVersion": "/providers/Microsoft.PlatformValidation/validationTests/compute-vmimagevalidation-remote-access-role-not-installed/versions/1.0.0",
-              "lastPublishedAt": "2026-10-09T10:03:35.7521125Z"
+              "currentVersion": "/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.PlatformValidation/validationTests/compute-vmimagevalidation-remote-access-role-not-installed/versions/1.0.0",
+              "latestPublishedVersion": "/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.PlatformValidation/validationTests/compute-vmimagevalidation-remote-access-role-not-installed/versions/1.0.0",
+              "lastPublishedAt": "2026-10-27T09:15:34.7447654Z"
             }
           },
           {
-            "id": "/providers/Microsoft.PlatformValidation/validationTests/compute-vmimagevalidation-snmp-service-not-installed",
-            "name": "compute-vmimagevalidation-snmp-service-not-installed",
-            "type": "Microsoft.PlatformValidation/validationTests",
-            "properties": {
-              "description": "Verifies the SNMP Service feature is not installed on the image under test. Validated by provisioning a VM and running Get-WindowsFeature to confirm the SNMP Service feature is not installed. Applies to Windows Server images only; AzCertify detects the image type from the OS name and skips this check for client images. AzCertify PolicyId: 200.3.2.10. More info: https://aka.ms/Windows-testcases.",
-              "displayName": "SNMP Service Not Installed",
-              "audience": "Public",
-              "provisioningState": "Succeeded",
-              "categoryIds": [
-                "windows-quality-validations"
-              ],
-              "owners": [
-                "Sanitized"
-              ],
-              "testStoreUri": "tst://Compute/VMImageValidation/snmp-service-not-installed@1.0.0",
-              "currentVersion": "/providers/Microsoft.PlatformValidation/validationTests/compute-vmimagevalidation-snmp-service-not-installed/versions/1.0.0",
-              "latestPublishedVersion": "/providers/Microsoft.PlatformValidation/validationTests/compute-vmimagevalidation-snmp-service-not-installed/versions/1.0.0",
-              "lastPublishedAt": "2026-10-09T10:03:35.9828136Z"
-            }
-          },
-          {
-            "id": "/providers/Microsoft.PlatformValidation/validationTests/compute-vmimagevalidation-software-compliance",
+            "id": "/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.PlatformValidation/validationTests/compute-vmimagevalidation-software-compliance",
             "name": "compute-vmimagevalidation-software-compliance",
             "type": "Microsoft.PlatformValidation/validationTests",
             "properties": {
@@ -611,40 +499,61 @@
               "audience": "Public",
               "provisioningState": "Succeeded",
               "categoryIds": [
-                "windows-quality-validations"
+                "/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.PlatformValidation/validationTestCategories/windows-quality-validations"
               ],
               "owners": [
                 "Sanitized"
               ],
               "testStoreUri": "tst://Compute/VMImageValidation/software-compliance@1.0.0",
-              "currentVersion": "/providers/Microsoft.PlatformValidation/validationTests/compute-vmimagevalidation-software-compliance/versions/1.0.0",
-              "latestPublishedVersion": "/providers/Microsoft.PlatformValidation/validationTests/compute-vmimagevalidation-software-compliance/versions/1.0.0",
-              "lastPublishedAt": "2026-10-09T10:03:36.2114569Z"
+              "currentVersion": "/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.PlatformValidation/validationTests/compute-vmimagevalidation-software-compliance/versions/1.0.0",
+              "latestPublishedVersion": "/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.PlatformValidation/validationTests/compute-vmimagevalidation-software-compliance/versions/1.0.0",
+              "lastPublishedAt": "2026-10-27T09:15:34.8266076Z"
             }
           },
           {
-            "id": "/providers/Microsoft.PlatformValidation/validationTests/compute-vmimagevalidation-vm-access",
-            "name": "compute-vmimagevalidation-vm-access",
+            "id": "/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.PlatformValidation/validationTests/compute-vmimagevalidation-vhd-footer",
+            "name": "compute-vmimagevalidation-vhd-footer",
             "type": "Microsoft.PlatformValidation/validationTests",
             "properties": {
-              "description": "Verifies the test provider (AzCertify) can sign in to and run its PowerShell validation checks on a VM created from the image under test. Validated by provisioning a VM and confirming remote sign-in and command execution succeed. AzCertify PolicyId: 200.3.1.17. More info: https://aka.ms/Windows-testcases.",
-              "displayName": "VM Access Check",
+              "description": "Verifies the VHD footer is well-formed for the OS disk and every provided data disk (the footer cookie is set correctly per the VHD specification). Validated by reading each disk VHD directly; no VM is provisioned. AzCertify PolicyId: 200.3.1.11. More info: https://aka.ms/vhd-specifications.",
+              "displayName": "VHD Footer Check",
               "audience": "Public",
               "provisioningState": "Succeeded",
               "categoryIds": [
-                "windows-quality-validations"
+                "/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.PlatformValidation/validationTestCategories/image-file-integrity-validations"
               ],
               "owners": [
                 "Sanitized"
               ],
-              "testStoreUri": "tst://Compute/VMImageValidation/vm-access@1.0.0",
-              "currentVersion": "/providers/Microsoft.PlatformValidation/validationTests/compute-vmimagevalidation-vm-access/versions/1.0.0",
-              "latestPublishedVersion": "/providers/Microsoft.PlatformValidation/validationTests/compute-vmimagevalidation-vm-access/versions/1.0.0",
-              "lastPublishedAt": "2026-10-09T10:03:36.4452608Z"
+              "testStoreUri": "tst://Compute/VMImageValidation/vhd-footer@1.0.0",
+              "currentVersion": "/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.PlatformValidation/validationTests/compute-vmimagevalidation-vhd-footer/versions/1.0.0",
+              "latestPublishedVersion": "/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.PlatformValidation/validationTests/compute-vmimagevalidation-vhd-footer/versions/1.0.0",
+              "lastPublishedAt": "2026-10-27T09:15:34.8551536Z"
             }
           },
           {
-            "id": "/providers/Microsoft.PlatformValidation/validationTests/compute-vmimagevalidation-vm-extension-provisioning",
+            "id": "/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.PlatformValidation/validationTests/compute-vmimagevalidation-snmp-service-not-installed",
+            "name": "compute-vmimagevalidation-snmp-service-not-installed",
+            "type": "Microsoft.PlatformValidation/validationTests",
+            "properties": {
+              "description": "Verifies the SNMP Service feature is not installed on the image under test. Validated by provisioning a VM and running Get-WindowsFeature to confirm the SNMP Service feature is not installed. Applies to Windows Server images only; AzCertify detects the image type from the OS name and skips this check for client images. AzCertify PolicyId: 200.3.2.10. More info: https://aka.ms/Windows-testcases.",
+              "displayName": "SNMP Service Not Installed",
+              "audience": "Public",
+              "provisioningState": "Succeeded",
+              "categoryIds": [
+                "/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.PlatformValidation/validationTestCategories/windows-quality-validations"
+              ],
+              "owners": [
+                "Sanitized"
+              ],
+              "testStoreUri": "tst://Compute/VMImageValidation/snmp-service-not-installed@1.0.0",
+              "currentVersion": "/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.PlatformValidation/validationTests/compute-vmimagevalidation-snmp-service-not-installed/versions/1.0.0",
+              "latestPublishedVersion": "/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.PlatformValidation/validationTests/compute-vmimagevalidation-snmp-service-not-installed/versions/1.0.0",
+              "lastPublishedAt": "2026-10-27T09:15:35.0882069Z"
+            }
+          },
+          {
+            "id": "/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.PlatformValidation/validationTests/compute-vmimagevalidation-vm-extension-provisioning",
             "name": "compute-vmimagevalidation-vm-extension-provisioning",
             "type": "Microsoft.PlatformValidation/validationTests",
             "properties": {
@@ -653,19 +562,40 @@
               "audience": "Public",
               "provisioningState": "Succeeded",
               "categoryIds": [
-                "windows-quality-validations"
+                "/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.PlatformValidation/validationTestCategories/windows-quality-validations"
               ],
               "owners": [
                 "Sanitized"
               ],
               "testStoreUri": "tst://Compute/VMImageValidation/vm-extension-provisioning@1.0.0",
-              "currentVersion": "/providers/Microsoft.PlatformValidation/validationTests/compute-vmimagevalidation-vm-extension-provisioning/versions/1.0.0",
-              "latestPublishedVersion": "/providers/Microsoft.PlatformValidation/validationTests/compute-vmimagevalidation-vm-extension-provisioning/versions/1.0.0",
-              "lastPublishedAt": "2026-10-09T10:03:36.6740615Z"
+              "currentVersion": "/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.PlatformValidation/validationTests/compute-vmimagevalidation-vm-extension-provisioning/versions/1.0.0",
+              "latestPublishedVersion": "/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.PlatformValidation/validationTests/compute-vmimagevalidation-vm-extension-provisioning/versions/1.0.0",
+              "lastPublishedAt": "2026-10-27T09:15:35.1622933Z"
             }
           },
           {
-            "id": "/providers/Microsoft.PlatformValidation/validationTests/compute-vmimagevalidation-wds-role-not-installed",
+            "id": "/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.PlatformValidation/validationTests/compute-vmimagevalidation-vm-access",
+            "name": "compute-vmimagevalidation-vm-access",
+            "type": "Microsoft.PlatformValidation/validationTests",
+            "properties": {
+              "description": "Verifies the test provider (AzCertify) can sign in to and run its PowerShell validation checks on a VM created from the image under test. Validated by provisioning a VM and confirming remote sign-in and command execution succeed. AzCertify PolicyId: 200.3.1.17. More info: https://aka.ms/Windows-testcases.",
+              "displayName": "VM Access Check",
+              "audience": "Public",
+              "provisioningState": "Succeeded",
+              "categoryIds": [
+                "/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.PlatformValidation/validationTestCategories/windows-quality-validations"
+              ],
+              "owners": [
+                "Sanitized"
+              ],
+              "testStoreUri": "tst://Compute/VMImageValidation/vm-access@1.0.0",
+              "currentVersion": "/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.PlatformValidation/validationTests/compute-vmimagevalidation-vm-access/versions/1.0.0",
+              "latestPublishedVersion": "/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.PlatformValidation/validationTests/compute-vmimagevalidation-vm-access/versions/1.0.0",
+              "lastPublishedAt": "2026-10-27T09:15:35.1900116Z"
+            }
+          },
+          {
+            "id": "/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.PlatformValidation/validationTests/compute-vmimagevalidation-wds-role-not-installed",
             "name": "compute-vmimagevalidation-wds-role-not-installed",
             "type": "Microsoft.PlatformValidation/validationTests",
             "properties": {
@@ -674,19 +604,40 @@
               "audience": "Public",
               "provisioningState": "Succeeded",
               "categoryIds": [
-                "windows-quality-validations"
+                "/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.PlatformValidation/validationTestCategories/windows-quality-validations"
               ],
               "owners": [
                 "Sanitized"
               ],
               "testStoreUri": "tst://Compute/VMImageValidation/wds-role-not-installed@1.0.0",
-              "currentVersion": "/providers/Microsoft.PlatformValidation/validationTests/compute-vmimagevalidation-wds-role-not-installed/versions/1.0.0",
-              "latestPublishedVersion": "/providers/Microsoft.PlatformValidation/validationTests/compute-vmimagevalidation-wds-role-not-installed/versions/1.0.0",
-              "lastPublishedAt": "2026-10-09T10:03:36.9614876Z"
+              "currentVersion": "/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.PlatformValidation/validationTests/compute-vmimagevalidation-wds-role-not-installed/versions/1.0.0",
+              "latestPublishedVersion": "/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.PlatformValidation/validationTests/compute-vmimagevalidation-wds-role-not-installed/versions/1.0.0",
+              "lastPublishedAt": "2026-10-27T09:15:35.3675882Z"
             }
           },
           {
-            "id": "/providers/Microsoft.PlatformValidation/validationTests/compute-vmimagevalidation-wins-feature-not-installed",
+            "id": "/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.PlatformValidation/validationTests/compute-vmimagevalidation-os-disk-size",
+            "name": "compute-vmimagevalidation-os-disk-size",
+            "type": "Microsoft.PlatformValidation/validationTests",
+            "properties": {
+              "description": "Verifies the OS disk VHD size is within the allowed range (limits differ by OS family). Validated by reading the disk VHD directly; no VM is provisioned. AzCertify PolicyId: 200.3.1.12. More info: https://aka.ms/os-disk-size-validation.",
+              "displayName": "OS Disk Size Check",
+              "audience": "Public",
+              "provisioningState": "Succeeded",
+              "categoryIds": [
+                "/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.PlatformValidation/validationTestCategories/image-file-integrity-validations"
+              ],
+              "owners": [
+                "Sanitized"
+              ],
+              "testStoreUri": "tst://Compute/VMImageValidation/os-disk-size@1.0.0",
+              "currentVersion": "/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.PlatformValidation/validationTests/compute-vmimagevalidation-os-disk-size/versions/1.0.0",
+              "latestPublishedVersion": "/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.PlatformValidation/validationTests/compute-vmimagevalidation-os-disk-size/versions/1.0.0",
+              "lastPublishedAt": "2026-10-27T09:15:35.416875Z"
+            }
+          },
+          {
+            "id": "/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.PlatformValidation/validationTests/compute-vmimagevalidation-wins-feature-not-installed",
             "name": "compute-vmimagevalidation-wins-feature-not-installed",
             "type": "Microsoft.PlatformValidation/validationTests",
             "properties": {
@@ -695,19 +646,19 @@
               "audience": "Public",
               "provisioningState": "Succeeded",
               "categoryIds": [
-                "windows-quality-validations"
+                "/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.PlatformValidation/validationTestCategories/windows-quality-validations"
               ],
               "owners": [
                 "Sanitized"
               ],
               "testStoreUri": "tst://Compute/VMImageValidation/wins-feature-not-installed@1.0.0",
-              "currentVersion": "/providers/Microsoft.PlatformValidation/validationTests/compute-vmimagevalidation-wins-feature-not-installed/versions/1.0.0",
-              "latestPublishedVersion": "/providers/Microsoft.PlatformValidation/validationTests/compute-vmimagevalidation-wins-feature-not-installed/versions/1.0.0",
-              "lastPublishedAt": "2026-10-09T10:03:37.2021714Z"
+              "currentVersion": "/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.PlatformValidation/validationTests/compute-vmimagevalidation-wins-feature-not-installed/versions/1.0.0",
+              "latestPublishedVersion": "/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.PlatformValidation/validationTests/compute-vmimagevalidation-wins-feature-not-installed/versions/1.0.0",
+              "lastPublishedAt": "2026-10-27T09:15:35.5335221Z"
             }
           },
           {
-            "id": "/providers/Microsoft.PlatformValidation/validationTests/compute-vmimagevalidation-wireless-lan-service-not-installed",
+            "id": "/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.PlatformValidation/validationTests/compute-vmimagevalidation-wireless-lan-service-not-installed",
             "name": "compute-vmimagevalidation-wireless-lan-service-not-installed",
             "type": "Microsoft.PlatformValidation/validationTests",
             "properties": {
@@ -716,19 +667,19 @@
               "audience": "Public",
               "provisioningState": "Succeeded",
               "categoryIds": [
-                "windows-quality-validations"
+                "/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.PlatformValidation/validationTestCategories/windows-quality-validations"
               ],
               "owners": [
                 "Sanitized"
               ],
               "testStoreUri": "tst://Compute/VMImageValidation/wireless-lan-service-not-installed@1.0.0",
-              "currentVersion": "/providers/Microsoft.PlatformValidation/validationTests/compute-vmimagevalidation-wireless-lan-service-not-installed/versions/1.0.0",
-              "latestPublishedVersion": "/providers/Microsoft.PlatformValidation/validationTests/compute-vmimagevalidation-wireless-lan-service-not-installed/versions/1.0.0",
-              "lastPublishedAt": "2026-10-09T10:03:38.2178845Z"
+              "currentVersion": "/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.PlatformValidation/validationTests/compute-vmimagevalidation-wireless-lan-service-not-installed/versions/1.0.0",
+              "latestPublishedVersion": "/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.PlatformValidation/validationTests/compute-vmimagevalidation-wireless-lan-service-not-installed/versions/1.0.0",
+              "lastPublishedAt": "2026-10-27T09:15:35.6412662Z"
             }
           },
           {
-            "id": "/providers/Microsoft.PlatformValidation/validationTests/azqualify-cloud-ex-control-group-ovl-networking",
+            "id": "/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.PlatformValidation/validationTests/azqualify-cloud-ex-control-group-ovl-networking",
             "name": "azqualify-cloud-ex-control-group-ovl-networking",
             "type": "Microsoft.PlatformValidation/validationTests",
             "properties": {
@@ -737,8 +688,8 @@
               "audience": "Internal",
               "provisioningState": "Succeeded",
               "categoryIds": [
-                "overlake-networking",
-                "host-baseline"
+                "/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.PlatformValidation/validationTestCategories/overlake-networking",
+                "/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.PlatformValidation/validationTestCategories/host-baseline"
               ],
               "owners": [
                 "Sanitized"
@@ -893,170 +844,13 @@
                 }
               ],
               "testStoreUri": "tst://azqualify/cloud-ex/control-group-ovl-networking@1.0.0",
-              "currentVersion": "/providers/Microsoft.PlatformValidation/validationTests/azqualify-cloud-ex-control-group-ovl-networking/versions/1.0.0",
-              "latestPublishedVersion": "/providers/Microsoft.PlatformValidation/validationTests/azqualify-cloud-ex-control-group-ovl-networking/versions/1.0.0",
-              "lastPublishedAt": "2026-10-09T10:03:38.9428759Z"
+              "currentVersion": "/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.PlatformValidation/validationTests/azqualify-cloud-ex-control-group-ovl-networking/versions/1.0.0",
+              "latestPublishedVersion": "/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.PlatformValidation/validationTests/azqualify-cloud-ex-control-group-ovl-networking/versions/1.0.0",
+              "lastPublishedAt": "2026-10-27T09:15:35.9510538Z"
             }
           },
           {
-            "id": "/providers/Microsoft.PlatformValidation/validationTests/azqualify-cloud-ex-control-group-sql-tpce",
-            "name": "azqualify-cloud-ex-control-group-sql-tpce",
-            "type": "Microsoft.PlatformValidation/validationTests",
-            "properties": {
-              "description": "Deploy SQL TPCE Workload on TiP",
-              "displayName": "Control Group Sql Tpce",
-              "audience": "Internal",
-              "provisioningState": "Succeeded",
-              "categoryIds": [
-                "database-performance",
-                "host-baseline"
-              ],
-              "owners": [
-                "Sanitized"
-              ],
-              "inputs": [
-                {
-                  "name": "CreatedBy",
-                  "definition": {
-                    "type": "String",
-                    "required": true,
-                    "defaultValue": "Sanitized"
-                  }
-                },
-                {
-                  "name": "DeleteRGExplicitly",
-                  "definition": {
-                    "type": "Boolean",
-                    "required": false,
-                    "defaultValue": "true"
-                  }
-                },
-                {
-                  "name": "DurationString",
-                  "definition": {
-                    "description": "Amount of time to wait",
-                    "type": "String",
-                    "required": false,
-                    "defaultValue": "P0DT19H"
-                  }
-                },
-                {
-                  "name": "Enable_DoubleBuffer",
-                  "definition": {
-                    "type": "Boolean",
-                    "required": false,
-                    "defaultValue": "false"
-                  }
-                },
-                {
-                  "name": "GuestOSDiskImageReferenceId",
-                  "definition": {
-                    "type": "String",
-                    "required": false,
-                    "defaultValue": ""
-                  }
-                },
-                {
-                  "name": "Iteration",
-                  "definition": {
-                    "type": "Integer",
-                    "required": false,
-                    "defaultValue": "1"
-                  }
-                },
-                {
-                  "name": "OptOutClusters",
-                  "definition": {
-                    "required": false,
-                    "defaultValue": "[\"DZ6PrdApp15\",\"BNZ10PrdGPC05\",\"LVL02PrdGPZ01\",\"LVL01PrdApp46\",\"IAD20PrdApp39\",\"DSM06PrdApp18\",\"SN4PrdApp39\",\"LVL03PrdApp14\",\"PHX70PrdApp28\"]"
-                  }
-                },
-                {
-                  "name": "OptOutRegions",
-                  "definition": {
-                    "description": "The OptOutRegions Schema",
-                    "required": false,
-                    "defaultValue": "null"
-                  }
-                },
-                {
-                  "name": "RegionType",
-                  "definition": {
-                    "required": false,
-                    "defaultValue": "[\"Hero\",\"Hub\",\"Satellite\"]"
-                  }
-                },
-                {
-                  "name": "ResourceLifeTime",
-                  "definition": {
-                    "required": false,
-                    "defaultValue": "P0DT20H"
-                  }
-                },
-                {
-                  "name": "SubscriptionId",
-                  "definition": {
-                    "type": "String",
-                    "required": true,
-                    "defaultValue": ""
-                  }
-                },
-                {
-                  "name": "TenantAzureConfigPath",
-                  "definition": {
-                    "type": "String",
-                    "required": true,
-                    "defaultValue": "/src/CirrusTenants/AzQualify/TenantAzureConfig.json"
-                  }
-                },
-                {
-                  "name": "TestPassInstanceLifeTime",
-                  "definition": {
-                    "required": false,
-                    "defaultValue": "P0DT20H"
-                  }
-                },
-                {
-                  "name": "TestPassInstanceLifeTimeInMins",
-                  "definition": {
-                    "type": "Integer",
-                    "required": false,
-                    "defaultValue": "1260"
-                  }
-                },
-                {
-                  "name": "VmSku",
-                  "definition": {
-                    "type": "String",
-                    "required": false,
-                    "defaultValue": "Standard_D32ds_v5"
-                  }
-                },
-                {
-                  "name": "diskControllerType",
-                  "definition": {
-                    "type": "String",
-                    "required": false,
-                    "defaultValue": "SCSI"
-                  }
-                },
-                {
-                  "name": "pinnedFabricCluster",
-                  "definition": {
-                    "type": "String",
-                    "required": false,
-                    "defaultValue": ""
-                  }
-                }
-              ],
-              "testStoreUri": "tst://azqualify/cloud-ex/control-group-sql-tpce@1.0.0",
-              "currentVersion": "/providers/Microsoft.PlatformValidation/validationTests/azqualify-cloud-ex-control-group-sql-tpce/versions/1.0.0",
-              "latestPublishedVersion": "/providers/Microsoft.PlatformValidation/validationTests/azqualify-cloud-ex-control-group-sql-tpce/versions/1.0.0",
-              "lastPublishedAt": "2026-10-09T10:03:39.4357888Z"
-            }
-          },
-          {
-            "id": "/providers/Microsoft.PlatformValidation/validationTests/azqualify-cloud-ex-control-group",
+            "id": "/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.PlatformValidation/validationTests/azqualify-cloud-ex-control-group",
             "name": "azqualify-cloud-ex-control-group",
             "type": "Microsoft.PlatformValidation/validationTests",
             "properties": {
@@ -1065,7 +859,7 @@
               "audience": "Internal",
               "provisioningState": "Succeeded",
               "categoryIds": [
-                "host-baseline"
+                "/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.PlatformValidation/validationTestCategories/host-baseline"
               ],
               "owners": [
                 "Sanitized"
@@ -1227,13 +1021,170 @@
                 }
               ],
               "testStoreUri": "tst://azqualify/cloud-ex/control-group@1.0.0",
-              "currentVersion": "/providers/Microsoft.PlatformValidation/validationTests/azqualify-cloud-ex-control-group/versions/1.0.0",
-              "latestPublishedVersion": "/providers/Microsoft.PlatformValidation/validationTests/azqualify-cloud-ex-control-group/versions/1.0.0",
-              "lastPublishedAt": "2026-10-09T10:03:39.7233271Z"
+              "currentVersion": "/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.PlatformValidation/validationTests/azqualify-cloud-ex-control-group/versions/1.0.0",
+              "latestPublishedVersion": "/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.PlatformValidation/validationTests/azqualify-cloud-ex-control-group/versions/1.0.0",
+              "lastPublishedAt": "2026-10-27T09:15:35.9745967Z"
             }
           },
           {
-            "id": "/providers/Microsoft.PlatformValidation/validationTests/azqualify-cloud-ex-host-agent-32vm-scale-test",
+            "id": "/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.PlatformValidation/validationTests/azqualify-cloud-ex-control-group-sql-tpce",
+            "name": "azqualify-cloud-ex-control-group-sql-tpce",
+            "type": "Microsoft.PlatformValidation/validationTests",
+            "properties": {
+              "description": "Deploy SQL TPCE Workload on TiP",
+              "displayName": "Control Group Sql Tpce",
+              "audience": "Internal",
+              "provisioningState": "Succeeded",
+              "categoryIds": [
+                "/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.PlatformValidation/validationTestCategories/database-performance",
+                "/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.PlatformValidation/validationTestCategories/host-baseline"
+              ],
+              "owners": [
+                "Sanitized"
+              ],
+              "inputs": [
+                {
+                  "name": "CreatedBy",
+                  "definition": {
+                    "type": "String",
+                    "required": true,
+                    "defaultValue": "Sanitized"
+                  }
+                },
+                {
+                  "name": "DeleteRGExplicitly",
+                  "definition": {
+                    "type": "Boolean",
+                    "required": false,
+                    "defaultValue": "true"
+                  }
+                },
+                {
+                  "name": "DurationString",
+                  "definition": {
+                    "description": "Amount of time to wait",
+                    "type": "String",
+                    "required": false,
+                    "defaultValue": "P0DT19H"
+                  }
+                },
+                {
+                  "name": "Enable_DoubleBuffer",
+                  "definition": {
+                    "type": "Boolean",
+                    "required": false,
+                    "defaultValue": "false"
+                  }
+                },
+                {
+                  "name": "GuestOSDiskImageReferenceId",
+                  "definition": {
+                    "type": "String",
+                    "required": false,
+                    "defaultValue": ""
+                  }
+                },
+                {
+                  "name": "Iteration",
+                  "definition": {
+                    "type": "Integer",
+                    "required": false,
+                    "defaultValue": "1"
+                  }
+                },
+                {
+                  "name": "OptOutClusters",
+                  "definition": {
+                    "required": false,
+                    "defaultValue": "[\"DZ6PrdApp15\",\"BNZ10PrdGPC05\",\"LVL02PrdGPZ01\",\"LVL01PrdApp46\",\"IAD20PrdApp39\",\"DSM06PrdApp18\",\"SN4PrdApp39\",\"LVL03PrdApp14\",\"PHX70PrdApp28\"]"
+                  }
+                },
+                {
+                  "name": "OptOutRegions",
+                  "definition": {
+                    "description": "The OptOutRegions Schema",
+                    "required": false,
+                    "defaultValue": "null"
+                  }
+                },
+                {
+                  "name": "RegionType",
+                  "definition": {
+                    "required": false,
+                    "defaultValue": "[\"Hero\",\"Hub\",\"Satellite\"]"
+                  }
+                },
+                {
+                  "name": "ResourceLifeTime",
+                  "definition": {
+                    "required": false,
+                    "defaultValue": "P0DT20H"
+                  }
+                },
+                {
+                  "name": "SubscriptionId",
+                  "definition": {
+                    "type": "String",
+                    "required": true,
+                    "defaultValue": ""
+                  }
+                },
+                {
+                  "name": "TenantAzureConfigPath",
+                  "definition": {
+                    "type": "String",
+                    "required": true,
+                    "defaultValue": "/src/CirrusTenants/AzQualify/TenantAzureConfig.json"
+                  }
+                },
+                {
+                  "name": "TestPassInstanceLifeTime",
+                  "definition": {
+                    "required": false,
+                    "defaultValue": "P0DT20H"
+                  }
+                },
+                {
+                  "name": "TestPassInstanceLifeTimeInMins",
+                  "definition": {
+                    "type": "Integer",
+                    "required": false,
+                    "defaultValue": "1260"
+                  }
+                },
+                {
+                  "name": "VmSku",
+                  "definition": {
+                    "type": "String",
+                    "required": false,
+                    "defaultValue": "Standard_D32ds_v5"
+                  }
+                },
+                {
+                  "name": "diskControllerType",
+                  "definition": {
+                    "type": "String",
+                    "required": false,
+                    "defaultValue": "SCSI"
+                  }
+                },
+                {
+                  "name": "pinnedFabricCluster",
+                  "definition": {
+                    "type": "String",
+                    "required": false,
+                    "defaultValue": ""
+                  }
+                }
+              ],
+              "testStoreUri": "tst://azqualify/cloud-ex/control-group-sql-tpce@1.0.0",
+              "currentVersion": "/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.PlatformValidation/validationTests/azqualify-cloud-ex-control-group-sql-tpce/versions/1.0.0",
+              "latestPublishedVersion": "/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.PlatformValidation/validationTests/azqualify-cloud-ex-control-group-sql-tpce/versions/1.0.0",
+              "lastPublishedAt": "2026-10-27T09:15:36.0875412Z"
+            }
+          },
+          {
+            "id": "/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.PlatformValidation/validationTests/azqualify-cloud-ex-host-agent-32vm-scale-test",
             "name": "azqualify-cloud-ex-host-agent-32vm-scale-test",
             "type": "Microsoft.PlatformValidation/validationTests",
             "properties": {
@@ -1242,7 +1193,7 @@
               "audience": "Internal",
               "provisioningState": "Succeeded",
               "categoryIds": [
-                "host-agent"
+                "/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.PlatformValidation/validationTestCategories/host-agent"
               ],
               "owners": [
                 "Sanitized"
@@ -1749,845 +1700,13 @@
                 }
               ],
               "testStoreUri": "tst://azqualify/cloud-ex/host-agent-32vm-scale-test@1.0.0",
-              "currentVersion": "/providers/Microsoft.PlatformValidation/validationTests/azqualify-cloud-ex-host-agent-32vm-scale-test/versions/1.0.0",
-              "latestPublishedVersion": "/providers/Microsoft.PlatformValidation/validationTests/azqualify-cloud-ex-host-agent-32vm-scale-test/versions/1.0.0",
-              "lastPublishedAt": "2026-10-09T10:03:40.137227Z"
+              "currentVersion": "/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.PlatformValidation/validationTests/azqualify-cloud-ex-host-agent-32vm-scale-test/versions/1.0.0",
+              "latestPublishedVersion": "/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.PlatformValidation/validationTests/azqualify-cloud-ex-host-agent-32vm-scale-test/versions/1.0.0",
+              "lastPublishedAt": "2026-10-27T09:15:36.8127252Z"
             }
           },
           {
-            "id": "/providers/Microsoft.PlatformValidation/validationTests/azqualify-cloud-ex-host-agent-lisa",
-            "name": "azqualify-cloud-ex-host-agent-lisa",
-            "type": "Microsoft.PlatformValidation/validationTests",
-            "properties": {
-              "description": "TestPassDefinition for running LISAWorkload using CloudEx for HostAgent Scenarios",
-              "displayName": "Host Agent Lisa",
-              "audience": "Internal",
-              "provisioningState": "Succeeded",
-              "categoryIds": [
-                "host-agent"
-              ],
-              "owners": [
-                "Sanitized"
-              ],
-              "inputs": [
-                {
-                  "name": "AgentPackage",
-                  "definition": {
-                    "type": "Object",
-                    "required": false,
-                    "defaultValue": "{}"
-                  }
-                },
-                {
-                  "name": "AllowedClusterGenerations",
-                  "definition": {
-                    "description": "Candidate cluster list for TiP environment",
-                    "required": false,
-                    "defaultValue": "null"
-                  }
-                },
-                {
-                  "name": "AllowedRegions",
-                  "definition": {
-                    "description": "The AllowedRegions for TiP run LISAv3",
-                    "required": false,
-                    "defaultValue": "null"
-                  }
-                },
-                {
-                  "name": "CandidateClusters",
-                  "definition": {
-                    "description": "The Array of CandidateClusters to be used to apply TiPNodeSession",
-                    "required": false,
-                    "defaultValue": "null"
-                  }
-                },
-                {
-                  "name": "ComponentName",
-                  "definition": {
-                    "description": "ComponentName used for the test pass",
-                    "type": "String",
-                    "required": true,
-                    "defaultValue": "LISAWorkload"
-                  }
-                },
-                {
-                  "name": "Concurrent",
-                  "definition": {
-                    "type": "Integer",
-                    "required": false,
-                    "defaultValue": "2"
-                  }
-                },
-                {
-                  "name": "CreatedBy",
-                  "definition": {
-                    "type": "String",
-                    "required": false,
-                    "defaultValue": "Sanitized"
-                  }
-                },
-                {
-                  "name": "CustomTemplateName",
-                  "definition": {
-                    "type": "String",
-                    "required": false,
-                    "defaultValue": "/src/CirrusTenants/LSG/AzQualify/CirrusV2/AzQualify-LISATest-OrchestratorV3.ArmTemplate.json"
-                  }
-                },
-                {
-                  "name": "CustomTemplateParameterName",
-                  "definition": {
-                    "type": "String",
-                    "required": false,
-                    "defaultValue": "/src/CirrusTenants/LSG/AzQualify/CirrusV2/AzQualify-LISATest-Orchestrator.ArmParameters.json"
-                  }
-                },
-                {
-                  "name": "HostAgentUpdateEnabled",
-                  "definition": {
-                    "description": "If set to true, Host Agent update action will run",
-                    "type": "Boolean",
-                    "required": false,
-                    "defaultValue": "true"
-                  }
-                },
-                {
-                  "name": "HwSkuIds",
-                  "definition": {
-                    "required": false,
-                    "defaultValue": "null"
-                  }
-                },
-                {
-                  "name": "ImperativeBranch",
-                  "definition": {
-                    "description": "LISA branch to be tested with",
-                    "type": "String",
-                    "required": false,
-                    "defaultValue": "main"
-                  }
-                },
-                {
-                  "name": "IsOverlake",
-                  "definition": {
-                    "description": "If set to true, Overlake Hardware will be used for the Tip Session",
-                    "type": "Boolean",
-                    "required": false,
-                    "defaultValue": "false"
-                  }
-                },
-                {
-                  "name": "MachinePoolType",
-                  "definition": {
-                    "required": false,
-                    "defaultValue": "Compute"
-                  }
-                },
-                {
-                  "name": "NumberOfNodes",
-                  "definition": {
-                    "type": "Integer",
-                    "required": true,
-                    "defaultValue": "2"
-                  }
-                },
-                {
-                  "name": "OSImage",
-                  "definition": {
-                    "description": "Comma seperated marketplace images",
-                    "type": "String",
-                    "required": false,
-                    "defaultValue": ""
-                  }
-                },
-                {
-                  "name": "OptOutClusters",
-                  "definition": {
-                    "description": "Will remove this list of clusters from cluster search",
-                    "required": false,
-                    "defaultValue": "null"
-                  }
-                },
-                {
-                  "name": "OptOutRegions",
-                  "definition": {
-                    "description": "The OptOutRegions for TiP run LISAv3",
-                    "required": false,
-                    "defaultValue": "null"
-                  }
-                },
-                {
-                  "name": "OverrideVMSize",
-                  "definition": {
-                    "type": "String",
-                    "required": true,
-                    "defaultValue": ""
-                  }
-                },
-                {
-                  "name": "RegionType",
-                  "definition": {
-                    "required": false,
-                    "defaultValue": "[\"Hero\",\"Hub\",\"Satellite\"]"
-                  }
-                },
-                {
-                  "name": "ResourceLifeTime",
-                  "definition": {
-                    "description": "Duration of LISA test pass estimated, orchestrator will be destroyed over this time",
-                    "type": "String",
-                    "required": false,
-                    "defaultValue": "P0DT18H"
-                  }
-                },
-                {
-                  "name": "Retry",
-                  "definition": {
-                    "type": "String",
-                    "required": false,
-                    "defaultValue": "No"
-                  }
-                },
-                {
-                  "name": "SkipFilters",
-                  "definition": {
-                    "required": false,
-                    "defaultValue": "null"
-                  }
-                },
-                {
-                  "name": "SleepDurationBeforeVmDeployment",
-                  "definition": {
-                    "type": "String",
-                    "required": false,
-                    "defaultValue": "PT1M"
-                  }
-                },
-                {
-                  "name": "StorageType",
-                  "definition": {
-                    "type": "String",
-                    "required": false,
-                    "defaultValue": "Premium_LRS"
-                  }
-                },
-                {
-                  "name": "SubscriptionId",
-                  "definition": {
-                    "description": "SubscriptionId for the Testpass",
-                    "type": "String",
-                    "required": true,
-                    "defaultValue": ""
-                  }
-                },
-                {
-                  "name": "TenantAzureConfigPath",
-                  "definition": {
-                    "type": "String",
-                    "required": false,
-                    "defaultValue": "/src/CirrusTenants/AzQualify/TenantAzureConfig.json"
-                  }
-                },
-                {
-                  "name": "TestParameters",
-                  "definition": {
-                    "description": "Specify parameters to Run LISA test",
-                    "type": "Object",
-                    "required": false,
-                    "defaultValue": "{}"
-                  }
-                },
-                {
-                  "name": "TestPassID",
-                  "definition": {
-                    "type": "String",
-                    "required": false,
-                    "defaultValue": "AzQualify Validation"
-                  }
-                },
-                {
-                  "name": "TestPassInstanceLifeTime",
-                  "definition": {
-                    "required": false,
-                    "defaultValue": "P0DT20H"
-                  }
-                },
-                {
-                  "name": "TestProject",
-                  "definition": {
-                    "type": "String",
-                    "required": false,
-                    "defaultValue": "AzQualify Validation"
-                  }
-                },
-                {
-                  "name": "TestType",
-                  "definition": {
-                    "type": "String",
-                    "required": true,
-                    "defaultValue": ""
-                  }
-                },
-                {
-                  "name": "VmSku",
-                  "definition": {
-                    "description": "The VmSku to be referenced to apply for clusters and TiP environment. e.g., Standard_DS2_v2, Standard_D15_v2, etc",
-                    "type": "String",
-                    "required": true,
-                    "defaultValue": ""
-                  }
-                }
-              ],
-              "testStoreUri": "tst://azqualify/cloud-ex/host-agent-lisa@1.0.0",
-              "currentVersion": "/providers/Microsoft.PlatformValidation/validationTests/azqualify-cloud-ex-host-agent-lisa/versions/1.0.0",
-              "latestPublishedVersion": "/providers/Microsoft.PlatformValidation/validationTests/azqualify-cloud-ex-host-agent-lisa/versions/1.0.0",
-              "lastPublishedAt": "2026-10-09T10:03:40.4798552Z"
-            }
-          },
-          {
-            "id": "/providers/Microsoft.PlatformValidation/validationTests/azqualify-cloud-ex-host-agent-msplmdefinition",
-            "name": "azqualify-cloud-ex-host-agent-msplmdefinition",
-            "type": "Microsoft.PlatformValidation/validationTests",
-            "properties": {
-              "description": "TestPassDefinition with MSP VM and LiveMigrationPlatformAction",
-              "displayName": "Host Agent Msplmdefinition",
-              "audience": "Internal",
-              "provisioningState": "Succeeded",
-              "categoryIds": [
-                "host-agent"
-              ],
-              "owners": [
-                "Sanitized"
-              ],
-              "inputs": [
-                {
-                  "name": "AgentPackage",
-                  "definition": {
-                    "type": "Object",
-                    "required": false,
-                    "defaultValue": "{}"
-                  }
-                },
-                {
-                  "name": "AgentPackage_1",
-                  "definition": {
-                    "type": "Object",
-                    "required": false,
-                    "defaultValue": "{}"
-                  }
-                },
-                {
-                  "name": "AllowedRegions",
-                  "definition": {
-                    "required": false,
-                    "defaultValue": "null"
-                  }
-                },
-                {
-                  "name": "ArmTemplateFilePath",
-                  "definition": {
-                    "type": "String",
-                    "required": false,
-                    "defaultValue": "src/CirrusTenants/AzQualify/CloudEx/ArmTemplate.json"
-                  }
-                },
-                {
-                  "name": "CandidateClusters",
-                  "definition": {
-                    "required": false,
-                    "defaultValue": "null"
-                  }
-                },
-                {
-                  "name": "ControlledLMLiveMigrateTimeout",
-                  "definition": {
-                    "type": "String",
-                    "required": false,
-                    "defaultValue": "P0DT6H"
-                  }
-                },
-                {
-                  "name": "CreatedBy",
-                  "definition": {
-                    "type": "String",
-                    "required": true,
-                    "defaultValue": "Sanitized"
-                  }
-                },
-                {
-                  "name": "DiskSize",
-                  "definition": {
-                    "type": "Integer",
-                    "required": false,
-                    "defaultValue": "256"
-                  }
-                },
-                {
-                  "name": "EnableAcceleratedNetworking",
-                  "definition": {
-                    "type": "Boolean",
-                    "required": false,
-                    "defaultValue": "false"
-                  }
-                },
-                {
-                  "name": "EnableCVM",
-                  "definition": {
-                    "type": "Boolean",
-                    "required": false,
-                    "defaultValue": "false"
-                  }
-                },
-                {
-                  "name": "EnableMSP",
-                  "definition": {
-                    "type": "Boolean",
-                    "required": false,
-                    "defaultValue": "true"
-                  }
-                },
-                {
-                  "name": "EnableSleepBetweenVMAndWorkloadDeployment",
-                  "definition": {
-                    "type": "Boolean",
-                    "required": false,
-                    "defaultValue": "true"
-                  }
-                },
-                {
-                  "name": "EphemeralDisks",
-                  "definition": {
-                    "type": "Boolean",
-                    "required": false,
-                    "defaultValue": "true"
-                  }
-                },
-                {
-                  "name": "HwSkuIds",
-                  "definition": {
-                    "required": false,
-                    "defaultValue": "null"
-                  }
-                },
-                {
-                  "name": "ImageOffer",
-                  "definition": {
-                    "type": "String",
-                    "required": false,
-                    "defaultValue": "WindowsServer"
-                  }
-                },
-                {
-                  "name": "ImagePublisher",
-                  "definition": {
-                    "type": "String",
-                    "required": false,
-                    "defaultValue": "MicrosoftWindowsServer"
-                  }
-                },
-                {
-                  "name": "ImageSku",
-                  "definition": {
-                    "type": "String",
-                    "required": false,
-                    "defaultValue": "2022-datacenter-core-smalldisk-g2"
-                  }
-                },
-                {
-                  "name": "ImageVersion",
-                  "definition": {
-                    "type": "String",
-                    "required": false,
-                    "defaultValue": "Latest"
-                  }
-                },
-                {
-                  "name": "IsControlledLM",
-                  "definition": {
-                    "type": "Boolean",
-                    "required": false,
-                    "defaultValue": "false"
-                  }
-                },
-                {
-                  "name": "IsOverlake",
-                  "definition": {
-                    "required": false,
-                    "defaultValue": "null"
-                  }
-                },
-                {
-                  "name": "MachinePoolType",
-                  "definition": {
-                    "required": false,
-                    "defaultValue": "null"
-                  }
-                },
-                {
-                  "name": "NeedPlanInformation",
-                  "definition": {
-                    "type": "Boolean",
-                    "required": false,
-                    "defaultValue": "false"
-                  }
-                },
-                {
-                  "name": "NodeCount",
-                  "definition": {
-                    "description": "Number of Nodes to be requested",
-                    "type": "Integer",
-                    "required": false,
-                    "defaultValue": "2"
-                  }
-                },
-                {
-                  "name": "NumberOfDisks",
-                  "definition": {
-                    "type": "Integer",
-                    "required": false,
-                    "defaultValue": "1"
-                  }
-                },
-                {
-                  "name": "OptOutClusters",
-                  "definition": {
-                    "required": false,
-                    "defaultValue": "[\"DZ6PrdApp15\",\"BNZ10PrdGPC05\",\"LVL02PrdGPZ01\",\"LVL01PrdApp46\",\"IAD20PrdApp39\",\"DSM06PrdApp18\",\"SN4PrdApp39\",\"LVL03PrdApp14\",\"PHX70PrdApp28\"]"
-                  }
-                },
-                {
-                  "name": "OptOutRegions",
-                  "definition": {
-                    "description": "The OptOutRegions Schema",
-                    "required": false,
-                    "defaultValue": "null"
-                  }
-                },
-                {
-                  "name": "Platform",
-                  "definition": {
-                    "type": "String",
-                    "required": false,
-                    "defaultValue": "AzureWindows"
-                  }
-                },
-                {
-                  "name": "RegionType",
-                  "definition": {
-                    "required": false,
-                    "defaultValue": "[\"Hero\",\"Hub\",\"Satellite\"]"
-                  }
-                },
-                {
-                  "name": "ResourceLifeTime",
-                  "definition": {
-                    "required": false,
-                    "defaultValue": "P0DT18H"
-                  }
-                },
-                {
-                  "name": "SkipFilters",
-                  "definition": {
-                    "required": false,
-                    "defaultValue": "[\"Subscription-VmSize Restrictions\",\"Clusters-VmSku Capacity\"]"
-                  }
-                },
-                {
-                  "name": "SleepBetweenControlledLM",
-                  "definition": {
-                    "type": "String",
-                    "required": false,
-                    "defaultValue": "PT10M"
-                  }
-                },
-                {
-                  "name": "SleepDurationBeforeVmDeployment",
-                  "definition": {
-                    "type": "String",
-                    "required": false,
-                    "defaultValue": "PT10M"
-                  }
-                },
-                {
-                  "name": "StorageType",
-                  "definition": {
-                    "type": "String",
-                    "required": false,
-                    "defaultValue": "Standard_LRS"
-                  }
-                },
-                {
-                  "name": "SubscriptionId",
-                  "definition": {
-                    "type": "String",
-                    "required": true,
-                    "defaultValue": ""
-                  }
-                },
-                {
-                  "name": "TenantAzureConfigPath",
-                  "definition": {
-                    "type": "String",
-                    "required": true,
-                    "defaultValue": "/src/CirrusTenants/AzQualify/TenantAzureConfig.json"
-                  }
-                },
-                {
-                  "name": "TestPassInstanceLifeTime",
-                  "definition": {
-                    "required": false,
-                    "defaultValue": "P0DT20H"
-                  }
-                },
-                {
-                  "name": "TestPassInstanceLifeTimeInMins",
-                  "definition": {
-                    "type": "Integer",
-                    "required": false,
-                    "defaultValue": "1200"
-                  }
-                },
-                {
-                  "name": "UpdateTIPNode",
-                  "definition": {
-                    "type": "Boolean",
-                    "required": false,
-                    "defaultValue": "true"
-                  }
-                },
-                {
-                  "name": "VmCount",
-                  "definition": {
-                    "description": "Total Count of VMs to be deployed",
-                    "type": "Integer",
-                    "required": false,
-                    "defaultValue": "1"
-                  }
-                },
-                {
-                  "name": "VmCountAfterUpdate",
-                  "definition": {
-                    "description": "Count of VMs to be deployed After Update",
-                    "type": "Integer",
-                    "required": false,
-                    "defaultValue": "1"
-                  }
-                },
-                {
-                  "name": "VmCountBeforeUpdate",
-                  "definition": {
-                    "description": "Count of VMs to be deployed Before Update",
-                    "type": "Integer",
-                    "required": false,
-                    "defaultValue": "1"
-                  }
-                },
-                {
-                  "name": "VmDeployAfterUpdateEnabled",
-                  "definition": {
-                    "type": "Boolean",
-                    "required": false,
-                    "defaultValue": "true"
-                  }
-                },
-                {
-                  "name": "VmDeployBeforeUpdateEnabled",
-                  "definition": {
-                    "type": "Boolean",
-                    "required": false,
-                    "defaultValue": "true"
-                  }
-                },
-                {
-                  "name": "VmSku",
-                  "definition": {
-                    "type": "String",
-                    "required": false,
-                    "defaultValue": ""
-                  }
-                },
-                {
-                  "name": "encryptionAtHost",
-                  "definition": {
-                    "type": "Boolean",
-                    "required": false,
-                    "defaultValue": "true"
-                  }
-                }
-              ],
-              "testStoreUri": "tst://azqualify/cloud-ex/host-agent-msplmdefinition@1.0.0",
-              "currentVersion": "/providers/Microsoft.PlatformValidation/validationTests/azqualify-cloud-ex-host-agent-msplmdefinition/versions/1.0.0",
-              "latestPublishedVersion": "/providers/Microsoft.PlatformValidation/validationTests/azqualify-cloud-ex-host-agent-msplmdefinition/versions/1.0.0",
-              "lastPublishedAt": "2026-10-09T10:03:40.8160449Z"
-            }
-          },
-          {
-            "id": "/providers/Microsoft.PlatformValidation/validationTests/azqualify-cloud-ex-hwqualification",
-            "name": "azqualify-cloud-ex-hwqualification",
-            "type": "Microsoft.PlatformValidation/validationTests",
-            "properties": {
-              "description": "HwQualification TestPassDefinition with Multi VM and TestWorkload",
-              "displayName": "Hwqualification",
-              "audience": "Internal",
-              "provisioningState": "Succeeded",
-              "categoryIds": [
-                "hardware-qualification"
-              ],
-              "owners": [
-                "Sanitized"
-              ],
-              "inputs": [
-                {
-                  "name": "CandidateClusters",
-                  "definition": {
-                    "required": false,
-                    "defaultValue": "null"
-                  }
-                },
-                {
-                  "name": "CreatedBy",
-                  "definition": {
-                    "type": "String",
-                    "required": true,
-                    "defaultValue": "Sanitized"
-                  }
-                },
-                {
-                  "name": "EnableCVM",
-                  "definition": {
-                    "type": "Boolean",
-                    "required": false,
-                    "defaultValue": "false"
-                  }
-                },
-                {
-                  "name": "NeedPlanInformation",
-                  "definition": {
-                    "type": "Boolean",
-                    "required": false,
-                    "defaultValue": "false"
-                  }
-                },
-                {
-                  "name": "NodeCount",
-                  "definition": {
-                    "description": "Number of Nodes to be requested",
-                    "type": "Integer",
-                    "required": false,
-                    "defaultValue": "1"
-                  }
-                },
-                {
-                  "name": "NumberOfDisks",
-                  "definition": {
-                    "type": "Integer",
-                    "required": false,
-                    "defaultValue": "1"
-                  }
-                },
-                {
-                  "name": "OptOutClusters",
-                  "definition": {
-                    "required": false,
-                    "defaultValue": "[\"LVL01PrdApp46\",\"IAD20PrdApp39\",\"SN4PrdApp39\",\"LVL03PrdApp14\",\"PHX70PrdApp28\"]"
-                  }
-                },
-                {
-                  "name": "OptOutRegions",
-                  "definition": {
-                    "description": "The OptOutRegions Schema",
-                    "required": false,
-                    "defaultValue": "null"
-                  }
-                },
-                {
-                  "name": "RegionType",
-                  "definition": {
-                    "required": false,
-                    "defaultValue": "[\"Hero\",\"Hub\",\"Satellite\"]"
-                  }
-                },
-                {
-                  "name": "ResourceLifeTime",
-                  "definition": {
-                    "required": false,
-                    "defaultValue": "P0DT18H"
-                  }
-                },
-                {
-                  "name": "SkipUtilizationChecks",
-                  "definition": {
-                    "type": "Boolean",
-                    "required": false,
-                    "defaultValue": "false"
-                  }
-                },
-                {
-                  "name": "StorageType",
-                  "definition": {
-                    "type": "String",
-                    "required": false,
-                    "defaultValue": "Standard_LRS"
-                  }
-                },
-                {
-                  "name": "SubscriptionId",
-                  "definition": {
-                    "type": "String",
-                    "required": true,
-                    "defaultValue": ""
-                  }
-                },
-                {
-                  "name": "TenantAzureConfigPath",
-                  "definition": {
-                    "type": "String",
-                    "required": true,
-                    "defaultValue": "/src/CirrusTenants/AzQualify/TenantAzureConfig.json"
-                  }
-                },
-                {
-                  "name": "TestPassInstanceLifeTime",
-                  "definition": {
-                    "required": false,
-                    "defaultValue": "P0DT20H"
-                  }
-                },
-                {
-                  "name": "TestPassInstanceLifeTimeInMins",
-                  "definition": {
-                    "type": "Integer",
-                    "required": false,
-                    "defaultValue": "1200"
-                  }
-                },
-                {
-                  "name": "VmCount",
-                  "definition": {
-                    "description": "Count of VMs to be deployed",
-                    "type": "Integer",
-                    "required": false,
-                    "defaultValue": "1"
-                  }
-                },
-                {
-                  "name": "VmSku",
-                  "definition": {
-                    "type": "String",
-                    "required": false,
-                    "defaultValue": ""
-                  }
-                }
-              ],
-              "testStoreUri": "tst://azqualify/cloud-ex/hwqualification@1.0.0",
-              "currentVersion": "/providers/Microsoft.PlatformValidation/validationTests/azqualify-cloud-ex-hwqualification/versions/1.0.0",
-              "latestPublishedVersion": "/providers/Microsoft.PlatformValidation/validationTests/azqualify-cloud-ex-hwqualification/versions/1.0.0",
-              "lastPublishedAt": "2026-10-09T10:03:41.1351281Z"
-            }
-          },
-          {
-            "id": "/providers/Microsoft.PlatformValidation/validationTests/azqualify-cloud-ex-n1wsperf-vnet-encryption-control-group",
+            "id": "/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.PlatformValidation/validationTests/azqualify-cloud-ex-n1wsperf-vnet-encryption-control-group",
             "name": "azqualify-cloud-ex-n1wsperf-vnet-encryption-control-group",
             "type": "Microsoft.PlatformValidation/validationTests",
             "properties": {
@@ -2596,9 +1715,9 @@
               "audience": "Internal",
               "provisioningState": "Succeeded",
               "categoryIds": [
-                "networking-performance",
-                "vnet-encryption",
-                "host-baseline"
+                "/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.PlatformValidation/validationTestCategories/networking-performance",
+                "/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.PlatformValidation/validationTestCategories/vnet-encryption",
+                "/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.PlatformValidation/validationTestCategories/host-baseline"
               ],
               "owners": [
                 "Sanitized"
@@ -2776,13 +1895,13 @@
                 }
               ],
               "testStoreUri": "tst://azqualify/cloud-ex/n1wsperf-vnet-encryption-control-group@1.0.0",
-              "currentVersion": "/providers/Microsoft.PlatformValidation/validationTests/azqualify-cloud-ex-n1wsperf-vnet-encryption-control-group/versions/1.0.0",
-              "latestPublishedVersion": "/providers/Microsoft.PlatformValidation/validationTests/azqualify-cloud-ex-n1wsperf-vnet-encryption-control-group/versions/1.0.0",
-              "lastPublishedAt": "2026-10-09T10:03:41.7727005Z"
+              "currentVersion": "/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.PlatformValidation/validationTests/azqualify-cloud-ex-n1wsperf-vnet-encryption-control-group/versions/1.0.0",
+              "latestPublishedVersion": "/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.PlatformValidation/validationTests/azqualify-cloud-ex-n1wsperf-vnet-encryption-control-group/versions/1.0.0",
+              "lastPublishedAt": "2026-10-27T09:15:37.4016976Z"
             }
           },
           {
-            "id": "/providers/Microsoft.PlatformValidation/validationTests/azqualify-cloud-ex-resi-in-place-migration-reverse-migration",
+            "id": "/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.PlatformValidation/validationTests/azqualify-cloud-ex-resi-in-place-migration-reverse-migration",
             "name": "azqualify-cloud-ex-resi-in-place-migration-reverse-migration",
             "type": "Microsoft.PlatformValidation/validationTests",
             "properties": {
@@ -2791,7 +1910,7 @@
               "audience": "Internal",
               "provisioningState": "Succeeded",
               "categoryIds": [
-                "live-migration"
+                "/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.PlatformValidation/validationTestCategories/live-migration"
               ],
               "owners": [
                 "Sanitized"
@@ -3193,13 +2312,390 @@
                 }
               ],
               "testStoreUri": "tst://azqualify/cloud-ex/resi-in-place-migration-reverse-migration@1.0.0",
-              "currentVersion": "/providers/Microsoft.PlatformValidation/validationTests/azqualify-cloud-ex-resi-in-place-migration-reverse-migration/versions/1.0.0",
-              "latestPublishedVersion": "/providers/Microsoft.PlatformValidation/validationTests/azqualify-cloud-ex-resi-in-place-migration-reverse-migration/versions/1.0.0",
-              "lastPublishedAt": "2026-10-09T10:03:42.1961284Z"
+              "currentVersion": "/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.PlatformValidation/validationTests/azqualify-cloud-ex-resi-in-place-migration-reverse-migration/versions/1.0.0",
+              "latestPublishedVersion": "/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.PlatformValidation/validationTests/azqualify-cloud-ex-resi-in-place-migration-reverse-migration/versions/1.0.0",
+              "lastPublishedAt": "2026-10-27T09:15:37.9482968Z"
             }
           },
           {
-            "id": "/providers/Microsoft.PlatformValidation/validationTests/azqualify-cloud-ex-windows-server2025-arm-tip-dynamic",
+            "id": "/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.PlatformValidation/validationTests/azqualify-cloud-ex-host-agent-msplmdefinition",
+            "name": "azqualify-cloud-ex-host-agent-msplmdefinition",
+            "type": "Microsoft.PlatformValidation/validationTests",
+            "properties": {
+              "description": "TestPassDefinition with MSP VM and LiveMigrationPlatformAction",
+              "displayName": "Host Agent Msplmdefinition",
+              "audience": "Internal",
+              "provisioningState": "Succeeded",
+              "categoryIds": [
+                "/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.PlatformValidation/validationTestCategories/host-agent"
+              ],
+              "owners": [
+                "Sanitized"
+              ],
+              "inputs": [
+                {
+                  "name": "AgentPackage",
+                  "definition": {
+                    "type": "Object",
+                    "required": false,
+                    "defaultValue": "{}"
+                  }
+                },
+                {
+                  "name": "AgentPackage_1",
+                  "definition": {
+                    "type": "Object",
+                    "required": false,
+                    "defaultValue": "{}"
+                  }
+                },
+                {
+                  "name": "AllowedRegions",
+                  "definition": {
+                    "required": false,
+                    "defaultValue": "null"
+                  }
+                },
+                {
+                  "name": "ArmTemplateFilePath",
+                  "definition": {
+                    "type": "String",
+                    "required": false,
+                    "defaultValue": "src/CirrusTenants/AzQualify/CloudEx/ArmTemplate.json"
+                  }
+                },
+                {
+                  "name": "CandidateClusters",
+                  "definition": {
+                    "required": false,
+                    "defaultValue": "null"
+                  }
+                },
+                {
+                  "name": "ControlledLMLiveMigrateTimeout",
+                  "definition": {
+                    "type": "String",
+                    "required": false,
+                    "defaultValue": "P0DT6H"
+                  }
+                },
+                {
+                  "name": "CreatedBy",
+                  "definition": {
+                    "type": "String",
+                    "required": true,
+                    "defaultValue": "Sanitized"
+                  }
+                },
+                {
+                  "name": "DiskSize",
+                  "definition": {
+                    "type": "Integer",
+                    "required": false,
+                    "defaultValue": "256"
+                  }
+                },
+                {
+                  "name": "EnableAcceleratedNetworking",
+                  "definition": {
+                    "type": "Boolean",
+                    "required": false,
+                    "defaultValue": "false"
+                  }
+                },
+                {
+                  "name": "EnableCVM",
+                  "definition": {
+                    "type": "Boolean",
+                    "required": false,
+                    "defaultValue": "false"
+                  }
+                },
+                {
+                  "name": "EnableMSP",
+                  "definition": {
+                    "type": "Boolean",
+                    "required": false,
+                    "defaultValue": "true"
+                  }
+                },
+                {
+                  "name": "EnableSleepBetweenVMAndWorkloadDeployment",
+                  "definition": {
+                    "type": "Boolean",
+                    "required": false,
+                    "defaultValue": "true"
+                  }
+                },
+                {
+                  "name": "EphemeralDisks",
+                  "definition": {
+                    "type": "Boolean",
+                    "required": false,
+                    "defaultValue": "true"
+                  }
+                },
+                {
+                  "name": "HwSkuIds",
+                  "definition": {
+                    "required": false,
+                    "defaultValue": "null"
+                  }
+                },
+                {
+                  "name": "ImageOffer",
+                  "definition": {
+                    "type": "String",
+                    "required": false,
+                    "defaultValue": "WindowsServer"
+                  }
+                },
+                {
+                  "name": "ImagePublisher",
+                  "definition": {
+                    "type": "String",
+                    "required": false,
+                    "defaultValue": "MicrosoftWindowsServer"
+                  }
+                },
+                {
+                  "name": "ImageSku",
+                  "definition": {
+                    "type": "String",
+                    "required": false,
+                    "defaultValue": "2022-datacenter-core-smalldisk-g2"
+                  }
+                },
+                {
+                  "name": "ImageVersion",
+                  "definition": {
+                    "type": "String",
+                    "required": false,
+                    "defaultValue": "Latest"
+                  }
+                },
+                {
+                  "name": "IsControlledLM",
+                  "definition": {
+                    "type": "Boolean",
+                    "required": false,
+                    "defaultValue": "false"
+                  }
+                },
+                {
+                  "name": "IsOverlake",
+                  "definition": {
+                    "required": false,
+                    "defaultValue": "null"
+                  }
+                },
+                {
+                  "name": "MachinePoolType",
+                  "definition": {
+                    "required": false,
+                    "defaultValue": "null"
+                  }
+                },
+                {
+                  "name": "NeedPlanInformation",
+                  "definition": {
+                    "type": "Boolean",
+                    "required": false,
+                    "defaultValue": "false"
+                  }
+                },
+                {
+                  "name": "NodeCount",
+                  "definition": {
+                    "description": "Number of Nodes to be requested",
+                    "type": "Integer",
+                    "required": false,
+                    "defaultValue": "2"
+                  }
+                },
+                {
+                  "name": "NumberOfDisks",
+                  "definition": {
+                    "type": "Integer",
+                    "required": false,
+                    "defaultValue": "1"
+                  }
+                },
+                {
+                  "name": "OptOutClusters",
+                  "definition": {
+                    "required": false,
+                    "defaultValue": "[\"DZ6PrdApp15\",\"BNZ10PrdGPC05\",\"LVL02PrdGPZ01\",\"LVL01PrdApp46\",\"IAD20PrdApp39\",\"DSM06PrdApp18\",\"SN4PrdApp39\",\"LVL03PrdApp14\",\"PHX70PrdApp28\"]"
+                  }
+                },
+                {
+                  "name": "OptOutRegions",
+                  "definition": {
+                    "description": "The OptOutRegions Schema",
+                    "required": false,
+                    "defaultValue": "null"
+                  }
+                },
+                {
+                  "name": "Platform",
+                  "definition": {
+                    "type": "String",
+                    "required": false,
+                    "defaultValue": "AzureWindows"
+                  }
+                },
+                {
+                  "name": "RegionType",
+                  "definition": {
+                    "required": false,
+                    "defaultValue": "[\"Hero\",\"Hub\",\"Satellite\"]"
+                  }
+                },
+                {
+                  "name": "ResourceLifeTime",
+                  "definition": {
+                    "required": false,
+                    "defaultValue": "P0DT18H"
+                  }
+                },
+                {
+                  "name": "SkipFilters",
+                  "definition": {
+                    "required": false,
+                    "defaultValue": "[\"Subscription-VmSize Restrictions\",\"Clusters-VmSku Capacity\"]"
+                  }
+                },
+                {
+                  "name": "SleepBetweenControlledLM",
+                  "definition": {
+                    "type": "String",
+                    "required": false,
+                    "defaultValue": "PT10M"
+                  }
+                },
+                {
+                  "name": "SleepDurationBeforeVmDeployment",
+                  "definition": {
+                    "type": "String",
+                    "required": false,
+                    "defaultValue": "PT10M"
+                  }
+                },
+                {
+                  "name": "StorageType",
+                  "definition": {
+                    "type": "String",
+                    "required": false,
+                    "defaultValue": "Standard_LRS"
+                  }
+                },
+                {
+                  "name": "SubscriptionId",
+                  "definition": {
+                    "type": "String",
+                    "required": true,
+                    "defaultValue": ""
+                  }
+                },
+                {
+                  "name": "TenantAzureConfigPath",
+                  "definition": {
+                    "type": "String",
+                    "required": true,
+                    "defaultValue": "/src/CirrusTenants/AzQualify/TenantAzureConfig.json"
+                  }
+                },
+                {
+                  "name": "TestPassInstanceLifeTime",
+                  "definition": {
+                    "required": false,
+                    "defaultValue": "P0DT20H"
+                  }
+                },
+                {
+                  "name": "TestPassInstanceLifeTimeInMins",
+                  "definition": {
+                    "type": "Integer",
+                    "required": false,
+                    "defaultValue": "1200"
+                  }
+                },
+                {
+                  "name": "UpdateTIPNode",
+                  "definition": {
+                    "type": "Boolean",
+                    "required": false,
+                    "defaultValue": "true"
+                  }
+                },
+                {
+                  "name": "VmCount",
+                  "definition": {
+                    "description": "Total Count of VMs to be deployed",
+                    "type": "Integer",
+                    "required": false,
+                    "defaultValue": "1"
+                  }
+                },
+                {
+                  "name": "VmCountAfterUpdate",
+                  "definition": {
+                    "description": "Count of VMs to be deployed After Update",
+                    "type": "Integer",
+                    "required": false,
+                    "defaultValue": "1"
+                  }
+                },
+                {
+                  "name": "VmCountBeforeUpdate",
+                  "definition": {
+                    "description": "Count of VMs to be deployed Before Update",
+                    "type": "Integer",
+                    "required": false,
+                    "defaultValue": "1"
+                  }
+                },
+                {
+                  "name": "VmDeployAfterUpdateEnabled",
+                  "definition": {
+                    "type": "Boolean",
+                    "required": false,
+                    "defaultValue": "true"
+                  }
+                },
+                {
+                  "name": "VmDeployBeforeUpdateEnabled",
+                  "definition": {
+                    "type": "Boolean",
+                    "required": false,
+                    "defaultValue": "true"
+                  }
+                },
+                {
+                  "name": "VmSku",
+                  "definition": {
+                    "type": "String",
+                    "required": false,
+                    "defaultValue": ""
+                  }
+                },
+                {
+                  "name": "encryptionAtHost",
+                  "definition": {
+                    "type": "Boolean",
+                    "required": false,
+                    "defaultValue": "true"
+                  }
+                }
+              ],
+              "testStoreUri": "tst://azqualify/cloud-ex/host-agent-msplmdefinition@1.0.0",
+              "currentVersion": "/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.PlatformValidation/validationTests/azqualify-cloud-ex-host-agent-msplmdefinition/versions/1.0.0",
+              "latestPublishedVersion": "/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.PlatformValidation/validationTests/azqualify-cloud-ex-host-agent-msplmdefinition/versions/1.0.0",
+              "lastPublishedAt": "2026-10-27T09:15:38.0838306Z"
+            }
+          },
+          {
+            "id": "/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.PlatformValidation/validationTests/azqualify-cloud-ex-windows-server2025-arm-tip-dynamic",
             "name": "azqualify-cloud-ex-windows-server2025-arm-tip-dynamic",
             "type": "Microsoft.PlatformValidation/validationTests",
             "properties": {
@@ -3208,8 +2704,8 @@
               "audience": "Internal",
               "provisioningState": "Succeeded",
               "categoryIds": [
-                "vm-deployment",
-                "operating-system"
+                "/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.PlatformValidation/validationTestCategories/vm-deployment",
+                "/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.PlatformValidation/validationTestCategories/operating-system"
               ],
               "owners": [
                 "Sanitized"
@@ -3439,13 +2935,510 @@
                 }
               ],
               "testStoreUri": "tst://azqualify/cloud-ex/windows-server2025-arm-tip-dynamic@1.0.0",
-              "currentVersion": "/providers/Microsoft.PlatformValidation/validationTests/azqualify-cloud-ex-windows-server2025-arm-tip-dynamic/versions/1.0.0",
-              "latestPublishedVersion": "/providers/Microsoft.PlatformValidation/validationTests/azqualify-cloud-ex-windows-server2025-arm-tip-dynamic/versions/1.0.0",
-              "lastPublishedAt": "2026-10-09T10:03:42.8181305Z"
+              "currentVersion": "/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.PlatformValidation/validationTests/azqualify-cloud-ex-windows-server2025-arm-tip-dynamic/versions/1.0.0",
+              "latestPublishedVersion": "/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.PlatformValidation/validationTests/azqualify-cloud-ex-windows-server2025-arm-tip-dynamic/versions/1.0.0",
+              "lastPublishedAt": "2026-10-27T09:15:39.1171434Z"
             }
           },
           {
-            "id": "/providers/Microsoft.PlatformValidation/validationTests/azqualify-cloud-ex-windows-server2025-tip-dynamic",
+            "id": "/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.PlatformValidation/validationTests/compute-vmimagevalidation-disk-multiple-of-one-mb",
+            "name": "compute-vmimagevalidation-disk-multiple-of-one-mb",
+            "type": "Microsoft.PlatformValidation/validationTests",
+            "properties": {
+              "description": "Verifies the VHD size is an exact multiple of 1 MB for the OS disk and every provided data disk, as required by the VHD specification. Validated by reading each disk VHD directly; no VM is provisioned. AzCertify PolicyId: 200.3.1.13. More info: https://aka.ms/vhd-specifications.",
+              "displayName": "OS Disk Size Multiple of 1 MB Check",
+              "audience": "Public",
+              "provisioningState": "Succeeded",
+              "categoryIds": [
+                "/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.PlatformValidation/validationTestCategories/image-file-integrity-validations"
+              ],
+              "owners": [
+                "Sanitized"
+              ],
+              "testStoreUri": "tst://Compute/VMImageValidation/disk-multiple-of-one-mb@1.0.0",
+              "currentVersion": "/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.PlatformValidation/validationTests/compute-vmimagevalidation-disk-multiple-of-one-mb/versions/1.0.0",
+              "latestPublishedVersion": "/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.PlatformValidation/validationTests/compute-vmimagevalidation-disk-multiple-of-one-mb/versions/1.0.0",
+              "lastPublishedAt": "2026-10-27T09:15:40.1211956Z"
+            }
+          },
+          {
+            "id": "/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.PlatformValidation/validationTests/azqualify-cloud-ex-host-agent-lisa",
+            "name": "azqualify-cloud-ex-host-agent-lisa",
+            "type": "Microsoft.PlatformValidation/validationTests",
+            "properties": {
+              "description": "TestPassDefinition for running LISAWorkload using CloudEx for HostAgent Scenarios",
+              "displayName": "Host Agent Lisa",
+              "audience": "Internal",
+              "provisioningState": "Succeeded",
+              "categoryIds": [
+                "/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.PlatformValidation/validationTestCategories/host-agent"
+              ],
+              "owners": [
+                "Sanitized"
+              ],
+              "inputs": [
+                {
+                  "name": "AgentPackage",
+                  "definition": {
+                    "type": "Object",
+                    "required": false,
+                    "defaultValue": "{}"
+                  }
+                },
+                {
+                  "name": "AllowedClusterGenerations",
+                  "definition": {
+                    "description": "Candidate cluster list for TiP environment",
+                    "required": false,
+                    "defaultValue": "null"
+                  }
+                },
+                {
+                  "name": "AllowedRegions",
+                  "definition": {
+                    "description": "The AllowedRegions for TiP run LISAv3",
+                    "required": false,
+                    "defaultValue": "null"
+                  }
+                },
+                {
+                  "name": "CandidateClusters",
+                  "definition": {
+                    "description": "The Array of CandidateClusters to be used to apply TiPNodeSession",
+                    "required": false,
+                    "defaultValue": "null"
+                  }
+                },
+                {
+                  "name": "ComponentName",
+                  "definition": {
+                    "description": "ComponentName used for the test pass",
+                    "type": "String",
+                    "required": true,
+                    "defaultValue": "LISAWorkload"
+                  }
+                },
+                {
+                  "name": "Concurrent",
+                  "definition": {
+                    "type": "Integer",
+                    "required": false,
+                    "defaultValue": "2"
+                  }
+                },
+                {
+                  "name": "CreatedBy",
+                  "definition": {
+                    "type": "String",
+                    "required": false,
+                    "defaultValue": "Sanitized"
+                  }
+                },
+                {
+                  "name": "CustomTemplateName",
+                  "definition": {
+                    "type": "String",
+                    "required": false,
+                    "defaultValue": "/src/CirrusTenants/LSG/AzQualify/CirrusV2/AzQualify-LISATest-OrchestratorV3.ArmTemplate.json"
+                  }
+                },
+                {
+                  "name": "CustomTemplateParameterName",
+                  "definition": {
+                    "type": "String",
+                    "required": false,
+                    "defaultValue": "/src/CirrusTenants/LSG/AzQualify/CirrusV2/AzQualify-LISATest-Orchestrator.ArmParameters.json"
+                  }
+                },
+                {
+                  "name": "HostAgentUpdateEnabled",
+                  "definition": {
+                    "description": "If set to true, Host Agent update action will run",
+                    "type": "Boolean",
+                    "required": false,
+                    "defaultValue": "true"
+                  }
+                },
+                {
+                  "name": "HwSkuIds",
+                  "definition": {
+                    "required": false,
+                    "defaultValue": "null"
+                  }
+                },
+                {
+                  "name": "ImperativeBranch",
+                  "definition": {
+                    "description": "LISA branch to be tested with",
+                    "type": "String",
+                    "required": false,
+                    "defaultValue": "main"
+                  }
+                },
+                {
+                  "name": "IsOverlake",
+                  "definition": {
+                    "description": "If set to true, Overlake Hardware will be used for the Tip Session",
+                    "type": "Boolean",
+                    "required": false,
+                    "defaultValue": "false"
+                  }
+                },
+                {
+                  "name": "MachinePoolType",
+                  "definition": {
+                    "required": false,
+                    "defaultValue": "Compute"
+                  }
+                },
+                {
+                  "name": "NumberOfNodes",
+                  "definition": {
+                    "type": "Integer",
+                    "required": true,
+                    "defaultValue": "2"
+                  }
+                },
+                {
+                  "name": "OSImage",
+                  "definition": {
+                    "description": "Comma seperated marketplace images",
+                    "type": "String",
+                    "required": false,
+                    "defaultValue": ""
+                  }
+                },
+                {
+                  "name": "OptOutClusters",
+                  "definition": {
+                    "description": "Will remove this list of clusters from cluster search",
+                    "required": false,
+                    "defaultValue": "null"
+                  }
+                },
+                {
+                  "name": "OptOutRegions",
+                  "definition": {
+                    "description": "The OptOutRegions for TiP run LISAv3",
+                    "required": false,
+                    "defaultValue": "null"
+                  }
+                },
+                {
+                  "name": "OverrideVMSize",
+                  "definition": {
+                    "type": "String",
+                    "required": true,
+                    "defaultValue": ""
+                  }
+                },
+                {
+                  "name": "RegionType",
+                  "definition": {
+                    "required": false,
+                    "defaultValue": "[\"Hero\",\"Hub\",\"Satellite\"]"
+                  }
+                },
+                {
+                  "name": "ResourceLifeTime",
+                  "definition": {
+                    "description": "Duration of LISA test pass estimated, orchestrator will be destroyed over this time",
+                    "type": "String",
+                    "required": false,
+                    "defaultValue": "P0DT18H"
+                  }
+                },
+                {
+                  "name": "Retry",
+                  "definition": {
+                    "type": "String",
+                    "required": false,
+                    "defaultValue": "No"
+                  }
+                },
+                {
+                  "name": "SkipFilters",
+                  "definition": {
+                    "required": false,
+                    "defaultValue": "null"
+                  }
+                },
+                {
+                  "name": "SleepDurationBeforeVmDeployment",
+                  "definition": {
+                    "type": "String",
+                    "required": false,
+                    "defaultValue": "PT1M"
+                  }
+                },
+                {
+                  "name": "StorageType",
+                  "definition": {
+                    "type": "String",
+                    "required": false,
+                    "defaultValue": "Premium_LRS"
+                  }
+                },
+                {
+                  "name": "SubscriptionId",
+                  "definition": {
+                    "description": "SubscriptionId for the Testpass",
+                    "type": "String",
+                    "required": true,
+                    "defaultValue": ""
+                  }
+                },
+                {
+                  "name": "TenantAzureConfigPath",
+                  "definition": {
+                    "type": "String",
+                    "required": false,
+                    "defaultValue": "/src/CirrusTenants/AzQualify/TenantAzureConfig.json"
+                  }
+                },
+                {
+                  "name": "TestParameters",
+                  "definition": {
+                    "description": "Specify parameters to Run LISA test",
+                    "type": "Object",
+                    "required": false,
+                    "defaultValue": "{}"
+                  }
+                },
+                {
+                  "name": "TestPassID",
+                  "definition": {
+                    "type": "String",
+                    "required": false,
+                    "defaultValue": "AzQualify Validation"
+                  }
+                },
+                {
+                  "name": "TestPassInstanceLifeTime",
+                  "definition": {
+                    "required": false,
+                    "defaultValue": "P0DT20H"
+                  }
+                },
+                {
+                  "name": "TestProject",
+                  "definition": {
+                    "type": "String",
+                    "required": false,
+                    "defaultValue": "AzQualify Validation"
+                  }
+                },
+                {
+                  "name": "TestType",
+                  "definition": {
+                    "type": "String",
+                    "required": true,
+                    "defaultValue": ""
+                  }
+                },
+                {
+                  "name": "VmSku",
+                  "definition": {
+                    "description": "The VmSku to be referenced to apply for clusters and TiP environment. e.g., Standard_DS2_v2, Standard_D15_v2, etc",
+                    "type": "String",
+                    "required": true,
+                    "defaultValue": ""
+                  }
+                }
+              ],
+              "testStoreUri": "tst://azqualify/cloud-ex/host-agent-lisa@1.0.0",
+              "currentVersion": "/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.PlatformValidation/validationTests/azqualify-cloud-ex-host-agent-lisa/versions/1.0.0",
+              "latestPublishedVersion": "/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.PlatformValidation/validationTests/azqualify-cloud-ex-host-agent-lisa/versions/1.0.0",
+              "lastPublishedAt": "2026-10-27T09:15:40.1480236Z"
+            }
+          },
+          {
+            "id": "/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.PlatformValidation/validationTests/azqualify-cloud-ex-hwqualification",
+            "name": "azqualify-cloud-ex-hwqualification",
+            "type": "Microsoft.PlatformValidation/validationTests",
+            "properties": {
+              "description": "HwQualification TestPassDefinition with Multi VM and TestWorkload",
+              "displayName": "Hwqualification",
+              "audience": "Internal",
+              "provisioningState": "Succeeded",
+              "categoryIds": [
+                "/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.PlatformValidation/validationTestCategories/hardware-qualification"
+              ],
+              "owners": [
+                "Sanitized"
+              ],
+              "inputs": [
+                {
+                  "name": "CandidateClusters",
+                  "definition": {
+                    "required": false,
+                    "defaultValue": "null"
+                  }
+                },
+                {
+                  "name": "CreatedBy",
+                  "definition": {
+                    "type": "String",
+                    "required": true,
+                    "defaultValue": "Sanitized"
+                  }
+                },
+                {
+                  "name": "EnableCVM",
+                  "definition": {
+                    "type": "Boolean",
+                    "required": false,
+                    "defaultValue": "false"
+                  }
+                },
+                {
+                  "name": "NeedPlanInformation",
+                  "definition": {
+                    "type": "Boolean",
+                    "required": false,
+                    "defaultValue": "false"
+                  }
+                },
+                {
+                  "name": "NodeCount",
+                  "definition": {
+                    "description": "Number of Nodes to be requested",
+                    "type": "Integer",
+                    "required": false,
+                    "defaultValue": "1"
+                  }
+                },
+                {
+                  "name": "NumberOfDisks",
+                  "definition": {
+                    "type": "Integer",
+                    "required": false,
+                    "defaultValue": "1"
+                  }
+                },
+                {
+                  "name": "OptOutClusters",
+                  "definition": {
+                    "required": false,
+                    "defaultValue": "[\"LVL01PrdApp46\",\"IAD20PrdApp39\",\"SN4PrdApp39\",\"LVL03PrdApp14\",\"PHX70PrdApp28\"]"
+                  }
+                },
+                {
+                  "name": "OptOutRegions",
+                  "definition": {
+                    "description": "The OptOutRegions Schema",
+                    "required": false,
+                    "defaultValue": "null"
+                  }
+                },
+                {
+                  "name": "RegionType",
+                  "definition": {
+                    "required": false,
+                    "defaultValue": "[\"Hero\",\"Hub\",\"Satellite\"]"
+                  }
+                },
+                {
+                  "name": "ResourceLifeTime",
+                  "definition": {
+                    "required": false,
+                    "defaultValue": "P0DT18H"
+                  }
+                },
+                {
+                  "name": "SkipUtilizationChecks",
+                  "definition": {
+                    "type": "Boolean",
+                    "required": false,
+                    "defaultValue": "false"
+                  }
+                },
+                {
+                  "name": "StorageType",
+                  "definition": {
+                    "type": "String",
+                    "required": false,
+                    "defaultValue": "Standard_LRS"
+                  }
+                },
+                {
+                  "name": "SubscriptionId",
+                  "definition": {
+                    "type": "String",
+                    "required": true,
+                    "defaultValue": ""
+                  }
+                },
+                {
+                  "name": "TenantAzureConfigPath",
+                  "definition": {
+                    "type": "String",
+                    "required": true,
+                    "defaultValue": "/src/CirrusTenants/AzQualify/TenantAzureConfig.json"
+                  }
+                },
+                {
+                  "name": "TestPassInstanceLifeTime",
+                  "definition": {
+                    "required": false,
+                    "defaultValue": "P0DT20H"
+                  }
+                },
+                {
+                  "name": "TestPassInstanceLifeTimeInMins",
+                  "definition": {
+                    "type": "Integer",
+                    "required": false,
+                    "defaultValue": "1200"
+                  }
+                },
+                {
+                  "name": "VmCount",
+                  "definition": {
+                    "description": "Count of VMs to be deployed",
+                    "type": "Integer",
+                    "required": false,
+                    "defaultValue": "1"
+                  }
+                },
+                {
+                  "name": "VmSku",
+                  "definition": {
+                    "type": "String",
+                    "required": false,
+                    "defaultValue": ""
+                  }
+                }
+              ],
+              "testStoreUri": "tst://azqualify/cloud-ex/hwqualification@1.0.0",
+              "currentVersion": "/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.PlatformValidation/validationTests/azqualify-cloud-ex-hwqualification/versions/1.0.0",
+              "latestPublishedVersion": "/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.PlatformValidation/validationTests/azqualify-cloud-ex-hwqualification/versions/1.0.0",
+              "lastPublishedAt": "2026-10-27T09:15:40.6613187Z"
+            }
+          },
+          {
+            "id": "/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.PlatformValidation/validationTests/compute-vmimagevalidation-vhd-first-one-mb",
+            "name": "compute-vmimagevalidation-vhd-first-one-mb",
+            "type": "Microsoft.PlatformValidation/validationTests",
+            "properties": {
+              "description": "Verifies the first 1 MB of the OS disk VHD is reserved and free (offset), as required by the VHD specification. Validated by reading the disk VHD directly; no VM is provisioned. AzCertify PolicyId: 200.3.1.4. More info: https://aka.ms/First-1MB-Offset.",
+              "displayName": "VHD First 1 MB Offset Check",
+              "audience": "Public",
+              "provisioningState": "Succeeded",
+              "categoryIds": [
+                "/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.PlatformValidation/validationTestCategories/image-file-integrity-validations"
+              ],
+              "owners": [
+                "Sanitized"
+              ],
+              "testStoreUri": "tst://Compute/VMImageValidation/vhd-first-one-mb@1.0.0",
+              "currentVersion": "/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.PlatformValidation/validationTests/compute-vmimagevalidation-vhd-first-one-mb/versions/1.0.0",
+              "latestPublishedVersion": "/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.PlatformValidation/validationTests/compute-vmimagevalidation-vhd-first-one-mb/versions/1.0.0",
+              "lastPublishedAt": "2026-10-27T09:15:41.1172084Z"
+            }
+          },
+          {
+            "id": "/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.PlatformValidation/validationTests/azqualify-cloud-ex-windows-server2025-tip-dynamic",
             "name": "azqualify-cloud-ex-windows-server2025-tip-dynamic",
             "type": "Microsoft.PlatformValidation/validationTests",
             "properties": {
@@ -3454,8 +3447,8 @@
               "audience": "Internal",
               "provisioningState": "Succeeded",
               "categoryIds": [
-                "vm-deployment",
-                "operating-system"
+                "/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.PlatformValidation/validationTestCategories/vm-deployment",
+                "/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.PlatformValidation/validationTestCategories/operating-system"
               ],
               "owners": [
                 "Sanitized"
@@ -3685,22 +3678,22 @@
                 }
               ],
               "testStoreUri": "tst://azqualify/cloud-ex/windows-server2025-tip-dynamic@1.0.0",
-              "currentVersion": "/providers/Microsoft.PlatformValidation/validationTests/azqualify-cloud-ex-windows-server2025-tip-dynamic/versions/1.0.0",
-              "latestPublishedVersion": "/providers/Microsoft.PlatformValidation/validationTests/azqualify-cloud-ex-windows-server2025-tip-dynamic/versions/1.0.0",
-              "lastPublishedAt": "2026-10-09T10:03:43.8103526Z"
+              "currentVersion": "/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.PlatformValidation/validationTests/azqualify-cloud-ex-windows-server2025-tip-dynamic/versions/1.0.0",
+              "latestPublishedVersion": "/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.PlatformValidation/validationTests/azqualify-cloud-ex-windows-server2025-tip-dynamic/versions/1.0.0",
+              "lastPublishedAt": "2026-10-27T09:15:41.3337403Z"
             }
           }
         ]
       }
     },
     {
-      "RequestUri": "https://eastus2euap.management.azure.com/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.PlatformValidation/validationTests/compute-vmimagevalidation-vm-boot-test?api-version=2026-08-01-preview",
+      "RequestUri": "https://swedencentral.management.azure.com/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.PlatformValidation/validationTests/compute-vmimagevalidation-vm-boot-test?api-version=2026-08-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-475c9d1bbe6479a9661a7e5fb09a34c2-7964c0f40ecf12db-00",
-        "User-Agent": "azsdk-net-ResourceManager.PlatformValidation/1.0.0-alpha.20261028.1 (.NET 10.0.14; Microsoft Windows 10.0.26300)",
+        "traceparent": "00-45b31ea6aacfd223d2afe8033901dbe3-fa9fdd6f47429da3-00",
+        "User-Agent": "azsdk-net-ResourceManager.PlatformValidation/1.0.0-alpha.20261103.1 (.NET 10.0.14; Microsoft Windows 10.0.26300)",
         "x-ms-client-request-id": "Sanitized",
         "x-ms-return-client-request-id": "true"
       },
@@ -3708,34 +3701,27 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "1047",
+        "Content-Length": "1316",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 28 Oct 2026 17:15:18 GMT",
+        "Date": "Tue, 03 Nov 2026 06:34:19 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Request-Context": "Sanitized",
-        "Set-Cookie": [
-          "Sanitized",
-          "Sanitized",
-          "Sanitized",
-          "Sanitized"
-        ],
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Vary": "Accept-Encoding",
         "X-Cache": "CONFIG_NOCACHE",
         "X-Content-Type-Options": "nosniff",
         "x-ms-client-request-id": "Sanitized",
-        "x-ms-correlation-request-id": "55922bb9-4ba2-4923-9f34-7d38aa6e502e",
+        "x-ms-correlation-request-id": "10baae4f-05ae-4cbc-89c4-a039854b0d47",
         "x-ms-operation-identifier": "Sanitized",
         "x-ms-providerhub-traffic": "Sanitized",
         "x-ms-ratelimit-remaining-subscription-resource-requests": "1099",
-        "x-ms-request-id": "249a8305-8961-45cd-92fe-f439edbf8aee",
-        "x-ms-routing-request-id": "EASTUS2EUAP:20261028T171517Z:55922bb9-4ba2-4923-9f34-7d38aa6e502e",
-        "x-ms-throttling-version": "v1",
-        "X-MSEdge-Ref": "Ref A: C2A4F927616A4DAA9DBFDDF1811F5083 Ref B: PNQ231110909054 Ref C: 2026-10-28T17:15:15Z"
+        "x-ms-request-id": "3874531b-d2ea-4f3e-b832-66294002d610",
+        "x-ms-routing-request-id": "SWEDENCENTRAL:20261103T063419Z:10baae4f-05ae-4cbc-89c4-a039854b0d47",
+        "X-MSEdge-Ref": "Ref A: DBE11B4790734DB3BFE16B61E24D140A Ref B: PNQ231110908040 Ref C: 2026-11-03T06:34:18Z"
       },
       "ResponseBody": {
-        "id": "/providers/Microsoft.PlatformValidation/validationTests/compute-vmimagevalidation-vm-boot-test",
+        "id": "/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.PlatformValidation/validationTests/compute-vmimagevalidation-vm-boot-test",
         "name": "compute-vmimagevalidation-vm-boot-test",
         "type": "Microsoft.PlatformValidation/validationTests",
         "properties": {
@@ -3744,26 +3730,26 @@
           "audience": "Public",
           "provisioningState": "Succeeded",
           "categoryIds": [
-            "basic-vm-validation"
+            "/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.PlatformValidation/validationTestCategories/basic-vm-validation"
           ],
           "owners": [
             "Sanitized"
           ],
           "testStoreUri": "tst://Compute/VMImageValidation/vm-boot-test@1.0.0",
-          "currentVersion": "/providers/Microsoft.PlatformValidation/validationTests/compute-vmimagevalidation-vm-boot-test/versions/1.0.0",
-          "latestPublishedVersion": "/providers/Microsoft.PlatformValidation/validationTests/compute-vmimagevalidation-vm-boot-test/versions/1.0.0",
-          "lastPublishedAt": "2026-10-09T10:03:29.5887336Z"
+          "currentVersion": "/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.PlatformValidation/validationTests/compute-vmimagevalidation-vm-boot-test/versions/1.0.0",
+          "latestPublishedVersion": "/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.PlatformValidation/validationTests/compute-vmimagevalidation-vm-boot-test/versions/1.0.0",
+          "lastPublishedAt": "2026-10-27T09:15:32.8913566Z"
         }
       }
     },
     {
-      "RequestUri": "https://eastus2euap.management.azure.com/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.PlatformValidation/validationTestCategories?api-version=2026-08-01-preview",
+      "RequestUri": "https://swedencentral.management.azure.com/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.PlatformValidation/validationTestCategories?api-version=2026-08-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-d6d7b1fe7095332a3827bca8ac94d835-411ce79547cebc34-00",
-        "User-Agent": "azsdk-net-ResourceManager.PlatformValidation/1.0.0-alpha.20261028.1 (.NET 10.0.14; Microsoft Windows 10.0.26300)",
+        "traceparent": "00-f2875592d69c94d81d9ff83a345405f7-e836eefb9f7f7f9f-00",
+        "User-Agent": "azsdk-net-ResourceManager.PlatformValidation/1.0.0-alpha.20261103.1 (.NET 10.0.14; Microsoft Windows 10.0.26300)",
         "x-ms-client-request-id": "Sanitized",
         "x-ms-return-client-request-id": "true"
       },
@@ -3771,36 +3757,29 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "11126",
+        "Content-Length": "14155",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 28 Oct 2026 17:15:19 GMT",
+        "Date": "Tue, 03 Nov 2026 06:34:20 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Request-Context": "Sanitized",
-        "Set-Cookie": [
-          "Sanitized",
-          "Sanitized",
-          "Sanitized",
-          "Sanitized"
-        ],
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Vary": "Accept-Encoding",
         "X-Cache": "CONFIG_NOCACHE",
         "X-Content-Type-Options": "nosniff",
         "x-ms-client-request-id": "Sanitized",
-        "x-ms-correlation-request-id": "92cd6d22-f727-4156-8297-211617a0934d",
+        "x-ms-correlation-request-id": "927091c2-a381-4181-9780-0b3030c8dea5",
         "x-ms-operation-identifier": "Sanitized",
         "x-ms-providerhub-traffic": "Sanitized",
         "x-ms-ratelimit-remaining-subscription-resource-requests": "1099",
-        "x-ms-request-id": "d685831e-3660-4bda-899d-a531a3f5c70f",
-        "x-ms-routing-request-id": "EASTUS2EUAP:20261028T171519Z:92cd6d22-f727-4156-8297-211617a0934d",
-        "x-ms-throttling-version": "v1",
-        "X-MSEdge-Ref": "Ref A: 743588315CAC40658DAB057917D0285B Ref B: PNQ231110909054 Ref C: 2026-10-28T17:15:18Z"
+        "x-ms-request-id": "40e45552-6beb-4f68-938e-97b557951f1d",
+        "x-ms-routing-request-id": "SWEDENCENTRAL:20261103T063420Z:927091c2-a381-4181-9780-0b3030c8dea5",
+        "X-MSEdge-Ref": "Ref A: F25129B78AA74001A9C21003D06EBDD2 Ref B: PNQ231110908040 Ref C: 2026-11-03T06:34:20Z"
       },
       "ResponseBody": {
         "value": [
           {
-            "id": "/providers/Microsoft.PlatformValidation/validationTestCategories/image-certification",
+            "id": "/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.PlatformValidation/validationTestCategories/image-certification",
             "name": "image-certification",
             "type": "Microsoft.PlatformValidation/validationTestCategories",
             "properties": {
@@ -3811,31 +3790,7 @@
             }
           },
           {
-            "id": "/providers/Microsoft.PlatformValidation/validationTestCategories/basic-vm-validation",
-            "name": "basic-vm-validation",
-            "type": "Microsoft.PlatformValidation/validationTestCategories",
-            "properties": {
-              "description": "AzCertify basic VM validations that provision a VM from the image under test and confirm it boots and provisions within the expected window (e.g. the VM boot / provisioning check).",
-              "displayName": "Basic VM Validation",
-              "audience": "Public",
-              "provisioningState": "Succeeded",
-              "parentCategoryId": "image-certification"
-            }
-          },
-          {
-            "id": "/providers/Microsoft.PlatformValidation/validationTestCategories/image-file-integrity-validations",
-            "name": "image-file-integrity-validations",
-            "type": "Microsoft.PlatformValidation/validationTestCategories",
-            "properties": {
-              "description": "AzCertify image file integrity validations that inspect the image disk itself (e.g. OS-disk size limits, data-disk size limits, VHD footer and first-1MB alignment, disk-size multiple-of-1MB checks).",
-              "displayName": "Image File Integrity Validations",
-              "audience": "Public",
-              "provisioningState": "Succeeded",
-              "parentCategoryId": "image-certification"
-            }
-          },
-          {
-            "id": "/providers/Microsoft.PlatformValidation/validationTestCategories/linux-quality-validations",
+            "id": "/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.PlatformValidation/validationTestCategories/linux-quality-validations",
             "name": "linux-quality-validations",
             "type": "Microsoft.PlatformValidation/validationTestCategories",
             "properties": {
@@ -3843,11 +3798,23 @@
               "displayName": "Linux Quality Validations",
               "audience": "Public",
               "provisioningState": "Succeeded",
-              "parentCategoryId": "image-certification"
+              "parentCategoryId": "/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.PlatformValidation/validationTestCategories/image-certification"
             }
           },
           {
-            "id": "/providers/Microsoft.PlatformValidation/validationTestCategories/malware-validation",
+            "id": "/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.PlatformValidation/validationTestCategories/basic-vm-validation",
+            "name": "basic-vm-validation",
+            "type": "Microsoft.PlatformValidation/validationTestCategories",
+            "properties": {
+              "description": "AzCertify basic VM validations that provision a VM from the image under test and confirm it boots and provisions within the expected window (e.g. the VM boot / provisioning check).",
+              "displayName": "Basic VM Validation",
+              "audience": "Public",
+              "provisioningState": "Succeeded",
+              "parentCategoryId": "/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.PlatformValidation/validationTestCategories/image-certification"
+            }
+          },
+          {
+            "id": "/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.PlatformValidation/validationTestCategories/malware-validation",
             "name": "malware-validation",
             "type": "Microsoft.PlatformValidation/validationTestCategories",
             "properties": {
@@ -3855,11 +3822,11 @@
               "displayName": "Malware Validation",
               "audience": "Public",
               "provisioningState": "Succeeded",
-              "parentCategoryId": "image-certification"
+              "parentCategoryId": "/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.PlatformValidation/validationTestCategories/image-certification"
             }
           },
           {
-            "id": "/providers/Microsoft.PlatformValidation/validationTestCategories/vulnerability-validation",
+            "id": "/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.PlatformValidation/validationTestCategories/vulnerability-validation",
             "name": "vulnerability-validation",
             "type": "Microsoft.PlatformValidation/validationTestCategories",
             "properties": {
@@ -3867,11 +3834,11 @@
               "displayName": "Vulnerability Validation",
               "audience": "Public",
               "provisioningState": "Succeeded",
-              "parentCategoryId": "image-certification"
+              "parentCategoryId": "/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.PlatformValidation/validationTestCategories/image-certification"
             }
           },
           {
-            "id": "/providers/Microsoft.PlatformValidation/validationTestCategories/windows-quality-validations",
+            "id": "/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.PlatformValidation/validationTestCategories/windows-quality-validations",
             "name": "windows-quality-validations",
             "type": "Microsoft.PlatformValidation/validationTestCategories",
             "properties": {
@@ -3879,11 +3846,23 @@
               "displayName": "Windows Quality Validations",
               "audience": "Public",
               "provisioningState": "Succeeded",
-              "parentCategoryId": "image-certification"
+              "parentCategoryId": "/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.PlatformValidation/validationTestCategories/image-certification"
             }
           },
           {
-            "id": "/providers/Microsoft.PlatformValidation/validationTestCategories/host-platform",
+            "id": "/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.PlatformValidation/validationTestCategories/image-file-integrity-validations",
+            "name": "image-file-integrity-validations",
+            "type": "Microsoft.PlatformValidation/validationTestCategories",
+            "properties": {
+              "description": "AzCertify image file integrity validations that inspect the image disk itself (e.g. OS-disk size limits, data-disk size limits, VHD footer and first-1MB alignment, disk-size multiple-of-1MB checks).",
+              "displayName": "Image File Integrity Validations",
+              "audience": "Public",
+              "provisioningState": "Succeeded",
+              "parentCategoryId": "/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.PlatformValidation/validationTestCategories/image-certification"
+            }
+          },
+          {
+            "id": "/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.PlatformValidation/validationTestCategories/host-platform",
             "name": "host-platform",
             "type": "Microsoft.PlatformValidation/validationTestCategories",
             "properties": {
@@ -3894,7 +3873,7 @@
             }
           },
           {
-            "id": "/providers/Microsoft.PlatformValidation/validationTestCategories/networking",
+            "id": "/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.PlatformValidation/validationTestCategories/networking",
             "name": "networking",
             "type": "Microsoft.PlatformValidation/validationTestCategories",
             "properties": {
@@ -3905,31 +3884,7 @@
             }
           },
           {
-            "id": "/providers/Microsoft.PlatformValidation/validationTestCategories/host-baseline",
-            "name": "host-baseline",
-            "type": "Microsoft.PlatformValidation/validationTestCategories",
-            "properties": {
-              "description": "AzQualify baseline and control-group reference tests that establish a known-good host platform baseline, including smoke tests.",
-              "displayName": "Host Baseline",
-              "audience": "Internal",
-              "provisioningState": "Succeeded",
-              "parentCategoryId": "host-platform"
-            }
-          },
-          {
-            "id": "/providers/Microsoft.PlatformValidation/validationTestCategories/overlake-networking",
-            "name": "overlake-networking",
-            "type": "Microsoft.PlatformValidation/validationTestCategories",
-            "properties": {
-              "description": "AzQualify Overlake-specific networking tests (Overlake ControlGroup networking variant).",
-              "displayName": "Overlake Networking",
-              "audience": "Internal",
-              "provisioningState": "Succeeded",
-              "parentCategoryId": "networking"
-            }
-          },
-          {
-            "id": "/providers/Microsoft.PlatformValidation/validationTestCategories/database",
+            "id": "/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.PlatformValidation/validationTestCategories/database",
             "name": "database",
             "type": "Microsoft.PlatformValidation/validationTestCategories",
             "properties": {
@@ -3940,7 +3895,31 @@
             }
           },
           {
-            "id": "/providers/Microsoft.PlatformValidation/validationTestCategories/database-performance",
+            "id": "/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.PlatformValidation/validationTestCategories/host-baseline",
+            "name": "host-baseline",
+            "type": "Microsoft.PlatformValidation/validationTestCategories",
+            "properties": {
+              "description": "AzQualify baseline and control-group reference tests that establish a known-good host platform baseline, including smoke tests.",
+              "displayName": "Host Baseline",
+              "audience": "Internal",
+              "provisioningState": "Succeeded",
+              "parentCategoryId": "/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.PlatformValidation/validationTestCategories/host-platform"
+            }
+          },
+          {
+            "id": "/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.PlatformValidation/validationTestCategories/overlake-networking",
+            "name": "overlake-networking",
+            "type": "Microsoft.PlatformValidation/validationTestCategories",
+            "properties": {
+              "description": "AzQualify Overlake-specific networking tests (Overlake ControlGroup networking variant).",
+              "displayName": "Overlake Networking",
+              "audience": "Internal",
+              "provisioningState": "Succeeded",
+              "parentCategoryId": "/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.PlatformValidation/validationTestCategories/networking"
+            }
+          },
+          {
+            "id": "/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.PlatformValidation/validationTestCategories/database-performance",
             "name": "database-performance",
             "type": "Microsoft.PlatformValidation/validationTestCategories",
             "properties": {
@@ -3948,11 +3927,11 @@
               "displayName": "Database Performance",
               "audience": "Internal",
               "provisioningState": "Succeeded",
-              "parentCategoryId": "database"
+              "parentCategoryId": "/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.PlatformValidation/validationTestCategories/database"
             }
           },
           {
-            "id": "/providers/Microsoft.PlatformValidation/validationTestCategories/host-agent",
+            "id": "/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.PlatformValidation/validationTestCategories/host-agent",
             "name": "host-agent",
             "type": "Microsoft.PlatformValidation/validationTestCategories",
             "properties": {
@@ -3960,34 +3939,11 @@
               "displayName": "Host Agent",
               "audience": "Internal",
               "provisioningState": "Succeeded",
-              "parentCategoryId": "host-platform"
+              "parentCategoryId": "/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.PlatformValidation/validationTestCategories/host-platform"
             }
           },
           {
-            "id": "/providers/Microsoft.PlatformValidation/validationTestCategories/hardware",
-            "name": "hardware",
-            "type": "Microsoft.PlatformValidation/validationTestCategories",
-            "properties": {
-              "description": "Root category for AzQualify hardware validation covering hardware qualification and driver verification scenarios.",
-              "displayName": "Hardware",
-              "audience": "Internal",
-              "provisioningState": "Succeeded"
-            }
-          },
-          {
-            "id": "/providers/Microsoft.PlatformValidation/validationTestCategories/hardware-qualification",
-            "name": "hardware-qualification",
-            "type": "Microsoft.PlatformValidation/validationTestCategories",
-            "properties": {
-              "description": "AzQualify hardware qualification tests covering HW SKU qualification and hardware scenario validation.",
-              "displayName": "Hardware Qualification",
-              "audience": "Internal",
-              "provisioningState": "Succeeded",
-              "parentCategoryId": "hardware"
-            }
-          },
-          {
-            "id": "/providers/Microsoft.PlatformValidation/validationTestCategories/networking-performance",
+            "id": "/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.PlatformValidation/validationTestCategories/networking-performance",
             "name": "networking-performance",
             "type": "Microsoft.PlatformValidation/validationTestCategories",
             "properties": {
@@ -3995,23 +3951,11 @@
               "displayName": "Networking Performance",
               "audience": "Internal",
               "provisioningState": "Succeeded",
-              "parentCategoryId": "networking"
+              "parentCategoryId": "/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.PlatformValidation/validationTestCategories/networking"
             }
           },
           {
-            "id": "/providers/Microsoft.PlatformValidation/validationTestCategories/vnet-encryption",
-            "name": "vnet-encryption",
-            "type": "Microsoft.PlatformValidation/validationTestCategories",
-            "properties": {
-              "description": "AzQualify VNet encryption tests covering N1WS-perf encryption, control-group encryption, and encryption scale scenarios.",
-              "displayName": "VNet Encryption",
-              "audience": "Internal",
-              "provisioningState": "Succeeded",
-              "parentCategoryId": "networking"
-            }
-          },
-          {
-            "id": "/providers/Microsoft.PlatformValidation/validationTestCategories/live-migration-suites",
+            "id": "/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.PlatformValidation/validationTestCategories/live-migration-suites",
             "name": "live-migration-suites",
             "type": "Microsoft.PlatformValidation/validationTestCategories",
             "properties": {
@@ -4022,7 +3966,19 @@
             }
           },
           {
-            "id": "/providers/Microsoft.PlatformValidation/validationTestCategories/live-migration",
+            "id": "/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.PlatformValidation/validationTestCategories/vnet-encryption",
+            "name": "vnet-encryption",
+            "type": "Microsoft.PlatformValidation/validationTestCategories",
+            "properties": {
+              "description": "AzQualify VNet encryption tests covering N1WS-perf encryption, control-group encryption, and encryption scale scenarios.",
+              "displayName": "VNet Encryption",
+              "audience": "Internal",
+              "provisioningState": "Succeeded",
+              "parentCategoryId": "/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.PlatformValidation/validationTestCategories/networking"
+            }
+          },
+          {
+            "id": "/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.PlatformValidation/validationTestCategories/live-migration",
             "name": "live-migration",
             "type": "Microsoft.PlatformValidation/validationTestCategories",
             "properties": {
@@ -4030,11 +3986,11 @@
               "displayName": "Live Migration",
               "audience": "Internal",
               "provisioningState": "Succeeded",
-              "parentCategoryId": "live-migration-suites"
+              "parentCategoryId": "/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.PlatformValidation/validationTestCategories/live-migration-suites"
             }
           },
           {
-            "id": "/providers/Microsoft.PlatformValidation/validationTestCategories/operating-system-suites",
+            "id": "/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.PlatformValidation/validationTestCategories/operating-system-suites",
             "name": "operating-system-suites",
             "type": "Microsoft.PlatformValidation/validationTestCategories",
             "properties": {
@@ -4045,7 +4001,7 @@
             }
           },
           {
-            "id": "/providers/Microsoft.PlatformValidation/validationTestCategories/operating-system",
+            "id": "/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.PlatformValidation/validationTestCategories/operating-system",
             "name": "operating-system",
             "type": "Microsoft.PlatformValidation/validationTestCategories",
             "properties": {
@@ -4053,11 +4009,11 @@
               "displayName": "Operating System",
               "audience": "Internal",
               "provisioningState": "Succeeded",
-              "parentCategoryId": "operating-system-suites"
+              "parentCategoryId": "/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.PlatformValidation/validationTestCategories/operating-system-suites"
             }
           },
           {
-            "id": "/providers/Microsoft.PlatformValidation/validationTestCategories/vm-deployment",
+            "id": "/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.PlatformValidation/validationTestCategories/vm-deployment",
             "name": "vm-deployment",
             "type": "Microsoft.PlatformValidation/validationTestCategories",
             "properties": {
@@ -4065,20 +4021,43 @@
               "displayName": "VM Deployment",
               "audience": "Internal",
               "provisioningState": "Succeeded",
-              "parentCategoryId": "host-platform"
+              "parentCategoryId": "/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.PlatformValidation/validationTestCategories/host-platform"
+            }
+          },
+          {
+            "id": "/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.PlatformValidation/validationTestCategories/hardware",
+            "name": "hardware",
+            "type": "Microsoft.PlatformValidation/validationTestCategories",
+            "properties": {
+              "description": "Root category for AzQualify hardware validation covering hardware qualification and driver verification scenarios.",
+              "displayName": "Hardware",
+              "audience": "Internal",
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.PlatformValidation/validationTestCategories/hardware-qualification",
+            "name": "hardware-qualification",
+            "type": "Microsoft.PlatformValidation/validationTestCategories",
+            "properties": {
+              "description": "AzQualify hardware qualification tests covering HW SKU qualification and hardware scenario validation.",
+              "displayName": "Hardware Qualification",
+              "audience": "Internal",
+              "provisioningState": "Succeeded",
+              "parentCategoryId": "/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.PlatformValidation/validationTestCategories/hardware"
             }
           }
         ]
       }
     },
     {
-      "RequestUri": "https://eastus2euap.management.azure.com/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.PlatformValidation/validationTestCategories/image-certification?api-version=2026-08-01-preview",
+      "RequestUri": "https://swedencentral.management.azure.com/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.PlatformValidation/validationTestCategories/image-certification?api-version=2026-08-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-6dccc9fdb412dea940bf5fa6918d0d5d-421361f90ce3728f-00",
-        "User-Agent": "azsdk-net-ResourceManager.PlatformValidation/1.0.0-alpha.20261028.1 (.NET 10.0.14; Microsoft Windows 10.0.26300)",
+        "traceparent": "00-d82f69fceba7fd58c501afc55ed36b29-900ef9af9345d603-00",
+        "User-Agent": "azsdk-net-ResourceManager.PlatformValidation/1.0.0-alpha.20261103.1 (.NET 10.0.14; Microsoft Windows 10.0.26300)",
         "x-ms-client-request-id": "Sanitized",
         "x-ms-return-client-request-id": "true"
       },
@@ -4086,34 +4065,27 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "569",
+        "Content-Length": "620",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 28 Oct 2026 17:15:20 GMT",
+        "Date": "Tue, 03 Nov 2026 06:34:20 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Request-Context": "Sanitized",
-        "Set-Cookie": [
-          "Sanitized",
-          "Sanitized",
-          "Sanitized",
-          "Sanitized"
-        ],
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Vary": "Accept-Encoding",
         "X-Cache": "CONFIG_NOCACHE",
         "X-Content-Type-Options": "nosniff",
         "x-ms-client-request-id": "Sanitized",
-        "x-ms-correlation-request-id": "d5c40ab2-bec8-4f7b-a702-5354698bdb5a",
+        "x-ms-correlation-request-id": "2be7239e-4f7b-46c1-b65f-ff9c14997e91",
         "x-ms-operation-identifier": "Sanitized",
         "x-ms-providerhub-traffic": "Sanitized",
         "x-ms-ratelimit-remaining-subscription-resource-requests": "1099",
-        "x-ms-request-id": "1c29f52e-1791-4bd8-bd5f-7f42ecfbec9e",
-        "x-ms-routing-request-id": "EASTUS2EUAP:20261028T171520Z:d5c40ab2-bec8-4f7b-a702-5354698bdb5a",
-        "x-ms-throttling-version": "v1",
-        "X-MSEdge-Ref": "Ref A: 3AD1F78D874A4A04A7D74BBDAA372DDA Ref B: PNQ231110909054 Ref C: 2026-10-28T17:15:19Z"
+        "x-ms-request-id": "690a9918-a742-4a0c-8cf7-72275ec807aa",
+        "x-ms-routing-request-id": "SWEDENCENTRAL:20261103T063420Z:2be7239e-4f7b-46c1-b65f-ff9c14997e91",
+        "X-MSEdge-Ref": "Ref A: 3A90840DD50A4D7484EF04AE6490E911 Ref B: PNQ231110908040 Ref C: 2026-11-03T06:34:20Z"
       },
       "ResponseBody": {
-        "id": "/providers/Microsoft.PlatformValidation/validationTestCategories/image-certification",
+        "id": "/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.PlatformValidation/validationTestCategories/image-certification",
         "name": "image-certification",
         "type": "Microsoft.PlatformValidation/validationTestCategories",
         "properties": {
@@ -4125,13 +4097,13 @@
       }
     },
     {
-      "RequestUri": "https://eastus2euap.management.azure.com/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.PlatformValidation/validationTestCategories/image-certification?api-version=2026-08-01-preview",
+      "RequestUri": "https://swedencentral.management.azure.com/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.PlatformValidation/validationTestCategories/image-certification?api-version=2026-08-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-cef924ca278197e9e47888a0d67ff58c-ce6d5f5058047f69-00",
-        "User-Agent": "azsdk-net-ResourceManager.PlatformValidation/1.0.0-alpha.20261028.1 (.NET 10.0.14; Microsoft Windows 10.0.26300)",
+        "traceparent": "00-8f7f5b9dd767f5aebc83682f0ab8c3f5-1188725f05176e43-00",
+        "User-Agent": "azsdk-net-ResourceManager.PlatformValidation/1.0.0-alpha.20261103.1 (.NET 10.0.14; Microsoft Windows 10.0.26300)",
         "x-ms-client-request-id": "Sanitized",
         "x-ms-return-client-request-id": "true"
       },
@@ -4139,34 +4111,27 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "569",
+        "Content-Length": "620",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 28 Oct 2026 17:15:21 GMT",
+        "Date": "Tue, 03 Nov 2026 06:34:20 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Request-Context": "Sanitized",
-        "Set-Cookie": [
-          "Sanitized",
-          "Sanitized",
-          "Sanitized",
-          "Sanitized"
-        ],
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Vary": "Accept-Encoding",
         "X-Cache": "CONFIG_NOCACHE",
         "X-Content-Type-Options": "nosniff",
         "x-ms-client-request-id": "Sanitized",
-        "x-ms-correlation-request-id": "2777be0b-178b-4a0a-8a1a-fecb65bf993f",
+        "x-ms-correlation-request-id": "ce4188a8-03f1-4789-9d51-6b5b330571f1",
         "x-ms-operation-identifier": "Sanitized",
         "x-ms-providerhub-traffic": "Sanitized",
         "x-ms-ratelimit-remaining-subscription-resource-requests": "1098",
-        "x-ms-request-id": "6b3b1bf1-246c-41c3-91c7-058b2fdc05bc",
-        "x-ms-routing-request-id": "EASTUS2EUAP:20261028T171521Z:2777be0b-178b-4a0a-8a1a-fecb65bf993f",
-        "x-ms-throttling-version": "v1",
-        "X-MSEdge-Ref": "Ref A: 97E06186D03A4B6A921223A29C13D63A Ref B: PNQ231110909054 Ref C: 2026-10-28T17:15:20Z"
+        "x-ms-request-id": "0c0f3f8c-e073-4262-9f29-5b1ae6c2ff6c",
+        "x-ms-routing-request-id": "SWEDENCENTRAL:20261103T063420Z:ce4188a8-03f1-4789-9d51-6b5b330571f1",
+        "X-MSEdge-Ref": "Ref A: 564D8079F4F3418BB07A4363544EF77C Ref B: PNQ231110908040 Ref C: 2026-11-03T06:34:20Z"
       },
       "ResponseBody": {
-        "id": "/providers/Microsoft.PlatformValidation/validationTestCategories/image-certification",
+        "id": "/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.PlatformValidation/validationTestCategories/image-certification",
         "name": "image-certification",
         "type": "Microsoft.PlatformValidation/validationTestCategories",
         "properties": {
@@ -4179,9 +4144,9 @@
     }
   ],
   "Variables": {
-    "CATALOG_TEST": "compute-vmimagevalidation-vm-boot-test",
-    "RandomSeed": "1847635186",
-    "RESOURCE_MANAGER_URL": "https://eastus2euap.management.azure.com",
+    "CATALOG_TEST": null,
+    "RandomSeed": "1167233631",
+    "RESOURCE_MANAGER_URL": "https://swedencentral.management.azure.com",
     "SERVICE_MANAGEMENT_URL": "https://management.azure.com",
     "SUBSCRIPTION_ID": "00000000-0000-0000-0000-000000000000"
   }

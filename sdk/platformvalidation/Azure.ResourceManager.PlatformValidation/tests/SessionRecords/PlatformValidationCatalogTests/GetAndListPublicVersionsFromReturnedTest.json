@@ -1,12 +1,12 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://eastus2euap.management.azure.com/subscriptions/00000000-0000-0000-0000-000000000000?api-version=2022-12-01",
+      "RequestUri": "https://swedencentral.management.azure.com/subscriptions/00000000-0000-0000-0000-000000000000?api-version=2022-12-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-df3963640dbff78c29a930e7eef2c1a9-a665d8592f3755b9-00",
+        "traceparent": "00-b456322c10813a78934804259836574e-1b9578051b5be13e-00",
         "User-Agent": "azsdk-net-ResourceManager/1.14.0 (.NET 10.0.14; Microsoft Windows 10.0.26300)",
         "x-ms-client-request-id": "Sanitized",
         "x-ms-return-client-request-id": "true"
@@ -15,20 +15,20 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "617",
+        "Content-Length": "379",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 28 Oct 2026 17:15:24 GMT",
+        "Date": "Tue, 03 Nov 2026 06:34:25 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Cache": "CONFIG_NOCACHE",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "df37988a-9aea-47a8-a6b8-4cb5f0e1bae7",
+        "x-ms-correlation-request-id": "eebeb2fe-006c-40b2-8bff-7d8342846a0c",
+        "x-ms-ratelimit-remaining-subscription-global-reads": "16499",
         "x-ms-ratelimit-remaining-subscription-reads": "1099",
-        "x-ms-request-id": "df37988a-9aea-47a8-a6b8-4cb5f0e1bae7",
-        "x-ms-routing-request-id": "EASTUS2EUAP:20261028T171524Z:df37988a-9aea-47a8-a6b8-4cb5f0e1bae7",
-        "x-ms-throttling-version": "v2",
-        "X-MSEdge-Ref": "Ref A: 65C0EBC17E464E18B0B139E6503205E3 Ref B: PNQ231110909054 Ref C: 2026-10-28T17:15:24Z"
+        "x-ms-request-id": "eebeb2fe-006c-40b2-8bff-7d8342846a0c",
+        "x-ms-routing-request-id": "SWEDENCENTRAL:20261103T063425Z:eebeb2fe-006c-40b2-8bff-7d8342846a0c",
+        "X-MSEdge-Ref": "Ref A: C63A31ACEECD4E44B0AC52C511A1EBEB Ref B: PNQ231110908040 Ref C: 2026-11-03T06:34:25Z"
       },
       "ResponseBody": {
         "id": "/subscriptions/00000000-0000-0000-0000-000000000000",
@@ -47,13 +47,13 @@
       }
     },
     {
-      "RequestUri": "https://eastus2euap.management.azure.com/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.PlatformValidation/validationTests/compute-vmimagevalidation-vm-boot-test?api-version=2026-08-01-preview",
+      "RequestUri": "https://swedencentral.management.azure.com/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.PlatformValidation/validationTests/compute-vmimagevalidation-vm-boot-test?api-version=2026-08-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-71f1fd2cfacdd4f278b9410279d18ec2-dea9d57f8b1d4cde-00",
-        "User-Agent": "azsdk-net-ResourceManager.PlatformValidation/1.0.0-alpha.20261028.1 (.NET 10.0.14; Microsoft Windows 10.0.26300)",
+        "traceparent": "00-4293b8b400a482b6a83835b65361c58e-d7038418a16e9c9a-00",
+        "User-Agent": "azsdk-net-ResourceManager.PlatformValidation/1.0.0-alpha.20261103.1 (.NET 10.0.14; Microsoft Windows 10.0.26300)",
         "x-ms-client-request-id": "Sanitized",
         "x-ms-return-client-request-id": "true"
       },
@@ -61,34 +61,27 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "1047",
+        "Content-Length": "1316",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 28 Oct 2026 17:15:24 GMT",
+        "Date": "Tue, 03 Nov 2026 06:34:26 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Request-Context": "Sanitized",
-        "Set-Cookie": [
-          "Sanitized",
-          "Sanitized",
-          "Sanitized",
-          "Sanitized"
-        ],
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Vary": "Accept-Encoding",
         "X-Cache": "CONFIG_NOCACHE",
         "X-Content-Type-Options": "nosniff",
         "x-ms-client-request-id": "Sanitized",
-        "x-ms-correlation-request-id": "f81e39da-a1fb-4ac3-bd71-d55d6eb5edf3",
+        "x-ms-correlation-request-id": "3bfadd9b-1082-47b3-bdf4-727ad099421a",
         "x-ms-operation-identifier": "Sanitized",
         "x-ms-providerhub-traffic": "Sanitized",
         "x-ms-ratelimit-remaining-subscription-resource-requests": "1099",
-        "x-ms-request-id": "c0348e2c-1cc2-4a0c-a922-268009b83830",
-        "x-ms-routing-request-id": "EASTUS2EUAP:20261028T171524Z:f81e39da-a1fb-4ac3-bd71-d55d6eb5edf3",
-        "x-ms-throttling-version": "v1",
-        "X-MSEdge-Ref": "Ref A: 686A185A248F4FF0AAC13817E140D6FF Ref B: PNQ231110909054 Ref C: 2026-10-28T17:15:24Z"
+        "x-ms-request-id": "70725034-ce37-453a-a6a3-614c3949844f",
+        "x-ms-routing-request-id": "SWEDENCENTRAL:20261103T063426Z:3bfadd9b-1082-47b3-bdf4-727ad099421a",
+        "X-MSEdge-Ref": "Ref A: C029C41730484B60952EF7BFF12CC1E4 Ref B: PNQ231110908040 Ref C: 2026-11-03T06:34:25Z"
       },
       "ResponseBody": {
-        "id": "/providers/Microsoft.PlatformValidation/validationTests/compute-vmimagevalidation-vm-boot-test",
+        "id": "/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.PlatformValidation/validationTests/compute-vmimagevalidation-vm-boot-test",
         "name": "compute-vmimagevalidation-vm-boot-test",
         "type": "Microsoft.PlatformValidation/validationTests",
         "properties": {
@@ -97,26 +90,26 @@
           "audience": "Public",
           "provisioningState": "Succeeded",
           "categoryIds": [
-            "basic-vm-validation"
+            "/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.PlatformValidation/validationTestCategories/basic-vm-validation"
           ],
           "owners": [
             "Sanitized"
           ],
           "testStoreUri": "tst://Compute/VMImageValidation/vm-boot-test@1.0.0",
-          "currentVersion": "/providers/Microsoft.PlatformValidation/validationTests/compute-vmimagevalidation-vm-boot-test/versions/1.0.0",
-          "latestPublishedVersion": "/providers/Microsoft.PlatformValidation/validationTests/compute-vmimagevalidation-vm-boot-test/versions/1.0.0",
-          "lastPublishedAt": "2026-10-09T10:03:29.5887336Z"
+          "currentVersion": "/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.PlatformValidation/validationTests/compute-vmimagevalidation-vm-boot-test/versions/1.0.0",
+          "latestPublishedVersion": "/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.PlatformValidation/validationTests/compute-vmimagevalidation-vm-boot-test/versions/1.0.0",
+          "lastPublishedAt": "2026-10-27T09:15:32.8913566Z"
         }
       }
     },
     {
-      "RequestUri": "https://eastus2euap.management.azure.com/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.PlatformValidation/validationTests/compute-vmimagevalidation-vm-boot-test/versions?api-version=2026-08-01-preview",
+      "RequestUri": "https://swedencentral.management.azure.com/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.PlatformValidation/validationTests/compute-vmimagevalidation-vm-boot-test/versions?api-version=2026-08-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-1dee75214dada9c0cbd8f8704e902a9e-34b5781e514ce65a-00",
-        "User-Agent": "azsdk-net-ResourceManager.PlatformValidation/1.0.0-alpha.20261028.1 (.NET 10.0.14; Microsoft Windows 10.0.26300)",
+        "traceparent": "00-5eeab8a2804ff47421d29a2e9522e967-9564b9b2d8d1a2d8-00",
+        "User-Agent": "azsdk-net-ResourceManager.PlatformValidation/1.0.0-alpha.20261103.1 (.NET 10.0.14; Microsoft Windows 10.0.26300)",
         "x-ms-client-request-id": "Sanitized",
         "x-ms-return-client-request-id": "true"
       },
@@ -124,36 +117,29 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "816",
+        "Content-Length": "983",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 28 Oct 2026 17:15:25 GMT",
+        "Date": "Tue, 03 Nov 2026 06:34:26 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Request-Context": "Sanitized",
-        "Set-Cookie": [
-          "Sanitized",
-          "Sanitized",
-          "Sanitized",
-          "Sanitized"
-        ],
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Vary": "Accept-Encoding",
         "X-Cache": "CONFIG_NOCACHE",
         "X-Content-Type-Options": "nosniff",
         "x-ms-client-request-id": "Sanitized",
-        "x-ms-correlation-request-id": "f387ee7d-9594-444f-855d-d6e6364e021f",
+        "x-ms-correlation-request-id": "3047851f-8797-4096-afcf-cac4ef9cc0f9",
         "x-ms-operation-identifier": "Sanitized",
         "x-ms-providerhub-traffic": "Sanitized",
         "x-ms-ratelimit-remaining-subscription-resource-requests": "1099",
-        "x-ms-request-id": "1f1a9095-be23-4c52-bf4e-b2e5d7b74061",
-        "x-ms-routing-request-id": "EASTUS2EUAP:20261028T171525Z:f387ee7d-9594-444f-855d-d6e6364e021f",
-        "x-ms-throttling-version": "v1",
-        "X-MSEdge-Ref": "Ref A: AF9C22659C1746EF9190DA6BFA312E61 Ref B: PNQ231110909054 Ref C: 2026-10-28T17:15:25Z"
+        "x-ms-request-id": "bf000f08-2da2-4fad-a4a0-8d4c406ab614",
+        "x-ms-routing-request-id": "SWEDENCENTRAL:20261103T063426Z:3047851f-8797-4096-afcf-cac4ef9cc0f9",
+        "X-MSEdge-Ref": "Ref A: 292D4BFC94334F7E84D0F62106B34E5F Ref B: PNQ231110908040 Ref C: 2026-11-03T06:34:26Z"
       },
       "ResponseBody": {
         "value": [
           {
-            "id": "/providers/Microsoft.PlatformValidation/validationTests/compute-vmimagevalidation-vm-boot-test/versions/1.0.0",
+            "id": "/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.PlatformValidation/validationTests/compute-vmimagevalidation-vm-boot-test/versions/1.0.0",
             "name": "1.0.0",
             "type": "Microsoft.PlatformValidation/validationTests/versions",
             "properties": {
@@ -162,7 +148,7 @@
               "audience": "Public",
               "provisioningState": "Succeeded",
               "categoryIds": [
-                "basic-vm-validation"
+                "/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.PlatformValidation/validationTestCategories/basic-vm-validation"
               ],
               "owners": [
                 "Sanitized"
@@ -175,13 +161,13 @@
       }
     },
     {
-      "RequestUri": "https://eastus2euap.management.azure.com/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.PlatformValidation/validationTests/compute-vmimagevalidation-vm-boot-test/versions/1.0.0?api-version=2026-08-01-preview",
+      "RequestUri": "https://swedencentral.management.azure.com/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.PlatformValidation/validationTests/compute-vmimagevalidation-vm-boot-test/versions/1.0.0?api-version=2026-08-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-a102cb23571b7ba9ec8e5f4d14da5229-0ac3866321e3e4a3-00",
-        "User-Agent": "azsdk-net-ResourceManager.PlatformValidation/1.0.0-alpha.20261028.1 (.NET 10.0.14; Microsoft Windows 10.0.26300)",
+        "traceparent": "00-72cdd5ec6fc0414de812d4e501c6b78c-9c19df69bff7ae4c-00",
+        "User-Agent": "azsdk-net-ResourceManager.PlatformValidation/1.0.0-alpha.20261103.1 (.NET 10.0.14; Microsoft Windows 10.0.26300)",
         "x-ms-client-request-id": "Sanitized",
         "x-ms-return-client-request-id": "true"
       },
@@ -189,34 +175,27 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "804",
+        "Content-Length": "971",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 28 Oct 2026 17:15:26 GMT",
+        "Date": "Tue, 03 Nov 2026 06:34:27 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Request-Context": "Sanitized",
-        "Set-Cookie": [
-          "Sanitized",
-          "Sanitized",
-          "Sanitized",
-          "Sanitized"
-        ],
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Vary": "Accept-Encoding",
         "X-Cache": "CONFIG_NOCACHE",
         "X-Content-Type-Options": "nosniff",
         "x-ms-client-request-id": "Sanitized",
-        "x-ms-correlation-request-id": "c5d95fab-9389-4942-8b7b-10d86d971641",
+        "x-ms-correlation-request-id": "35e223f5-5bbb-4cc0-b05a-d392f9f64127",
         "x-ms-operation-identifier": "Sanitized",
         "x-ms-providerhub-traffic": "Sanitized",
         "x-ms-ratelimit-remaining-subscription-resource-requests": "1099",
-        "x-ms-request-id": "dfc5d6b0-6e1e-4257-9242-fb197172d8bc",
-        "x-ms-routing-request-id": "EASTUS2EUAP:20261028T171526Z:c5d95fab-9389-4942-8b7b-10d86d971641",
-        "x-ms-throttling-version": "v1",
-        "X-MSEdge-Ref": "Ref A: 1E1EB5706D7546089A6E26C1BA705EB7 Ref B: PNQ231110909054 Ref C: 2026-10-28T17:15:25Z"
+        "x-ms-request-id": "310131d1-d211-4f24-80e7-a42f1c9758b6",
+        "x-ms-routing-request-id": "SWEDENCENTRAL:20261103T063427Z:35e223f5-5bbb-4cc0-b05a-d392f9f64127",
+        "X-MSEdge-Ref": "Ref A: F55FDA57D7F84C40AB7E83D33C47C81B Ref B: PNQ231110908040 Ref C: 2026-11-03T06:34:26Z"
       },
       "ResponseBody": {
-        "id": "/providers/Microsoft.PlatformValidation/validationTests/compute-vmimagevalidation-vm-boot-test/versions/1.0.0",
+        "id": "/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.PlatformValidation/validationTests/compute-vmimagevalidation-vm-boot-test/versions/1.0.0",
         "name": "1.0.0",
         "type": "Microsoft.PlatformValidation/validationTests/versions",
         "properties": {
@@ -225,7 +204,7 @@
           "audience": "Public",
           "provisioningState": "Succeeded",
           "categoryIds": [
-            "basic-vm-validation"
+            "/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.PlatformValidation/validationTestCategories/basic-vm-validation"
           ],
           "owners": [
             "Sanitized"
@@ -236,13 +215,13 @@
       }
     },
     {
-      "RequestUri": "https://eastus2euap.management.azure.com/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.PlatformValidation/validationTests/compute-vmimagevalidation-vm-boot-test/versions/1.0.0?api-version=2026-08-01-preview",
+      "RequestUri": "https://swedencentral.management.azure.com/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.PlatformValidation/validationTests/compute-vmimagevalidation-vm-boot-test/versions/1.0.0?api-version=2026-08-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-a87c2bc316cee6d1931e04a0401acaac-b1ec183e0230afde-00",
-        "User-Agent": "azsdk-net-ResourceManager.PlatformValidation/1.0.0-alpha.20261028.1 (.NET 10.0.14; Microsoft Windows 10.0.26300)",
+        "traceparent": "00-a316d8cd21026c3467f2ae2b24baf891-39a567a85a24337b-00",
+        "User-Agent": "azsdk-net-ResourceManager.PlatformValidation/1.0.0-alpha.20261103.1 (.NET 10.0.14; Microsoft Windows 10.0.26300)",
         "x-ms-client-request-id": "Sanitized",
         "x-ms-return-client-request-id": "true"
       },
@@ -250,34 +229,27 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "804",
+        "Content-Length": "971",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 28 Oct 2026 17:15:26 GMT",
+        "Date": "Tue, 03 Nov 2026 06:34:27 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Request-Context": "Sanitized",
-        "Set-Cookie": [
-          "Sanitized",
-          "Sanitized",
-          "Sanitized",
-          "Sanitized"
-        ],
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Vary": "Accept-Encoding",
         "X-Cache": "CONFIG_NOCACHE",
         "X-Content-Type-Options": "nosniff",
         "x-ms-client-request-id": "Sanitized",
-        "x-ms-correlation-request-id": "cbb5fe01-0d12-4e63-8738-b2c39d7d956e",
+        "x-ms-correlation-request-id": "8a6ec8d9-eb74-41c8-9507-ab123bda9ead",
         "x-ms-operation-identifier": "Sanitized",
         "x-ms-providerhub-traffic": "Sanitized",
         "x-ms-ratelimit-remaining-subscription-resource-requests": "1098",
-        "x-ms-request-id": "287c621d-32fb-4b06-9589-ad1f47deaca9",
-        "x-ms-routing-request-id": "EASTUS2EUAP:20261028T171526Z:cbb5fe01-0d12-4e63-8738-b2c39d7d956e",
-        "x-ms-throttling-version": "v1",
-        "X-MSEdge-Ref": "Ref A: 4A32FD6F538A4EEFB203C3CE005D36BD Ref B: PNQ231110909054 Ref C: 2026-10-28T17:15:26Z"
+        "x-ms-request-id": "cb81e583-919b-4f2d-adef-8c24f2ad1a2e",
+        "x-ms-routing-request-id": "SWEDENCENTRAL:20261103T063427Z:8a6ec8d9-eb74-41c8-9507-ab123bda9ead",
+        "X-MSEdge-Ref": "Ref A: 28313FDCD70147389EE1537D4F52B9F3 Ref B: PNQ231110908040 Ref C: 2026-11-03T06:34:27Z"
       },
       "ResponseBody": {
-        "id": "/providers/Microsoft.PlatformValidation/validationTests/compute-vmimagevalidation-vm-boot-test/versions/1.0.0",
+        "id": "/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.PlatformValidation/validationTests/compute-vmimagevalidation-vm-boot-test/versions/1.0.0",
         "name": "1.0.0",
         "type": "Microsoft.PlatformValidation/validationTests/versions",
         "properties": {
@@ -286,7 +258,7 @@
           "audience": "Public",
           "provisioningState": "Succeeded",
           "categoryIds": [
-            "basic-vm-validation"
+            "/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.PlatformValidation/validationTestCategories/basic-vm-validation"
           ],
           "owners": [
             "Sanitized"
@@ -298,9 +270,9 @@
     }
   ],
   "Variables": {
-    "CATALOG_TEST": "compute-vmimagevalidation-vm-boot-test",
-    "RandomSeed": "1192512588",
-    "RESOURCE_MANAGER_URL": "https://eastus2euap.management.azure.com",
+    "CATALOG_TEST": null,
+    "RandomSeed": "1720903078",
+    "RESOURCE_MANAGER_URL": "https://swedencentral.management.azure.com",
     "SERVICE_MANAGEMENT_URL": "https://management.azure.com",
     "SUBSCRIPTION_ID": "00000000-0000-0000-0000-000000000000"
   }
