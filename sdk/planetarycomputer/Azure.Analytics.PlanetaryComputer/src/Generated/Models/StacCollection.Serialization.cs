@@ -130,8 +130,11 @@ namespace Azure.Analytics.PlanetaryComputer
                 }
                 writer.WriteEndArray();
             }
-            writer.WritePropertyName("id"u8);
-            writer.WriteStringValue(Id);
+            if (LifecycleModelReaderWriterOptions.IsVisible(options, LifecycleVisibility.Read | LifecycleVisibility.Create | LifecycleVisibility.Update))
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
             writer.WritePropertyName("description"u8);
             writer.WriteStringValue(Description);
             if (Optional.IsDefined(StacVersion))

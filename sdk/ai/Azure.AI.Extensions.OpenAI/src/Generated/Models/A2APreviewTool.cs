@@ -38,6 +38,7 @@ namespace Azure.AI.Extensions.OpenAI
         /// specified by the caller (anonymous fetch).
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+#pragma warning disable OPENAI001 // This generated code depends on experimental functionality.
         internal A2APreviewTool(ResponseToolKind @type, Uri baseUri, string agentCardPath, string projectConnectionId, bool? sendCredentialsForAgentCard, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type)
         {
             BaseUri = baseUri;
@@ -46,6 +47,7 @@ namespace Azure.AI.Extensions.OpenAI
             SendCredentialsForAgentCard = sendCredentialsForAgentCard;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+#pragma warning restore OPENAI001 // This generated code depends on experimental functionality.
 
         /// <summary> Base URL of the agent. </summary>
         public Uri BaseUri { get; set; }

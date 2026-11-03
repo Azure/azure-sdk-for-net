@@ -36,11 +36,13 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="type"></param>
         /// <param name="browserAutomationPreview"> The Browser Automation Tool parameters. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+#pragma warning disable OPENAI001 // This generated code depends on experimental functionality.
         internal BrowserAutomationPreviewTool(ResponseToolKind @type, BrowserAutomationToolOptions browserAutomationPreview, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type)
         {
             BrowserAutomationPreview = browserAutomationPreview;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+#pragma warning restore OPENAI001 // This generated code depends on experimental functionality.
 
         /// <summary> The Browser Automation Tool parameters. </summary>
         public BrowserAutomationToolOptions BrowserAutomationPreview { get; set; }

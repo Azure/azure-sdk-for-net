@@ -14,7 +14,9 @@ namespace Azure.AI.Projects.Agents
     [Experimental("AAIP001")]
     public partial class VoiceAgentMcpTool : VoiceAgentTool
     {
+#pragma warning disable OPENAI001 // This generated code depends on experimental functionality.
         private McpToolFilter _allowedTools;
+#pragma warning restore OPENAI001 // This generated code depends on experimental functionality.
         private bool _allowedToolsIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="VoiceAgentMcpTool"/>. </summary>
@@ -52,6 +54,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="projectConnectionId"> The connection ID in the project for the MCP server. The connection stores authentication and other connection details needed to connect to the MCP server. </param>
         /// <param name="toolConfigs"> Deprecated. This property is deprecated and will be removed in a future version. </param>
         /// <param name="responseScheduling"> When the MCP invocation creates a follow-up response. Defaults to `when_idle`. </param>
+#pragma warning disable OPENAI001 // This generated code depends on experimental functionality.
         internal VoiceAgentMcpTool(string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string serverLabel, Uri serverUrl, string authorization, string serverDescription, IDictionary<string, string> headers, McpToolFilter allowedTools, IList<CallableToolAllowedCaller> allowedCallers, BinaryData requireApprovalInternal, bool? deferLoading, string projectConnectionId, IDictionary<string, ToolConfig> toolConfigs, VoiceAgentToolResponseScheduling? responseScheduling) : base(@type, additionalBinaryDataProperties)
         {
             ServerLabel = serverLabel;
@@ -67,6 +70,7 @@ namespace Azure.AI.Projects.Agents
             ToolConfigs = toolConfigs;
             ResponseScheduling = responseScheduling;
         }
+#pragma warning restore OPENAI001 // This generated code depends on experimental functionality.
 
         /// <summary> A label for this MCP server, used to identify it in tool calls. </summary>
         public string ServerLabel { get; set; }
@@ -90,6 +94,7 @@ namespace Azure.AI.Projects.Agents
         /// <summary> Gets or sets the Headers. </summary>
         public IDictionary<string, string> Headers { get; set; }
 
+#pragma warning disable OPENAI001 // This generated code depends on experimental functionality.
         /// <summary> Gets or sets the AllowedTools. </summary>
         public McpToolFilter AllowedTools
         {
@@ -103,6 +108,7 @@ namespace Azure.AI.Projects.Agents
                 _allowedToolsIsDefined = true;
             }
         }
+#pragma warning restore OPENAI001 // This generated code depends on experimental functionality.
 
         /// <summary> Gets or sets the AllowedCallers. </summary>
         public IList<CallableToolAllowedCaller> AllowedCallers { get; set; }

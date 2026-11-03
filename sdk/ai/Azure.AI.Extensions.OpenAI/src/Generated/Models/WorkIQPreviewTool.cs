@@ -30,11 +30,13 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="type"></param>
         /// <param name="projectConnectionId"> The ID of the WorkIQ project connection. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+#pragma warning disable OPENAI001 // This generated code depends on experimental functionality.
         internal WorkIQPreviewTool(ResponseToolKind @type, string projectConnectionId, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type)
         {
             ProjectConnectionId = projectConnectionId;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+#pragma warning restore OPENAI001 // This generated code depends on experimental functionality.
 
         /// <summary> The ID of the WorkIQ project connection. </summary>
         public string ProjectConnectionId { get; set; }

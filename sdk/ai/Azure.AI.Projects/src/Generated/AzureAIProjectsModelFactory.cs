@@ -1041,6 +1041,7 @@ namespace Azure.AI.Projects
         /// <param name="toolDescriptions"> Optional descriptions of tools available to the agent. </param>
         /// <param name="tools"> Tool definitions made available when invoking the agent. </param>
         /// <returns> A new <see cref="Evaluation.AzureAIAgentTarget"/> instance for mocking. </returns>
+#pragma warning disable OPENAI001 // This generated code depends on experimental functionality.
         [Experimental("AAIP002")]
         public static AzureAIAgentTarget AzureAIAgentTarget(string name, string version, IEnumerable<ToolDescription> toolDescriptions, IEnumerable<ResponseTool> tools)
         {
@@ -1055,6 +1056,7 @@ namespace Azure.AI.Projects
                 toolDescriptions.ToList(),
                 tools.ToList());
         }
+#pragma warning restore OPENAI001 // This generated code depends on experimental functionality.
 
         /// <summary> Description of a tool that can be used by an agent. </summary>
         /// <param name="name"> The name of the tool. </param>
@@ -2168,6 +2170,7 @@ namespace Azure.AI.Projects
         /// <param name="outputTokensDetails"> A detailed breakdown of the output tokens. </param>
         /// <param name="totalTokens"> The total number of tokens used. </param>
         /// <returns> A new <see cref="Memory.MemoryStoreOperationUsage"/> instance for mocking. </returns>
+#pragma warning disable OPENAI001 // This generated code depends on experimental functionality.
         [Experimental("AAIP001")]
         public static MemoryStoreOperationUsage MemoryStoreOperationUsage(int embeddingTokens = default, long inputTokens = default, ResponseInputTokenUsageDetails inputTokensDetails = default, long outputTokens = default, ResponseOutputTokenUsageDetails outputTokensDetails = default, long totalTokens = default)
         {
@@ -2180,6 +2183,7 @@ namespace Azure.AI.Projects
                 totalTokens,
                 additionalBinaryDataProperties: null);
         }
+#pragma warning restore OPENAI001 // This generated code depends on experimental functionality.
 
         /// <summary> The MemoryUpdateOptions. </summary>
         /// <param name="scope"> The namespace that logically groups and isolates memories, such as a user ID. </param>

@@ -120,6 +120,7 @@ namespace Azure.AI.Extensions.OpenAI
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
+#pragma warning disable OPENAI001 // This generated code depends on experimental functionality.
         internal static WebIQPreviewTool DeserializeWebIQPreviewTool(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
@@ -165,5 +166,6 @@ namespace Azure.AI.Extensions.OpenAI
             }
             return new WebIQPreviewTool(@type, projectConnectionId, serverLabel, requireApproval, additionalBinaryDataProperties);
         }
+#pragma warning restore OPENAI001 // This generated code depends on experimental functionality.
     }
 }

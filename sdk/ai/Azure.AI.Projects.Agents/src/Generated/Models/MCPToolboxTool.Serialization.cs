@@ -85,11 +85,13 @@ namespace Azure.AI.Projects.Agents
                 writer.WritePropertyName("server_url"u8);
                 writer.WriteStringValue(ServerUri.AbsoluteUri);
             }
+#pragma warning disable OPENAI001 // This generated code depends on experimental functionality.
             if (Optional.IsDefined(ConnectorId))
             {
                 writer.WritePropertyName("connector_id"u8);
                 writer.WriteObjectValue<McpToolConnectorId?>(ConnectorId.Value, options);
             }
+#pragma warning restore OPENAI001 // This generated code depends on experimental functionality.
             if (Optional.IsDefined(TunnelId))
             {
                 writer.WritePropertyName("tunnel_id"u8);
@@ -128,6 +130,7 @@ namespace Azure.AI.Projects.Agents
                     writer.WriteNull("headers"u8);
                 }
             }
+#pragma warning disable OPENAI001 // This generated code depends on experimental functionality.
             if (Optional.IsDefined(AllowedTools, _allowedToolsIsDefined))
             {
                 if (AllowedTools != null)
@@ -140,6 +143,7 @@ namespace Azure.AI.Projects.Agents
                     writer.WriteNull("allowed_tools"u8);
                 }
             }
+#pragma warning restore OPENAI001 // This generated code depends on experimental functionality.
             if (Optional.IsCollectionDefined(AllowedCallers))
             {
                 if (AllowedCallers != null)
@@ -200,6 +204,7 @@ namespace Azure.AI.Projects.Agents
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
+#pragma warning disable OPENAI001 // This generated code depends on experimental functionality.
         internal static MCPToolboxTool DeserializeMCPToolboxTool(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
@@ -394,5 +399,6 @@ namespace Azure.AI.Projects.Agents
                 _allowedToolsIsDefined = allowedToolsIsDefined
             };
         }
+#pragma warning restore OPENAI001 // This generated code depends on experimental functionality.
     }
 }

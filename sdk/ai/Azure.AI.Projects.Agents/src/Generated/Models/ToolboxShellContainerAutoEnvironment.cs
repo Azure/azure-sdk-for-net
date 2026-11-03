@@ -12,8 +12,10 @@ namespace Azure.AI.Projects.Agents
     /// <summary> An automatically provisioned container environment for a shell tool stored in a toolbox. </summary>
     public partial class ToolboxShellContainerAutoEnvironment : ToolboxShellEnvironment
     {
+#pragma warning disable OPENAI001 // This generated code depends on experimental functionality.
         [Experimental("AAIP002")]
         private ContainerMemoryLimit? _memoryLimit;
+#pragma warning restore OPENAI001 // This generated code depends on experimental functionality.
         private bool _memoryLimitIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="ToolboxShellContainerAutoEnvironment"/>. </summary>
@@ -30,6 +32,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="memoryLimit"></param>
         /// <param name="skills"> An optional list of skills referenced by id or inline data. </param>
         /// <param name="networkPolicy"> The network access policy for the container. When omitted, the service defaults to disabled outbound network access. </param>
+#pragma warning disable OPENAI001 // This generated code depends on experimental functionality.
         [Experimental("AAIP002")]
         internal ToolboxShellContainerAutoEnvironment(string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<string> fileIds, ContainerMemoryLimit? memoryLimit, IList<ContainerSkill> skills, ToolboxShellNetworkPolicy networkPolicy) : base(@type, additionalBinaryDataProperties)
         {
@@ -38,10 +41,12 @@ namespace Azure.AI.Projects.Agents
             Skills = skills;
             NetworkPolicy = networkPolicy;
         }
+#pragma warning restore OPENAI001 // This generated code depends on experimental functionality.
 
         /// <summary> An optional list of uploaded files to make available to your code. </summary>
         public IList<string> FileIds { get; }
 
+#pragma warning disable OPENAI001 // This generated code depends on experimental functionality.
         /// <summary> Gets or sets the MemoryLimit. </summary>
         [Experimental("AAIP002")]
         public ContainerMemoryLimit? MemoryLimit
@@ -56,6 +61,7 @@ namespace Azure.AI.Projects.Agents
                 _memoryLimitIsDefined = true;
             }
         }
+#pragma warning restore OPENAI001 // This generated code depends on experimental functionality.
 
         /// <summary> An optional list of skills referenced by id or inline data. </summary>
         public IList<ContainerSkill> Skills { get; }

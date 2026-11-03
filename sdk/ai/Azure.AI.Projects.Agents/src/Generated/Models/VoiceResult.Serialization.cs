@@ -96,16 +96,21 @@ namespace Azure.AI.Projects.Agents
                 writer.WritePropertyName("object"u8);
                 writer.WriteStringValue(Object.Value.ToString());
             }
+#pragma warning disable OPENAI002 // This generated code depends on experimental functionality.
             if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteObjectValue<RealtimeResponseStatus?>(Status.Value, options);
             }
+#pragma warning restore OPENAI002 // This generated code depends on experimental functionality.
+#pragma warning disable OPENAI002 // This generated code depends on experimental functionality.
             if (Optional.IsDefined(StatusDetails))
             {
                 writer.WritePropertyName("status_details"u8);
                 writer.WriteObjectValue(StatusDetails, options);
             }
+#pragma warning restore OPENAI002 // This generated code depends on experimental functionality.
+#pragma warning disable OPENAI002 // This generated code depends on experimental functionality.
             if (Optional.IsCollectionDefined(Output))
             {
                 writer.WritePropertyName("output"u8);
@@ -121,6 +126,7 @@ namespace Azure.AI.Projects.Agents
                 }
                 writer.WriteEndArray();
             }
+#pragma warning restore OPENAI002 // This generated code depends on experimental functionality.
             if (Optional.IsCollectionDefined(Metadata))
             {
                 writer.WritePropertyName("metadata"u8);
@@ -144,16 +150,19 @@ namespace Azure.AI.Projects.Agents
                 }
                 writer.WriteEndObject();
             }
+#pragma warning disable OPENAI002 // This generated code depends on experimental functionality.
             if (Optional.IsDefined(Usage))
             {
                 writer.WritePropertyName("usage"u8);
                 writer.WriteObjectValue(Usage, options);
             }
+#pragma warning restore OPENAI002 // This generated code depends on experimental functionality.
             if (Optional.IsDefined(ConversationId))
             {
                 writer.WritePropertyName("conversation_id"u8);
                 writer.WriteStringValue(ConversationId);
             }
+#pragma warning disable OPENAI002 // This generated code depends on experimental functionality.
             if (Optional.IsCollectionDefined(OutputModalities))
             {
                 writer.WritePropertyName("output_modalities"u8);
@@ -164,6 +173,7 @@ namespace Azure.AI.Projects.Agents
                 }
                 writer.WriteEndArray();
             }
+#pragma warning restore OPENAI002 // This generated code depends on experimental functionality.
             if (Optional.IsDefined(MaxOutputTokens))
             {
                 writer.WritePropertyName("max_output_tokens"u8);
@@ -232,6 +242,7 @@ namespace Azure.AI.Projects.Agents
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
+#pragma warning disable OPENAI002 // This generated code depends on experimental functionality.
         internal static VoiceResult DeserializeVoiceResult(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
@@ -424,5 +435,6 @@ namespace Azure.AI.Projects.Agents
                 completedOn,
                 additionalBinaryDataProperties);
         }
+#pragma warning restore OPENAI002 // This generated code depends on experimental functionality.
     }
 }

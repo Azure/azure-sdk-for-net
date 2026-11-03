@@ -118,6 +118,7 @@ namespace Azure.AI.Projects.Agents
                     writer.WriteNull("headers"u8);
                 }
             }
+#pragma warning disable OPENAI001 // This generated code depends on experimental functionality.
             if (Optional.IsDefined(AllowedTools, _allowedToolsIsDefined))
             {
                 if (AllowedTools != null)
@@ -130,6 +131,7 @@ namespace Azure.AI.Projects.Agents
                     writer.WriteNull("allowed_tools"u8);
                 }
             }
+#pragma warning restore OPENAI001 // This generated code depends on experimental functionality.
             if (Optional.IsCollectionDefined(AllowedCallers))
             {
                 if (AllowedCallers != null)
@@ -211,6 +213,7 @@ namespace Azure.AI.Projects.Agents
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
+#pragma warning disable OPENAI001 // This generated code depends on experimental functionality.
         internal static VoiceAgentMcpTool DeserializeVoiceAgentMcpTool(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
@@ -384,5 +387,6 @@ namespace Azure.AI.Projects.Agents
                 _allowedToolsIsDefined = allowedToolsIsDefined
             };
         }
+#pragma warning restore OPENAI001 // This generated code depends on experimental functionality.
     }
 }

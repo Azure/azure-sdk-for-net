@@ -78,34 +78,46 @@ namespace Azure.AI.ContentUnderstanding
             {
                 throw new FormatException($"The model {nameof(ContentFieldSchema)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Name))
+            if (LifecycleModelReaderWriterOptions.IsVisible(options, LifecycleVisibility.Read | LifecycleVisibility.Create))
             {
-                writer.WritePropertyName("name"u8);
-                writer.WriteStringValue(Name);
+                if (Optional.IsDefined(Name))
+                {
+                    writer.WritePropertyName("name"u8);
+                    writer.WriteStringValue(Name);
+                }
             }
-            if (Optional.IsDefined(Description))
+            if (LifecycleModelReaderWriterOptions.IsVisible(options, LifecycleVisibility.Read | LifecycleVisibility.Create))
             {
-                writer.WritePropertyName("description"u8);
-                writer.WriteStringValue(Description);
+                if (Optional.IsDefined(Description))
+                {
+                    writer.WritePropertyName("description"u8);
+                    writer.WriteStringValue(Description);
+                }
             }
-            writer.WritePropertyName("fields"u8);
-            writer.WriteStartObject();
-            foreach (var item in Fields)
+            if (LifecycleModelReaderWriterOptions.IsVisible(options, LifecycleVisibility.Read | LifecycleVisibility.Create))
             {
-                writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value, options);
-            }
-            writer.WriteEndObject();
-            if (Optional.IsCollectionDefined(Definitions))
-            {
-                writer.WritePropertyName("definitions"u8);
+                writer.WritePropertyName("fields"u8);
                 writer.WriteStartObject();
-                foreach (var item in Definitions)
+                foreach (var item in Fields)
                 {
                     writer.WritePropertyName(item.Key);
                     writer.WriteObjectValue(item.Value, options);
                 }
                 writer.WriteEndObject();
+            }
+            if (LifecycleModelReaderWriterOptions.IsVisible(options, LifecycleVisibility.Read | LifecycleVisibility.Create))
+            {
+                if (Optional.IsCollectionDefined(Definitions))
+                {
+                    writer.WritePropertyName("definitions"u8);
+                    writer.WriteStartObject();
+                    foreach (var item in Definitions)
+                    {
+                        writer.WritePropertyName(item.Key);
+                        writer.WriteObjectValue(item.Value, options);
+                    }
+                    writer.WriteEndObject();
+                }
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {

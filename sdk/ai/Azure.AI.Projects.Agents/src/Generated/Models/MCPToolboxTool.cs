@@ -13,8 +13,10 @@ namespace Azure.AI.Projects.Agents
     /// <summary> An MCP tool stored in a toolbox. </summary>
     public partial class MCPToolboxTool : ToolboxTool
     {
+#pragma warning disable OPENAI001 // This generated code depends on experimental functionality.
         [Experimental("AAIP002")]
         private McpToolFilter _allowedTools;
+#pragma warning restore OPENAI001 // This generated code depends on experimental functionality.
         private bool _allowedToolsIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="MCPToolboxTool"/>. </summary>
@@ -70,6 +72,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="requireApprovalInternal"></param>
         /// <param name="deferLoading"> Whether this MCP tool is deferred and discovered via tool search. </param>
         /// <param name="projectConnectionId"> The connection ID in the project for the MCP server. The connection stores authentication and other connection details needed to connect to the MCP server. </param>
+#pragma warning disable OPENAI001 // This generated code depends on experimental functionality.
         [Experimental("AAIP002")]
         internal MCPToolboxTool(ToolboxToolType @type, string name, string description, IDictionary<string, ToolConfig> toolConfigs, IDictionary<string, BinaryData> additionalBinaryDataProperties, string serverLabel, Uri serverUri, McpToolConnectorId? connectorId, string tunnelId, string authorization, string serverDescription, IDictionary<string, string> headers, McpToolFilter allowedTools, IList<CallableToolAllowedCaller> allowedCallers, BinaryData requireApprovalInternal, bool? deferLoading, string projectConnectionId) : base(@type, name, description, toolConfigs, additionalBinaryDataProperties)
         {
@@ -86,10 +89,12 @@ namespace Azure.AI.Projects.Agents
             DeferLoading = deferLoading;
             ProjectConnectionId = projectConnectionId;
         }
+#pragma warning restore OPENAI001 // This generated code depends on experimental functionality.
 
         /// <summary> A label for this MCP server, used to identify it in tool calls. </summary>
         public string ServerLabel { get; set; }
 
+#pragma warning disable OPENAI001 // This generated code depends on experimental functionality.
         /// <summary>
         /// Identifier for service connectors, like those available in ChatGPT. One of
         ///   `server_url`, `connector_id`, or `tunnel_id` must be provided. Learn more
@@ -102,6 +107,7 @@ namespace Azure.AI.Projects.Agents
         /// </summary>
         [Experimental("AAIP002")]
         public McpToolConnectorId? ConnectorId { get; set; }
+#pragma warning restore OPENAI001 // This generated code depends on experimental functionality.
 
         /// <summary>
         /// The Secure MCP Tunnel ID to use instead of a direct server URL. One of
@@ -122,6 +128,7 @@ namespace Azure.AI.Projects.Agents
         /// <summary> Gets or sets the Headers. </summary>
         public IDictionary<string, string> Headers { get; set; }
 
+#pragma warning disable OPENAI001 // This generated code depends on experimental functionality.
         /// <summary> Gets or sets the AllowedTools. </summary>
         [Experimental("AAIP002")]
         public McpToolFilter AllowedTools
@@ -136,6 +143,7 @@ namespace Azure.AI.Projects.Agents
                 _allowedToolsIsDefined = true;
             }
         }
+#pragma warning restore OPENAI001 // This generated code depends on experimental functionality.
 
         /// <summary> Gets or sets the AllowedCallers. </summary>
         public IList<CallableToolAllowedCaller> AllowedCallers { get; set; }

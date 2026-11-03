@@ -36,6 +36,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="echoCancellation"> Optional server-side echo cancellation settings. </param>
         /// <param name="transcription"> Asynchronous input-audio transcription. Set to null to disable transcription. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+#pragma warning disable OPENAI002 // This generated code depends on experimental functionality.
         internal VoiceAgentAudioInputConfig(RealtimeAudioFormat format, VoiceAgentNoiseReduction noiseReduction, VoiceAgentTurnDetectionConfig turnDetection, VoiceAgentEchoCancellation echoCancellation, VoiceAgentInputTranscription transcription, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Format = format;
@@ -45,9 +46,12 @@ namespace Azure.AI.Projects.Agents
             _transcription = transcription;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+#pragma warning restore OPENAI002 // This generated code depends on experimental functionality.
 
+#pragma warning disable OPENAI002 // This generated code depends on experimental functionality.
         /// <summary> The input audio format. </summary>
         public RealtimeAudioFormat Format { get; set; }
+#pragma warning restore OPENAI002 // This generated code depends on experimental functionality.
 
         /// <summary> Input noise reduction. Set to null to disable. </summary>
         public VoiceAgentNoiseReduction NoiseReduction

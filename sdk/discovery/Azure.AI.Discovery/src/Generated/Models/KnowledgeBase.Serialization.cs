@@ -102,15 +102,18 @@ namespace Azure.AI.Discovery
                 writer.WritePropertyName("bookshelfName"u8);
                 writer.WriteStringValue(BookshelfName);
             }
-            if (Optional.IsCollectionDefined(StorageAssetReferences))
+            if (LifecycleModelReaderWriterOptions.IsVisible(options, LifecycleVisibility.Read | LifecycleVisibility.Create | LifecycleVisibility.Update))
             {
-                writer.WritePropertyName("storageAssetReferences"u8);
-                writer.WriteStartArray();
-                foreach (StorageAssetReference item in StorageAssetReferences)
+                if (Optional.IsCollectionDefined(StorageAssetReferences))
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WritePropertyName("storageAssetReferences"u8);
+                    writer.WriteStartArray();
+                    foreach (StorageAssetReference item in StorageAssetReferences)
+                    {
+                        writer.WriteObjectValue(item, options);
+                    }
+                    writer.WriteEndArray();
                 }
-                writer.WriteEndArray();
             }
             if (options.Format != "W" && Optional.IsDefined(KnowledgeBaseUrl))
             {
@@ -172,20 +175,29 @@ namespace Azure.AI.Discovery
                 writer.WritePropertyName("lastModifiedByType"u8);
                 writer.WriteStringValue(LastModifiedByType.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (LifecycleModelReaderWriterOptions.IsVisible(options, LifecycleVisibility.Read | LifecycleVisibility.Create | LifecycleVisibility.Update))
             {
-                writer.WritePropertyName("tags"u8);
-                writer.WriteStartArray();
-                foreach (DiscoveryTag item in Tags)
+                if (Optional.IsCollectionDefined(Tags))
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WritePropertyName("tags"u8);
+                    writer.WriteStartArray();
+                    foreach (DiscoveryTag item in Tags)
+                    {
+                        writer.WriteObjectValue(item, options);
+                    }
+                    writer.WriteEndArray();
                 }
-                writer.WriteEndArray();
             }
-            writer.WritePropertyName("description"u8);
-            writer.WriteStringValue(Description);
-            writer.WritePropertyName("copilotInstruction"u8);
-            writer.WriteStringValue(CopilotInstruction);
+            if (LifecycleModelReaderWriterOptions.IsVisible(options, LifecycleVisibility.Read | LifecycleVisibility.Create | LifecycleVisibility.Update))
+            {
+                writer.WritePropertyName("description"u8);
+                writer.WriteStringValue(Description);
+            }
+            if (LifecycleModelReaderWriterOptions.IsVisible(options, LifecycleVisibility.Read | LifecycleVisibility.Create | LifecycleVisibility.Update))
+            {
+                writer.WritePropertyName("copilotInstruction"u8);
+                writer.WriteStringValue(CopilotInstruction);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)

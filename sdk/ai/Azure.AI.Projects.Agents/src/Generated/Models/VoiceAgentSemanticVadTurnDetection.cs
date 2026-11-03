@@ -25,15 +25,19 @@ namespace Azure.AI.Projects.Agents
         /// <param name="eagerness"></param>
         /// <param name="createResponse"></param>
         /// <param name="interruptResponse"></param>
+#pragma warning disable OPENAI002 // This generated code depends on experimental functionality.
         internal VoiceAgentSemanticVadTurnDetection(VoiceAgentTurnDetectionType @type, bool? autoTruncate, IDictionary<string, BinaryData> additionalBinaryDataProperties, RealtimeSemanticVadEagernessLevel? eagerness, bool? createResponse, bool? interruptResponse) : base(@type, autoTruncate, additionalBinaryDataProperties)
         {
             Eagerness = eagerness;
             CreateResponse = createResponse;
             InterruptResponse = interruptResponse;
         }
+#pragma warning restore OPENAI002 // This generated code depends on experimental functionality.
 
+#pragma warning disable OPENAI002 // This generated code depends on experimental functionality.
         /// <summary> Gets or sets the Eagerness. </summary>
         public RealtimeSemanticVadEagernessLevel? Eagerness { get; set; }
+#pragma warning restore OPENAI002 // This generated code depends on experimental functionality.
 
         /// <summary> Gets or sets the CreateResponse. </summary>
         public bool? CreateResponse { get; set; }

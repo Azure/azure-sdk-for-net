@@ -86,11 +86,13 @@ namespace Azure.AI.Projects.Agents
                 writer.WritePropertyName("voice_locale"u8);
                 writer.WriteStringValue(VoiceLocale);
             }
+#pragma warning disable OPENAI002 // This generated code depends on experimental functionality.
             if (Optional.IsDefined(Format))
             {
                 writer.WritePropertyName("format"u8);
                 writer.WriteObjectValue(Format, options);
             }
+#pragma warning restore OPENAI002 // This generated code depends on experimental functionality.
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -127,6 +129,7 @@ namespace Azure.AI.Projects.Agents
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
+#pragma warning disable OPENAI002 // This generated code depends on experimental functionality.
         internal static VoiceResponseAudioOutput DeserializeVoiceResponseAudioOutput(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
@@ -175,5 +178,6 @@ namespace Azure.AI.Projects.Agents
             }
             return new VoiceResponseAudioOutput(voice, voiceType, voiceLocale, format, additionalBinaryDataProperties);
         }
+#pragma warning restore OPENAI002 // This generated code depends on experimental functionality.
     }
 }

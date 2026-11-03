@@ -47,6 +47,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="personalVoiceModel"> The Azure personal or avatar voice model. Applies only when `voice_type` is `azure-personal` or `avatar-voice-sync`. </param>
         /// <param name="outputAudioTimestampTypes"> Timestamp kinds to include with output audio. Applies to every `voice_type`. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+#pragma warning disable OPENAI002 // This generated code depends on experimental functionality.
         internal VoiceAgentAudioOutputConfig(RealtimeAudioFormat format, string voice, VoiceType? voiceType, string voiceLocale, float? speed, float? voiceTemperature, Uri customLexiconUrl, Uri customTextNormalizationUrl, IList<string> preferLocales, string style, string pitch, string volume, string customVoiceEndpointId, string personalVoiceModel, IList<VoiceAgentAudioTimestampType> outputAudioTimestampTypes, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Format = format;
@@ -66,9 +67,12 @@ namespace Azure.AI.Projects.Agents
             OutputAudioTimestampTypes = outputAudioTimestampTypes;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+#pragma warning restore OPENAI002 // This generated code depends on experimental functionality.
 
+#pragma warning disable OPENAI002 // This generated code depends on experimental functionality.
         /// <summary> The output audio format. Applies to every `voice_type` and defaults to 24 kHz PCM. </summary>
         public RealtimeAudioFormat Format { get; set; }
+#pragma warning restore OPENAI002 // This generated code depends on experimental functionality.
 
         /// <summary> The voice name or identifier. Applies to `openai`, `azure-standard`, `azure-custom`, `azure-personal`, and `azure-realtime-native`. It does not apply to `avatar-voice-sync`, which derives the voice name from the avatar. </summary>
         public string Voice { get; set; }

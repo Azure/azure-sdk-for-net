@@ -43,6 +43,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="usage"> Final aggregate token usage across all responses in this conversation. Absent while `status` is `in_progress` and populated after successful `completed` finalization; it may be absent when `status` is `failed`, and values are not guaranteed to be reported incrementally. </param>
         /// <param name="lastError"> The terminal error that prevented persistence finalization. Present only when `status` is `failed`. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+#pragma warning disable OPENAI002 // This generated code depends on experimental functionality.
         internal VoiceConversation(string id, string @object, VoiceConversationStatus status, DateTimeOffset createdOn, DateTimeOffset? completedOn, IDictionary<string, string> metadata, RealtimeResponseUsage usage, FoundryOpenAIError lastError, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
@@ -55,6 +56,7 @@ namespace Azure.AI.Projects.Agents
             LastError = lastError;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+#pragma warning restore OPENAI002 // This generated code depends on experimental functionality.
 
         /// <summary> The unique id of the conversation. </summary>
         public string Id { get; }
@@ -74,7 +76,9 @@ namespace Azure.AI.Projects.Agents
         /// <summary> A set of key-value pairs attached to the conversation. </summary>
         public IDictionary<string, string> Metadata { get; }
 
+#pragma warning disable OPENAI002 // This generated code depends on experimental functionality.
         /// <summary> Final aggregate token usage across all responses in this conversation. Absent while `status` is `in_progress` and populated after successful `completed` finalization; it may be absent when `status` is `failed`, and values are not guaranteed to be reported incrementally. </summary>
         public RealtimeResponseUsage Usage { get; }
+#pragma warning restore OPENAI002 // This generated code depends on experimental functionality.
     }
 }

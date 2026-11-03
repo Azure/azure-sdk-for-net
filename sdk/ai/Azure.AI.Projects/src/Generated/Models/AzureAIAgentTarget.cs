@@ -25,7 +25,9 @@ namespace Azure.AI.Projects.Evaluation
 
             Name = name;
             ToolDescriptions = new ChangeTrackingList<ToolDescription>();
+#pragma warning disable OPENAI001 // This generated code depends on experimental functionality.
             Tools = new ChangeTrackingList<ResponseTool>();
+#pragma warning restore OPENAI001 // This generated code depends on experimental functionality.
         }
 
         /// <summary> Initializes a new instance of <see cref="AzureAIAgentTarget"/>. </summary>
@@ -35,6 +37,7 @@ namespace Azure.AI.Projects.Evaluation
         /// <param name="version"> The version of the Azure AI agent. When omitted, the latest version is used. </param>
         /// <param name="toolDescriptions"> Optional descriptions of tools available to the agent. </param>
         /// <param name="tools"> Tool definitions made available when invoking the agent. </param>
+#pragma warning disable OPENAI001 // This generated code depends on experimental functionality.
         [Experimental("AAIP002")]
         internal AzureAIAgentTarget(string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, string version, IList<ToolDescription> toolDescriptions, IList<ResponseTool> tools) : base(@type, additionalBinaryDataProperties)
         {
@@ -43,6 +46,7 @@ namespace Azure.AI.Projects.Evaluation
             ToolDescriptions = toolDescriptions;
             Tools = tools;
         }
+#pragma warning restore OPENAI001 // This generated code depends on experimental functionality.
 
         /// <summary> The name of the Azure AI agent to invoke as the evaluation target. </summary>
         public string Name { get; set; }
@@ -53,8 +57,10 @@ namespace Azure.AI.Projects.Evaluation
         /// <summary> Optional descriptions of tools available to the agent. </summary>
         public IList<ToolDescription> ToolDescriptions { get; }
 
+#pragma warning disable OPENAI001 // This generated code depends on experimental functionality.
         /// <summary> Tool definitions made available when invoking the agent. </summary>
         [Experimental("AAIP002")]
         public IList<ResponseTool> Tools { get; }
+#pragma warning restore OPENAI001 // This generated code depends on experimental functionality.
     }
 }

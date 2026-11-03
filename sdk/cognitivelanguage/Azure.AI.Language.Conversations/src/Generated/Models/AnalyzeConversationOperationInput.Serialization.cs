@@ -95,8 +95,11 @@ namespace Azure.AI.Language.Conversations.Models
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            writer.WritePropertyName("analysisInput"u8);
-            writer.WriteObjectValue(ConversationInput, options);
+            if (LifecycleModelReaderWriterOptions.IsVisible(options, LifecycleVisibility.Read | LifecycleVisibility.Create | LifecycleVisibility.Query))
+            {
+                writer.WritePropertyName("analysisInput"u8);
+                writer.WriteObjectValue(ConversationInput, options);
+            }
             writer.WritePropertyName("tasks"u8);
             writer.WriteStartArray();
             foreach (AnalyzeConversationOperationAction item in Actions)

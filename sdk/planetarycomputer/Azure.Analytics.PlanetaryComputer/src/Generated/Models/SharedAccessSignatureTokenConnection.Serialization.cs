@@ -80,10 +80,13 @@ namespace Azure.Analytics.PlanetaryComputer
             }
             writer.WritePropertyName("containerUrl"u8);
             writer.WriteStringValue(ContainerUri.AbsoluteUri);
-            if (Optional.IsDefined(SharedAccessSignatureToken))
+            if (LifecycleModelReaderWriterOptions.IsVisible(options, LifecycleVisibility.Create | LifecycleVisibility.Update))
             {
-                writer.WritePropertyName("sasToken"u8);
-                writer.WriteStringValue(SharedAccessSignatureToken);
+                if (Optional.IsDefined(SharedAccessSignatureToken))
+                {
+                    writer.WritePropertyName("sasToken"u8);
+                    writer.WriteStringValue(SharedAccessSignatureToken);
+                }
             }
             if (options.Format != "W" && Optional.IsDefined(ExpiresOn))
             {

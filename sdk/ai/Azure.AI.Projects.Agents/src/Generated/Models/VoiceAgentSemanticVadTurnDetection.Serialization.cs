@@ -72,11 +72,13 @@ namespace Azure.AI.Projects.Agents
                 throw new FormatException($"The model {nameof(VoiceAgentSemanticVadTurnDetection)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
+#pragma warning disable OPENAI002 // This generated code depends on experimental functionality.
             if (Optional.IsDefined(Eagerness))
             {
                 writer.WritePropertyName("eagerness"u8);
                 writer.WriteObjectValue<RealtimeSemanticVadEagernessLevel?>(Eagerness.Value, options);
             }
+#pragma warning restore OPENAI002 // This generated code depends on experimental functionality.
             if (Optional.IsDefined(CreateResponse))
             {
                 writer.WritePropertyName("create_response"u8);
@@ -108,6 +110,7 @@ namespace Azure.AI.Projects.Agents
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
+#pragma warning disable OPENAI002 // This generated code depends on experimental functionality.
         internal static VoiceAgentSemanticVadTurnDetection DeserializeVoiceAgentSemanticVadTurnDetection(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
@@ -176,5 +179,6 @@ namespace Azure.AI.Projects.Agents
                 createResponse,
                 interruptResponse);
         }
+#pragma warning restore OPENAI002 // This generated code depends on experimental functionality.
     }
 }

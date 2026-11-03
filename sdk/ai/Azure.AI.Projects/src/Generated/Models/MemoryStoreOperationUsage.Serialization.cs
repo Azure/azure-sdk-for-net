@@ -81,12 +81,16 @@ namespace Azure.AI.Projects.Memory
             writer.WriteNumberValue(EmbeddingTokens);
             writer.WritePropertyName("input_tokens"u8);
             writer.WriteNumberValue(InputTokens);
+#pragma warning disable OPENAI001 // This generated code depends on experimental functionality.
             writer.WritePropertyName("input_tokens_details"u8);
             writer.WriteObjectValue(InputTokensDetails, options);
+#pragma warning restore OPENAI001 // This generated code depends on experimental functionality.
             writer.WritePropertyName("output_tokens"u8);
             writer.WriteNumberValue(OutputTokens);
+#pragma warning disable OPENAI001 // This generated code depends on experimental functionality.
             writer.WritePropertyName("output_tokens_details"u8);
             writer.WriteObjectValue(OutputTokensDetails, options);
+#pragma warning restore OPENAI001 // This generated code depends on experimental functionality.
             writer.WritePropertyName("total_tokens"u8);
             writer.WriteNumberValue(TotalTokens);
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
@@ -125,6 +129,7 @@ namespace Azure.AI.Projects.Memory
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
+#pragma warning disable OPENAI001 // This generated code depends on experimental functionality.
         internal static MemoryStoreOperationUsage DeserializeMemoryStoreOperationUsage(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
@@ -184,5 +189,6 @@ namespace Azure.AI.Projects.Memory
                 totalTokens,
                 additionalBinaryDataProperties);
         }
+#pragma warning restore OPENAI001 // This generated code depends on experimental functionality.
     }
 }

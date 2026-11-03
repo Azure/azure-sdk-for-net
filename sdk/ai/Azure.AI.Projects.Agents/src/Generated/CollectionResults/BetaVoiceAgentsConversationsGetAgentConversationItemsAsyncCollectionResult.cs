@@ -58,6 +58,7 @@ namespace Azure.AI.Projects.Agents
 
         /// <summary> Gets the raw pages of the collection. </summary>
         /// <returns> The raw pages of the collection. </returns>
+#pragma warning disable OPENAI002 // This generated code depends on experimental functionality.
         public override async IAsyncEnumerable<ClientResult> GetRawPagesAsync()
         {
             PipelineMessage message = _client.CreateGetAgentConversationItemsRequest(_agentName, _conversationId, _limit, _order, _after, _before, _options);
@@ -75,10 +76,12 @@ namespace Azure.AI.Projects.Agents
                 message = _client.CreateGetAgentConversationItemsRequest(_agentName, _conversationId, _limit, _order, nextToken, _before, _options);
             }
         }
+#pragma warning restore OPENAI002 // This generated code depends on experimental functionality.
 
         /// <summary> Gets the continuation token from the specified page. </summary>
         /// <param name="page"></param>
         /// <returns> The continuation token for the specified page. </returns>
+#pragma warning disable OPENAI002 // This generated code depends on experimental functionality.
         public override ContinuationToken GetContinuationToken(ClientResult page)
         {
             string nextPage = ((AgentsPagedResultRealtimeConversationItem)page).LastId;
@@ -91,9 +94,11 @@ namespace Azure.AI.Projects.Agents
                 return null;
             }
         }
+#pragma warning restore OPENAI002 // This generated code depends on experimental functionality.
 
         /// <summary> Sends the request in the pipeline message and returns the response. </summary>
         /// <param name="message"> The pipeline message containing the request to send. </param>
+#pragma warning disable OPENAI002 // This generated code depends on experimental functionality.
         private async ValueTask<ClientResult> GetNextResponseAsync(PipelineMessage message)
         {
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("BetaVoiceAgentsConversations.GetAgentConversationItems");
@@ -108,5 +113,6 @@ namespace Azure.AI.Projects.Agents
                 throw;
             }
         }
+#pragma warning restore OPENAI002 // This generated code depends on experimental functionality.
     }
 }

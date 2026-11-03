@@ -78,8 +78,11 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             {
                 throw new FormatException($"The model {nameof(ImportQnaRecord)} does not support writing '{format}' format.");
             }
-            writer.WritePropertyName("id"u8);
-            writer.WriteNumberValue(Id);
+            if (LifecycleModelReaderWriterOptions.IsVisible(options, LifecycleVisibility.Read | LifecycleVisibility.Create))
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteNumberValue(Id);
+            }
             if (Optional.IsDefined(Answer))
             {
                 writer.WritePropertyName("answer"u8);

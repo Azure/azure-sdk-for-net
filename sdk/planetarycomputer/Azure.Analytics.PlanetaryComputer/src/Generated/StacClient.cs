@@ -1045,7 +1045,9 @@ namespace Azure.Analytics.PlanetaryComputer
         {
             Argument.AssertNotNull(body, nameof(body));
 
-            return CreateCollection(waitUntil, body, cancellationToken.ToRequestContext());
+            using Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(body, new LifecycleModelReaderWriterOptions(LifecycleVisibility.Create, "W"));
+            return CreateCollection(waitUntil, content, cancellationToken.ToRequestContext());
         }
 
         /// <summary> Create a new collection in the GeoCatalog instance. </summary>
@@ -1057,7 +1059,9 @@ namespace Azure.Analytics.PlanetaryComputer
         {
             Argument.AssertNotNull(body, nameof(body));
 
-            return await CreateCollectionAsync(waitUntil, body, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            using Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(body, new LifecycleModelReaderWriterOptions(LifecycleVisibility.Create, "W"));
+            return await CreateCollectionAsync(waitUntil, content, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1140,7 +1144,9 @@ namespace Azure.Analytics.PlanetaryComputer
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
             Argument.AssertNotNull(body, nameof(body));
 
-            Response result = ReplaceCollection(collectionId, body, cancellationToken.ToRequestContext());
+            using Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(body, new LifecycleModelReaderWriterOptions(LifecycleVisibility.Create | LifecycleVisibility.Update, "W"));
+            Response result = ReplaceCollection(collectionId, content, cancellationToken.ToRequestContext());
             return Response.FromValue((StacCollection)result, result);
         }
 
@@ -1156,7 +1162,9 @@ namespace Azure.Analytics.PlanetaryComputer
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
             Argument.AssertNotNull(body, nameof(body));
 
-            Response result = await ReplaceCollectionAsync(collectionId, body, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            using Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(body, new LifecycleModelReaderWriterOptions(LifecycleVisibility.Create | LifecycleVisibility.Update, "W"));
+            Response result = await ReplaceCollectionAsync(collectionId, content, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((StacCollection)result, result);
         }
 
@@ -2611,7 +2619,9 @@ namespace Azure.Analytics.PlanetaryComputer
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
             Argument.AssertNotNull(body, nameof(body));
 
-            return CreateItem(waitUntil, collectionId, body, cancellationToken.ToRequestContext());
+            using Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(body, new LifecycleModelReaderWriterOptions(LifecycleVisibility.Create, "W"));
+            return CreateItem(waitUntil, collectionId, content, cancellationToken.ToRequestContext());
         }
 
         /// <summary> Create a new STAC item or a set of items in a collection. </summary>
@@ -2635,7 +2645,9 @@ namespace Azure.Analytics.PlanetaryComputer
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
             Argument.AssertNotNull(body, nameof(body));
 
-            return await CreateItemAsync(waitUntil, collectionId, body, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            using Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(body, new LifecycleModelReaderWriterOptions(LifecycleVisibility.Create, "W"));
+            return await CreateItemAsync(waitUntil, collectionId, content, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
 
         /// <summary> Replace a STAC item in a collection. </summary>
@@ -2710,7 +2722,9 @@ namespace Azure.Analytics.PlanetaryComputer
             Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
             Argument.AssertNotNull(body, nameof(body));
 
-            return ReplaceItem(waitUntil, collectionId, itemId, body, cancellationToken.ToRequestContext());
+            using Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(body, new LifecycleModelReaderWriterOptions(LifecycleVisibility.Create | LifecycleVisibility.Update, "W"));
+            return ReplaceItem(waitUntil, collectionId, itemId, content, cancellationToken.ToRequestContext());
         }
 
         /// <summary> Replace a STAC item in a collection. </summary>
@@ -2727,7 +2741,9 @@ namespace Azure.Analytics.PlanetaryComputer
             Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
             Argument.AssertNotNull(body, nameof(body));
 
-            return await ReplaceItemAsync(waitUntil, collectionId, itemId, body, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            using Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(body, new LifecycleModelReaderWriterOptions(LifecycleVisibility.Create | LifecycleVisibility.Update, "W"));
+            return await ReplaceItemAsync(waitUntil, collectionId, itemId, content, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
 
         /// <summary> Delete a STAC item from a collection. </summary>

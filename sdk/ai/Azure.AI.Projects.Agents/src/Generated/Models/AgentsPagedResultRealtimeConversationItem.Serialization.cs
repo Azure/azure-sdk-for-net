@@ -85,6 +85,7 @@ namespace Azure.AI.Projects.Agents
             {
                 throw new FormatException($"The model {nameof(AgentsPagedResultRealtimeConversationItem)} does not support writing '{format}' format.");
             }
+#pragma warning disable OPENAI002 // This generated code depends on experimental functionality.
             writer.WritePropertyName("data"u8);
             writer.WriteStartArray();
             foreach (RealtimeItem item in Data)
@@ -97,6 +98,7 @@ namespace Azure.AI.Projects.Agents
                 writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
+#pragma warning restore OPENAI002 // This generated code depends on experimental functionality.
             if (Optional.IsDefined(FirstId))
             {
                 writer.WritePropertyName("first_id"u8);
@@ -145,6 +147,7 @@ namespace Azure.AI.Projects.Agents
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
+#pragma warning disable OPENAI002 // This generated code depends on experimental functionality.
         internal static AgentsPagedResultRealtimeConversationItem DeserializeAgentsPagedResultRealtimeConversationItem(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
@@ -197,5 +200,6 @@ namespace Azure.AI.Projects.Agents
             }
             return new AgentsPagedResultRealtimeConversationItem(data ?? new ChangeTrackingList<RealtimeItem>(), firstId, lastId, hasMore, additionalBinaryDataProperties);
         }
+#pragma warning restore OPENAI002 // This generated code depends on experimental functionality.
     }
 }

@@ -30,11 +30,13 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="type"></param>
         /// <param name="toolOptions"> The sharepoint grounding tool parameters. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+#pragma warning disable OPENAI001 // This generated code depends on experimental functionality.
         internal SharePointPreviewTool(ResponseToolKind @type, SharePointGroundingToolOptions toolOptions, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type)
         {
             ToolOptions = toolOptions;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+#pragma warning restore OPENAI001 // This generated code depends on experimental functionality.
 
         /// <summary> The sharepoint grounding tool parameters. </summary>
         public SharePointGroundingToolOptions ToolOptions { get; set; }

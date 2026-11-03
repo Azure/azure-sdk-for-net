@@ -34,6 +34,7 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="toolConfigs"> Deprecated. This property is deprecated and will be removed in a future version. </param>
         /// <param name="azureAISearch"> The azure ai search index resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+#pragma warning disable OPENAI001 // This generated code depends on experimental functionality.
         internal AzureAISearchTool(ResponseToolKind @type, string name, string description, IDictionary<string, ToolConfig> toolConfigs, AzureAISearchToolOptions azureAISearch, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type)
         {
             Name = name;
@@ -42,6 +43,7 @@ namespace Azure.AI.Extensions.OpenAI
             AzureAISearch = azureAISearch;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+#pragma warning restore OPENAI001 // This generated code depends on experimental functionality.
 
         /// <summary> Deprecated. This property is deprecated and will be removed in a future version. </summary>
         public string Name { get; set; }

@@ -116,20 +116,29 @@ namespace Azure.AI.Discovery
                 writer.WritePropertyName("lastModifiedByType"u8);
                 writer.WriteStringValue(LastModifiedByType.Value.ToString());
             }
-            if (Optional.IsDefined(DisplayName))
+            if (LifecycleModelReaderWriterOptions.IsVisible(options, LifecycleVisibility.Read | LifecycleVisibility.Create | LifecycleVisibility.Update))
             {
-                writer.WritePropertyName("displayName"u8);
-                writer.WriteStringValue(DisplayName);
+                if (Optional.IsDefined(DisplayName))
+                {
+                    writer.WritePropertyName("displayName"u8);
+                    writer.WriteStringValue(DisplayName);
+                }
             }
-            if (Optional.IsDefined(InvestigationName))
+            if (LifecycleModelReaderWriterOptions.IsVisible(options, LifecycleVisibility.Read | LifecycleVisibility.Create))
             {
-                writer.WritePropertyName("investigationName"u8);
-                writer.WriteStringValue(InvestigationName);
+                if (Optional.IsDefined(InvestigationName))
+                {
+                    writer.WritePropertyName("investigationName"u8);
+                    writer.WriteStringValue(InvestigationName);
+                }
             }
-            if (Optional.IsDefined(ProjectName))
+            if (LifecycleModelReaderWriterOptions.IsVisible(options, LifecycleVisibility.Read | LifecycleVisibility.Create))
             {
-                writer.WritePropertyName("projectName"u8);
-                writer.WriteStringValue(ProjectName);
+                if (Optional.IsDefined(ProjectName))
+                {
+                    writer.WritePropertyName("projectName"u8);
+                    writer.WriteStringValue(ProjectName);
+                }
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {

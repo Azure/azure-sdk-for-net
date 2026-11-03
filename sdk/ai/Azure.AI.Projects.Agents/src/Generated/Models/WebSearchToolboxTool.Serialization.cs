@@ -78,6 +78,7 @@ namespace Azure.AI.Projects.Agents
                 writer.WritePropertyName("external_web_access"u8);
                 writer.WriteBooleanValue(ExternalWebAccess.Value);
             }
+#pragma warning disable OPENAI001 // This generated code depends on experimental functionality.
             if (Optional.IsDefined(Filters, _filtersIsDefined))
             {
                 if (Filters != null)
@@ -90,6 +91,8 @@ namespace Azure.AI.Projects.Agents
                     writer.WriteNull("filters"u8);
                 }
             }
+#pragma warning restore OPENAI001 // This generated code depends on experimental functionality.
+#pragma warning disable OPENAI001 // This generated code depends on experimental functionality.
             if (Optional.IsDefined(UserLocation, _userLocationIsDefined))
             {
                 if (UserLocation != null)
@@ -102,11 +105,14 @@ namespace Azure.AI.Projects.Agents
                     writer.WriteNull("user_location"u8);
                 }
             }
+#pragma warning restore OPENAI001 // This generated code depends on experimental functionality.
+#pragma warning disable OPENAI001 // This generated code depends on experimental functionality.
             if (Optional.IsDefined(SearchContextSize))
             {
                 writer.WritePropertyName("search_context_size"u8);
                 writer.WriteObjectValue<WebSearchToolContextSize?>(SearchContextSize.Value, options);
             }
+#pragma warning restore OPENAI001 // This generated code depends on experimental functionality.
             if (Optional.IsDefined(CustomSearchConfiguration))
             {
                 writer.WritePropertyName("custom_search_configuration"u8);
@@ -133,6 +139,7 @@ namespace Azure.AI.Projects.Agents
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
+#pragma warning disable OPENAI001 // This generated code depends on experimental functionality.
         internal static WebSearchToolboxTool DeserializeWebSearchToolboxTool(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
@@ -259,5 +266,6 @@ namespace Azure.AI.Projects.Agents
                 _userLocationIsDefined = userLocationIsDefined
             };
         }
+#pragma warning restore OPENAI001 // This generated code depends on experimental functionality.
     }
 }

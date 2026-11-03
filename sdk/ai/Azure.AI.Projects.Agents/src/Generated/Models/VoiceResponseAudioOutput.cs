@@ -27,6 +27,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="voiceLocale"> The BCP-47 locale of the voice used for the response's audio output. </param>
         /// <param name="format"> The audio format used for the response's audio output. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+#pragma warning disable OPENAI002 // This generated code depends on experimental functionality.
         internal VoiceResponseAudioOutput(string voice, VoiceType? voiceType, string voiceLocale, RealtimeAudioFormat format, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Voice = voice;
@@ -35,6 +36,7 @@ namespace Azure.AI.Projects.Agents
             Format = format;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+#pragma warning restore OPENAI002 // This generated code depends on experimental functionality.
 
         /// <summary> The voice name used for the response's audio output. </summary>
         public string Voice { get; set; }
@@ -45,7 +47,9 @@ namespace Azure.AI.Projects.Agents
         /// <summary> The BCP-47 locale of the voice used for the response's audio output. </summary>
         public string VoiceLocale { get; set; }
 
+#pragma warning disable OPENAI002 // This generated code depends on experimental functionality.
         /// <summary> The audio format used for the response's audio output. </summary>
         public RealtimeAudioFormat Format { get; set; }
+#pragma warning restore OPENAI002 // This generated code depends on experimental functionality.
     }
 }

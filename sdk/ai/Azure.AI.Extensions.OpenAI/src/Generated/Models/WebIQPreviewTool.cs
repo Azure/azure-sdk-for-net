@@ -32,6 +32,7 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="serverLabel"> The label of the WebIQ MCP server to connect to. When omitted, the service defaults to connection name extracted from project_connection_id. </param>
         /// <param name="requireApproval"> Whether the agent requires approval before executing actions. When omitted, the service defaults to "always". </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+#pragma warning disable OPENAI001 // This generated code depends on experimental functionality.
         internal WebIQPreviewTool(ResponseToolKind @type, string projectConnectionId, string serverLabel, WebIQPreviewToolRequireApprovalChoice requireApproval, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type)
         {
             ProjectConnectionId = projectConnectionId;
@@ -39,6 +40,7 @@ namespace Azure.AI.Extensions.OpenAI
             RequireApproval = requireApproval;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+#pragma warning restore OPENAI001 // This generated code depends on experimental functionality.
 
         /// <summary> The ID of the WebIQ project connection. </summary>
         public string ProjectConnectionId { get; set; }

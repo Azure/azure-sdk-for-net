@@ -211,7 +211,9 @@ namespace Azure.AI.Discovery
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
             CreateRequest spreadModel = new CreateRequest(projectName, investigationName, displayName, default);
-            Response result = Create(spreadModel, cancellationToken.ToRequestContext());
+            using Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(spreadModel, new LifecycleModelReaderWriterOptions(LifecycleVisibility.Create, "W"));
+            Response result = Create(content, cancellationToken.ToRequestContext());
             return Response.FromValue((DiscoveryConversation)result, result);
         }
 
@@ -228,7 +230,9 @@ namespace Azure.AI.Discovery
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
             CreateRequest spreadModel = new CreateRequest(projectName, investigationName, displayName, default);
-            Response result = await CreateAsync(spreadModel, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            using Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(spreadModel, new LifecycleModelReaderWriterOptions(LifecycleVisibility.Create, "W"));
+            Response result = await CreateAsync(content, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((DiscoveryConversation)result, result);
         }
 

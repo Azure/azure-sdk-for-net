@@ -30,11 +30,13 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="type"></param>
         /// <param name="bingCustomSearchPreview"> The bing custom search tool parameters. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+#pragma warning disable OPENAI001 // This generated code depends on experimental functionality.
         internal BingCustomSearchPreviewTool(ResponseToolKind @type, BingCustomSearchToolOptions bingCustomSearchPreview, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type)
         {
             BingCustomSearchPreview = bingCustomSearchPreview;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+#pragma warning restore OPENAI001 // This generated code depends on experimental functionality.
 
         /// <summary> The bing custom search tool parameters. </summary>
         public BingCustomSearchToolOptions BingCustomSearchPreview { get; set; }

@@ -15,11 +15,6 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
     /// <summary> QnA record. </summary>
     public partial class QnaRecord : IJsonModel<QnaRecord>
     {
-        /// <summary> Initializes a new instance of <see cref="QnaRecord"/> for deserialization. </summary>
-        internal QnaRecord()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual QnaRecord PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
@@ -78,8 +73,14 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             {
                 throw new FormatException($"The model {nameof(QnaRecord)} does not support writing '{format}' format.");
             }
-            writer.WritePropertyName("id"u8);
-            writer.WriteNumberValue(Id);
+            if (LifecycleModelReaderWriterOptions.IsVisible(options, LifecycleVisibility.Read | LifecycleVisibility.Create))
+            {
+                if (Optional.IsDefined(Id))
+                {
+                    writer.WritePropertyName("id"u8);
+                    writer.WriteNumberValue(Id.Value);
+                }
+            }
             if (Optional.IsDefined(Answer))
             {
                 writer.WritePropertyName("answer"u8);
@@ -178,7 +179,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             {
                 return null;
             }
-            int id = default;
+            int? id = default;
             string answer = default;
             string source = default;
             IList<string> questions = default;
@@ -190,6 +191,10 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             {
                 if (prop.NameEquals("id"u8))
                 {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     id = prop.Value.GetInt32();
                     continue;
                 }

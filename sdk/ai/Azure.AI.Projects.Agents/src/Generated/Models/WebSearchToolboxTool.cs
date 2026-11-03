@@ -13,11 +13,15 @@ namespace Azure.AI.Projects.Agents
     /// <summary> A web search tool stored in a toolbox. </summary>
     public partial class WebSearchToolboxTool : ToolboxTool
     {
+#pragma warning disable OPENAI001 // This generated code depends on experimental functionality.
         [Experimental("AAIP002")]
         private WebSearchToolFilters _filters;
+#pragma warning restore OPENAI001 // This generated code depends on experimental functionality.
         private bool _filtersIsDefined;
+#pragma warning disable OPENAI001 // This generated code depends on experimental functionality.
         [Experimental("AAIP002")]
         private WebSearchToolApproximateLocation _userLocation;
+#pragma warning restore OPENAI001 // This generated code depends on experimental functionality.
         private bool _userLocationIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="WebSearchToolboxTool"/>. </summary>
@@ -47,6 +51,7 @@ namespace Azure.AI.Projects.Agents
         /// The project connections attached to this tool. There can be a maximum of 1 connection
         /// resource attached to the tool.
         /// </param>
+#pragma warning disable OPENAI001 // This generated code depends on experimental functionality.
         [Experimental("AAIP002")]
         internal WebSearchToolboxTool(ToolboxToolType @type, string name, string description, IDictionary<string, ToolConfig> toolConfigs, IDictionary<string, BinaryData> additionalBinaryDataProperties, bool? externalWebAccess, WebSearchToolFilters filters, WebSearchToolApproximateLocation userLocation, WebSearchToolContextSize? searchContextSize, WebSearchConfiguration customSearchConfiguration) : base(@type, name, description, toolConfigs, additionalBinaryDataProperties)
         {
@@ -56,10 +61,12 @@ namespace Azure.AI.Projects.Agents
             SearchContextSize = searchContextSize;
             CustomSearchConfiguration = customSearchConfiguration;
         }
+#pragma warning restore OPENAI001 // This generated code depends on experimental functionality.
 
         /// <summary> Allow live internet access for web search. Defaults to true when omitted. When false, the web search tool runs in offline/cache-only mode and will not fetch new external content. </summary>
         public bool? ExternalWebAccess { get; set; }
 
+#pragma warning disable OPENAI001 // This generated code depends on experimental functionality.
         /// <summary> Gets or sets the Filters. </summary>
         [Experimental("AAIP002")]
         public WebSearchToolFilters Filters
@@ -74,7 +81,9 @@ namespace Azure.AI.Projects.Agents
                 _filtersIsDefined = true;
             }
         }
+#pragma warning restore OPENAI001 // This generated code depends on experimental functionality.
 
+#pragma warning disable OPENAI001 // This generated code depends on experimental functionality.
         /// <summary>
         /// The approximate location of the user. If omitted or null, defaults to the
         ///   United States. To avoid this fallback, pass `{"type": "approximate"}` without
@@ -93,10 +102,13 @@ namespace Azure.AI.Projects.Agents
                 _userLocationIsDefined = true;
             }
         }
+#pragma warning restore OPENAI001 // This generated code depends on experimental functionality.
 
+#pragma warning disable OPENAI001 // This generated code depends on experimental functionality.
         /// <summary> High level guidance for the amount of context window space to use for the search. One of `low`, `medium`, or `high`. `medium` is the default. </summary>
         [Experimental("AAIP002")]
         public WebSearchToolContextSize? SearchContextSize { get; set; }
+#pragma warning restore OPENAI001 // This generated code depends on experimental functionality.
 
         /// <summary>
         /// The project connections attached to this tool. There can be a maximum of 1 connection

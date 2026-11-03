@@ -133,6 +133,7 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
+#pragma warning disable OPENAI001 // This generated code depends on experimental functionality.
         internal static A2AToolCallOutput DeserializeA2AToolCallOutput(JsonElement element, BinaryData data, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
@@ -213,5 +214,6 @@ namespace Azure.AI.Extensions.OpenAI
                 status,
                 patch);
         }
+#pragma warning restore OPENAI001 // This generated code depends on experimental functionality.
     }
 }

@@ -34,6 +34,7 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="toolConfigs"> Deprecated. This property is deprecated and will be removed in a future version. </param>
         /// <param name="bingGrounding"> The bing grounding search tool parameters. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+#pragma warning disable OPENAI001 // This generated code depends on experimental functionality.
         internal BingGroundingTool(ResponseToolKind @type, string name, string description, IDictionary<string, ToolConfig> toolConfigs, BingGroundingSearchToolOptions bingGrounding, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type)
         {
             Name = name;
@@ -42,6 +43,7 @@ namespace Azure.AI.Extensions.OpenAI
             BingGrounding = bingGrounding;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+#pragma warning restore OPENAI001 // This generated code depends on experimental functionality.
 
         /// <summary> Deprecated. This property is deprecated and will be removed in a future version. </summary>
         public string Name { get; set; }

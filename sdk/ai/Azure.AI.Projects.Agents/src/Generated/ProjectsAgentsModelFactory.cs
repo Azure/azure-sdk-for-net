@@ -570,6 +570,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="echoCancellation"> Optional server-side echo cancellation settings. </param>
         /// <param name="transcription"> Asynchronous input-audio transcription. Set to null to disable transcription. </param>
         /// <returns> A new <see cref="Agents.VoiceAgentAudioInputConfig"/> instance for mocking. </returns>
+#pragma warning disable OPENAI002 // This generated code depends on experimental functionality.
         [Experimental("AAIP001")]
         public static VoiceAgentAudioInputConfig VoiceAgentAudioInputConfig(RealtimeAudioFormat format = default, VoiceAgentNoiseReduction noiseReduction = default, VoiceAgentTurnDetectionConfig turnDetection = default, VoiceAgentEchoCancellation echoCancellation = default, VoiceAgentInputTranscription transcription = default)
         {
@@ -581,6 +582,7 @@ namespace Azure.AI.Projects.Agents
                 transcription,
                 additionalBinaryDataProperties: null);
         }
+#pragma warning restore OPENAI002 // This generated code depends on experimental functionality.
 
         /// <summary>
         /// Input audio noise reduction configuration. `azure_deep_noise_suppression_headset` and
@@ -759,6 +761,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="createResponse"></param>
         /// <param name="interruptResponse"></param>
         /// <returns> A new <see cref="Agents.VoiceAgentSemanticVadTurnDetection"/> instance for mocking. </returns>
+#pragma warning disable OPENAI002 // This generated code depends on experimental functionality.
         [Experimental("AAIP001")]
         public static VoiceAgentSemanticVadTurnDetection VoiceAgentSemanticVadTurnDetection(bool? autoTruncate = default, RealtimeSemanticVadEagernessLevel? eagerness = default, bool? createResponse = default, bool? interruptResponse = default)
         {
@@ -770,6 +773,7 @@ namespace Azure.AI.Projects.Agents
                 createResponse,
                 interruptResponse);
         }
+#pragma warning restore OPENAI002 // This generated code depends on experimental functionality.
 
         /// <summary> Server-side echo cancellation settings for input audio. </summary>
         /// <param name="referenceSource"> Whether reference audio comes from server playback or a client-provided channel. </param>
@@ -868,6 +872,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="personalVoiceModel"> The Azure personal or avatar voice model. Applies only when `voice_type` is `azure-personal` or `avatar-voice-sync`. </param>
         /// <param name="outputAudioTimestampTypes"> Timestamp kinds to include with output audio. Applies to every `voice_type`. </param>
         /// <returns> A new <see cref="Agents.VoiceAgentAudioOutputConfig"/> instance for mocking. </returns>
+#pragma warning disable OPENAI002 // This generated code depends on experimental functionality.
         [Experimental("AAIP001")]
         public static VoiceAgentAudioOutputConfig VoiceAgentAudioOutputConfig(RealtimeAudioFormat format = default, string voice = default, VoiceType? voiceType = default, string voiceLocale = default, float? speed = default, float? voiceTemperature = default, Uri customLexiconUrl = default, Uri customTextNormalizationUrl = default, IEnumerable<string> preferLocales = default, string style = default, string pitch = default, string volume = default, string customVoiceEndpointId = default, string personalVoiceModel = default, IEnumerable<VoiceAgentAudioTimestampType> outputAudioTimestampTypes = default)
         {
@@ -892,6 +897,7 @@ namespace Azure.AI.Projects.Agents
                 outputAudioTimestampTypes.ToList(),
                 additionalBinaryDataProperties: null);
         }
+#pragma warning restore OPENAI002 // This generated code depends on experimental functionality.
 
         /// <summary> Agent-owned background ambience and event cues. Each omitted track is disabled. The service rejects unknown fields; custom uploads, URLs, and inline audio are not supported. </summary>
         /// <param name="background"> Continuous background ambience that continues during caller and agent speech. </param>
@@ -1151,6 +1157,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="toolConfigs"> Deprecated. This property is deprecated and will be removed in a future version. </param>
         /// <param name="responseScheduling"> When the MCP invocation creates a follow-up response. Defaults to `when_idle`. </param>
         /// <returns> A new <see cref="Agents.VoiceAgentMcpTool"/> instance for mocking. </returns>
+#pragma warning disable OPENAI001 // This generated code depends on experimental functionality.
         [Experimental("AAIP001")]
         public static VoiceAgentMcpTool VoiceAgentMcpTool(string serverLabel = default, Uri serverUrl = default, string authorization = default, string serverDescription = default, IDictionary<string, string> headers = default, McpToolFilter allowedTools = default, IEnumerable<CallableToolAllowedCaller> allowedCallers = default, BinaryData requireApprovalInternal = default, bool? deferLoading = default, string projectConnectionId = default, IDictionary<string, ToolConfig> toolConfigs = default, VoiceAgentToolResponseScheduling? responseScheduling = default)
         {
@@ -1174,6 +1181,7 @@ namespace Azure.AI.Projects.Agents
                 toolConfigs,
                 responseScheduling);
         }
+#pragma warning restore OPENAI001 // This generated code depends on experimental functionality.
 
         /// <summary> A service-managed control that acts on the active voice session without customer code or external authentication. </summary>
         /// <param name="description"> An optional description of the system tool. </param>
@@ -1754,6 +1762,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="createdOn"> The Unix timestamp (in seconds) for when the response was created. </param>
         /// <param name="completedOn"> The Unix timestamp (in seconds) for when the response completed. </param>
         /// <returns> A new <see cref="Agents.VoiceResult"/> instance for mocking. </returns>
+#pragma warning disable OPENAI002 // This generated code depends on experimental functionality.
         [Experimental("AAIP001")]
         public static VoiceResult VoiceResult(string id = default, VoiceResponseObject? @object = default, RealtimeResponseStatus? status = default, RealtimeResponseStatusDetails statusDetails = default, IEnumerable<RealtimeItem> output = default, IDictionary<string, BinaryData> metadata = default, RealtimeResponseUsage usage = default, string conversationId = default, IEnumerable<RealtimeOutputModality> outputModalities = default, BinaryData maxOutputTokens = default, VoiceResponseAudio audio = default, float? temperature = default, DateTimeOffset? createdOn = default, DateTimeOffset? completedOn = default)
         {
@@ -1778,6 +1787,7 @@ namespace Azure.AI.Projects.Agents
                 completedOn,
                 additionalBinaryDataProperties: null);
         }
+#pragma warning restore OPENAI002 // This generated code depends on experimental functionality.
 
         /// <summary> Audio configuration for a response. Follows the OpenAI Realtime GA `audio` object shape. </summary>
         /// <param name="output"> The audio output configuration used for the response. </param>
@@ -1794,11 +1804,13 @@ namespace Azure.AI.Projects.Agents
         /// <param name="voiceLocale"> The BCP-47 locale of the voice used for the response's audio output. </param>
         /// <param name="format"> The audio format used for the response's audio output. </param>
         /// <returns> A new <see cref="Agents.VoiceResponseAudioOutput"/> instance for mocking. </returns>
+#pragma warning disable OPENAI002 // This generated code depends on experimental functionality.
         [Experimental("AAIP001")]
         public static VoiceResponseAudioOutput VoiceResponseAudioOutput(string voice = default, VoiceType? voiceType = default, string voiceLocale = default, RealtimeAudioFormat format = default)
         {
             return new VoiceResponseAudioOutput(voice, voiceType, voiceLocale, format, additionalBinaryDataProperties: null);
         }
+#pragma warning restore OPENAI002 // This generated code depends on experimental functionality.
 
         /// <summary>
         /// Metadata for a single conversation item's audio segment. For bring-your-own-storage (BYOS), the response includes
@@ -2566,6 +2578,7 @@ namespace Azure.AI.Projects.Agents
         /// resource attached to the tool.
         /// </param>
         /// <returns> A new <see cref="Agents.WebSearchToolboxTool"/> instance for mocking. </returns>
+#pragma warning disable OPENAI001 // This generated code depends on experimental functionality.
         [Experimental("AAIP002")]
         public static WebSearchToolboxTool WebSearchToolboxTool(string name = default, string description = default, IDictionary<string, ToolConfig> toolConfigs = default, bool? externalWebAccess = default, WebSearchToolFilters filters = default, WebSearchToolApproximateLocation userLocation = default, WebSearchToolContextSize? searchContextSize = default, WebSearchConfiguration customSearchConfiguration = default)
         {
@@ -2583,6 +2596,7 @@ namespace Azure.AI.Projects.Agents
                 searchContextSize,
                 customSearchConfiguration);
         }
+#pragma warning restore OPENAI001 // This generated code depends on experimental functionality.
 
         /// <summary> A shell tool stored in a toolbox. This model is additive to toolbox configuration and does not modify the OpenAI tool contract or existing toolbox tool definitions. </summary>
         /// <param name="name"> Optional user-defined name for this tool or configuration. </param>
@@ -2627,6 +2641,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="skills"> An optional list of skills referenced by id or inline data. </param>
         /// <param name="networkPolicy"> The network access policy for the container. When omitted, the service defaults to disabled outbound network access. </param>
         /// <returns> A new <see cref="Agents.ToolboxShellContainerAutoEnvironment"/> instance for mocking. </returns>
+#pragma warning disable OPENAI001 // This generated code depends on experimental functionality.
         [Experimental("AAIP002")]
         public static ToolboxShellContainerAutoEnvironment ToolboxShellContainerAutoEnvironment(IEnumerable<string> fileIds = default, ContainerMemoryLimit? memoryLimit = default, IEnumerable<ContainerSkill> skills = default, ToolboxShellNetworkPolicy networkPolicy = default)
         {
@@ -2641,6 +2656,7 @@ namespace Azure.AI.Projects.Agents
                 skills.ToList(),
                 networkPolicy);
         }
+#pragma warning restore OPENAI001 // This generated code depends on experimental functionality.
 
         /// <summary>
         /// Network access policy for an automatically provisioned toolbox shell container.
@@ -2708,6 +2724,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="deferLoading"> Whether this MCP tool is deferred and discovered via tool search. </param>
         /// <param name="projectConnectionId"> The connection ID in the project for the MCP server. The connection stores authentication and other connection details needed to connect to the MCP server. </param>
         /// <returns> A new <see cref="Agents.MCPToolboxTool"/> instance for mocking. </returns>
+#pragma warning disable OPENAI001 // This generated code depends on experimental functionality.
         [Experimental("AAIP002")]
         public static MCPToolboxTool MCPToolboxTool(string name = default, string description = default, IDictionary<string, ToolConfig> toolConfigs = default, string serverLabel = default, Uri serverUri = default, McpToolConnectorId? connectorId = default, string tunnelId = default, string authorization = default, string serverDescription = default, IDictionary<string, string> headers = default, McpToolFilter allowedTools = default, IEnumerable<CallableToolAllowedCaller> allowedCallers = default, BinaryData requireApprovalInternal = default, bool? deferLoading = default, string projectConnectionId = default)
         {
@@ -2734,6 +2751,7 @@ namespace Azure.AI.Projects.Agents
                 deferLoading,
                 projectConnectionId);
         }
+#pragma warning restore OPENAI001 // This generated code depends on experimental functionality.
 
         /// <summary> An Azure AI Search tool stored in a toolbox. </summary>
         /// <param name="name"> Optional user-defined name for this tool or configuration. </param>

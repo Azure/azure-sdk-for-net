@@ -26,12 +26,14 @@ namespace Azure.AI.Projects
         /// <param name="defaultConfig"> The default configuration for built-in tools. If omitted, built-in tools are enabled by default. </param>
         /// <param name="configs"> Per-tool configuration overrides. Duplicate built-in tool names are not allowed. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+#pragma warning disable OPENAI001 // This generated code depends on experimental functionality.
         internal InternalGitHubCopilotToolsetPreview(ResponseToolKind @type, InternalGitHubCopilotToolsetDefaultConfig defaultConfig, IList<InternalGitHubCopilotToolsetConfig> configs, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type)
         {
             DefaultConfig = defaultConfig;
             Configs = configs;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+#pragma warning restore OPENAI001 // This generated code depends on experimental functionality.
 
         /// <summary> The default configuration for built-in tools. If omitted, built-in tools are enabled by default. </summary>
         public InternalGitHubCopilotToolsetDefaultConfig DefaultConfig { get; }

@@ -23,6 +23,7 @@ namespace Azure.AI.Projects.Memory
         /// <param name="outputTokens"> The number of output tokens. </param>
         /// <param name="outputTokensDetails"> A detailed breakdown of the output tokens. </param>
         /// <param name="totalTokens"> The total number of tokens used. </param>
+#pragma warning disable OPENAI001 // This generated code depends on experimental functionality.
         internal MemoryStoreOperationUsage(int embeddingTokens, long inputTokens, ResponseInputTokenUsageDetails inputTokensDetails, long outputTokens, ResponseOutputTokenUsageDetails outputTokensDetails, long totalTokens)
         {
             EmbeddingTokens = embeddingTokens;
@@ -32,6 +33,7 @@ namespace Azure.AI.Projects.Memory
             OutputTokensDetails = outputTokensDetails;
             TotalTokens = totalTokens;
         }
+#pragma warning restore OPENAI001 // This generated code depends on experimental functionality.
 
         /// <summary> Initializes a new instance of <see cref="MemoryStoreOperationUsage"/>. </summary>
         /// <param name="embeddingTokens"> The number of embedding tokens. </param>
@@ -41,6 +43,7 @@ namespace Azure.AI.Projects.Memory
         /// <param name="outputTokensDetails"> A detailed breakdown of the output tokens. </param>
         /// <param name="totalTokens"> The total number of tokens used. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+#pragma warning disable OPENAI001 // This generated code depends on experimental functionality.
         internal MemoryStoreOperationUsage(int embeddingTokens, long inputTokens, ResponseInputTokenUsageDetails inputTokensDetails, long outputTokens, ResponseOutputTokenUsageDetails outputTokensDetails, long totalTokens, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             EmbeddingTokens = embeddingTokens;
@@ -51,6 +54,7 @@ namespace Azure.AI.Projects.Memory
             TotalTokens = totalTokens;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+#pragma warning restore OPENAI001 // This generated code depends on experimental functionality.
 
         /// <summary> The number of embedding tokens. </summary>
         public int EmbeddingTokens { get; }
@@ -58,14 +62,18 @@ namespace Azure.AI.Projects.Memory
         /// <summary> The number of input tokens. </summary>
         public long InputTokens { get; }
 
+#pragma warning disable OPENAI001 // This generated code depends on experimental functionality.
         /// <summary> A detailed breakdown of the input tokens. </summary>
         public ResponseInputTokenUsageDetails InputTokensDetails { get; }
+#pragma warning restore OPENAI001 // This generated code depends on experimental functionality.
 
         /// <summary> The number of output tokens. </summary>
         public long OutputTokens { get; }
 
+#pragma warning disable OPENAI001 // This generated code depends on experimental functionality.
         /// <summary> A detailed breakdown of the output tokens. </summary>
         public ResponseOutputTokenUsageDetails OutputTokensDetails { get; }
+#pragma warning restore OPENAI001 // This generated code depends on experimental functionality.
 
         /// <summary> The total number of tokens used. </summary>
         public long TotalTokens { get; }

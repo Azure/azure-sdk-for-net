@@ -98,6 +98,7 @@ namespace Azure.AI.Projects.Evaluation
                 }
                 writer.WriteEndArray();
             }
+#pragma warning disable OPENAI001 // This generated code depends on experimental functionality.
             if (Optional.IsCollectionDefined(Tools))
             {
                 writer.WritePropertyName("tools"u8);
@@ -113,6 +114,7 @@ namespace Azure.AI.Projects.Evaluation
                 }
                 writer.WriteEndArray();
             }
+#pragma warning restore OPENAI001 // This generated code depends on experimental functionality.
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -134,6 +136,7 @@ namespace Azure.AI.Projects.Evaluation
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
+#pragma warning disable OPENAI001 // This generated code depends on experimental functionality.
         internal static AzureAIAgentTarget DeserializeAzureAIAgentTarget(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
@@ -195,5 +198,6 @@ namespace Azure.AI.Projects.Evaluation
                 toolDescriptions ?? new ChangeTrackingList<ToolDescription>(),
                 tools ?? new ChangeTrackingList<ResponseTool>());
         }
+#pragma warning restore OPENAI001 // This generated code depends on experimental functionality.
     }
 }

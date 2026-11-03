@@ -32,12 +32,14 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="toolConfigs"> Deprecated. This property is deprecated and will be removed in a future version. </param>
         /// <param name="azureFunction"> The Azure Function Tool definition. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+#pragma warning disable OPENAI001 // This generated code depends on experimental functionality.
         internal AzureFunctionTool(ResponseToolKind @type, IDictionary<string, ToolConfig> toolConfigs, AzureFunctionDefinition azureFunction, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type)
         {
             ToolConfigs = toolConfigs;
             AzureFunction = azureFunction;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+#pragma warning restore OPENAI001 // This generated code depends on experimental functionality.
 
         /// <summary> Deprecated. This property is deprecated and will be removed in a future version. </summary>
         public IDictionary<string, ToolConfig> ToolConfigs { get; }

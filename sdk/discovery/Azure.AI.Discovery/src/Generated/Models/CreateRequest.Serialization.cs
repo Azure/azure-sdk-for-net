@@ -89,17 +89,26 @@ namespace Azure.AI.Discovery
             {
                 throw new FormatException($"The model {nameof(CreateRequest)} does not support writing '{format}' format.");
             }
-            writer.WritePropertyName("projectName"u8);
-            writer.WriteStringValue(ProjectName);
-            if (Optional.IsDefined(InvestigationName))
+            if (LifecycleModelReaderWriterOptions.IsVisible(options, LifecycleVisibility.Read | LifecycleVisibility.Create))
             {
-                writer.WritePropertyName("investigationName"u8);
-                writer.WriteStringValue(InvestigationName);
+                writer.WritePropertyName("projectName"u8);
+                writer.WriteStringValue(ProjectName);
             }
-            if (Optional.IsDefined(DisplayName))
+            if (LifecycleModelReaderWriterOptions.IsVisible(options, LifecycleVisibility.Read | LifecycleVisibility.Create))
             {
-                writer.WritePropertyName("displayName"u8);
-                writer.WriteStringValue(DisplayName);
+                if (Optional.IsDefined(InvestigationName))
+                {
+                    writer.WritePropertyName("investigationName"u8);
+                    writer.WriteStringValue(InvestigationName);
+                }
+            }
+            if (LifecycleModelReaderWriterOptions.IsVisible(options, LifecycleVisibility.Read | LifecycleVisibility.Create | LifecycleVisibility.Update))
+            {
+                if (Optional.IsDefined(DisplayName))
+                {
+                    writer.WritePropertyName("displayName"u8);
+                    writer.WriteStringValue(DisplayName);
+                }
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {

@@ -119,11 +119,13 @@ namespace Azure.AI.Projects.Agents
                 }
                 writer.WriteEndObject();
             }
+#pragma warning disable OPENAI002 // This generated code depends on experimental functionality.
             if (Optional.IsDefined(Usage))
             {
                 writer.WritePropertyName("usage"u8);
                 writer.WriteObjectValue(Usage, options);
             }
+#pragma warning restore OPENAI002 // This generated code depends on experimental functionality.
             if (Optional.IsDefined(LastError))
             {
                 writer.WritePropertyName("last_error"u8);
@@ -165,6 +167,7 @@ namespace Azure.AI.Projects.Agents
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
+#pragma warning disable OPENAI002 // This generated code depends on experimental functionality.
         internal static VoiceConversation DeserializeVoiceConversation(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
@@ -266,5 +269,6 @@ namespace Azure.AI.Projects.Agents
                 lastError,
                 additionalBinaryDataProperties);
         }
+#pragma warning restore OPENAI002 // This generated code depends on experimental functionality.
     }
 }
