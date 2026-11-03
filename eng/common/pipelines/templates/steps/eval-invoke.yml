@@ -2,6 +2,7 @@
 # node script directly. UseAzSdkAuthentication=true wraps the same run in AzureCLI@2 so a live
 # MCP's Azure DevOps calls inherit the service-connection identity.
 # The shard's login-to-copilot template supplies the executor and prompt-judge token.
+# Authenticated callers define EvalAzureSubscription in pipeline YAML or a variable template.
 
 parameters:
   - name: vallyRoot
@@ -13,10 +14,6 @@ parameters:
     # Pass-rate gate passed to `vally eval --threshold` and the shard verdict in invoke-eval-shard.js.
     type: number
     default: 0.8
-  - name: azureSubscription
-    # Caller-owned service connection; required only for authenticated runs.
-    type: string
-    default: ''
   - name: vallyArguments
     # Supplementary --tag/--runs/--workers/--timeout argument pairs, not shell text.
     # --tag does not filter the matrix; callers must keep every planned eval non-empty.
@@ -25,9 +22,9 @@ parameters:
     default: []
 
 steps:
-  - ${{ if and(parameters.UseAzSdkAuthentication, eq(trim(parameters.azureSubscription), '')) }}:
+  - ${{ if and(parameters.UseAzSdkAuthentication, eq(trim(coalesce(variables.EvalAzureSubscription, ' ')), '')) }}:
     - script: |
-        echo "##vso[task.logissue type=error]azureSubscription must be provided when UseAzSdkAuthentication is true."
+        echo "##vso[task.logissue type=error]EvalAzureSubscription must be defined in YAML when UseAzSdkAuthentication is true."
         exit 1
       displayName: 'Validate authenticated eval service connection'
 
@@ -35,7 +32,7 @@ steps:
     - task: AzureCLI@2
       displayName: 'vally eval $(shardName) (authenticated)'
       inputs:
-        azureSubscription: ${{ parameters.azureSubscription }}
+        azureSubscription: ${{ variables.EvalAzureSubscription }}
         scriptType: bash
         scriptLocation: inlineScript
         workingDirectory: ${{ parameters.vallyRoot }}
