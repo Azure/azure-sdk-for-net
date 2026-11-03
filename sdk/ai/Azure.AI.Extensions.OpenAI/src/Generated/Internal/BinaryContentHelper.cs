@@ -4,6 +4,7 @@
 
 using System;
 using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 
@@ -12,14 +13,15 @@ namespace Azure.AI.Extensions.OpenAI
     internal static partial class BinaryContentHelper
     {
         /// <param name="enumerable"></param>
-        public static BinaryContent FromEnumerable<T>(IEnumerable<T> enumerable)
+        /// <param name="options"></param>
+        public static BinaryContent FromEnumerable<T>(IEnumerable<T> enumerable, ModelReaderWriterOptions options = null)
             where T : notnull
         {
             Utf8JsonBinaryContent content = new Utf8JsonBinaryContent();
             content.JsonWriter.WriteStartArray();
             foreach (var item in enumerable)
             {
-                content.JsonWriter.WriteObjectValue(item, ModelSerializationExtensions.WireOptions);
+                content.JsonWriter.WriteObjectValue(item, options ?? ModelSerializationExtensions.WireOptions);
             }
             content.JsonWriter.WriteEndArray();
 
@@ -27,7 +29,8 @@ namespace Azure.AI.Extensions.OpenAI
         }
 
         /// <param name="enumerable"></param>
-        public static BinaryContent FromEnumerable(IEnumerable<BinaryData> enumerable)
+        /// <param name="options"></param>
+        public static BinaryContent FromEnumerable(IEnumerable<BinaryData> enumerable, ModelReaderWriterOptions options = null)
         {
             Utf8JsonBinaryContent content = new Utf8JsonBinaryContent();
             content.JsonWriter.WriteStartArray();
@@ -55,7 +58,8 @@ namespace Azure.AI.Extensions.OpenAI
         }
 
         /// <param name="span"></param>
-        public static BinaryContent FromEnumerable<T>(ReadOnlySpan<T> span)
+        /// <param name="options"></param>
+        public static BinaryContent FromEnumerable<T>(ReadOnlySpan<T> span, ModelReaderWriterOptions options = null)
             where T : notnull
         {
             Utf8JsonBinaryContent content = new Utf8JsonBinaryContent();
@@ -63,7 +67,7 @@ namespace Azure.AI.Extensions.OpenAI
             int i = 0;
             for (; i < span.Length; i++)
             {
-                content.JsonWriter.WriteObjectValue(span[i], ModelSerializationExtensions.WireOptions);
+                content.JsonWriter.WriteObjectValue(span[i], options ?? ModelSerializationExtensions.WireOptions);
             }
             content.JsonWriter.WriteEndArray();
 
@@ -71,7 +75,8 @@ namespace Azure.AI.Extensions.OpenAI
         }
 
         /// <param name="dictionary"></param>
-        public static BinaryContent FromDictionary<TValue>(IDictionary<string, TValue> dictionary)
+        /// <param name="options"></param>
+        public static BinaryContent FromDictionary<TValue>(IDictionary<string, TValue> dictionary, ModelReaderWriterOptions options = null)
             where TValue : notnull
         {
             Utf8JsonBinaryContent content = new Utf8JsonBinaryContent();
@@ -79,7 +84,7 @@ namespace Azure.AI.Extensions.OpenAI
             foreach (var item in dictionary)
             {
                 content.JsonWriter.WritePropertyName(item.Key);
-                content.JsonWriter.WriteObjectValue(item.Value, ModelSerializationExtensions.WireOptions);
+                content.JsonWriter.WriteObjectValue(item.Value, options ?? ModelSerializationExtensions.WireOptions);
             }
             content.JsonWriter.WriteEndObject();
 
@@ -87,7 +92,8 @@ namespace Azure.AI.Extensions.OpenAI
         }
 
         /// <param name="dictionary"></param>
-        public static BinaryContent FromDictionary(IDictionary<string, BinaryData> dictionary)
+        /// <param name="options"></param>
+        public static BinaryContent FromDictionary(IDictionary<string, BinaryData> dictionary, ModelReaderWriterOptions options = null)
         {
             Utf8JsonBinaryContent content = new Utf8JsonBinaryContent();
             content.JsonWriter.WriteStartObject();
