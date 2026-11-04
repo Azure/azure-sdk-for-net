@@ -4,3 +4,17 @@ extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-tests.yml
   parameters:
     ServiceDirectory: appconfiguration
+    PlatformPostSteps:
+      - task: CopyFiles@2
+        condition: and(succeededOrFailed(), eq(variables.TestMode, 'Record'))
+        displayName: Copy external App Configuration test recordings
+        inputs:
+          sourceFolder: '$(Build.SourcesDirectory)/.assets'
+          contents: '**/net/sdk/appconfiguration/**/SessionRecords/**/*.json'
+          targetFolder: '$(Build.ArtifactStagingDirectory)/AppConfigurationRecordings'
+      - template: /eng/common/pipelines/templates/steps/publish-1es-artifact.yml
+        parameters:
+          CustomCondition: and(succeededOrFailed(), eq(variables.TestMode, 'Record'))
+          ArtifactPath: '$(Build.ArtifactStagingDirectory)/AppConfigurationRecordings'
+          ArtifactName: appconfiguration-recordings
+          SbomEnabled: false

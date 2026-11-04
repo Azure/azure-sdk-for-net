@@ -44,6 +44,8 @@ Our testing framework supports recording service requests made during a unit tes
 
 Properly supporting recorded tests does require a few extra considerations. All random values should be obtained via `this.Recording.Random` since we use the same seed on test playback to ensure our client code generates the same "random" values each time. You can't share any state between tests or rely on ordering because you don't know the order they'll be recorded or replayed. Any sensitive values are redacted via the [`ConfigurationRecordedTestSanitizer`][tests_sanitized].
 
+App Configuration CI recording runs publish external recordings in the `appconfiguration-recordings` artifact, with a `-FailedAttempt<attempt>` suffix after failures. Download this artifact directly; the legacy recording download script only handles in-repository recordings. Copy the relevant `SessionRecords` files into the package's restored assets checkout, then follow the [recording instructions](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core.TestFramework/README.md#recording) to push the assets and commit the updated `assets.json`.
+
 ### Running tests
 
 The easiest way to run the tests is via Visual Studio's unit test runner.
