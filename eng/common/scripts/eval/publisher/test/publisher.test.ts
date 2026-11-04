@@ -380,8 +380,8 @@ test("one checkbox gates trusted-run egress; owner configuration additionally ga
         for (const account of [undefined, ""]) assert.equal(evaluate(runtime, { ...trusted, EvalStorageAccountName: account }), false);
         for (const complete of [undefined, "", "false"]) assert.equal(evaluate(runtime, { ...trusted, EvalSummaryComplete: complete }), false);
         for (const [key, value] of [["System.CollectionUri", "https://dev.azure.com/other/"], ["System.TeamProject", "public"],
-            ["Build.Repository.Name", "helen229/azure-rest-api-specs"], ["Build.Repository.Name", "Azure/azure-rest-api-specs-pr"],
-            ["Build.Repository.Name", "Azure/azure-sdk-for-python-pr"], ["Build.Repository.Name", "helen229/new-sdk-repository"],
+            ["Build.Repository.Name", "example-org/azure-rest-api-specs"], ["Build.Repository.Name", "Azure/azure-rest-api-specs-pr"],
+            ["Build.Repository.Name", "Azure/azure-sdk-for-python-pr"], ["Build.Repository.Name", "example-org/new-sdk-repository"],
             ["Build.Reason", "PullRequest"], ["Build.Reason", "ResourceTrigger"],
             ...["refs/pull/1/merge", "refs/heads/feature", "refs/heads/feature/main", "refs/tags/main", ""].map(branch => ["Build.SourceBranch", branch])]) {
             const variables = { ...trusted, [key]: value };
