@@ -57,7 +57,78 @@ namespace Azure.Storage.Files.Shares.Models
             bool? enableChangeFeed = default,
             int? changeFeedRetentionInDays = default,
             string changeFeedBlobContainerName = default,
-            DateTimeOffset? createdOn = default)
+            DateTimeOffset? createdOn = default,
+            DateTimeOffset? changeFeedLastEnabledOn = default)
+            => new ShareProperties()
+            {
+                AccessTier = accessTier,
+                LastModified = lastModified,
+                ProvisionedIops = provisionedIops,
+                ProvisionedIngressMBps = provisionedIngressMBps,
+                ProvisionedEgressMBps = provisionedEgressMBps,
+                NextAllowedQuotaDowngradeTime = nextAllowedQuotaDowngradeTime,
+                DeletedOn = deletedOn,
+                RemainingRetentionDays = remainingRetentionDays,
+                ETag = eTag,
+                AccessTierChangeTime = accessTierChangeTime,
+                AccessTierTransitionState = accessTierTransitionState,
+                LeaseStatus = leaseStatus,
+                LeaseState = leaseState,
+                LeaseDuration = leaseDuration,
+                QuotaInGB = quotaInGB,
+                Metadata = metadata,
+                Protocols = protocols,
+                RootSquash = rootSquash,
+                EnableSnapshotVirtualDirectoryAccess = enableSnapshotVirtualDirectoryAccess,
+                EnablePaidBursting = enablePaidBursting,
+                PaidBurstingMaxIops = paidBurstingMaxIops,
+                PaidBurstingMaxBandwidthMibps = paidBustingMaxBandwidthMibps,
+                IncludedBurstIops = includedBurstIops,
+                MaxBurstCreditsForIops = maxBurstCreditsForIops,
+                NextAllowedProvisionedIopsDowngradeTime = nextAllowedProvisionedIopsDowngradeTime,
+                NextAllowedProvisionedBandwidthDowngradeTime = nextAllowedProvisionedBandwidthDowngradeTime,
+                EnableChangeFeed = enableChangeFeed,
+                ChangeFeedRetentionInDays = changeFeedRetentionInDays,
+                ChangeFeedBlobContainerName = changeFeedBlobContainerName,
+                CreatedOn = createdOn,
+                ChangeFeedLastEnabledOn = changeFeedLastEnabledOn
+            };
+
+        /// <summary>
+        /// Creates a new ShareProperties instance for mocking.
+        /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static ShareProperties ShareProperties(
+            string accessTier,
+            DateTimeOffset? lastModified,
+            int? provisionedIops,
+            int? provisionedIngressMBps,
+            int? provisionedEgressMBps,
+            DateTimeOffset? nextAllowedQuotaDowngradeTime,
+            DateTimeOffset? deletedOn,
+            int? remainingRetentionDays,
+            ETag? eTag,
+            DateTimeOffset? accessTierChangeTime,
+            string accessTierTransitionState,
+            ShareLeaseStatus? leaseStatus,
+            ShareLeaseState? leaseState,
+            ShareLeaseDuration? leaseDuration,
+            int? quotaInGB,
+            IDictionary<string, string> metadata,
+            ShareProtocols? protocols,
+            ShareRootSquash? rootSquash,
+            bool? enableSnapshotVirtualDirectoryAccess,
+            bool? enablePaidBursting,
+            long? paidBurstingMaxIops,
+            long? paidBustingMaxBandwidthMibps,
+            long? includedBurstIops,
+            long? maxBurstCreditsForIops,
+            DateTimeOffset? nextAllowedProvisionedIopsDowngradeTime,
+            DateTimeOffset? nextAllowedProvisionedBandwidthDowngradeTime,
+            bool? enableChangeFeed,
+            int? changeFeedRetentionInDays,
+            string changeFeedBlobContainerName,
+            DateTimeOffset? createdOn)
             => new ShareProperties()
             {
                 AccessTier = accessTier,
