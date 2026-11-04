@@ -17,14 +17,14 @@
       "/p:UseProjectReferenceToAzureClients=false"
     ],
     "SampleSelector": {
-      "ProjectsAuthenticate": {
-        "AdditionalTestFilters": "((FullyQualifiedName~Azure.AI.Projects.Tests.Samples & Name=Authenticate & Name!=Troubleshooting))"
+      "ProjectsClientInit": {
+        "AdditionalTestFilters": "((FullyQualifiedName~Azure.AI.Projects.Tests.Samples.Sample_ClientInitialization & Name=CreateClientOnly))"
       },
-      "AgentsVersionSelection": {
-        "AdditionalTestFilters": "((FullyQualifiedName~Azure.AI.Projects.Agents.Tests.Samples & Name=VersionSelection & Name!=AgentCRUDAsync & Name!=AgentCRUD & Name!=ErrorHandling))"
+      "AgentsClientInit": {
+        "AdditionalTestFilters": "((FullyQualifiedName~Azure.AI.Projects.Agents.Tests.Samples.Sample_ClientInitialization & Name=CreateClientOnly))"
       },
-      "OpenAIClientCreation": {
-        "AdditionalTestFilters": "((FullyQualifiedName~Azure.AI.Extensions.OpenAI.Tests.Samples & Name=CreateAgentClientFromProjectsClient & Name!=CreateAgentClientDirectlyFromProjectEndpoint & Name!=GetOpenAIClientsFromAgents & Name!=SelectClientVersion))"
+      "OpenAIClientInit": {
+        "AdditionalTestFilters": "((FullyQualifiedName~Azure.AI.Extensions.OpenAI.Tests.Samples.Sample_ClientInitialization & Name=CreateClientOnly))"
       }
     }
   }
