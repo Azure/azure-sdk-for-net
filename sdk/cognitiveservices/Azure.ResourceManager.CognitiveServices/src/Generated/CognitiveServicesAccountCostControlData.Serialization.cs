@@ -17,7 +17,11 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.CognitiveServices
 {
-    /// <summary> A cost control owned by a Cognitive Services account. </summary>
+    /// <summary>
+    /// A budget that measures consumption and optionally alerts or blocks requests within an account.
+    /// This API version does not require Microsoft.CognitiveServices/CostControls subscription registration.
+    /// Reading, deleting, and enforcing stored identity selections do not require Microsoft.CognitiveServices/CostControlsByIdentity registration.
+    /// </summary>
     public partial class CognitiveServicesAccountCostControlData : ResourceData, IJsonModel<CognitiveServicesAccountCostControlData>
     {
         /// <param name="data"> The data to parse. </param>

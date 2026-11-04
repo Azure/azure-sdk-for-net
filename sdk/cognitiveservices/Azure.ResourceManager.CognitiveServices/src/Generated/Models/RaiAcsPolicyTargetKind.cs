@@ -15,14 +15,22 @@ namespace Azure.ResourceManager.CognitiveServices.Models
     public readonly partial struct RaiAcsPolicyTargetKind : IEquatable<RaiAcsPolicyTargetKind>
     {
         private readonly string _value;
+        /// <summary> The target contains agent initialization state. </summary>
+        private const string AgentInitializationValue = "agent_init";
         /// <summary> The target contains user input. </summary>
         private const string UserInputValue = "user_input";
+        /// <summary> The target contains model messages. </summary>
+        private const string ModelMessagesValue = "messages";
+        /// <summary> The target contains a completed model response. </summary>
+        private const string ModelResponseValue = "model_response";
         /// <summary> The target contains assistant output. </summary>
         private const string AssistantOutputValue = "assistant_output";
         /// <summary> The target contains tool-call arguments. </summary>
         private const string ToolArgumentsValue = "tool_args";
         /// <summary> The target contains a tool result. </summary>
         private const string ToolResultValue = "tool_result";
+        /// <summary> The target contains the final agent execution summary. </summary>
+        private const string AgentSummaryValue = "agent_summary";
 
         /// <summary> Initializes a new instance of <see cref="RaiAcsPolicyTargetKind"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -34,8 +42,17 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             _value = value;
         }
 
+        /// <summary> The target contains agent initialization state. </summary>
+        public static RaiAcsPolicyTargetKind AgentInitialization { get; } = new RaiAcsPolicyTargetKind(AgentInitializationValue);
+
         /// <summary> The target contains user input. </summary>
         public static RaiAcsPolicyTargetKind UserInput { get; } = new RaiAcsPolicyTargetKind(UserInputValue);
+
+        /// <summary> The target contains model messages. </summary>
+        public static RaiAcsPolicyTargetKind ModelMessages { get; } = new RaiAcsPolicyTargetKind(ModelMessagesValue);
+
+        /// <summary> The target contains a completed model response. </summary>
+        public static RaiAcsPolicyTargetKind ModelResponse { get; } = new RaiAcsPolicyTargetKind(ModelResponseValue);
 
         /// <summary> The target contains assistant output. </summary>
         public static RaiAcsPolicyTargetKind AssistantOutput { get; } = new RaiAcsPolicyTargetKind(AssistantOutputValue);
@@ -45,6 +62,9 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 
         /// <summary> The target contains a tool result. </summary>
         public static RaiAcsPolicyTargetKind ToolResult { get; } = new RaiAcsPolicyTargetKind(ToolResultValue);
+
+        /// <summary> The target contains the final agent execution summary. </summary>
+        public static RaiAcsPolicyTargetKind AgentSummary { get; } = new RaiAcsPolicyTargetKind(AgentSummaryValue);
 
         /// <summary> Determines if two <see cref="RaiAcsPolicyTargetKind"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
