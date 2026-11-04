@@ -12,7 +12,7 @@ parameters:
   - name: selection
     displayName: 'Selection value (; separated)'
     type: string
-    default: '(Name=Authenticate|Name=AgentCRUDAsync|Name=AgentResponseSync)'
+    default: '(FullyQualifiedName~Readme.Authenticate|FullyQualifiedName~Sample_agents_CRUD.AgentCRUDAsync|FullyQualifiedName~Sample_ResponseBasic.AgentResponseSync)'
   - name: testQueueCount
     displayName: 'Maximum parallel live test workers'
     type: number
