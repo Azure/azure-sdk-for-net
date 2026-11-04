@@ -5,14 +5,14 @@ parameters:
   - name: selectionKind
     displayName: 'Selection type'
     type: string
-    default: sample-path
+    default: test-id
     values:
       - sample-path
       - test-id
   - name: selection
     displayName: 'Selection value (; separated)'
     type: string
-    default: 'Azure.AI.Projects/tests/Samples;Azure.AI.Projects.Agents/tests/Samples;Azure.AI.Extensions.OpenAI/tests/Samples'
+    default: '(FullyQualifiedName~Azure.AI.Projects.Tests.Samples.Readme.Authenticate|FullyQualifiedName~Azure.AI.Projects.Agents.Tests.Samples.Sample_agents_CRUD.AgentCRUDAsync|FullyQualifiedName~Azure.AI.Extensions.OpenAI.Tests.Samples.Sample_ResponseBasic.AgentResponseSync)'
   - name: testQueueCount
     displayName: 'Maximum parallel live test workers'
     type: number
