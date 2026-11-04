@@ -17,6 +17,8 @@
 
 ### Bugs Fixed
 
+- Prevented a stale steering nudge from canceling a promoted turn after its pending-input queue has drained. Pending-input publication now follows the same turn as the cancellation signal.
+
 ### Other Changes
 
 ## 1.0.0-beta.30 (2026-10-15)
