@@ -4,9 +4,3 @@
 
 ### Features Added
 - Initial release of Azure.Storage.Files.Shares.ChangeFeed.
-
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
