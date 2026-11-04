@@ -26,6 +26,8 @@ namespace Azure.Core.Tests
         // No other explicit encoding besides "utf-8" is supported, so falls through to defaulting to "utf-8" based on Content-Type.
         [TestCase("application/x-www-form-urlencoded; charset=us-ascii", true, "Unicode (UTF-8)")]
         [TestCase("application/problem+json", true, "Unicode (UTF-8)")]
+        [TestCase("application/problem+json; charset=us-ascii", true, "Unicode (UTF-8)")]
+        [TestCase("application/soap+xml; version=1", true, "Unicode (UTF-8)")]
         [TestCase("application/problem+json; charset=utf-8", true, "Unicode (UTF-8)")]
         [TestCase("application/problem+json;charset=utf-8", true, "Unicode (UTF-8)")]
         [TestCase("application/problem+json; charset=\"utf-8\"", true, "Unicode (UTF-8)")]
