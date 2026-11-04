@@ -21,7 +21,7 @@ namespace Azure.Provisioning.ProvisioningTypeSpec.Preview
         private BicepValue<string> _name;
         private SystemData _systemData;
         private ExtensionAssignmentProperties _properties;
-        private ResourceReference<ExternalChildResourceExternalResourceExtensionAssignment> _parent;
+        private ProvisioningResourceReference<ExternalChildResourceExternalResourceExtensionAssignment> _parent;
 
         /// <summary> Creates a new ExternalChildResourceExternalResourceExtensionChild. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -120,7 +120,7 @@ namespace Azure.Provisioning.ProvisioningTypeSpec.Preview
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _properties = DefineModelProperty<ExtensionAssignmentProperties>(nameof(Properties), new string[] { "properties" });
-            _parent = DefineResource<ExternalChildResourceExternalResourceExtensionAssignment>(nameof(Parent), new string[] { "parent" });
+            _parent = new ProvisioningResourceReference<ExternalChildResourceExternalResourceExtensionAssignment>(DefineProperty<string>(nameof(Parent), new string[] { "parent" }));
             DefineAdditionalProperties();
         }
 

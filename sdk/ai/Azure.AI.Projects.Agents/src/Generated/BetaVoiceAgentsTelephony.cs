@@ -982,7 +982,9 @@ namespace Azure.AI.Projects.Agents
         internal virtual ClientResult<TelephonyTransferTargets> ReplaceTelephonyTransferTargets(string agentName, string ifMatch, IEnumerable<TelephonyTransferTarget> transferTargets, AgentDefinitionOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
         {
             ReplaceTelephonyTransferTargetsRequest spreadModel = new ReplaceTelephonyTransferTargetsRequest(transferTargets?.ToList() as IList<TelephonyTransferTarget> ?? new ChangeTrackingList<TelephonyTransferTarget>(), default);
-            ClientResult result = ReplaceTelephonyTransferTargets(agentName, ifMatch, spreadModel, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions());
+            using Utf8JsonBinaryContent content = new Utf8JsonBinaryContent();
+            content.JsonWriter.WriteObjectValue(spreadModel, new LifecycleModelReaderWriterOptions(LifecycleVisibility.Create | LifecycleVisibility.Update, "W"));
+            ClientResult result = ReplaceTelephonyTransferTargets(agentName, ifMatch, content, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions());
             return ClientResult.FromValue((TelephonyTransferTargets)result, result.GetRawResponse());
         }
 
@@ -996,7 +998,9 @@ namespace Azure.AI.Projects.Agents
         internal virtual async Task<ClientResult<TelephonyTransferTargets>> ReplaceTelephonyTransferTargetsAsync(string agentName, string ifMatch, IEnumerable<TelephonyTransferTarget> transferTargets, AgentDefinitionOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
         {
             ReplaceTelephonyTransferTargetsRequest spreadModel = new ReplaceTelephonyTransferTargetsRequest(transferTargets?.ToList() as IList<TelephonyTransferTarget> ?? new ChangeTrackingList<TelephonyTransferTarget>(), default);
-            ClientResult result = await ReplaceTelephonyTransferTargetsAsync(agentName, ifMatch, spreadModel, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions()).ConfigureAwait(false);
+            using Utf8JsonBinaryContent content = new Utf8JsonBinaryContent();
+            content.JsonWriter.WriteObjectValue(spreadModel, new LifecycleModelReaderWriterOptions(LifecycleVisibility.Create | LifecycleVisibility.Update, "W"));
+            ClientResult result = await ReplaceTelephonyTransferTargetsAsync(agentName, ifMatch, content, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions()).ConfigureAwait(false);
             return ClientResult.FromValue((TelephonyTransferTargets)result, result.GetRawResponse());
         }
 

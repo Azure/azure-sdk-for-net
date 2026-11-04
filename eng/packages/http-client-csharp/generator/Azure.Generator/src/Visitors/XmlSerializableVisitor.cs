@@ -204,14 +204,14 @@ namespace Azure.Generator.Visitors
 
         private static void UpdateFromEnumerableMethod(TypeProvider type)
         {
-            // Find the existing FromEnumerable<T> method with 3 parameters (enumerable, rootNameHint, childNameHint)
             var fromEnumerableMethod = type.Methods
                 .FirstOrDefault(m => m.Signature.Name == FromEnumerableMethodName &&
                                     m.Signature.GenericArguments?.Count == 1 &&
-                                    m.Signature.Parameters.Count == 3 &&
+                                    m.Signature.Parameters.Count == 4 &&
                                     m.Signature.Parameters[0].Name == "enumerable" &&
                                     m.Signature.Parameters[1].Name == "rootNameHint" &&
-                                    m.Signature.Parameters[2].Name == "childNameHint");
+                                    m.Signature.Parameters[2].Name == "childNameHint" &&
+                                    m.Signature.Parameters[3].Type.Equals(ModelReaderWriterOptionsType));
 
             if (fromEnumerableMethod is null)
             {
@@ -221,6 +221,7 @@ namespace Azure.Generator.Visitors
             var enumerableParameter = fromEnumerableMethod.Signature.Parameters[0];
             var rootNameHintParameter = fromEnumerableMethod.Signature.Parameters[1];
             var childNameHintParameter = fromEnumerableMethod.Signature.Parameters[2];
+            var optionsParameter = fromEnumerableMethod.Signature.Parameters[3];
 
             var body = new MethodBodyStatements(
             [
@@ -228,7 +229,7 @@ namespace Azure.Generator.Visitors
                 content.As<XmlWriterContent>().XmlWriter().Invoke(nameof(XmlWriter.WriteStartElement), [rootNameHintParameter]).Terminate(),
                 new ForEachStatement("item", enumerableParameter.As(enumerableParameter.Type), out var itemVariable)
                 {
-                    content.As<XmlWriterContent>().XmlWriter().Invoke(WriteObjectValueMethodName, [itemVariable, Static<ModelSerializationExtensionsDefinition>().Property("WireOptions"), childNameHintParameter]).Terminate()
+                    content.As<XmlWriterContent>().XmlWriter().Invoke(WriteObjectValueMethodName, [itemVariable, optionsParameter.NullCoalesce(Static<ModelSerializationExtensionsDefinition>().Property("WireOptions")), childNameHintParameter]).Terminate()
                 },
                 content.As<XmlWriterContent>().XmlWriter().Invoke(nameof(XmlWriter.WriteEndElement), []).Terminate(),
                 Return(content)
