@@ -450,6 +450,7 @@ public class AgentsTestBase : RecordedTestBase<AgentsTestEnvironment>
                 }
             }
         }
+        }
         catch (ClientResultException e) when (e.Status == 403)
         {
             TestContext.WriteLine("Skipping Agents sample cleanup due to missing Microsoft.CognitiveServices/accounts/AIServices/agents/read permission.");
