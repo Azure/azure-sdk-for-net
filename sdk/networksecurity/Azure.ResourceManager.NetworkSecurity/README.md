@@ -1,6 +1,6 @@
-# Azure.ResourceManager.NetworkSecurity management client library for .NET
+# Azure Network Security management client library for .NET
 
-This library supports managing Microsoft Azure resources.
+This library supports managing Azure Network Security resources, including NeuroShield resources, protected resources, findings, mitigations, and summaries.
 
 This library follows the [new Azure SDK guidelines](https://azure.github.io/azure-sdk/general_introduction.html), and provides many core capabilities:
 
