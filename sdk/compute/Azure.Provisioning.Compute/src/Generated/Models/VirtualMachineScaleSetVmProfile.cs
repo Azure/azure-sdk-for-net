@@ -221,7 +221,7 @@ namespace Azure.Provisioning.Compute
         }
 
         /// <summary> Gets or sets the CapacityReservation. </summary>
-        internal CapacityReservationProfile CapacityReservation
+        public CapacityReservationProfile CapacityReservation
         {
             get
             {
@@ -266,7 +266,7 @@ namespace Azure.Provisioning.Compute
         }
 
         /// <summary> Gets or sets the HardwareProfile. </summary>
-        internal VirtualMachineScaleSetHardwareProfile HardwareProfile
+        public VirtualMachineScaleSetHardwareProfile HardwareProfile
         {
             get
             {
@@ -355,23 +355,6 @@ namespace Azure.Provisioning.Compute
         }
 
         /// <summary> Gets or sets the Id. </summary>
-        public BicepValue<ResourceIdentifier> CapacityReservationGroupId
-        {
-            get
-            {
-                return CapacityReservation is null ? default : CapacityReservation.CapacityReservationGroupId;
-            }
-            set
-            {
-                if (CapacityReservation is null)
-                {
-                    CapacityReservation = new CapacityReservationProfile();
-                }
-                CapacityReservation.CapacityReservationGroupId = value;
-            }
-        }
-
-        /// <summary> Gets or sets the Id. </summary>
         public BicepValue<ResourceIdentifier> InterconnectBlockId
         {
             get
@@ -402,23 +385,6 @@ namespace Azure.Provisioning.Compute
                     ApplicationProfile = new ApplicationProfile();
                 }
                 ApplicationProfile.GalleryApplications = value;
-            }
-        }
-
-        /// <summary> Gets or sets the VmSizeProperties. </summary>
-        public VirtualMachineSizeProperties HardwareVmSizeProperties
-        {
-            get
-            {
-                return HardwareProfile is null ? default : HardwareProfile.VmSizeProperties;
-            }
-            set
-            {
-                if (HardwareProfile is null)
-                {
-                    HardwareProfile = new VirtualMachineScaleSetHardwareProfile();
-                }
-                HardwareProfile.VmSizeProperties = value;
             }
         }
 

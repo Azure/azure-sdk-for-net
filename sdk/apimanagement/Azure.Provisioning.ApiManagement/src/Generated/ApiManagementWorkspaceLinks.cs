@@ -129,7 +129,7 @@ namespace Azure.Provisioning.ApiManagement
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _properties = DefineModelProperty<ApiManagementWorkspaceLinksProperties>(nameof(Properties), new string[] { "properties" });
             _eTag = DefineProperty<ETag>(nameof(ETag), new string[] { "etag" }, isOutput: true);
-            _parent = DefineResource<ApiManagementService>(nameof(Parent), new string[] { "parent" }, isRequired: true);
+            _parent = DefineResource<ApiManagementService>(nameof(Parent), new string[] { "parent" });
             DefineAdditionalProperties();
         }
 

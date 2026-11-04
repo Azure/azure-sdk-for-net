@@ -12,6 +12,7 @@ using Microsoft.TypeSpec.Generator.Providers;
 using Microsoft.TypeSpec.Generator.Statements;
 using NUnit.Framework;
 using System;
+using System.ClientModel.Primitives;
 using System.Linq;
 using System.Xml;
 
@@ -424,10 +425,11 @@ namespace Azure.Generator.Tests.Visitors
             var fromEnumerableMethod = bch!.Methods
                 .FirstOrDefault(m => m.Signature.Name == "FromEnumerable" &&
                                      m.Signature.GenericArguments?.Count == 1 &&
-                                     m.Signature.Parameters.Count == 3 &&
+                                     m.Signature.Parameters.Count == 4 &&
                                      m.Signature.Parameters[0].Name == "enumerable" &&
                                      m.Signature.Parameters[1].Name == "rootNameHint" &&
-                                     m.Signature.Parameters[2].Name == "childNameHint");
+                                     m.Signature.Parameters[2].Name == "childNameHint" &&
+                                     m.Signature.Parameters[3].Type.Equals(typeof(ModelReaderWriterOptions)));
             Assert.IsNotNull(fromEnumerableMethod, "FromEnumerable method should exist in BinaryContentHelper");
 
             var bodyBefore = fromEnumerableMethod!.BodyStatements?.ToDisplayString();

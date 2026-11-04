@@ -85,7 +85,7 @@ namespace Azure.Provisioning.Sql
             _id = DefineProperty<ResourceIdentifier>(nameof(Id), new string[] { "id" }, isOutput: true);
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
-            _parent = DefineResource<ManagedDatabase>(nameof(Parent), new string[] { "parent" }, isRequired: true);
+            _parent = DefineResource<ManagedDatabase>(nameof(Parent), new string[] { "parent" });
             DefineAdditionalProperties();
         }
 

@@ -11,7 +11,6 @@ using Azure.AI.AgentServer.Core.Tasks;
 using Azure.AI.AgentServer.Core.Tasks.Providers;
 using Azure.AI.AgentServer.Core.Tasks.Serialization;
 using Azure.AI.AgentServer.Responses.Internal;
-using Azure.AI.AgentServer.Responses.Models;
 using Azure.AI.AgentServer.Responses.Tests.Helpers;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -27,7 +26,7 @@ public class TaskStreamTerminalPatchFailureProtocolTests
     [TestCase(false, true)]
     [TestCase(true, true)]
     public async Task StreamingTerminalTaskPatchFailure_EmitsErrorAndLeavesRecoverableStreamOpen(
-        bool multiTurn, bool delayedSubscription)
+        bool multiTurn, bool delayReplay)
     {
         string root = Path.Combine(
             Path.GetTempPath(),
@@ -38,25 +37,28 @@ public class TaskStreamTerminalPatchFailureProtocolTests
 
         try
         {
+            bool terminalPatchFailed = false;
+            using var delayedRegistry = delayReplay ? new DelayedReplayRegistry(() => Volatile.Read(ref terminalPatchFailed)) : null;
             var store = new SpyTaskStore(new LocalTaskStore(Path.Combine(root, "tasks")))
             {
                 ThrowOnPatch = new IOException("Injected terminal task patch failure."),
-                PatchFailurePredicate = patch => string.Equals(
-                    patch.Status,
-                    multiTurn ? TaskWireKeys.StatusSuspended : TaskWireKeys.StatusCompleted,
-                    StringComparison.Ordinal),
+                PatchFailurePredicate = patch =>
+                {
+                    bool terminal = string.Equals(
+                        patch.Status,
+                        multiTurn ? TaskWireKeys.StatusSuspended : TaskWireKeys.StatusCompleted,
+                        StringComparison.Ordinal);
+                    if (terminal)
+                    {
+                        Volatile.Write(ref terminalPatchFailed, true);
+                    }
+                    return terminal;
+                },
             };
             var logger = new CapturingLogger<ResponseEndpointHandler>();
-            using var delayedRegistry = delayedSubscription ? new DelayedEventStreamRegistry() : null;
             string responseId = IdGenerator.NewResponseId();
-            var handler = new TestHandler();
-            if (delayedRegistry is not null)
-            {
-                handler.EventFactory = Events;
-            }
 
             using var factory = new TestWebApplicationFactory(
-                handler: handler,
                 configureOptions: options => options.ResilientBackground = true,
                 configureTestServices: services =>
                 {
@@ -67,15 +69,6 @@ public class TaskStreamTerminalPatchFailureProtocolTests
                         services.AddSingleton<AgentEventStreamRegistry>(delayedRegistry);
                     }
                 });
-            if (delayedRegistry is not null)
-            {
-                delayedRegistry.OnSubscribe = () =>
-                {
-                    var tracker = factory.Services.GetRequiredService<ResponseExecutionTracker>();
-                    Assert.That(tracker.TryGet(responseId, out var execution), Is.True);
-                    return execution!.ExecutionTask!;
-                };
-            }
             using HttpClient client = factory.CreateClient();
             var payload = new Dictionary<string, object?>
             {
@@ -98,23 +91,9 @@ public class TaskStreamTerminalPatchFailureProtocolTests
             };
             request.Headers.Add("x-agent-response-id", responseId);
 
-            Task<HttpResponseMessage> pendingResponse = client.SendAsync(
+            using HttpResponseMessage response = await client.SendAsync(
                 request,
-                HttpCompletionOption.ResponseHeadersRead);
-            if (delayedRegistry is not null)
-            {
-                try
-                {
-                    Task completion = await delayedRegistry.SubscriptionStarted.Task.WaitAsync(TimeSpan.FromSeconds(10));
-                    Assert.ThrowsAsync<ResilientTaskException>(async () =>
-                        await completion.WaitAsync(TimeSpan.FromSeconds(10)));
-                }
-                finally
-                {
-                    delayedRegistry.ReleaseRead.TrySetResult();
-                }
-            }
-            using HttpResponseMessage response = await pendingResponse.WaitAsync(TimeSpan.FromSeconds(10));
+                HttpCompletionOption.ResponseHeadersRead).WaitAsync(TimeSpan.FromSeconds(10));
             Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
 
             string body = await response.Content.ReadAsStringAsync()
@@ -135,21 +114,20 @@ public class TaskStreamTerminalPatchFailureProtocolTests
             string taskId = store.LastCreateRequest!.Id!;
             AgentEventStream? taskStream = await registry.GetTaskStreamAsync(taskId, responseId);
             Assert.That(taskStream, Is.Not.Null);
+            int lastSequence = int.Parse((await taskStream!.GetLastEventIdAsync())!, System.Globalization.CultureInfo.InvariantCulture);
+            var events = Helpers.SseParser.Parse(body);
+            Assert.That(events.Last().EventType, Is.EqualTo("error"));
+            var deliveredSequences = events.Take(events.Count - 1).Select(item =>
+            {
+                using var document = JsonDocument.Parse(item.Data);
+                return document.RootElement.GetProperty("sequence_number").GetInt32();
+            }).ToArray();
+            Assert.That(deliveredSequences, Is.EqualTo(Enumerable.Range(0, lastSequence + 1)),
+                "Every retained event must reach the client in order before the terminal task error.");
             Assert.DoesNotThrowAsync(async () =>
                 await taskStream!.EmitAsync(
                     new SseItem<string>("recovery-probe") { EventId = "recovery-probe" }));
             await taskStream!.CloseAsync();
-
-            async IAsyncEnumerable<ResponseStreamEvent> Events(
-                CreateResponse createRequest, ResponseContext context,
-                [EnumeratorCancellation] CancellationToken cancellationToken)
-            {
-                var result = new ResponseObject(context.ResponseId, createRequest.Model ?? "test");
-                yield return new ResponseCreatedEvent(0, result);
-                await delayedRegistry!.SubscriptionStarted.Task.WaitAsync(cancellationToken);
-                result.SetCompleted();
-                yield return new ResponseCompletedEvent(0, result);
-            }
         }
         finally
         {
@@ -164,74 +142,74 @@ public class TaskStreamTerminalPatchFailureProtocolTests
         }
     }
 
-    private sealed class DelayedEventStreamRegistry : AgentEventStreamRegistry, ITaskEventStreamRegistry, IDisposable
+    private sealed class DelayedReplayRegistry : AgentEventStreamRegistry, ITaskEventStreamRegistry, IDisposable
     {
         private readonly ServiceProvider _provider;
         private readonly AgentEventStreamRegistry _inner;
         private readonly ITaskEventStreamRegistry _taskInner;
-        private AgentEventStream? _delayedStream;
+        private readonly Func<bool> _terminalPatchFailed;
+        private readonly TaskCompletionSource _releaseReplay = new(TaskCreationOptions.RunContinuationsAsynchronously);
 
-        public DelayedEventStreamRegistry()
+        public DelayedReplayRegistry(Func<bool> terminalPatchFailed)
         {
             var services = new ServiceCollection();
             services.AddAgentEventStreams(options => options.UseInMemoryReplay());
             _provider = services.BuildServiceProvider();
             _inner = _provider.GetRequiredService<AgentEventStreamRegistry>();
             _taskInner = (ITaskEventStreamRegistry)_inner;
+            _terminalPatchFailed = terminalPatchFailed;
         }
 
-        public Func<Task>? OnSubscribe { get; set; }
-        public TaskCompletionSource<Task> SubscriptionStarted { get; } = new(TaskCreationOptions.RunContinuationsAsynchronously);
-        public TaskCompletionSource ReleaseRead { get; } = new(TaskCreationOptions.RunContinuationsAsynchronously);
+        public override ValueTask<AgentEventStream> GetAsync(string id, CancellationToken cancellationToken = default)
+            => _inner.GetAsync(id, cancellationToken);
 
-        public override ValueTask<AgentEventStream> GetAsync(string id, CancellationToken cancellationToken = default) =>
-            _inner.GetAsync(id, cancellationToken);
+        public override ValueTask<AgentEventStream> GetOrCreateAsync(string id, CancellationToken cancellationToken = default)
+            => _inner.GetOrCreateAsync(id, cancellationToken);
 
-        public override ValueTask<AgentEventStream> GetOrCreateAsync(string id, CancellationToken cancellationToken = default) =>
-            _inner.GetOrCreateAsync(id, cancellationToken);
+        public override ValueTask DeleteAsync(string id, CancellationToken cancellationToken = default)
+            => _inner.DeleteAsync(id, cancellationToken);
 
-        public override ValueTask DeleteAsync(string id, CancellationToken cancellationToken = default) =>
-            _inner.DeleteAsync(id, cancellationToken);
-
-        public ValueTask<AgentEventStream?> GetTaskStreamAsync(
-            string taskId, string inputId, CancellationToken cancellationToken = default) =>
-            _taskInner.GetTaskStreamAsync(taskId, inputId, cancellationToken);
+        public ValueTask<AgentEventStream?> GetTaskStreamAsync(string taskId, string inputId, CancellationToken cancellationToken = default)
+            => _taskInner.GetTaskStreamAsync(taskId, inputId, cancellationToken);
 
         public async ValueTask<AgentEventStream> GetOrCreateTaskStreamAsync(
             string taskId, string inputId, CancellationToken cancellationToken = default)
-        {
-            var stream = await _taskInner.GetOrCreateTaskStreamAsync(taskId, inputId, cancellationToken);
-            return _delayedStream ??= new DelayedSubscriptionStream(stream, this);
-        }
+            => new DelayedReplayStream(
+                await _taskInner.GetOrCreateTaskStreamAsync(taskId, inputId, cancellationToken), this);
 
         public Task<int> CloseOrphanTaskStreamsAsync(
-            Func<string, string, ValueTask<bool>> shouldClose, CancellationToken cancellationToken = default) =>
-            _taskInner.CloseOrphanTaskStreamsAsync(shouldClose, cancellationToken);
+            Func<string, string, ValueTask<bool>> shouldClose, CancellationToken cancellationToken = default)
+            => _taskInner.CloseOrphanTaskStreamsAsync(shouldClose, cancellationToken);
 
         public void Dispose() => _provider.Dispose();
-    }
 
-    private sealed class DelayedSubscriptionStream(AgentEventStream inner, DelayedEventStreamRegistry owner) : AgentEventStream
-    {
-        public override ValueTask EmitAsync(
-            SseItem<string> item, bool close = false, CancellationToken cancellationToken = default) =>
-            inner.EmitAsync(item, close, cancellationToken);
-
-        public override ValueTask CloseAsync(CancellationToken cancellationToken = default) =>
-            inner.CloseAsync(cancellationToken);
-
-        public override ValueTask<string?> GetLastEventIdAsync(CancellationToken cancellationToken = default) =>
-            inner.GetLastEventIdAsync(cancellationToken);
-
-        public override async IAsyncEnumerable<SseItem<string>> Subscribe(
-            string? afterEventId = null, [EnumeratorCancellation] CancellationToken cancellationToken = default)
+        private sealed class DelayedReplayStream(AgentEventStream inner, DelayedReplayRegistry owner) : AgentEventStream
         {
-            owner.SubscriptionStarted.TrySetResult(owner.OnSubscribe!());
-            await owner.ReleaseRead.Task.WaitAsync(cancellationToken);
-            await foreach (var item in inner.Subscribe(afterEventId, cancellationToken))
+            public override ValueTask EmitAsync(SseItem<string> item, bool close = false, CancellationToken cancellationToken = default)
+                => inner.EmitAsync(item, close, cancellationToken);
+
+            public override ValueTask CloseAsync(CancellationToken cancellationToken = default)
+                => inner.CloseAsync(cancellationToken);
+
+            public override ValueTask<string?> GetLastEventIdAsync(CancellationToken cancellationToken = default)
             {
-                await Task.Yield();
-                yield return item;
+                if (owner._terminalPatchFailed())
+                {
+                    owner._releaseReplay.TrySetResult();
+                }
+                return inner.GetLastEventIdAsync(cancellationToken);
+            }
+
+            public override async IAsyncEnumerable<SseItem<string>> Subscribe(
+                string? afterEventId = null, [EnumeratorCancellation] CancellationToken cancellationToken = default)
+            {
+                // Force the terminal fault to win before the asynchronous replay read can return.
+                await owner._releaseReplay.Task.WaitAsync(cancellationToken);
+                await foreach (var item in inner.Subscribe(afterEventId, cancellationToken))
+                {
+                    await Task.Yield();
+                    yield return item;
+                }
             }
         }
     }

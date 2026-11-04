@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> The scope connection properties. </param>
-        /// <param name="eTag"></param>
+        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal NetworkManagerConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, NetworkManagerConnectionProperties properties, ETag? eTag, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
@@ -43,6 +43,10 @@ namespace Azure.ResourceManager.Network
         /// <summary> The scope connection properties. </summary>
         [WirePath("properties")]
         internal NetworkManagerConnectionProperties Properties { get; set; }
+
+        /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
+        [WirePath("etag")]
+        public ETag? ETag { get; }
 
         /// <summary> Network Manager Id. </summary>
         [WirePath("properties.networkManagerId")]

@@ -13,6 +13,30 @@ namespace Azure.AI.Extensions.OpenAI
     public static partial class ExtensionsOpenAIModelFactory
     {
 
+        /// <summary> Per-tool configuration that controls tool visibility and search behavior. </summary>
+        /// <param name="pin">
+        /// When true, the tool is always included in agent context and visible in `tools/list`.
+        /// When false (default), the tool is hidden from `tools/list` and only discoverable via `tool_search`.
+        /// </param>
+        /// <param name="additionalSearchText">
+        /// Additional text indexed for tool_search. Supplements the native tool description
+        /// to improve discoverability. Does not alter `tools/list` output.
+        /// </param>
+        /// <returns> A new <see cref="OpenAI.ToolConfig"/> instance for mocking. </returns>
+        public static ToolConfig ToolConfig(bool? pin = default, string additionalSearchText = default)
+        {
+            return new ToolConfig(pin, additionalSearchText, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> A web search configuration for bing custom search. </summary>
+        /// <param name="projectConnectionId"> Project connection id for grounding with bing custom search. </param>
+        /// <param name="instanceName"> Name of the custom configuration instance given to config. </param>
+        /// <returns> A new <see cref="OpenAI.WebSearchConfiguration"/> instance for mocking. </returns>
+        public static WebSearchConfiguration WebSearchConfiguration(string projectConnectionId = default, string instanceName = default)
+        {
+            return new WebSearchConfiguration(projectConnectionId, instanceName, additionalBinaryDataProperties: null);
+        }
+
         /// <summary> The input definition information for a bing grounding search tool as used to configure an agent. </summary>
         /// <param name="name"> Deprecated. This property is deprecated and will be removed in a future version. </param>
         /// <param name="description"> Deprecated. This property is deprecated and will be removed in a future version. </param>
@@ -31,21 +55,6 @@ namespace Azure.AI.Extensions.OpenAI
                 toolConfigs,
                 bingGrounding,
                 additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Per-tool configuration that controls tool visibility and search behavior. </summary>
-        /// <param name="pin">
-        /// When true, the tool is always included in agent context and visible in `tools/list`.
-        /// When false (default), the tool is hidden from `tools/list` and only discoverable via `tool_search`.
-        /// </param>
-        /// <param name="additionalSearchText">
-        /// Additional text indexed for tool_search. Supplements the native tool description
-        /// to improve discoverability. Does not alter `tools/list` output.
-        /// </param>
-        /// <returns> A new <see cref="OpenAI.ToolConfig"/> instance for mocking. </returns>
-        public static ToolConfig ToolConfig(bool? pin = default, string additionalSearchText = default)
-        {
-            return new ToolConfig(pin, additionalSearchText, additionalBinaryDataProperties: null);
         }
 
         /// <summary> The bing grounding search tool parameters. </summary>
@@ -335,11 +344,15 @@ namespace Azure.AI.Extensions.OpenAI
         /// </summary>
         /// <param name="browserAutomationPreview"> The Browser Automation Tool parameters. </param>
         /// <returns> A new <see cref="OpenAI.BrowserAutomationPreviewTool"/> instance for mocking. </returns>
+#pragma warning disable CS0612 // This generated code references obsolete functionality.
+#pragma warning disable CS0618 // This generated code references obsolete functionality.
         [Experimental("AAIP001")]
         public static BrowserAutomationPreviewTool BrowserAutomationPreviewTool(BrowserAutomationToolOptions browserAutomationPreview = default)
         {
             return new BrowserAutomationPreviewTool("browser_automation_preview", browserAutomationPreview, additionalBinaryDataProperties: null);
         }
+#pragma warning restore CS0612 // This generated code references obsolete functionality.
+#pragma warning restore CS0618 // This generated code references obsolete functionality.
 
         /// <summary> Definition of input parameters for the Browser Automation Tool. </summary>
         /// <param name="connection"> The project connection parameters associated with the Browser Automation Tool. </param>
@@ -605,15 +618,6 @@ namespace Azure.AI.Extensions.OpenAI
             return new GitHubCopilotToolsetConfig(name, enabled, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> A web search configuration for bing custom search. </summary>
-        /// <param name="projectConnectionId"> Project connection id for grounding with bing custom search. </param>
-        /// <param name="instanceName"> Name of the custom configuration instance given to config. </param>
-        /// <returns> A new <see cref="OpenAI.WebSearchConfiguration"/> instance for mocking. </returns>
-        public static WebSearchConfiguration WebSearchConfiguration(string projectConnectionId = default, string instanceName = default)
-        {
-            return new WebSearchConfiguration(projectConnectionId, instanceName, additionalBinaryDataProperties: null);
-        }
-
         /// <summary> The AgentReference. </summary>
         /// <param name="name"> The name of the agent. </param>
         /// <param name="version"> The version identifier of the agent. </param>
@@ -646,7 +650,7 @@ namespace Azure.AI.Extensions.OpenAI
                 parentActionId,
                 previousActionId,
                 status,
-                additionalBinaryDataProperties: null);
+                default);
         }
 
         /// <summary> The AgentStructuredOutputsResponseItem. </summary>
@@ -664,7 +668,7 @@ namespace Azure.AI.Extensions.OpenAI
                 agentReference,
                 responseId,
                 output,
-                additionalBinaryDataProperties: null);
+                default);
         }
 
         /// <summary> Request from the service for the user to perform OAuth consent. </summary>
@@ -684,7 +688,7 @@ namespace Azure.AI.Extensions.OpenAI
                 responseId,
                 consentLink,
                 serverLabel,
-                additionalBinaryDataProperties: null);
+                default);
         }
 
         /// <summary> A Bing grounding tool call. </summary>
@@ -706,7 +710,7 @@ namespace Azure.AI.Extensions.OpenAI
                 callId,
                 arguments,
                 status,
-                additionalBinaryDataProperties: null);
+                default);
         }
 
         /// <summary> The output of a Bing grounding tool call. </summary>
@@ -728,7 +732,7 @@ namespace Azure.AI.Extensions.OpenAI
                 callId,
                 output,
                 status,
-                additionalBinaryDataProperties: null);
+                default);
         }
 
         /// <summary> A SharePoint grounding tool call. </summary>
@@ -750,7 +754,7 @@ namespace Azure.AI.Extensions.OpenAI
                 callId,
                 arguments,
                 status,
-                additionalBinaryDataProperties: null);
+                default);
         }
 
         /// <summary> The output of a SharePoint grounding tool call. </summary>
@@ -772,7 +776,7 @@ namespace Azure.AI.Extensions.OpenAI
                 callId,
                 output,
                 status,
-                additionalBinaryDataProperties: null);
+                default);
         }
 
         /// <summary> An Azure AI Search tool call. </summary>
@@ -794,7 +798,7 @@ namespace Azure.AI.Extensions.OpenAI
                 callId,
                 arguments,
                 status,
-                additionalBinaryDataProperties: null);
+                default);
         }
 
         /// <summary> The output of an Azure AI Search tool call. </summary>
@@ -816,7 +820,7 @@ namespace Azure.AI.Extensions.OpenAI
                 callId,
                 output,
                 status,
-                additionalBinaryDataProperties: null);
+                default);
         }
 
         /// <summary> A Bing custom search tool call. </summary>
@@ -838,7 +842,7 @@ namespace Azure.AI.Extensions.OpenAI
                 callId,
                 arguments,
                 status,
-                additionalBinaryDataProperties: null);
+                default);
         }
 
         /// <summary> The output of a Bing custom search tool call. </summary>
@@ -860,7 +864,7 @@ namespace Azure.AI.Extensions.OpenAI
                 callId,
                 output,
                 status,
-                additionalBinaryDataProperties: null);
+                default);
         }
 
         /// <summary> An OpenAPI tool call. </summary>
@@ -884,7 +888,7 @@ namespace Azure.AI.Extensions.OpenAI
                 name,
                 arguments,
                 status,
-                additionalBinaryDataProperties: null);
+                default);
         }
 
         /// <summary> The output of an OpenAPI tool call. </summary>
@@ -908,7 +912,7 @@ namespace Azure.AI.Extensions.OpenAI
                 name,
                 output,
                 status,
-                additionalBinaryDataProperties: null);
+                default);
         }
 
         /// <summary> A browser automation tool call. </summary>
@@ -930,7 +934,7 @@ namespace Azure.AI.Extensions.OpenAI
                 callId,
                 arguments,
                 status,
-                additionalBinaryDataProperties: null);
+                default);
         }
 
         /// <summary> The output of a browser automation tool call. </summary>
@@ -952,7 +956,7 @@ namespace Azure.AI.Extensions.OpenAI
                 callId,
                 output,
                 status,
-                additionalBinaryDataProperties: null);
+                default);
         }
 
         /// <summary> A Fabric data agent tool call. </summary>
@@ -974,7 +978,7 @@ namespace Azure.AI.Extensions.OpenAI
                 callId,
                 arguments,
                 status,
-                additionalBinaryDataProperties: null);
+                default);
         }
 
         /// <summary> The output of a Fabric data agent tool call. </summary>
@@ -996,7 +1000,7 @@ namespace Azure.AI.Extensions.OpenAI
                 callId,
                 output,
                 status,
-                additionalBinaryDataProperties: null);
+                default);
         }
 
         /// <summary> An Azure Function tool call. </summary>
@@ -1020,7 +1024,7 @@ namespace Azure.AI.Extensions.OpenAI
                 name,
                 arguments,
                 status,
-                additionalBinaryDataProperties: null);
+                default);
         }
 
         /// <summary> The output of an Azure Function tool call. </summary>
@@ -1044,7 +1048,7 @@ namespace Azure.AI.Extensions.OpenAI
                 name,
                 output,
                 status,
-                additionalBinaryDataProperties: null);
+                default);
         }
 
         /// <summary> An A2A (Agent-to-Agent) tool call. </summary>
@@ -1068,7 +1072,7 @@ namespace Azure.AI.Extensions.OpenAI
                 name,
                 arguments,
                 status,
-                additionalBinaryDataProperties: null);
+                default);
         }
 
         /// <summary> The output of an A2A (Agent-to-Agent) tool call. </summary>
@@ -1092,7 +1096,7 @@ namespace Azure.AI.Extensions.OpenAI
                 name,
                 output,
                 status,
-                additionalBinaryDataProperties: null);
+                default);
         }
 
         /// <summary> A memory search tool call. </summary>
@@ -1114,7 +1118,7 @@ namespace Azure.AI.Extensions.OpenAI
                 responseId,
                 status,
                 memories.ToList(),
-                additionalBinaryDataProperties: null);
+                default);
         }
 
         /// <summary>
@@ -1122,17 +1126,17 @@ namespace Azure.AI.Extensions.OpenAI
         /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="OpenAI.ChatSummaryMemoryItem"/>, <see cref="OpenAI.ProceduralMemoryItem"/>, and <see cref="OpenAI.UserProfileMemoryItem"/>.
         /// </summary>
         /// <param name="memoryId"> The unique ID of the memory item. </param>
-        /// <param name="updatedOn"> The last update time of the memory item. </param>
+        /// <param name="updatedAt"> The last update time of the memory item. </param>
         /// <param name="scope"> The namespace that logically groups and isolates memories, such as a user ID. </param>
         /// <param name="content"> The content of the memory. </param>
         /// <param name="kind"> The kind of the memory item. </param>
         /// <returns> A new <see cref="OpenAI.MemoryOutputItem"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static MemoryOutputItem MemoryOutputItem(string memoryId = default, DateTimeOffset updatedOn = default, string scope = default, string content = default, string kind = default)
+        public static MemoryOutputItem MemoryOutputItem(string memoryId = default, DateTimeOffset updatedAt = default, string scope = default, string content = default, string kind = default)
         {
             return new UnknownMemoryOutputItem(
                 memoryId,
-                updatedOn,
+                updatedAt,
                 scope,
                 content,
                 new MemoryItemKind(kind),
@@ -1141,16 +1145,16 @@ namespace Azure.AI.Extensions.OpenAI
 
         /// <summary> A memory item specifically containing user profile information extracted from conversations, such as preferences, interests, and personal details. </summary>
         /// <param name="memoryId"> The unique ID of the memory item. </param>
-        /// <param name="updatedOn"> The last update time of the memory item. </param>
+        /// <param name="updatedAt"> The last update time of the memory item. </param>
         /// <param name="scope"> The namespace that logically groups and isolates memories, such as a user ID. </param>
         /// <param name="content"> The content of the memory. </param>
         /// <returns> A new <see cref="OpenAI.UserProfileMemoryItem"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static UserProfileMemoryItem UserProfileMemoryItem(string memoryId = default, DateTimeOffset updatedOn = default, string scope = default, string content = default)
+        public static UserProfileMemoryItem UserProfileMemoryItem(string memoryId = default, DateTimeOffset updatedAt = default, string scope = default, string content = default)
         {
             return new UserProfileMemoryItem(
                 memoryId,
-                updatedOn,
+                updatedAt,
                 scope,
                 content,
                 MemoryItemKind.UserProfile,
@@ -1159,16 +1163,16 @@ namespace Azure.AI.Extensions.OpenAI
 
         /// <summary> A memory item containing a summary extracted from conversations. </summary>
         /// <param name="memoryId"> The unique ID of the memory item. </param>
-        /// <param name="updatedOn"> The last update time of the memory item. </param>
+        /// <param name="updatedAt"> The last update time of the memory item. </param>
         /// <param name="scope"> The namespace that logically groups and isolates memories, such as a user ID. </param>
         /// <param name="content"> The content of the memory. </param>
         /// <returns> A new <see cref="OpenAI.ChatSummaryMemoryItem"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static ChatSummaryMemoryItem ChatSummaryMemoryItem(string memoryId = default, DateTimeOffset updatedOn = default, string scope = default, string content = default)
+        public static ChatSummaryMemoryItem ChatSummaryMemoryItem(string memoryId = default, DateTimeOffset updatedAt = default, string scope = default, string content = default)
         {
             return new ChatSummaryMemoryItem(
                 memoryId,
-                updatedOn,
+                updatedAt,
                 scope,
                 content,
                 MemoryItemKind.ChatSummary,
@@ -1177,16 +1181,16 @@ namespace Azure.AI.Extensions.OpenAI
 
         /// <summary> A memory item containing a procedure extracted from conversations. </summary>
         /// <param name="memoryId"> The unique ID of the memory item. </param>
-        /// <param name="updatedOn"> The last update time of the memory item. </param>
+        /// <param name="updatedAt"> The last update time of the memory item. </param>
         /// <param name="scope"> The namespace that logically groups and isolates memories, such as a user ID. </param>
         /// <param name="content"> The content of the memory. </param>
         /// <returns> A new <see cref="OpenAI.ProceduralMemoryItem"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static ProceduralMemoryItem ProceduralMemoryItem(string memoryId = default, DateTimeOffset updatedOn = default, string scope = default, string content = default)
+        public static ProceduralMemoryItem ProceduralMemoryItem(string memoryId = default, DateTimeOffset updatedAt = default, string scope = default, string content = default)
         {
             return new ProceduralMemoryItem(
                 memoryId,
-                updatedOn,
+                updatedAt,
                 scope,
                 content,
                 MemoryItemKind.Procedural,
@@ -1212,7 +1216,7 @@ namespace Azure.AI.Extensions.OpenAI
                 callId,
                 arguments,
                 status,
-                additionalBinaryDataProperties: null);
+                default);
         }
 
         /// <summary> The output of a memory command tool call. </summary>
@@ -1232,7 +1236,7 @@ namespace Azure.AI.Extensions.OpenAI
                 responseId,
                 callId,
                 status,
-                additionalBinaryDataProperties: null);
+                default);
         }
     }
 }

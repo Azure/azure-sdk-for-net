@@ -1,14 +1,10 @@
 # Release History
 
-## 1.0.0-beta.3 (Unreleased)
+## 1.0.0-beta.3 (2026-11-03)
 
 ### Features Added
 
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- Added support for specifying the Azure cloud using the `CloudName` property on `KeyVaultSecretProviderClassProperties` and `AzureKeyVaultSecretProviderClassUpdateProperties`.
 
 ## 1.0.0-beta.2 (2026-04-29)
 

@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> AzureDisk CSI Driver settings for the storage profile. </summary>
         [WirePath("diskCSIDriver")]
-        internal ManagedClusterStorageProfileDiskCsiDriver DiskCsiDriver { get; set; }
+        public ManagedClusterStorageProfileDiskCsiDriver DiskCsiDriver { get; set; }
 
         /// <summary> AzureFile CSI Driver settings for the storage profile. </summary>
         [WirePath("fileCSIDriver")]

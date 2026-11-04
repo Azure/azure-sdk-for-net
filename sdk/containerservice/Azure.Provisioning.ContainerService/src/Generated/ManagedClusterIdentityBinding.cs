@@ -115,7 +115,7 @@ namespace Azure.Provisioning.ContainerService
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _properties = DefineModelProperty<ManagedClusterIdentityBindingProperties>(nameof(Properties), new string[] { "properties" });
             _eTag = DefineProperty<ETag>(nameof(ETag), new string[] { "eTag" }, isOutput: true);
-            _parent = DefineResource<ContainerServiceManagedCluster>(nameof(Parent), new string[] { "parent" }, isRequired: true);
+            _parent = DefineResource<ContainerServiceManagedCluster>(nameof(Parent), new string[] { "parent" });
             DefineAdditionalProperties();
         }
 

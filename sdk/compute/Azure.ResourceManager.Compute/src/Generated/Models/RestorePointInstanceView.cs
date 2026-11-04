@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> Initializes a new instance of <see cref="RestorePointInstanceView"/>. </summary>
         /// <param name="diskRestorePoints"> The disk restore points information. </param>
-        /// <param name="statuses"> The resource status information. </param>
+        /// <param name="statuses"> The aggregate status information for the restore point. The list may include separate aggregate entries for replication and, in supported API versions, Instant Access, as applicable. For more information about Instant Access, see [Use virtual machine restore points](https://learn.microsoft.com/azure/virtual-machines/virtual-machines-create-restore-points#instant-access). </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal RestorePointInstanceView(IReadOnlyList<DiskRestorePointInstanceView> diskRestorePoints, IReadOnlyList<InstanceViewStatus> statuses, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> The disk restore points information. </summary>
         public IReadOnlyList<DiskRestorePointInstanceView> DiskRestorePoints { get; }
 
-        /// <summary> The resource status information. </summary>
+        /// <summary> The aggregate status information for the restore point. The list may include separate aggregate entries for replication and, in supported API versions, Instant Access, as applicable. For more information about Instant Access, see [Use virtual machine restore points](https://learn.microsoft.com/azure/virtual-machines/virtual-machines-create-restore-points#instant-access). </summary>
         public IReadOnlyList<InstanceViewStatus> Statuses { get; }
     }
 }

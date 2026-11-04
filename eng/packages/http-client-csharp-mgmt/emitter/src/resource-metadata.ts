@@ -417,6 +417,8 @@ export interface ResourceMetadata {
   parentResourceModelId?: string;
   singletonResourceName?: string;
   resourceName: string;
+  /** Whether the resource name stem was explicitly customized by the spec. */
+  resourceNameIsExplicit?: boolean;
   /** The name constraints for the resource, from TypeSpec decorators */
   nameConstraints: NameConstraints;
   /** The API versions that this resource is available in */
@@ -448,7 +450,8 @@ export function convertResourceMetadataToArguments(
     },
     parentResourceId: metadata.parentResourceId?.path,
     singletonResourceName: metadata.singletonResourceName,
-    resourceName: metadata.resourceName
+    resourceName: metadata.resourceName,
+    resourceNameIsExplicit: metadata.resourceNameIsExplicit
   };
 }
 
@@ -942,6 +945,7 @@ export function convertArmProviderSchemaToArguments(
       parentResourceId: r.metadata.parentResourceId?.path,
       singletonResourceName: r.metadata.singletonResourceName,
       resourceName: r.metadata.resourceName,
+      resourceNameIsExplicit: r.metadata.resourceNameIsExplicit,
       nameConstraints: r.metadata.nameConstraints,
       apiVersions: r.metadata.apiVersions,
       rbacRoles: r.metadata.rbacRoles
@@ -1537,6 +1541,10 @@ export function expandDynamicParentResourcesInSchema(
           parentResourceModelId: undefined,
           singletonResourceName: resource.metadata.singletonResourceName,
           resourceName: expandedResourceName,
+          resourceNameIsExplicit:
+            overrideName !== undefined
+              ? true
+              : resource.metadata.resourceNameIsExplicit,
           nameConstraints: resource.metadata.nameConstraints,
           apiVersions: resource.metadata.apiVersions,
           rbacRoles: resource.metadata.rbacRoles

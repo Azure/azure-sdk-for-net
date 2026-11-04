@@ -87,8 +87,14 @@ namespace Azure.AI.Projects
             {
                 throw new FormatException($"The model {nameof(AIProjectDataset)} does not support writing '{format}' format.");
             }
-            writer.WritePropertyName("dataUri"u8);
-            writer.WriteStringValue(DataUri.AbsoluteUri);
+            if (LifecycleModelReaderWriterOptions.IsVisible(options, LifecycleVisibility.Read | LifecycleVisibility.Create))
+            {
+                if (Optional.IsDefined(DataUri))
+                {
+                    writer.WritePropertyName("dataUri"u8);
+                    writer.WriteStringValue(DataUri.AbsoluteUri);
+                }
+            }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type.ToString());
             if (options.Format != "W" && Optional.IsDefined(IsReference))
@@ -96,10 +102,13 @@ namespace Azure.AI.Projects
                 writer.WritePropertyName("isReference"u8);
                 writer.WriteBooleanValue(IsReference.Value);
             }
-            if (Optional.IsDefined(ConnectionName))
+            if (LifecycleModelReaderWriterOptions.IsVisible(options, LifecycleVisibility.Read | LifecycleVisibility.Create))
             {
-                writer.WritePropertyName("connectionName"u8);
-                writer.WriteStringValue(ConnectionName);
+                if (Optional.IsDefined(ConnectionName))
+                {
+                    writer.WritePropertyName("connectionName"u8);
+                    writer.WriteStringValue(ConnectionName);
+                }
             }
             if (options.Format != "W" && Optional.IsDefined(Id))
             {
@@ -116,26 +125,32 @@ namespace Azure.AI.Projects
                 writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version);
             }
-            if (Optional.IsDefined(Description))
+            if (LifecycleModelReaderWriterOptions.IsVisible(options, LifecycleVisibility.Create | LifecycleVisibility.Update))
             {
-                writer.WritePropertyName("description"u8);
-                writer.WriteStringValue(Description);
-            }
-            if (Optional.IsCollectionDefined(Tags))
-            {
-                writer.WritePropertyName("tags"u8);
-                writer.WriteStartObject();
-                foreach (var item in Tags)
+                if (Optional.IsDefined(Description))
                 {
-                    writer.WritePropertyName(item.Key);
-                    if (item.Value == null)
-                    {
-                        writer.WriteNullValue();
-                        continue;
-                    }
-                    writer.WriteStringValue(item.Value);
+                    writer.WritePropertyName("description"u8);
+                    writer.WriteStringValue(Description);
                 }
-                writer.WriteEndObject();
+            }
+            if (LifecycleModelReaderWriterOptions.IsVisible(options, LifecycleVisibility.Create | LifecycleVisibility.Update))
+            {
+                if (Optional.IsCollectionDefined(Tags))
+                {
+                    writer.WritePropertyName("tags"u8);
+                    writer.WriteStartObject();
+                    foreach (var item in Tags)
+                    {
+                        writer.WritePropertyName(item.Key);
+                        if (item.Value == null)
+                        {
+                            writer.WriteNullValue();
+                            continue;
+                        }
+                        writer.WriteStringValue(item.Value);
+                    }
+                    writer.WriteEndObject();
+                }
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {

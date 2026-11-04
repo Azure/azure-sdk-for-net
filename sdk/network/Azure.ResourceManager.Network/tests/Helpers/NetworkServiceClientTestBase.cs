@@ -516,7 +516,7 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
                     },
                     LegacyMode = Convert.ToInt32(true)
                 },
-                RouteFilter = { Id = filter.Id }
+                RouteFilterId = filter.Id
             };
 
             Operation<ExpressRouteCircuitPeeringResource> peerOperation = await GetResourceGroup(resourceGroupName).GetExpressRouteCircuits().Get(circuitName).Value.GetExpressRouteCircuitPeerings().CreateOrUpdateAsync(WaitUntil.Completed, ExpressRouteTests.Peering_Microsoft, peering);
@@ -667,10 +667,7 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
                 {
                     AddressPrefixes = { "10.0.0.0/16", }
                 },
-                DhcpOptions = new DhcpOptions()
-                {
-                    DnsServers = { "10.1.1.1", "10.1.2.4" }
-                },
+                DhcpOptionsDnsServers = { "10.1.1.1", "10.1.2.4" },
                 Subnets = { new SubnetData() { AddressPrefix = "10.0.0.0/24", } }
             };
 
@@ -691,10 +688,7 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
                 {
                     AddressPrefixes = { "10.0.0.0/16", }
                 },
-                DhcpOptions = new DhcpOptions()
-                {
-                    DnsServers = { "10.1.1.1", "10.1.2.4" }
-                },
+                DhcpOptionsDnsServers = { "10.1.1.1", "10.1.2.4" },
                 Subnets = { new SubnetData() { AddressPrefix = "10.0.0.0/24", } }
             };
 
