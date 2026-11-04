@@ -118,9 +118,6 @@ extends:
           }
 
           Write-Host "Using AdditionalTestFilters: $additionalTestFilters"
-          if ([string]::IsNullOrWhiteSpace($env:AdditionalTestFilters)) {
-            Write-Host "##vso[task.setvariable variable=AdditionalTestFilters]$additionalTestFilters"
-          }
           Write-Host "##vso[task.setvariable variable=FOUNDRY_PROJECT_ENDPOINT]$validationEndpoint"
           Write-Host "##vso[task.setvariable variable=FOUNDRY_MODEL_NAME]${{ parameters.modelName }}"
           Write-Host "##vso[task.setvariable variable=FOUNDRY_AGENT_NAME]sample-agent"
