@@ -53,7 +53,7 @@
     "@eslint/js": "^10.0.1",
     "@types/node": "~26.0.1",
     "@types/pluralize": "^0.0.33",
-    "@typespec/compiler": "1.17.0",
+    "@typespec/compiler": "1.18.0-dev.8",
     "@typespec/events": "0.87.0",
     "@typespec/http": "1.17.0",
     "@typespec/openapi": "1.17.0",
@@ -73,7 +73,8 @@
     "vitest": "^4.1.9"
   },
   "overrides": {
-    "@azure-tools/typespec-azure-resource-manager": "$@azure-tools/typespec-azure-resource-manager"
+    "@azure-tools/typespec-azure-resource-manager": "$@azure-tools/typespec-azure-resource-manager",
+    "@typespec/compiler": "$@typespec/compiler"
   },
   "azure-sdk/emitter-package-json-pinning": [
     "@azure-tools/typespec-autorest",

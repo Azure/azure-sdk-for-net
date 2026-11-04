@@ -82,6 +82,44 @@ interface Widgets {
     }
   );
 
+  it.each([false, true])(
+    "uses a model client name for a single scope-specific occurrence (singleton: %s)",
+    async (singleton) => {
+      const host = await createEmitterTestHost();
+      const program = await typeSpecCompile(
+        `
+@clientName("CustomWidget", "csharp")
+${singleton ? '@singleton("default")' : ""}
+model Widget is TrackedResource<{}> {
+  ...ResourceNameParameter<Widget>;
+}
+@armResourceOperations
+interface Widgets {
+  get is Azure.ResourceManager.Extension.Read<Azure.ResourceManager.Extension.ResourceGroup, Widget>;
+}
+`,
+        host
+      );
+      expect(program.diagnostics.filter((d) => d.severity === "error")).toEqual(
+        []
+      );
+      const sdkContext = await createCSharpSdkContext(
+        createEmitterContext(program)
+      );
+      const [root] = createModel(sdkContext);
+      for (const schema of [
+        buildArmProviderSchema(sdkContext, root),
+        resolveArmResources(program, sdkContext)
+      ]) {
+        expect(schema.resources).toHaveLength(1);
+        expect(schema.resources[0].metadata).toMatchObject({
+          resourceName: "CustomWidget",
+          resourceNameIsExplicit: true
+        });
+      }
+    }
+  );
+
   it.each([
     ["", "Widget", false],
     ['@@clientName(Widget, "CustomWidget", "csharp");', "CustomWidget", true],
@@ -211,20 +249,23 @@ interface SubscriptionWidgets {
   );
 
   it.each([
-    ["", "ResourceGroupWidget", false],
+    ["", "ResourceGroupWidget", false, "ResourceGroupWidgets"],
     [
       '@@clientName(ResourceGroupWidgets, "CustomWidgets", "csharp");',
       "CustomWidget",
-      true
+      true,
+      "ResourceGroupWidgets"
     ],
     [
       '#suppress "@azure-tools/typespec-client-generator-core/client-option" "Testing path-specific resource-name override"\n@@clientOption(ResourceGroupWidgets.get, "resource-name", "NamedWidget", "csharp");',
       "NamedWidget",
-      true
-    ]
+      true,
+      "ResourceGroupWidgets"
+    ],
+    ["", "ResourceGroupAssignment", false, "ResourceGroupAssignments"]
   ])(
     "keeps shared-model stems path-specific: %s",
-    async (decorator, name, explicit) => {
+    async (decorator, name, explicit, interfaceName) => {
       const host = await createEmitterTestHost();
       const program = await typeSpecCompile(
         `
@@ -234,7 +275,7 @@ model Widget is TrackedResource<WidgetProperties> {
 }
 model WidgetProperties { size?: int32; }
 @armResourceOperations
-interface ResourceGroupWidgets {
+interface ${interfaceName} {
   get is Azure.ResourceManager.Extension.Read<Azure.ResourceManager.Extension.ResourceGroup, Widget>;
 }
 @armResourceOperations

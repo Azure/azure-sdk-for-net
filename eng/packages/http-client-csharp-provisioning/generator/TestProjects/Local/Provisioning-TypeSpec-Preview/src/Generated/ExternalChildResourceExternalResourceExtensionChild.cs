@@ -15,18 +15,18 @@ using Azure.Provisioning.Resources;
 namespace Azure.Provisioning.ProvisioningTypeSpec.Preview
 {
     /// <summary> A structural child that inherits its assignment's external scope. </summary>
-    public partial class ExtensionChild : ProvisionableResource
+    public partial class ExternalChildResourceExternalResourceExtensionChild : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;
         private BicepValue<string> _name;
         private SystemData _systemData;
         private ExtensionAssignmentProperties _properties;
-        private ResourceReference<ExtensionAssignment> _parent;
+        private ResourceReference<ExternalChildResourceExternalResourceExtensionAssignment> _parent;
 
-        /// <summary> Creates a new ExtensionChild. </summary>
+        /// <summary> Creates a new ExternalChildResourceExternalResourceExtensionChild. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
         /// <param name="resourceVersion"> The resource API version. </param>
-        public ExtensionChild(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "ProvisioningTypeSpec/extensionAssignments/children", resourceVersion ?? "2024-03-01-preview")
+        public ExternalChildResourceExternalResourceExtensionChild(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "ProvisioningTypeSpec/extensionAssignments/children", resourceVersion ?? "2024-03-01-preview")
         {
         }
 
@@ -81,7 +81,7 @@ namespace Azure.Provisioning.ProvisioningTypeSpec.Preview
         }
 
         /// <summary> Gets or sets the Parent. </summary>
-        public ExtensionAssignment Parent
+        public ExternalChildResourceExternalResourceExtensionAssignment Parent
         {
             get
             {
@@ -112,7 +112,7 @@ namespace Azure.Provisioning.ProvisioningTypeSpec.Preview
             }
         }
 
-        /// <summary> Define all the provisionable properties for ExtensionChild. </summary>
+        /// <summary> Define all the provisionable properties for ExternalChildResourceExternalResourceExtensionChild. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
@@ -120,21 +120,21 @@ namespace Azure.Provisioning.ProvisioningTypeSpec.Preview
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _properties = DefineModelProperty<ExtensionAssignmentProperties>(nameof(Properties), new string[] { "properties" });
-            _parent = DefineResource<ExtensionAssignment>(nameof(Parent), new string[] { "parent" });
+            _parent = DefineResource<ExternalChildResourceExternalResourceExtensionAssignment>(nameof(Parent), new string[] { "parent" });
             DefineAdditionalProperties();
         }
 
-        /// <summary> Creates a reference to an existing ExtensionChild. </summary>
+        /// <summary> Creates a reference to an existing ExternalChildResourceExternalResourceExtensionChild. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
         /// <param name="resourceVersion"> The resource API version. </param>
-        public static ExtensionChild FromExisting(string bicepIdentifier, string resourceVersion = null)
+        public static ExternalChildResourceExternalResourceExtensionChild FromExisting(string bicepIdentifier, string resourceVersion = null)
         {
-            ExtensionChild result = new ExtensionChild(bicepIdentifier, resourceVersion);
+            ExternalChildResourceExternalResourceExtensionChild result = new ExternalChildResourceExternalResourceExtensionChild(bicepIdentifier, resourceVersion);
             result.IsExistingResource = true;
             return result;
         }
 
-        /// <summary> Define additional provisionable properties for ExtensionChild that are not part of the generated code. </summary>
+        /// <summary> Define additional provisionable properties for ExternalChildResourceExternalResourceExtensionChild that are not part of the generated code. </summary>
         partial void DefineAdditionalProperties();
 
         /// <summary> Get the requirements for naming this resource. </summary>

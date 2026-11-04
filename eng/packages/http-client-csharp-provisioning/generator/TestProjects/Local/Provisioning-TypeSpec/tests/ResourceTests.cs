@@ -28,7 +28,7 @@ public class ResourceTests
                         ContentType = "text/plain"
                     }
                 };
-                ExtensionAssignment extension = new(nameof(extension))
+                ExternalChildResourceExternalResourceExtensionAssignment extension = new(nameof(extension))
                 {
                     Scope = store,
                     ExtensionAssignmentDisplayName = "store assignment"

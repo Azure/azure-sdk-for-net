@@ -66,6 +66,10 @@ Keep all three generator dependencies in `package.json` aligned with
 with each other, except for the temporary local management emitter reference
 described above. The ARM resolver uses the published
 `@azure-tools/typespec-azure-resource-manager` version `0.74.0-dev.8`, which
-includes the versioned resource resolution changes from TypeSpec Azure PR #5431.
+includes the versioned resource resolution changes from
+[Azure/typespec-azure#5431](https://github.com/Azure/typespec-azure/pull/5431).
+Both emitters use `@typespec/compiler` version `1.18.0-dev.8` because this TARM
+build requires the `skipTrivia` AST export, which is absent from compiler
+`1.17.0`. Compiler overrides keep transitive dependencies on the same instance.
 After updating the pins, run `npm install` in this directory,
 then run `eng/scripts/Generate.ps1` to regenerate and build both local fixtures.

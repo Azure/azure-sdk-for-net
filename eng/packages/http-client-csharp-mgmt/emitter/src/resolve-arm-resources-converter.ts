@@ -72,6 +72,7 @@ import {
 } from "@azure-tools/typespec-client-generator-core";
 import { getAllSdkClients } from "./sdk-client-utils.js";
 import {
+  extensionResourceOperationName,
   isResourceCollectionAction,
   getExplicitResourceName
 } from "./sdk-context-options.js";
@@ -491,9 +492,19 @@ function convertResolvedResourceToMetadata(
       ? getLibraryName(sdkContext, rawInterface, "csharp")
       : undefined
     : undefined;
-  if (hasMultiplePaths && interfaceNameOverride !== undefined) {
-    resourceName = pluralize.singular(interfaceNameOverride);
-    resourceNameIsExplicit = true;
+  // Shared extension models use operation-group stems, not model client names.
+  const interfaceName =
+    hasMultiplePaths &&
+    rawInterface &&
+    readOperation?.decorators.some(
+      (decorator) =>
+        decorator.definition?.name === extensionResourceOperationName
+    )
+      ? getLibraryName(sdkContext, rawInterface, "csharp")
+      : interfaceNameOverride;
+  if (hasMultiplePaths && interfaceName !== undefined) {
+    resourceName = pluralize.singular(interfaceName);
+    resourceNameIsExplicit = interfaceNameOverride !== undefined;
   }
   const explicitName = getExplicitResourceNameFromOperations(resolvedResource);
   if (explicitName) {

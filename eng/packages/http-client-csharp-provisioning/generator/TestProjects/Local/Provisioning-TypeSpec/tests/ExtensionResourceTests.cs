@@ -25,11 +25,11 @@ public class ExtensionResourceTests
     [Test]
     public void ExtensionChildPreservesStructuralParent()
     {
-        Assert.That(typeof(ExtensionChild).GetProperty("Parent")?.PropertyType,
-            Is.EqualTo(typeof(ExtensionAssignment)));
-        Assert.That(typeof(ExtensionChild).GetProperty("Scope"), Is.Null,
+        Assert.That(typeof(ExternalChildResourceExternalResourceExtensionChild).GetProperty("Parent")?.PropertyType,
+            Is.EqualTo(typeof(ExternalChildResourceExternalResourceExtensionAssignment)));
+        Assert.That(typeof(ExternalChildResourceExternalResourceExtensionChild).GetProperty("Scope"), Is.Null,
             "A child inherits scope through its parent, not a second scope property.");
-        ExtensionChild child = new("child");
+        ExternalChildResourceExternalResourceExtensionChild child = new("child");
         _ = child.Name;
         Assert.That(child.ProvisionableProperties["Parent"].IsRequired, Is.False);
     }
@@ -37,7 +37,7 @@ public class ExtensionResourceTests
     [Test]
     public void ExtensionOnlyScopeRemainsOptional()
     {
-        ExtensionAssignment assignment = new("assignment");
+        ExternalChildResourceExternalResourceExtensionAssignment assignment = new("assignment");
         _ = assignment.Name;
         Assert.That(assignment.ProvisionableProperties["Scope"].IsRequired, Is.False);
         Infrastructure infra = new();
@@ -63,9 +63,9 @@ public class ExtensionResourceTests
                 ExistingBillingProfile billing = new();
                 ReadOnlyExtension grant = ReadOnlyExtension.FromExisting("grant");
                 grant.Scope = billing;
-                ExtensionAssignment lab = new("lab") { Name = "lab", Scope = billing };
-                ExtensionChild student = new("student") { Name = "student", Parent = lab };
-                ExtensionChild existing = ExtensionChild.FromExisting("existing");
+                ExternalChildResourceExternalResourceExtensionAssignment lab = new("lab") { Name = "lab", Scope = billing };
+                ExternalChildResourceExternalResourceExtensionChild student = new("student") { Name = "student", Parent = lab };
+                ExternalChildResourceExternalResourceExtensionChild existing = ExternalChildResourceExternalResourceExtensionChild.FromExisting("existing");
                 existing.Name = "existing";
                 existing.Parent = lab;
                 infra.Add(billing);

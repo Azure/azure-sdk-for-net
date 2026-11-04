@@ -13,19 +13,19 @@ using Azure.Provisioning.Resources;
 
 namespace Azure.Provisioning.ProvisioningTypeSpec.Preview
 {
-    /// <summary> A private link resource for a configuration store. </summary>
-    public partial class ConfigurationStorePrivateLinkResource : ProvisionableResource
+    /// <summary> An assignment applied to another Azure resource as an extension resource. </summary>
+    public partial class ExternalChildResourceExternalResourceExtensionAssignment : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;
         private BicepValue<string> _name;
         private SystemData _systemData;
-        private ProvisioningTypeSpecPreviewPrivateLinkResourceProperties _properties;
-        private ResourceReference<ConfigurationStore> _parent;
+        private ExtensionAssignmentProperties _properties;
+        private ResourceReference<ProvisionableResource> _scope;
 
-        /// <summary> Creates a new ConfigurationStorePrivateLinkResource. </summary>
+        /// <summary> Creates a new ExternalChildResourceExternalResourceExtensionAssignment. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
         /// <param name="resourceVersion"> The resource API version. </param>
-        internal ConfigurationStorePrivateLinkResource(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "ProvisioningTypeSpec/configurationStores/privateLinkResources", resourceVersion ?? "2024-03-01-preview")
+        public ExternalChildResourceExternalResourceExtensionAssignment(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "ProvisioningTypeSpec/extensionAssignments", resourceVersion ?? "2024-03-01-preview")
         {
         }
 
@@ -64,54 +64,76 @@ namespace Azure.Provisioning.ProvisioningTypeSpec.Preview
             }
         }
 
-        /// <summary> Gets the Properties. </summary>
-        public ProvisioningTypeSpecPreviewPrivateLinkResourceProperties Properties
+        /// <summary> Gets or sets the Properties. </summary>
+        internal ExtensionAssignmentProperties Properties
         {
             get
             {
                 Initialize();
                 return _properties;
             }
+            set
+            {
+                Initialize();
+                AssignOrReplace(ref _properties, value);
+            }
         }
 
-        /// <summary> Gets or sets the Parent. </summary>
-        public ConfigurationStore Parent
+        /// <summary> Gets or sets the Scope. </summary>
+        public ProvisionableResource Scope
         {
             get
             {
                 Initialize();
-                return _parent.Value;
+                return _scope.Value;
             }
             set
             {
                 Initialize();
-                _parent.Value = value;
+                _scope.Value = value;
             }
         }
 
-        /// <summary> Define all the provisionable properties for ConfigurationStorePrivateLinkResource. </summary>
+        /// <summary> Gets or sets the DisplayName. </summary>
+        public BicepValue<string> ExtensionAssignmentDisplayName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DisplayName;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ExtensionAssignmentProperties();
+                }
+                Properties.DisplayName = value;
+            }
+        }
+
+        /// <summary> Define all the provisionable properties for ExternalChildResourceExternalResourceExtensionAssignment. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
             _id = DefineProperty<ResourceIdentifier>(nameof(Id), new string[] { "id" }, isOutput: true);
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
-            _properties = DefineModelProperty<ProvisioningTypeSpecPreviewPrivateLinkResourceProperties>(nameof(Properties), new string[] { "properties" });
-            _parent = DefineResource<ConfigurationStore>(nameof(Parent), new string[] { "parent" });
+            _properties = DefineModelProperty<ExtensionAssignmentProperties>(nameof(Properties), new string[] { "properties" });
+            _scope = DefineResource<ProvisionableResource>(nameof(Scope), new string[] { "scope" });
             DefineAdditionalProperties();
         }
 
-        /// <summary> Creates a reference to an existing ConfigurationStorePrivateLinkResource. </summary>
+        /// <summary> Creates a reference to an existing ExternalChildResourceExternalResourceExtensionAssignment. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
         /// <param name="resourceVersion"> The resource API version. </param>
-        public static ConfigurationStorePrivateLinkResource FromExisting(string bicepIdentifier, string resourceVersion = null)
+        public static ExternalChildResourceExternalResourceExtensionAssignment FromExisting(string bicepIdentifier, string resourceVersion = null)
         {
-            ConfigurationStorePrivateLinkResource result = new ConfigurationStorePrivateLinkResource(bicepIdentifier, resourceVersion);
+            ExternalChildResourceExternalResourceExtensionAssignment result = new ExternalChildResourceExternalResourceExtensionAssignment(bicepIdentifier, resourceVersion);
             result.IsExistingResource = true;
             return result;
         }
 
-        /// <summary> Define additional provisionable properties for ConfigurationStorePrivateLinkResource that are not part of the generated code. </summary>
+        /// <summary> Define additional provisionable properties for ExternalChildResourceExternalResourceExtensionAssignment that are not part of the generated code. </summary>
         partial void DefineAdditionalProperties();
 
         /// <summary></summary>

@@ -38,9 +38,10 @@ The converter selects the API version resolved by TCGC for the ARM service,
 including the default latest version. With `api-version: all`, it preserves the
 multi-version declaration view. Its `nameResolver` uses TCGC's `getLibraryName`
 for model, operation, and operation-group names so that scoped `@clientName`
-customizations apply to resource metadata. Complete resource names are left to
-the ARM library, preserving explicit names and composed names for extension
-resources.
+customizations apply to resource metadata. Shared extension models retain their
+path-specific default stems unless an occurrence has an explicit override.
+Other complete resource names are left to the ARM library, preserving explicit
+names and composed names for extension resources.
 
 ### Step 2: Add Feature Flag (✅ Complete)
 
