@@ -287,11 +287,15 @@ namespace BasicTypeSpec
             return message;
         }
 
-        internal HttpMessage CreateGetWithNextLinkRequest(RequestContext context)
+        internal HttpMessage CreateGetWithNextLinkRequest(string resumeFrom, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/link", false);
+            if (resumeFrom != null)
+            {
+                uri.AppendQuery("resumeFrom", resumeFrom, true);
+            }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
@@ -300,7 +304,7 @@ namespace BasicTypeSpec
             return message;
         }
 
-        internal HttpMessage CreateNextGetWithNextLinkRequest(Uri nextPage, RequestContext context)
+        internal HttpMessage CreateNextGetWithNextLinkRequest(Uri nextPage, string resumeFrom, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)
@@ -351,7 +355,7 @@ namespace BasicTypeSpec
             return message;
         }
 
-        internal HttpMessage CreateGetWithHeaderNextLinkRequest(RequestContext context)
+        internal HttpMessage CreateGetWithHeaderNextLinkRequest(string resumeFrom, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -360,11 +364,15 @@ namespace BasicTypeSpec
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Get;
+            if (resumeFrom != null)
+            {
+                request.Headers.SetValue("x-continuation-token", resumeFrom);
+            }
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
-        internal HttpMessage CreateNextGetWithHeaderNextLinkRequest(Uri nextPage, RequestContext context)
+        internal HttpMessage CreateNextGetWithHeaderNextLinkRequest(Uri nextPage, string resumeFrom, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)

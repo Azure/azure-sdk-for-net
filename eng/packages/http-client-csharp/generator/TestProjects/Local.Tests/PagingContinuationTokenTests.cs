@@ -48,10 +48,58 @@ namespace TestProjects.Local.Tests
             Assert.IsNull(resumedPages[0].ContinuationToken);
 
             Assert.AreEqual(3, handler.Requests.Count);
+            Assert.That(handler.Requests[0].Query, Does.Not.Contain("resumeFrom"));
+            Assert.That(handler.Requests[0].Query, Does.Not.Contain("continuationToken"));
             var expectedNextUri = new Uri(endpoint, nextLink);
             Assert.AreEqual(expectedNextUri, handler.Requests[1]);
             Assert.AreEqual(expectedNextUri, handler.Requests[2]);
             Assert.That(handler.Requests.All(uri => uri.Scheme == Uri.UriSchemeHttps));
+        }
+
+        [Test]
+        public void NextLinkMethodsDoNotExposeRequestToken()
+        {
+            foreach (var method in typeof(BasicTypeSpecClient).GetMethods().Where(
+                m => m.Name is "GetWithNextLink" or "GetWithNextLinkAsync" or "GetWithHeaderNextLink" or "GetWithHeaderNextLinkAsync"))
+            {
+                Assert.That(method.GetParameters().All(p => p.Name != "resumeFrom"));
+            }
+        }
+
+        [Test]
+        public async Task RetainedRequestTokenIsSentOnFirstRequest([Values] bool isAsync, [Values] bool isProtocol)
+        {
+            using var handler = new PagingHandler("/items?page=2", false, emptyItems: true);
+            using var httpClient = new HttpClient(handler);
+            var client = new BasicTypeSpecClient(new Uri("https://example.test/"), new AzureKeyCredential("test-key"),
+                new BasicTypeSpecClientOptions { Transport = new HttpClientTransport(httpClient) });
+            const string token = "bare-token";
+            if (isAsync)
+            {
+                if (isProtocol)
+                {
+                    await foreach (var item in new BasicTypeSpecClientGetWithNextLinkAsyncCollectionResult(client, token, null, "paging"))
+                    {
+                    }
+                }
+                else
+                {
+                    await foreach (var item in new BasicTypeSpecClientGetWithNextLinkAsyncCollectionResultOfT(client, token, null, "paging"))
+                    {
+                    }
+                }
+            }
+            else if (isProtocol)
+            {
+                _ = new BasicTypeSpecClientGetWithNextLinkCollectionResult(client, token, null, "paging").ToList();
+            }
+            else
+            {
+                _ = new BasicTypeSpecClientGetWithNextLinkCollectionResultOfT(client, token, null, "paging").ToList();
+            }
+            Assert.AreEqual(2, handler.Requests.Count);
+            Assert.That(handler.Requests[0].Query, Does.Contain("resumeFrom=bare-token"));
+            Assert.That(handler.Requests[1].Query, Does.Not.Contain("resumeFrom"));
         }
 
         private static async Task<List<Page<ThingModel>>> GetPages(
@@ -82,19 +130,21 @@ namespace TestProjects.Local.Tests
             return pages;
         }
 
-        private sealed class PagingHandler(string nextLink, bool headerNextLink) : HttpMessageHandler
+        private sealed class PagingHandler(string nextLink, bool headerNextLink, bool emptyItems = false) : HttpMessageHandler
         {
             public List<Uri> Requests { get; } = new();
 
             protected override HttpResponseMessage Send(HttpRequestMessage request, CancellationToken cancellationToken)
             {
+                Assert.IsFalse(request.Headers.Contains("x-continuation-token"));
                 Requests.Add(request.RequestUri!);
                 bool firstPage = Requests.Count == 1;
                 string name = firstPage ? "first" : "second";
+                string items = emptyItems ? "" : $"{{\"name\":\"{name}\"}}";
                 string next = firstPage && !headerNextLink ? $",\"next\":\"{nextLink}\"" : "";
                 var response = new HttpResponseMessage(HttpStatusCode.OK)
                 {
-                    Content = new StringContent($"{{\"things\":[{{\"name\":\"{name}\"}}]{next}}}", Encoding.UTF8, "application/json")
+                    Content = new StringContent($"{{\"things\":[{items}]{next}}}", Encoding.UTF8, "application/json")
                 };
                 if (firstPage && headerNextLink)
                 {

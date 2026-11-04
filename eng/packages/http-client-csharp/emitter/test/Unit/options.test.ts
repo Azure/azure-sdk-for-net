@@ -95,7 +95,8 @@ describe("Configuration tests", async () => {
         context.options["sdk-context-options"]?.additionalDecorators,
         [
           "Azure\\.ClientGenerator\\.Core\\.@useSystemTextJsonConverter",
-          "TypeSpec\\.HttpClient\\.CSharp\\.@dynamicModel"
+          "TypeSpec\\.HttpClient\\.CSharp\\.@dynamicModel",
+          "TypeSpec\\.@continuationToken"
         ]
       );
     });
@@ -112,7 +113,8 @@ describe("Configuration tests", async () => {
         context.options["sdk-context-options"]?.additionalDecorators,
         [
           "Azure\\.ClientGenerator\\.Core\\.@useSystemTextJsonConverter",
-          "TypeSpec\\.HttpClient\\.CSharp\\.@dynamicModel"
+          "TypeSpec\\.HttpClient\\.CSharp\\.@dynamicModel",
+          "TypeSpec\\.@continuationToken"
         ]
       );
     });
@@ -131,7 +133,8 @@ describe("Configuration tests", async () => {
         context.options["sdk-context-options"]?.additionalDecorators,
         [
           "Azure\\.ClientGenerator\\.Core\\.@useSystemTextJsonConverter",
-          "TypeSpec\\.HttpClient\\.CSharp\\.@dynamicModel"
+          "TypeSpec\\.HttpClient\\.CSharp\\.@dynamicModel",
+          "TypeSpec\\.@continuationToken"
         ]
       );
     });
@@ -155,7 +158,8 @@ describe("Configuration tests", async () => {
           "Existing.Decorator.One",
           "Existing.Decorator.Two",
           "Azure\\.ClientGenerator\\.Core\\.@useSystemTextJsonConverter",
-          "TypeSpec\\.HttpClient\\.CSharp\\.@dynamicModel"
+          "TypeSpec\\.HttpClient\\.CSharp\\.@dynamicModel",
+          "TypeSpec\\.@continuationToken"
         ]
       );
     });
@@ -174,7 +178,8 @@ describe("Configuration tests", async () => {
         context.options["sdk-context-options"]?.additionalDecorators,
         [
           "Azure\\.ClientGenerator\\.Core\\.@useSystemTextJsonConverter",
-          "TypeSpec\\.HttpClient\\.CSharp\\.@dynamicModel"
+          "TypeSpec\\.HttpClient\\.CSharp\\.@dynamicModel",
+          "TypeSpec\\.@continuationToken"
         ]
       );
     });
@@ -199,7 +204,8 @@ describe("Configuration tests", async () => {
         [
           "Existing.Decorator",
           "Azure\\.ClientGenerator\\.Core\\.@useSystemTextJsonConverter",
-          "TypeSpec\\.HttpClient\\.CSharp\\.@dynamicModel"
+          "TypeSpec\\.HttpClient\\.CSharp\\.@dynamicModel",
+          "TypeSpec\\.@continuationToken"
         ]
       );
     });

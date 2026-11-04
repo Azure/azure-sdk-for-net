@@ -1,5 +1,6 @@
 import { beforeEach, describe, it, vi } from "vitest";
 import {
+  createCSharpSdkContext,
   createEmitterContext,
   createEmitterTestHost,
   typeSpecCompile
@@ -7,6 +8,7 @@ import {
 import { AzureEmitterOptions } from "../../src/options.js";
 import { $onEmit } from "../../src/emitter.js";
 import { strictEqual, ok, deepStrictEqual } from "assert";
+import { createModel } from "@typespec/http-client-csharp";
 
 describe("Metadata generation tests", async () => {
   let writeFileMock: any;
@@ -27,6 +29,38 @@ describe("Metadata generation tests", async () => {
         }
       };
     });
+  });
+
+  it("Preserves request continuation-token markers without a response token", async () => {
+    const runner = await createEmitterTestHost();
+    const program = await typeSpecCompile(
+      `
+        @list
+        @route("/items")
+        op listItems(@query @continuationToken resumeFrom?: string): {
+          @pageItems items: string[];
+          @nextLink next?: url;
+        };
+        `,
+      runner
+    );
+    const context = createEmitterContext(program);
+    await $onEmit(context);
+    const sdkContext = await createCSharpSdkContext(
+      context,
+      context.options["sdk-context-options"]
+    );
+    const [model] = createModel(sdkContext);
+    const method = model.clients[0].methods[0];
+    ok(method.kind === "paging");
+    ok(method.pagingMetadata.nextLink);
+    strictEqual(method.pagingMetadata.continuationToken, undefined);
+    const token = method.operation.parameters.find(
+      (p) => p.serializedName === "resumeFrom"
+    );
+    ok(
+      token?.decorators?.some((d) => d.name === "TypeSpec.@continuationToken")
+    );
   });
 
   it("Generates metadata.json with apiVersions map from TypeSpec", async () => {
