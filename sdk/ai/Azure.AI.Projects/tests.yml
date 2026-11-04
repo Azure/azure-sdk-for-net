@@ -12,7 +12,7 @@ parameters:
   - name: selection
     displayName: 'Selection value (; separated)'
     type: string
-    default: '((FullyQualifiedName~Azure.AI.Projects.Tests.Samples & Name=Authenticate)|(FullyQualifiedName~Azure.AI.Projects.Agents.Tests.Samples & Name=AgentCRUDAsync)|(FullyQualifiedName~Azure.AI.Extensions.OpenAI.Tests.Samples & Name=AgentResponseSync))'
+    default: '((FullyQualifiedName~Azure.AI.Projects.Tests.Samples & Name=Authenticate)|(FullyQualifiedName~Azure.AI.Projects.Agents.Tests.Samples & Name=VersionSelection)|(FullyQualifiedName~Azure.AI.Extensions.OpenAI.Tests.Samples & Name=CreateAgentClientFromProjectsClient))'
   - name: testQueueCount
     displayName: 'Maximum parallel live test workers'
     type: number
