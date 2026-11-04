@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.AI.Agents.Persistent;
 using Azure.Identity;
 using Microsoft.ClientModel.TestFramework;
@@ -32,12 +33,21 @@ public class Sample_AIAgents : SamplesBase
         AIProjectClient projectClient = new(new Uri(endpoint), new DefaultAzureCredential());
         PersistentAgentsClient agentsClient = projectClient.GetPersistentAgentsClient();
 
-        // Step 1: Create an agent
-        PersistentAgent agent = agentsClient.Administration.CreateAgent(
-            model: modelDeploymentName,
-            name: "Math Tutor",
-            instructions: "You are a personal math tutor. Write and run code to answer math questions."
-        );
+        PersistentAgent agent;
+        try
+        {
+            // Step 1: Create an agent
+            agent = agentsClient.Administration.CreateAgent(
+                model: modelDeploymentName,
+                name: "Math Tutor",
+                instructions: "You are a personal math tutor. Write and run code to answer math questions."
+            );
+        }
+        catch (RequestFailedException ex) when (ex.Status == 400 && ex.ErrorCode == "Tenant provided in token does not match resource token")
+        {
+            Assert.Ignore($"Skipping sample due to tenant mismatch: {ex.Message}");
+            return;
+        }
 
         // Step 2: Create a thread
         PersistentAgentThread thread = agentsClient.Threads.CreateThread();
