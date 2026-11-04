@@ -162,10 +162,9 @@ extends:
         displayName: 'Collect sample Console.WriteLine output'
         condition: always()
 
-      - task: PublishPipelineArtifact@1
-        displayName: 'Publish sample console output artifact'
-        condition: always()
-        inputs:
-          targetPath: '$(Build.ArtifactStagingDirectory)/sample-console-output'
-          artifact: 'sample-console-output-$(Agent.JobName)'
-          publishLocation: 'pipeline'
+      - template: /eng/common/pipelines/templates/steps/publish-1es-artifact.yml
+        parameters:
+          CustomCondition: always()
+          ArtifactPath: '$(Build.ArtifactStagingDirectory)/sample-console-output'
+          ArtifactName: 'sample-console-output-$(Agent.JobName)'
+          SbomEnabled: false
