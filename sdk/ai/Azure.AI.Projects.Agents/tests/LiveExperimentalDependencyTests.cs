@@ -18,6 +18,8 @@ public class LiveExperimentalDependencyTests
     [TestCase(typeof(LiveDecisionScoreQuestionParam))]
     [TestCase(typeof(LiveDecisionChoiceParam))]
     [TestCase(typeof(LiveDecisionScoreLevelParam))]
+    [TestCase(typeof(LiveDecisionInputJsonParam))]
+    [TestCase(typeof(LiveDecisionJsonObject))]
     [TestCase(typeof(DecisionResult))]
     [TestCase(typeof(AnswerResource))]
     [TestCase(typeof(AnswerResourcePredicate))]
@@ -44,6 +46,19 @@ public class LiveExperimentalDependencyTests
             }
         });
     }
+
+    [TestCase(typeof(LiveDecisionTriggerInputParamEventType))]
+    [TestCase(typeof(LiveFunctionCallItemStatus))]
+    [TestCase(typeof(LiveInitialAssistantMessageItemParamType))]
+    [TestCase(typeof(LiveInitialDeveloperMessageItemParamType))]
+    [TestCase(typeof(LiveInitialInputTextContentPartParamType))]
+    [TestCase(typeof(LiveInitialTextContentPartParamType))]
+    [TestCase(typeof(LiveInitialUserMessageItemParamType))]
+    [TestCase(typeof(LiveServerEventLiveDecisionEventSourceEventType))]
+    [TestCase(typeof(LiveServerEventLiveSessionClosedReason))]
+    [TestCase(typeof(LiveSessionAudioFormatPCMParamRate))]
+    public void LiveEnumAndValueTypesAreExperimental(Type type)
+        => Assert.That(ExperimentalDiagnosticIds(type), Is.EqualTo(new[] { "AAIP001" }));
 
     [TestCase(typeof(ProjectsAgentDefinition))]
     [TestCase(typeof(DeclarativeAgentDefinition))]

@@ -114,12 +114,14 @@ public class ProjectsLiveSessionClientTests
         await LiveTestHelpers.InitializeAsync(session, timeout.Token);
 
         VoiceAgentLiveSessionResource snapshot = session.SessionStarted.Session;
-        VoiceAgentLiveManagedAgentDelegation owner = ModelReaderWriter.Read<VoiceAgentLiveManagedAgentDelegation>(
-            snapshot.Delegation, ModelReaderWriterOptions.Json, AzureAIProjectsAgentsContext.Default);
+        Assert.That(snapshot.Delegation, Is.TypeOf<VoiceAgentLiveManagedAgentDelegation>());
+        VoiceAgentLiveManagedAgentDelegation owner = (VoiceAgentLiveManagedAgentDelegation)snapshot.Delegation;
+        using JsonDocument delegation = JsonDocument.Parse(ModelReaderWriter.Write(
+            snapshot.Delegation, new ModelReaderWriterOptions("W"), AzureAIProjectsAgentsContext.Default));
         Assert.Multiple(() =>
         {
             Assert.That(snapshot.Id, Is.EqualTo("live-session"));
-            Assert.That(owner.Type, Is.EqualTo("foundry_managed_agent"));
+            Assert.That(delegation.RootElement.GetProperty("type").GetString(), Is.EqualTo("foundry_managed_agent"));
             Assert.That(owner.AgentName, Is.EqualTo("backend"));
             Assert.That(owner.AgentVersion, Is.EqualTo("2"));
         });

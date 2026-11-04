@@ -4879,6 +4879,7 @@ namespace Azure.AI.Projects.Agents
         /// <summary> The LiveDecisionInputJsonParam. </summary>
         /// <param name="data"></param>
         /// <returns> A new <see cref="Agents.LiveDecisionInputJsonParam"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
         public static LiveDecisionInputJsonParam LiveDecisionInputJsonParam(BinaryData data = default)
         {
             return new LiveDecisionInputJsonParam("input_json", data, additionalBinaryDataProperties: null);
@@ -4887,6 +4888,7 @@ namespace Azure.AI.Projects.Agents
         /// <summary> The LiveDecisionJsonObject. </summary>
         /// <param name="additionalProperties"></param>
         /// <returns> A new <see cref="Agents.LiveDecisionJsonObject"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
         public static LiveDecisionJsonObject LiveDecisionJsonObject(IDictionary<string, BinaryData> additionalProperties = default)
         {
             additionalProperties ??= new ChangeTrackingDictionary<string, BinaryData>();

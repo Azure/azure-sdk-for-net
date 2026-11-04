@@ -4,20 +4,18 @@
 
 ### Features Added
 - Added experimental Live voice agent definitions, native client/server event models, and `BetaVoiceAgentsLiveConversations` for stored Live history and recordings.
-- Added Foundry-aware Live session snapshots and delegation trigger metadata, including `foundry_managed_agent` ownership with the pinned agent name and resolved version.
-- Live definitions preserve typed Realtime/Live dispatch and existing Realtime model-factory parameter order. Stored Live history pagination honors `has_more` even when a terminal page retains `last_id`.
+- Added typed `VoiceAgentLiveSessionResource` snapshots, `VoiceAgentLiveDelegation` configuration, and `VoiceAgentLiveDelegationItem` metadata, including `foundry_managed_agent` ownership with the pinned agent name and resolved version.
+- Added typed Realtime/Live definition dispatch and stored Live history pagination.
+- Added experimental Live Decision and transport event models aligned with OpenAI TypeSpec 1.34.0.
+- Live models, enums, value types, and model-factory methods require the `AAIP001` experimental opt-in.
 
 ### Breaking Changes
-- Live lifecycle events now expose `VoiceAgentLiveSessionResource`, and delegation-created events expose `VoiceAgentLiveDelegationItem` with `VoiceAgentLiveDelegationTarget`, replacing the corresponding native-only snapshot and trigger types.
-- Renamed the experimental `LiveTransportRinging`, `LiveTransportAnswered`, and `LiveTransportFailed` models to `LiveServerEventLiveTransportRinging`, `LiveServerEventLiveTransportAnswered`, and `LiveServerEventLiveTransportFailed`. Their wire event names are unchanged.
-- Aligned experimental native Live models with OpenAI TypeSpec 1.34.0, including Live-specific Decision question models and the `transport.dtmf.sent` server event.
-- Voice definitions now emit the required `sub_protocol` discriminator, including `realtime` for Realtime definitions. Live delegation configuration and session snapshots now use the typed experimental `VoiceAgentLiveDelegation` hierarchy.
+- Realtime voice definitions now emit the required `sub_protocol` discriminator with the value `realtime`.
 
 ### Bugs Fixed
 - Fixed typed persisted Realtime response status and output-modality serialization to use the external OpenAI enum values rather than treating them as ModelReaderWriter models.
 - Fixed semantic VAD eagerness serialization and deserialization to preserve the external OpenAI string values.
 - Fixed the Realtime model factory to preserve newly added fields, including `Soundscape` and `PostCall`, without changing the order of its existing parameters.
-- Kept Live-only decision helper models and their model-factory methods behind the `AAIP001` experimental opt-in without changing shared stable models.
 
 ### Other Changes
 - Regenerated from the published Foundry definitions in [Azure/azure-rest-api-specs#47196](https://github.com/Azure/azure-rest-api-specs/pull/47196) at `a8ba157506e523c4274cd5f5d3288a2ae45235ab`, using OpenAI TypeSpec 1.34.0.

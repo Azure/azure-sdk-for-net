@@ -202,6 +202,8 @@ Canceling WebSocket I/O may abort the connection; create a new session rather th
 ## Call a function
 
 Set `delegation.type` to `responses` to handle function calls through a Responses model.
+Assign `new VoiceAgentLiveResponsesDelegation(responses)` to `VoiceAgentLiveDefinition.Delegation`;
+the agent definition now uses typed Foundry delegation models rather than `BinaryData`.
 The `response.item.create` and `response.create` commands control that model, not spoken output.
 
 1. Read completed function calls from `LiveServerEventLiveResponseEvent.Event` and validate their
@@ -645,8 +647,9 @@ Switching to Realtime history will not read a Live conversation.
 
 ## Handle events and errors
 
-Session metadata identifies delegation as `client`, `responses`, or `foundry_managed_agent`.
-For a managed agent, it includes the agent name and resolved version. Handle local delegation
+Session metadata exposes typed `VoiceAgentLiveDelegation` models for `client`, `responses`, and
+`foundry_managed_agent`. For a managed agent, `VoiceAgentLiveManagedAgentDelegation` includes
+the agent name and resolved version. Handle local delegation
 requests only when `VoiceAgentLiveDelegationItem.Target` is `VoiceAgentLiveDelegationTarget.Client`;
 the service handles the other known targets. Do not execute unknown targets locally.
 

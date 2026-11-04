@@ -733,8 +733,7 @@ public static class Sample_VoiceAgent_Live
         }
         VoiceAgentLiveDefinition definition = CreateDefinition(liveDeployment);
         definition.Instructions = "You are a helpful voice assistant. Delegate requests to the Responses backend.";
-        definition.Delegation = ModelReaderWriter.Write(new LiveResponsesDelegationParam(responses),
-            new ModelReaderWriterOptions("W"), AzureAIProjectsAgentsContext.Default);
+        definition.Delegation = new VoiceAgentLiveResponsesDelegation(responses);
         return definition;
     }
 

@@ -2973,6 +2973,7 @@ namespace Azure.AI.Projects.Agents
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.LiveDecisionInputItemParamMessage>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.LiveDecisionInputItemParamMessage>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
     public partial class LiveDecisionInputJsonParam : System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.LiveDecisionInputJsonParam>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.LiveDecisionInputJsonParam>
     {
         public LiveDecisionInputJsonParam(System.BinaryData data) { }
@@ -3004,6 +3005,7 @@ namespace Azure.AI.Projects.Agents
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.LiveDecisionInputTextParam>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.LiveDecisionInputTextParam>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
     public partial class LiveDecisionJsonObject : System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.LiveDecisionJsonObject>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.LiveDecisionJsonObject>
     {
         public LiveDecisionJsonObject() { }
@@ -3281,6 +3283,7 @@ namespace Azure.AI.Projects.Agents
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.LiveDecisionTriggerInputParam>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.LiveDecisionTriggerInputParam>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
     public enum LiveDecisionTriggerInputParamEventType
     {
         SessionInputTranscriptDelta = 0,
@@ -3354,6 +3357,7 @@ namespace Azure.AI.Projects.Agents
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.LiveFileSearchToolInputParam>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.LiveFileSearchToolInputParam>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
     public enum LiveFunctionCallItemStatus
     {
         InProgress = 0,
@@ -3479,6 +3483,7 @@ namespace Azure.AI.Projects.Agents
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.LiveInitialAssistantMessageItemParam>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.LiveInitialAssistantMessageItemParam>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct LiveInitialAssistantMessageItemParamType : System.IEquatable<Azure.AI.Projects.Agents.LiveInitialAssistantMessageItemParamType>
     {
@@ -3513,6 +3518,7 @@ namespace Azure.AI.Projects.Agents
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.LiveInitialDeveloperMessageItemParam>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.LiveInitialDeveloperMessageItemParam>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct LiveInitialDeveloperMessageItemParamType : System.IEquatable<Azure.AI.Projects.Agents.LiveInitialDeveloperMessageItemParamType>
     {
@@ -3545,6 +3551,7 @@ namespace Azure.AI.Projects.Agents
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.LiveInitialInputTextContentPartParam>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.LiveInitialInputTextContentPartParam>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct LiveInitialInputTextContentPartParamType : System.IEquatable<Azure.AI.Projects.Agents.LiveInitialInputTextContentPartParamType>
     {
@@ -3644,6 +3651,7 @@ namespace Azure.AI.Projects.Agents
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.LiveInitialTextContentPartParam>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.LiveInitialTextContentPartParam>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct LiveInitialTextContentPartParamType : System.IEquatable<Azure.AI.Projects.Agents.LiveInitialTextContentPartParamType>
     {
@@ -3678,6 +3686,7 @@ namespace Azure.AI.Projects.Agents
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.LiveInitialUserMessageItemParam>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.LiveInitialUserMessageItemParam>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct LiveInitialUserMessageItemParamType : System.IEquatable<Azure.AI.Projects.Agents.LiveInitialUserMessageItemParamType>
     {
@@ -4032,6 +4041,7 @@ namespace Azure.AI.Projects.Agents
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.LiveServerEventLiveDecisionEvent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.LiveServerEventLiveDecisionEvent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
     public enum LiveServerEventLiveDecisionEventSourceEventType
     {
         SessionInputTranscriptDelta = 0,
@@ -4281,6 +4291,7 @@ namespace Azure.AI.Projects.Agents
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.LiveServerEventLiveSessionClosed>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.LiveServerEventLiveSessionClosed>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
     public enum LiveServerEventLiveSessionClosedReason
     {
         CloseRequested = 0,
@@ -4472,6 +4483,7 @@ namespace Azure.AI.Projects.Agents
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.LiveSessionAudioFormatPCMParam>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.LiveSessionAudioFormatPCMParam>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
     public enum LiveSessionAudioFormatPCMParamRate
     {
         _16000 = 16000,
@@ -5348,9 +5360,11 @@ namespace Azure.AI.Projects.Agents
         public static Azure.AI.Projects.Agents.LiveDecisionInputItemParam LiveDecisionInputItemParam(string type = null) { throw null; }
         [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
         public static Azure.AI.Projects.Agents.LiveDecisionInputItemParamMessage LiveDecisionInputItemParamMessage() { throw null; }
+        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
         public static Azure.AI.Projects.Agents.LiveDecisionInputJsonParam LiveDecisionInputJsonParam(System.BinaryData data = null) { throw null; }
         [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
         public static Azure.AI.Projects.Agents.LiveDecisionInputTextParam LiveDecisionInputTextParam(string text = null) { throw null; }
+        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
         public static Azure.AI.Projects.Agents.LiveDecisionJsonObject LiveDecisionJsonObject(System.Collections.Generic.IDictionary<string, System.BinaryData> additionalProperties = null) { throw null; }
         [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
         public static Azure.AI.Projects.Agents.LiveDecisionPredicateQuestionParam LiveDecisionPredicateQuestionParam(string name = null, System.BinaryData instructions = null) { throw null; }

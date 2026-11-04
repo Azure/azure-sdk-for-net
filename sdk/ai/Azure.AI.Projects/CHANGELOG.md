@@ -11,9 +11,16 @@
 
 ### Breaking Changes
 
+- Realtime connection options no longer allow overriding the client-managed `Authorization` or `Foundry-Features` headers; these overrides now throw `ArgumentException`.
+
 ### Bugs Fixed
 
 - Realtime WebSocket authentication now honors provider-created token options and explicitly rejects unsupported authentication flows.
+- Fixed synchronous Realtime event streaming and connection failures when explicitly setting the `realtime` WebSocket subprotocol.
+
+### Sample Updates
+
+- Added native Live samples for connections, session controls, multi-turn text, audio streaming, function calling, and stored-conversation REST APIs, including synchronous/asynchronous typed/protocol overloads, typed delegation ownership, persistence finalization polling, speech-item validation, and coordinated audio cleanup and graceful shutdown.
 
 ### Other Changes
 
@@ -34,7 +41,6 @@
 ### Sample Updates
 
 - Added Realtime function-calling and recorded-speech audio samples.
-- Added native Live samples for connections, session controls, multi-turn text, audio streaming, function calling, and stored-conversation REST APIs with synchronous/asynchronous typed/protocol overloads, delegation ownership handling, persistence finalization polling, and coordinated audio input cleanup and graceful shutdown.
 - Added runnable Voice Agent REST and realtime telemetry samples using the existing Foundry tracing settings, OpenTelemetry console exporter, and correlated realtime diagnostic logs.
 
 ## 3.0.0-beta.5 (2026-10-16)

@@ -281,11 +281,15 @@ namespace Azure.AI.Projects.Agents
 #pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.LiveDecisionInputItemParamMessage is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(LiveDecisionInputItemParamMessage))]
 #pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.LiveDecisionInputItemParamMessage is experimental and may change in future versions.
+#pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.LiveDecisionInputJsonParam is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(LiveDecisionInputJsonParam))]
+#pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.LiveDecisionInputJsonParam is experimental and may change in future versions.
 #pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.LiveDecisionInputTextParam is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(LiveDecisionInputTextParam))]
 #pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.LiveDecisionInputTextParam is experimental and may change in future versions.
+#pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.LiveDecisionJsonObject is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(LiveDecisionJsonObject))]
+#pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.LiveDecisionJsonObject is experimental and may change in future versions.
 #pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.LiveDecisionPredicateQuestionParam is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(LiveDecisionPredicateQuestionParam))]
 #pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.LiveDecisionPredicateQuestionParam is experimental and may change in future versions.

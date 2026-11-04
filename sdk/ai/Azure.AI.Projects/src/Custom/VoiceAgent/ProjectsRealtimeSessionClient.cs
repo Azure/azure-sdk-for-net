@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 using System;
+using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -84,6 +85,74 @@ public class ProjectsRealtimeSessionClient : RealtimeSessionClient
     internal Task ConnectInternalAsync(string queryString, IDictionary<string, string> headers, CancellationToken cancellationToken)
         => ConnectAsync(queryString: queryString, headers: headers, cancellationToken: cancellationToken);
 
+    /// <summary> Receives typed Realtime updates synchronously. </summary>
+    /// <param name="cancellationToken"> Cancels receiving updates. </param>
+    /// <returns> The updates received from the service. </returns>
+    /// <remarks> This method blocks its calling thread. Use <see cref="RealtimeSessionClient.ReceiveUpdatesAsync(CancellationToken)"/> for nonblocking consumption. </remarks>
+    public override IEnumerable<RealtimeServerUpdate> ReceiveUpdates(CancellationToken cancellationToken = default)
+        => ReadSynchronously(() => ReceiveUpdatesAsync(cancellationToken));
+
+    /// <summary> Receives raw Realtime updates synchronously. </summary>
+    /// <param name="options"> The request options, including the cancellation token. </param>
+    /// <returns> The raw updates received from the service. </returns>
+    public override IEnumerable<ClientResult> ReceiveUpdates(RequestOptions options)
+        => ReadSynchronously(() => ReceiveUpdatesAsync(options));
+
+#pragma warning disable AZC0102 // WebSocket receive is asynchronous-only; preserve the synchronous API without reading ahead.
+#pragma warning disable AZC0107 // The upstream synchronous receive overloads are stubs, so adapt the working asynchronous enumerators.
+    private static IEnumerable<T> ReadSynchronously<T>(Func<IAsyncEnumerable<T>> updates)
+    {
+        bool dispatch = SynchronizationContext.Current != null || TaskScheduler.Current != TaskScheduler.Default;
+        IAsyncEnumerator<T> enumerator = dispatch
+            ? Task.Run(() => updates().GetAsyncEnumerator()).GetAwaiter().GetResult()
+            : updates().GetAsyncEnumerator();
+        try
+        {
+            while (true)
+            {
+                bool available;
+                if (dispatch)
+                {
+                    // The upstream async reader captures context; do not block the context its continuation needs.
+                    available = Task.Run(async () => await enumerator.MoveNextAsync().ConfigureAwait(false)).GetAwaiter().GetResult();
+                }
+                else
+                {
+                    ValueTask<bool> move = enumerator.MoveNextAsync();
+                    available = move.IsCompleted
+                        ? move.GetAwaiter().GetResult()
+                        : move.AsTask().GetAwaiter().GetResult();
+                }
+                if (!available)
+                {
+                    yield break;
+                }
+                yield return enumerator.Current;
+            }
+        }
+        finally
+        {
+            if (dispatch)
+            {
+                Task.Run(async () => await enumerator.DisposeAsync().ConfigureAwait(false)).GetAwaiter().GetResult();
+            }
+            else
+            {
+                ValueTask dispose = enumerator.DisposeAsync();
+                if (dispose.IsCompleted)
+                {
+                    dispose.GetAwaiter().GetResult();
+                }
+                else
+                {
+                    dispose.AsTask().GetAwaiter().GetResult();
+                }
+            }
+        }
+    }
+#pragma warning restore AZC0107
+#pragma warning restore AZC0102
+
     /// <summary>
     /// Connects to the Foundry voice agent using the project's authentication, API version, and preview headers.
     /// </summary>
@@ -99,31 +168,43 @@ public class ProjectsRealtimeSessionClient : RealtimeSessionClient
         }
         try
         {
-            GetTokenOptions tokenOptions = _tokenProvider.CreateTokenOptions(_tokenProperties);
-            if (tokenOptions == null)
-            {
-                throw new InvalidOperationException("The token provider does not support the Foundry Realtime authentication flow.");
-            }
-            AuthenticationToken token = await _tokenProvider.GetTokenAsync(tokenOptions, cancellationToken).ConfigureAwait(false);
-
             // No "User-Agent" here: RealtimeSessionClient.ConnectAsync applies every entry in this
             // dictionary via ClientWebSocketOptions.SetRequestHeader, and .NET Framework's
             // implementation of that method rejects "User-Agent" as a restricted header (throwing
             // ArgumentException), unlike .NET/.NET Core. Since Azure.AI.Projects also targets
             // netstandard2.0 (loadable by .NET Framework consumers), sending it here would break the
             // WebSocket handshake for them.
-            Dictionary<string, string> connectionHeaders = new()
+            Dictionary<string, string> connectionHeaders = new(StringComparer.OrdinalIgnoreCase)
             {
                 ["Foundry-Features"] = _experimentalHeaders,
-                ["Authorization"] = $"{token.TokenType} {token.TokenValue}",
             };
             if (headers is not null)
             {
                 foreach (KeyValuePair<string, string> nameHeader in headers)
                 {
+                    if (nameHeader.Key.Equals("Authorization", StringComparison.OrdinalIgnoreCase) ||
+                        nameHeader.Key.Equals("Foundry-Features", StringComparison.OrdinalIgnoreCase))
+                    {
+                        throw new ArgumentException("Authentication and preview headers are managed by the client.", nameof(headers));
+                    }
+                    if (nameHeader.Key.Equals("Sec-WebSocket-Protocol", StringComparison.OrdinalIgnoreCase))
+                    {
+                        if (!string.Equals(nameHeader.Value, "realtime", StringComparison.Ordinal))
+                        {
+                            throw new ArgumentException("Only the realtime WebSocket subprotocol is supported.", nameof(headers));
+                        }
+                        continue;
+                    }
                     connectionHeaders[nameHeader.Key] = nameHeader.Value;
                 }
             }
+            GetTokenOptions tokenOptions = _tokenProvider.CreateTokenOptions(_tokenProperties);
+            if (tokenOptions == null)
+            {
+                throw new InvalidOperationException("The token provider does not support the Foundry Realtime authentication flow.");
+            }
+            AuthenticationToken token = await _tokenProvider.GetTokenAsync(tokenOptions, cancellationToken).ConfigureAwait(false);
+            connectionHeaders["Authorization"] = $"{token.TokenType} {token.TokenValue}";
             _telemetry?.AddTraceHeaders(connectionHeaders);
 
             StringBuilder mergedQueryString = new();

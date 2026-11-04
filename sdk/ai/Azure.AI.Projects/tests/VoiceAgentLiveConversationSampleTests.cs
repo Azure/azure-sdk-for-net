@@ -254,7 +254,9 @@ public class VoiceAgentLiveConversationSampleTests
         {
             ItemsPageOverride = Page("""{"id":"unknown","type":"future_item"}""", "unknown", false)
         };
-        Assert.ThrowsAsync<ArgumentOutOfRangeException>(() => RunSample(sample, fixture, deleteConversation: true));
+        InvalidOperationException error = Assert.ThrowsAsync<InvalidOperationException>(
+            () => RunSample(sample, fixture, deleteConversation: true));
+        Assert.That(error.Message, Does.Contain("No stored input or output speech item was found"));
         Assert.That(fixture.Transport.Requests.Count, Is.EqualTo(4));
         AssertNoDelete(fixture);
     }
