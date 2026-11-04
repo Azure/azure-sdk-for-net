@@ -12,28 +12,28 @@ using System.Text.Json;
 namespace Azure.ResourceManager.NetworkSecurity
 {
     /// <summary></summary>
-    public partial class NeuroShieldResource : IJsonModel<NeuroShieldResourceData>
+    public partial class NeuroShieldResource : IJsonModel<NeuroShieldData>
     {
-        private static IJsonModel<NeuroShieldResourceData> s_dataDeserializationInstance;
+        private static IJsonModel<NeuroShieldData> s_dataDeserializationInstance;
 
-        private static IJsonModel<NeuroShieldResourceData> DataDeserializationInstance => s_dataDeserializationInstance ??= new NeuroShieldResourceData();
+        private static IJsonModel<NeuroShieldData> DataDeserializationInstance => s_dataDeserializationInstance ??= new NeuroShieldData();
 
         /// <param name="writer"> The writer to serialize the model to. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<NeuroShieldResourceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<NeuroShieldResourceData>)Data).Write(writer, options);
+        void IJsonModel<NeuroShieldData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<NeuroShieldData>)Data).Write(writer, options);
 
         /// <param name="reader"> The reader for deserializing the model. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        NeuroShieldResourceData IJsonModel<NeuroShieldResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
+        NeuroShieldData IJsonModel<NeuroShieldData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<NeuroShieldResourceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<NeuroShieldResourceData>(Data, options, AzureResourceManagerNetworkSecurityContext.Default);
+        BinaryData IPersistableModel<NeuroShieldData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<NeuroShieldData>(Data, options, AzureResourceManagerNetworkSecurityContext.Default);
 
         /// <param name="data"> The binary data to be processed. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        NeuroShieldResourceData IPersistableModel<NeuroShieldResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<NeuroShieldResourceData>(data, options, AzureResourceManagerNetworkSecurityContext.Default);
+        NeuroShieldData IPersistableModel<NeuroShieldData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<NeuroShieldData>(data, options, AzureResourceManagerNetworkSecurityContext.Default);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<NeuroShieldResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
+        string IPersistableModel<NeuroShieldData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

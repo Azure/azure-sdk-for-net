@@ -11,21 +11,21 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.NetworkSecurity.Models
 {
     /// <summary> Patch request body for updating a NeuroShield resource. </summary>
-    public partial class NeuroShieldResourcePatch
+    public partial class NeuroShieldPatch
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="NeuroShieldResourcePatch"/>. </summary>
-        public NeuroShieldResourcePatch()
+        /// <summary> Initializes a new instance of <see cref="NeuroShieldPatch"/>. </summary>
+        public NeuroShieldPatch()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="NeuroShieldResourcePatch"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="NeuroShieldPatch"/>. </summary>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="properties"> Patch properties for the NeuroShield resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NeuroShieldResourcePatch(NeuroShieldPatchTags tags, NeuroShieldPatchProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal NeuroShieldPatch(NeuroShieldPatchTags tags, NeuroShieldPatchProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Tags = tags;
             Properties = properties;
