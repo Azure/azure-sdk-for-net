@@ -22,7 +22,7 @@ namespace Azure.Provisioning.ServiceFabricManagedClusters
         private BicepDictionary<string> _tags;
         private BicepValue<AzureLocation> _location;
         private ApplicationTypeVersionResourceProperties _properties;
-        private ResourceReference<ServiceFabricManagedApplicationType> _parent;
+        private ProvisioningResourceReference<ServiceFabricManagedApplicationType> _parent;
 
         /// <summary> Creates a new ServiceFabricManagedApplicationTypeVersion. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -166,7 +166,7 @@ namespace Azure.Provisioning.ServiceFabricManagedClusters
             _tags = DefineDictionaryProperty<string>(nameof(Tags), new string[] { "tags" });
             _location = DefineProperty<AzureLocation>(nameof(Location), new string[] { "location" }, isRequired: true);
             _properties = DefineModelProperty<ApplicationTypeVersionResourceProperties>(nameof(Properties), new string[] { "properties" });
-            _parent = DefineResource<ServiceFabricManagedApplicationType>(nameof(Parent), new string[] { "parent" });
+            _parent = new ProvisioningResourceReference<ServiceFabricManagedApplicationType>(DefineProperty<string>(nameof(Parent), new string[] { "parent" }));
             DefineAdditionalProperties();
         }
 
