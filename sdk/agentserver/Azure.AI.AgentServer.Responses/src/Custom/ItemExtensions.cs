@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 
 namespace Azure.AI.AgentServer.Responses.Models;
@@ -9,6 +10,7 @@ namespace Azure.AI.AgentServer.Responses.Models;
 /// <summary>
 /// Extension methods for sequences of <see cref="Item"/> instances.
 /// </summary>
+[Experimental("OPENAI001")]
 public static class ItemExtensions
 {
     /// <summary>
@@ -25,11 +27,24 @@ public static class ItemExtensions
     {
         Argument.AssertNotNull(items, nameof(items));
 
-        var texts = items
-            .OfType<ItemMessage>()
-            .SelectMany(msg => msg.GetContentExpanded())
-            .OfType<MessageContentInputTextContent>()
-            .Select(tc => tc.Text);
+        // Explicit loops instead of a LINQ chain: the generator's custom-code analyzer throws
+        // ArgumentException on lambda chains over externalized OpenAI types, which breaks regeneration.
+        var texts = new List<string>();
+        foreach (Item item in items)
+        {
+            if (item is not ItemMessage msg)
+            {
+                continue;
+            }
+
+            foreach (MessageContent content in msg.GetContentExpanded())
+            {
+                if (content is MessageContentInputTextContent textContent)
+                {
+                    texts.Add(textContent.Text);
+                }
+            }
+        }
 
         return string.Join("\n", texts);
     }

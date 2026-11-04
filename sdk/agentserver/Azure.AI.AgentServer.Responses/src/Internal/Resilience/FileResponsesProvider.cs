@@ -3,6 +3,7 @@
 
 using System.ClientModel.Primitives;
 using System.Collections.Concurrent;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Text;
 using System.Text.Json;
@@ -27,6 +28,7 @@ namespace Azure.AI.AgentServer.Responses.Internal.Resilience;
 /// reads are fast and post-restart recovery sees the pre-crash envelopes. Writes are write-through
 /// and use an atomic temp-file + rename so a crash mid-write never corrupts a committed record.
 /// </remarks>
+[Experimental("OPENAI001")]
 internal sealed class FileResponsesProvider : ResponsesProvider
 {
     private readonly string _root;
@@ -46,7 +48,7 @@ internal sealed class FileResponsesProvider : ResponsesProvider
             new Lazy<FileResponseStore>(() => new FileResponseStore(Path.Combine(_root, key.DirectoryName)))).Value;
     }
 
-    public override Task CreateResponseAsync(CreateResponseRequest request, PlatformContext context, CancellationToken cancellationToken = default)
+    public override Task CreateResponseAsync(CreateResponsePersistRequest request, PlatformContext context, CancellationToken cancellationToken = default)
     {
         var store = GetStore(context, cancellationToken);
         lock (store)
@@ -55,7 +57,7 @@ internal sealed class FileResponsesProvider : ResponsesProvider
         }
     }
 
-    public override Task<Models.ResponseObject> GetResponseAsync(string responseId, PlatformContext context, CancellationToken cancellationToken = default)
+    public override Task<ResponseObject> GetResponseAsync(string responseId, PlatformContext context, CancellationToken cancellationToken = default)
     {
         var store = GetStore(context, cancellationToken);
         lock (store)
@@ -64,7 +66,7 @@ internal sealed class FileResponsesProvider : ResponsesProvider
         }
     }
 
-    public override Task UpdateResponseAsync(Models.ResponseObject response, PlatformContext context, CancellationToken cancellationToken = default)
+    public override Task UpdateResponseAsync(ResponseObject response, PlatformContext context, CancellationToken cancellationToken = default)
     {
         var store = GetStore(context, cancellationToken);
         lock (store)
@@ -125,6 +127,7 @@ internal sealed class FileResponsesProvider : ResponsesProvider
 }
 
 // All operations complete synchronously under the owning provider's per-partition lock.
+[Experimental("OPENAI001")]
 internal sealed class FileResponseStore : ResponsesProvider
 {
     private const string EnvelopesDirName = "envelopes";
@@ -154,7 +157,7 @@ internal sealed class FileResponseStore : ResponsesProvider
 
     /// <inheritdoc/>
     public override Task CreateResponseAsync(
-        CreateResponseRequest request,
+        CreateResponsePersistRequest request,
         PlatformContext context,
         CancellationToken cancellationToken = default)
     {
@@ -186,14 +189,14 @@ internal sealed class FileResponseStore : ResponsesProvider
 
         StoreOutputItems(record, response);
         AddToConversation(response);
-        record.ConversationId = response.Conversation?.Id;
+        record.ConversationId = response.ConversationOptions?.ConversationId;
 
         WriteRecord(record);
         return Task.CompletedTask;
     }
 
     /// <inheritdoc/>
-    public override Task<Models.ResponseObject> GetResponseAsync(string responseId, PlatformContext context, CancellationToken cancellationToken = default)
+    public override Task<ResponseObject> GetResponseAsync(string responseId, PlatformContext context, CancellationToken cancellationToken = default)
     {
         if (!_records.TryGetValue(responseId, out var record) || record.Deleted || record.Envelope is null)
         {
@@ -205,7 +208,7 @@ internal sealed class FileResponseStore : ResponsesProvider
     }
 
     /// <inheritdoc/>
-    public override Task UpdateResponseAsync(Models.ResponseObject response, PlatformContext context, CancellationToken cancellationToken = default)
+    public override Task UpdateResponseAsync(ResponseObject response, PlatformContext context, CancellationToken cancellationToken = default)
     {
         if (!_records.TryGetValue(response.Id, out var record) || record.Deleted)
         {
@@ -217,7 +220,7 @@ internal sealed class FileResponseStore : ResponsesProvider
 
         StoreOutputItems(record, response);
         AddToConversation(response);
-        record.ConversationId ??= response.Conversation?.Id;
+        record.ConversationId ??= response.ConversationOptions?.ConversationId;
 
         WriteRecord(record);
         return Task.CompletedTask;
@@ -398,15 +401,15 @@ internal sealed class FileResponseStore : ResponsesProvider
         }
     }
 
-    private void StoreOutputItems(ResponseRecord record, Models.ResponseObject response)
+    private void StoreOutputItems(ResponseRecord record, ResponseObject response)
     {
-        if (response.Output.Count == 0)
+        if (response.OutputItems.Count == 0)
         {
             return;
         }
 
         var outputIds = new List<string>();
-        foreach (var item in response.Output)
+        foreach (var item in response.OutputItems)
         {
             var id = GetItemId(item);
             if (id is not null)
@@ -423,9 +426,9 @@ internal sealed class FileResponseStore : ResponsesProvider
         }
     }
 
-    private void AddToConversation(Models.ResponseObject response)
+    private void AddToConversation(ResponseObject response)
     {
-        var conversationId = response.Conversation?.Id;
+        var conversationId = response.ConversationOptions?.ConversationId;
         if (conversationId is null)
         {
             return;
@@ -463,7 +466,7 @@ internal sealed class FileResponseStore : ResponsesProvider
 
     private void WriteItem(string itemId, OutputItem item)
     {
-        var json = ModelReaderWriter.Write(item, ModelReaderWriterOptions.Json, AzureAIAgentServerResponsesContext.Default);
+        var json = ModelJson.Write(item, ModelReaderWriterOptions.Json);
         var node = JsonNode.Parse(json.ToString());
         if (node is not null)
         {
@@ -550,10 +553,9 @@ internal sealed class FileResponseStore : ResponsesProvider
         try
         {
             var text = File.ReadAllText(path, Encoding.UTF8);
-            return ModelReaderWriter.Read<OutputItem>(
+            return ModelJson.Read<OutputItem>(
                 BinaryData.FromString(text),
-                ModelReaderWriterOptions.Json,
-                AzureAIAgentServerResponsesContext.Default);
+                ModelReaderWriterOptions.Json);
         }
         catch (JsonException)
         {
@@ -595,11 +597,11 @@ internal sealed class FileResponseStore : ResponsesProvider
     /// </summary>
     private sealed class ResponseRecord
     {
-        private Models.ResponseObject? _envelope;
+        private ResponseObject? _envelope;
 
         public string Id { get; private set; } = string.Empty;
 
-        public Models.ResponseObject? Envelope
+        public ResponseObject? Envelope
         {
             get => _envelope;
             set
@@ -634,7 +636,7 @@ internal sealed class FileResponseStore : ResponsesProvider
 
             if (_envelope is not null)
             {
-                var envJson = ModelReaderWriter.Write(_envelope, ModelReaderWriterOptions.Json, AzureAIAgentServerResponsesContext.Default);
+                var envJson = ModelJson.Write(_envelope, ModelReaderWriterOptions.Json);
                 obj["envelope"] = JsonNode.Parse(envJson.ToString());
             }
 
@@ -667,10 +669,9 @@ internal sealed class FileResponseStore : ResponsesProvider
 
             if (obj["envelope"] is JsonObject env)
             {
-                record._envelope = ModelReaderWriter.Read<Models.ResponseObject>(
+                record._envelope = ModelJson.Read<ResponseObject>(
                     BinaryData.FromString(env.ToJsonString()),
-                    ModelReaderWriterOptions.Json,
-                    AzureAIAgentServerResponsesContext.Default);
+                    ModelReaderWriterOptions.Json);
             }
 
             ReadInto(record.InputItemIds, obj["input_item_ids"]);

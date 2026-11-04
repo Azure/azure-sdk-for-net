@@ -89,6 +89,17 @@ def is_closed_enum(schema: dict) -> bool:
     return schema.get("type") == "string" and "enum" in schema
 
 
+def is_scalar_schema(schema: dict) -> bool:
+    """Returns True if schema is a plain string/number/integer/boolean (no enum, object or union)."""
+    return (
+        schema.get("type") in ("string", "integer", "number", "boolean")
+        and "enum" not in schema
+        and "properties" not in schema
+        and "oneOf" not in schema
+        and "anyOf" not in schema
+    )
+
+
 def get_discriminator(schema: dict) -> dict | None:
     """Get discriminator info if present."""
     return schema.get("discriminator")
@@ -771,6 +782,13 @@ internal static partial class {class_name}
                             effective_schema = self.all_schemas[ref_name]
                     elif "properties" in item or "type" in item:
                         effective_schema = item
+        elif "$ref" in prop_schema:
+            # Properties typed with the externally-owned OpenAI scalars (OpenAI.numeric,
+            # OpenAI.integer) are emitted as a bare $ref with no inline "type". Resolve it
+            # so the number/integer kind and range checks are still generated.
+            ref_schema = self.all_schemas.get(resolve_ref(prop_schema["$ref"]), {})
+            if is_scalar_schema(ref_schema):
+                effective_schema = ref_schema
 
         prop_type = effective_schema.get("type", prop_schema.get("type"))
         ref_target = extract_ref_from_prop(prop_schema)
@@ -1143,7 +1161,16 @@ def generate_create_response_validator(
             schema = content.get("schema", {})
             # anyOf with two identical branches — use the first
             if "anyOf" in schema and len(schema["anyOf"]) > 0:
-                post_schema = schema["anyOf"][0]
+                schema = schema["anyOf"][0]
+            # The body may be a direct $ref (e.g. once CreateResponse is mapped to an
+            # externally-owned model) rather than an inline object schema.
+            if "$ref" in schema:
+                resolved = all_schemas.get(resolve_ref(schema["$ref"]))
+                if resolved is not None:
+                    post_schema = resolved
+                    break
+            elif schema:
+                post_schema = schema
                 break
 
     if post_schema is None:

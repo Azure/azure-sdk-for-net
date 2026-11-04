@@ -25,7 +25,7 @@ using OpenAI;
 using OpenAI.Responses;
 
 // Disambiguate shared type names
-using AzureMessageRole = Azure.AI.AgentServer.Responses.Models.MessageRole;
+using AzureMessageRole = OpenAI.Responses.MessageRole;
 using SdkResponseStatus = OpenAI.Responses.ResponseStatus;
 
 namespace Azure.AI.AgentServer.Responses.Tests.Interop;
@@ -379,7 +379,7 @@ public class SdkRoundTripTests
         Assert.That(captured!.Instructions, Is.EqualTo("Be helpful"));
         Assert.That(captured.Temperature, Is.EqualTo(0.7f).Within(0.01f));
         Assert.That(captured.TopP, Is.EqualTo(0.9f).Within(0.01f));
-        Assert.That(captured.MaxOutputTokens, Is.EqualTo(1024));  // Server model uses MaxOutputTokens
+        Assert.That(captured.MaxOutputTokenCount, Is.EqualTo(1024));  // Server model uses MaxOutputTokens
     }
 
     // ═══════════════════════════════════════════════════════════════════

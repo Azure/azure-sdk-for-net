@@ -11,7 +11,7 @@ namespace Azure.AI.AgentServer.Responses.Models
 {
     /// <summary>
     /// The FunctionShellCallEnvironment.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="LocalEnvironmentResource"/> and <see cref="ContainerReferenceResource"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ContainerReferenceResource"/> and <see cref="LocalEnvironmentResource"/>.
     /// </summary>
     public abstract partial class FunctionShellCallEnvironment
     {

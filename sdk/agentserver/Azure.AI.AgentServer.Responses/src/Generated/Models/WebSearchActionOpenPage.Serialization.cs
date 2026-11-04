@@ -75,10 +75,17 @@ namespace Azure.AI.AgentServer.Responses.Models
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
-            if (Optional.IsDefined(Url))
+            if (Optional.IsDefined(Url, _urlIsDefined))
             {
-                writer.WritePropertyName("url"u8);
-                writer.WriteStringValue(Url.AbsoluteUri);
+                if (Url != null)
+                {
+                    writer.WritePropertyName("url"u8);
+                    writer.WriteStringValue(Url.AbsoluteUri);
+                }
+                else
+                {
+                    writer.WriteNull("url"u8);
+                }
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -123,6 +130,7 @@ namespace Azure.AI.AgentServer.Responses.Models
                 return null;
             }
             string @type = default;
+            bool urlIsDefined = false;
             Uri url = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -134,6 +142,7 @@ namespace Azure.AI.AgentServer.Responses.Models
                 }
                 if (prop.NameEquals("url"u8))
                 {
+                    urlIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         url = null;
@@ -144,10 +153,13 @@ namespace Azure.AI.AgentServer.Responses.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new WebSearchActionOpenPage(@type, url, additionalBinaryDataProperties);
+            return new WebSearchActionOpenPage(@type, url, additionalBinaryDataProperties)
+            {
+                _urlIsDefined = urlIsDefined
+            };
         }
     }
 }

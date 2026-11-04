@@ -152,10 +152,10 @@ public class TestSteerableConversationContractTests
 
         string antecedentId = Azure.AI.AgentServer.Responses.IdGenerator.NewResponseId();
         var seedProvider = new FileResponsesProvider(responsesDir);
-        var antecedent = new ResponseObject(antecedentId, "test-model");
+        var antecedent = new ResponseObject { Id = antecedentId, Model = "test-model" };
         antecedent.SetCompleted();
         await seedProvider.CreateResponseAsync(
-            new CreateResponseRequest(antecedent, null, null), PlatformContext.Empty);
+            new CreateResponsePersistRequest(antecedent, null, null), PlatformContext.Empty);
 
         var spy = new SpyTaskStore(new LocalTaskStore(tasksDir))
         {
@@ -368,10 +368,10 @@ public class TestSteerableConversationContractTests
 
         string antecedentId = Azure.AI.AgentServer.Responses.IdGenerator.NewResponseId();
         var seedProvider = new FileResponsesProvider(responsesDir);
-        var antecedent = new ResponseObject(antecedentId, "test-model");
+        var antecedent = new ResponseObject { Id = antecedentId, Model = "test-model" };
         antecedent.SetCompleted();
         await seedProvider.CreateResponseAsync(
-            new CreateResponseRequest(antecedent, null, null), PlatformContext.Empty);
+            new CreateResponsePersistRequest(antecedent, null, null), PlatformContext.Empty);
 
         var spy = new SpyTaskStore(new LocalTaskStore(tasksDir))
         {
@@ -549,10 +549,10 @@ public class TestSteerableConversationContractTests
 
         string antecedentId = Azure.AI.AgentServer.Responses.IdGenerator.NewResponseId();
         var seedProvider = new FileResponsesProvider(responsesDir);
-        var antecedent = new ResponseObject(antecedentId, "test-model");
+        var antecedent = new ResponseObject { Id = antecedentId, Model = "test-model" };
         antecedent.SetCompleted();
         await seedProvider.CreateResponseAsync(
-            new CreateResponseRequest(antecedent, null, null), PlatformContext.Empty);
+            new CreateResponsePersistRequest(antecedent, null, null), PlatformContext.Empty);
 
         var spy = new SpyTaskStore(new LocalTaskStore(tasksDir));
         try
@@ -1002,8 +1002,8 @@ public class TestSteerableConversationContractTests
         TaskCompletionSource entered,
         [System.Runtime.CompilerServices.EnumeratorCancellation] CancellationToken ct)
     {
-        var response = new ResponseObject(context.ResponseId, request.Model ?? "test-model");
-        yield return new ResponseCreatedEvent(0, response);
+        var response = new ResponseObject { Id = context.ResponseId, Model = request.Model ?? "test-model" };
+        yield return new ResponseCreatedEvent { SequenceNumber = (int)(0), Response = response };
 
         // Signal only from the first (non-steered) turn so the test knows the chain is in-flight.
         if (!context.IsSteeredTurn)
@@ -1013,7 +1013,7 @@ public class TestSteerableConversationContractTests
         }
 
         response.SetCompleted();
-        yield return new ResponseCompletedEvent(0, response);
+        yield return new ResponseCompletedEvent { SequenceNumber = (int)(0), Response = response };
     }
 
     private static async Task AssertEventuallyAsync(Func<bool> condition, TimeSpan timeout, string message)

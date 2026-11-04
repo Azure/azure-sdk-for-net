@@ -14,6 +14,8 @@ namespace Azure.AI.AgentServer.Responses.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private string _fileId;
+        private bool _fileIdIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="InputFileContent"/>. </summary>
         public InputFileContent()
@@ -25,15 +27,19 @@ namespace Azure.AI.AgentServer.Responses.Models
         /// <param name="fileId"></param>
         /// <param name="filename"> The name of the file to be sent to the model. </param>
         /// <param name="fileData"> The content of the file to be sent to the model. </param>
+        /// <param name="promptCacheBreakpoint"></param>
         /// <param name="fileUrl"> The URL of the file to be sent to the model. </param>
+        /// <param name="detail"> The detail level of the file to be sent to the model. Use `auto` to let the system select the detail level; for GPT-5.6 and later models, `auto` uses high-quality rendering, which may increase input token usage. Use `low` for lower-cost rendering, or `high` to render the file at higher quality. Defaults to `auto`. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal InputFileContent(string @type, string fileId, string filename, string fileData, Uri fileUrl, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal InputFileContent(string @type, string fileId, string filename, string fileData, PromptCacheBreakpointConfig promptCacheBreakpoint, Uri fileUrl, FileInputDetail? detail, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Type = @type;
-            FileId = fileId;
+            _fileId = fileId;
             Filename = filename;
             FileData = fileData;
+            PromptCacheBreakpoint = promptCacheBreakpoint;
             FileUrl = fileUrl;
+            Detail = detail;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -41,7 +47,18 @@ namespace Azure.AI.AgentServer.Responses.Models
         public string Type { get; } = "input_file";
 
         /// <summary> Gets or sets the FileId. </summary>
-        public string FileId { get; set; }
+        public string FileId
+        {
+            get
+            {
+                return _fileId;
+            }
+            set
+            {
+                _fileId = value;
+                _fileIdIsDefined = true;
+            }
+        }
 
         /// <summary> The name of the file to be sent to the model. </summary>
         public string Filename { get; set; }
@@ -49,7 +66,13 @@ namespace Azure.AI.AgentServer.Responses.Models
         /// <summary> The content of the file to be sent to the model. </summary>
         public string FileData { get; set; }
 
+        /// <summary> Gets or sets the PromptCacheBreakpoint. </summary>
+        public PromptCacheBreakpointConfig PromptCacheBreakpoint { get; set; }
+
         /// <summary> The URL of the file to be sent to the model. </summary>
         public Uri FileUrl { get; set; }
+
+        /// <summary> The detail level of the file to be sent to the model. Use `auto` to let the system select the detail level; for GPT-5.6 and later models, `auto` uses high-quality rendering, which may increase input token usage. Use `low` for lower-cost rendering, or `high` to render the file at higher quality. Defaults to `auto`. </summary>
+        public FileInputDetail? Detail { get; set; }
     }
 }

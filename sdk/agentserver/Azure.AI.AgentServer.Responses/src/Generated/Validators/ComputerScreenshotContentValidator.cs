@@ -60,6 +60,17 @@ internal static partial class ComputerScreenshotContentValidator
                 errors.Add(new ValidationError("$.image_url", $"Expected string, got {imageUrlProp.ValueKind}"));
         }
 
+        // Optional: prompt_cache_breakpoint
+        if (element.TryGetProperty("prompt_cache_breakpoint", out var promptCacheBreakpointProp))
+        {
+            var promptCacheBreakpointResult = PromptCacheBreakpointConfigValidator.Validate(promptCacheBreakpointProp);
+            if (!promptCacheBreakpointResult.IsValid)
+            {
+                foreach (var e in promptCacheBreakpointResult.Errors)
+                    errors.Add(new ValidationError("$.prompt_cache_breakpoint" + e.Path.Substring(1), e.Message));
+            }
+        }
+
         // Required: type
         if (!element.TryGetProperty("type", out var typeValProp))
             errors.Add(new ValidationError("$.type", "Required property 'type' is missing"));

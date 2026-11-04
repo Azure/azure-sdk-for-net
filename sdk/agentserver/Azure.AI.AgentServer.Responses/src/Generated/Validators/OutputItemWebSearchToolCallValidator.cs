@@ -56,8 +56,8 @@ internal static partial class OutputItemWebSearchToolCallValidator
         {
             if (statusProp.ValueKind != JsonValueKind.String)
                 errors.Add(new ValidationError("$.status", $"Expected string, got {statusProp.ValueKind}"));
-            else if (statusProp.GetString() is not ("in_progress" or "searching" or "completed" or "failed"))
-                errors.Add(new ValidationError("$.status", $"Value '{statusProp.GetString()}' is not valid. Allowed: in_progress, searching, completed, failed"));
+            else if (statusProp.GetString() is not ("in_progress" or "searching" or "completed" or "failed" or "incomplete"))
+                errors.Add(new ValidationError("$.status", $"Value '{statusProp.GetString()}' is not valid. Allowed: in_progress, searching, completed, failed, incomplete"));
         }
 
         // Required: type

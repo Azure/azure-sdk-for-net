@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.Net.ServerSentEvents;
 using System.Text.Json;
 using Azure.AI.AgentServer.Core;
@@ -18,6 +19,7 @@ namespace Azure.AI.AgentServer.Responses.Internal;
 /// responsible only for SSE wire-format output, keep-alive heartbeats, and
 /// background-mode client-disconnect handling.
 /// </summary>
+[Experimental("OPENAI001")]
 internal sealed class SseResult : IResult
 {
     private readonly IAsyncEnumerable<SseItem<string>> _events;

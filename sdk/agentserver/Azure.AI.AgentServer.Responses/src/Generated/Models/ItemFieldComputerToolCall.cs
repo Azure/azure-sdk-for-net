@@ -6,12 +6,15 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Azure.AI.AgentServer.Responses;
+using OpenAI.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
     /// <summary> Computer tool call. </summary>
+    [Experimental("OPENAI001")]
     public partial class ItemFieldComputerToolCall : ItemField
     {
         /// <summary> Initializes a new instance of <see cref="ItemFieldComputerToolCall"/>. </summary>

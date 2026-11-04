@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.AI.AgentServer.Core;
 using Azure.AI.AgentServer.Responses.Models;
 using Microsoft.Extensions.Primitives;
@@ -96,13 +97,14 @@ public class ResponseContext
     /// for each <paramref name="resolveReferences"/> mode.
     /// </summary>
     /// <param name="resolveReferences">
-    /// When <c>true</c> (the default), <see cref="Models.ItemReferenceParam"/> items
+    /// When <c>true</c> (the default), <see cref="ItemReferenceParam"/> items
     /// are resolved via the provider and returned as their concrete <see cref="Item"/> subtype.
-    /// When <c>false</c>, item references are left as <see cref="Models.ItemReferenceParam"/>
+    /// When <c>false</c>, item references are left as <see cref="ItemReferenceParam"/>
     /// in the returned list.
     /// </param>
     /// <param name="cancellationToken">A token to cancel the operation.</param>
     /// <returns>The resolved input items.</returns>
+    [Experimental("OPENAI001")]
     public virtual Task<IReadOnlyList<Item>> GetInputItemsAsync(bool resolveReferences = true, CancellationToken cancellationToken = default)
         => Task.FromResult<IReadOnlyList<Item>>(Array.Empty<Item>());
 
@@ -114,12 +116,13 @@ public class ResponseContext
     /// </summary>
     /// <param name="cancellationToken">A token to cancel the operation.</param>
     /// <returns>The resolved history items, or an empty list if no conversation context exists.</returns>
+    [Experimental("OPENAI001")]
     public virtual Task<IReadOnlyList<OutputItem>> GetHistoryAsync(CancellationToken cancellationToken = default)
         => Task.FromResult<IReadOnlyList<OutputItem>>(Array.Empty<OutputItem>());
 
     /// <summary>
     /// Resolves input items and extracts all text content as a single string.
-    /// Filters for <see cref="Models.ItemMessage"/> items, expands their content,
+    /// Filters for <see cref="ItemMessage"/> items, expands their content,
     /// and joins all text values with newline separators.
     /// </summary>
     /// <param name="resolveReferences">
@@ -131,8 +134,11 @@ public class ResponseContext
     /// </returns>
     public virtual async Task<string> GetInputTextAsync(bool resolveReferences = true, CancellationToken cancellationToken = default)
     {
+        // The items are only reduced to text here, so OpenAI's experimental types are not exposed to the caller.
+#pragma warning disable OPENAI001
         var items = await GetInputItemsAsync(resolveReferences, cancellationToken).ConfigureAwait(false);
         return items.GetInputText();
+#pragma warning restore OPENAI001
     }
 
     /// <summary>
@@ -174,6 +180,7 @@ public class ResponseContext
     /// (<see cref="IsRecovery"/> is <see langword="false"/>). Handlers can use this to
     /// resume from the last checkpointed watermark rather than restarting work.
     /// </summary>
+    [Experimental("OPENAI001")]
     public virtual ResponseObject? PersistedResponse => null;
 
     /// <summary>

@@ -9,6 +9,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.AI.AgentServer.Responses;
+using OpenAI.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
@@ -81,20 +82,31 @@ namespace Azure.AI.AgentServer.Responses.Models
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("text"u8);
             writer.WriteStringValue(Text);
-            writer.WritePropertyName("annotations"u8);
-            writer.WriteStartArray();
-            foreach (Annotation item in Annotations)
+            if (Optional.IsCollectionDefined(Annotations))
             {
-                writer.WriteObjectValue(item, options);
+                writer.WritePropertyName("annotations"u8);
+                writer.WriteStartArray();
+                foreach (ResponseMessageAnnotation item in Annotations)
+                {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
             }
-            writer.WriteEndArray();
-            writer.WritePropertyName("logprobs"u8);
-            writer.WriteStartArray();
-            foreach (LogProb item in Logprobs)
+            if (Optional.IsCollectionDefined(Logprobs))
             {
-                writer.WriteObjectValue(item, options);
+                writer.WritePropertyName("logprobs"u8);
+                writer.WriteStartArray();
+                foreach (LogProb item in Logprobs)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
             }
-            writer.WriteEndArray();
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -125,7 +137,7 @@ namespace Azure.AI.AgentServer.Responses.Models
             MessageContentType @type = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string text = default;
-            IList<Annotation> annotations = default;
+            IList<ResponseMessageAnnotation> annotations = default;
             IList<LogProb> logprobs = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -141,16 +153,31 @@ namespace Azure.AI.AgentServer.Responses.Models
                 }
                 if (prop.NameEquals("annotations"u8))
                 {
-                    List<Annotation> array = new List<Annotation>();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<ResponseMessageAnnotation> array = new List<ResponseMessageAnnotation>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(Annotation.DeserializeAnnotation(item, options));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ModelReaderWriter.Read<ResponseMessageAnnotation>(item.GetUtf8Bytes(), options, AzureAIAgentServerResponsesContext.Default));
+                        }
                     }
                     annotations = array;
                     continue;
                 }
                 if (prop.NameEquals("logprobs"u8))
                 {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     List<LogProb> array = new List<LogProb>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
@@ -161,10 +188,10 @@ namespace Azure.AI.AgentServer.Responses.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new MessageContentOutputTextContent(@type, additionalBinaryDataProperties, text, annotations, logprobs);
+            return new MessageContentOutputTextContent(@type, additionalBinaryDataProperties, text, annotations ?? new ChangeTrackingList<ResponseMessageAnnotation>(), logprobs ?? new ChangeTrackingList<LogProb>());
         }
     }
 }

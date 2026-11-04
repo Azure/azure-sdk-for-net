@@ -92,7 +92,7 @@ public class CancelConsistencyTests : IDisposable
 
         var lastUpdate = updates[^1];
         Assert.That(lastUpdate.Status?.ToString().ToLowerInvariant(), Is.EqualTo("cancelled"));
-        Assert.That(lastUpdate.Output, Is.Empty);
+        Assert.That(lastUpdate.OutputItems, Is.Empty);
     }
 
     // ═══════════════════════════════════════════════════════════════════════
@@ -174,8 +174,8 @@ public class CancelConsistencyTests : IDisposable
         ResponseContext ctx, TaskCompletionSource started, TaskCompletionSource gate,
         [EnumeratorCancellation] CancellationToken ct = default)
     {
-        var response = new Models.ResponseObject(ctx.ResponseId, "test");
-        yield return new ResponseCreatedEvent(0, response);
+        var response = new ResponseObject { Id = ctx.ResponseId, Model = "test" };
+        yield return new ResponseCreatedEvent { SequenceNumber = (int)(0), Response = response };
         started.TrySetResult();
 
         // Wait for either cancellation or gate signal
@@ -190,7 +190,7 @@ public class CancelConsistencyTests : IDisposable
         }
 
         response.SetCompleted();
-        yield return new ResponseCompletedEvent(0, response);
+        yield return new ResponseCompletedEvent { SequenceNumber = (int)(0), Response = response };
     }
 
     /// <summary>
@@ -198,13 +198,13 @@ public class CancelConsistencyTests : IDisposable
     /// </summary>
     private sealed class RecordingProvider : ResponsesProvider
     {
-        private readonly ConcurrentDictionary<string, Models.ResponseObject> _responses = new();
+        private readonly ConcurrentDictionary<string, ResponseObject> _responses = new();
         private readonly ConcurrentDictionary<string, CancellationTokenSource> _cts = new();
 
-        public ConcurrentBag<Models.ResponseObject> CreateCalls { get; } = new();
-        public ConcurrentBag<Models.ResponseObject> UpdateCalls { get; } = new();
+        public ConcurrentBag<ResponseObject> CreateCalls { get; } = new();
+        public ConcurrentBag<ResponseObject> UpdateCalls { get; } = new();
 
-        public override Task CreateResponseAsync(CreateResponseRequest request, PlatformContext isolation, CancellationToken ct = default)
+        public override Task CreateResponseAsync(CreateResponsePersistRequest request, PlatformContext isolation, CancellationToken ct = default)
         {
             // Snapshot the response at call time
             var snapshot = request.Response.Snapshot();
@@ -213,7 +213,7 @@ public class CancelConsistencyTests : IDisposable
             return Task.CompletedTask;
         }
 
-        public override Task<Models.ResponseObject> GetResponseAsync(string responseId, PlatformContext isolation, CancellationToken ct = default)
+        public override Task<ResponseObject> GetResponseAsync(string responseId, PlatformContext isolation, CancellationToken ct = default)
         {
             if (!_responses.TryGetValue(responseId, out var response))
             {
@@ -222,7 +222,7 @@ public class CancelConsistencyTests : IDisposable
             return Task.FromResult(response);
         }
 
-        public override Task UpdateResponseAsync(Models.ResponseObject response, PlatformContext isolation, CancellationToken ct = default)
+        public override Task UpdateResponseAsync(ResponseObject response, PlatformContext isolation, CancellationToken ct = default)
         {
             // Snapshot the response at call time
             var snapshot = response.Snapshot();

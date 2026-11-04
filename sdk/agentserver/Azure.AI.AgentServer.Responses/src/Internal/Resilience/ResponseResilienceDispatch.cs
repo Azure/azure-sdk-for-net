@@ -1,6 +1,8 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.AI.AgentServer.Responses.Internal.Resilience;
 
 /// <summary>
@@ -16,6 +18,7 @@ namespace Azure.AI.AgentServer.Responses.Internal.Resilience;
 /// <item><description>Row 4: <c>store=false</c> — no persisted state, no next-lifetime action.</description></item>
 /// </list>
 /// </summary>
+[Experimental("OPENAI001")]
 internal static class ResponseResilienceDispatch
 {
     /// <summary>Row 1: resilient background (store + background + resilient_background).</summary>

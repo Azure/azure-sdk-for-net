@@ -81,10 +81,17 @@ namespace Azure.AI.AgentServer.Responses.Models
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("server_label"u8);
             writer.WriteStringValue(ServerLabel);
-            if (Optional.IsDefined(Name))
+            if (Optional.IsDefined(Name, _nameIsDefined))
             {
-                writer.WritePropertyName("name"u8);
-                writer.WriteStringValue(Name);
+                if (Name != null)
+                {
+                    writer.WritePropertyName("name"u8);
+                    writer.WriteStringValue(Name);
+                }
+                else
+                {
+                    writer.WriteNull("name"u8);
+                }
             }
         }
 
@@ -116,6 +123,7 @@ namespace Azure.AI.AgentServer.Responses.Models
             ToolChoiceParamType @type = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string serverLabel = default;
+            bool nameIsDefined = false;
             string name = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -131,6 +139,7 @@ namespace Azure.AI.AgentServer.Responses.Models
                 }
                 if (prop.NameEquals("name"u8))
                 {
+                    nameIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         name = null;
@@ -141,10 +150,13 @@ namespace Azure.AI.AgentServer.Responses.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ToolChoiceMCP(@type, additionalBinaryDataProperties, serverLabel, name);
+            return new ToolChoiceMCP(@type, additionalBinaryDataProperties, serverLabel, name)
+            {
+                _nameIsDefined = nameIsDefined
+            };
         }
     }
 }

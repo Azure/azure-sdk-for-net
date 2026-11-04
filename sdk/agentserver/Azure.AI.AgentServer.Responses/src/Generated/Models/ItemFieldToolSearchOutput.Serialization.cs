@@ -9,6 +9,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.AI.AgentServer.Responses;
+using OpenAI.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
@@ -96,6 +97,11 @@ namespace Azure.AI.AgentServer.Responses.Models
             writer.WriteStartArray();
             foreach (Tool item in Tools)
             {
+                if (item == null)
+                {
+                    writer.WriteNullValue();
+                    continue;
+                }
                 writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
@@ -173,7 +179,14 @@ namespace Azure.AI.AgentServer.Responses.Models
                     List<Tool> array = new List<Tool>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(Tool.DeserializeTool(item, options));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ModelReaderWriter.Read<Tool>(item.GetUtf8Bytes(), options, AzureAIAgentServerResponsesContext.Default));
+                        }
                     }
                     tools = array;
                     continue;
@@ -190,7 +203,7 @@ namespace Azure.AI.AgentServer.Responses.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new ItemFieldToolSearchOutput(
@@ -199,7 +212,7 @@ namespace Azure.AI.AgentServer.Responses.Models
                 id,
                 callId,
                 execution,
-                tools,
+                tools ?? new ChangeTrackingList<Tool>(),
                 status,
                 createdBy);
         }

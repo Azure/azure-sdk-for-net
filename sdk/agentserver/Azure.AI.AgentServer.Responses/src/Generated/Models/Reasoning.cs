@@ -14,6 +14,14 @@ namespace Azure.AI.AgentServer.Responses.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private ReasoningEffort? _effort;
+        private bool _effortIsDefined;
+        private CreateResponseRequestReasoningSummary? _summary;
+        private bool _summaryIsDefined;
+        private CreateResponseRequestReasoningContext? _context;
+        private bool _contextIsDefined;
+        private CreateResponseRequestReasoningGenerateSummary? _generateSummary;
+        private bool _generateSummaryIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="Reasoning"/>. </summary>
         public Reasoning()
@@ -21,25 +29,85 @@ namespace Azure.AI.AgentServer.Responses.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="Reasoning"/>. </summary>
+        /// <param name="mode">
+        /// Controls the reasoning execution mode for the request.
+        ///   When returned on a response, this is the effective execution mode.
+        /// </param>
         /// <param name="effort"></param>
         /// <param name="summary"></param>
+        /// <param name="context"></param>
         /// <param name="generateSummary"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal Reasoning(CreateResponseReasoningEffort? effort, CreateResponseReasoningSummary? summary, CreateResponseReasoningGenerateSummary? generateSummary, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal Reasoning(ReasoningModeEnum? mode, ReasoningEffort? effort, CreateResponseRequestReasoningSummary? summary, CreateResponseRequestReasoningContext? context, CreateResponseRequestReasoningGenerateSummary? generateSummary, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Effort = effort;
-            Summary = summary;
-            GenerateSummary = generateSummary;
+            Mode = mode;
+            _effort = effort;
+            _summary = summary;
+            _context = context;
+            _generateSummary = generateSummary;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
+        /// <summary>
+        /// Controls the reasoning execution mode for the request.
+        ///   When returned on a response, this is the effective execution mode.
+        /// </summary>
+        public ReasoningModeEnum? Mode { get; set; }
+
         /// <summary> Gets or sets the Effort. </summary>
-        public CreateResponseReasoningEffort? Effort { get; set; }
+        public ReasoningEffort? Effort
+        {
+            get
+            {
+                return _effort;
+            }
+            set
+            {
+                _effort = value;
+                _effortIsDefined = true;
+            }
+        }
 
         /// <summary> Gets or sets the Summary. </summary>
-        public CreateResponseReasoningSummary? Summary { get; set; }
+        public CreateResponseRequestReasoningSummary? Summary
+        {
+            get
+            {
+                return _summary;
+            }
+            set
+            {
+                _summary = value;
+                _summaryIsDefined = true;
+            }
+        }
+
+        /// <summary> Gets or sets the Context. </summary>
+        public CreateResponseRequestReasoningContext? Context
+        {
+            get
+            {
+                return _context;
+            }
+            set
+            {
+                _context = value;
+                _contextIsDefined = true;
+            }
+        }
 
         /// <summary> Gets or sets the GenerateSummary. </summary>
-        public CreateResponseReasoningGenerateSummary? GenerateSummary { get; set; }
+        public CreateResponseRequestReasoningGenerateSummary? GenerateSummary
+        {
+            get
+            {
+                return _generateSummary;
+            }
+            set
+            {
+                _generateSummary = value;
+                _generateSummaryIsDefined = true;
+            }
+        }
     }
 }

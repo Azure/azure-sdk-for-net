@@ -5,6 +5,7 @@ using System.Runtime.CompilerServices;
 using Azure.AI.AgentServer.Responses;
 using Azure.AI.AgentServer.Responses.Models;
 using NUnit.Framework;
+using OpenAI.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Tests.Snippets
 {
@@ -50,8 +51,8 @@ namespace Azure.AI.AgentServer.Responses.Tests.Snippets
 
         public class FileBase64Handler : ResponseHandler
         {
-            public override async IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
-                CreateResponse request,
+            public override async IAsyncEnumerable<StreamingResponseUpdate> CreateAsync(
+                CreateResponseOptions request,
                 ResponseContext context,
                 [EnumeratorCancellation] CancellationToken cancellationToken)
             {
@@ -64,7 +65,7 @@ namespace Azure.AI.AgentServer.Responses.Tests.Snippets
 
                 // Find file content parts from user messages.
                 var files = items
-                    .OfType<ItemMessage>()
+                    .OfType<MessageResponseItem>()
                     .SelectMany(msg => msg.GetContentExpanded())
                     .OfType<MessageContentInputFileContent>()
                     .ToList();
@@ -93,8 +94,8 @@ namespace Azure.AI.AgentServer.Responses.Tests.Snippets
 
         public class FileUrlHandler : ResponseHandler
         {
-            public override async IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
-                CreateResponse request,
+            public override async IAsyncEnumerable<StreamingResponseUpdate> CreateAsync(
+                CreateResponseOptions request,
                 ResponseContext context,
                 [EnumeratorCancellation] CancellationToken cancellationToken)
             {
@@ -106,7 +107,7 @@ namespace Azure.AI.AgentServer.Responses.Tests.Snippets
                 var items = await context.GetInputItemsAsync(cancellationToken: cancellationToken);
 
                 var files = items
-                    .OfType<ItemMessage>()
+                    .OfType<MessageResponseItem>()
                     .SelectMany(msg => msg.GetContentExpanded())
                     .OfType<MessageContentInputFileContent>()
                     .ToList();
@@ -135,8 +136,8 @@ namespace Azure.AI.AgentServer.Responses.Tests.Snippets
 
         public class FileIdHandler : ResponseHandler
         {
-            public override async IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
-                CreateResponse request,
+            public override async IAsyncEnumerable<StreamingResponseUpdate> CreateAsync(
+                CreateResponseOptions request,
                 ResponseContext context,
                 [EnumeratorCancellation] CancellationToken cancellationToken)
             {
@@ -148,7 +149,7 @@ namespace Azure.AI.AgentServer.Responses.Tests.Snippets
                 var items = await context.GetInputItemsAsync(cancellationToken: cancellationToken);
 
                 var files = items
-                    .OfType<ItemMessage>()
+                    .OfType<MessageResponseItem>()
                     .SelectMany(msg => msg.GetContentExpanded())
                     .OfType<MessageContentInputFileContent>()
                     .ToList();

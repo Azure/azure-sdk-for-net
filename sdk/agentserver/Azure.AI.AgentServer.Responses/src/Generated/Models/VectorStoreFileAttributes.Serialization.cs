@@ -145,22 +145,28 @@ namespace Azure.AI.AgentServer.Responses.Models
                 switch (prop.Value.ValueKind)
                 {
                     case JsonValueKind.String:
-                        additionalProperties.Add(prop.Name, prop.Value.GetString());
+                        additionalDoubleProperties.Remove(prop.Name);
+                        additionalBooleanProperties.Remove(prop.Name);
+                        additionalProperties[prop.Name] = prop.Value.GetString();
                         continue;
                     case JsonValueKind.Number:
                         if (prop.Value.TryGetDouble(out double doubleValue))
                         {
-                            additionalDoubleProperties.Add(prop.Name, doubleValue);
+                            additionalProperties.Remove(prop.Name);
+                            additionalBooleanProperties.Remove(prop.Name);
+                            additionalDoubleProperties[prop.Name] = doubleValue;
                             continue;
                         }
                         break;
                     case JsonValueKind.True or JsonValueKind.False:
-                        additionalBooleanProperties.Add(prop.Name, prop.Value.GetBoolean());
+                        additionalProperties.Remove(prop.Name);
+                        additionalDoubleProperties.Remove(prop.Name);
+                        additionalBooleanProperties[prop.Name] = prop.Value.GetBoolean();
                         continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new VectorStoreFileAttributes(additionalProperties, additionalDoubleProperties, additionalBooleanProperties, additionalBinaryDataProperties);

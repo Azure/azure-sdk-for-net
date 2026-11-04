@@ -5,6 +5,7 @@ using System.Runtime.CompilerServices;
 using Azure.AI.AgentServer.Responses;
 using Azure.AI.AgentServer.Responses.Models;
 using NUnit.Framework;
+using OpenAI.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Tests.Snippets
 {
@@ -50,8 +51,8 @@ namespace Azure.AI.AgentServer.Responses.Tests.Snippets
 
         public class ImageUrlHandler : ResponseHandler
         {
-            public override async IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
-                CreateResponse request,
+            public override async IAsyncEnumerable<StreamingResponseUpdate> CreateAsync(
+                CreateResponseOptions request,
                 ResponseContext context,
                 [EnumeratorCancellation] CancellationToken cancellationToken)
             {
@@ -63,7 +64,7 @@ namespace Azure.AI.AgentServer.Responses.Tests.Snippets
                 // Retrieve the resolved input items and expand message content.
                 var items = await context.GetInputItemsAsync(cancellationToken: cancellationToken);
                 var imageUrls = items
-                    .OfType<ItemMessage>()
+                    .OfType<MessageResponseItem>()
                     .SelectMany(msg => msg.GetContentExpanded())
                     .OfType<MessageContentInputImageContent>()
                     .Where(img => img.ImageUrl != null)
@@ -88,8 +89,8 @@ namespace Azure.AI.AgentServer.Responses.Tests.Snippets
 
         public class ImageBase64Handler : ResponseHandler
         {
-            public override async IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
-                CreateResponse request,
+            public override async IAsyncEnumerable<StreamingResponseUpdate> CreateAsync(
+                CreateResponseOptions request,
                 ResponseContext context,
                 [EnumeratorCancellation] CancellationToken cancellationToken)
             {
@@ -102,7 +103,7 @@ namespace Azure.AI.AgentServer.Responses.Tests.Snippets
 
                 // Find all image content parts.
                 var images = items
-                    .OfType<ItemMessage>()
+                    .OfType<MessageResponseItem>()
                     .SelectMany(msg => msg.GetContentExpanded())
                     .OfType<MessageContentInputImageContent>()
                     .Where(img => img.ImageUrl != null)
@@ -132,8 +133,8 @@ namespace Azure.AI.AgentServer.Responses.Tests.Snippets
 
         public class ImageFileIdHandler : ResponseHandler
         {
-            public override async IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
-                CreateResponse request,
+            public override async IAsyncEnumerable<StreamingResponseUpdate> CreateAsync(
+                CreateResponseOptions request,
                 ResponseContext context,
                 [EnumeratorCancellation] CancellationToken cancellationToken)
             {
@@ -146,7 +147,7 @@ namespace Azure.AI.AgentServer.Responses.Tests.Snippets
 
                 // Find image content parts that use file_id (a path in your file store).
                 var images = items
-                    .OfType<ItemMessage>()
+                    .OfType<MessageResponseItem>()
                     .SelectMany(msg => msg.GetContentExpanded())
                     .OfType<MessageContentInputImageContent>()
                     .Where(img => img.FileId != null)

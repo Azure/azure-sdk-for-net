@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.AI.AgentServer.Responses.Models;
 
 namespace Azure.AI.AgentServer.Responses;
@@ -30,6 +31,7 @@ public abstract class ResponseHandler
     /// An async enumerable of events comprising the full response event stream,
     /// including both lifecycle events and content events.
     /// </returns>
+    [Experimental("OPENAI001")]
     public abstract IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
         CreateResponse request,
         ResponseContext context,

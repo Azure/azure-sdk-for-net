@@ -31,6 +31,13 @@ internal static partial class MCPToolValidator
             return ValidationResult.Failure(errors);
         }
 
+        // Optional: allowed_callers
+        if (element.TryGetProperty("allowed_callers", out var allowedCallersProp) && allowedCallersProp.ValueKind != JsonValueKind.Null)
+        {
+            if (allowedCallersProp.ValueKind != JsonValueKind.Array)
+                errors.Add(new ValidationError("$.allowed_callers", $"Expected array, got {allowedCallersProp.ValueKind}"));
+        }
+
         // Optional: allowed_tools
         if (element.TryGetProperty("allowed_tools", out var allowedToolsProp))
         {
@@ -103,6 +110,20 @@ internal static partial class MCPToolValidator
         {
             if (serverUrlProp.ValueKind != JsonValueKind.String)
                 errors.Add(new ValidationError("$.server_url", $"Expected string, got {serverUrlProp.ValueKind}"));
+        }
+
+        // Optional: tool_configs
+        if (element.TryGetProperty("tool_configs", out var toolConfigsProp))
+        {
+            if (toolConfigsProp.ValueKind != JsonValueKind.Object)
+                errors.Add(new ValidationError("$.tool_configs", $"Expected object, got {toolConfigsProp.ValueKind}"));
+        }
+
+        // Optional: tunnel_id
+        if (element.TryGetProperty("tunnel_id", out var tunnelIdProp))
+        {
+            if (tunnelIdProp.ValueKind != JsonValueKind.String)
+                errors.Add(new ValidationError("$.tunnel_id", $"Expected string, got {tunnelIdProp.ValueKind}"));
         }
 
         // Required: type

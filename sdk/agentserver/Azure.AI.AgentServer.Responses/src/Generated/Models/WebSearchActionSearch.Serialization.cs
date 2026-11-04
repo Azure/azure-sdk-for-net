@@ -15,11 +15,6 @@ namespace Azure.AI.AgentServer.Responses.Models
     /// <summary> Search action. </summary>
     public partial class WebSearchActionSearch : IJsonModel<WebSearchActionSearch>
     {
-        /// <summary> Initializes a new instance of <see cref="WebSearchActionSearch"/> for deserialization. </summary>
-        internal WebSearchActionSearch()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual WebSearchActionSearch PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
@@ -80,8 +75,11 @@ namespace Azure.AI.AgentServer.Responses.Models
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
-            writer.WritePropertyName("query"u8);
-            writer.WriteStringValue(Query);
+            if (Optional.IsDefined(Query))
+            {
+                writer.WritePropertyName("query"u8);
+                writer.WriteStringValue(Query);
+            }
             if (Optional.IsCollectionDefined(Queries))
             {
                 writer.WritePropertyName("queries"u8);
@@ -203,7 +201,7 @@ namespace Azure.AI.AgentServer.Responses.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new WebSearchActionSearch(@type, query, queries ?? new ChangeTrackingList<string>(), sources ?? new ChangeTrackingList<WebSearchActionSearchSources>(), additionalBinaryDataProperties);

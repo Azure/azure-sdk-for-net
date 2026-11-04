@@ -122,7 +122,7 @@ namespace Azure.AI.AgentServer.Responses.Models
             ItemFieldType @type = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string id = default;
-            ItemWebSearchToolCallStatus status = default;
+            WebSearchCallStatus status = default;
             BinaryData action = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -138,17 +138,17 @@ namespace Azure.AI.AgentServer.Responses.Models
                 }
                 if (prop.NameEquals("status"u8))
                 {
-                    status = prop.Value.GetString().ToItemWebSearchToolCallStatus();
+                    status = prop.Value.GetString().ToWebSearchCallStatus();
                     continue;
                 }
                 if (prop.NameEquals("action"u8))
                 {
-                    action = BinaryData.FromString(prop.Value.GetRawText());
+                    action = prop.Value.GetUtf8Bytes();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new ItemFieldWebSearchToolCall(@type, additionalBinaryDataProperties, id, status, action);

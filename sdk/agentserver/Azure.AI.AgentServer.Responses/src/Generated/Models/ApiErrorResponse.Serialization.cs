@@ -122,18 +122,18 @@ namespace Azure.AI.AgentServer.Responses.Models
             {
                 return null;
             }
-            Error error = default;
+            ApiError error = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("error"u8))
                 {
-                    error = Error.DeserializeError(prop.Value, options);
+                    error = ApiError.DeserializeApiError(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new ApiErrorResponse(error, additionalBinaryDataProperties);

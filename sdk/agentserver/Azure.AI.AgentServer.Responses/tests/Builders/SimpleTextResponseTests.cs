@@ -100,7 +100,7 @@ public class SimpleTextResponseTests
         Assert.That(doneItem.Status, Is.EqualTo(MessageStatus.Completed));
         XAssert.Single(doneItem.Content);
 
-        var finalContent = XAssert.IsType<MessageContentOutputTextContent>(doneItem.Content[0]);
+        var finalContent = XAssert.IsInstanceOf<ResponseContentPart>(doneItem.Content[0]);
         Assert.That(finalContent.Text, Is.EqualTo("Hello, world!"));
     }
 

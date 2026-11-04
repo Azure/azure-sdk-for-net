@@ -13,6 +13,9 @@ namespace Azure.AI.AgentServer.Responses.Models
     /// <summary> JSON schema. </summary>
     public partial class TextResponseFormatJsonSchema : TextResponseFormatConfiguration
     {
+        private bool? _strict;
+        private bool _strictIsDefined;
+
         /// <summary> Initializes a new instance of <see cref="TextResponseFormatJsonSchema"/>. </summary>
         /// <param name="name">
         /// The name of the response format. Must be a-z, A-Z, 0-9, or contain
@@ -47,7 +50,7 @@ namespace Azure.AI.AgentServer.Responses.Models
             Description = description;
             Name = name;
             Schema = schema;
-            Strict = strict;
+            _strict = strict;
         }
 
         /// <summary>
@@ -66,6 +69,17 @@ namespace Azure.AI.AgentServer.Responses.Models
         public ResponseFormatJsonSchemaSchema Schema { get; set; }
 
         /// <summary> Gets or sets the Strict. </summary>
-        public bool? Strict { get; set; }
+        public bool? Strict
+        {
+            get
+            {
+                return _strict;
+            }
+            set
+            {
+                _strict = value;
+                _strictIsDefined = true;
+            }
+        }
     }
 }

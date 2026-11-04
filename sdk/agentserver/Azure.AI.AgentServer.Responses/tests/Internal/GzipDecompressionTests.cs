@@ -65,7 +65,7 @@ public class GzipDecompressionTests
 
         var ex = Assert.Throws<ResponsesApiException>(() => StorageErrorMapper.ThrowIfError(message.Response));
         Assert.That(ex!.Message, Is.EqualTo("Service unavailable."));
-        Assert.That(ex.Error.Code, Is.EqualTo("storage_error"));
+        Assert.That(ex.Error.Code.ToString(), Is.EqualTo("storage_error"));
     }
 
     /// <summary>

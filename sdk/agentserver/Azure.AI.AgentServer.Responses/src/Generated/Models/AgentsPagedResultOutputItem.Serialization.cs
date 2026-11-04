@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.AI.AgentServer.Responses;
+using OpenAI.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
@@ -97,13 +98,14 @@ namespace Azure.AI.AgentServer.Responses.Models
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
+#pragma warning disable OPENAI001 // This generated code depends on experimental functionality.
         internal static AgentsPagedResultOutputItem DeserializeAgentsPagedResultOutputItem(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            IList<OutputItem> data = default;
+            IList<ResponseItem> data = default;
             string firstId = default;
             string lastId = default;
             bool hasMore = default;
@@ -112,10 +114,17 @@ namespace Azure.AI.AgentServer.Responses.Models
             {
                 if (prop.NameEquals("data"u8))
                 {
-                    List<OutputItem> array = new List<OutputItem>();
+                    List<ResponseItem> array = new List<ResponseItem>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(OutputItem.DeserializeOutputItem(item, options));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ModelReaderWriter.Read<ResponseItem>(item.GetUtf8Bytes(), options, AzureAIAgentServerResponsesContext.Default));
+                        }
                     }
                     data = array;
                     continue;
@@ -137,10 +146,11 @@ namespace Azure.AI.AgentServer.Responses.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new AgentsPagedResultOutputItem(data, firstId, lastId, hasMore, additionalBinaryDataProperties);
+            return new AgentsPagedResultOutputItem(data ?? new ChangeTrackingList<ResponseItem>(), firstId, lastId, hasMore, additionalBinaryDataProperties);
         }
+#pragma warning restore OPENAI001 // This generated code depends on experimental functionality.
     }
 }

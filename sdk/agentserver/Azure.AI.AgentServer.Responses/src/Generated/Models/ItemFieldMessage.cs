@@ -13,6 +13,9 @@ namespace Azure.AI.AgentServer.Responses.Models
     /// <summary> Message. </summary>
     public partial class ItemFieldMessage : ItemField
     {
+        private MessagePhase? _phase;
+        private bool _phaseIsDefined;
+
         /// <summary> Initializes a new instance of <see cref="ItemFieldMessage"/>. </summary>
         /// <param name="id"> The unique ID of the message. </param>
         /// <param name="status"> The status of item. One of `in_progress`, `completed`, or `incomplete`. Populated when items are returned via API. </param>
@@ -40,7 +43,7 @@ namespace Azure.AI.AgentServer.Responses.Models
             Status = status;
             Role = role;
             Content = content;
-            Phase = phase;
+            _phase = phase;
         }
 
         /// <summary> The unique ID of the message. </summary>
@@ -56,6 +59,12 @@ namespace Azure.AI.AgentServer.Responses.Models
         public IList<MessageContent> Content { get; }
 
         /// <summary> Gets the Phase. </summary>
-        public MessagePhase? Phase { get; }
+        public MessagePhase? Phase
+        {
+            get
+            {
+                return _phase;
+            }
+        }
     }
 }

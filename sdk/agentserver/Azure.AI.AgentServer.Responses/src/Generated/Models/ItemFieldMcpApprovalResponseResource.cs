@@ -12,6 +12,9 @@ namespace Azure.AI.AgentServer.Responses.Models
     /// <summary> MCP approval response. </summary>
     public partial class ItemFieldMcpApprovalResponseResource : ItemField
     {
+        private string _reason;
+        private bool _reasonIsDefined;
+
         /// <summary> Initializes a new instance of <see cref="ItemFieldMcpApprovalResponseResource"/>. </summary>
         /// <param name="id"> The unique ID of the approval response. </param>
         /// <param name="approvalRequestId"> The ID of the approval request being answered. </param>
@@ -35,7 +38,7 @@ namespace Azure.AI.AgentServer.Responses.Models
             Id = id;
             ApprovalRequestId = approvalRequestId;
             Approve = approve;
-            Reason = reason;
+            _reason = reason;
         }
 
         /// <summary> The unique ID of the approval response. </summary>
@@ -48,6 +51,12 @@ namespace Azure.AI.AgentServer.Responses.Models
         public bool Approve { get; }
 
         /// <summary> Gets the Reason. </summary>
-        public string Reason { get; }
+        public string Reason
+        {
+            get
+            {
+                return _reason;
+            }
+        }
     }
 }

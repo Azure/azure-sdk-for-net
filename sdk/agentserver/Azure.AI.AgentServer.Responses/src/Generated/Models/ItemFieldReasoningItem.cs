@@ -14,6 +14,9 @@ namespace Azure.AI.AgentServer.Responses.Models
     /// <summary> Reasoning. </summary>
     public partial class ItemFieldReasoningItem : ItemField
     {
+        private string _encryptedContent;
+        private bool _encryptedContentIsDefined;
+
         /// <summary> Initializes a new instance of <see cref="ItemFieldReasoningItem"/>. </summary>
         /// <param name="id"> The unique identifier of the reasoning content. </param>
         /// <param name="summary"> Reasoning summary content. </param>
@@ -38,7 +41,7 @@ namespace Azure.AI.AgentServer.Responses.Models
         internal ItemFieldReasoningItem(ItemFieldType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string id, string encryptedContent, IList<SummaryTextContent> summary, IList<ReasoningTextContent> content, ItemReasoningItemStatus? status) : base(@type, additionalBinaryDataProperties)
         {
             Id = id;
-            EncryptedContent = encryptedContent;
+            _encryptedContent = encryptedContent;
             Summary = summary;
             Content = content;
             Status = status;
@@ -48,7 +51,13 @@ namespace Azure.AI.AgentServer.Responses.Models
         public string Id { get; }
 
         /// <summary> Gets the EncryptedContent. </summary>
-        public string EncryptedContent { get; }
+        public string EncryptedContent
+        {
+            get
+            {
+                return _encryptedContent;
+            }
+        }
 
         /// <summary> Reasoning summary content. </summary>
         public IList<SummaryTextContent> Summary { get; }

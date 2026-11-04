@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.AgentServer.Responses.Models;
 
@@ -10,6 +11,7 @@ namespace Azure.AI.AgentServer.Responses.Models;
 /// Extension methods for <see cref="ItemMessage"/> that provide typed access
 /// to the <see cref="ItemMessage.Content"/> BinaryData property.
 /// </summary>
+[Experimental("OPENAI001")]
 public static class ItemMessageExtensions
 {
     /// <summary>

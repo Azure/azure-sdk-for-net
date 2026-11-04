@@ -11,6 +11,7 @@ using Azure.AI.AgentServer.Responses.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using NUnit.Framework;
+using OpenAI.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Tests.Snippets
 {
@@ -57,8 +58,8 @@ namespace Azure.AI.AgentServer.Responses.Tests.Snippets
 
         public class EchoHandler : ResponseHandler
         {
-            public override IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
-                CreateResponse request,
+            public override IAsyncEnumerable<StreamingResponseUpdate> CreateAsync(
+                CreateResponseOptions request,
                 ResponseContext context,
                 CancellationToken cancellationToken)
             {
@@ -84,8 +85,8 @@ namespace Azure.AI.AgentServer.Responses.Tests.Snippets
 
         public class EchoHandlerConvenience : ResponseHandler
         {
-            public override async IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
-                CreateResponse request,
+            public override async IAsyncEnumerable<StreamingResponseUpdate> CreateAsync(
+                CreateResponseOptions request,
                 ResponseContext context,
                 [EnumeratorCancellation] CancellationToken cancellationToken)
             {
@@ -116,8 +117,8 @@ namespace Azure.AI.AgentServer.Responses.Tests.Snippets
 
         public class EchoHandlerFullControl : ResponseHandler
         {
-            public override async IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
-                CreateResponse request,
+            public override async IAsyncEnumerable<StreamingResponseUpdate> CreateAsync(
+                CreateResponseOptions request,
                 ResponseContext context,
                 [EnumeratorCancellation] CancellationToken cancellationToken)
             {
@@ -176,8 +177,8 @@ namespace Azure.AI.AgentServer.Responses.Tests.Snippets
             public MultiUserHandler(IHttpClientFactory httpClientFactory) =>
                 _httpClientFactory = httpClientFactory;
 
-            public override IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
-                CreateResponse request,
+            public override IAsyncEnumerable<StreamingResponseUpdate> CreateAsync(
+                CreateResponseOptions request,
                 ResponseContext context,
                 CancellationToken cancellationToken)
             {

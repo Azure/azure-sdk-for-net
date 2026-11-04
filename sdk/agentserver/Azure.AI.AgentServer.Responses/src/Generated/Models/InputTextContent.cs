@@ -29,11 +29,13 @@ namespace Azure.AI.AgentServer.Responses.Models
         /// <summary> Initializes a new instance of <see cref="InputTextContent"/>. </summary>
         /// <param name="type"> The type of the input item. Always `input_text`. </param>
         /// <param name="text"> The text input to the model. </param>
+        /// <param name="promptCacheBreakpoint"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal InputTextContent(string @type, string text, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal InputTextContent(string @type, string text, PromptCacheBreakpointConfig promptCacheBreakpoint, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Type = @type;
             Text = text;
+            PromptCacheBreakpoint = promptCacheBreakpoint;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -42,5 +44,8 @@ namespace Azure.AI.AgentServer.Responses.Models
 
         /// <summary> The text input to the model. </summary>
         public string Text { get; set; }
+
+        /// <summary> Gets or sets the PromptCacheBreakpoint. </summary>
+        public PromptCacheBreakpointConfig PromptCacheBreakpoint { get; set; }
     }
 }

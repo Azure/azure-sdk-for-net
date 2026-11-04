@@ -88,10 +88,17 @@ namespace Azure.AI.AgentServer.Responses.Models
             writer.WriteStringValue(Name);
             writer.WritePropertyName("schema"u8);
             writer.WriteObjectValue(Schema, options);
-            if (Optional.IsDefined(Strict))
+            if (Optional.IsDefined(Strict, _strictIsDefined))
             {
-                writer.WritePropertyName("strict"u8);
-                writer.WriteBooleanValue(Strict.Value);
+                if (Strict != null)
+                {
+                    writer.WritePropertyName("strict"u8);
+                    writer.WriteBooleanValue(Strict.Value);
+                }
+                else
+                {
+                    writer.WriteNull("strict"u8);
+                }
             }
         }
 
@@ -125,6 +132,7 @@ namespace Azure.AI.AgentServer.Responses.Models
             string description = default;
             string name = default;
             ResponseFormatJsonSchemaSchema schema = default;
+            bool strictIsDefined = false;
             bool? strict = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -150,6 +158,7 @@ namespace Azure.AI.AgentServer.Responses.Models
                 }
                 if (prop.NameEquals("strict"u8))
                 {
+                    strictIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         strict = null;
@@ -160,7 +169,7 @@ namespace Azure.AI.AgentServer.Responses.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new TextResponseFormatJsonSchema(
@@ -169,7 +178,10 @@ namespace Azure.AI.AgentServer.Responses.Models
                 description,
                 name,
                 schema,
-                strict);
+                strict)
+            {
+                _strictIsDefined = strictIsDefined
+            };
         }
     }
 }

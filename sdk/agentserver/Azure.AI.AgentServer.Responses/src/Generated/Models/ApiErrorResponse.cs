@@ -19,7 +19,7 @@ namespace Azure.AI.AgentServer.Responses.Models
         /// <summary> Initializes a new instance of <see cref="ApiErrorResponse"/>. </summary>
         /// <param name="error"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="error"/> is null. </exception>
-        public ApiErrorResponse(Error error)
+        public ApiErrorResponse(ApiError error)
         {
             Argument.AssertNotNull(error, nameof(error));
 
@@ -29,13 +29,13 @@ namespace Azure.AI.AgentServer.Responses.Models
         /// <summary> Initializes a new instance of <see cref="ApiErrorResponse"/>. </summary>
         /// <param name="error"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ApiErrorResponse(Error error, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ApiErrorResponse(ApiError error, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Error = error;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Gets or sets the Error. </summary>
-        public Error Error { get; set; }
+        public ApiError Error { get; set; }
     }
 }

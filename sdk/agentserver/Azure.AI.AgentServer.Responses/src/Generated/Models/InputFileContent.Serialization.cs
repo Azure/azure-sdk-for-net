@@ -75,10 +75,17 @@ namespace Azure.AI.AgentServer.Responses.Models
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
-            if (Optional.IsDefined(FileId))
+            if (Optional.IsDefined(FileId, _fileIdIsDefined))
             {
-                writer.WritePropertyName("file_id"u8);
-                writer.WriteStringValue(FileId);
+                if (FileId != null)
+                {
+                    writer.WritePropertyName("file_id"u8);
+                    writer.WriteStringValue(FileId);
+                }
+                else
+                {
+                    writer.WriteNull("file_id"u8);
+                }
             }
             if (Optional.IsDefined(Filename))
             {
@@ -90,10 +97,20 @@ namespace Azure.AI.AgentServer.Responses.Models
                 writer.WritePropertyName("file_data"u8);
                 writer.WriteStringValue(FileData);
             }
+            if (Optional.IsDefined(PromptCacheBreakpoint))
+            {
+                writer.WritePropertyName("prompt_cache_breakpoint"u8);
+                writer.WriteObjectValue(PromptCacheBreakpoint, options);
+            }
             if (Optional.IsDefined(FileUrl))
             {
                 writer.WritePropertyName("file_url"u8);
                 writer.WriteStringValue(FileUrl.AbsoluteUri);
+            }
+            if (Optional.IsDefined(Detail))
+            {
+                writer.WritePropertyName("detail"u8);
+                writer.WriteStringValue(Detail.Value.ToSerialString());
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -138,10 +155,13 @@ namespace Azure.AI.AgentServer.Responses.Models
                 return null;
             }
             string @type = default;
+            bool fileIdIsDefined = false;
             string fileId = default;
             string filename = default;
             string fileData = default;
+            PromptCacheBreakpointConfig promptCacheBreakpoint = default;
             Uri fileUrl = default;
+            FileInputDetail? detail = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -152,6 +172,7 @@ namespace Azure.AI.AgentServer.Responses.Models
                 }
                 if (prop.NameEquals("file_id"u8))
                 {
+                    fileIdIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         fileId = null;
@@ -170,6 +191,15 @@ namespace Azure.AI.AgentServer.Responses.Models
                     fileData = prop.Value.GetString();
                     continue;
                 }
+                if (prop.NameEquals("prompt_cache_breakpoint"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    promptCacheBreakpoint = PromptCacheBreakpointConfig.DeserializePromptCacheBreakpointConfig(prop.Value, options);
+                    continue;
+                }
                 if (prop.NameEquals("file_url"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -179,9 +209,18 @@ namespace Azure.AI.AgentServer.Responses.Models
                     fileUrl = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
+                if (prop.NameEquals("detail"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    detail = prop.Value.GetString().ToFileInputDetail();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new InputFileContent(
@@ -189,8 +228,13 @@ namespace Azure.AI.AgentServer.Responses.Models
                 fileId,
                 filename,
                 fileData,
+                promptCacheBreakpoint,
                 fileUrl,
-                additionalBinaryDataProperties);
+                detail,
+                additionalBinaryDataProperties)
+            {
+                _fileIdIsDefined = fileIdIsDefined
+            };
         }
     }
 }

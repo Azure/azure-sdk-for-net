@@ -92,15 +92,29 @@ namespace Azure.AI.AgentServer.Responses.Models
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
-            if (Optional.IsDefined(TimeoutMs))
+            if (Optional.IsDefined(TimeoutMs, _timeoutMsIsDefined))
             {
-                writer.WritePropertyName("timeout_ms"u8);
-                writer.WriteNumberValue(TimeoutMs.Value);
+                if (TimeoutMs != null)
+                {
+                    writer.WritePropertyName("timeout_ms"u8);
+                    writer.WriteNumberValue(TimeoutMs.Value);
+                }
+                else
+                {
+                    writer.WriteNull("timeout_ms"u8);
+                }
             }
-            if (Optional.IsDefined(WorkingDirectory))
+            if (Optional.IsDefined(WorkingDirectory, _workingDirectoryIsDefined))
             {
-                writer.WritePropertyName("working_directory"u8);
-                writer.WriteStringValue(WorkingDirectory);
+                if (WorkingDirectory != null)
+                {
+                    writer.WritePropertyName("working_directory"u8);
+                    writer.WriteStringValue(WorkingDirectory);
+                }
+                else
+                {
+                    writer.WriteNull("working_directory"u8);
+                }
             }
             writer.WritePropertyName("env"u8);
             writer.WriteStartObject();
@@ -115,10 +129,17 @@ namespace Azure.AI.AgentServer.Responses.Models
                 writer.WriteStringValue(item.Value);
             }
             writer.WriteEndObject();
-            if (Optional.IsDefined(User))
+            if (Optional.IsDefined(User, _userIsDefined))
             {
-                writer.WritePropertyName("user"u8);
-                writer.WriteStringValue(User);
+                if (User != null)
+                {
+                    writer.WritePropertyName("user"u8);
+                    writer.WriteStringValue(User);
+                }
+                else
+                {
+                    writer.WriteNull("user"u8);
+                }
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -164,9 +185,12 @@ namespace Azure.AI.AgentServer.Responses.Models
             }
             string @type = default;
             IList<string> command = default;
+            bool timeoutMsIsDefined = false;
             long? timeoutMs = default;
+            bool workingDirectoryIsDefined = false;
             string workingDirectory = default;
             IDictionary<string, string> env = default;
+            bool userIsDefined = false;
             string user = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -195,6 +219,7 @@ namespace Azure.AI.AgentServer.Responses.Models
                 }
                 if (prop.NameEquals("timeout_ms"u8))
                 {
+                    timeoutMsIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         timeoutMs = null;
@@ -205,6 +230,7 @@ namespace Azure.AI.AgentServer.Responses.Models
                 }
                 if (prop.NameEquals("working_directory"u8))
                 {
+                    workingDirectoryIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         workingDirectory = null;
@@ -232,6 +258,7 @@ namespace Azure.AI.AgentServer.Responses.Models
                 }
                 if (prop.NameEquals("user"u8))
                 {
+                    userIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         user = null;
@@ -242,17 +269,22 @@ namespace Azure.AI.AgentServer.Responses.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new LocalShellExecAction(
                 @type,
-                command,
+                command ?? new ChangeTrackingList<string>(),
                 timeoutMs,
                 workingDirectory,
-                env,
+                env ?? new ChangeTrackingDictionary<string, string>(),
                 user,
-                additionalBinaryDataProperties);
+                additionalBinaryDataProperties)
+            {
+                _timeoutMsIsDefined = timeoutMsIsDefined,
+                _workingDirectoryIsDefined = workingDirectoryIsDefined,
+                _userIsDefined = userIsDefined
+            };
         }
     }
 }

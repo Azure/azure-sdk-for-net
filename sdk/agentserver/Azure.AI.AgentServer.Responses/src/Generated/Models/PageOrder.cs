@@ -9,9 +9,9 @@ namespace Azure.AI.AgentServer.Responses.Models
     /// <summary></summary>
     public enum PageOrder
     {
-        /// <summary> Asc. </summary>
+        /// <summary> Return items in ascending creation-time order. </summary>
         Asc,
-        /// <summary> Desc. </summary>
+        /// <summary> Return items in descending creation-time order. </summary>
         Desc
     }
 }

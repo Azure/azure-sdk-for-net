@@ -125,7 +125,7 @@ public sealed class ResilienceSampleParityEndToEndTests
 
         string[] phaseOrder = { "analyze", "generate", "refine" };
         int start = context.IsRecovery
-            ? Math.Min(context.PersistedResponse?.Output?.Count ?? 0, phaseOrder.Length)
+            ? Math.Min(context.PersistedResponse?.OutputItems?.Count ?? 0, phaseOrder.Length)
             : 0;
         for (int i = start; i < phaseOrder.Length; i++)
         {
@@ -219,8 +219,8 @@ public sealed class ResilienceSampleParityEndToEndTests
         TaskCompletionSource steeredDrained,
         [EnumeratorCancellation] CancellationToken ct)
     {
-        var response = new ResponseObject(context.ResponseId, request.Model ?? "agent");
-        yield return new ResponseCreatedEvent(0, response);
+        var response = new ResponseObject { Id = context.ResponseId, Model = request.Model ?? "agent" };
+        yield return new ResponseCreatedEvent { SequenceNumber = (int)(0), Response = response };
 
         if (context.IsSteeredTurn)
         {
@@ -235,7 +235,7 @@ public sealed class ResilienceSampleParityEndToEndTests
         }
 
         response.SetCompleted();
-        yield return new ResponseCompletedEvent(0, response);
+        yield return new ResponseCompletedEvent { SequenceNumber = (int)(0), Response = response };
     }
 
     // ==========================================================================================
@@ -313,8 +313,8 @@ public sealed class ResilienceSampleParityEndToEndTests
         ResponseContext context,
         [EnumeratorCancellation] CancellationToken ct)
     {
-        var response = new ResponseObject(context.ResponseId, request.Model ?? "chat");
-        yield return new ResponseCreatedEvent(0, response);
+        var response = new ResponseObject { Id = context.ResponseId, Model = request.Model ?? "chat" };
+        yield return new ResponseCreatedEvent { SequenceNumber = (int)(0), Response = response };
 
         FoundryStateStore store = await FoundryStateStore.GetOrCreateAsync(
             $"responses/resilient-multiturn/{context.ConversationChainId}",
@@ -367,7 +367,7 @@ public sealed class ResilienceSampleParityEndToEndTests
         }
 
         response.SetCompleted();
-        yield return new ResponseCompletedEvent(0, response);
+        yield return new ResponseCompletedEvent { SequenceNumber = (int)(0), Response = response };
     }
 
     // ==========================================================================================

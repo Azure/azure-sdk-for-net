@@ -3,8 +3,12 @@
 
 using System;
 using System.ClientModel.Primitives;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Text.Json;
+
+// Maps Azure.AI.Extensions.OpenAI tool-call items that are still marked experimental upstream; the tag is owned and removed there.
+#pragma warning disable AAIP001, AAIP002
 
 namespace Azure.AI.AgentServer.Responses.Models;
 
@@ -12,6 +16,7 @@ namespace Azure.AI.AgentServer.Responses.Models;
 /// Extension methods for <see cref="OutputItem"/> that provide efficient
 /// access to the <c>Id</c> property without reflection.
 /// </summary>
+[Experimental("OPENAI001")]
 public static class OutputItemExtensions
 {
     /// <summary>
@@ -84,21 +89,9 @@ public static class OutputItemExtensions
             case OutputItemReasoningItem m:
                 id = m.Id;
                 return true;
-            case OutputItemCompactionBody m:
-                id = m.Id;
-                return true;
-            case OutputItemLocalShellToolCall m:
-                id = m.Id;
-                return true;
-            case OutputItemLocalShellToolCallOutput m:
-                id = m.Id;
-                return true;
-            case OutputItemFunctionShellCall m:
-                id = m.Id;
-                return true;
-            case OutputItemFunctionShellCallOutput m:
-                id = m.Id;
-                return true;
+
+            // OpenAI.Responses.ResponseItem has no typed models for the shell and compaction
+            // items, so those resolve through the JSON fallback below.
             case OutputItemApplyPatchToolCall m:
                 id = m.Id;
                 return true;

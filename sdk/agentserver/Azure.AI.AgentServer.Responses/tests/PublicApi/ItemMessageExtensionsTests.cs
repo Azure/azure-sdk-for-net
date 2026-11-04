@@ -3,6 +3,7 @@
 
 using System.Text.Json;
 using Azure.AI.AgentServer.Responses.Models;
+using Azure.AI.AgentServer.Responses.Tests.Helpers;
 
 namespace Azure.AI.AgentServer.Responses.Tests.PublicApi;
 
@@ -14,19 +15,19 @@ public class ItemMessageExtensionsTests
     public void Content_IsAccessibleAsBinaryData()
     {
         var json = """[{"type":"input_text","text":"Hello"}]""";
-        var msg = new ItemMessage(MessageRole.User, BinaryData.FromString(json));
+        var msg = MessageItemFactory.Message(MessageRole.User, BinaryData.FromString(json));
         Assert.That(msg.Content, Is.Not.Null);
-        XAssert.Contains("Hello", msg.Content.ToString());
+        XAssert.Contains("Hello", msg.Content[0].Text);
     }
 
     [Test]
     public void Content_ViaConvenienceConstructor_RoundTrips()
     {
-        var content = new List<MessageContent>
+        var content = new List<ResponseContentPart>
         {
-            new MessageContentInputTextContent("Hello world"),
+            ResponseContentPart.CreateInputTextPart("Hello world"),
         };
-        var msg = new ItemMessage(MessageRole.User, content);
+        var msg = MessageItemFactory.Message(MessageRole.User, content);
 
         var expanded = msg.GetContentExpanded();
         var textContent = XAssert.Single(expanded);
@@ -48,8 +49,7 @@ public class ItemMessageExtensionsTests
     {
         // Use the internal parameterless constructor via deserialization
         var json = """{"type":"message","id":"msg1","status":"completed","role":"user"}""";
-        using var doc = System.Text.Json.JsonDocument.Parse(json);
-        var msg = ItemMessage.DeserializeItemMessage(doc.RootElement, System.ClientModel.Primitives.ModelReaderWriterOptions.Json);
+        var msg = (ItemMessage)OpenAIJson.Read<Item>(json);
         var result = msg.GetContentExpanded();
         Assert.That(result, Is.Empty);
     }
@@ -57,7 +57,7 @@ public class ItemMessageExtensionsTests
     [Test]
     public void GetContentExpanded_StringContent_ReturnsSingleTextContent()
     {
-        var msg = new ItemMessage(MessageRole.User,
+        var msg = MessageItemFactory.Message(MessageRole.User,
             BinaryData.FromObjectAsJson("Hello world"));
 
         var result = msg.GetContentExpanded();
@@ -71,7 +71,7 @@ public class ItemMessageExtensionsTests
     public void GetContentExpanded_ArrayContent_DeserializesCorrectly()
     {
         var json = """[{"type":"input_text","text":"Hi"},{"type":"input_text","text":"there"}]""";
-        var msg = new ItemMessage(MessageRole.User,
+        var msg = MessageItemFactory.Message(MessageRole.User,
             BinaryData.FromString(json));
 
         var result = msg.GetContentExpanded();
@@ -81,15 +81,5 @@ public class ItemMessageExtensionsTests
         XAssert.IsType<MessageContentInputTextContent>(result[1]);
         Assert.That(((MessageContentInputTextContent)result[0]).Text, Is.EqualTo("Hi"));
         Assert.That(((MessageContentInputTextContent)result[1]).Text, Is.EqualTo("there"));
-    }
-
-    [Test]
-    public void GetContentExpanded_NonStringNonArray_ThrowsFormatException()
-    {
-        var msg = new ItemMessage(MessageRole.User,
-            BinaryData.FromString("42"));
-
-        var ex = Assert.Throws<FormatException>(() => msg.GetContentExpanded());
-        Assert.That(ex.Message, Is.EqualTo("Expected JSON array, object, or string for item content"));
     }
 }

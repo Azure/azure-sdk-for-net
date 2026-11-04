@@ -167,7 +167,7 @@ public class HistoryValidationTests : IDisposable
         public HashSet<string> InvalidPreviousResponseIds { get; } = new();
         public HashSet<string> InvalidConversationIds { get; } = new();
 
-        public override Task CreateResponseAsync(CreateResponseRequest request, PlatformContext isolation, CancellationToken cancellationToken = default)
+        public override Task CreateResponseAsync(CreateResponsePersistRequest request, PlatformContext isolation, CancellationToken cancellationToken = default)
             => _inner.CreateResponseAsync(request, isolation, cancellationToken);
 
         public override Task<ResponseObject> GetResponseAsync(string responseId, PlatformContext isolation, CancellationToken cancellationToken = default)

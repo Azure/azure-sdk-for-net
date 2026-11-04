@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.AI.AgentServer.Responses.Models;
 
 namespace Azure.AI.AgentServer.Responses;
@@ -13,6 +14,7 @@ namespace Azure.AI.AgentServer.Responses;
 /// sub-events (no deltas, no status transitions).
 /// </summary>
 /// <typeparam name="T">The concrete <see cref="OutputItem"/> subtype this builder handles.</typeparam>
+[Experimental("OPENAI001")]
 public class OutputItemBuilder<T> where T : OutputItem
 {
     private protected readonly ResponseEventStream _stream;
@@ -56,7 +58,7 @@ public class OutputItemBuilder<T> where T : OutputItem
     {
         EnsureTransition(BuilderLifecycleState.NotStarted, BuilderLifecycleState.Added);
         ApplyAutoStamps(item);
-        return new ResponseOutputItemAddedEvent(_stream.NextSequenceNumber(), _outputIndex, item);
+        return new ResponseOutputItemAddedEvent { SequenceNumber = (int)(_stream.NextSequenceNumber()), OutputIndex = (int)(_outputIndex), Item = item };
     }
 
     /// <summary>
@@ -70,7 +72,7 @@ public class OutputItemBuilder<T> where T : OutputItem
         EnsureTransition(BuilderLifecycleState.Added, BuilderLifecycleState.Done);
         _stream.TrackCompletedOutputItem(item, _outputIndex);
         ApplyAutoStamps(item);
-        return new ResponseOutputItemDoneEvent(_stream.NextSequenceNumber(), _outputIndex, item);
+        return new ResponseOutputItemDoneEvent { SequenceNumber = (int)(_stream.NextSequenceNumber()), OutputIndex = (int)(_outputIndex), Item = item };
     }
 
     /// <summary>

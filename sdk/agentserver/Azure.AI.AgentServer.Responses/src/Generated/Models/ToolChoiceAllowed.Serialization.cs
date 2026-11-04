@@ -174,7 +174,7 @@ namespace Azure.AI.AgentServer.Responses.Models
                                 }
                                 else
                                 {
-                                    dictionary.Add(prop0.Name, BinaryData.FromString(prop0.Value.GetRawText()));
+                                    dictionary.Add(prop0.Name, prop0.Value.GetUtf8Bytes());
                                 }
                             }
                             array.Add(dictionary);
@@ -185,10 +185,10 @@ namespace Azure.AI.AgentServer.Responses.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ToolChoiceAllowed(@type, additionalBinaryDataProperties, mode, tools);
+            return new ToolChoiceAllowed(@type, additionalBinaryDataProperties, mode, tools ?? new ChangeTrackingList<IDictionary<string, BinaryData>>());
         }
     }
 }

@@ -31,13 +31,20 @@ internal static partial class ReasoningValidator
             return ValidationResult.Failure(errors);
         }
 
+        // Optional: context
+        if (element.TryGetProperty("context", out var contextProp) && contextProp.ValueKind != JsonValueKind.Null)
+        {
+            if (contextProp.ValueKind != JsonValueKind.String)
+                errors.Add(new ValidationError("$.context", $"Expected string, got {contextProp.ValueKind}"));
+            else if (contextProp.GetString() is not ("auto" or "current_turn" or "all_turns"))
+                errors.Add(new ValidationError("$.context", $"Value '{contextProp.GetString()}' is not valid. Allowed: auto, current_turn, all_turns"));
+        }
+
         // Optional: effort
-        if (element.TryGetProperty("effort", out var effortProp))
+        if (element.TryGetProperty("effort", out var effortProp) && effortProp.ValueKind != JsonValueKind.Null)
         {
             if (effortProp.ValueKind != JsonValueKind.String)
                 errors.Add(new ValidationError("$.effort", $"Expected string, got {effortProp.ValueKind}"));
-            else if (effortProp.GetString() is not ("none" or "minimal" or "low" or "medium" or "high" or "xhigh"))
-                errors.Add(new ValidationError("$.effort", $"Value '{effortProp.GetString()}' is not valid. Allowed: none, minimal, low, medium, high, xhigh"));
         }
 
         // Optional: generate_summary
@@ -47,6 +54,13 @@ internal static partial class ReasoningValidator
                 errors.Add(new ValidationError("$.generate_summary", $"Expected string, got {generateSummaryProp.ValueKind}"));
             else if (generateSummaryProp.GetString() is not ("auto" or "concise" or "detailed"))
                 errors.Add(new ValidationError("$.generate_summary", $"Value '{generateSummaryProp.GetString()}' is not valid. Allowed: auto, concise, detailed"));
+        }
+
+        // Optional: mode
+        if (element.TryGetProperty("mode", out var modeProp))
+        {
+            if (modeProp.ValueKind != JsonValueKind.String)
+                errors.Add(new ValidationError("$.mode", $"Expected string, got {modeProp.ValueKind}"));
         }
 
         // Optional: summary

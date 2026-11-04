@@ -15,7 +15,7 @@ namespace Azure.AI.AgentServer.Responses.Models
     /// How the model should select which tool (or tools) to use when generating
     /// a response. See the `tools` parameter to see how to specify which tools
     /// the model can call.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ToolChoiceAllowed"/>, <see cref="ToolChoiceFunction"/>, <see cref="ToolChoiceMCP"/>, <see cref="ToolChoiceCustom"/>, <see cref="SpecificApplyPatchParam"/>, <see cref="SpecificFunctionShellParam"/>, <see cref="ToolChoiceFileSearch"/>, <see cref="ToolChoiceWebSearchPreview"/>, <see cref="ToolChoiceComputerUsePreview"/>, <see cref="ToolChoiceWebSearchPreview20250311"/>, <see cref="ToolChoiceImageGeneration"/>, <see cref="ToolChoiceCodeInterpreter"/>, <see cref="ToolChoiceComputer"/>, and <see cref="ToolChoiceComputerUse"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="SpecificApplyPatchParam"/>, <see cref="SpecificFunctionShellParam"/>, <see cref="SpecificProgrammaticToolCallingParam"/>, <see cref="ToolChoiceAllowed"/>, <see cref="ToolChoiceCodeInterpreter"/>, <see cref="ToolChoiceComputer"/>, <see cref="ToolChoiceComputerUse"/>, <see cref="ToolChoiceComputerUsePreview"/>, <see cref="ToolChoiceCustom"/>, <see cref="ToolChoiceFileSearch"/>, <see cref="ToolChoiceFunction"/>, <see cref="ToolChoiceImageGeneration"/>, <see cref="ToolChoiceMCP"/>, <see cref="ToolChoiceWebSearchPreview"/>, and <see cref="ToolChoiceWebSearchPreview20250311"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownToolChoiceParam))]
     public abstract partial class ToolChoiceParam : IJsonModel<ToolChoiceParam>
@@ -131,34 +131,36 @@ namespace Azure.AI.AgentServer.Responses.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "allowed_tools":
-                        return ToolChoiceAllowed.DeserializeToolChoiceAllowed(element, options);
-                    case "function":
-                        return ToolChoiceFunction.DeserializeToolChoiceFunction(element, options);
-                    case "mcp":
-                        return ToolChoiceMCP.DeserializeToolChoiceMCP(element, options);
-                    case "custom":
-                        return ToolChoiceCustom.DeserializeToolChoiceCustom(element, options);
                     case "apply_patch":
                         return SpecificApplyPatchParam.DeserializeSpecificApplyPatchParam(element, options);
                     case "shell":
                         return SpecificFunctionShellParam.DeserializeSpecificFunctionShellParam(element, options);
-                    case "file_search":
-                        return ToolChoiceFileSearch.DeserializeToolChoiceFileSearch(element, options);
-                    case "web_search_preview":
-                        return ToolChoiceWebSearchPreview.DeserializeToolChoiceWebSearchPreview(element, options);
-                    case "computer_use_preview":
-                        return ToolChoiceComputerUsePreview.DeserializeToolChoiceComputerUsePreview(element, options);
-                    case "web_search_preview_2025_03_11":
-                        return ToolChoiceWebSearchPreview20250311.DeserializeToolChoiceWebSearchPreview20250311(element, options);
-                    case "image_generation":
-                        return ToolChoiceImageGeneration.DeserializeToolChoiceImageGeneration(element, options);
+                    case "programmatic_tool_calling":
+                        return SpecificProgrammaticToolCallingParam.DeserializeSpecificProgrammaticToolCallingParam(element, options);
+                    case "allowed_tools":
+                        return ToolChoiceAllowed.DeserializeToolChoiceAllowed(element, options);
                     case "code_interpreter":
                         return ToolChoiceCodeInterpreter.DeserializeToolChoiceCodeInterpreter(element, options);
                     case "computer":
                         return ToolChoiceComputer.DeserializeToolChoiceComputer(element, options);
                     case "computer_use":
                         return ToolChoiceComputerUse.DeserializeToolChoiceComputerUse(element, options);
+                    case "computer_use_preview":
+                        return ToolChoiceComputerUsePreview.DeserializeToolChoiceComputerUsePreview(element, options);
+                    case "custom":
+                        return ToolChoiceCustom.DeserializeToolChoiceCustom(element, options);
+                    case "file_search":
+                        return ToolChoiceFileSearch.DeserializeToolChoiceFileSearch(element, options);
+                    case "function":
+                        return ToolChoiceFunction.DeserializeToolChoiceFunction(element, options);
+                    case "image_generation":
+                        return ToolChoiceImageGeneration.DeserializeToolChoiceImageGeneration(element, options);
+                    case "mcp":
+                        return ToolChoiceMCP.DeserializeToolChoiceMCP(element, options);
+                    case "web_search_preview":
+                        return ToolChoiceWebSearchPreview.DeserializeToolChoiceWebSearchPreview(element, options);
+                    case "web_search_preview_2025_03_11":
+                        return ToolChoiceWebSearchPreview20250311.DeserializeToolChoiceWebSearchPreview20250311(element, options);
                 }
             }
             return UnknownToolChoiceParam.DeserializeUnknownToolChoiceParam(element, options);

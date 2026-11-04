@@ -1,0 +1,7 @@
+# Generated models inherit from OpenAI.Responses.ResponseItem, which already declares `Id`.
+# The TypeSpec views these are emitted from still declare their own `id` property, so the
+# generated members legitimately shadow the base. The emitter does not add the `new` keyword,
+# and these files are overwritten on every regeneration, so the shadowing warning is
+# suppressed for generated code only. Hand-written code is unaffected.
+[Generated/**.cs]
+dotnet_diagnostic.CS0108.severity = none

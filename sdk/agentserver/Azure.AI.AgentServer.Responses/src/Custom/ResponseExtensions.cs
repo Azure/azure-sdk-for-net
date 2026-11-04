@@ -4,6 +4,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Text.Json;
 
@@ -14,6 +15,7 @@ namespace Azure.AI.AgentServer.Responses.Models;
 /// to BinaryData properties like <see cref="ResponseObject.ToolChoice"/> and
 /// <see cref="ResponseObject.Instructions"/>.
 /// </summary>
+[Experimental("OPENAI001")]
 public static class ResponseExtensions
 {
     /// <summary>
@@ -49,7 +51,8 @@ public static class ResponseExtensions
     {
         Argument.AssertNotNull(response, nameof(response));
         Argument.AssertNotNull(toolChoice, nameof(toolChoice));
-        response.ToolChoice = ModelReaderWriter.Write(toolChoice, ModelReaderWriterOptions.Json, AzureAIAgentServerResponsesContext.Default);
+        response.ToolChoice = Internal.OpenAIModelFactory.ReadToolChoice(
+            Internal.ModelJson.Write(toolChoice, ModelReaderWriterOptions.Json));
     }
 
     /// <summary>
@@ -62,7 +65,8 @@ public static class ResponseExtensions
     public static void SetToolChoice(this ResponseObject response, ToolChoiceOptions toolChoice)
     {
         Argument.AssertNotNull(response, nameof(response));
-        response.ToolChoice = BinaryData.FromObjectAsJson(toolChoice.ToSerialString());
+        response.ToolChoice = Internal.OpenAIModelFactory.ReadToolChoice(
+            BinaryData.FromObjectAsJson(toolChoice.ToSerialString()));
     }
 
     /// <summary>
@@ -78,7 +82,7 @@ public static class ResponseExtensions
     public static List<Item> GetInstructionItems(this ResponseObject response)
     {
         Argument.AssertNotNull(response, nameof(response));
-        return BinaryDataExpansionHelpers.ExpandInstructions(response.Instructions);
+        return new List<Item>(response.Instructions);
     }
 
     /// <summary>
@@ -93,7 +97,8 @@ public static class ResponseExtensions
     {
         Argument.AssertNotNull(response, nameof(response));
         Argument.AssertNotNull(instructions, nameof(instructions));
-        response.Instructions = BinaryData.FromObjectAsJson(instructions);
+        response.Instructions.Clear();
+        response.Instructions.Add(ResponseItem.CreateDeveloperMessageItem(instructions));
     }
 
     /// <summary>
@@ -110,17 +115,10 @@ public static class ResponseExtensions
         Argument.AssertNotNull(response, nameof(response));
         Argument.AssertNotNull(items, nameof(items));
 
-        using var stream = new MemoryStream();
-        using (var writer = new Utf8JsonWriter(stream))
+        response.Instructions.Clear();
+        foreach (var item in items)
         {
-            writer.WriteStartArray();
-            foreach (var item in items)
-            {
-                ((IJsonModel<Item>)item).Write(writer, ModelReaderWriterOptions.Json);
-            }
-            writer.WriteEndArray();
+            response.Instructions.Add(item);
         }
-
-        response.Instructions = BinaryData.FromBytes(stream.ToArray());
     }
 }

@@ -6,28 +6,26 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
+using System.Diagnostics.CodeAnalysis;
 using Azure.AI.AgentServer.Responses;
+using OpenAI.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
     /// <summary> Output text. </summary>
+    [Experimental("OPENAI001")]
     public partial class MessageContentOutputTextContent : MessageContent
     {
         /// <summary> Initializes a new instance of <see cref="MessageContentOutputTextContent"/>. </summary>
         /// <param name="text"> The text output from the model. </param>
-        /// <param name="annotations"> The annotations of the text output. </param>
-        /// <param name="logprobs"></param>
-        /// <exception cref="ArgumentNullException"> <paramref name="text"/>, <paramref name="annotations"/> or <paramref name="logprobs"/> is null. </exception>
-        public MessageContentOutputTextContent(string text, IEnumerable<Annotation> annotations, IEnumerable<LogProb> logprobs) : base(MessageContentType.OutputText)
+        /// <exception cref="ArgumentNullException"> <paramref name="text"/> is null. </exception>
+        public MessageContentOutputTextContent(string text) : base(MessageContentType.OutputText)
         {
             Argument.AssertNotNull(text, nameof(text));
-            Argument.AssertNotNull(annotations, nameof(annotations));
-            Argument.AssertNotNull(logprobs, nameof(logprobs));
 
             Text = text;
-            Annotations = annotations.ToList();
-            Logprobs = logprobs.ToList();
+            Annotations = new ChangeTrackingList<ResponseMessageAnnotation>();
+            Logprobs = new ChangeTrackingList<LogProb>();
         }
 
         /// <summary> Initializes a new instance of <see cref="MessageContentOutputTextContent"/>. </summary>
@@ -36,7 +34,7 @@ namespace Azure.AI.AgentServer.Responses.Models
         /// <param name="text"> The text output from the model. </param>
         /// <param name="annotations"> The annotations of the text output. </param>
         /// <param name="logprobs"></param>
-        internal MessageContentOutputTextContent(MessageContentType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string text, IList<Annotation> annotations, IList<LogProb> logprobs) : base(@type, additionalBinaryDataProperties)
+        internal MessageContentOutputTextContent(MessageContentType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string text, IList<ResponseMessageAnnotation> annotations, IList<LogProb> logprobs) : base(@type, additionalBinaryDataProperties)
         {
             Text = text;
             Annotations = annotations;
@@ -47,7 +45,7 @@ namespace Azure.AI.AgentServer.Responses.Models
         public string Text { get; set; }
 
         /// <summary> The annotations of the text output. </summary>
-        public IList<Annotation> Annotations { get; }
+        public IList<ResponseMessageAnnotation> Annotations { get; }
 
         /// <summary> Gets the Logprobs. </summary>
         public IList<LogProb> Logprobs { get; }

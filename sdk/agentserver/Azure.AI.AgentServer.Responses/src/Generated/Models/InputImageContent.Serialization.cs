@@ -80,18 +80,37 @@ namespace Azure.AI.AgentServer.Responses.Models
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
-            if (Optional.IsDefined(ImageUrl))
+            if (Optional.IsDefined(ImageUrl, _imageUrlIsDefined))
             {
-                writer.WritePropertyName("image_url"u8);
-                writer.WriteStringValue(ImageUrl.AbsoluteUri);
+                if (ImageUrl != null)
+                {
+                    writer.WritePropertyName("image_url"u8);
+                    writer.WriteStringValue(ImageUrl.AbsoluteUri);
+                }
+                else
+                {
+                    writer.WriteNull("image_url"u8);
+                }
             }
-            if (Optional.IsDefined(FileId))
+            if (Optional.IsDefined(FileId, _fileIdIsDefined))
             {
-                writer.WritePropertyName("file_id"u8);
-                writer.WriteStringValue(FileId);
+                if (FileId != null)
+                {
+                    writer.WritePropertyName("file_id"u8);
+                    writer.WriteStringValue(FileId);
+                }
+                else
+                {
+                    writer.WriteNull("file_id"u8);
+                }
             }
             writer.WritePropertyName("detail"u8);
             writer.WriteStringValue(Detail.ToSerialString());
+            if (Optional.IsDefined(PromptCacheBreakpoint))
+            {
+                writer.WritePropertyName("prompt_cache_breakpoint"u8);
+                writer.WriteObjectValue(PromptCacheBreakpoint, options);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -135,9 +154,12 @@ namespace Azure.AI.AgentServer.Responses.Models
                 return null;
             }
             string @type = default;
+            bool imageUrlIsDefined = false;
             Uri imageUrl = default;
+            bool fileIdIsDefined = false;
             string fileId = default;
             ImageDetail detail = default;
+            PromptCacheBreakpointConfig promptCacheBreakpoint = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -148,6 +170,7 @@ namespace Azure.AI.AgentServer.Responses.Models
                 }
                 if (prop.NameEquals("image_url"u8))
                 {
+                    imageUrlIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         imageUrl = null;
@@ -158,6 +181,7 @@ namespace Azure.AI.AgentServer.Responses.Models
                 }
                 if (prop.NameEquals("file_id"u8))
                 {
+                    fileIdIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         fileId = null;
@@ -171,12 +195,31 @@ namespace Azure.AI.AgentServer.Responses.Models
                     detail = prop.Value.GetString().ToImageDetail();
                     continue;
                 }
+                if (prop.NameEquals("prompt_cache_breakpoint"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    promptCacheBreakpoint = PromptCacheBreakpointConfig.DeserializePromptCacheBreakpointConfig(prop.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new InputImageContent(@type, imageUrl, fileId, detail, additionalBinaryDataProperties);
+            return new InputImageContent(
+                @type,
+                imageUrl,
+                fileId,
+                detail,
+                promptCacheBreakpoint,
+                additionalBinaryDataProperties)
+            {
+                _imageUrlIsDefined = imageUrlIsDefined,
+                _fileIdIsDefined = fileIdIsDefined
+            };
         }
     }
 }

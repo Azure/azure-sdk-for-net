@@ -16,3 +16,15 @@ nowarn:AZC0100
 # would either deadlock under ASP.NET Core or duplicate code without value.
 # Same exemption as the parent Azure.AI.AgentServer.Core (and AMQP-based SDKs).
 nowarn:AZC0004
+
+# OPENAI001 is forwarded, not suppressed: public APIs that expose OpenAI.Responses experimental
+# types carry [Experimental("OPENAI001")] (generated models via the TypeSpec @experimental
+# decorator in client.tsp, hand-written APIs directly), and internal code is attributed or
+# pragma-scoped. Two sites cannot be annotated at the source:
+# - the System.ClientModel model-reader source generator emits an OpenAI.OpenAIContext reference
+#   into a .g.cs file;
+# - the C# emitter wraps generated members referencing an @experimental type in pragmas but not
+#   private backing fields, so the CreateResponseRequest._conversation field
+#   (ResponseConversationOptions) is scoped to that one field.
+nowarn:OPENAI001 SourceGenerated
+nowarn:OPENAI001 F:Azure.AI.AgentServer.Responses.CreateResponseRequest._conversation

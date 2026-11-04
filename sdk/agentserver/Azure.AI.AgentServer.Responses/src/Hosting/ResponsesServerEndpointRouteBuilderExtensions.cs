@@ -30,6 +30,8 @@ public static class ResponsesServerEndpointRouteBuilderExtensions
         this IEndpointRouteBuilder endpoints,
         string? prefix = null)
     {
+        // Wires up internal implementation types that use OpenAI experimental types; nothing experimental is exposed to the caller.
+#pragma warning disable OPENAI001
         // Fail-fast: verify ResponseHandler is registered (S-004)
         var handler = endpoints.ServiceProvider.GetService<ResponseHandler>();
         if (handler is null)
@@ -96,6 +98,7 @@ public static class ResponsesServerEndpointRouteBuilderExtensions
         group.WithTags("Responses");
 
         return group;
+#pragma warning restore OPENAI001
     }
 
     private sealed class TaskScopedResult(IResult inner, bool enabled) : IResult
@@ -120,6 +123,8 @@ public static class ResponsesServerEndpointRouteBuilderExtensions
     /// </summary>
     private static void ValidateResilientComposition(IServiceProvider services)
     {
+        // Wires up internal implementation types that use OpenAI experimental types; nothing experimental is exposed to the caller.
+#pragma warning disable OPENAI001
         var options = services.GetService<Microsoft.Extensions.Options.IOptions<ResponsesServerOptions>>()?.Value;
         if (options is null || (!options.ResilientBackground && !options.SteerableConversations))
         {
@@ -179,5 +184,6 @@ public static class ResponsesServerEndpointRouteBuilderExtensions
                 "local and hosted hosts; if you removed or replaced the task subsystem registration, restore it " +
                 "or disable the resilient/steerable options.");
         }
+#pragma warning restore OPENAI001
     }
 }

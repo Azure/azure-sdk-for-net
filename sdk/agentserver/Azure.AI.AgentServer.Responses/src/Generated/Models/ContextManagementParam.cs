@@ -15,6 +15,8 @@ namespace Azure.AI.AgentServer.Responses.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private long? _compactThreshold;
+        private bool _compactThresholdIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="ContextManagementParam"/>. </summary>
         /// <param name="type"> The context management entry type. Currently only 'compaction' is supported. </param>
@@ -33,14 +35,25 @@ namespace Azure.AI.AgentServer.Responses.Models
         internal ContextManagementParam(string @type, long? compactThreshold, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Type = @type;
-            CompactThreshold = compactThreshold;
+            _compactThreshold = compactThreshold;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The context management entry type. Currently only 'compaction' is supported. </summary>
-        public string Type { get; set; }
+        public string Type { get; }
 
         /// <summary> Gets or sets the CompactThreshold. </summary>
-        public long? CompactThreshold { get; set; }
+        public long? CompactThreshold
+        {
+            get
+            {
+                return _compactThreshold;
+            }
+            set
+            {
+                _compactThreshold = value;
+                _compactThresholdIsDefined = true;
+            }
+        }
     }
 }

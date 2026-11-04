@@ -17,20 +17,15 @@ namespace Azure.AI.AgentServer.Responses.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="WebSearchActionSearch"/>. </summary>
-        /// <param name="query"> [DEPRECATED] The search query. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="query"/> is null. </exception>
-        public WebSearchActionSearch(string query)
+        public WebSearchActionSearch()
         {
-            Argument.AssertNotNull(query, nameof(query));
-
-            Query = query;
             Queries = new ChangeTrackingList<string>();
             Sources = new ChangeTrackingList<WebSearchActionSearchSources>();
         }
 
         /// <summary> Initializes a new instance of <see cref="WebSearchActionSearch"/>. </summary>
         /// <param name="type"> The action type. </param>
-        /// <param name="query"> [DEPRECATED] The search query. </param>
+        /// <param name="query"> The search query. </param>
         /// <param name="queries"> The search queries. </param>
         /// <param name="sources"> The sources used in the search. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
@@ -46,7 +41,7 @@ namespace Azure.AI.AgentServer.Responses.Models
         /// <summary> The action type. </summary>
         public string Type { get; } = "search";
 
-        /// <summary> [DEPRECATED] The search query. </summary>
+        /// <summary> The search query. </summary>
         public string Query { get; set; }
 
         /// <summary> The search queries. </summary>

@@ -219,10 +219,10 @@ public class BadHandlerTests : ProtocolTestBase
         ResponseContext ctx)
     {
         await Task.CompletedTask;
-        var response = new Models.ResponseObject(ctx.ResponseId, "test");
+        var response = new ResponseObject { Id = ctx.ResponseId, Model = "test" };
         // Yield a completed event directly — violates contract
         response.SetCompleted();
-        yield return new ResponseCompletedEvent(0, response);
+        yield return new ResponseCompletedEvent { SequenceNumber = (int)(0), Response = response };
     }
 
     /// <summary>

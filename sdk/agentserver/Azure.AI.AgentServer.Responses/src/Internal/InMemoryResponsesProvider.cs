@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System.Collections.Concurrent;
+using System.Diagnostics.CodeAnalysis;
 using Azure.AI.AgentServer.Core;
 using Azure.AI.AgentServer.Responses.Models;
 using Microsoft.Extensions.Options;
@@ -27,13 +28,14 @@ namespace Azure.AI.AgentServer.Responses.Internal;
 /// window fully elapses since the last event was emitted.
 /// </para>
 /// </remarks>
+[Experimental("OPENAI001")]
 internal sealed class InMemoryResponsesProvider : ResponsesProvider, IDisposable
 {
     private readonly ConcurrentDictionary<ResponseStorePartition, Store> _partitions = new();
 
     private sealed class Store
     {
-        public Dictionary<string, Models.ResponseObject> Responses { get; } = new();
+        public Dictionary<string, ResponseObject> Responses { get; } = new();
         public Dictionary<string, string> UserIdKeys { get; } = new();
         public Dictionary<string, OutputItem> Items { get; } = new();
         public Dictionary<string, IReadOnlyList<string>> InputItemIds { get; } = new();
@@ -79,7 +81,7 @@ internal sealed class InMemoryResponsesProvider : ResponsesProvider, IDisposable
 
     /// <inheritdoc/>
     public override Task CreateResponseAsync(
-        CreateResponseRequest request,
+        CreateResponsePersistRequest request,
         PlatformContext context,
         CancellationToken cancellationToken = default)
     {
@@ -135,7 +137,7 @@ internal sealed class InMemoryResponsesProvider : ResponsesProvider, IDisposable
     }
 
     /// <inheritdoc/>
-    public override Task<Models.ResponseObject> GetResponseAsync(string responseId, PlatformContext context, CancellationToken cancellationToken = default)
+    public override Task<ResponseObject> GetResponseAsync(string responseId, PlatformContext context, CancellationToken cancellationToken = default)
     {
         var store = GetStore(context, cancellationToken);
         lock (store)
@@ -164,7 +166,7 @@ internal sealed class InMemoryResponsesProvider : ResponsesProvider, IDisposable
     }
 
     /// <inheritdoc/>
-    public override Task UpdateResponseAsync(Models.ResponseObject response, PlatformContext context, CancellationToken cancellationToken = default)
+    public override Task UpdateResponseAsync(ResponseObject response, PlatformContext context, CancellationToken cancellationToken = default)
     {
         var store = GetStore(context, cancellationToken);
         lock (store)
@@ -434,18 +436,18 @@ internal sealed class InMemoryResponsesProvider : ResponsesProvider, IDisposable
     }
 
     /// <summary>
-    /// Extracts output items from <see cref="Models.ResponseObject.Output"/>, stores new ones in the item store,
+    /// Extracts output items from <see cref="ResponseObject.OutputItems"/>, stores new ones in the item store,
     /// and updates the output item ID list for the response.
     /// </summary>
-    private static void StoreOutputItems(Store store, Models.ResponseObject response)
+    private static void StoreOutputItems(Store store, ResponseObject response)
     {
-        if (response.Output.Count == 0)
+        if (response.OutputItems.Count == 0)
         {
             return;
         }
 
         var outputIds = new List<string>();
-        foreach (var item in response.Output)
+        foreach (var item in response.OutputItems)
         {
             var id = GetItemId(item);
             if (id is not null)
@@ -465,9 +467,9 @@ internal sealed class InMemoryResponsesProvider : ResponsesProvider, IDisposable
     /// Adds input and output item IDs to the conversation if the response has a conversation ID.
     /// Called on <see cref="CreateResponseAsync"/>.
     /// </summary>
-    private static void AddToConversation(Store store, Models.ResponseObject response)
+    private static void AddToConversation(Store store, ResponseObject response)
     {
-        var conversationId = response.Conversation?.Id;
+        var conversationId = response.ConversationOptions?.ConversationId;
         if (conversationId is null)
         {
             return;

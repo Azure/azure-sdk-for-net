@@ -86,6 +86,18 @@ namespace Azure.AI.AgentServer.Responses.Models
             }
             writer.WritePropertyName("call_id"u8);
             writer.WriteStringValue(CallId);
+            if (Optional.IsDefined(Caller, _callerIsDefined))
+            {
+                if (Caller != null)
+                {
+                    writer.WritePropertyName("caller"u8);
+                    writer.WriteObjectValue(Caller, options);
+                }
+                else
+                {
+                    writer.WriteNull("caller"u8);
+                }
+            }
             writer.WritePropertyName("output"u8);
 #if NET6_0_OR_GREATER
             writer.WriteRawValue(Output);
@@ -126,6 +138,8 @@ namespace Azure.AI.AgentServer.Responses.Models
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string id = default;
             string callId = default;
+            bool callerIsDefined = false;
+            ToolCallCallerParam caller = default;
             BinaryData output = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -144,17 +158,37 @@ namespace Azure.AI.AgentServer.Responses.Models
                     callId = prop.Value.GetString();
                     continue;
                 }
+                if (prop.NameEquals("caller"u8))
+                {
+                    callerIsDefined = true;
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        caller = null;
+                        continue;
+                    }
+                    caller = ToolCallCallerParam.DeserializeToolCallCallerParam(prop.Value, options);
+                    continue;
+                }
                 if (prop.NameEquals("output"u8))
                 {
-                    output = BinaryData.FromString(prop.Value.GetRawText());
+                    output = prop.Value.GetUtf8Bytes();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ItemFieldCustomToolCallOutput(@type, additionalBinaryDataProperties, id, callId, output);
+            return new ItemFieldCustomToolCallOutput(
+                @type,
+                additionalBinaryDataProperties,
+                id,
+                callId,
+                caller,
+                output)
+            {
+                _callerIsDefined = callerIsDefined
+            };
         }
     }
 }

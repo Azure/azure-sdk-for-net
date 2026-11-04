@@ -298,10 +298,8 @@ public sealed class SessionInstanceIdTaskIdProtocolTests
         TaskCompletionSource firstTurnGate,
         [EnumeratorCancellation] CancellationToken cancellationToken)
     {
-        var response = new ResponseObject(
-            context.ResponseId,
-            request.Model ?? "test-model");
-        yield return new ResponseCreatedEvent(0, response);
+        var response = new ResponseObject { Id = context.ResponseId, Model = request.Model ?? "test-model" };
+        yield return new ResponseCreatedEvent { SequenceNumber = 0, Response = response };
 
         if (firstTurnStarted.TrySetResult())
         {
@@ -309,7 +307,7 @@ public sealed class SessionInstanceIdTaskIdProtocolTests
         }
 
         response.SetCompleted();
-        yield return new ResponseCompletedEvent(0, response);
+        yield return new ResponseCompletedEvent { SequenceNumber = 0, Response = response };
     }
 
     private static async Task<HttpResponseMessage> PostConversationAsync(

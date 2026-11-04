@@ -85,10 +85,17 @@ namespace Azure.AI.AgentServer.Responses.Models
             writer.WriteStringValue(ApprovalRequestId);
             writer.WritePropertyName("approve"u8);
             writer.WriteBooleanValue(Approve);
-            if (Optional.IsDefined(Reason))
+            if (Optional.IsDefined(Reason, _reasonIsDefined))
             {
-                writer.WritePropertyName("reason"u8);
-                writer.WriteStringValue(Reason);
+                if (Reason != null)
+                {
+                    writer.WritePropertyName("reason"u8);
+                    writer.WriteStringValue(Reason);
+                }
+                else
+                {
+                    writer.WriteNull("reason"u8);
+                }
             }
         }
 
@@ -122,6 +129,7 @@ namespace Azure.AI.AgentServer.Responses.Models
             string id = default;
             string approvalRequestId = default;
             bool approve = default;
+            bool reasonIsDefined = false;
             string reason = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -147,6 +155,7 @@ namespace Azure.AI.AgentServer.Responses.Models
                 }
                 if (prop.NameEquals("reason"u8))
                 {
+                    reasonIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         reason = null;
@@ -157,7 +166,7 @@ namespace Azure.AI.AgentServer.Responses.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new ItemFieldMcpApprovalResponseResource(
@@ -166,7 +175,10 @@ namespace Azure.AI.AgentServer.Responses.Models
                 id,
                 approvalRequestId,
                 approve,
-                reason);
+                reason)
+            {
+                _reasonIsDefined = reasonIsDefined
+            };
         }
     }
 }
