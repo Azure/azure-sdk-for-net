@@ -340,6 +340,8 @@ Read GitHub data with the GitHub MCP `pull_request_read` tool, and read file con
 - `get_review_comments`: every review thread with its resolution state and comments. Request `perPage: 100` and, while `pageInfo.hasNextPage` is true, request the next page with `after` set to the previous `pageInfo.endCursor`. Record the response's `totalCount`. If a thread's `total_count` exceeds the comments returned for it, that thread's history is incomplete.
 - `get_reviews`: all prior reviews submitted on this PR, paged with `page` and `perPage`, to see what earlier passes (the native Copilot reviewer, human reviewers, and this workflow's own earlier runs) already said.
 
+Fetch the changed-file pages and prior reviews before judging the workload. Do not treat a large `changed_files` count or generated-code-heavy PR as a blocker. Keep a compact per-path index of the patches and process related files in batches; inspect every changed-file patch, and fetch full file content only when a patch is missing or surrounding context is needed. For generated framework variants, compare the meaningful changes and consistency across targets rather than rereading unchanged file bodies.
+
 `resolve_pull_request_review_thread` takes a thread's `id`. `reply_to_pull_request_review_comment` and `unresolve_review_thread` take the database ID of the thread's first comment, because GitHub accepts replies only to a thread's first comment. That ID is the number after `discussion_r` in the comment's `html_url`.
 
 When a response is too large to return inline, the tool saves it to a file and gives you the path; read the file from disk.
@@ -364,7 +366,7 @@ For each thread that **is resolved**:
 
 ## Step 3 - Fresh full review pass
 
-Independently review every changed file from Step 1, one file at a time, using the shared rules, exactly as a first-pass review would, to catch anything missed by earlier passes (including commits pushed after the native reviewer's last pass). Before posting any new finding, confirm it is not already covered by an existing open thread (Step 2) or another reviewer's comment.
+Independently review every changed file from Step 1 using the shared rules, exactly as a first-pass review would, to catch anything missed by earlier passes (including commits pushed after the native reviewer's last pass). Work through the indexed patches in batches, but track coverage per path and do not skip generated variants. For generated framework variants, review the meaningful differences and check consistency across targets; use full file content when a patch is absent or the finding depends on surrounding code. Before posting any new finding, confirm it is not already covered by an existing open thread (Step 2) or another reviewer's comment.
 
 ## Step 4 - Confirm coverage, then submit one review
 
