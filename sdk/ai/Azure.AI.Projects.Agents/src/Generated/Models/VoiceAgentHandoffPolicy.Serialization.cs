@@ -9,57 +9,52 @@ using System.Text.Json;
 
 namespace Azure.AI.Projects.Agents
 {
-    /// <summary> The LiveDecisionsDelegationParam. </summary>
-    public partial class LiveDecisionsDelegationParam : IJsonModel<LiveDecisionsDelegationParam>
+    /// <summary> Session-wide limits shared by all handoff conditions in one Voice Agent session. </summary>
+    public partial class VoiceAgentHandoffPolicy : IJsonModel<VoiceAgentHandoffPolicy>
     {
-        /// <summary> Initializes a new instance of <see cref="LiveDecisionsDelegationParam"/> for deserialization. </summary>
-        internal LiveDecisionsDelegationParam()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual LiveDecisionsDelegationParam PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual VoiceAgentHandoffPolicy PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<LiveDecisionsDelegationParam>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<VoiceAgentHandoffPolicy>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeLiveDecisionsDelegationParam(document.RootElement, options);
+                        return DeserializeVoiceAgentHandoffPolicy(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(LiveDecisionsDelegationParam)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VoiceAgentHandoffPolicy)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<LiveDecisionsDelegationParam>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<VoiceAgentHandoffPolicy>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureAIProjectsAgentsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(LiveDecisionsDelegationParam)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VoiceAgentHandoffPolicy)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<LiveDecisionsDelegationParam>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<VoiceAgentHandoffPolicy>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        LiveDecisionsDelegationParam IPersistableModel<LiveDecisionsDelegationParam>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        VoiceAgentHandoffPolicy IPersistableModel<VoiceAgentHandoffPolicy>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<LiveDecisionsDelegationParam>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<VoiceAgentHandoffPolicy>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<LiveDecisionsDelegationParam>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<VoiceAgentHandoffPolicy>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -70,20 +65,21 @@ namespace Azure.AI.Projects.Agents
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<LiveDecisionsDelegationParam>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<VoiceAgentHandoffPolicy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LiveDecisionsDelegationParam)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(VoiceAgentHandoffPolicy)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(AcknowledgementDelayMs))
+            if (Optional.IsDefined(MaxTransfers))
             {
-                writer.WritePropertyName("acknowledgement_delay_ms"u8);
-                writer.WriteNumberValue(AcknowledgementDelayMs.Value);
+                writer.WritePropertyName("max_transfers"u8);
+                writer.WriteNumberValue(MaxTransfers.Value);
             }
-            writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(Type);
-            writer.WritePropertyName("decisions"u8);
-            writer.WriteObjectValue(Decisions, options);
+            if (Optional.IsDefined(MaxAttempts))
+            {
+                writer.WritePropertyName("max_attempts"u8);
+                writer.WriteNumberValue(MaxAttempts.Value);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -103,52 +99,50 @@ namespace Azure.AI.Projects.Agents
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        LiveDecisionsDelegationParam IJsonModel<LiveDecisionsDelegationParam>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        VoiceAgentHandoffPolicy IJsonModel<VoiceAgentHandoffPolicy>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual LiveDecisionsDelegationParam JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual VoiceAgentHandoffPolicy JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<LiveDecisionsDelegationParam>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<VoiceAgentHandoffPolicy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LiveDecisionsDelegationParam)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(VoiceAgentHandoffPolicy)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeLiveDecisionsDelegationParam(document.RootElement, options);
+            return DeserializeVoiceAgentHandoffPolicy(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static LiveDecisionsDelegationParam DeserializeLiveDecisionsDelegationParam(JsonElement element, ModelReaderWriterOptions options)
+        internal static VoiceAgentHandoffPolicy DeserializeVoiceAgentHandoffPolicy(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            long? acknowledgementDelayMs = default;
-            string @type = default;
-            LiveDecisionsSettingsInputParam decisions = default;
+            int? maxTransfers = default;
+            int? maxAttempts = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("acknowledgement_delay_ms"u8))
+                if (prop.NameEquals("max_transfers"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    acknowledgementDelayMs = prop.Value.GetInt64();
+                    maxTransfers = prop.Value.GetInt32();
                     continue;
                 }
-                if (prop.NameEquals("type"u8))
+                if (prop.NameEquals("max_attempts"u8))
                 {
-                    @type = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("decisions"u8))
-                {
-                    decisions = LiveDecisionsSettingsInputParam.DeserializeLiveDecisionsSettingsInputParam(prop.Value, options);
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    maxAttempts = prop.Value.GetInt32();
                     continue;
                 }
                 if (options.Format != "W")
@@ -156,7 +150,7 @@ namespace Azure.AI.Projects.Agents
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new LiveDecisionsDelegationParam(acknowledgementDelayMs, @type, decisions, additionalBinaryDataProperties);
+            return new VoiceAgentHandoffPolicy(maxTransfers, maxAttempts, additionalBinaryDataProperties);
         }
     }
 }

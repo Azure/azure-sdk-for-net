@@ -34,6 +34,12 @@ public class VoiceAgentLiveVisitor : ScmLibraryVisitor
         "outputModalities", "internalMaxOutputTokens", "include", "interimResponse", "avatar", "tools", "internalToolChoice",
         "parallelToolCalls", "structuredInputs", "subagentConfig", "store"
     ];
+    private static readonly string[] AudioOutputFactoryParameters =
+    [
+        "format", "voice", "voiceType", "voiceLocale", "speed", "voiceTemperature", "customLexiconUrl",
+        "customTextNormalizationUrl", "preferLocales", "style", "pitch", "volume", "customVoiceEndpointId",
+        "personalVoiceModel", "outputAudioTimestampTypes"
+    ];
     private readonly Dictionary<string, ModelProvider> _models = new(StringComparer.Ordinal);
     private ClientProvider _liveClient;
     private CSharpType _responseItemType;
@@ -118,8 +124,35 @@ public class VoiceAgentLiveVisitor : ScmLibraryVisitor
         {
             method.Update(bodyStatements: BuildVoiceDefinitionDispatch(method));
         }
+        if (method.Signature.Name == "DeserializeVoiceAgentSubagentConfig")
+        {
+            ValueExpression element = method.Signature.Parameters[0].AsVariable();
+            ValueExpression options = method.Signature.Parameters[1].AsVariable();
+            DeclarationExpression discriminator = new(typeof(JsonElement), "legacyDiscriminator", out _, isOut: true);
+            ModelProvider delegateModel = _models["VoiceAgentDelegateSubagentConfig"];
+            DeclarationExpression configuration = new(delegateModel.Type, "legacyConfiguration", out var legacyConfiguration);
+            CSharpType discriminatorType = delegateModel.FullConstructor.Signature.Parameters
+                .Single(parameter => parameter.Name == "subagentType").Type;
+            // Persisted delegate configurations can omit the newer subagent_type discriminator.
+            MethodBodyStatement[] body =
+            [
+                new IfStatement(element.Property(nameof(JsonElement.ValueKind)).Equal(FrameworkEnumValue(JsonValueKind.Object)))
+                {
+                    new IfStatement(Not(element.Invoke(nameof(JsonElement.TryGetProperty), Literal("subagent_type"), discriminator)))
+                    {
+                        new ExpressionStatement(new AssignmentExpression(configuration,
+                            Static(delegateModel.Type).Invoke("DeserializeVoiceAgentDelegateSubagentConfig", element, options))),
+                        new ExpressionStatement(new AssignmentExpression(legacyConfiguration.Property("SubagentType"),
+                            Static(discriminatorType).Property("Delegate"))),
+                        Return(legacyConfiguration)
+                    }
+                },
+                .. method.BodyStatements
+            ];
+            method.Update(bodyStatements: body);
+        }
         if (method.EnclosingType is ModelFactoryProvider && method.Signature.ReturnType?.Name is
-            "VoiceAgentDefinition" or "VoiceAgentLiveDefinition" or "VoiceAgentBaseDefinition")
+            "VoiceAgentDefinition" or "VoiceAgentLiveDefinition" or "VoiceAgentBaseDefinition" or "VoiceAgentAudioOutputConfig")
         {
             UpdateVoiceFactory(method);
         }
@@ -265,12 +298,18 @@ public class VoiceAgentLiveVisitor : ScmLibraryVisitor
         }
         bool hasKindParameter = method.Signature.Parameters.Any(parameter => parameter.Name == "kind");
         string name = method.Signature.ReturnType.Name;
+        string[] originalParameters = name switch
+        {
+            "VoiceAgentDefinition" => RealtimeFactoryParameters,
+            "VoiceAgentAudioOutputConfig" => AudioOutputFactoryParameters,
+            _ => null
+        };
         // Keep the existing parameter order and append fields added by newer schemas.
-        ParameterProvider[] parameters = name == "VoiceAgentDefinition"
+        ParameterProvider[] parameters = originalParameters != null
             ? [
-                .. RealtimeFactoryParameters.Select(parameterName => method.Signature.Parameters.Single(parameter => parameter.Name == parameterName)),
+                .. originalParameters.Select(parameterName => method.Signature.Parameters.Single(parameter => parameter.Name == parameterName)),
                 .. method.Signature.Parameters.Where(parameter => parameter.Name is not ("kind" or "subProtocol") &&
-                    !RealtimeFactoryParameters.Contains(parameter.Name))
+                    !originalParameters.Contains(parameter.Name))
             ]
             : method.Signature.Parameters.Where(parameter => parameter.Name != "kind").ToArray();
         IReadOnlyList<ParameterProvider> constructor = _models[name].FullConstructor.Signature.Parameters;

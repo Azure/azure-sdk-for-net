@@ -3,12 +3,14 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects.Agents
 {
     internal static partial class LiveFunctionCallItemStatusExtensions
     {
         /// <param name="value"> The value to serialize. </param>
+        [Experimental("AAIP001")]
         public static string ToSerialString(this LiveFunctionCallItemStatus value) => value switch
         {
             LiveFunctionCallItemStatus.InProgress => "in_progress",
@@ -18,6 +20,7 @@ namespace Azure.AI.Projects.Agents
         };
 
         /// <param name="value"> The value to deserialize. </param>
+        [Experimental("AAIP001")]
         public static LiveFunctionCallItemStatus ToLiveFunctionCallItemStatus(this string value)
         {
             if (StringComparer.OrdinalIgnoreCase.Equals(value, "in_progress"))

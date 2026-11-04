@@ -4,10 +4,12 @@
 
 using System;
 using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects.Agents
 {
     /// <summary></summary>
+    [Experimental("AAIP001")]
     public readonly partial struct LiveInitialInputTextContentPartParamType : IEquatable<LiveInitialInputTextContentPartParamType>
     {
         private readonly string _value;

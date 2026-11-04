@@ -3,12 +3,14 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects.Agents
 {
     internal static partial class LiveSessionAudioFormatPCMParamRateExtensions
     {
         /// <param name="value"> The value to deserialize. </param>
+        [Experimental("AAIP001")]
         public static LiveSessionAudioFormatPCMParamRate ToLiveSessionAudioFormatPCMParamRate(this int value)
         {
             if (value == 16000)

@@ -11,18 +11,14 @@ using OpenAI.Realtime;
 namespace Azure.AI.Projects.Agents
 {
     /// <summary>
-    /// Output audio configuration for a voice agent.
-    /// Provider-specific fields are selected by `voice_type`:
-    /// <list type="bullet"><item><description>`openai`: `voice` and `speed`.</description></item><item><description>`azure-standard`: `voice`, `voice_locale`, `speed`, `voice_temperature`, `custom_lexicon_url`,</description></item></list>
-    ///   `custom_text_normalization_url`, `prefer_locales`, `style`, `pitch`, and `volume`.
-    /// <list type="bullet"><item><description>`azure-custom`: all `azure-standard` fields except `style`, plus `custom_voice_endpoint_id`.</description></item><item><description>`azure-personal`: all `azure-standard` fields except `style`, plus `personal_voice_model`.</description></item><item><description>`avatar-voice-sync`: all `azure-standard` fields except `voice` and `style`, plus `personal_voice_model`; the voice name is derived from the avatar.</description></item><item><description>`azure-realtime-native`: `voice` and `speed`.</description></item></list>
-    /// `format` and `output_audio_timestamp_types` apply to every voice type.
+    /// Output audio configuration for a voice agent. Extends the voice configuration with the session-level `format` and
+    /// `output_audio_timestamp_types` settings, which apply to every voice type.
     /// </summary>
-    public partial class VoiceAgentAudioOutputConfig : IJsonModel<VoiceAgentAudioOutputConfig>
+    public partial class VoiceAgentAudioOutputConfig : VoiceAgentVoiceConfig, IJsonModel<VoiceAgentAudioOutputConfig>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual VoiceAgentAudioOutputConfig PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override VoiceAgentVoiceConfig PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<VoiceAgentAudioOutputConfig>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -38,7 +34,7 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<VoiceAgentAudioOutputConfig>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -55,7 +51,7 @@ namespace Azure.AI.Projects.Agents
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        VoiceAgentAudioOutputConfig IPersistableModel<VoiceAgentAudioOutputConfig>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        VoiceAgentAudioOutputConfig IPersistableModel<VoiceAgentAudioOutputConfig>.Create(BinaryData data, ModelReaderWriterOptions options) => (VoiceAgentAudioOutputConfig)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<VoiceAgentAudioOutputConfig>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
@@ -71,92 +67,18 @@ namespace Azure.AI.Projects.Agents
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<VoiceAgentAudioOutputConfig>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(VoiceAgentAudioOutputConfig)} does not support writing '{format}' format.");
             }
+            base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(Format))
             {
                 writer.WritePropertyName("format"u8);
                 writer.WriteObjectValue(Format, options);
-            }
-            if (Optional.IsDefined(Voice))
-            {
-                writer.WritePropertyName("voice"u8);
-                writer.WriteStringValue(Voice);
-            }
-            if (Optional.IsDefined(VoiceType))
-            {
-                writer.WritePropertyName("voice_type"u8);
-                writer.WriteStringValue(VoiceType.Value.ToString());
-            }
-            if (Optional.IsDefined(VoiceLocale))
-            {
-                writer.WritePropertyName("voice_locale"u8);
-                writer.WriteStringValue(VoiceLocale);
-            }
-            if (Optional.IsDefined(Speed))
-            {
-                writer.WritePropertyName("speed"u8);
-                writer.WriteNumberValue(Speed.Value);
-            }
-            if (Optional.IsDefined(VoiceTemperature))
-            {
-                writer.WritePropertyName("voice_temperature"u8);
-                writer.WriteNumberValue(VoiceTemperature.Value);
-            }
-            if (Optional.IsDefined(CustomLexiconUrl))
-            {
-                writer.WritePropertyName("custom_lexicon_url"u8);
-                writer.WriteStringValue(CustomLexiconUrl.AbsoluteUri);
-            }
-            if (Optional.IsDefined(CustomTextNormalizationUrl))
-            {
-                writer.WritePropertyName("custom_text_normalization_url"u8);
-                writer.WriteStringValue(CustomTextNormalizationUrl.AbsoluteUri);
-            }
-            if (Optional.IsCollectionDefined(PreferLocales))
-            {
-                writer.WritePropertyName("prefer_locales"u8);
-                writer.WriteStartArray();
-                foreach (string item in PreferLocales)
-                {
-                    if (item == null)
-                    {
-                        writer.WriteNullValue();
-                        continue;
-                    }
-                    writer.WriteStringValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsDefined(Style))
-            {
-                writer.WritePropertyName("style"u8);
-                writer.WriteStringValue(Style);
-            }
-            if (Optional.IsDefined(Pitch))
-            {
-                writer.WritePropertyName("pitch"u8);
-                writer.WriteStringValue(Pitch);
-            }
-            if (Optional.IsDefined(Volume))
-            {
-                writer.WritePropertyName("volume"u8);
-                writer.WriteStringValue(Volume);
-            }
-            if (Optional.IsDefined(CustomVoiceEndpointId))
-            {
-                writer.WritePropertyName("custom_voice_endpoint_id"u8);
-                writer.WriteStringValue(CustomVoiceEndpointId);
-            }
-            if (Optional.IsDefined(PersonalVoiceModel))
-            {
-                writer.WritePropertyName("personal_voice_model"u8);
-                writer.WriteStringValue(PersonalVoiceModel);
             }
             if (Optional.IsCollectionDefined(OutputAudioTimestampTypes))
             {
@@ -168,30 +90,15 @@ namespace Azure.AI.Projects.Agents
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
-            {
-                foreach (var item in _additionalBinaryDataProperties)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        VoiceAgentAudioOutputConfig IJsonModel<VoiceAgentAudioOutputConfig>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        VoiceAgentAudioOutputConfig IJsonModel<VoiceAgentAudioOutputConfig>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (VoiceAgentAudioOutputConfig)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual VoiceAgentAudioOutputConfig JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override VoiceAgentVoiceConfig JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<VoiceAgentAudioOutputConfig>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -210,7 +117,6 @@ namespace Azure.AI.Projects.Agents
             {
                 return null;
             }
-            RealtimeAudioFormat format = default;
             string voice = default;
             VoiceType? voiceType = default;
             string voiceLocale = default;
@@ -224,19 +130,11 @@ namespace Azure.AI.Projects.Agents
             string volume = default;
             string customVoiceEndpointId = default;
             string personalVoiceModel = default;
-            IList<VoiceAgentAudioTimestampType> outputAudioTimestampTypes = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            RealtimeAudioFormat format = default;
+            IList<VoiceAgentAudioTimestampType> outputAudioTimestampTypes = default;
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("format"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    format = ModelReaderWriter.Read<RealtimeAudioFormat>(prop.Value.GetUtf8Bytes(), options, AzureAIProjectsAgentsContext.Default);
-                    continue;
-                }
                 if (prop.NameEquals("voice"u8))
                 {
                     voice = prop.Value.GetString();
@@ -338,6 +236,15 @@ namespace Azure.AI.Projects.Agents
                     personalVoiceModel = prop.Value.GetString();
                     continue;
                 }
+                if (prop.NameEquals("format"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    format = ModelReaderWriter.Read<RealtimeAudioFormat>(prop.Value.GetUtf8Bytes(), options, AzureAIProjectsAgentsContext.Default);
+                    continue;
+                }
                 if (prop.NameEquals("output_audio_timestamp_types"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -358,7 +265,6 @@ namespace Azure.AI.Projects.Agents
                 }
             }
             return new VoiceAgentAudioOutputConfig(
-                format,
                 voice,
                 voiceType,
                 voiceLocale,
@@ -372,8 +278,9 @@ namespace Azure.AI.Projects.Agents
                 volume,
                 customVoiceEndpointId,
                 personalVoiceModel,
-                outputAudioTimestampTypes ?? new ChangeTrackingList<VoiceAgentAudioTimestampType>(),
-                additionalBinaryDataProperties);
+                additionalBinaryDataProperties,
+                format,
+                outputAudioTimestampTypes ?? new ChangeTrackingList<VoiceAgentAudioTimestampType>());
         }
     }
 }

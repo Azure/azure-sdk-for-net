@@ -97,7 +97,7 @@ namespace Extensions.Plugin.Visitors
 
         private static bool IsLiveDecisionDependency(InputModelType modelType, ModelProvider type)
         {
-            // These upstream Decisions models lack Foundry preview metadata and are only exposed by Live.
+            // These upstream Live models lack Foundry preview metadata and are only exposed by Live.
             // Scope the fallback to exact source identities in Agents, not arbitrary dependencies of Live
             // models: those can be shared with stable APIs. Existing inheritance and factory handling below
             // also cover the QuestionParam, LiveDecisionQuestion, and AnswerResource descendants.
@@ -109,6 +109,10 @@ namespace Extensions.Plugin.Visitors
                     "OpenAI.LiveDecisionQuestion" or
                     "OpenAI.LiveDecisionChoiceParam" or
                     "OpenAI.LiveDecisionScoreLevelParam" or
+                    "OpenAI.LiveDecisionInputJsonParam" or
+                    "OpenAI.LiveDecisionJsonObject" or
+                    "OpenAI.LiveSessionCreateParamsDelegationLiveClientDelegationParam" or
+                    "OpenAI.LiveSessionUpdateParamsDelegationLiveClientDelegationParam" or
                     "OpenAI.DecisionResponse" or
                     "OpenAI.AnswerResource" or
                     "OpenAI.ChoiceProbabilityResource" or
@@ -144,7 +148,16 @@ namespace Extensions.Plugin.Visitors
 
         protected override EnumProvider PreVisitEnum(InputEnumType enumType, EnumProvider type)
         {
-            if (HasExperimentalDecorator(enumType.Decorators))
+            bool isLiveEnum = type?.Type.Namespace == "Azure.AI.Projects.Agents"
+                && (enumType.CrossLanguageDefinitionId?.StartsWith("OpenAI.Live", StringComparison.Ordinal) == true ||
+                    // Literal helper enums have no source ID; these belong only to Live initial-message models.
+                    (string.IsNullOrEmpty(enumType.CrossLanguageDefinitionId) && enumType.Name is
+                        "LiveInitialAssistantMessageItemParamType" or
+                        "LiveInitialDeveloperMessageItemParamType" or
+                        "LiveInitialInputTextContentPartParamType" or
+                        "LiveInitialTextContentPartParamType" or
+                        "LiveInitialUserMessageItemParamType"));
+            if (HasExperimentalDecorator(enumType.Decorators) || isLiveEnum)
             {
                 _experimentalClasses.Add(type.Type.FullyQualifiedName);
             }

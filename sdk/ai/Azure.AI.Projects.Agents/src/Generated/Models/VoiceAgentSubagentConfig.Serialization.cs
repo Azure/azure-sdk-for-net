@@ -4,13 +4,17 @@
 
 using System;
 using System.ClientModel.Primitives;
-using System.Collections.Generic;
 using System.Text.Json;
 
 namespace Azure.AI.Projects.Agents
 {
-    /// <summary> Configuration for sibling Foundry text agents that a voice agent may consult. </summary>
-    public partial class VoiceAgentSubagentConfig : IJsonModel<VoiceAgentSubagentConfig>
+    /// <summary>
+    /// Configuration for delegated background specialists or inline voice subagents. For compatibility with existing
+    /// delegate configurations, the service treats an omitted `subagent_type` as `delegate`.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="VoiceAgentDelegateSubagentConfig"/> and <see cref="VoiceAgentInlineSubagentConfig"/>.
+    /// </summary>
+    [PersistableModelProxy(typeof(UnknownVoiceAgentSubagentConfig))]
+    public abstract partial class VoiceAgentSubagentConfig : IJsonModel<VoiceAgentSubagentConfig>
     {
         /// <summary> Initializes a new instance of <see cref="VoiceAgentSubagentConfig"/> for deserialization. </summary>
         internal VoiceAgentSubagentConfig()
@@ -75,13 +79,8 @@ namespace Azure.AI.Projects.Agents
             {
                 throw new FormatException($"The model {nameof(VoiceAgentSubagentConfig)} does not support writing '{format}' format.");
             }
-            writer.WritePropertyName("subagents"u8);
-            writer.WriteStartArray();
-            foreach (VoiceAgentSubagent item in Subagents)
-            {
-                writer.WriteObjectValue(item, options);
-            }
-            writer.WriteEndArray();
+            writer.WritePropertyName("subagent_type"u8);
+            writer.WriteStringValue(SubagentType.ToString());
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -120,30 +119,30 @@ namespace Azure.AI.Projects.Agents
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static VoiceAgentSubagentConfig DeserializeVoiceAgentSubagentConfig(JsonElement element, ModelReaderWriterOptions options)
         {
+            if (element.ValueKind == JsonValueKind.Object)
+            {
+                if (!element.TryGetProperty("subagent_type", out JsonElement legacyDiscriminator))
+                {
+                    VoiceAgentDelegateSubagentConfig legacyConfiguration = VoiceAgentDelegateSubagentConfig.DeserializeVoiceAgentDelegateSubagentConfig(element, options);
+                    legacyConfiguration.SubagentType = VoiceAgentSubagentType.Delegate;
+                    return legacyConfiguration;
+                }
+            }
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            IList<VoiceAgentSubagent> subagents = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            foreach (var prop in element.EnumerateObject())
+            if (element.TryGetProperty("subagent_type"u8, out JsonElement discriminator))
             {
-                if (prop.NameEquals("subagents"u8))
+                switch (discriminator.GetString())
                 {
-                    List<VoiceAgentSubagent> array = new List<VoiceAgentSubagent>();
-                    foreach (var item in prop.Value.EnumerateArray())
-                    {
-                        array.Add(VoiceAgentSubagent.DeserializeVoiceAgentSubagent(item, options));
-                    }
-                    subagents = array;
-                    continue;
-                }
-                if (options.Format != "W")
-                {
-                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
+                    case "delegate":
+                        return VoiceAgentDelegateSubagentConfig.DeserializeVoiceAgentDelegateSubagentConfig(element, options);
+                    case "inline":
+                        return VoiceAgentInlineSubagentConfig.DeserializeVoiceAgentInlineSubagentConfig(element, options);
                 }
             }
-            return new VoiceAgentSubagentConfig(subagents ?? new ChangeTrackingList<VoiceAgentSubagent>(), additionalBinaryDataProperties);
+            return UnknownVoiceAgentSubagentConfig.DeserializeUnknownVoiceAgentSubagentConfig(element, options);
         }
     }
 }

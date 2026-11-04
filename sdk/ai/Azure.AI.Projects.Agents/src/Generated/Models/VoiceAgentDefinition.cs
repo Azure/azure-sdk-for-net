@@ -60,7 +60,7 @@ namespace Azure.AI.Projects.Agents
         /// Defaults to `auto`.
         /// </param>
         /// <param name="parallelToolCalls"> Whether the model may call multiple tools in parallel. </param>
-        /// <param name="subagentConfig"> Optional configuration for sibling Foundry text agents that this voice agent may consult as background specialists. </param>
+        /// <param name="subagentConfig"> Optional subagent configuration. Set `subagent_type` to `delegate` for delegated background specialists or `inline` for inline voice subagents. </param>
         /// <param name="postCall"> Optional post-call delivery configuration. After each session ends, the service notifies the configured destinations. </param>
         internal VoiceAgentDefinition(ProjectsAgentKind kind, ContentFilterConfiguration contentFilterConfiguration, IDictionary<string, BinaryData> additionalBinaryDataProperties, VoiceAgentSubProtocol subProtocol, string instructions, IDictionary<string, StructuredInputDefinition> structuredInputs, bool? store, VoiceModelType? modelType, string model, VoiceConversationEngine conversationEngine, VoiceAgentGreetingConfig greeting, VoiceAgentAudioConfig audio, VoiceAgentSoundscapeConfig soundscape, IList<VoiceOutputModality> outputModalities, BinaryData internalMaxOutputTokens, IList<VoiceAgentSessionIncludeOption> include, VoiceAgentInterimResponseConfig interimResponse, VoiceAgentAvatarConfig avatar, IList<VoiceAgentTool> tools, BinaryData internalToolChoice, bool? parallelToolCalls, VoiceAgentSubagentConfig subagentConfig, VoiceAgentPostCallConfig postCall) : base(kind, contentFilterConfiguration, additionalBinaryDataProperties, subProtocol, instructions, structuredInputs, store)
         {
@@ -128,7 +128,7 @@ namespace Azure.AI.Projects.Agents
         /// <summary> Whether the model may call multiple tools in parallel. </summary>
         public bool? ParallelToolCalls { get; set; }
 
-        /// <summary> Optional configuration for sibling Foundry text agents that this voice agent may consult as background specialists. </summary>
+        /// <summary> Optional subagent configuration. Set `subagent_type` to `delegate` for delegated background specialists or `inline` for inline voice subagents. </summary>
         public VoiceAgentSubagentConfig SubagentConfig { get; set; }
 
         /// <summary> Optional post-call delivery configuration. After each session ends, the service notifies the configured destinations. </summary>

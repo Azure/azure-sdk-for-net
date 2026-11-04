@@ -10,34 +10,26 @@ namespace Azure.AI.Projects.Agents
 {
     /// <summary> Update the Responses backend for an existing Live session without changing delegation ownership. </summary>
     [Experimental("AAIP001")]
-    public partial class LiveResponsesDelegationUpdateParam
+    public partial class LiveResponsesDelegationUpdateParam : LiveSessionUpdateParamsDelegation
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
-
         /// <summary> Initializes a new instance of <see cref="LiveResponsesDelegationUpdateParam"/>. </summary>
-        public LiveResponsesDelegationUpdateParam()
+        public LiveResponsesDelegationUpdateParam() : base(LiveSessionUpdateParamsDelegationType.Responses)
         {
         }
 
         /// <summary> Initializes a new instance of <see cref="LiveResponsesDelegationUpdateParam"/>. </summary>
-        /// <param name="acknowledgementDelayMs"> Milliseconds to wait before requesting an automatic spoken acknowledgement for a delegation. The model may still speak before this delay. Any commentary or thinking appended to the session cancels all pending acknowledgements, including those for other delegations. Defaults to 400 for Decisions sessions and 0 (request immediately) for other sessions. Omission in a session update preserves the current value. Updates apply to subsequent delegations. </param>
-        /// <param name="type"> The delegation owner. Always `responses` for tasks handled by the Responses API. </param>
-        /// <param name="responses"> Responses backend settings to update. Omitted settings keep their existing values. </param>
+        /// <param name="type"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal LiveResponsesDelegationUpdateParam(long? acknowledgementDelayMs, string @type, LiveResponsesDelegationSettingsUpdateInputParam responses, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        /// <param name="acknowledgementDelayMs"> Milliseconds to wait before requesting an automatic spoken acknowledgement for a delegation. The model may still speak before this delay. Any commentary or thinking appended to the session cancels all pending acknowledgements, including those for other delegations. Defaults to 400 for Decisions sessions and 0 (request immediately) for other sessions. Omission in a session update preserves the current value. Updates apply to subsequent delegations. </param>
+        /// <param name="responses"> Responses backend settings to update. Omitted settings keep their existing values. </param>
+        internal LiveResponsesDelegationUpdateParam(LiveSessionUpdateParamsDelegationType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, long? acknowledgementDelayMs, LiveResponsesDelegationSettingsUpdateInputParam responses) : base(@type, additionalBinaryDataProperties)
         {
             AcknowledgementDelayMs = acknowledgementDelayMs;
-            Type = @type;
             Responses = responses;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Milliseconds to wait before requesting an automatic spoken acknowledgement for a delegation. The model may still speak before this delay. Any commentary or thinking appended to the session cancels all pending acknowledgements, including those for other delegations. Defaults to 400 for Decisions sessions and 0 (request immediately) for other sessions. Omission in a session update preserves the current value. Updates apply to subsequent delegations. </summary>
         public long? AcknowledgementDelayMs { get; set; }
-
-        /// <summary> The delegation owner. Always `responses` for tasks handled by the Responses API. </summary>
-        internal string Type { get; } = "responses";
 
         /// <summary> Responses backend settings to update. Omitted settings keep their existing values. </summary>
         public LiveResponsesDelegationSettingsUpdateInputParam Responses { get; set; }

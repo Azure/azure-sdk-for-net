@@ -10,18 +10,18 @@ namespace Azure.AI.Projects.Agents
 {
     /// <summary> Delegate tasks to your application. The Live session emits delegation events that your backend handles. </summary>
     [Experimental("AAIP001")]
-    public partial class LiveClientDelegationParam : LiveDelegation
+    public partial class LiveSessionCreateParamsDelegationLiveClientDelegationParam : LiveSessionCreateParamsDelegation
     {
-        /// <summary> Initializes a new instance of <see cref="LiveClientDelegationParam"/>. </summary>
-        public LiveClientDelegationParam() : base(DelegationType.Client)
+        /// <summary> Initializes a new instance of <see cref="LiveSessionCreateParamsDelegationLiveClientDelegationParam"/>. </summary>
+        public LiveSessionCreateParamsDelegationLiveClientDelegationParam() : base(LiveSessionCreateParamsDelegationType.Client)
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="LiveClientDelegationParam"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="LiveSessionCreateParamsDelegationLiveClientDelegationParam"/>. </summary>
         /// <param name="type"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="acknowledgementDelayMs"> Milliseconds to wait before requesting an automatic spoken acknowledgement for a delegation. The model may still speak before this delay. Any commentary or thinking appended to the session cancels all pending acknowledgements, including those for other delegations. Defaults to 400 for Decisions sessions and 0 (request immediately) for other sessions. Omission in a session update preserves the current value. Updates apply to subsequent delegations. </param>
-        internal LiveClientDelegationParam(DelegationType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, long? acknowledgementDelayMs) : base(@type, additionalBinaryDataProperties)
+        internal LiveSessionCreateParamsDelegationLiveClientDelegationParam(LiveSessionCreateParamsDelegationType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, long? acknowledgementDelayMs) : base(@type, additionalBinaryDataProperties)
         {
             AcknowledgementDelayMs = acknowledgementDelayMs;
         }

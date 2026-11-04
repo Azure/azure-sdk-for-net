@@ -17,7 +17,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="connectionName"> The Foundry connection name for the telephony provider. </param>
         /// <param name="label"> The optional display label for the binding. </param>
         /// <param name="status"> The lifecycle status. </param>
-        /// <param name="incomingCallUrl"> The service-generated webhook URL to configure with the telephony provider. </param>
+        /// <param name="incomingCallUrl"> The service-generated webhook URL to configure with the telephony provider. For SIP bindings, this is a SIP URI. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal UnknownTelephonyBinding(string id, TelephonyProvider provider, string connectionName, string label, TelephonyBindingStatus status, Uri incomingCallUrl, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, provider != default ? provider : "unknown", connectionName, label, status, incomingCallUrl, additionalBinaryDataProperties)
         {

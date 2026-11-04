@@ -429,7 +429,7 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <summary>
-        /// [Protocol Method] Lists stored speech and delegation items in order; cursors use item IDs. Returns 404 if the conversation is absent or unstored.
+        /// [Protocol Method] Lists stored speech and delegation items in order; cursors use item IDs. Returns 404 if the conversation is absent or not stored.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -488,7 +488,7 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <summary>
-        /// [Protocol Method] Lists stored speech and delegation items in order; cursors use item IDs. Returns 404 if the conversation is absent or unstored.
+        /// [Protocol Method] Lists stored speech and delegation items in order; cursors use item IDs. Returns 404 if the conversation is absent or not stored.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -546,7 +546,7 @@ namespace Azure.AI.Projects.Agents
             }
         }
 
-        /// <summary> Lists stored speech and delegation items in order; cursors use item IDs. Returns 404 if the conversation is absent or unstored. </summary>
+        /// <summary> Lists stored speech and delegation items in order; cursors use item IDs. Returns 404 if the conversation is absent or not stored. </summary>
         /// <param name="agentName"> The name of the Live voice agent. </param>
         /// <param name="conversationId"> The Foundry conversation ID returned in session.started.conversation_id. </param>
         /// <param name="limit">
@@ -587,7 +587,7 @@ namespace Azure.AI.Projects.Agents
                 cancellationToken.ToRequestOptions());
         }
 
-        /// <summary> Lists stored speech and delegation items in order; cursors use item IDs. Returns 404 if the conversation is absent or unstored. </summary>
+        /// <summary> Lists stored speech and delegation items in order; cursors use item IDs. Returns 404 if the conversation is absent or not stored. </summary>
         /// <param name="agentName"> The name of the Live voice agent. </param>
         /// <param name="conversationId"> The Foundry conversation ID returned in session.started.conversation_id. </param>
         /// <param name="limit">
@@ -737,7 +737,7 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <summary>
-        /// [Protocol Method] Gets captured speech-audio metadata. BYOS uses unsigned blob_uri. Returns 404 for missing audio, unstored conversations, or delegation items.
+        /// [Protocol Method] Gets captured speech-audio metadata. BYOS uses unsigned blob_uri. Returns 404 for missing audio, conversations not stored, or delegation items.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -773,7 +773,7 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <summary>
-        /// [Protocol Method] Gets captured speech-audio metadata. BYOS uses unsigned blob_uri. Returns 404 for missing audio, unstored conversations, or delegation items.
+        /// [Protocol Method] Gets captured speech-audio metadata. BYOS uses unsigned blob_uri. Returns 404 for missing audio, conversations not stored, or delegation items.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -808,7 +808,7 @@ namespace Azure.AI.Projects.Agents
             }
         }
 
-        /// <summary> Gets captured speech-audio metadata. BYOS uses unsigned blob_uri. Returns 404 for missing audio, unstored conversations, or delegation items. </summary>
+        /// <summary> Gets captured speech-audio metadata. BYOS uses unsigned blob_uri. Returns 404 for missing audio, conversations not stored, or delegation items. </summary>
         /// <param name="agentName"> The name of the Live voice agent. </param>
         /// <param name="conversationId"> The Foundry conversation ID returned in session.started.conversation_id. </param>
         /// <param name="itemId"> The id returned on the persisted item. </param>
@@ -826,7 +826,7 @@ namespace Azure.AI.Projects.Agents
             return ClientResult.FromValue((VoiceAudioItem)result, result.GetRawResponse());
         }
 
-        /// <summary> Gets captured speech-audio metadata. BYOS uses unsigned blob_uri. Returns 404 for missing audio, unstored conversations, or delegation items. </summary>
+        /// <summary> Gets captured speech-audio metadata. BYOS uses unsigned blob_uri. Returns 404 for missing audio, conversations not stored, or delegation items. </summary>
         /// <param name="agentName"> The name of the Live voice agent. </param>
         /// <param name="conversationId"> The Foundry conversation ID returned in session.started.conversation_id. </param>
         /// <param name="itemId"> The id returned on the persisted item. </param>
@@ -845,7 +845,7 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <summary>
-        /// [Protocol Method] Streams captured speech as WAV. BYOS returns 409; use blob_uri. Returns 404 for missing audio, unstored conversations, or delegation items.
+        /// [Protocol Method] Streams captured speech as WAV. BYOS returns 409; use blob_uri. Returns 404 for missing audio, conversations not stored, or delegation items.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -881,7 +881,7 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <summary>
-        /// [Protocol Method] Streams captured speech as WAV. BYOS returns 409; use blob_uri. Returns 404 for missing audio, unstored conversations, or delegation items.
+        /// [Protocol Method] Streams captured speech as WAV. BYOS returns 409; use blob_uri. Returns 404 for missing audio, conversations not stored, or delegation items.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -916,7 +916,7 @@ namespace Azure.AI.Projects.Agents
             }
         }
 
-        /// <summary> Streams captured speech as WAV. BYOS returns 409; use blob_uri. Returns 404 for missing audio, unstored conversations, or delegation items. </summary>
+        /// <summary> Streams captured speech as WAV. BYOS returns 409; use blob_uri. Returns 404 for missing audio, conversations not stored, or delegation items. </summary>
         /// <param name="agentName"> The name of the Live voice agent. </param>
         /// <param name="conversationId"> The Foundry conversation ID returned in session.started.conversation_id. </param>
         /// <param name="itemId"> The id returned on the persisted item. </param>
@@ -934,7 +934,7 @@ namespace Azure.AI.Projects.Agents
             return ClientResult.FromValue(result.GetRawResponse().Content, result.GetRawResponse());
         }
 
-        /// <summary> Streams captured speech as WAV. BYOS returns 409; use blob_uri. Returns 404 for missing audio, unstored conversations, or delegation items. </summary>
+        /// <summary> Streams captured speech as WAV. BYOS returns 409; use blob_uri. Returns 404 for missing audio, conversations not stored, or delegation items. </summary>
         /// <param name="agentName"> The name of the Live voice agent. </param>
         /// <param name="conversationId"> The Foundry conversation ID returned in session.started.conversation_id. </param>
         /// <param name="itemId"> The id returned on the persisted item. </param>

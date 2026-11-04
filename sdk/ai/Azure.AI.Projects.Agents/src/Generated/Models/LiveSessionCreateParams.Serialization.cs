@@ -109,14 +109,7 @@ namespace Azure.AI.Projects.Agents
                 if (Delegation != null)
                 {
                     writer.WritePropertyName("delegation"u8);
-#if NET6_0_OR_GREATER
-                    writer.WriteRawValue(Delegation);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(Delegation))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
+                    writer.WriteObjectValue(Delegation, options);
                 }
                 else
                 {
@@ -191,7 +184,7 @@ namespace Azure.AI.Projects.Agents
             IList<LiveInitialItem> input = default;
             LiveInitialSessionAudioParam audio = default;
             bool delegationIsDefined = false;
-            BinaryData delegation = default;
+            LiveSessionCreateParamsDelegation delegation = default;
             IList<LiveDecisionTriggerInputParam> triggers = default;
             bool? store = default;
             LiveClientConfigParam client = default;
@@ -245,7 +238,7 @@ namespace Azure.AI.Projects.Agents
                         delegation = null;
                         continue;
                     }
-                    delegation = prop.Value.GetUtf8Bytes();
+                    delegation = LiveSessionCreateParamsDelegation.DeserializeLiveSessionCreateParamsDelegation(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("triggers"u8))

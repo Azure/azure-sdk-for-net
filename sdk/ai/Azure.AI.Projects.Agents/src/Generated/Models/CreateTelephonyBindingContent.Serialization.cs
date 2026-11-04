@@ -11,7 +11,7 @@ namespace Azure.AI.Projects.Agents
 {
     /// <summary>
     /// The request to create a telephony binding.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="CreateTeamsPhoneExtensibilityTelephonyBindingContent"/> and <see cref="CreateTwilioTelephonyBindingContent"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="CreateSipTelephonyBindingContent"/>, <see cref="CreateTeamsPhoneExtensibilityTelephonyBindingContent"/>, and <see cref="CreateTwilioTelephonyBindingContent"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownCreateTelephonyBindingContent))]
     public abstract partial class CreateTelephonyBindingContent : IJsonModel<CreateTelephonyBindingContent>
@@ -144,6 +144,8 @@ namespace Azure.AI.Projects.Agents
             {
                 switch (discriminator.GetString())
                 {
+                    case "sip":
+                        return CreateSipTelephonyBindingContent.DeserializeCreateSipTelephonyBindingContent(element, options);
                     case "teams_phone_extensibility":
                         return CreateTeamsPhoneExtensibilityTelephonyBindingContent.DeserializeCreateTeamsPhoneExtensibilityTelephonyBindingContent(element, options);
                     case "twilio":

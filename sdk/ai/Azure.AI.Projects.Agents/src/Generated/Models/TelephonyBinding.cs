@@ -10,7 +10,7 @@ namespace Azure.AI.Projects.Agents
 {
     /// <summary>
     /// A telephony binding owned by a voice agent.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="TeamsPhoneExtensibilityTelephonyBinding"/> and <see cref="TwilioTelephonyBinding"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="SipTelephonyBinding"/>, <see cref="TeamsPhoneExtensibilityTelephonyBinding"/>, and <see cref="TwilioTelephonyBinding"/>.
     /// </summary>
     [Experimental("AAIP001")]
     public abstract partial class TelephonyBinding
@@ -23,7 +23,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="provider"> The telephony provider. </param>
         /// <param name="connectionName"> The Foundry connection name for the telephony provider. </param>
         /// <param name="status"> The lifecycle status. </param>
-        /// <param name="incomingCallUrl"> The service-generated webhook URL to configure with the telephony provider. </param>
+        /// <param name="incomingCallUrl"> The service-generated webhook URL to configure with the telephony provider. For SIP bindings, this is a SIP URI. </param>
         private protected TelephonyBinding(string id, TelephonyProvider provider, string connectionName, TelephonyBindingStatus status, Uri incomingCallUrl)
         {
             Id = id;
@@ -39,7 +39,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="connectionName"> The Foundry connection name for the telephony provider. </param>
         /// <param name="label"> The optional display label for the binding. </param>
         /// <param name="status"> The lifecycle status. </param>
-        /// <param name="incomingCallUrl"> The service-generated webhook URL to configure with the telephony provider. </param>
+        /// <param name="incomingCallUrl"> The service-generated webhook URL to configure with the telephony provider. For SIP bindings, this is a SIP URI. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal TelephonyBinding(string id, TelephonyProvider provider, string connectionName, string label, TelephonyBindingStatus status, Uri incomingCallUrl, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
@@ -67,7 +67,7 @@ namespace Azure.AI.Projects.Agents
         /// <summary> The lifecycle status. </summary>
         public TelephonyBindingStatus Status { get; }
 
-        /// <summary> The service-generated webhook URL to configure with the telephony provider. </summary>
+        /// <summary> The service-generated webhook URL to configure with the telephony provider. For SIP bindings, this is a SIP URI. </summary>
         public Uri IncomingCallUrl { get; }
     }
 }
