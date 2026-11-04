@@ -66,6 +66,7 @@ extends:
       - AdditionalTestArguments=^(?!.*UseProjectReferenceToAzureClients=true)
       - TestTargetFramework=^net10.0$
       - BuildConfiguration=^Debug$
+      - AdditionalTestFilters=^\(\(FullyQualifiedName~Azure\.AI\.(Projects\.Tests\.Samples|Projects\.Agents\.Tests\.Samples|Extensions\.OpenAI\.Tests\.Samples).*$
     PreSteps:
       - pwsh: |
           $selectionKind = '${{ parameters.selectionKind }}'
@@ -107,13 +108,19 @@ extends:
             throw "Unsupported selectionKind: $selectionKind"
           }
 
+          if (-not [string]::IsNullOrWhiteSpace($env:AdditionalTestFilters)) {
+            $additionalTestFilters = $env:AdditionalTestFilters
+          }
+
           $validationEndpoint = $env:LLM_VALIDATION_PROJECT_ENDPOINT
           if ([string]::IsNullOrWhiteSpace($validationEndpoint)) {
             throw 'Set LLM_VALIDATION_PROJECT_ENDPOINT in the pipeline variables.'
           }
 
           Write-Host "Using AdditionalTestFilters: $additionalTestFilters"
-          Write-Host "##vso[task.setvariable variable=AdditionalTestFilters]$additionalTestFilters"
+          if ([string]::IsNullOrWhiteSpace($env:AdditionalTestFilters)) {
+            Write-Host "##vso[task.setvariable variable=AdditionalTestFilters]$additionalTestFilters"
+          }
           Write-Host "##vso[task.setvariable variable=FOUNDRY_PROJECT_ENDPOINT]$validationEndpoint"
           Write-Host "##vso[task.setvariable variable=FOUNDRY_MODEL_NAME]${{ parameters.modelName }}"
           Write-Host "##vso[task.setvariable variable=FOUNDRY_AGENT_NAME]sample-agent"
