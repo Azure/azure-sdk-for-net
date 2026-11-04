@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -57,8 +58,60 @@ public class BicepValueTests
     {
         BicepValue<ResponseError> value = new ResponseError("ExampleCode", "Example message");
 
-        TestHelpers.AssertExpression("json('{\"code\":\"ExampleCode\",\"message\":\"Example message\"}')", value);
+        TestHelpers.AssertExpression(
+            """
+            {
+              code: 'ExampleCode'
+              message: 'Example message'
+            }
+            """,
+            value);
         TestHelpers.AssertExpression("object", new TypeExpression(typeof(ResponseError)));
+    }
+
+    [Test]
+    public void ValidateNestedResponseErrorBicepValue()
+    {
+        ResponseError? error = ModelReaderWriter.Read<ResponseError>(
+            BinaryData.FromString(
+                """
+                {
+                  "code": "ExampleCode",
+                  "message": "Example message",
+                  "target": "Example target",
+                  "innererror": {
+                    "code": "InnerCode"
+                  },
+                  "details": [
+                    {
+                      "code": "DetailCode",
+                      "message": "Detail message"
+                    }
+                  ]
+                }
+                """),
+            ModelReaderWriterOptions.Json,
+            AzureCoreContext.Default);
+        Assert.That(error, Is.Not.Null);
+
+        TestHelpers.AssertExpression(
+            """
+            {
+              code: 'ExampleCode'
+              message: 'Example message'
+              target: 'Example target'
+              innererror: {
+                code: 'InnerCode'
+              }
+              details: [
+                {
+                  code: 'DetailCode'
+                  message: 'Detail message'
+                }
+              ]
+            }
+            """,
+            new BicepValue<ResponseError>(error!));
     }
 
     [Test]
