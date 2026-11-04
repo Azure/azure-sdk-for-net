@@ -54,7 +54,7 @@ extends:
     Location: 'East US'
     MaxParallel: ${{ parameters.testQueueCount }}
     DeployTestResources: false
-    UseFederatedAuth: false
+    UseFederatedAuth: true
     IgnoreTestFailures: true
     EnvVars:
       CLIENTMODEL_TEST_MODE: Live
