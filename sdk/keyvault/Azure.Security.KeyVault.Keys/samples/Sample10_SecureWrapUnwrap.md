@@ -2,7 +2,7 @@
 
 This sample demonstrates how to securely wrap a key generated inside a Managed HSM trusted execution environment (TEE) and securely unwrap it into a target TEE.
 
-Secure wrap and unwrap are only supported on Managed HSM with service version `2026-01-01-preview` or newer. Unlike ordinary wrap/unwrap, these operations are **remote-only** (they cannot be performed locally) and release the key only into a target environment that can prove its identity with a Microsoft Azure Attestation (MAA) token.
+Secure wrap and unwrap are only supported on Managed HSM with service version `2026-04-01` or newer. Unlike ordinary wrap/unwrap, these operations are **remote-only** (they cannot be performed locally) and release the key only into a target environment that can prove its identity with a Microsoft Azure Attestation (MAA) token.
 
 To get started, you'll need a URI to an Azure Managed HSM. See the [README][] for links and instructions.
 
