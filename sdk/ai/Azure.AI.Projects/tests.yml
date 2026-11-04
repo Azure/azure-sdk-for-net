@@ -122,3 +122,50 @@ extends:
           Write-Host "##vso[task.setvariable variable=FOUNDRY_MODEL_NAME]${{ parameters.modelName }}"
           Write-Host "##vso[task.setvariable variable=FOUNDRY_AGENT_NAME]sample-agent"
         displayName: 'Prepare sample test filter and deployment parameters'
+    PostSteps:
+      - pwsh: |
+          $artifactDir = Join-Path '$(Build.ArtifactStagingDirectory)' 'sample-console-output'
+          New-Item -ItemType Directory -Force -Path $artifactDir | Out-Null
+
+          $combinedOutput = Join-Path $artifactDir 'console-output.txt'
+          $trxFiles = Get-ChildItem -Path '$(Build.SourcesDirectory)' -Recurse -Filter *.trx -ErrorAction SilentlyContinue
+
+          if (-not $trxFiles) {
+            Set-Content -Path $combinedOutput -Value 'No TRX files were found.'
+            exit 0
+          }
+
+          foreach ($trx in $trxFiles) {
+            try {
+              [xml]$doc = Get-Content -LiteralPath $trx.FullName
+              $ns = New-Object System.Xml.XmlNamespaceManager($doc.NameTable)
+              $ns.AddNamespace('x', 'http://microsoft.com/schemas/VisualStudio/TeamTest/2010')
+
+              $results = $doc.SelectNodes('//x:UnitTestResult', $ns)
+              foreach ($result in $results) {
+                $stdOut = $result.SelectSingleNode('x:Output/x:StdOut', $ns)
+                if ($null -ne $stdOut -and -not [string]::IsNullOrWhiteSpace($stdOut.InnerText)) {
+                  Add-Content -Path $combinedOutput -Value "[$($trx.Name)] $($result.testName)"
+                  Add-Content -Path $combinedOutput -Value $stdOut.InnerText
+                  Add-Content -Path $combinedOutput -Value ''
+                }
+              }
+            }
+            catch {
+              Add-Content -Path $combinedOutput -Value "Failed to parse TRX $($trx.FullName): $($_.Exception.Message)"
+            }
+          }
+
+          if (-not (Test-Path $combinedOutput)) {
+            Set-Content -Path $combinedOutput -Value 'No StdOut entries were captured from TRX files.'
+          }
+        displayName: 'Collect sample Console.WriteLine output'
+        condition: always()
+
+      - task: PublishPipelineArtifact@1
+        displayName: 'Publish sample console output artifact'
+        condition: always()
+        inputs:
+          targetPath: '$(Build.ArtifactStagingDirectory)/sample-console-output'
+          artifact: 'sample-console-output-$(Agent.JobName)'
+          publishLocation: 'pipeline'
