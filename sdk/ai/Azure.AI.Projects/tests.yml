@@ -51,6 +51,9 @@ extends:
   parameters:
     ServiceDirectory: ai
     SupportedClouds: 'Public'
+    CloudConfig:
+      Public:
+        ServiceConnection: azure-sdk-tests
     Location: 'East US'
     MaxParallel: ${{ parameters.testQueueCount }}
     DeployTestResources: false
