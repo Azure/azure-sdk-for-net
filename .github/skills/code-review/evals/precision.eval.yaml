@@ -687,6 +687,25 @@ stimuli:
         config:
           pattern: '(?i)((?:changelog|release note)[^\n]*(🔴|🟡|ℹ️)|(🔴|🟡|ℹ️)[^\n]*(?:changelog|release note))'
 
+  - name: report-public-change-missing-from-changelog
+    prompt: >-
+      First invoke the code-review skill. Review this synthetic PR and return findings only.
+      Azure.Widgets 1.2.0 shipped GA, and its CHANGELOG.md starts with a
+      `## 1.3.0-beta.1 (Unreleased)` entry whose `### Features Added`, `### Breaking Changes`,
+      `### Bugs Fixed`, and `### Other Changes` headings are all empty. This PR adds the public
+      methods `WidgetClient.GetWidgetHistory` and `WidgetClient.GetWidgetHistoryAsync` with
+      correct API listings, tests, and documentation, and it does not modify CHANGELOG.md.
+    graders:
+      - type: skill-invocation
+        config:
+          required: ["code-review"]
+      - type: output-not-matches
+        config:
+          pattern: '^\s*No findings\.\s*$'
+      - type: output-matches
+        config:
+          pattern: '(?i)((?:changelog|release note)[^\n]*(🔴|🟡|ℹ️)|(🔴|🟡|ℹ️)[^\n]*(?:changelog|release note))'
+
   - name: allow-empty-changelog-entry-in-post-release-increment
     prompt: >-
       First invoke the code-review skill. Review this synthetic PR and return findings only.

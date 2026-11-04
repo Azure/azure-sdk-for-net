@@ -622,8 +622,11 @@ manually; that is the intended reading of the in-repo-analyzer rule above, not a
 
 - Assembly name, root namespace, and NuGet package id all match
 - Version bumps: patch for bug fixes only — **no new public API in a patch release**; minor
-  or major for new API or a new service API version. `CHANGELOG.md` must be updated in the
-  same PR
+  or major for new API or a new service API version
+- **`CHANGELOG.md` reflects the PR's public changes.** New or changed public API or
+  customer-visible behavior must be described in the current entry 🟡. If nothing public
+  changes, as in a post-release version bump, an empty entry is correct. PR builds only check
+  that the entry exists; the release pipeline rejects an empty one
 - A management library's major-version increase needs explicit .NET architecture approval for
   a coordinated management SDK major release. This coordination does not waive compatibility
   requirements.
@@ -648,13 +651,6 @@ review.
   the PR should carry a `-beta.N` suffix 🟡. The `ValidateReleaseNotes` build target already
   fails a changelog heading that does not match `<Version>`, so judge the version, not the
   heading
-- **A new library's first `CHANGELOG.md` entry needs release notes.** SDK generation creates
-  it with only empty `### Features Added`, `### Breaking Changes`, `### Bugs Fixed`, and
-  `### Other Changes` headings. A passing PR build does not cover this: for an `(Unreleased)`
-  entry, `ValidateReleaseNotes` checks only that the entry exists, and the empty-content and
-  empty-section checks run only in the release pipeline, which then rejects the release. Ask
-  for an initial-release note under `### Features Added` and removal of the empty headings 🟡.
-  The same empty entry added by a post-release version increment is expected, not a finding
 - **`<Description>` and `<AssemblyTitle>` are customer-facing** — the description is what
   renders on the package's nuget.org page. The template ships `Azure Widget Analytics client
   library for .NET`; a library still carrying that text, or a description auto-generated from
