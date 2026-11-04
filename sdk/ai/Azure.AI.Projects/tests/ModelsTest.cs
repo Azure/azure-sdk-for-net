@@ -149,49 +149,6 @@ public class ModelsTest : ProjectsClientTestBase
         //Assert.That(models[0].Version, Is.EqualTo("1"));
     }
 
-    //[Test]
-    //public void Precancelled_async_upload_does_not_send_a_request()
-    //{
-    //    var method = typeof(AIProjectModels).GetMethod("UploadModelAsync",
-    //        new[] { typeof(string), typeof(string), typeof(string), typeof(CancellationToken) });
-    //    Assert.That(method, Is.Not.Null);
-    //    var transport = new MockPipelineTransport(_ =>
-    //        throw new InvalidOperationException("Cancellation must prevent any request."));
-    //    var client = new AIProjectClient(new Uri("https://example.test/api/projects/p"),
-    //        new MockCredential(), new AIProjectClientOptions
-    //        {
-    //            Transport = transport,
-    //            EnableDistributedTracing = false
-    //        });
-    //    string directory = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString("N"));
-    //    Directory.CreateDirectory(directory);
-    //    using var cancellation = new CancellationTokenSource();
-    //    cancellation.Cancel();
-    //    try
-    //    {
-    //        Assert.ThrowsAsync<OperationCanceledException>(async () =>
-    //        {
-    //            Task<Uri> task;
-    //            try
-    //            {
-    //                task = (Task<Uri>)method.Invoke(client.Models,
-    //                    new object[] { directory, "model", "1", cancellation.Token });
-    //            }
-    //            catch (TargetInvocationException exception)
-    //                when (exception.InnerException is OperationCanceledException cancelled)
-    //            {
-    //                throw cancelled;
-    //            }
-    //            await task;
-    //        });
-    //        Assert.That(transport.Requests, Is.Empty);
-    //    }
-    //    finally
-    //    {
-    //        Directory.Delete(directory);
-    //    }
-    //}
-
     [RecordedTest]
     public void Precancelled_async_upload_does_not_send_a_request()
     {

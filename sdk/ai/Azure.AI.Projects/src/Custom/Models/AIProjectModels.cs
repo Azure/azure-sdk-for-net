@@ -85,10 +85,10 @@ public partial class AIProjectModels
     /// <param name="name">Model name. </param>
     /// <param name="version">Model version. </param>
     /// <returns>Uploaded model URI</returns>
-    /// <param name="token">Cancelation token</param>
+    /// <param name="cancellationToken">Cancelation token</param>
     /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="version"/> or  is null. </exception>
     /// <exception cref="ArgumentException"> <paramref name="name"/>, <paramref name="version"/> or <paramref name="path"/> is an empty string, and was expected to be non-empty. </exception>
-    public virtual Uri UploadModel(string path, string name, string version, CancellationToken token = default)
+    public virtual Uri UploadModel(string path, string name, string version, CancellationToken cancellationToken = default)
     {
         Argument.AssertNotNullOrEmpty(name, nameof(name));
         Argument.AssertNotNullOrEmpty(version, nameof(version));
@@ -97,15 +97,15 @@ public partial class AIProjectModels
         {
             throw new ArgumentException($"The provided folder does not exist: {path}");
         }
-        if (token.IsCancellationRequested)
+        if (cancellationToken.IsCancellationRequested)
         {
-            throw new OperationCanceledException("The model upload was canceled.");
+            throw new OperationCanceledException("The model upload was canceled.", cancellationToken);
         }
         ModelPendingUploadResult uploadResponse = StartModelPendingUpload(
             name: name,
             version: version,
             pendingUploadRequest: new(),
-            cancellationToken: token
+            cancellationToken: cancellationToken
         );
         BlobContainerClient client = GetContainerClientOrRaise(uploadResponse);
 
@@ -117,7 +117,7 @@ public partial class AIProjectModels
             using (FileStream fileStream = File.OpenRead(filePath))
             {
                 blobClient = client.GetBlobClient(fileName);
-                blobClient.Upload(fileStream, token);
+                blobClient.Upload(fileStream, cancellationToken);
                 filesUploaded = true;
             }
         }
@@ -135,11 +135,11 @@ public partial class AIProjectModels
     /// <param name="path">The path to the directory, containing model. </param>
     /// <param name="name">Model name. </param>
     /// <param name="version">Model version. </param>
-    /// <param name="token">Cancelation token</param>
+    /// <param name="cancellationToken">Cancelation token</param>
     /// <returns>Uploaded model URI</returns>
     /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="version"/> or  is null. </exception>
     /// <exception cref="ArgumentException"> <paramref name="name"/>, <paramref name="version"/> or <paramref name="path"/> is an empty string, and was expected to be non-empty. </exception>
-    public virtual async Task<Uri> UploadModelAsync(string path, string name, string version, CancellationToken token = default)
+    public virtual async Task<Uri> UploadModelAsync(string path, string name, string version, CancellationToken cancellationToken = default)
     {
         Argument.AssertNotNullOrEmpty(name, nameof(name));
         Argument.AssertNotNullOrEmpty(version, nameof(version));
@@ -148,15 +148,15 @@ public partial class AIProjectModels
         {
             throw new ArgumentException($"The provided folder does not exist: {path}");
         }
-        if (token.IsCancellationRequested)
+        if (cancellationToken.IsCancellationRequested)
         {
-            throw new OperationCanceledException("The model upload was canceled.");
+            throw new OperationCanceledException("The model upload was canceled.", cancellationToken);
         }
         ModelPendingUploadResult uploadResponse = await StartModelPendingUploadAsync(
             name: name,
             version: version,
             pendingUploadRequest: new(),
-            cancellationToken: token
+            cancellationToken: cancellationToken
         ).ConfigureAwait(false);
         BlobContainerClient client = GetContainerClientOrRaise(uploadResponse);
 
@@ -168,7 +168,7 @@ public partial class AIProjectModels
             using (FileStream fileStream = File.OpenRead(filePath))
             {
                 blobClient = client.GetBlobClient(fileName);
-                await blobClient.UploadAsync(fileStream, token).ConfigureAwait(false);
+                await blobClient.UploadAsync(fileStream, cancellationToken).ConfigureAwait(false);
                 filesUploaded = true;
             }
         }

@@ -9,12 +9,13 @@ using System.Diagnostics;
 using System.Diagnostics.Metrics;
 using System.Globalization;
 using System.IO;
+using System.Linq;
+using System.Net.Http;
 using System.Text.Encodings.Web;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.AI.Projects.Agents;
 using Azure.Core;
 using static Azure.AI.Projects.Agents.Telemetry.OpenTelemetryConstants;
 
@@ -278,6 +279,40 @@ namespace Azure.AI.Projects.Agents.Telemetry
             content.WriteTo(memoryStream, CancellationToken.None);
             memoryStream.Position = 0;
             BinaryData binaryData = BinaryData.FromStream(memoryStream);
+            if (content is MultiPartFormDataBinaryContent multiPartFormContent)
+            {
+                string boundary = null;
+                if (multiPartFormContent.HttpContent is MultipartFormDataContent httpContent)
+                {
+                    boundary = httpContent.Headers.ContentType?.Parameters
+                        .FirstOrDefault(x => string.Equals(x.Name, "boundary", StringComparison.InvariantCultureIgnoreCase))
+                        .Value?.Trim('"');
+                }
+                if (string.IsNullOrEmpty(boundary))
+                {
+                    return null;
+                }
+                else
+                {
+                    // We cannot just parse MultipartFormDataContent, because its parts cannot be deserialized
+                    // to stream in sync manner due to netstandard2.0 limitation.
+                    string[] parts  = binaryData.ToString().Split(separator: [$"--{boundary}"], options: StringSplitOptions.RemoveEmptyEntries);
+                    binaryData = null;
+                    foreach (string part in parts)
+                    {
+                        if (part.Trim().StartsWith("Content-Type: application/json", StringComparison.InvariantCultureIgnoreCase) && part.Contains('{'))
+                        {
+                            // Only copy JSON part to the binary data.
+                            binaryData = BinaryData.FromString(part.Substring(part.IndexOf('{')));
+                            break;
+                        }
+                    }
+                }
+                if (binaryData == null)
+                {
+                    return null;
+                }
+            }
             ProjectsAgentVersionCreationOptions creationOptions = ModelReaderWriter.Read<ProjectsAgentVersionCreationOptions>(
                 binaryData,
                 ModelSerializationExtensions.WireOptions,
