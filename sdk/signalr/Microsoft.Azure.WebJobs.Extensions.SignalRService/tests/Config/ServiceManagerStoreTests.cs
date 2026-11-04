@@ -94,7 +94,7 @@ namespace SignalRServiceExtension.Tests
             Assert.IsType<NewtonsoftJsonObjectSerializer>(resultOptions.ObjectSerializer);
         }
 
-        [Fact]
+        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/64528")]
         public async void TestConfigurationHotReload()
         {
             var mock = new Mock<IEndpointRouter>();
