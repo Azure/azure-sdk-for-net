@@ -1,0 +1,25 @@
+{
+  "displayNames": {
+    "/p:UseProjectReferenceToAzureClients=false": "PackageRef"
+  },
+  "matrix": {
+    "Agent": {
+      "Ubuntu-24.04_NET10.0": {
+        "OSVmImage": "env:LINUXVMIMAGE",
+        "Pool": "env:LINUXPOOL",
+        "TestTargetFramework": "net10.0"
+      }
+    },
+    "BuildConfiguration": [
+      "Debug"
+    ],
+    "AdditionalTestArguments": [
+      "/p:UseProjectReferenceToAzureClients=false"
+    ],
+    "SampleSelector": [
+      "ProjectsAuthenticate",
+      "AgentsVersionSelection",
+      "OpenAIClientCreation"
+    ]
+  }
+}

@@ -57,6 +57,11 @@ extends:
     UseFederatedAuth: false
     EnvVars:
       CLIENTMODEL_TEST_MODE: Live
+    MatrixConfigs:
+      - Name: ai_projects_samples_single_run
+        Path: sdk/ai/Azure.AI.Projects/tests/Samples/ci/sample-slice-matrix.json
+        Selection: sparse
+        GenerateVMJobs: true
     MatrixFilters:
       - AdditionalTestArguments=^(?!.*UseProjectReferenceToAzureClients=true)
       - TestTargetFramework=^net10.0$
@@ -100,6 +105,16 @@ extends:
           }
           else {
             throw "Unsupported selectionKind: $selectionKind"
+          }
+
+          if ($env:SampleSelector -eq 'ProjectsAuthenticate') {
+            $additionalTestFilters = '((FullyQualifiedName~Azure.AI.Projects.Tests.Samples & Name=Authenticate))'
+          }
+          elseif ($env:SampleSelector -eq 'AgentsVersionSelection') {
+            $additionalTestFilters = '((FullyQualifiedName~Azure.AI.Projects.Agents.Tests.Samples & Name=VersionSelection))'
+          }
+          elseif ($env:SampleSelector -eq 'OpenAIClientCreation') {
+            $additionalTestFilters = '((FullyQualifiedName~Azure.AI.Extensions.OpenAI.Tests.Samples & Name=CreateAgentClientFromProjectsClient))'
           }
 
           $validationEndpoint = $env:LLM_VALIDATION_PROJECT_ENDPOINT
