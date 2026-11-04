@@ -29,10 +29,10 @@ namespace Azure.Data.AI
     }
     public partial class InferenceClientOptions : Azure.Core.ClientOptions
     {
-        public InferenceClientOptions(Azure.Data.AI.InferenceClientOptions.ServiceVersion version = Azure.Data.AI.InferenceClientOptions.ServiceVersion.V2026_09_01_Preview) { }
+        public InferenceClientOptions(Azure.Data.AI.InferenceClientOptions.ServiceVersion version = Azure.Data.AI.InferenceClientOptions.ServiceVersion.V2026_10_30) { }
         public enum ServiceVersion
         {
-            V2026_09_01_Preview = 1,
+            V2026_10_30 = 1,
         }
     }
     public partial class InferenceClientSettings : System.ClientModel.Primitives.ClientSettings

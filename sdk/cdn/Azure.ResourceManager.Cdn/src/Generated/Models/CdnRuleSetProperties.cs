@@ -12,11 +12,12 @@ using Azure.ResourceManager.Cdn;
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> The JSON object that contains the properties of the Rule Set to create. </summary>
-    public partial class CdnRuleSetProperties : FrontDoorStateProperties
+    internal partial class CdnRuleSetProperties : FrontDoorStateProperties
     {
         /// <summary> Initializes a new instance of <see cref="CdnRuleSetProperties"/>. </summary>
-        internal CdnRuleSetProperties()
+        public CdnRuleSetProperties()
         {
+            Rules = new ChangeTrackingList<BatchRuleProperties>();
         }
 
         /// <summary> Initializes a new instance of <see cref="CdnRuleSetProperties"/>. </summary>
@@ -24,13 +25,41 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="deploymentStatus"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="profileName"> The name of the profile which holds the rule set. </param>
-        internal CdnRuleSetProperties(FrontDoorProvisioningState? provisioningState, FrontDoorDeploymentStatus? deploymentStatus, IDictionary<string, BinaryData> additionalBinaryDataProperties, string profileName) : base(provisioningState, deploymentStatus, additionalBinaryDataProperties)
+        /// <param name="isBatchMode">
+        /// Indicates whether rule set is in batch mode. When batch mode is enabled, rules will be processed in a batch along with the rule set.
+        /// When batch mode is disabled, rules would need to be processed independently.
+        /// This property can only be set during rule set creation and cannot be updated later.
+        /// For switching modes, a new rule set needs to be created with the desired mode and rules need to be migrated to the new rule set.
+        /// </param>
+        /// <param name="rules">
+        /// A list of rules that are part of this rule set provided the rule set is in batch mode.
+        /// This property will be ignored if the rule set is not in batch mode.
+        /// </param>
+        internal CdnRuleSetProperties(FrontDoorProvisioningState? provisioningState, FrontDoorDeploymentStatus? deploymentStatus, IDictionary<string, BinaryData> additionalBinaryDataProperties, string profileName, bool? isBatchMode, IList<BatchRuleProperties> rules) : base(provisioningState, deploymentStatus, additionalBinaryDataProperties)
         {
             ProfileName = profileName;
+            IsBatchMode = isBatchMode;
+            Rules = rules;
         }
 
         /// <summary> The name of the profile which holds the rule set. </summary>
         [WirePath("profileName")]
         public string ProfileName { get; }
+
+        /// <summary>
+        /// Indicates whether rule set is in batch mode. When batch mode is enabled, rules will be processed in a batch along with the rule set.
+        /// When batch mode is disabled, rules would need to be processed independently.
+        /// This property can only be set during rule set creation and cannot be updated later.
+        /// For switching modes, a new rule set needs to be created with the desired mode and rules need to be migrated to the new rule set.
+        /// </summary>
+        [WirePath("batchMode")]
+        public bool? IsBatchMode { get; set; }
+
+        /// <summary>
+        /// A list of rules that are part of this rule set provided the rule set is in batch mode.
+        /// This property will be ignored if the rule set is not in batch mode.
+        /// </summary>
+        [WirePath("rules")]
+        public IList<BatchRuleProperties> Rules { get; } = new ChangeTrackingList<BatchRuleProperties>();
     }
 }

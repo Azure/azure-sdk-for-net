@@ -49,6 +49,24 @@ namespace Azure.ResourceManager.Network.Models
         internal NetworkSubResource DdosProtectionPlan { get; set; }
 
         /// <summary> Resource ID. </summary>
+        [WirePath("ddosCustomPolicy.id")]
+        public ResourceIdentifier DdosCustomPolicyId
+        {
+            get
+            {
+                return DdosCustomPolicy is null ? default : DdosCustomPolicy.Id;
+            }
+            set
+            {
+                if (DdosCustomPolicy is null)
+                {
+                    DdosCustomPolicy = new NetworkSubResource();
+                }
+                DdosCustomPolicy.Id = value;
+            }
+        }
+
+        /// <summary> Resource ID. </summary>
         [WirePath("ddosProtectionPlan.id")]
         public ResourceIdentifier DdosProtectionPlanId
         {

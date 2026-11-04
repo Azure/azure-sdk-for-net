@@ -1,13 +1,16 @@
-# Migration guide: `Azure.AI.Extensions.OpenAI` 2.x to 3.0.0-beta.1
+# Migration guide: `Azure.AI.Extensions.OpenAI` 2.x to 3.x
 
-This guide helps you upgrade from the 2.x releases of `Azure.AI.Extensions.OpenAI` to `3.0.0-beta.1`.
+This guide helps you upgrade from the 2.x releases of `Azure.AI.Extensions.OpenAI` to 3.x.
+The migration began in `3.0.0-beta.1`; the current source version is `3.0.0-beta.6` (unreleased),
+with an `OpenAI` 2.14.0 dependency.
 
 ## Overview
 
 Through the 2.x line, `Azure.AI.Extensions.OpenAI` shipped its own generated copies of the OpenAI
-Responses object model (response items, tools, and the conversation types), each prefixed with
-`Responses` or `Agent`. Starting with `3.0.0-beta.1`, the library instead **consumes those types
-directly from the official [`OpenAI`](https://www.nuget.org/packages/OpenAI) .NET library (2.12.0)**.
+Responses object model (response items, tools, and the conversation types), including types prefixed with
+`Responses`, `Agent`, or `Project`. Starting with `3.0.0-beta.1`, the library instead **consumes those types
+directly from the official [`OpenAI`](https://www.nuget.org/packages/OpenAI) .NET library**.
+That first 3.x preview depended on OpenAI 2.12.0; the current source depends on 2.14.0.
 
 This is a large, deliberately breaking change. The benefits:
 
@@ -24,17 +27,19 @@ The changes fall into four categories, each covered below:
 3. [Azure tool and model types were renamed](#3-azure-tool-and-model-types-were-renamed)
 4. [Client options](#4-client-options)
 
-There is also guidance on [preview tool kinds that were temporarily dropped](#preview-tool-kinds-temporarily-unavailable)
+There is also guidance on [custom tools and preview tool availability](#custom-tools-and-preview-tool-availability)
 and on [experimental APIs](#experimental-apis).
 
 ## Update your package references
 
-`3.0.0-beta.1` depends on `OpenAI` 2.12.0. If you reference the `OpenAI` package directly, ensure it
-is at 2.12.0 or later:
+Use the OpenAI dependency version required by the Extensions version you install. The example below
+uses the latest released Extensions preview, `3.0.0-beta.5`, with `OpenAI` 2.14.0. The current
+`3.0.0-beta.6` source is unreleased and also depends on 2.14.0. If you reference `OpenAI` directly,
+use 2.14.0 or later with this dependency; 2.12.0 was the dependency of the historical `3.0.0-beta.1`.
 
 ```xml
-<PackageReference Include="Azure.AI.Extensions.OpenAI" Version="3.0.0-beta.1" />
-<PackageReference Include="OpenAI" Version="2.12.0" />
+<PackageReference Include="Azure.AI.Extensions.OpenAI" Version="3.0.0-beta.5" />
+<PackageReference Include="OpenAI" Version="2.14.0" />
 ```
 
 Add the relevant `OpenAI` namespaces where you previously relied on Azure-emitted equivalents:
@@ -75,7 +80,7 @@ foreach (ResponseItem item in response.OutputItems)
 }
 ```
 
-After (3.0.0-beta.1):
+After (3.x):
 
 ```csharp
 foreach (ResponseItem item in response.OutputItems)
@@ -120,15 +125,20 @@ foreach (ResponseItem item in response.OutputItems)
 }
 
 // Request-level metadata (settable).
-CreateResponseOptions options = new(inputItems);
+CreateResponseOptions options = new();
+foreach (ResponseItem inputItem in inputItems)
+{
+    options.InputItems.Add(inputItem);
+}
 options.Agent = new AgentReference(FOUNDRY_AGENT_NAME);
 options.AgentConversationId = conversation.Id;
 options.SessionId = sessionId;
 ```
 
 If you previously *assigned* `AgentResponseItem.AgentReference` or `AgentResponseItem.ResponseId`,
-there is no replacement on the item; set the corresponding value on `CreateResponseOptions` instead.
-`CreateResponseOptions.SessionId` is new in `3.0.0-beta.1` and lets you scope a response to a specific
+there is no public setter on the item. Configure request-level agent and conversation metadata on
+`CreateResponseOptions` instead; these are not setters for an output item's source `ResponseId`.
+`CreateResponseOptions.SessionId` was introduced in `3.0.0-beta.1` and lets you scope a response to a specific
 session.
 
 ### Built-in tools now come from OpenAI
@@ -144,7 +154,7 @@ Azure-specific Foundry tools are unaffected apart from the renames in section 3.
 The `ProjectConversation`, `ProjectConversationCreationOptions`, and `ProjectConversationUpdateOptions`
 types were **removed** and replaced by the upstream conversation types from `OpenAI.Conversations`:
 
-| Old (2.x) | New (3.0.0-beta.1) |
+| Old (2.x) | New (3.x) |
 | --- | --- |
 | `ProjectConversation` | `OpenAI.Conversations.ConversationResource` |
 | `ProjectConversationCreationOptions` | `OpenAI.Conversations.ConversationCreationOptions` |
@@ -172,7 +182,7 @@ ProjectResponsesClient responseClient = projectClient.ProjectOpenAIClient
     .GetProjectResponsesClientForAgent(FOUNDRY_AGENT_NAME, conversation);
 ```
 
-After (3.0.0-beta.1):
+After (3.x):
 
 ```csharp
 ConversationCreationOptions conversationOptions = new()
@@ -200,12 +210,13 @@ the upstream `OpenAI.Responses` types. A few names were normalized further:
 - `...Configuration` and `...ConnectionParameters` on the Bing and browser-automation search shapes
   became `...Options`.
 - `...AuthDetails` became `...AuthenticationDetails`.
-- `Sharepoint` became `SharePoint` (on the options type), and `OpenApi` became `OpenAPI` on the tool
-  type name.
+- `Sharepoint` became `SharePoint` on the tool, options, and response-item type names.
+- OpenAPI model names consistently use `OpenApi`, including `OpenApiTool` and
+  `OpenApiAnonymousAuthenticationDetails`.
 
 Full mapping (old to new):
 
-| Old (2.x) | New (3.0.0-beta.1) |
+| Old (2.x) | New (3.x) |
 | --- | --- |
 | `ResponsesA2APreviewTool` | `A2APreviewTool` |
 | `ResponsesAzureAISearchQueryKind` | `AzureAISearchQueryKind` |
@@ -229,10 +240,10 @@ Full mapping (old to new):
 | `ResponsesCaptureStructuredOutputsTool` | `CaptureStructuredOutputsTool` |
 | `ResponsesFabricDataAgentToolOptions` | `FabricDataAgentToolOptions` |
 | `ResponsesFabricIQPreviewTool` | `FabricIQPreviewTool` |
-| `ResponsesMemorySearchOptions` | `MemorySearchOptions` |
+| `ResponsesMemorySearchOptions` | `MemorySearchResultOptions` |
 | `ResponsesMemorySearchPreviewTool` | `MemorySearchPreviewTool` |
 | `ResponsesMicrosoftFabricPreviewTool` | `MicrosoftFabricPreviewTool` |
-| `ResponsesOpenApiAnonymousAuthDetails` | `OpenAPIAnonymousAuthenticationDetails` |
+| `ResponsesOpenApiAnonymousAuthDetails` | `OpenApiAnonymousAuthenticationDetails` |
 | `ResponsesOpenApiAuthDetails` | `OpenApiAuthenticationDetails` |
 | `ResponsesOpenApiFunctionDefinition` | `OpenApiFunctionDefinition` |
 | `ResponsesOpenApiFunctionDefinitionFunction` | `OpenApiFunctionDefinitionFunction` |
@@ -240,17 +251,19 @@ Full mapping (old to new):
 | `ResponsesOpenApiManagedSecurityScheme` | `OpenApiManagedSecurityScheme` |
 | `ResponsesOpenApiProjectConnectionAuthDetails` | `OpenApiProjectConnectionAuthenticationDetails` |
 | `ResponsesOpenApiProjectConnectionSecurityScheme` | `OpenApiProjectConnectionSecurityScheme` |
-| `ResponsesOpenApiTool` | `OpenAPITool` |
+| `ResponsesOpenApiTool` | `OpenApiTool` |
 | `ResponsesSharepointGroundingToolParameters` | `SharePointGroundingToolOptions` |
-| `ResponsesSharepointPreviewTool` | `SharepointPreviewTool` |
+| `ResponsesSharepointPreviewTool` | `SharePointPreviewTool` |
 | `ResponsesStructuredOutputDefinition` | `StructuredOutputDefinition` |
 | `ResponsesToolProjectConnection` | `ToolProjectConnection` |
 | `ResponsesWebSearchConfiguration` | `WebSearchConfiguration` |
 | `ResponsesWorkIQPreviewTool` | `WorkIQPreviewTool` |
 
-The `...ToolCall` and `...ToolCallOutput` response-item types (for example `BingGroundingToolCall`,
-`AzureAISearchToolCallOutput`) keep their names; only their base type changed from `AgentResponseItem`
-to `OpenAI.Responses.ResponseItem` as described in section 1.
+Most `...ToolCall` and `...ToolCallOutput` response-item types (for example `BingGroundingToolCall`,
+`AzureAISearchToolCallOutput`) keep their names; their base type changed from `AgentResponseItem`
+to `OpenAI.Responses.ResponseItem` as described in section 1. The SharePoint items were also renamed:
+`SharepointGroundingToolCall` became `SharePointGroundingToolCall`, and
+`SharepointGroundingToolCallOutput` became `SharePointGroundingToolCallOutput`.
 
 Before (2.x):
 
@@ -260,7 +273,7 @@ ResponsesBingGroundingTool bingGroundingAgentTool = new(new ResponsesBingGroundi
 ));
 ```
 
-After (3.0.0-beta.1):
+After (3.x):
 
 ```csharp
 BingGroundingTool bingGroundingAgentTool = new(new BingGroundingSearchToolOptions(
@@ -272,19 +285,22 @@ BingGroundingTool bingGroundingAgentTool = new(new BingGroundingSearchToolOption
 
 A few members were renamed alongside their declaring types:
 
-| Type | Old member (2.x) | New member (3.0.0-beta.1) |
+| Type | Old member (2.x) | New member (3.x) |
 | --- | --- | --- |
 | `OpenApiFunctionDefinition` | `Auth` (and the `auth` constructor parameter) | `Authentication` (and `authentication`) |
 | `OpenApiFunctionDefinition` | `DefaultParams` | `DefaultParameters` |
 | `OpenApiAuthenticationDetails` | `Type` | `Kind` |
+| `SharePointPreviewTool` | `SharepointGroundingPreview` (and `sharepointGroundingPreview`) | `ToolOptions` (and `toolOptions`) |
+| `MicrosoftFabricPreviewTool` | `FabricDataagentPreview` (and `fabricDataagentPreview`) | `ToolOptions` (and `toolOptions`) |
 
-`OAuthConsentRequestResponseItem` also changed shape: the consent link is now the strongly-typed
-`Uri ConsentLink` property (previously the `internalConsentLink` string), and both `ConsentLink` and
-`Id` are now settable.
+`OpenApiFunctionDefinition.Specification` and its `specification` constructor parameter also changed
+from `IDictionary<string, BinaryData>` to `BinaryData`. Supply a JSON object as `BinaryData` rather
+than passing the old dictionary directly.
 
 Before (2.x):
 
 ```csharp
+// specification is an IDictionary<string, BinaryData> containing the OpenAPI document fields.
 ResponsesOpenApiFunctionDefinition openApiFunction = new(name, specification, auth)
 {
     DefaultParams = { "format" },
@@ -292,15 +308,49 @@ ResponsesOpenApiFunctionDefinition openApiFunction = new(name, specification, au
 ResponsesOpenApiAuthDetails details = openApiFunction.Auth;
 ```
 
-After (3.0.0-beta.1):
+After (3.x):
 
 ```csharp
+BinaryData specification = BinaryData.FromString(openApiDocumentJson);
 OpenApiFunctionDefinition openApiFunction = new(name, specification, authentication)
 {
     DefaultParameters = { "format" },
 };
 OpenApiAuthenticationDetails details = openApiFunction.Authentication;
 ```
+
+Here, `openApiDocumentJson` is the complete OpenAPI document as JSON. If converting an existing
+dictionary whose values are JSON-encoded `BinaryData`, preserve those values as JSON rather than
+serializing their byte representation.
+
+### Memory migration from earlier 2.x releases
+
+The replacement of `MemorySearchToolCallResponseItem` by `MemorySearchToolCall`,
+`MemoryCommandToolCall`, and `MemoryCommandToolCallOutput`, and removal of `MemoryToolSearchItem`,
+were already announced in `2.1.0-beta.3`. They are not newly introduced 3.0 changes, but applications
+migrating from 2.0.0 still need to account for them.
+
+Search results no longer have a `MemoryToolSearchItem` wrapper. Access the `MemoryOutputItem`
+directly through `MemorySearchToolCall.Memories`:
+
+```csharp
+// Before (2.0.0): memoryCall is a MemorySearchToolCallResponseItem.
+MemoryOutputItem memory = memoryCall.Results[i].MemoryItem;
+```
+
+```csharp
+// After: memoryCall is a MemorySearchToolCall.
+MemoryOutputItem memory = memoryCall.Memories[i];
+```
+
+The old extensible `MemorySearchToolCallStatus` was replaced by the `ToolCallStatus` enum, whose
+values are `InProgress`, `Completed`, `Incomplete`, and `Failed`. The old `Searching` value has no
+named equivalent; update status-handling code rather than referring to the retired type or value.
+
+The current memory APIs require acknowledgement of `AAIP001`, including `MemorySearchPreviewTool`,
+`MemorySearchResultOptions`, the memory search/command response items, `MemoryOutputItem`, and its
+concrete subtypes. Some earlier memory APIs shipped without the intended experimental marker;
+its presence now is a correction to experimental status, not a restoration of the old model.
 
 ## 4. Client options
 
@@ -309,10 +359,7 @@ OpenApiAuthenticationDetails details = openApiFunction.Authentication;
 `ProjectResponsesClientOptions` now derives from `OpenAI.Responses.ResponsesClientOptions` (instead of
 `ProjectOpenAIClientOptions`):
 
-- `ProjectResponsesClientOptions` derives from `OpenAI.Responses.ResponsesClientOptions`. There is an
-  implicit conversion from `ProjectOpenAIClientOptions` that copies all public configuration (endpoint,
-  organization/project IDs, user-agent application ID, pipeline/retry/logging/transport settings,
-  network timeout, distributed tracing flag, `ApiVersion`, and `AgentName`). `ProjectResponsesClient`
+- `ProjectResponsesClientOptions` derives from `OpenAI.Responses.ResponsesClientOptions`. `ProjectResponsesClient`
   constructors accept it, including parameterless-options overloads.
 - Because `ProjectResponsesClientOptions` no longer derives from `ProjectOpenAIClientOptions`, it can no
   longer be passed to the `ProjectOpenAIClient` constructor; use `ProjectOpenAIClientOptions` there.
@@ -327,25 +374,39 @@ ProjectOpenAIClient openAIClient = new(projectEndpoint, tokenProvider, options);
 ProjectResponsesClient client = new(projectEndpoint, tokenProvider, options);
 ```
 
-After (3.0.0-beta.1):
+After (3.x), when sharing root-client configuration:
 
 ```csharp
 // ProjectOpenAIClient requires ProjectOpenAIClientOptions.
 ProjectOpenAIClientOptions openAIOptions = new();
 ProjectOpenAIClient openAIClient = new(projectEndpoint, tokenProvider, openAIOptions);
+ProjectResponsesClient client = openAIClient.GetProjectResponsesClient();
+```
 
-// ProjectResponsesClientOptions is still accepted by ProjectResponsesClient, and
-// ProjectOpenAIClientOptions converts implicitly if you want to share configuration.
-ProjectResponsesClientOptions responsesOptions = openAIOptions;
+Configure `openAIOptions` before constructing the root client. The factory reuses that client's
+existing pipeline, including its transport and custom policies.
+
+When constructing clients independently, create and configure one options instance of each type:
+
+```csharp
+ProjectOpenAIClientOptions openAIOptions = new();
+ProjectResponsesClientOptions responsesOptions = new();
+// Configure each options instance before constructing its client.
+ProjectOpenAIClient openAIClient = new(projectEndpoint, tokenProvider, openAIOptions);
 ProjectResponsesClient client = new(projectEndpoint, tokenProvider, responsesOptions);
 ```
+
+These clients are independently configured. Setting a transport, retry policy, custom pipeline policy,
+or another option on `openAIOptions` does not configure `responsesOptions`. Use the root factory when
+shared-pipeline behavior is intended. These Responses client/options/factory paths require
+`OPENAI001`; individual response calls may additionally require `AAIP001`.
 
 ## Code-interpreter container settings
 
 The generated code-interpreter container types were replaced by the upstream Responses container
 configuration and the equivalent container-management value types:
 
-| Old (2.x) | New (3.0.0-beta.1) |
+| Old (2.x) | New (3.x) |
 | --- | --- |
 | `ResponsesAutoCodeInterpreterToolParam` | `OpenAI.Responses.AutomaticCodeInterpreterToolContainerConfiguration` |
 | `ResponsesContainerMemoryLimit` | `OpenAI.Containers.ContainerMemoryLimit` |
@@ -385,13 +446,26 @@ ResponseTool codeInterpreterTool = ResponseTool.CreateCodeInterpreterTool(
 Use `new ContainerDisabledNetworkPolicy()` when the container should have no network access. File IDs
 and container-ID selection continue to use the upstream `OpenAI.Responses` APIs.
 
-## Preview tool kinds temporarily unavailable
+## Custom tools and preview tool availability
 
-Some preview Responses tool kinds have no equivalent in `OpenAI` 2.12.0, so mapping onto the upstream
-types dropped their strongly-typed request/response classes. These are:
+The initial migration to OpenAI 2.12.0 dropped some generated preview request/response classes.
+Availability depends on the upstream version, not just on the Extensions major version.
 
-- **Custom tools + grammar:** `ResponsesCustomToolParam`, `ResponsesCustomTextFormatParam`,
-  `CustomGrammarFormatParam`, `OutputItemCustomToolCallOutputResource`.
+OpenAI 2.14.0 now provides strongly-typed custom tools, including text and grammar formats:
+
+| Removed Extensions type | OpenAI 2.14.0 type in `OpenAI.Responses` |
+| --- | --- |
+| `ResponsesCustomToolParam` | `CustomTool` |
+| `ResponsesCustomTextFormatParam` | `CustomToolTextFormat` |
+| `CustomGrammarFormatParam` | `CustomToolGrammarFormat` |
+| `OutputItemCustomToolCallOutputResource` | `CustomToolCallOutputItem` |
+
+Use `CustomToolCallItem` for custom-tool calls. These are upstream types, not restored copies of the
+removed Extensions models.
+
+The following formerly generated preview models still have no strongly-typed equivalents in
+OpenAI 2.14.0:
+
 - **`local_shell` / `shell` tools:** `ResponsesLocalShellToolParam`, `ResponsesFunctionShellToolParam`
   (and its environment variants), `OutputItemLocalShellToolCallOutput`.
 - **`namespace` tool:** `ResponsesNamespaceToolParam`.
@@ -400,33 +474,69 @@ types dropped their strongly-typed request/response classes. These are:
 - **Skills:** `ResponsesInlineSkillParam`, `ResponsesInlineSkillSourceParam`,
   `ResponsesSkillReferenceParam`, `LocalSkillParam`.
 
-These capabilities remain reachable on the wire because the corresponding tool kind is an extensible
-enum and the tool slots accept a raw object payload — but strongly-typed construction is not
-available. Native support for each will return once the upstream OpenAI .NET SDK models the tool kind.
+For service-supported capabilities without a strongly-typed model, use protocol overloads with
+`BinaryContent` containing the required JSON payload. An extensible tool-kind value alone does not
+provide strongly-typed construction. Check the upstream API surface when upgrading OpenAI versions.
 This does not affect the Azure Foundry toolbox search feature, which remains available (surfaced as
 `OpenAI.Responses.ResponseToolKind.ToolboxSearchPreview`).
 
+## Content-filter configuration package migration
+
+`Azure.AI.Extensions.OpenAI.ContentFilterConfiguration` was removed entirely; it was not made
+internal. For `ToolboxPolicies.RaiConfig`, use the separate, existing public
+`Azure.AI.Projects.Agents.ContentFilterConfiguration` model. That model already exists in Agents 2.0;
+this is not an automatic type forward or a newly introduced Agents type.
+
+| Removed Extensions API | Existing Agents counterpart |
+| --- | --- |
+| `Azure.AI.Extensions.OpenAI.ContentFilterConfiguration` | `Azure.AI.Projects.Agents.ContentFilterConfiguration` |
+| Constructor parameter `policyName` | Constructor parameter `raiPolicyName` |
+| Property `PolicyName` | Property `RaiPolicyName` |
+
+Add a reference to the `Azure.AI.Projects.Agents` package and import its namespace:
+
+```csharp
+using Azure.AI.Projects.Agents;
+
+ContentFilterConfiguration configuration = new(raiPolicyName: policyName);
+ToolboxPolicies policies = new() { RaiConfig = configuration };
+```
+
+The supported `ToolboxPolicies.RaiConfig` functionality remains in the Agents package; do not restore
+the removed Extensions model or remove the live Agents model as part of this migration.
+
 ## Experimental APIs
 
-Parts of this library are marked with `[Experimental]` and must be explicitly acknowledged before you
-can compile against them. Two diagnostic IDs are used:
+Parts of this library and its dependencies are marked with `[Experimental]` and must be explicitly
+acknowledged before you can compile against them. The applicable diagnostics depend on the API used:
 
 | Diagnostic | Applies to |
 | --- | --- |
-| `AAIP001` | Response-normalization surfaces, `ProjectResponsesClient`, the `CreateResponse`/`CreateResponseAsync` extension overloads that take a `ConversationResource`, the extension-member classes, and the preview Foundry tool/item types (A2A, SharePoint, Fabric data agent, memory, Azure Function, browser automation, Bing custom search, ...). |
+| `OPENAI001` | Upstream OpenAI preview surfaces; also the Extensions `ProjectResponsesClient`, `ProjectResponsesClientOptions`, `ProjectConversationsClient`, the Responses/conversation factories on `ProjectOpenAIClient`, `ResponseItemExtensions`, `ResponseResultExtensions`, and the response/tool-kind extension classes. |
+| `AAIP001` | Response creation/normalization methods, the `CreateResponse`/`CreateResponseAsync` extension overloads that take a `ConversationResource`, `CreateResponseOptionsExtensions`, automatic-container configuration extensions, and preview Foundry tool/item types (A2A, SharePoint, Fabric data agent, memory, Azure Function, browser automation, Bing custom search, ...). |
 | `AAIP002` | The remaining Azure tool and response-item models, including `BingGroundingTool`, `AzureAISearchTool`, `CaptureStructuredOutputsTool`, `OAuthConsentRequestResponseItem`, `AgentStructuredOutputsResponseItem`, `AgentWorkflowPreviewActionResponseItem`, and their `...ToolCall`/`...ToolCallOutput` types. |
+| `SCME0001` | Extension properties backed by the experimental `System.ClientModel` JSON patch APIs. |
 
-Suppress the IDs you use — for example with `#pragma warning disable AAIP001, AAIP002` around the call
-site, or by adding them to `<NoWarn>` in your project. Code that only suppressed `AAIP001` against an
-earlier `3.0.0-beta.1` drop must add `AAIP002`.
+Suppress only the IDs required by the APIs you use, with `#pragma warning disable` around the call
+site or by adding them to `<NoWarn>` in your project. For example, constructing the root client and
+obtaining its Responses client requires only `OPENAI001` for the APIs shown:
 
-Extension properties additionally surface the .NET `SCME0001` experimental diagnostic from
-`System.ClientModel`, and upstream OpenAI preview surfaces use `OPENAI001`; suppress those as well if
-you consume them. Experimental APIs may change in a later release.
+```csharp
+#pragma warning disable OPENAI001
+ProjectOpenAIClientOptions openAIOptions = new();
+ProjectOpenAIClient openAIClient = new(projectEndpoint, tokenProvider, openAIOptions);
+ProjectResponsesClient client = openAIClient.GetProjectResponsesClient();
+#pragma warning restore OPENAI001
+```
+
+Calling response methods, accessing extension properties, or constructing Azure tools can require
+additional diagnostics from the table. In particular, memory models require `AAIP001`, and callers
+using `AAIP002` models must acknowledge that ID even if older code suppressed only `AAIP001`.
+Experimental APIs may change in a later release.
 
 ## Getting help
 
 If you hit a migration issue not covered here, please
 [open an issue](https://github.com/Azure/azure-sdk-for-net/issues/new/choose) with the
 `Azure.AI.Extensions.OpenAI` label. See the [CHANGELOG](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/ai/Azure.AI.Extensions.OpenAI/CHANGELOG.md) for the complete list of
-changes in this release.
+changes in each release.

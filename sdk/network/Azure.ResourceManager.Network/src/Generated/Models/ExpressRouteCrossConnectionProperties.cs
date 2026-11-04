@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="provisioningState"> The provisioning state of the express route cross connection resource. </param>
         /// <param name="peerings"> The list of peerings. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ExpressRouteCrossConnectionProperties(string primaryAzurePort, string secondaryAzurePort, int? sTag, string peeringLocation, int? bandwidthInMbps, ResourceIdentifier expressRouteCircuit, ServiceProviderProvisioningState? serviceProviderProvisioningState, string serviceProviderNotes, NetworkProvisioningState? provisioningState, IList<ExpressRouteCrossConnectionPeeringData> peerings, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ExpressRouteCrossConnectionProperties(string primaryAzurePort, string secondaryAzurePort, int? sTag, string peeringLocation, int? bandwidthInMbps, ExpressRouteCircuitReference expressRouteCircuit, ServiceProviderProvisioningState? serviceProviderProvisioningState, string serviceProviderNotes, NetworkProvisioningState? provisioningState, IList<ExpressRouteCrossConnectionPeeringData> peerings, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             PrimaryAzurePort = primaryAzurePort;
             SecondaryAzurePort = secondaryAzurePort;
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> The ExpressRouteCircuit. </summary>
         [WirePath("expressRouteCircuit")]
-        public ResourceIdentifier ExpressRouteCircuit { get; set; }
+        internal ExpressRouteCircuitReference ExpressRouteCircuit { get; set; }
 
         /// <summary> The provisioning state of the circuit in the connectivity provider system. </summary>
         [WirePath("serviceProviderProvisioningState")]
@@ -90,5 +90,23 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> The list of peerings. </summary>
         [WirePath("peerings")]
         public IList<ExpressRouteCrossConnectionPeeringData> Peerings { get; } = new ChangeTrackingList<ExpressRouteCrossConnectionPeeringData>();
+
+        /// <summary> Corresponding Express Route Circuit Id. </summary>
+        [WirePath("expressRouteCircuit.id")]
+        public ResourceIdentifier ExpressRouteCircuitId
+        {
+            get
+            {
+                return ExpressRouteCircuit is null ? default : ExpressRouteCircuit.Id;
+            }
+            set
+            {
+                if (ExpressRouteCircuit is null)
+                {
+                    ExpressRouteCircuit = new ExpressRouteCircuitReference();
+                }
+                ExpressRouteCircuit.Id = value;
+            }
+        }
     }
 }

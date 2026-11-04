@@ -336,7 +336,7 @@ namespace Azure.AI.Projects.Agents
         [Experimental("SCME0004")]
         internal virtual ClientResult<ProjectsAgentVersion> CreateAgentVersionFromCode(string agentName, string codeZipSha256, CreateAgentVersionFromCodeContent content, CancellationToken cancellationToken = default)
         {
-            using MultiPartFormContent content0 = content.ToMultipartFormContent();
+            using MultiPartFormContent content0 = content.ToMultipartFormContent(new LifecycleModelReaderWriterOptions(LifecycleVisibility.Create, "W"));
             ClientResult result = CreateAgentVersionFromCode(agentName, codeZipSha256, content0, content0.MediaType, cancellationToken.ToRequestOptions());
             return ClientResult.FromValue((ProjectsAgentVersion)result, result.GetRawResponse());
         }
@@ -359,7 +359,7 @@ namespace Azure.AI.Projects.Agents
         [Experimental("SCME0004")]
         internal virtual async Task<ClientResult<ProjectsAgentVersion>> CreateAgentVersionFromCodeAsync(string agentName, string codeZipSha256, CreateAgentVersionFromCodeContent content, CancellationToken cancellationToken = default)
         {
-            using MultiPartFormContent content0 = content.ToMultipartFormContent();
+            using MultiPartFormContent content0 = content.ToMultipartFormContent(new LifecycleModelReaderWriterOptions(LifecycleVisibility.Create, "W"));
             ClientResult result = await CreateAgentVersionFromCodeAsync(agentName, codeZipSha256, content0, content0.MediaType, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
             return ClientResult.FromValue((ProjectsAgentVersion)result, result.GetRawResponse());
         }

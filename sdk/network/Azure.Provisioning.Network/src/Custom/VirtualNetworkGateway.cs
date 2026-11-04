@@ -8,13 +8,12 @@ namespace Azure.Provisioning.Network;
 
 public partial class VirtualNetworkGateway
 {
-    // Preserve the pre-TypeSpec property name because it maps to the same Bicep property as the generated member.
-    /// <inheritdoc cref="ActiveActive"/>
+    /// <inheritdoc cref="IsActive"/>
     [EditorBrowsable(EditorBrowsableState.Never)]
-    [Obsolete("This property is deprecated and it will be removed in a future version. Please use ActiveActive instead.")]
+    [Obsolete("This property is deprecated and it will be removed in a future version. Please use IsActive instead.")]
     public BicepValue<bool> Active
     {
-        get => ActiveActive;
-        set => ActiveActive = value;
+        get => IsActive;
+        set => IsActive = value;
     }
 }

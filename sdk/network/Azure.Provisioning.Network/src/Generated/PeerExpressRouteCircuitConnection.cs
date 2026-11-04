@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure;
 using Azure.Core;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
@@ -18,13 +19,13 @@ namespace Azure.Provisioning.Network
         private BicepValue<ResourceIdentifier> _id;
         private BicepValue<string> _name;
         private PeerExpressRouteCircuitConnectionPropertiesFormat _properties;
-        private BicepValue<string> _eTag;
+        private BicepValue<ETag> _eTag;
         private ResourceReference<ExpressRouteCircuitPeering> _parent;
 
         /// <summary> Creates a new PeerExpressRouteCircuitConnection. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
         /// <param name="resourceVersion"> The resource API version. </param>
-        internal PeerExpressRouteCircuitConnection(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.Network/expressRouteCircuits/peerings/peerConnections", resourceVersion ?? "2026-01-01")
+        internal PeerExpressRouteCircuitConnection(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.Network/expressRouteCircuits/peerings/peerConnections", resourceVersion ?? "2026-03-01")
         {
         }
 
@@ -64,7 +65,7 @@ namespace Azure.Provisioning.Network
         }
 
         /// <summary> Gets the ETag. </summary>
-        public BicepValue<string> ETag
+        public BicepValue<ETag> ETag
         {
             get
             {
@@ -158,8 +159,8 @@ namespace Azure.Provisioning.Network
             _id = DefineProperty<ResourceIdentifier>(nameof(Id), new string[] { "id" }, isOutput: true);
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _properties = DefineModelProperty<PeerExpressRouteCircuitConnectionPropertiesFormat>(nameof(Properties), new string[] { "properties" });
-            _eTag = DefineProperty<string>(nameof(ETag), new string[] { "etag" }, isOutput: true);
-            _parent = DefineResource<ExpressRouteCircuitPeering>(nameof(Parent), new string[] { "parent" }, isRequired: true);
+            _eTag = DefineProperty<ETag>(nameof(ETag), new string[] { "etag" }, isOutput: true);
+            _parent = DefineResource<ExpressRouteCircuitPeering>(nameof(Parent), new string[] { "parent" });
             DefineAdditionalProperties();
         }
 
@@ -179,6 +180,8 @@ namespace Azure.Provisioning.Network
         /// <summary></summary>
         public static partial class ResourceVersions
         {
+            /// <summary> API version "2026-03-01". </summary>
+            public static readonly string V2026_03_01 = "2026-03-01";
             /// <summary> API version "2026-01-01". </summary>
             public static readonly string V2026_01_01 = "2026-01-01";
             /// <summary> API version "2025-09-01". </summary>

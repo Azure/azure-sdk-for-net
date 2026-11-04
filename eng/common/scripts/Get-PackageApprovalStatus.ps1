@@ -4,6 +4,7 @@ Checks whether a package is approved for release.
 
 .DESCRIPTION
 Invokes the centralized Azure SDK CLI API review release gate and fails unless its structured result approves the package.
+Approval summary headings include the package name and version to distinguish packages in CI logs.
 
 .PARAMETER PackageInfoFiles
 Package-info JSON files containing the package name, version, and optional API hash.
@@ -58,25 +59,25 @@ function Write-BackendStatus([string] $Name, [object] $Status) {
     }
 }
 
-function Write-ApprovalSummary([object] $Response) {
+function Write-ApprovalSummary([object] $Response, [string] $PackageName, [string] $PackageVersion) {
     $result = $Response.result
     $source = if ($result.PSObject.Properties["finalSource"]) { $result.finalSource } else { "unknown" }
     $reason = if ($result.PSObject.Properties["reason"]) { $result.reason } else { "none" }
 
     Write-Host ""
-    Write-Host "Approval results"
+    Write-Host "Approval Results ($PackageName $PackageVersion)"
     Write-Host "----------------"
     if ($result.PSObject.Properties["reviewHub"]) {
-        Write-BackendStatus "API Review Hub" $result.reviewHub
+        Write-BackendStatus "API Review Hub ($PackageName $PackageVersion)" $result.reviewHub
     }
     if ($result.PSObject.Properties["apiView"]) {
         Write-Host ""
-        Write-BackendStatus "APIView" $result.apiView
+        Write-BackendStatus "APIView ($PackageName $PackageVersion)" $result.apiView
     }
 
     $approval = if ($result.isApproved) { "APPROVED" } else { "NOT APPROVED" }
     Write-Host ""
-    Write-Host "Overall"
+    Write-Host "Overall ($PackageName $PackageVersion)"
     Write-Host "  Status: $approval"
     Write-Host "  Source: $source"
     Write-Host "  Reason: $reason"
@@ -120,7 +121,7 @@ function Test-PackageApproval([string] $PackageName, [string] $PackageVersion, [
         $null -ne $response.result -and
         $response.result.PSObject.Properties["isApproved"] -and
         $response.result.isApproved -is [bool]) {
-        Write-ApprovalSummary $response
+        Write-ApprovalSummary $response $PackageName $PackageVersion
     }
 
     if ($exitCode -ne 0) {

@@ -382,7 +382,7 @@ namespace Azure.Provisioning.HealthcareApis
             _eTag = DefineProperty<ETag>(nameof(ETag), new string[] { "etag" });
             _identity = DefineModelProperty<ManagedServiceIdentity>(nameof(Identity), new string[] { "identity" });
             _kind = DefineProperty<FhirServiceKind>(nameof(Kind), new string[] { "kind" });
-            _parent = DefineResource<HealthcareApisWorkspace>(nameof(Parent), new string[] { "parent" }, isRequired: true);
+            _parent = DefineResource<HealthcareApisWorkspace>(nameof(Parent), new string[] { "parent" });
             DefineAdditionalProperties();
         }
 

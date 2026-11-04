@@ -31,16 +31,16 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="EffectiveBaseSecurityAdminRule"/>. </summary>
-        /// <param name="id"> Resource ID. </param>
+        /// <param name="resourceId"> Resource ID. </param>
         /// <param name="configurationDescription"> A description of the security admin configuration. </param>
         /// <param name="ruleCollectionDescription"> A description of the rule collection. </param>
         /// <param name="ruleCollectionAppliesToGroups"> Groups for rule collection. </param>
         /// <param name="ruleGroups"> Effective configuration groups. </param>
         /// <param name="kind"> Whether the rule is custom or default. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal EffectiveBaseSecurityAdminRule(ResourceIdentifier id, string configurationDescription, string ruleCollectionDescription, IReadOnlyList<NetworkManagerSecurityGroupItem> ruleCollectionAppliesToGroups, IReadOnlyList<NetworkConfigurationGroup> ruleGroups, EffectiveAdminRuleKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal EffectiveBaseSecurityAdminRule(ResourceIdentifier resourceId, string configurationDescription, string ruleCollectionDescription, IReadOnlyList<NetworkManagerSecurityGroupItem> ruleCollectionAppliesToGroups, IReadOnlyList<NetworkConfigurationGroup> ruleGroups, EffectiveAdminRuleKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Id = id;
+            ResourceId = resourceId;
             ConfigurationDescription = configurationDescription;
             RuleCollectionDescription = ruleCollectionDescription;
             RuleCollectionAppliesToGroups = ruleCollectionAppliesToGroups;
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Resource ID. </summary>
         [WirePath("id")]
-        public ResourceIdentifier Id { get; }
+        public ResourceIdentifier ResourceId { get; }
 
         /// <summary> A description of the security admin configuration. </summary>
         [WirePath("configurationDescription")]

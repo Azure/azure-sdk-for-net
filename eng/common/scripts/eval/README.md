@@ -185,10 +185,9 @@ relax TLS or broaden permissions to hide a failed request.
 ## TypeScript (no build step)
 
 The `*.ts` sources run directly through Node's native type stripping (erasable syntax only —
-no `enum`/`namespace`/parameter properties, no emit). Shard/Summary jobs and publisher
-CI use Node `24.x`; the publisher requires `>=24.14.1`. The older dependency-free
-glue still supports its declared Node 22 minimum, but that is not the publisher's
-runtime requirement. Relative imports use explicit `.ts` specifiers, as Node requires.
+no `enum`/`namespace`/parameter properties, no emit). Matrix/Shard/Summary jobs and publisher
+CI use Node `24.x`; both evaluator projects and the publisher require `>=24.14.1`,
+matching azure-rest-api-specs. Relative imports use explicit `.ts` specifiers, as Node requires.
 The standalone Blob publisher uses the same execution model; it adds no compiler or TypeScript runtime dependency.
 
 ## Vendored files

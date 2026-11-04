@@ -1,0 +1,8 @@
+import:
+  - ../../.vscode/cspell.json
+words:
+  - aiinfraoptimization
+  - gibibytes
+  - interruptible
+  - tpot
+  - ttft
