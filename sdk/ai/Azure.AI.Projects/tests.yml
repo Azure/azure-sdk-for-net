@@ -66,6 +66,7 @@ extends:
       - AdditionalTestArguments=^(?!.*UseProjectReferenceToAzureClients=true)
       - TestTargetFramework=^net10.0$
       - BuildConfiguration=^Debug$
+      - SampleSelector=^$(SampleSelector)$
     PreSteps:
       - pwsh: |
           $selectionKind = '${{ parameters.selectionKind }}'
@@ -108,13 +109,13 @@ extends:
           }
 
           if ($env:SampleSelector -eq 'ProjectsAuthenticate') {
-            $additionalTestFilters = '((FullyQualifiedName~Azure.AI.Projects.Tests.Samples & Name=Authenticate))'
+            $additionalTestFilters = '((FullyQualifiedName~Azure.AI.Projects.Tests.Samples & Name=Authenticate & Name!=Troubleshooting))'
           }
           elseif ($env:SampleSelector -eq 'AgentsVersionSelection') {
-            $additionalTestFilters = '((FullyQualifiedName~Azure.AI.Projects.Agents.Tests.Samples & Name=VersionSelection))'
+            $additionalTestFilters = '((FullyQualifiedName~Azure.AI.Projects.Agents.Tests.Samples & Name=VersionSelection & Name!=AgentCRUDAsync & Name!=AgentCRUD & Name!=ErrorHandling))'
           }
           elseif ($env:SampleSelector -eq 'OpenAIClientCreation') {
-            $additionalTestFilters = '((FullyQualifiedName~Azure.AI.Extensions.OpenAI.Tests.Samples & Name=CreateAgentClientFromProjectsClient))'
+            $additionalTestFilters = '((FullyQualifiedName~Azure.AI.Extensions.OpenAI.Tests.Samples & Name=CreateAgentClientFromProjectsClient & Name!=CreateAgentClientDirectlyFromProjectEndpoint & Name!=GetOpenAIClientsFromAgents & Name!=SelectClientVersion))'
           }
 
           $validationEndpoint = $env:LLM_VALIDATION_PROJECT_ENDPOINT
