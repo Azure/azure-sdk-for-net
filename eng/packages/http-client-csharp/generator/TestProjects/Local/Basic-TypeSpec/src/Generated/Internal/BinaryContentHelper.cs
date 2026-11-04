@@ -6,9 +6,10 @@
 #nullable disable
 
 using System;
-using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.IO;
 using System.Text.Json;
+using System.Xml;
 using Azure.Core;
 
 namespace BasicTypeSpec
@@ -16,15 +17,14 @@ namespace BasicTypeSpec
     internal static partial class BinaryContentHelper
     {
         /// <param name="enumerable"></param>
-        /// <param name="options"></param>
-        public static RequestContent FromEnumerable<T>(IEnumerable<T> enumerable, ModelReaderWriterOptions options = null)
+        public static RequestContent FromEnumerable<T>(IEnumerable<T> enumerable)
             where T : notnull
         {
             Utf8JsonRequestContent content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteStartArray();
             foreach (var item in enumerable)
             {
-                content.JsonWriter.WriteObjectValue(item, options ?? ModelSerializationExtensions.WireOptions);
+                content.JsonWriter.WriteObjectValue(item, ModelSerializationExtensions.WireOptions);
             }
             content.JsonWriter.WriteEndArray();
 
@@ -32,8 +32,7 @@ namespace BasicTypeSpec
         }
 
         /// <param name="enumerable"></param>
-        /// <param name="options"></param>
-        public static RequestContent FromEnumerable(IEnumerable<BinaryData> enumerable, ModelReaderWriterOptions options = null)
+        public static RequestContent FromEnumerable(IEnumerable<BinaryData> enumerable)
         {
             Utf8JsonRequestContent content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteStartArray();
@@ -61,8 +60,7 @@ namespace BasicTypeSpec
         }
 
         /// <param name="span"></param>
-        /// <param name="options"></param>
-        public static RequestContent FromEnumerable<T>(ReadOnlySpan<T> span, ModelReaderWriterOptions options = null)
+        public static RequestContent FromEnumerable<T>(ReadOnlySpan<T> span)
             where T : notnull
         {
             Utf8JsonRequestContent content = new Utf8JsonRequestContent();
@@ -70,7 +68,7 @@ namespace BasicTypeSpec
             int i = 0;
             for (; i < span.Length; i++)
             {
-                content.JsonWriter.WriteObjectValue(span[i], options ?? ModelSerializationExtensions.WireOptions);
+                content.JsonWriter.WriteObjectValue(span[i], ModelSerializationExtensions.WireOptions);
             }
             content.JsonWriter.WriteEndArray();
 
@@ -78,8 +76,7 @@ namespace BasicTypeSpec
         }
 
         /// <param name="dictionary"></param>
-        /// <param name="options"></param>
-        public static RequestContent FromDictionary<TValue>(IDictionary<string, TValue> dictionary, ModelReaderWriterOptions options = null)
+        public static RequestContent FromDictionary<TValue>(IDictionary<string, TValue> dictionary)
             where TValue : notnull
         {
             Utf8JsonRequestContent content = new Utf8JsonRequestContent();
@@ -87,7 +84,7 @@ namespace BasicTypeSpec
             foreach (var item in dictionary)
             {
                 content.JsonWriter.WritePropertyName(item.Key);
-                content.JsonWriter.WriteObjectValue(item.Value, options ?? ModelSerializationExtensions.WireOptions);
+                content.JsonWriter.WriteObjectValue(item.Value, ModelSerializationExtensions.WireOptions);
             }
             content.JsonWriter.WriteEndObject();
 
@@ -95,8 +92,7 @@ namespace BasicTypeSpec
         }
 
         /// <param name="dictionary"></param>
-        /// <param name="options"></param>
-        public static RequestContent FromDictionary(IDictionary<string, BinaryData> dictionary, ModelReaderWriterOptions options = null)
+        public static RequestContent FromDictionary(IDictionary<string, BinaryData> dictionary)
         {
             Utf8JsonRequestContent content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteStartObject();
@@ -150,18 +146,30 @@ namespace BasicTypeSpec
         /// <param name="enumerable"></param>
         /// <param name="rootNameHint"></param>
         /// <param name="childNameHint"></param>
-        /// <param name="options"></param>
-        public static RequestContent FromEnumerable<T>(IEnumerable<T> enumerable, string rootNameHint, string childNameHint, ModelReaderWriterOptions options = null)
+        public static RequestContent FromEnumerable<T>(IEnumerable<T> enumerable, string rootNameHint, string childNameHint)
             where T : notnull
         {
-            XmlWriterContent content = new XmlWriterContent();
-            content.XmlWriter.WriteStartElement(rootNameHint);
-            foreach (var item in enumerable)
+            using (MemoryStream stream = new MemoryStream(256))
             {
-                content.XmlWriter.WriteObjectValue(item, options ?? ModelSerializationExtensions.WireOptions, childNameHint);
+                using (XmlWriter writer = XmlWriter.Create(stream, ModelSerializationExtensions.XmlWriterSettings))
+                {
+                    writer.WriteStartElement(rootNameHint);
+                    foreach (var item in enumerable)
+                    {
+                        writer.WriteObjectValue(item, ModelSerializationExtensions.WireOptions, childNameHint);
+                    }
+                    writer.WriteEndElement();
+                }
+
+                if (stream.Position > int.MaxValue)
+                {
+                    return RequestContent.Create(BinaryData.FromStream(stream));
+                }
+                else
+                {
+                    return RequestContent.Create(new BinaryData(stream.GetBuffer().AsMemory(0, (int)stream.Position)));
+                }
             }
-            content.XmlWriter.WriteEndElement();
-            return content;
         }
     }
 }

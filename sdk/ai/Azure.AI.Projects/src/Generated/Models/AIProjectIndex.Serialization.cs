@@ -104,32 +104,26 @@ namespace Azure.AI.Projects
                 writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version);
             }
-            if (LifecycleModelReaderWriterOptions.IsVisible(options, LifecycleVisibility.Create | LifecycleVisibility.Update))
+            if (Optional.IsDefined(Description))
             {
-                if (Optional.IsDefined(Description))
-                {
-                    writer.WritePropertyName("description"u8);
-                    writer.WriteStringValue(Description);
-                }
+                writer.WritePropertyName("description"u8);
+                writer.WriteStringValue(Description);
             }
-            if (LifecycleModelReaderWriterOptions.IsVisible(options, LifecycleVisibility.Create | LifecycleVisibility.Update))
+            if (Optional.IsCollectionDefined(Tags))
             {
-                if (Optional.IsCollectionDefined(Tags))
+                writer.WritePropertyName("tags"u8);
+                writer.WriteStartObject();
+                foreach (var item in Tags)
                 {
-                    writer.WritePropertyName("tags"u8);
-                    writer.WriteStartObject();
-                    foreach (var item in Tags)
+                    writer.WritePropertyName(item.Key);
+                    if (item.Value == null)
                     {
-                        writer.WritePropertyName(item.Key);
-                        if (item.Value == null)
-                        {
-                            writer.WriteNullValue();
-                            continue;
-                        }
-                        writer.WriteStringValue(item.Value);
+                        writer.WriteNullValue();
+                        continue;
                     }
-                    writer.WriteEndObject();
+                    writer.WriteStringValue(item.Value);
                 }
+                writer.WriteEndObject();
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
