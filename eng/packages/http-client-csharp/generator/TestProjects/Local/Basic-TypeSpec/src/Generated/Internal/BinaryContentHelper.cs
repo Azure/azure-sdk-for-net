@@ -7,9 +7,7 @@
 
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Text.Json;
-using System.Xml;
 using Azure.Core;
 
 namespace BasicTypeSpec
@@ -149,27 +147,14 @@ namespace BasicTypeSpec
         public static RequestContent FromEnumerable<T>(IEnumerable<T> enumerable, string rootNameHint, string childNameHint)
             where T : notnull
         {
-            using (MemoryStream stream = new MemoryStream(256))
+            XmlWriterContent content = new XmlWriterContent();
+            content.XmlWriter.WriteStartElement(rootNameHint);
+            foreach (var item in enumerable)
             {
-                using (XmlWriter writer = XmlWriter.Create(stream, ModelSerializationExtensions.XmlWriterSettings))
-                {
-                    writer.WriteStartElement(rootNameHint);
-                    foreach (var item in enumerable)
-                    {
-                        writer.WriteObjectValue(item, ModelSerializationExtensions.WireOptions, childNameHint);
-                    }
-                    writer.WriteEndElement();
-                }
-
-                if (stream.Position > int.MaxValue)
-                {
-                    return RequestContent.Create(BinaryData.FromStream(stream));
-                }
-                else
-                {
-                    return RequestContent.Create(new BinaryData(stream.GetBuffer().AsMemory(0, (int)stream.Position)));
-                }
+                content.XmlWriter.WriteObjectValue(item, ModelSerializationExtensions.WireOptions, childNameHint);
             }
+            content.XmlWriter.WriteEndElement();
+            return content;
         }
     }
 }
