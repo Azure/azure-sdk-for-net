@@ -855,6 +855,7 @@ namespace Azure.Storage.Files.Shares
                 EnableChangeFeed = response.Headers.TryGetValue("x-ms-file-enable-change-feed", out bool? enableChangeFeed) ? enableChangeFeed : null,
                 ChangeFeedRetentionInDays = response.Headers.TryGetValue("x-ms-file-change-feed-retention-in-days", out int? changeFeedRetentionInDays) ? changeFeedRetentionInDays : null,
                 ChangeFeedBlobContainerName = response.Headers.TryGetValue("x-ms-file-blob-container-for-xfiles-change-feed", out string changeFeedBlobContainerName) ? changeFeedBlobContainerName : null,
+                ChangeFeedLastEnabledOn = response.Headers.TryGetValue("x-ms-file-change-feed-last-enabled-time", out DateTimeOffset? changeFeedLastEnabledOn) ? changeFeedLastEnabledOn : null,
                 //EnableDirectoryLease = response.Headers.EnableSmbDirectoryLease,
                 CreatedOn = response.Headers.TryGetValue("x-ms-share-creation-time", out DateTimeOffset? creationTime) ? creationTime : null,
             };

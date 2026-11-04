@@ -179,6 +179,12 @@ namespace Azure.Storage.Files.Shares.Models
         /// </summary>
         public string ChangeFeedBlobContainerName { get; internal set; }
 
+        /// <summary>
+        /// Optional. Supported in version 2026-02-06 and above.
+        /// The time at which change feed was last enabled on the share.
+        /// </summary>
+        public DateTimeOffset? ChangeFeedLastEnabledOn { get; internal set; }
+
         ///// <summary>
         ///// Optional, default value is true.  Ony applicable to SMB shares.
         ///// Specifies whether granting of new directory leases for directories present in a share are to be enabled or disabled.
