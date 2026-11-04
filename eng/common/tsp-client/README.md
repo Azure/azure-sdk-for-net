@@ -53,21 +53,6 @@ npm ci --prefix ${_TspClientDir}
 npm exec --prefix ${_TspClientDir} --no -- tsp-client init --update-if-exists --tsp-config https://github.com/Azure/azure-rest-api-specs/blob/dee71463cbde1d416c47cf544e34f7966a94ddcb/specification/contosowidgetmanager/Contoso.WidgetManager/tspconfig.yaml
 ```
 
-## Unified pipeline emitter selection
-
-`eng/scripts/Invoke-GenerateAndBuildV2.ps1` accepts an optional `typespecEmitter`
-property in its input JSON. A nonempty value must exactly match a name in
-`eng/tsp-client-config.yaml`. The script uses that emitter's `tspconfig.yaml`
-options to locate the SDK project and passes the registered package descriptor
-to `tsp-client init` using `--emitter-package-json-path`. This also updates the
-emitter descriptor in an existing `tsp-location.yaml`.
-
-Omitting `typespecEmitter`, or setting it to `null`, `""`, or whitespace, preserves
-the existing emitter selection. Unsupported names, missing package descriptors,
-or missing options for the selected emitter fail rather than selecting a different
-emitter. The selected emitter must produce a .NET SDK package compatible with the
-existing build and packaging steps; this input does not change those steps.
-
 ## Package Management
 
 ### Automatic Updates via Dependabot
