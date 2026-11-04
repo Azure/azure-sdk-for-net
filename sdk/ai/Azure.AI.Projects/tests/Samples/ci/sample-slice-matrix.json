@@ -23,8 +23,8 @@
       "AgentsVersionSelection": {
         "AdditionalTestFilters": "((FullyQualifiedName~Azure.AI.Projects.Agents.Tests.Samples.Sample_agents_CRUD & Name=VersionSelection & Name!=AgentCRUDAsync & Name!=AgentCRUD & Name!=ErrorHandling))"
       },
-      "OpenAIClientCreation": {
-        "AdditionalTestFilters": "((FullyQualifiedName~Azure.AI.Extensions.OpenAI.Tests.Samples.ClientCreationAndAuthenticationSamples & Name=CreateAgentClientFromProjectsClient))"
+      "OpenAIResponseBasic": {
+        "AdditionalTestFilters": "((FullyQualifiedName~Azure.AI.Extensions.OpenAI.Tests.Samples.Sample_ResponseBasic & Name=AgentResponseSync))"
       }
     }
   }
