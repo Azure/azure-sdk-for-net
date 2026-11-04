@@ -80,3 +80,50 @@ test('does not publish an import map when writing a bundle fails', async (t) => 
     },
   );
 });
+
+test('includes separately bundled peers in the emitter import map', async (t) => {
+  const directory = await mkdtemp(join(tmpdir(), 'csharp-playground-'));
+  t.after(() => rm(directory, { recursive: true, force: true }));
+  const manifest = {
+    name: '@azure-typespec/http-client-csharp',
+    version: '1.0.0',
+    imports: { '.': 'index.js' },
+  };
+  await writeBundle(
+    { manifest, files: [{ filename: 'index.js', content: 'export {};' }] },
+    directory,
+    [
+      {
+        manifest: {
+          name: '@typespec/http-client',
+          version: '0.17.0',
+          imports: { '.': 'index.js', './typekit': 'typekit.js' },
+        },
+        files: [
+          { filename: 'index.js', content: 'export {};' },
+          { filename: 'typekit.js', content: 'export const typekit = {};' },
+        ],
+      },
+    ],
+  );
+  const index = JSON.parse(
+    await readFile(join(directory, manifest.name, 'latest.json')),
+  );
+  strictEqual(
+    index.imports['@typespec/http-client/typekit'],
+    'https://typespec.blob.core.windows.net/pkgs/@typespec/http-client/0.17.0/typekit.js',
+  );
+  strictEqual(
+    await readFile(
+      join(directory, '@typespec/http-client/0.17.0/typekit.js'),
+      'utf8',
+    ),
+    'export const typekit = {};',
+  );
+  await rejects(
+    readFile(join(directory, '@typespec/http-client/latest.json')),
+    {
+      code: 'ENOENT',
+    },
+  );
+});

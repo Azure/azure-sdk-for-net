@@ -55,6 +55,11 @@
     "@typespec/streams": ">=0.87.0 <0.88.0",
     "@typespec/versioning": ">=0.87.0 <0.88.0"
   },
+  "playgroundConfig": {
+    "bundlePeerDependencies": [
+      "@typespec/http-client"
+    ]
+  },
   "devDependencies": {
     "@azure-tools/azure-http-specs": "0.1.0-alpha.46",
     "@azure-tools/typespec-autorest": "0.73.0",

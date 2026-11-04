@@ -9,29 +9,34 @@ import { fileURLToPath } from 'node:url';
 
 const storageUrl = 'https://typespec.blob.core.windows.net/pkgs/';
 
-export async function writeBundle(bundle, outputDirectory) {
-  const { manifest, files } = bundle;
-  const packageDirectory = resolve(outputDirectory, manifest.name);
-  const versionDirectory = resolve(packageDirectory, manifest.version);
-  const imports = Object.fromEntries(
-    Object.entries(manifest.imports).map(([key, value]) => [
-      join(manifest.name, key),
-      new URL(join(manifest.name, manifest.version, value), storageUrl).href,
-    ]),
-  );
+export async function writeBundle(bundle, outputDirectory, peerBundles = []) {
+  const imports = {};
+  for (const { manifest, files } of [bundle, ...peerBundles]) {
+    const versionDirectory = resolve(
+      outputDirectory,
+      manifest.name,
+      manifest.version,
+    );
+    for (const [key, value] of Object.entries(manifest.imports)) {
+      imports[join(manifest.name, key)] = new URL(
+        join(manifest.name, manifest.version, value),
+        storageUrl,
+      ).href;
+    }
 
-  for (const file of files) {
-    const path = resolve(versionDirectory, file.filename);
-    await mkdir(dirname(path), { recursive: true });
-    await writeFile(path, file.content);
+    for (const file of files) {
+      const path = resolve(versionDirectory, file.filename);
+      await mkdir(dirname(path), { recursive: true });
+      await writeFile(path, file.content);
+    }
+    await writeFile(
+      resolve(versionDirectory, 'manifest.json'),
+      JSON.stringify(manifest, null, 2),
+    );
   }
   await writeFile(
-    resolve(versionDirectory, 'manifest.json'),
-    JSON.stringify(manifest, null, 2),
-  );
-  await writeFile(
-    resolve(packageDirectory, 'latest.json'),
-    JSON.stringify({ version: manifest.version, imports }, null, 2),
+    resolve(outputDirectory, bundle.manifest.name, 'latest.json'),
+    JSON.stringify({ version: bundle.manifest.version, imports }, null, 2),
   );
 }
 
@@ -43,8 +48,13 @@ if (
   if (!packagePath || !outputDirectory) {
     throw new Error('Usage: node bundle.mjs <package-path> <output-directory>');
   }
-  await writeBundle(
-    await createTypeSpecBundle(resolve(packagePath)),
-    resolve(outputDirectory),
-  );
+  const bundle = await createTypeSpecBundle(resolve(packagePath));
+  const peerBundles = [];
+  for (const name of bundle.definition.packageJson.playgroundConfig
+    ?.bundlePeerDependencies ?? []) {
+    peerBundles.push(
+      await createTypeSpecBundle(resolve(packagePath, 'node_modules', name)),
+    );
+  }
+  await writeBundle(bundle, resolve(outputDirectory), peerBundles);
 }
