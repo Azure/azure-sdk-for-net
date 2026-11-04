@@ -16,10 +16,16 @@
     "AdditionalTestArguments": [
       "/p:UseProjectReferenceToAzureClients=false"
     ],
-    "SampleSelector": [
-      "ProjectsAuthenticate",
-      "AgentsVersionSelection",
-      "OpenAIClientCreation"
-    ]
+    "SampleSelector": {
+      "ProjectsAuthenticate": {
+        "AdditionalTestFilters": "((FullyQualifiedName~Azure.AI.Projects.Tests.Samples & Name=Authenticate & Name!=Troubleshooting))"
+      },
+      "AgentsVersionSelection": {
+        "AdditionalTestFilters": "((FullyQualifiedName~Azure.AI.Projects.Agents.Tests.Samples & Name=VersionSelection & Name!=AgentCRUDAsync & Name!=AgentCRUD & Name!=ErrorHandling))"
+      },
+      "OpenAIClientCreation": {
+        "AdditionalTestFilters": "((FullyQualifiedName~Azure.AI.Extensions.OpenAI.Tests.Samples & Name=CreateAgentClientFromProjectsClient & Name!=CreateAgentClientDirectlyFromProjectEndpoint & Name!=GetOpenAIClientsFromAgents & Name!=SelectClientVersion))"
+      }
+    }
   }
 }
