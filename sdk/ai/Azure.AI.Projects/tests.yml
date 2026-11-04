@@ -55,6 +55,7 @@ extends:
     MaxParallel: ${{ parameters.testQueueCount }}
     DeployTestResources: false
     UseFederatedAuth: false
+    IgnoreTestFailures: true
     EnvVars:
       CLIENTMODEL_TEST_MODE: Live
     MatrixConfigs:

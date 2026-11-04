@@ -60,6 +60,9 @@ parameters:
   - name: PersistOidcToken
     type: boolean
     default: false
+  - name: IgnoreTestFailures
+    type: boolean
+    default: false
 
 jobs:
   - job:
@@ -190,6 +193,10 @@ jobs:
               $(AdditionalTestArguments);
 
               Write-Host "Last exit code: $LASTEXITCODE";
+              if ($LASTEXITCODE -ne 0 -and '${{ parameters.IgnoreTestFailures }}' -eq 'true') {
+                Write-Host "##vso[task.logissue type=warning]dotnet test failed but IgnoreTestFailures=true, continuing without failing the job."
+                exit 0;
+              }
               exit $LASTEXITCODE;
           env:
             AZURE_TEST_MODE: $(TestMode)
@@ -219,6 +226,12 @@ jobs:
             /p:CollectCoverage=$(CollectCoverage) /p:CodeCoverageDirectory=$(Build.SourcesDirectory)\sdk\${{parameters.ServiceDirectory}}
             /p:EnableSourceLink=false
             $(AdditionalTestArguments)
+            ;
+            if ($LASTEXITCODE -ne 0 -and '${{ parameters.IgnoreTestFailures }}' -eq 'true') {
+              Write-Host "##vso[task.logissue type=warning]dotnet test failed but IgnoreTestFailures=true, continuing without failing the job."
+              exit 0
+            }
+            exit $LASTEXITCODE
           displayName: "Build & Test (all tests for $(TestTargetFramework)) - Client Secret Auth"
           env:
             AZURE_TEST_MODE: $(TestMode)

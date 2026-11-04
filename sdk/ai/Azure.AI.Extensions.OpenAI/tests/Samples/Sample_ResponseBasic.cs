@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.ClientModel;
 using System.Threading.Tasks;
 using Azure.AI.Projects;
 using Azure.Identity;
@@ -55,16 +54,7 @@ public class Sample_ResponseBasic : ProjectsOpenAITestBase
         AIProjectClient projectClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
         #region Snippet:Sample_CreateResponse_Sync
         ProjectResponsesClient responseClient = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForModel(modelDeploymentName);
-        ResponseResult response;
-        try
-        {
-            response = responseClient.CreateResponse("What is the size of France in square miles?");
-        }
-        catch (ClientResultException ex) when (ex.Status == 403)
-        {
-            Assert.Ignore($"Skipping sample due to missing permission: {ex.Message}");
-            return;
-        }
+        ResponseResult response = responseClient.CreateResponse("What is the size of France in square miles?");
         #endregion
 
         #region Snippet:Sample_WriteOutput_ResponseBasic_Sync

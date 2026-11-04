@@ -104,6 +104,9 @@ parameters:
   - name: PersistOidcToken
     type: boolean
     default: false
+  - name: IgnoreTestFailures
+    type: boolean
+    default: false
 
 extends:
   template: /eng/pipelines/templates/stages/1es-redirect.yml
@@ -145,6 +148,7 @@ extends:
                       DeployTestResources: ${{ parameters.DeployTestResources }}
                       UseFederatedAuth: ${{ parameters.UseFederatedAuth }}
                       PersistOidcToken: ${{ parameters.PersistOidcToken }}
+                      IgnoreTestFailures: ${{ parameters.IgnoreTestFailures }}
                     MatrixConfigs:
                       # Enumerate platforms and additional platforms based on supported clouds (sparse platform<-->cloud matrix).
                       - ${{ each config in parameters.MatrixConfigs }}:
