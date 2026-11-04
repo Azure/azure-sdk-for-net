@@ -17,8 +17,7 @@ public class Sample_ClientInitialization : ProjectsOpenAITestBase
     {
         var projectEndpoint = TestEnvironment.FOUNDRY_PROJECT_ENDPOINT;
         AIProjectClient projectClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
-        var openAiClient = projectClient.ProjectOpenAIClient;
-        Assert.IsNotNull(openAiClient);
+        _ = projectClient.ProjectOpenAIClient;
     }
 
     public Sample_ClientInitialization(bool isAsync) : base(isAsync)

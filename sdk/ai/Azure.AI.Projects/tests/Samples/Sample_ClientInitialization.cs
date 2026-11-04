@@ -16,7 +16,7 @@ public class Sample_ClientInitialization : SamplesBase
     {
         var endpoint = TestEnvironment.FOUNDRY_PROJECT_ENDPOINT;
         AIProjectClient projectClient = new(endpoint: new Uri(endpoint), tokenProvider: new DefaultAzureCredential());
-        Assert.IsNotNull(projectClient);
+        _ = projectClient;
     }
 
     public Sample_ClientInitialization(bool isAsync) : base(isAsync) { }

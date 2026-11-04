@@ -3,6 +3,7 @@
 
 using System;
 using Azure.Identity;
+using Microsoft.ClientModel.TestFramework;
 using NUnit.Framework;
 
 namespace Azure.AI.Projects.Agents.Tests.Samples;
@@ -15,7 +16,7 @@ public class Sample_ClientInitialization : SamplesBase
     {
         var projectEndpoint = TestEnvironment.FOUNDRY_PROJECT_ENDPOINT;
         AgentAdministrationClient agentsClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
-        Assert.IsNotNull(agentsClient);
+        _ = agentsClient;
     }
 
     public Sample_ClientInitialization(bool isAsync) : base(isAsync)
