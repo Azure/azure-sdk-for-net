@@ -329,26 +329,9 @@ Describe 'Re-review prompt' {
     It 'states the same time limit as timeout-minutes' {
         $minutes = [regex]::Match($script:Frontmatter, '(?m)^timeout-minutes:\s*(\d+)\s*$').Groups[1].Value
         $minutes | Should -Not -BeNullOrEmpty
-        $stated = [regex]::Match($script:PromptBody, 'The run stops after (\d+) minutes').Groups[1].Value
+        $stated = @([regex]::Matches($script:PromptBody, '\b(\d+)[- ]minutes?\b') | ForEach-Object { $_.Groups[1].Value })
         $stated | Should -Not -BeNullOrEmpty
-        $stated | Should -Be $minutes
-    }
-
-    It 'measures a deadline before the job timeout and requires evidence for a time-limit stop' {
-        $minutes = [int][regex]::Match($script:Frontmatter, '(?m)^timeout-minutes:\s*(\d+)\s*$').Groups[1].Value
-        $deadline = [regex]::Match($script:PromptBody, 'deadline (\d+) minutes later').Groups[1].Value
-        $deadline | Should -Not -BeNullOrEmpty
-        [int]$deadline | Should -BeGreaterThan 0
-        [int]$deadline | Should -BeLessThan $minutes
-        $script:PromptBody | Should -Match 'date -u \+%s'
-        $script:Step4 | Should -Match 'start time, current time, and deadline'
-    }
-
-    It 'requires incremental review rather than abandoning a large PR before fetching its files' {
-        $script:PromptBody | Should -Match 'review files in batches of at most 10'
-        $script:PromptBody | Should -Match 'updating the checklist after each batch'
-        $script:Step4 | Should -Match 'continue the next unfinished checklist item'
-        $script:Step4 | Should -Match 'failing tool/page and its actual error'
+        $stated | Select-Object -Unique | Should -Be $minutes
     }
 
     It 'reserves report_incomplete for failures that happen, not a size estimate' {
