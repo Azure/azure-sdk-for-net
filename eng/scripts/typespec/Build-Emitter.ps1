@@ -4,7 +4,8 @@ param(
     [string] $OutputDirectory,
     [switch] $TargetNpmJsFeed,
     [string] $emitterPackagePath,
-    [string] $GeneratorVersion
+    [string] $GeneratorVersion,
+    [switch] $BuildPlaygroundBundle
 )
 
 if ([string]::IsNullOrEmpty($GeneratorVersion)) {
@@ -33,6 +34,16 @@ function Build-Emitter {
 
         # build and pack the emitter
         Invoke-LoggedCommand "npm run build" -GroupOutput
+
+        if ($BuildPlaygroundBundle) {
+            $playgroundTools = Join-Path $PSScriptRoot "playground"
+            $playgroundOutput = [System.IO.Path]::GetFullPath((Join-Path $outputPath "../playground"))
+            Invoke-LoggedCommand "npm ci --prefix `"$playgroundTools`""
+            Invoke-LoggedCommand "npm test --prefix `"$playgroundTools`""
+            $packageName = Split-Path $packageRoot -Leaf
+            Invoke-LoggedCommand "node --test --test-name-pattern `"^$packageName bundles `" `"$playgroundTools/browser.test.mjs`""
+            Invoke-LoggedCommand "node `"$playgroundTools/bundle.mjs`" `"$packageRoot`" `"$playgroundOutput`""
+        }
 
         # remove any existing tarballs
         Remove-Item -Path "./*.tgz" -Force | Out-Null
