@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Chaos
             return message;
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(Guid subscriptionId, string resourceGroupName, string workspaceName, string scenarioName, RequestContent content, RequestContext context)
+        internal HttpMessage CreateCreateOrUpdateRequest(Guid subscriptionId, string resourceGroupName, string workspaceName, string scenarioName, RequestContent content, MatchConditions matchConditions, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -90,6 +90,10 @@ namespace Azure.ResourceManager.Chaos
             request.Uri = uri;
             request.Method = RequestMethod.Put;
             _userAgent.Apply(message);
+            if (matchConditions != null)
+            {
+                request.Headers.Add(matchConditions);
+            }
             request.Headers.SetValue("Content-Type", "application/json");
             request.Headers.SetValue("Accept", "application/json");
             request.Content = content;

@@ -22,6 +22,7 @@ namespace Azure.ResourceManager.Chaos.Models
         internal WorkspaceDiscoveryProperties()
         {
             Errors = new ChangeTrackingList<ChaosOperationError>();
+            Warnings = new ChangeTrackingList<WorkspaceDiscoveryWarning>();
         }
 
         /// <summary> Initializes a new instance of <see cref="WorkspaceDiscoveryProperties"/>. </summary>
@@ -31,8 +32,13 @@ namespace Azure.ResourceManager.Chaos.Models
         /// <param name="errors"> System or infrastructure errors encountered during discovery. </param>
         /// <param name="workspaceId"> The workspace ID this discovery belongs to. </param>
         /// <param name="resourceSnapshotId"> The resource snapshot ID produced by this discovery. </param>
+        /// <param name="completeness"> The coverage established by the accepted discovery result for Azure Resource Manager scopes. Present with coverageSummary on newly produced snapshot results; absence is not Established or a known zero. </param>
+        /// <param name="coverageSummary"> Coverage facts for the accepted result. Scope counts, resource-occurrence counts, warning counts, and returned inventory-row counts are different units and must not be combined. </param>
+        /// <param name="warnings"> Confirmed access, missing-resource, or access-indeterminate guidance. System verification failures are reported in errors, not as permission warnings. The returned array may be a subset; use warningsTotalCount and warningsTruncated. </param>
+        /// <param name="warningsTotalCount"> The deduplicated number of warning identities before sampling. Identity consists of the expanded scope, affected resource, and reason. Absent means no accepted warning population was recorded, not zero warnings. </param>
+        /// <param name="warningsTruncated"> Whether warnings contains fewer entries than warningsTotalCount. False requires equality; true requires a smaller returned array. An accepted empty warning population is an empty array, zero total, and false. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal WorkspaceDiscoveryProperties(WorkspaceDiscoveryStatus status, DateTimeOffset? startsOn, DateTimeOffset? endsOn, IReadOnlyList<ChaosOperationError> errors, ResourceIdentifier workspaceId, string resourceSnapshotId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal WorkspaceDiscoveryProperties(WorkspaceDiscoveryStatus status, DateTimeOffset? startsOn, DateTimeOffset? endsOn, IReadOnlyList<ChaosOperationError> errors, ResourceIdentifier workspaceId, string resourceSnapshotId, WorkspaceDiscoveryCompleteness? completeness, WorkspaceDiscoveryCoverageSummary coverageSummary, IReadOnlyList<WorkspaceDiscoveryWarning> warnings, long? warningsTotalCount, bool? warningsTruncated, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Status = status;
             StartsOn = startsOn;
@@ -40,6 +46,11 @@ namespace Azure.ResourceManager.Chaos.Models
             Errors = errors;
             WorkspaceId = workspaceId;
             ResourceSnapshotId = resourceSnapshotId;
+            Completeness = completeness;
+            CoverageSummary = coverageSummary;
+            Warnings = warnings;
+            WarningsTotalCount = warningsTotalCount;
+            WarningsTruncated = warningsTruncated;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -60,5 +71,20 @@ namespace Azure.ResourceManager.Chaos.Models
 
         /// <summary> The resource snapshot ID produced by this discovery. </summary>
         public string ResourceSnapshotId { get; }
+
+        /// <summary> The coverage established by the accepted discovery result for Azure Resource Manager scopes. Present with coverageSummary on newly produced snapshot results; absence is not Established or a known zero. </summary>
+        public WorkspaceDiscoveryCompleteness? Completeness { get; }
+
+        /// <summary> Coverage facts for the accepted result. Scope counts, resource-occurrence counts, warning counts, and returned inventory-row counts are different units and must not be combined. </summary>
+        public WorkspaceDiscoveryCoverageSummary CoverageSummary { get; }
+
+        /// <summary> Confirmed access, missing-resource, or access-indeterminate guidance. System verification failures are reported in errors, not as permission warnings. The returned array may be a subset; use warningsTotalCount and warningsTruncated. </summary>
+        public IReadOnlyList<WorkspaceDiscoveryWarning> Warnings { get; }
+
+        /// <summary> The deduplicated number of warning identities before sampling. Identity consists of the expanded scope, affected resource, and reason. Absent means no accepted warning population was recorded, not zero warnings. </summary>
+        public long? WarningsTotalCount { get; }
+
+        /// <summary> Whether warnings contains fewer entries than warningsTotalCount. False requires equality; true requires a smaller returned array. An accepted empty warning population is an empty array, zero total, and false. </summary>
+        public bool? WarningsTruncated { get; }
     }
 }

@@ -100,6 +100,16 @@ namespace Azure.ResourceManager.Chaos.Models
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsCollectionDefined(Selectors))
+            {
+                writer.WritePropertyName("selectors"u8);
+                writer.WriteStartArray();
+                foreach (ScenarioActionSelector item in Selectors)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
             if (Optional.IsDefined(RunAfter))
             {
                 writer.WritePropertyName("runAfter"u8);
@@ -119,6 +129,11 @@ namespace Azure.ResourceManager.Chaos.Models
             {
                 writer.WritePropertyName("externalResource"u8);
                 writer.WriteObjectValue(ExternalResource, options);
+            }
+            if (Optional.IsDefined(FailureBehavior))
+            {
+                writer.WritePropertyName("failureBehavior"u8);
+                writer.WriteStringValue(FailureBehavior.Value.ToString());
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -167,10 +182,12 @@ namespace Azure.ResourceManager.Chaos.Models
             string description = default;
             string duration = default;
             IList<ChaosKeyValuePair> parameters = default;
+            IList<ScenarioActionSelector> selectors = default;
             RunAfter runAfter = default;
             string waitBefore = default;
             string timeout = default;
             ExternalResource externalResource = default;
+            FailureBehavior? failureBehavior = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -208,6 +225,20 @@ namespace Azure.ResourceManager.Chaos.Models
                     parameters = array;
                     continue;
                 }
+                if (prop.NameEquals("selectors"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<ScenarioActionSelector> array = new List<ScenarioActionSelector>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        array.Add(ScenarioActionSelector.DeserializeScenarioActionSelector(item, options));
+                    }
+                    selectors = array;
+                    continue;
+                }
                 if (prop.NameEquals("runAfter"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -236,6 +267,15 @@ namespace Azure.ResourceManager.Chaos.Models
                     externalResource = ExternalResource.DeserializeExternalResource(prop.Value, options);
                     continue;
                 }
+                if (prop.NameEquals("failureBehavior"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    failureBehavior = new FailureBehavior(prop.Value.GetString());
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
@@ -247,10 +287,12 @@ namespace Azure.ResourceManager.Chaos.Models
                 description,
                 duration,
                 parameters ?? new ChangeTrackingList<ChaosKeyValuePair>(),
+                selectors ?? new ChangeTrackingList<ScenarioActionSelector>(),
                 runAfter,
                 waitBefore,
                 timeout,
                 externalResource,
+                failureBehavior,
                 additionalBinaryDataProperties);
         }
     }

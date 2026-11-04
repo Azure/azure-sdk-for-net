@@ -35,14 +35,16 @@ namespace Azure.ResourceManager.Chaos.Models
         /// <param name="default"> Default value for the parameter. </param>
         /// <param name="isRequired"> Whether this parameter is required. </param>
         /// <param name="description"> Description of the parameter. </param>
+        /// <param name="format"> Format validation applied to the parameter's value, and examples of values that satisfy it. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ChaosScenarioParameterInfo(string name, ChaosScenarioParameterType @type, string @default, bool? isRequired, string description, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ChaosScenarioParameterInfo(string name, ChaosScenarioParameterType @type, string @default, bool? isRequired, string description, ScenarioParameterFormat format, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Type = @type;
             Default = @default;
             IsRequired = isRequired;
             Description = description;
+            Format = format;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -60,5 +62,8 @@ namespace Azure.ResourceManager.Chaos.Models
 
         /// <summary> Description of the parameter. </summary>
         public string Description { get; set; }
+
+        /// <summary> Format validation applied to the parameter's value, and examples of values that satisfy it. </summary>
+        public ScenarioParameterFormat Format { get; set; }
     }
 }

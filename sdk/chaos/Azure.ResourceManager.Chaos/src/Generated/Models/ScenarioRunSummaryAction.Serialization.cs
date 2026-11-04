@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Chaos.Models
             {
                 writer.WritePropertyName("resources"u8);
                 writer.WriteStartArray();
-                foreach (ScenarioRunResource item in Resources)
+                foreach (ScenarioRunSummaryResource item in Resources)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -103,6 +103,16 @@ namespace Azure.ResourceManager.Chaos.Models
             {
                 writer.WritePropertyName("completedAt"u8);
                 writer.WriteStringValue(CompletedOn.Value, "O");
+            }
+            if (options.Format != "W" && Optional.IsDefined(Error))
+            {
+                writer.WritePropertyName("error"u8);
+                writer.WriteObjectValue(Error, options);
+            }
+            if (options.Format != "W" && Optional.IsDefined(FailureSuppressed))
+            {
+                writer.WritePropertyName("failureSuppressed"u8);
+                writer.WriteBooleanValue(FailureSuppressed.Value);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -146,20 +156,22 @@ namespace Azure.ResourceManager.Chaos.Models
             {
                 return null;
             }
-            IReadOnlyList<ScenarioRunResource> resources = default;
+            IReadOnlyList<ScenarioRunSummaryResource> resources = default;
             string actionUrn = default;
             ScenarioSummaryState state = default;
             DateTimeOffset? startedOn = default;
             DateTimeOffset? completedOn = default;
+            ActionError error = default;
+            bool? failureSuppressed = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("resources"u8))
                 {
-                    List<ScenarioRunResource> array = new List<ScenarioRunResource>();
+                    List<ScenarioRunSummaryResource> array = new List<ScenarioRunSummaryResource>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ScenarioRunResource.DeserializeScenarioRunResource(item, options));
+                        array.Add(ScenarioRunSummaryResource.DeserializeScenarioRunSummaryResource(item, options));
                     }
                     resources = array;
                     continue;
@@ -192,17 +204,37 @@ namespace Azure.ResourceManager.Chaos.Models
                     completedOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
+                if (prop.NameEquals("error"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    error = ActionError.DeserializeActionError(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("failureSuppressed"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    failureSuppressed = prop.Value.GetBoolean();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new ScenarioRunSummaryAction(
-                resources ?? new ChangeTrackingList<ScenarioRunResource>(),
+                resources ?? new ChangeTrackingList<ScenarioRunSummaryResource>(),
                 actionUrn,
                 state,
                 startedOn,
                 completedOn,
+                error,
+                failureSuppressed,
                 additionalBinaryDataProperties);
         }
     }

@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using Azure.ResourceManager.Chaos;
 
 namespace Azure.ResourceManager.Chaos.Models
@@ -19,28 +18,48 @@ namespace Azure.ResourceManager.Chaos.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ScenarioProperties"/>. </summary>
-        /// <param name="parameters"> Parameter definitions for the scenario. </param>
-        /// <param name="actions"> Array of actions that define the scenario's orchestration. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> or <paramref name="actions"/> is null. </exception>
-        public ScenarioProperties(IEnumerable<ChaosScenarioParameterInfo> parameters, IEnumerable<ScenarioAction> actions)
+        public ScenarioProperties()
         {
-            Argument.AssertNotNull(parameters, nameof(parameters));
-            Argument.AssertNotNull(actions, nameof(actions));
-
-            Parameters = parameters.ToList();
-            Actions = actions.ToList();
+            Parameters = new ChangeTrackingList<ChaosScenarioParameterInfo>();
+            Actions = new ChangeTrackingList<ScenarioAction>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ScenarioProperties"/>. </summary>
         /// <param name="provisioningState"> Most recent provisioning state for the given scenario resource. </param>
-        /// <param name="createdFrom"> Resource ID of the template version this scenario was created from (optional). </param>
-        /// <param name="version"> Version of the scenario. </param>
+        /// <param name="createdFrom">
+        /// Resource ID of the template version this scenario was created from (optional).
+        /// The ID has the form
+        /// `/providers/Microsoft.Chaos/scenarioTemplates/{scenarioTemplateName}/versions/{version}`.
+        /// This property retains its existing string representation for compatibility
+        /// with earlier API versions and SDKs.
+        /// A scenario's structure comes from exactly one of two mutually exclusive sources.
+        /// When `createdFrom` is supplied on create, the referenced template version is the
+        /// authoritative source for the scenario's structure; inline `parameters` and
+        /// `actions` are not used. When `createdFrom` is absent, the structure comes from
+        /// the inline `parameters` and `actions` supplied in the request.
+        /// Supplying neither source is rejected by request validation.
+        /// </param>
+        /// <param name="version">
+        /// Version of the scenario, supplied by the author. Defaults to `1.0` when not
+        /// supplied on create. This is the scenario's own version and is independent of
+        /// the version of any template it was created from.
+        /// </param>
         /// <param name="description"> Description of what this scenario does (optional). </param>
         /// <param name="parameters"> Parameter definitions for the scenario. </param>
         /// <param name="actions"> Array of actions that define the scenario's orchestration. </param>
+        /// <param name="failureBehavior">
+        /// Scenario-wide default for how a scenario run reacts when one of its actions fails.
+        /// An action that does not supply its own `failureBehavior` inherits this value; when
+        /// neither is supplied the effective behavior is `Stop`.
+        /// Not used when `createdFrom` is supplied, for the same reason as `parameters` and
+        /// `actions`: the referenced template version is then the authoritative source for the
+        /// scenario's structure, and it supplies this policy too. A value sent in the request is
+        /// ignored in that case — on create the referenced template's policy is used, and on update
+        /// the policy of the already persisted template is preserved.
+        /// </param>
         /// <param name="recommendation"> The recommendation information for this scenario. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ScenarioProperties(ChaosProvisioningState? provisioningState, string createdFrom, string version, string description, IList<ChaosScenarioParameterInfo> parameters, IList<ScenarioAction> actions, ChaosScenarioRecommendation recommendation, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ScenarioProperties(ChaosProvisioningState? provisioningState, string createdFrom, string version, string description, IList<ChaosScenarioParameterInfo> parameters, IList<ScenarioAction> actions, FailureBehavior? failureBehavior, ChaosScenarioRecommendation recommendation, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             CreatedFrom = createdFrom;
@@ -48,6 +67,7 @@ namespace Azure.ResourceManager.Chaos.Models
             Description = description;
             Parameters = parameters;
             Actions = actions;
+            FailureBehavior = failureBehavior;
             Recommendation = recommendation;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -55,11 +75,27 @@ namespace Azure.ResourceManager.Chaos.Models
         /// <summary> Most recent provisioning state for the given scenario resource. </summary>
         public ChaosProvisioningState? ProvisioningState { get; }
 
-        /// <summary> Resource ID of the template version this scenario was created from (optional). </summary>
-        public string CreatedFrom { get; }
+        /// <summary>
+        /// Resource ID of the template version this scenario was created from (optional).
+        /// The ID has the form
+        /// `/providers/Microsoft.Chaos/scenarioTemplates/{scenarioTemplateName}/versions/{version}`.
+        /// This property retains its existing string representation for compatibility
+        /// with earlier API versions and SDKs.
+        /// A scenario's structure comes from exactly one of two mutually exclusive sources.
+        /// When `createdFrom` is supplied on create, the referenced template version is the
+        /// authoritative source for the scenario's structure; inline `parameters` and
+        /// `actions` are not used. When `createdFrom` is absent, the structure comes from
+        /// the inline `parameters` and `actions` supplied in the request.
+        /// Supplying neither source is rejected by request validation.
+        /// </summary>
+        public string CreatedFrom { get; set; }
 
-        /// <summary> Version of the scenario. </summary>
-        public string Version { get; }
+        /// <summary>
+        /// Version of the scenario, supplied by the author. Defaults to `1.0` when not
+        /// supplied on create. This is the scenario's own version and is independent of
+        /// the version of any template it was created from.
+        /// </summary>
+        public string Version { get; set; }
 
         /// <summary> Description of what this scenario does (optional). </summary>
         public string Description { get; set; }
@@ -69,6 +105,18 @@ namespace Azure.ResourceManager.Chaos.Models
 
         /// <summary> Array of actions that define the scenario's orchestration. </summary>
         public IList<ScenarioAction> Actions { get; }
+
+        /// <summary>
+        /// Scenario-wide default for how a scenario run reacts when one of its actions fails.
+        /// An action that does not supply its own `failureBehavior` inherits this value; when
+        /// neither is supplied the effective behavior is `Stop`.
+        /// Not used when `createdFrom` is supplied, for the same reason as `parameters` and
+        /// `actions`: the referenced template version is then the authoritative source for the
+        /// scenario's structure, and it supplies this policy too. A value sent in the request is
+        /// ignored in that case — on create the referenced template's policy is used, and on update
+        /// the policy of the already persisted template is preserved.
+        /// </summary>
+        public FailureBehavior? FailureBehavior { get; set; }
 
         /// <summary> The recommendation information for this scenario. </summary>
         public ChaosScenarioRecommendation Recommendation { get; }

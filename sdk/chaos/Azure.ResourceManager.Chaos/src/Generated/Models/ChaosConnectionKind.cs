@@ -19,8 +19,6 @@ namespace Azure.ResourceManager.Chaos.Models
         private const string AksExtensionValue = "AksExtension";
         /// <summary> A connection backed by the Chaos agent installed on the target resource. </summary>
         private const string ChaosAgentValue = "ChaosAgent";
-        /// <summary> A connection backed by Cloud Service Fault Injection (CSFI). </summary>
-        private const string CsfiValue = "Csfi";
 
         /// <summary> Initializes a new instance of <see cref="ChaosConnectionKind"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -37,9 +35,6 @@ namespace Azure.ResourceManager.Chaos.Models
 
         /// <summary> A connection backed by the Chaos agent installed on the target resource. </summary>
         public static ChaosConnectionKind ChaosAgent { get; } = new ChaosConnectionKind(ChaosAgentValue);
-
-        /// <summary> A connection backed by Cloud Service Fault Injection (CSFI). </summary>
-        public static ChaosConnectionKind Csfi { get; } = new ChaosConnectionKind(CsfiValue);
 
         /// <summary> Determines if two <see cref="ChaosConnectionKind"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

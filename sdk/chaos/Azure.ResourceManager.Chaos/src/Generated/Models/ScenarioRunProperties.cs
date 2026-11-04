@@ -23,6 +23,7 @@ namespace Azure.ResourceManager.Chaos.Models
             Resources = new ChangeTrackingList<ScenarioRunResource>();
             ExcludedResources = new ChangeTrackingList<ScenarioRunResource>();
             Errors = new ChangeTrackingList<ChaosOperationError>();
+            Warnings = new ChangeTrackingList<ScenarioRunWarning>();
             ScenarioRunSummary = new ChangeTrackingList<ScenarioRunSummaryAction>();
         }
 
@@ -45,6 +46,7 @@ namespace Azure.ResourceManager.Chaos.Models
         /// (for example zone, location, or explicit exclusions). These resources will not be impacted by the run.
         /// </param>
         /// <param name="errors"> System or infrastructure errors encountered during the scenario run. </param>
+        /// <param name="warnings"> Customer-actionable warnings encountered during the scenario run. </param>
         /// <param name="executionErrors"> Business errors from fault injection — permission and resource state issues. </param>
         /// <param name="scenarioRunJson"> The scenario run json. </param>
         /// <param name="scenarioRunSummary"> The scenario run summary. </param>
@@ -56,7 +58,7 @@ namespace Azure.ResourceManager.Chaos.Models
         /// requested physical zones, and per-subscription logical zone mappings.
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ScenarioRunProperties(string workspaceName, string scenarioName, string scenarioConfigurationName, string managedIdentityPrincipalId, string resourceSnapshotId, ScenarioRunState status, IReadOnlyList<ScenarioRunResource> resources, IReadOnlyList<ScenarioRunResource> excludedResources, IReadOnlyList<ChaosOperationError> errors, ScenarioErrors executionErrors, string scenarioRunJson, IReadOnlyList<ScenarioRunSummaryAction> scenarioRunSummary, DateTimeOffset startsOn, DateTimeOffset? endsOn, ZoneResolutionInfo zoneResolution, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ScenarioRunProperties(string workspaceName, string scenarioName, string scenarioConfigurationName, string managedIdentityPrincipalId, string resourceSnapshotId, ScenarioRunState status, IReadOnlyList<ScenarioRunResource> resources, IReadOnlyList<ScenarioRunResource> excludedResources, IReadOnlyList<ChaosOperationError> errors, IReadOnlyList<ScenarioRunWarning> warnings, ScenarioErrors executionErrors, string scenarioRunJson, IReadOnlyList<ScenarioRunSummaryAction> scenarioRunSummary, DateTimeOffset startsOn, DateTimeOffset? endsOn, ZoneResolutionInfo zoneResolution, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             WorkspaceName = workspaceName;
             ScenarioName = scenarioName;
@@ -67,6 +69,7 @@ namespace Azure.ResourceManager.Chaos.Models
             Resources = resources;
             ExcludedResources = excludedResources;
             Errors = errors;
+            Warnings = warnings;
             ExecutionErrors = executionErrors;
             ScenarioRunJson = scenarioRunJson;
             ScenarioRunSummary = scenarioRunSummary;
@@ -111,6 +114,9 @@ namespace Azure.ResourceManager.Chaos.Models
 
         /// <summary> System or infrastructure errors encountered during the scenario run. </summary>
         public IReadOnlyList<ChaosOperationError> Errors { get; }
+
+        /// <summary> Customer-actionable warnings encountered during the scenario run. </summary>
+        public IReadOnlyList<ScenarioRunWarning> Warnings { get; }
 
         /// <summary> Business errors from fault injection — permission and resource state issues. </summary>
         public ScenarioErrors ExecutionErrors { get; }
