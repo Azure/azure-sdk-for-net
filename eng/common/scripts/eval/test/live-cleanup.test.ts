@@ -4,7 +4,7 @@ import os from "node:os";
 import path from "node:path";
 import { afterEach, describe, it } from "node:test";
 
-import { cleanupLiveEval } from "../cleanup-live-eval.ts";
+import { cleanupLiveEval, findProjectPlans } from "../cleanup-live-eval.ts";
 import {
   discoverLiveCleanupCandidates,
   parseAzureSdkPullRequestUrl,
@@ -192,7 +192,10 @@ describe("cleanupLiveEval", () => {
           ? { release_plan_details: fixture({ sdkInfo: [{ sdkPullRequestUrl: prUrl }] }) }
           : { status: "Success", details: ["Release plan 1600 has been successfully abandoned."] };
       },
-      getPullRequest: async () => ({ state: "open", created_at: "2026-01-01T00:00:00Z" }),
+      getPullRequest: async () => ({
+        state: calls.some((args) => args[1] === "abandon") ? "closed" : "open",
+        created_at: "2026-01-01T00:00:00Z",
+      }),
     });
 
     assert.deepEqual(calls.at(-1), [
@@ -232,10 +235,91 @@ describe("cleanupLiveEval", () => {
           ? { release_plan_details: fixture({ sdkInfo: [{ sdkPullRequestUrl: prUrl }] }) }
           : {};
       },
-      getPullRequest: async () => ({ state: "open", created_at: "2026-08-18T08:05:00Z" }),
+      getPullRequest: async () => ({
+        state: calls.some((args) => args[1] === "abandon") ? "closed" : "open",
+        created_at: "2026-08-18T08:05:00Z",
+      }),
     });
 
     assert.equal(calls.at(-1)[1], "abandon");
+  });
+
+  it("rediscovers an abandoned project test plan and retries its open PR cleanup", async () => {
+    let abandoned = false;
+    await cleanupLiveEval({
+      azsdk: "azsdk.dll",
+      typeSpecProject: project,
+      queryPlans: (requestedProject) => findProjectPlans(requestedProject, {
+        runCommand: () => ({ accessToken: "test-token" }),
+        request: async (_, options) => {
+          const { query } = JSON.parse(options.body);
+          return {
+            ok: true,
+            json: async () => ({
+              workItems: query.includes("'Abandoned'") ? [] : [{ id: 36111 }],
+            }),
+          };
+        },
+      }),
+      runCli: (_, args) => {
+        if (args[1] === "get") {
+          return {
+            release_plan_details: fixture({
+              status: "Abandoned",
+              sdkInfo: [{ sdkPullRequestUrl: prUrl }],
+            }),
+          };
+        }
+        assert.deepEqual(args, ["release-plan", "abandon", "--release-plan-id", "1600"]);
+        abandoned = true;
+        return {};
+      },
+      getPullRequest: async () => ({ state: abandoned ? "closed" : "open" }),
+    });
+    assert.equal(abandoned, true);
+  });
+
+  it("skips already abandoned plans with no outstanding PR cleanup", async () => {
+    for (const sdkInfo of [[], [{ sdkPullRequestUrl: prUrl }]]) {
+      await cleanupLiveEval({
+        azsdk: "azsdk.dll",
+        typeSpecProject: project,
+        queryPlans: () => [{ kind: "workItemId", id: 36111, pullRequestUrls: [] }],
+        runCli: (_, args) => {
+          assert.equal(args[1], "get");
+          return { release_plan_details: fixture({ status: "Abandoned", sdkInfo }) };
+        },
+        getPullRequest: async () => ({ state: "closed" }),
+      });
+    }
+  });
+
+  it("reports a trajectory-only PR left open after abandonment", async () => {
+    const root = writeEvents([
+      start("1", "azsdk_link_sdk_pull_request_to_release_plan", {
+        workItemId: 36111,
+        pullRequestUrl: prUrl,
+      }),
+    ]);
+    let abandoned = false;
+    let checks = 0;
+    await assert.rejects(cleanupLiveEval({
+      resultsDir: root,
+      azsdk: "azsdk.dll",
+      runCli: (_, args) => {
+        if (args[1] === "get") {
+          return { release_plan_details: fixture() };
+        }
+        abandoned = true;
+        return { status: "Success" };
+      },
+      getPullRequest: async () => {
+        checks++;
+        return { state: "open", created_at: "2026-08-18T08:05:00Z" };
+      },
+    }), /manual follow-up required: https:\/\/github\.com\/Azure\/azure-sdk-for-java\/pull\/50170/);
+    assert.equal(abandoned, true);
+    assert.equal(checks, 2);
   });
 
   it("does not let post-eval abandonment close a pre-existing open PR", async () => {

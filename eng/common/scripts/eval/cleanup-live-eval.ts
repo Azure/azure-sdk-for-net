@@ -66,18 +66,18 @@ function runAzSdk(azsdk, command) {
   return runJson("dotnet", [azsdk, ...command, "--output", "json"]);
 }
 
-async function findProjectPlans(typeSpecProject) {
+export async function findProjectPlans(typeSpecProject, { runCommand = runJson, request = fetch } = {}) {
   const escapedPath = typeSpecProject.replaceAll("'", "''");
   const query = "SELECT [System.Id] FROM WorkItems WHERE [System.TeamProject] = 'release'"
     + ` AND [Custom.ApiSpecProjectPath] = '${escapedPath}'`
     + " AND [System.WorkItemType] = 'Release Plan'"
-    + " AND [System.State] NOT IN ('Closed','Duplicate','Abandoned','Finished')"
+    + " AND [System.State] NOT IN ('Closed','Duplicate','Finished')"
     + " AND [System.Tags] CONTAINS 'Release Planner App Test'";
-  const { accessToken } = runJson("az", [
+  const { accessToken } = runCommand("az", [
     "account", "get-access-token", "--resource", "499b84ac-1321-427f-aa17-267ca6975798",
     "--output", "json",
   ]);
-  const response = await fetch("https://dev.azure.com/azure-sdk/release/_apis/wit/wiql?api-version=7.1", {
+  const response = await request("https://dev.azure.com/azure-sdk/release/_apis/wit/wiql?api-version=7.1", {
     method: "POST",
     headers: { Authorization: `Bearer ${accessToken}`, "Content-Type": "application/json" },
     body: JSON.stringify({ query }),
@@ -137,6 +137,9 @@ async function checkPullRequest(url, evalStartedAt, includePreexisting, getPullR
 
   const apiPath = `/repos/${pullRequest.owner}/${pullRequest.repo}/pulls/${pullRequest.number}`;
   const current = await getPullRequest(apiPath);
+  if (!["open", "closed"].includes(current.state)) {
+    throw new Error(`Could not verify SDK pull request state: ${url}`);
+  }
   if (current.merged_at) {
     throw new Error(`Refusing to clean a plan with a merged SDK pull request: ${url}`);
   }
@@ -145,6 +148,7 @@ async function checkPullRequest(url, evalStartedAt, includePreexisting, getPullR
     && !wasPullRequestCreatedDuringEval(current, evalStartedAt)) {
     throw new Error(`Refusing to close pre-existing SDK pull request: ${url}`);
   }
+  return { apiPath, state: current.state };
 }
 
 export async function cleanupLiveEval({
@@ -188,6 +192,15 @@ export async function cleanupLiveEval({
 
   for (const [workItemId, plan] of verifiedPlans) {
     try {
+      const pullRequests = [];
+      for (const url of plan.pullRequestUrls) {
+        const checked = await checkPullRequest(url, candidates.startedAt, Boolean(typeSpecProject), getPullRequest);
+        pullRequests.push({ url, ...checked });
+      }
+      if (getCaseInsensitiveProperty(plan.details, "status") === "Abandoned"
+        && pullRequests.every((pr) => pr.state === "closed")) {
+        continue;
+      }
       const sdks = getCaseInsensitiveProperty(plan.details, "sdkInfo") ?? [];
       for (const sdk of sdks) {
         const pipelineUrl = getCaseInsensitiveProperty(sdk, "generationPipelineUrl");
@@ -203,9 +216,6 @@ export async function cleanupLiveEval({
           throw new Error(`Generation is still pending for test plan ${workItemId}.`);
         }
       }
-      for (const url of plan.pullRequestUrls) {
-        await checkPullRequest(url, candidates.startedAt, Boolean(typeSpecProject), getPullRequest);
-      }
       const releasePlanId = Number(getCaseInsensitiveProperty(plan.details, "releasePlanId"));
       if (!Number.isInteger(releasePlanId) || releasePlanId <= 0) {
         throw new Error(`Verified test plan ${workItemId} has no valid Release Plan ID.`);
@@ -214,6 +224,16 @@ export async function cleanupLiveEval({
       const response = runCli(azsdk, ["release-plan", "abandon", "--release-plan-id", String(releasePlanId)]);
       const details = getCaseInsensitiveProperty(response, "details") ?? [];
       const warnings = details.filter((detail) => /^Warning:/i.test(detail));
+      for (const pr of pullRequests) {
+        try {
+          const current = await getPullRequest(pr.apiPath);
+          if (current.state !== "closed") {
+            warnings.push(`SDK PR is not confirmed closed; manual follow-up required: ${pr.url}`);
+          }
+        } catch (error) {
+          warnings.push(`Could not verify SDK PR cleanup at ${pr.url}: ${error.message}`);
+        }
+      }
       if (warnings.length) {
         throw new Error(`Test plan ${workItemId} cleanup needs follow-up: ${warnings.join("; ")}`);
       }
