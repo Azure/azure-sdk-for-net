@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.KoreAIArtemis.Models
 {
@@ -21,7 +22,7 @@ namespace Azure.ResourceManager.KoreAIArtemis.Models
         /// <param name="mpId"> Globally unique Marketplace SaaS identifier used for billing. </param>
         /// <param name="planId"> Plan identifier within the Marketplace offer. </param>
         /// <param name="offerId"> Marketplace offer identifier. </param>
-        internal WorkspaceMarketplaceDetails(string resourceId, string mpId, string planId, string offerId)
+        internal WorkspaceMarketplaceDetails(ResourceIdentifier resourceId, string mpId, string planId, string offerId)
         {
             ResourceId = resourceId;
             MpId = mpId;
@@ -39,7 +40,7 @@ namespace Azure.ResourceManager.KoreAIArtemis.Models
         /// <param name="termId"> Marketplace subscription term identifier. </param>
         /// <param name="status"> Azure Marketplace fulfillment subscription status. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal WorkspaceMarketplaceDetails(string resourceId, string mpId, string planId, string planName, string offerId, string publisherId, string termId, WorkspaceMarketplaceStatus? status, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal WorkspaceMarketplaceDetails(ResourceIdentifier resourceId, string mpId, string planId, string planName, string offerId, string publisherId, string termId, WorkspaceMarketplaceStatus? status, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ResourceId = resourceId;
             MpId = mpId;
@@ -53,7 +54,7 @@ namespace Azure.ResourceManager.KoreAIArtemis.Models
         }
 
         /// <summary> Azure resource ID of the Marketplace SaaS resource. </summary>
-        public string ResourceId { get; }
+        public ResourceIdentifier ResourceId { get; }
 
         /// <summary> Globally unique Marketplace SaaS identifier used for billing. </summary>
         public string MpId { get; }

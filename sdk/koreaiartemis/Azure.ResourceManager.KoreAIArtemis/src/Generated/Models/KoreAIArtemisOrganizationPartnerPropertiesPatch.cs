@@ -11,22 +11,22 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.KoreAIArtemis.Models
 {
     /// <summary> Mutable partner properties for PATCH. </summary>
-    public partial class OrganizationPartnerPropertiesUpdate
+    public partial class KoreAIArtemisOrganizationPartnerPropertiesPatch
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="OrganizationPartnerPropertiesUpdate"/>. </summary>
-        public OrganizationPartnerPropertiesUpdate()
+        /// <summary> Initializes a new instance of <see cref="KoreAIArtemisOrganizationPartnerPropertiesPatch"/>. </summary>
+        public KoreAIArtemisOrganizationPartnerPropertiesPatch()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="OrganizationPartnerPropertiesUpdate"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="KoreAIArtemisOrganizationPartnerPropertiesPatch"/>. </summary>
         /// <param name="organizationName"> Display name of the Organization on the partner side. </param>
         /// <param name="billingEmail"> Billing contact email address for the Organization. </param>
         /// <param name="ownerEmail"> Initial owner email for the Organization. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal OrganizationPartnerPropertiesUpdate(string organizationName, string billingEmail, string ownerEmail, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal KoreAIArtemisOrganizationPartnerPropertiesPatch(string organizationName, string billingEmail, string ownerEmail, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             OrganizationName = organizationName;
             BillingEmail = billingEmail;

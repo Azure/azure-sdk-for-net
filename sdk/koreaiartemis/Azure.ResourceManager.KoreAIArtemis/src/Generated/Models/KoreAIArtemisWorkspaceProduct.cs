@@ -12,7 +12,7 @@ using Azure.ResourceManager.KoreAIArtemis;
 namespace Azure.ResourceManager.KoreAIArtemis.Models
 {
     /// <summary> Marketplace product options available for a Workspace. </summary>
-    public readonly partial struct Product : IEquatable<Product>
+    public readonly partial struct KoreAIArtemisWorkspaceProduct : IEquatable<KoreAIArtemisWorkspaceProduct>
     {
         private readonly string _value;
         /// <summary> AI for Work product. &lt;!-- cspell:words aiforservice aiforwork --&gt;. </summary>
@@ -20,10 +20,10 @@ namespace Azure.ResourceManager.KoreAIArtemis.Models
         /// <summary> AI for Service product. </summary>
         private const string AiforserviceValue = "aiforservice";
 
-        /// <summary> Initializes a new instance of <see cref="Product"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="KoreAIArtemisWorkspaceProduct"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public Product(string value)
+        public KoreAIArtemisWorkspaceProduct(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -31,35 +31,35 @@ namespace Azure.ResourceManager.KoreAIArtemis.Models
         }
 
         /// <summary> AI for Work product. &lt;!-- cspell:words aiforservice aiforwork --&gt;. </summary>
-        public static Product Aiforwork { get; } = new Product(AiforworkValue);
+        public static KoreAIArtemisWorkspaceProduct Aiforwork { get; } = new KoreAIArtemisWorkspaceProduct(AiforworkValue);
 
         /// <summary> AI for Service product. </summary>
-        public static Product Aiforservice { get; } = new Product(AiforserviceValue);
+        public static KoreAIArtemisWorkspaceProduct Aiforservice { get; } = new KoreAIArtemisWorkspaceProduct(AiforserviceValue);
 
-        /// <summary> Determines if two <see cref="Product"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="KoreAIArtemisWorkspaceProduct"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(Product left, Product right) => left.Equals(right);
+        public static bool operator ==(KoreAIArtemisWorkspaceProduct left, KoreAIArtemisWorkspaceProduct right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="Product"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="KoreAIArtemisWorkspaceProduct"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(Product left, Product right) => !left.Equals(right);
+        public static bool operator !=(KoreAIArtemisWorkspaceProduct left, KoreAIArtemisWorkspaceProduct right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="Product"/>. </summary>
+        /// <summary> Converts a string to a <see cref="KoreAIArtemisWorkspaceProduct"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator Product(string value) => new Product(value);
+        public static implicit operator KoreAIArtemisWorkspaceProduct(string value) => new KoreAIArtemisWorkspaceProduct(value);
 
-        /// <summary> Converts a string to a <see cref="Product"/>. </summary>
+        /// <summary> Converts a string to a <see cref="KoreAIArtemisWorkspaceProduct"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator Product?(string value) => value == null ? null : new Product(value);
+        public static implicit operator KoreAIArtemisWorkspaceProduct?(string value) => value == null ? null : new KoreAIArtemisWorkspaceProduct(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is Product other && Equals(other);
+        public override bool Equals(object obj) => obj is KoreAIArtemisWorkspaceProduct other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(Product other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(KoreAIArtemisWorkspaceProduct other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

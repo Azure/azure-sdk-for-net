@@ -15,66 +15,66 @@ using Azure.ResourceManager.KoreAIArtemis;
 namespace Azure.ResourceManager.KoreAIArtemis.Models
 {
     /// <summary> SaaS-related data properties. Contains the full list of SaaS resource IDs to link. </summary>
-    public partial class WorkspaceSaaSData : IJsonModel<WorkspaceSaaSData>
+    public partial class WorkspaceSaasContent : IJsonModel<WorkspaceSaasContent>
     {
-        /// <summary> Initializes a new instance of <see cref="WorkspaceSaaSData"/> for deserialization. </summary>
-        internal WorkspaceSaaSData()
+        /// <summary> Initializes a new instance of <see cref="WorkspaceSaasContent"/> for deserialization. </summary>
+        internal WorkspaceSaasContent()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual WorkspaceSaaSData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual WorkspaceSaasContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<WorkspaceSaaSData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<WorkspaceSaasContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeWorkspaceSaaSData(document.RootElement, options);
+                        return DeserializeWorkspaceSaasContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(WorkspaceSaaSData)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(WorkspaceSaasContent)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<WorkspaceSaaSData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<WorkspaceSaasContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerKoreAIArtemisContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(WorkspaceSaaSData)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(WorkspaceSaasContent)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<WorkspaceSaaSData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<WorkspaceSaasContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        WorkspaceSaaSData IPersistableModel<WorkspaceSaaSData>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        WorkspaceSaasContent IPersistableModel<WorkspaceSaasContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<WorkspaceSaaSData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<WorkspaceSaasContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="workspaceSaaSData"> The <see cref="WorkspaceSaaSData"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(WorkspaceSaaSData workspaceSaaSData)
+        /// <param name="workspaceSaasContent"> The <see cref="WorkspaceSaasContent"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(WorkspaceSaasContent workspaceSaasContent)
         {
-            if (workspaceSaaSData == null)
+            if (workspaceSaasContent == null)
             {
                 return null;
             }
-            return RequestContent.Create(workspaceSaaSData, ModelSerializationExtensions.WireOptions);
+            return RequestContent.Create(workspaceSaasContent, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<WorkspaceSaaSData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<WorkspaceSaasContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -85,10 +85,10 @@ namespace Azure.ResourceManager.KoreAIArtemis.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<WorkspaceSaaSData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<WorkspaceSaasContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(WorkspaceSaaSData)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(WorkspaceSaasContent)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("saaSResourceIds"u8);
             writer.WriteStartArray();
@@ -121,24 +121,24 @@ namespace Azure.ResourceManager.KoreAIArtemis.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        WorkspaceSaaSData IJsonModel<WorkspaceSaaSData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        WorkspaceSaasContent IJsonModel<WorkspaceSaasContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual WorkspaceSaaSData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual WorkspaceSaasContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<WorkspaceSaaSData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<WorkspaceSaasContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(WorkspaceSaaSData)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(WorkspaceSaasContent)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeWorkspaceSaaSData(document.RootElement, options);
+            return DeserializeWorkspaceSaasContent(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static WorkspaceSaaSData DeserializeWorkspaceSaaSData(JsonElement element, ModelReaderWriterOptions options)
+        internal static WorkspaceSaasContent DeserializeWorkspaceSaasContent(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.KoreAIArtemis.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new WorkspaceSaaSData(saaSResourceIds ?? new ChangeTrackingList<ResourceIdentifier>(), additionalBinaryDataProperties);
+            return new WorkspaceSaasContent(saaSResourceIds ?? new ChangeTrackingList<ResourceIdentifier>(), additionalBinaryDataProperties);
         }
     }
 }

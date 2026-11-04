@@ -21,14 +21,14 @@ namespace Azure.ResourceManager.KoreAIArtemis.Models
         /// <param name="name"> Workspace display name. </param>
         /// <param name="ownerEmail"> Email address of the Workspace owner. </param>
         /// <param name="retentionDays"> Conversation retention period in days. Valid values are 1 through 365. </param>
-        /// <param name="default"> Indicates whether this is the Organization's default Workspace. </param>
+        /// <param name="isDefault"> Indicates whether this is the Organization's default Workspace. </param>
         /// <param name="marketplaceDetails"> Marketplace SaaS subscriptions owned by the Workspace. </param>
-        internal WorkspaceDetailPartnerProperties(string name, string ownerEmail, int retentionDays, bool @default, IEnumerable<WorkspaceMarketplaceDetails> marketplaceDetails)
+        internal WorkspaceDetailPartnerProperties(string name, string ownerEmail, int retentionDays, bool isDefault, IEnumerable<WorkspaceMarketplaceDetails> marketplaceDetails)
         {
             Name = name;
             OwnerEmail = ownerEmail;
             RetentionDays = retentionDays;
-            Default = @default;
+            IsDefault = isDefault;
             MarketplaceDetails = marketplaceDetails.ToList();
         }
 
@@ -36,15 +36,15 @@ namespace Azure.ResourceManager.KoreAIArtemis.Models
         /// <param name="name"> Workspace display name. </param>
         /// <param name="ownerEmail"> Email address of the Workspace owner. </param>
         /// <param name="retentionDays"> Conversation retention period in days. Valid values are 1 through 365. </param>
-        /// <param name="default"> Indicates whether this is the Organization's default Workspace. </param>
+        /// <param name="isDefault"> Indicates whether this is the Organization's default Workspace. </param>
         /// <param name="marketplaceDetails"> Marketplace SaaS subscriptions owned by the Workspace. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal WorkspaceDetailPartnerProperties(string name, string ownerEmail, int retentionDays, bool @default, IList<WorkspaceMarketplaceDetails> marketplaceDetails, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal WorkspaceDetailPartnerProperties(string name, string ownerEmail, int retentionDays, bool isDefault, IList<WorkspaceMarketplaceDetails> marketplaceDetails, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             OwnerEmail = ownerEmail;
             RetentionDays = retentionDays;
-            Default = @default;
+            IsDefault = isDefault;
             MarketplaceDetails = marketplaceDetails;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.KoreAIArtemis.Models
         public int RetentionDays { get; }
 
         /// <summary> Indicates whether this is the Organization's default Workspace. </summary>
-        public bool Default { get; }
+        public bool IsDefault { get; }
 
         /// <summary> Marketplace SaaS subscriptions owned by the Workspace. </summary>
         public IList<WorkspaceMarketplaceDetails> MarketplaceDetails { get; }

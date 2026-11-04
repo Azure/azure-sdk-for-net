@@ -14,51 +14,51 @@ using Azure.ResourceManager.KoreAIArtemis;
 namespace Azure.ResourceManager.KoreAIArtemis.Models
 {
     /// <summary> Mutable Organization properties (subset of OrganizationProperties). </summary>
-    public partial class OrganizationPropertiesUpdate : IJsonModel<OrganizationPropertiesUpdate>
+    public partial class KoreAIArtemisOrganizationPropertiesPatch : IJsonModel<KoreAIArtemisOrganizationPropertiesPatch>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual OrganizationPropertiesUpdate PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual KoreAIArtemisOrganizationPropertiesPatch PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<OrganizationPropertiesUpdate>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<KoreAIArtemisOrganizationPropertiesPatch>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeOrganizationPropertiesUpdate(document.RootElement, options);
+                        return DeserializeKoreAIArtemisOrganizationPropertiesPatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(OrganizationPropertiesUpdate)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(KoreAIArtemisOrganizationPropertiesPatch)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<OrganizationPropertiesUpdate>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<KoreAIArtemisOrganizationPropertiesPatch>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerKoreAIArtemisContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(OrganizationPropertiesUpdate)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(KoreAIArtemisOrganizationPropertiesPatch)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<OrganizationPropertiesUpdate>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<KoreAIArtemisOrganizationPropertiesPatch>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        OrganizationPropertiesUpdate IPersistableModel<OrganizationPropertiesUpdate>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        KoreAIArtemisOrganizationPropertiesPatch IPersistableModel<KoreAIArtemisOrganizationPropertiesPatch>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<OrganizationPropertiesUpdate>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<KoreAIArtemisOrganizationPropertiesPatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<OrganizationPropertiesUpdate>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<KoreAIArtemisOrganizationPropertiesPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -69,10 +69,10 @@ namespace Azure.ResourceManager.KoreAIArtemis.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<OrganizationPropertiesUpdate>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<KoreAIArtemisOrganizationPropertiesPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(OrganizationPropertiesUpdate)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(KoreAIArtemisOrganizationPropertiesPatch)} does not support writing '{format}' format.");
             }
             if (Optional.IsDefined(PartnerProperties))
             {
@@ -108,30 +108,30 @@ namespace Azure.ResourceManager.KoreAIArtemis.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        OrganizationPropertiesUpdate IJsonModel<OrganizationPropertiesUpdate>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        KoreAIArtemisOrganizationPropertiesPatch IJsonModel<KoreAIArtemisOrganizationPropertiesPatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual OrganizationPropertiesUpdate JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual KoreAIArtemisOrganizationPropertiesPatch JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<OrganizationPropertiesUpdate>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<KoreAIArtemisOrganizationPropertiesPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(OrganizationPropertiesUpdate)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(KoreAIArtemisOrganizationPropertiesPatch)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeOrganizationPropertiesUpdate(document.RootElement, options);
+            return DeserializeKoreAIArtemisOrganizationPropertiesPatch(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static OrganizationPropertiesUpdate DeserializeOrganizationPropertiesUpdate(JsonElement element, ModelReaderWriterOptions options)
+        internal static KoreAIArtemisOrganizationPropertiesPatch DeserializeKoreAIArtemisOrganizationPropertiesPatch(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            OrganizationPartnerPropertiesUpdate partnerProperties = default;
+            KoreAIArtemisOrganizationPartnerPropertiesPatch partnerProperties = default;
             KoreAIArtemisUserDetails user = default;
             KoreAIArtemisCompanyDetails companyDetails = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.KoreAIArtemis.Models
                     {
                         continue;
                     }
-                    partnerProperties = OrganizationPartnerPropertiesUpdate.DeserializeOrganizationPartnerPropertiesUpdate(prop.Value, options);
+                    partnerProperties = KoreAIArtemisOrganizationPartnerPropertiesPatch.DeserializeKoreAIArtemisOrganizationPartnerPropertiesPatch(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("user"u8))
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.KoreAIArtemis.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new OrganizationPropertiesUpdate(partnerProperties, user, companyDetails, additionalBinaryDataProperties);
+            return new KoreAIArtemisOrganizationPropertiesPatch(partnerProperties, user, companyDetails, additionalBinaryDataProperties);
         }
     }
 }

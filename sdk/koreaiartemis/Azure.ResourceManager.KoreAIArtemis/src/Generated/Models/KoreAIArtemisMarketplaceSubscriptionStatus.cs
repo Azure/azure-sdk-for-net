@@ -12,7 +12,7 @@ using Azure.ResourceManager.KoreAIArtemis;
 namespace Azure.ResourceManager.KoreAIArtemis.Models
 {
     /// <summary> Marketplace subscription status of a resource. </summary>
-    public readonly partial struct MarketplaceSubscriptionStatus : IEquatable<MarketplaceSubscriptionStatus>
+    public readonly partial struct KoreAIArtemisMarketplaceSubscriptionStatus : IEquatable<KoreAIArtemisMarketplaceSubscriptionStatus>
     {
         private readonly string _value;
         /// <summary> Purchased but not yet activated. </summary>
@@ -24,10 +24,10 @@ namespace Azure.ResourceManager.KoreAIArtemis.Models
         /// <summary> Customer has cancelled the subscription. </summary>
         private const string UnsubscribedValue = "Unsubscribed";
 
-        /// <summary> Initializes a new instance of <see cref="MarketplaceSubscriptionStatus"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="KoreAIArtemisMarketplaceSubscriptionStatus"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public MarketplaceSubscriptionStatus(string value)
+        public KoreAIArtemisMarketplaceSubscriptionStatus(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -35,41 +35,41 @@ namespace Azure.ResourceManager.KoreAIArtemis.Models
         }
 
         /// <summary> Purchased but not yet activated. </summary>
-        public static MarketplaceSubscriptionStatus PendingFulfillmentStart { get; } = new MarketplaceSubscriptionStatus(PendingFulfillmentStartValue);
+        public static KoreAIArtemisMarketplaceSubscriptionStatus PendingFulfillmentStart { get; } = new KoreAIArtemisMarketplaceSubscriptionStatus(PendingFulfillmentStartValue);
 
         /// <summary> Marketplace subscription is activated. </summary>
-        public static MarketplaceSubscriptionStatus Subscribed { get; } = new MarketplaceSubscriptionStatus(SubscribedValue);
+        public static KoreAIArtemisMarketplaceSubscriptionStatus Subscribed { get; } = new KoreAIArtemisMarketplaceSubscriptionStatus(SubscribedValue);
 
         /// <summary> This state indicates that a customer's payment for the Marketplace service was not received. </summary>
-        public static MarketplaceSubscriptionStatus Suspended { get; } = new MarketplaceSubscriptionStatus(SuspendedValue);
+        public static KoreAIArtemisMarketplaceSubscriptionStatus Suspended { get; } = new KoreAIArtemisMarketplaceSubscriptionStatus(SuspendedValue);
 
         /// <summary> Customer has cancelled the subscription. </summary>
-        public static MarketplaceSubscriptionStatus Unsubscribed { get; } = new MarketplaceSubscriptionStatus(UnsubscribedValue);
+        public static KoreAIArtemisMarketplaceSubscriptionStatus Unsubscribed { get; } = new KoreAIArtemisMarketplaceSubscriptionStatus(UnsubscribedValue);
 
-        /// <summary> Determines if two <see cref="MarketplaceSubscriptionStatus"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="KoreAIArtemisMarketplaceSubscriptionStatus"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(MarketplaceSubscriptionStatus left, MarketplaceSubscriptionStatus right) => left.Equals(right);
+        public static bool operator ==(KoreAIArtemisMarketplaceSubscriptionStatus left, KoreAIArtemisMarketplaceSubscriptionStatus right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="MarketplaceSubscriptionStatus"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="KoreAIArtemisMarketplaceSubscriptionStatus"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(MarketplaceSubscriptionStatus left, MarketplaceSubscriptionStatus right) => !left.Equals(right);
+        public static bool operator !=(KoreAIArtemisMarketplaceSubscriptionStatus left, KoreAIArtemisMarketplaceSubscriptionStatus right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="MarketplaceSubscriptionStatus"/>. </summary>
+        /// <summary> Converts a string to a <see cref="KoreAIArtemisMarketplaceSubscriptionStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator MarketplaceSubscriptionStatus(string value) => new MarketplaceSubscriptionStatus(value);
+        public static implicit operator KoreAIArtemisMarketplaceSubscriptionStatus(string value) => new KoreAIArtemisMarketplaceSubscriptionStatus(value);
 
-        /// <summary> Converts a string to a <see cref="MarketplaceSubscriptionStatus"/>. </summary>
+        /// <summary> Converts a string to a <see cref="KoreAIArtemisMarketplaceSubscriptionStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator MarketplaceSubscriptionStatus?(string value) => value == null ? null : new MarketplaceSubscriptionStatus(value);
+        public static implicit operator KoreAIArtemisMarketplaceSubscriptionStatus?(string value) => value == null ? null : new KoreAIArtemisMarketplaceSubscriptionStatus(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is MarketplaceSubscriptionStatus other && Equals(other);
+        public override bool Equals(object obj) => obj is KoreAIArtemisMarketplaceSubscriptionStatus other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(MarketplaceSubscriptionStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(KoreAIArtemisMarketplaceSubscriptionStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

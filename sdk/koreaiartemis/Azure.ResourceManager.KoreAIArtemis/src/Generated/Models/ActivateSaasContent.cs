@@ -12,16 +12,16 @@ using Azure.ResourceManager.KoreAIArtemis;
 namespace Azure.ResourceManager.KoreAIArtemis.Models
 {
     /// <summary> SaaS guid &amp; PublisherId for Activate and Validate SaaS Resource. </summary>
-    public partial class ActivateSaaSParameterRequest
+    public partial class ActivateSaasContent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ActivateSaaSParameterRequest"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ActivateSaasContent"/>. </summary>
         /// <param name="saasGuid"> SaaS subscription identifier (GUID) issued by the Azure Marketplace fulfillment API. </param>
         /// <param name="publisherId"> Publisher Id for the marketplace offer. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="saasGuid"/> or <paramref name="publisherId"/> is null. </exception>
-        public ActivateSaaSParameterRequest(string saasGuid, string publisherId)
+        public ActivateSaasContent(string saasGuid, string publisherId)
         {
             Argument.AssertNotNull(saasGuid, nameof(saasGuid));
             Argument.AssertNotNull(publisherId, nameof(publisherId));
@@ -30,11 +30,11 @@ namespace Azure.ResourceManager.KoreAIArtemis.Models
             PublisherId = publisherId;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ActivateSaaSParameterRequest"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ActivateSaasContent"/>. </summary>
         /// <param name="saasGuid"> SaaS subscription identifier (GUID) issued by the Azure Marketplace fulfillment API. </param>
         /// <param name="publisherId"> Publisher Id for the marketplace offer. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ActivateSaaSParameterRequest(string saasGuid, string publisherId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ActivateSaasContent(string saasGuid, string publisherId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SaasGuid = saasGuid;
             PublisherId = publisherId;

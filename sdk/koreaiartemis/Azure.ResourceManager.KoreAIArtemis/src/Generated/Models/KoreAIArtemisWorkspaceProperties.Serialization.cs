@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.KoreAIArtemis.Models
             {
                 return null;
             }
-            Product? product = default;
+            KoreAIArtemisWorkspaceProduct? product = default;
             IList<KoreAIArtemisMarketplaceDetails> marketplaceDetails = default;
             KoreAIArtemisWorkspacePartnerProperties partnerProperties = default;
             bool? isDefault = default;
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.KoreAIArtemis.Models
                     {
                         continue;
                     }
-                    product = new Product(prop.Value.GetString());
+                    product = new KoreAIArtemisWorkspaceProduct(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("marketplaceDetails"u8))

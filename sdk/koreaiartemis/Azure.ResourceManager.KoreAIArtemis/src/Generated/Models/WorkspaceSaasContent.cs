@@ -14,25 +14,25 @@ using Azure.ResourceManager.KoreAIArtemis;
 namespace Azure.ResourceManager.KoreAIArtemis.Models
 {
     /// <summary> SaaS-related data properties. Contains the full list of SaaS resource IDs to link. </summary>
-    public partial class WorkspaceSaaSData
+    public partial class WorkspaceSaasContent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="WorkspaceSaaSData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkspaceSaasContent"/>. </summary>
         /// <param name="saaSResourceIds"> ARM resource IDs of the Microsoft.SaaS marketplace resources to link to this Workspace. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="saaSResourceIds"/> is null. </exception>
-        public WorkspaceSaaSData(IEnumerable<ResourceIdentifier> saaSResourceIds)
+        public WorkspaceSaasContent(IEnumerable<ResourceIdentifier> saaSResourceIds)
         {
             Argument.AssertNotNull(saaSResourceIds, nameof(saaSResourceIds));
 
             SaaSResourceIds = saaSResourceIds.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="WorkspaceSaaSData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkspaceSaasContent"/>. </summary>
         /// <param name="saaSResourceIds"> ARM resource IDs of the Microsoft.SaaS marketplace resources to link to this Workspace. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal WorkspaceSaaSData(IList<ResourceIdentifier> saaSResourceIds, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal WorkspaceSaasContent(IList<ResourceIdentifier> saaSResourceIds, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SaaSResourceIds = saaSResourceIds;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

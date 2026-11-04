@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.KoreAIArtemis.Models
         /// plan changes.
         /// </param>
         /// <returns> A new <see cref="Models.KoreAIArtemisDefaultWorkspaceProperties"/> instance for mocking. </returns>
-        public static KoreAIArtemisDefaultWorkspaceProperties KoreAIArtemisDefaultWorkspaceProperties(string name = default, Product? product = default, IEnumerable<KoreAIArtemisMarketplaceDetails> marketplaceDetails = default)
+        public static KoreAIArtemisDefaultWorkspaceProperties KoreAIArtemisDefaultWorkspaceProperties(string name = default, KoreAIArtemisWorkspaceProduct? product = default, IEnumerable<KoreAIArtemisMarketplaceDetails> marketplaceDetails = default)
         {
             marketplaceDetails ??= new ChangeTrackingList<KoreAIArtemisMarketplaceDetails>();
 
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.KoreAIArtemis.Models
         /// <param name="saasResourceId"> Marketplace SaaS Resource Id. </param>
         /// <param name="offerDetails"> Offer details for the marketplace that is selected by the user. </param>
         /// <returns> A new <see cref="Models.KoreAIArtemisMarketplaceDetails"/> instance for mocking. </returns>
-        public static KoreAIArtemisMarketplaceDetails KoreAIArtemisMarketplaceDetails(string subscriptionId = default, MarketplaceSubscriptionStatus? subscriptionStatus = default, string saasResourceId = default, KoreAIArtemisOfferDetails offerDetails = default)
+        public static KoreAIArtemisMarketplaceDetails KoreAIArtemisMarketplaceDetails(string subscriptionId = default, KoreAIArtemisMarketplaceSubscriptionStatus? subscriptionStatus = default, string saasResourceId = default, KoreAIArtemisOfferDetails offerDetails = default)
         {
             return new KoreAIArtemisMarketplaceDetails(subscriptionId, subscriptionStatus, saasResourceId, offerDetails, default);
         }
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.KoreAIArtemis.Models
         /// <param name="uri"> URL for SSO to be used by the partner to redirect the user to their system. </param>
         /// <param name="aadDomains"> List of AAD domains fetched from Microsoft Graph for user. </param>
         /// <returns> A new <see cref="Models.KoreAIArtemisSingleSignOnProperties"/> instance for mocking. </returns>
-        public static KoreAIArtemisSingleSignOnProperties KoreAIArtemisSingleSignOnProperties(SingleSignOnType @type = default, SingleSignOnStates? state = default, string enterpriseAppId = default, string uri = default, IEnumerable<string> aadDomains = default)
+        public static KoreAIArtemisSingleSignOnProperties KoreAIArtemisSingleSignOnProperties(KoreAIArtemisSingleSignOnType @type = default, KoreAIArtemisSingleSignOnState? state = default, string enterpriseAppId = default, string uri = default, IEnumerable<string> aadDomains = default)
         {
             aadDomains ??= new ChangeTrackingList<string>();
 
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.KoreAIArtemis.Models
         /// <param name="tags"> Resource tags. </param>
         /// <param name="properties"> The resource-specific properties to update. </param>
         /// <returns> A new <see cref="Models.KoreAIArtemisOrganizationPatch"/> instance for mocking. </returns>
-        public static KoreAIArtemisOrganizationPatch KoreAIArtemisOrganizationPatch(IDictionary<string, string> tags = default, OrganizationPropertiesUpdate properties = default)
+        public static KoreAIArtemisOrganizationPatch KoreAIArtemisOrganizationPatch(IDictionary<string, string> tags = default, KoreAIArtemisOrganizationPropertiesPatch properties = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -224,20 +224,20 @@ namespace Azure.ResourceManager.KoreAIArtemis.Models
         /// <param name="partnerProperties"> Partner-specific (Kore) Organization properties. </param>
         /// <param name="user"> Azure customer profile metadata. </param>
         /// <param name="companyDetails"> Organization-tier company metadata. </param>
-        /// <returns> A new <see cref="Models.OrganizationPropertiesUpdate"/> instance for mocking. </returns>
-        public static OrganizationPropertiesUpdate OrganizationPropertiesUpdate(OrganizationPartnerPropertiesUpdate partnerProperties = default, KoreAIArtemisUserDetails user = default, KoreAIArtemisCompanyDetails companyDetails = default)
+        /// <returns> A new <see cref="Models.KoreAIArtemisOrganizationPropertiesPatch"/> instance for mocking. </returns>
+        public static KoreAIArtemisOrganizationPropertiesPatch KoreAIArtemisOrganizationPropertiesPatch(KoreAIArtemisOrganizationPartnerPropertiesPatch partnerProperties = default, KoreAIArtemisUserDetails user = default, KoreAIArtemisCompanyDetails companyDetails = default)
         {
-            return new OrganizationPropertiesUpdate(partnerProperties, user, companyDetails, default);
+            return new KoreAIArtemisOrganizationPropertiesPatch(partnerProperties, user, companyDetails, default);
         }
 
         /// <summary> Mutable partner properties for PATCH. </summary>
         /// <param name="organizationName"> Display name of the Organization on the partner side. </param>
         /// <param name="billingEmail"> Billing contact email address for the Organization. </param>
         /// <param name="ownerEmail"> Initial owner email for the Organization. </param>
-        /// <returns> A new <see cref="Models.OrganizationPartnerPropertiesUpdate"/> instance for mocking. </returns>
-        public static OrganizationPartnerPropertiesUpdate OrganizationPartnerPropertiesUpdate(string organizationName = default, string billingEmail = default, string ownerEmail = default)
+        /// <returns> A new <see cref="Models.KoreAIArtemisOrganizationPartnerPropertiesPatch"/> instance for mocking. </returns>
+        public static KoreAIArtemisOrganizationPartnerPropertiesPatch KoreAIArtemisOrganizationPartnerPropertiesPatch(string organizationName = default, string billingEmail = default, string ownerEmail = default)
         {
-            return new OrganizationPartnerPropertiesUpdate(organizationName, billingEmail, ownerEmail, default);
+            return new KoreAIArtemisOrganizationPartnerPropertiesPatch(organizationName, billingEmail, ownerEmail, default);
         }
 
         /// <summary> Response containing all Workspaces in a Kore Organization. </summary>
@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.KoreAIArtemis.Models
         /// <param name="isManagedByLiftr"> Indicates whether the Workspace is managed as an ARM resource through Liftr. </param>
         /// <param name="armResourceId"> ARM resource ID when the Workspace is managed through Liftr. </param>
         /// <returns> A new <see cref="Models.DiscoveredWorkspace"/> instance for mocking. </returns>
-        public static DiscoveredWorkspace DiscoveredWorkspace(string partnerResourceId = default, string name = default, string ownerEmail = default, bool? isDefault = default, KoreAIArtemisWorkspaceLifecycleStatus? status = default, Product? product = default, IEnumerable<KoreAIArtemisMarketplaceDetails> marketplaceDetails = default, bool isManagedByLiftr = default, ResourceIdentifier armResourceId = default)
+        public static DiscoveredWorkspace DiscoveredWorkspace(string partnerResourceId = default, string name = default, string ownerEmail = default, bool? isDefault = default, KoreAIArtemisWorkspaceLifecycleStatus? status = default, KoreAIArtemisWorkspaceProduct? product = default, IEnumerable<KoreAIArtemisMarketplaceDetails> marketplaceDetails = default, bool isManagedByLiftr = default, ResourceIdentifier armResourceId = default)
         {
             marketplaceDetails ??= new ChangeTrackingList<KoreAIArtemisMarketplaceDetails>();
 
@@ -281,10 +281,10 @@ namespace Azure.ResourceManager.KoreAIArtemis.Models
         /// <summary> SaaS guid &amp; PublisherId for Activate and Validate SaaS Resource. </summary>
         /// <param name="saasGuid"> SaaS subscription identifier (GUID) issued by the Azure Marketplace fulfillment API. </param>
         /// <param name="publisherId"> Publisher Id for the marketplace offer. </param>
-        /// <returns> A new <see cref="Models.ActivateSaaSParameterRequest"/> instance for mocking. </returns>
-        public static ActivateSaaSParameterRequest ActivateSaaSParameterRequest(string saasGuid = default, string publisherId = default)
+        /// <returns> A new <see cref="Models.ActivateSaasContent"/> instance for mocking. </returns>
+        public static ActivateSaasContent ActivateSaasContent(string saasGuid = default, string publisherId = default)
         {
-            return new ActivateSaaSParameterRequest(saasGuid, publisherId, default);
+            return new ActivateSaasContent(saasGuid, publisherId, default);
         }
 
         /// <summary> Marketplace SaaS resource details. </summary>
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.KoreAIArtemis.Models
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="saasId"> SaaS subscription identifier (GUID) issued by the Azure Marketplace fulfillment API for the activated SaaS resource. </param>
         /// <returns> A new <see cref="Models.SaaSResourceDetailsResult"/> instance for mocking. </returns>
-        public static SaaSResourceDetailsResult SaaSResourceDetailsResult(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string saasId = default)
+        public static SaaSResourceDetailsResult SaaSResourceDetailsResult(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, Guid? saasId = default)
         {
             return new SaaSResourceDetailsResult(
                 id,
@@ -344,7 +344,7 @@ namespace Azure.ResourceManager.KoreAIArtemis.Models
         /// <param name="status"> Lifecycle status of the Workspace as reported by the Kore partner. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <returns> A new <see cref="Models.KoreAIArtemisWorkspaceProperties"/> instance for mocking. </returns>
-        public static KoreAIArtemisWorkspaceProperties KoreAIArtemisWorkspaceProperties(Product? product = default, IEnumerable<KoreAIArtemisMarketplaceDetails> marketplaceDetails = default, KoreAIArtemisWorkspacePartnerProperties partnerProperties = default, bool? isDefault = default, KoreAIArtemisWorkspaceLifecycleStatus? status = default, KoreAIArtemisResourceProvisioningState? provisioningState = default)
+        public static KoreAIArtemisWorkspaceProperties KoreAIArtemisWorkspaceProperties(KoreAIArtemisWorkspaceProduct? product = default, IEnumerable<KoreAIArtemisMarketplaceDetails> marketplaceDetails = default, KoreAIArtemisWorkspacePartnerProperties partnerProperties = default, bool? isDefault = default, KoreAIArtemisWorkspaceLifecycleStatus? status = default, KoreAIArtemisResourceProvisioningState? provisioningState = default)
         {
             marketplaceDetails ??= new ChangeTrackingList<KoreAIArtemisMarketplaceDetails>();
 
@@ -370,12 +370,12 @@ namespace Azure.ResourceManager.KoreAIArtemis.Models
 
         /// <summary> SaaS-related data properties. Contains the full list of SaaS resource IDs to link. </summary>
         /// <param name="saaSResourceIds"> ARM resource IDs of the Microsoft.SaaS marketplace resources to link to this Workspace. </param>
-        /// <returns> A new <see cref="Models.WorkspaceSaaSData"/> instance for mocking. </returns>
-        public static WorkspaceSaaSData WorkspaceSaaSData(IEnumerable<ResourceIdentifier> saaSResourceIds = default)
+        /// <returns> A new <see cref="Models.WorkspaceSaasContent"/> instance for mocking. </returns>
+        public static WorkspaceSaasContent WorkspaceSaasContent(IEnumerable<ResourceIdentifier> saaSResourceIds = default)
         {
             saaSResourceIds ??= new ChangeTrackingList<ResourceIdentifier>();
 
-            return new WorkspaceSaaSData((saaSResourceIds ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(), default);
+            return new WorkspaceSaasContent((saaSResourceIds ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(), default);
         }
 
         /// <summary> Response containing the list of SaaS resources linked to the Workspace. </summary>
@@ -427,10 +427,10 @@ namespace Azure.ResourceManager.KoreAIArtemis.Models
         /// <param name="name"> Workspace display name. </param>
         /// <param name="ownerEmail"> Email address of the Workspace owner. </param>
         /// <param name="retentionDays"> Conversation retention period in days. Valid values are 1 through 365. </param>
-        /// <param name="default"> Indicates whether this is the Organization's default Workspace. </param>
+        /// <param name="isDefault"> Indicates whether this is the Organization's default Workspace. </param>
         /// <param name="marketplaceDetails"> Marketplace SaaS subscriptions owned by the Workspace. </param>
         /// <returns> A new <see cref="Models.WorkspaceDetailPartnerProperties"/> instance for mocking. </returns>
-        public static WorkspaceDetailPartnerProperties WorkspaceDetailPartnerProperties(string name = default, string ownerEmail = default, int retentionDays = default, bool @default = default, IEnumerable<WorkspaceMarketplaceDetails> marketplaceDetails = default)
+        public static WorkspaceDetailPartnerProperties WorkspaceDetailPartnerProperties(string name = default, string ownerEmail = default, int retentionDays = default, bool isDefault = default, IEnumerable<WorkspaceMarketplaceDetails> marketplaceDetails = default)
         {
             marketplaceDetails ??= new ChangeTrackingList<WorkspaceMarketplaceDetails>();
 
@@ -438,7 +438,7 @@ namespace Azure.ResourceManager.KoreAIArtemis.Models
                 name,
                 ownerEmail,
                 retentionDays,
-                @default,
+                isDefault,
                 (marketplaceDetails ?? new ChangeTrackingList<WorkspaceMarketplaceDetails>()).ToList(),
                 default);
         }
@@ -453,7 +453,7 @@ namespace Azure.ResourceManager.KoreAIArtemis.Models
         /// <param name="termId"> Marketplace subscription term identifier. </param>
         /// <param name="status"> Azure Marketplace fulfillment subscription status. </param>
         /// <returns> A new <see cref="Models.WorkspaceMarketplaceDetails"/> instance for mocking. </returns>
-        public static WorkspaceMarketplaceDetails WorkspaceMarketplaceDetails(string resourceId = default, string mpId = default, string planId = default, string planName = default, string offerId = default, string publisherId = default, string termId = default, WorkspaceMarketplaceStatus? status = default)
+        public static WorkspaceMarketplaceDetails WorkspaceMarketplaceDetails(ResourceIdentifier resourceId = default, string mpId = default, string planId = default, string planName = default, string offerId = default, string publisherId = default, string termId = default, WorkspaceMarketplaceStatus? status = default)
         {
             return new WorkspaceMarketplaceDetails(
                 resourceId,

@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 using Azure.ResourceManager.KoreAIArtemis;
 
 namespace Azure.ResourceManager.KoreAIArtemis.Models
@@ -149,7 +150,7 @@ namespace Azure.ResourceManager.KoreAIArtemis.Models
             {
                 return null;
             }
-            string resourceId = default;
+            ResourceIdentifier resourceId = default;
             string mpId = default;
             string planId = default;
             string planName = default;
@@ -162,7 +163,7 @@ namespace Azure.ResourceManager.KoreAIArtemis.Models
             {
                 if (prop.NameEquals("resourceId"u8))
                 {
-                    resourceId = prop.Value.GetString();
+                    resourceId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("mpId"u8))

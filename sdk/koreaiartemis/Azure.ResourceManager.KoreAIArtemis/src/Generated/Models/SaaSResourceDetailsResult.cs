@@ -30,13 +30,13 @@ namespace Azure.ResourceManager.KoreAIArtemis.Models
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="saasId"> SaaS subscription identifier (GUID) issued by the Azure Marketplace fulfillment API for the activated SaaS resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SaaSResourceDetailsResult(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string saasId, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
+        internal SaaSResourceDetailsResult(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Guid? saasId, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
             SaasId = saasId;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> SaaS subscription identifier (GUID) issued by the Azure Marketplace fulfillment API for the activated SaaS resource. </summary>
-        public string SaasId { get; }
+        public Guid? SaasId { get; }
     }
 }

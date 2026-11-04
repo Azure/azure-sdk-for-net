@@ -12,7 +12,7 @@ using Azure.ResourceManager.KoreAIArtemis;
 namespace Azure.ResourceManager.KoreAIArtemis.Models
 {
     /// <summary> Various states of the SSO resource. </summary>
-    public readonly partial struct SingleSignOnStates : IEquatable<SingleSignOnStates>
+    public readonly partial struct KoreAIArtemisSingleSignOnState : IEquatable<KoreAIArtemisSingleSignOnState>
     {
         private readonly string _value;
         /// <summary> Initial state of the SSO resource. </summary>
@@ -22,10 +22,10 @@ namespace Azure.ResourceManager.KoreAIArtemis.Models
         /// <summary> State of the SSO resource when it is disabled. </summary>
         private const string DisableValue = "Disable";
 
-        /// <summary> Initializes a new instance of <see cref="SingleSignOnStates"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="KoreAIArtemisSingleSignOnState"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public SingleSignOnStates(string value)
+        public KoreAIArtemisSingleSignOnState(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -33,38 +33,38 @@ namespace Azure.ResourceManager.KoreAIArtemis.Models
         }
 
         /// <summary> Initial state of the SSO resource. </summary>
-        public static SingleSignOnStates Initial { get; } = new SingleSignOnStates(InitialValue);
+        public static KoreAIArtemisSingleSignOnState Initial { get; } = new KoreAIArtemisSingleSignOnState(InitialValue);
 
         /// <summary> State of the SSO resource when it is enabled. </summary>
-        public static SingleSignOnStates Enable { get; } = new SingleSignOnStates(EnableValue);
+        public static KoreAIArtemisSingleSignOnState Enable { get; } = new KoreAIArtemisSingleSignOnState(EnableValue);
 
         /// <summary> State of the SSO resource when it is disabled. </summary>
-        public static SingleSignOnStates Disable { get; } = new SingleSignOnStates(DisableValue);
+        public static KoreAIArtemisSingleSignOnState Disable { get; } = new KoreAIArtemisSingleSignOnState(DisableValue);
 
-        /// <summary> Determines if two <see cref="SingleSignOnStates"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="KoreAIArtemisSingleSignOnState"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(SingleSignOnStates left, SingleSignOnStates right) => left.Equals(right);
+        public static bool operator ==(KoreAIArtemisSingleSignOnState left, KoreAIArtemisSingleSignOnState right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="SingleSignOnStates"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="KoreAIArtemisSingleSignOnState"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(SingleSignOnStates left, SingleSignOnStates right) => !left.Equals(right);
+        public static bool operator !=(KoreAIArtemisSingleSignOnState left, KoreAIArtemisSingleSignOnState right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="SingleSignOnStates"/>. </summary>
+        /// <summary> Converts a string to a <see cref="KoreAIArtemisSingleSignOnState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SingleSignOnStates(string value) => new SingleSignOnStates(value);
+        public static implicit operator KoreAIArtemisSingleSignOnState(string value) => new KoreAIArtemisSingleSignOnState(value);
 
-        /// <summary> Converts a string to a <see cref="SingleSignOnStates"/>. </summary>
+        /// <summary> Converts a string to a <see cref="KoreAIArtemisSingleSignOnState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SingleSignOnStates?(string value) => value == null ? null : new SingleSignOnStates(value);
+        public static implicit operator KoreAIArtemisSingleSignOnState?(string value) => value == null ? null : new KoreAIArtemisSingleSignOnState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is SingleSignOnStates other && Equals(other);
+        public override bool Equals(object obj) => obj is KoreAIArtemisSingleSignOnState other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(SingleSignOnStates other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(KoreAIArtemisSingleSignOnState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

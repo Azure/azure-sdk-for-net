@@ -157,8 +157,8 @@ namespace Azure.ResourceManager.KoreAIArtemis.Models
             {
                 return null;
             }
-            SingleSignOnType @type = default;
-            SingleSignOnStates? state = default;
+            KoreAIArtemisSingleSignOnType @type = default;
+            KoreAIArtemisSingleSignOnState? state = default;
             string enterpriseAppId = default;
             string uri = default;
             IList<string> aadDomains = default;
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.KoreAIArtemis.Models
             {
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = new SingleSignOnType(prop.Value.GetString());
+                    @type = new KoreAIArtemisSingleSignOnType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("state"u8))
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.KoreAIArtemis.Models
                     {
                         continue;
                     }
-                    state = new SingleSignOnStates(prop.Value.GetString());
+                    state = new KoreAIArtemisSingleSignOnState(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("enterpriseAppId"u8))

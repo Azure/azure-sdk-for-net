@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.KoreAIArtemis.Models
             if (Optional.IsDefined(SaasId))
             {
                 writer.WritePropertyName("saasId"u8);
-                writer.WriteStringValue(SaasId);
+                writer.WriteStringValue(SaasId.Value);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.KoreAIArtemis.Models
             string name = default;
             ResourceType resourceType = default;
             SystemData systemData = default;
-            string saasId = default;
+            Guid? saasId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -175,7 +175,11 @@ namespace Azure.ResourceManager.KoreAIArtemis.Models
                 }
                 if (prop.NameEquals("saasId"u8))
                 {
-                    saasId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    saasId = new Guid(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

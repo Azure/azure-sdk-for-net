@@ -12,7 +12,7 @@ using Azure.ResourceManager.KoreAIArtemis;
 namespace Azure.ResourceManager.KoreAIArtemis.Models
 {
     /// <summary> Defines the type of Single Sign-On (SSO) mechanism being used. </summary>
-    public readonly partial struct SingleSignOnType : IEquatable<SingleSignOnType>
+    public readonly partial struct KoreAIArtemisSingleSignOnType : IEquatable<KoreAIArtemisSingleSignOnType>
     {
         private readonly string _value;
         /// <summary> Security Assertion Markup Language (SAML) based Single Sign-On. </summary>
@@ -20,10 +20,10 @@ namespace Azure.ResourceManager.KoreAIArtemis.Models
         /// <summary> OpenID Connect based Single Sign-On. </summary>
         private const string OpenIdValue = "OpenId";
 
-        /// <summary> Initializes a new instance of <see cref="SingleSignOnType"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="KoreAIArtemisSingleSignOnType"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public SingleSignOnType(string value)
+        public KoreAIArtemisSingleSignOnType(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -31,35 +31,35 @@ namespace Azure.ResourceManager.KoreAIArtemis.Models
         }
 
         /// <summary> Security Assertion Markup Language (SAML) based Single Sign-On. </summary>
-        public static SingleSignOnType Saml { get; } = new SingleSignOnType(SamlValue);
+        public static KoreAIArtemisSingleSignOnType Saml { get; } = new KoreAIArtemisSingleSignOnType(SamlValue);
 
         /// <summary> OpenID Connect based Single Sign-On. </summary>
-        public static SingleSignOnType OpenId { get; } = new SingleSignOnType(OpenIdValue);
+        public static KoreAIArtemisSingleSignOnType OpenId { get; } = new KoreAIArtemisSingleSignOnType(OpenIdValue);
 
-        /// <summary> Determines if two <see cref="SingleSignOnType"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="KoreAIArtemisSingleSignOnType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(SingleSignOnType left, SingleSignOnType right) => left.Equals(right);
+        public static bool operator ==(KoreAIArtemisSingleSignOnType left, KoreAIArtemisSingleSignOnType right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="SingleSignOnType"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="KoreAIArtemisSingleSignOnType"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(SingleSignOnType left, SingleSignOnType right) => !left.Equals(right);
+        public static bool operator !=(KoreAIArtemisSingleSignOnType left, KoreAIArtemisSingleSignOnType right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="SingleSignOnType"/>. </summary>
+        /// <summary> Converts a string to a <see cref="KoreAIArtemisSingleSignOnType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SingleSignOnType(string value) => new SingleSignOnType(value);
+        public static implicit operator KoreAIArtemisSingleSignOnType(string value) => new KoreAIArtemisSingleSignOnType(value);
 
-        /// <summary> Converts a string to a <see cref="SingleSignOnType"/>. </summary>
+        /// <summary> Converts a string to a <see cref="KoreAIArtemisSingleSignOnType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SingleSignOnType?(string value) => value == null ? null : new SingleSignOnType(value);
+        public static implicit operator KoreAIArtemisSingleSignOnType?(string value) => value == null ? null : new KoreAIArtemisSingleSignOnType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is SingleSignOnType other && Equals(other);
+        public override bool Equals(object obj) => obj is KoreAIArtemisSingleSignOnType other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(SingleSignOnType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(KoreAIArtemisSingleSignOnType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

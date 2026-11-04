@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.KoreAIArtemis
         /// Resolve the token to get the SaaS resource ID and activate the SaaS resource.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableKoreAIArtemisSubscriptionResource.ActivateResourceAsync(WaitUntil, ActivateSaaSParameterRequest, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableKoreAIArtemisSubscriptionResource.ActivateResourceAsync(WaitUntil, ActivateSaasContent, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.KoreAIArtemis
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static async Task<ArmOperation<SaaSResourceDetailsResult>> ActivateResourceAsync(this SubscriptionResource subscriptionResource, WaitUntil waitUntil, ActivateSaaSParameterRequest content, CancellationToken cancellationToken = default)
+        public static async Task<ArmOperation<SaaSResourceDetailsResult>> ActivateResourceAsync(this SubscriptionResource subscriptionResource, WaitUntil waitUntil, ActivateSaasContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.KoreAIArtemis
         /// Resolve the token to get the SaaS resource ID and activate the SaaS resource.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableKoreAIArtemisSubscriptionResource.ActivateResource(WaitUntil, ActivateSaaSParameterRequest, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableKoreAIArtemisSubscriptionResource.ActivateResource(WaitUntil, ActivateSaasContent, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.KoreAIArtemis
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static ArmOperation<SaaSResourceDetailsResult> ActivateResource(this SubscriptionResource subscriptionResource, WaitUntil waitUntil, ActivateSaaSParameterRequest content, CancellationToken cancellationToken = default)
+        public static ArmOperation<SaaSResourceDetailsResult> ActivateResource(this SubscriptionResource subscriptionResource, WaitUntil waitUntil, ActivateSaasContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 

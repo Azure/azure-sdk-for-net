@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.KoreAIArtemis.Models
         /// <param name="status"> Lifecycle status of the Workspace as reported by the Kore partner. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal KoreAIArtemisWorkspaceProperties(Product? product, IList<KoreAIArtemisMarketplaceDetails> marketplaceDetails, KoreAIArtemisWorkspacePartnerProperties partnerProperties, bool? isDefault, KoreAIArtemisWorkspaceLifecycleStatus? status, KoreAIArtemisResourceProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal KoreAIArtemisWorkspaceProperties(KoreAIArtemisWorkspaceProduct? product, IList<KoreAIArtemisMarketplaceDetails> marketplaceDetails, KoreAIArtemisWorkspacePartnerProperties partnerProperties, bool? isDefault, KoreAIArtemisWorkspaceLifecycleStatus? status, KoreAIArtemisResourceProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Product = product;
             MarketplaceDetails = marketplaceDetails;
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.KoreAIArtemis.Models
         }
 
         /// <summary> Marketplace product selected for this Workspace. </summary>
-        public Product? Product { get; set; }
+        public KoreAIArtemisWorkspaceProduct? Product { get; set; }
 
         /// <summary>
         /// Azure Marketplace SaaS subscriptions linked to this Workspace.

@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.KoreAIArtemis.Models
         /// <param name="tags"> Resource tags. </param>
         /// <param name="properties"> The resource-specific properties to update. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal KoreAIArtemisOrganizationPatch(IDictionary<string, string> tags, OrganizationPropertiesUpdate properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal KoreAIArtemisOrganizationPatch(IDictionary<string, string> tags, KoreAIArtemisOrganizationPropertiesPatch properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Tags = tags;
             Properties = properties;
@@ -38,6 +38,6 @@ namespace Azure.ResourceManager.KoreAIArtemis.Models
         public IDictionary<string, string> Tags { get; }
 
         /// <summary> The resource-specific properties to update. </summary>
-        public OrganizationPropertiesUpdate Properties { get; set; }
+        public KoreAIArtemisOrganizationPropertiesPatch Properties { get; set; }
     }
 }

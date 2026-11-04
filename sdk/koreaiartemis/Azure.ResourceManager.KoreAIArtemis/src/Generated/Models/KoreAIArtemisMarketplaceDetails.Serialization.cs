@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.KoreAIArtemis.Models
                 return null;
             }
             string subscriptionId = default;
-            MarketplaceSubscriptionStatus? subscriptionStatus = default;
+            KoreAIArtemisMarketplaceSubscriptionStatus? subscriptionStatus = default;
             string saasResourceId = default;
             KoreAIArtemisOfferDetails offerDetails = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.KoreAIArtemis.Models
                     {
                         continue;
                     }
-                    subscriptionStatus = new MarketplaceSubscriptionStatus(prop.Value.GetString());
+                    subscriptionStatus = new KoreAIArtemisMarketplaceSubscriptionStatus(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("saasResourceId"u8))

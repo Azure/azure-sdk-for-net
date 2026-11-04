@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.KoreAIArtemis.Models
             writer.WritePropertyName("retentionDays"u8);
             writer.WriteNumberValue(RetentionDays);
             writer.WritePropertyName("default"u8);
-            writer.WriteBooleanValue(Default);
+            writer.WriteBooleanValue(IsDefault);
             writer.WritePropertyName("marketplaceDetails"u8);
             writer.WriteStartArray();
             foreach (WorkspaceMarketplaceDetails item in MarketplaceDetails)
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.KoreAIArtemis.Models
             string name = default;
             string ownerEmail = default;
             int retentionDays = default;
-            bool @default = default;
+            bool isDefault = default;
             IList<WorkspaceMarketplaceDetails> marketplaceDetails = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.KoreAIArtemis.Models
                 }
                 if (prop.NameEquals("default"u8))
                 {
-                    @default = prop.Value.GetBoolean();
+                    isDefault = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("marketplaceDetails"u8))
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.KoreAIArtemis.Models
                 name,
                 ownerEmail,
                 retentionDays,
-                @default,
+                isDefault,
                 marketplaceDetails ?? new ChangeTrackingList<WorkspaceMarketplaceDetails>(),
                 additionalBinaryDataProperties);
         }

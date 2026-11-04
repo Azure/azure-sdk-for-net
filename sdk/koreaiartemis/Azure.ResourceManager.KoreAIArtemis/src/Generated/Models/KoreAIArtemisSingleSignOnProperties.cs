@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.KoreAIArtemis.Models
 
         /// <summary> Initializes a new instance of <see cref="KoreAIArtemisSingleSignOnProperties"/>. </summary>
         /// <param name="type"> Type of Single Sign-On mechanism being used. </param>
-        internal KoreAIArtemisSingleSignOnProperties(SingleSignOnType @type)
+        internal KoreAIArtemisSingleSignOnProperties(KoreAIArtemisSingleSignOnType @type)
         {
             Type = @type;
             AadDomains = new ChangeTrackingList<string>();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.KoreAIArtemis.Models
         /// <param name="uri"> URL for SSO to be used by the partner to redirect the user to their system. </param>
         /// <param name="aadDomains"> List of AAD domains fetched from Microsoft Graph for user. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal KoreAIArtemisSingleSignOnProperties(SingleSignOnType @type, SingleSignOnStates? state, string enterpriseAppId, string uri, IList<string> aadDomains, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal KoreAIArtemisSingleSignOnProperties(KoreAIArtemisSingleSignOnType @type, KoreAIArtemisSingleSignOnState? state, string enterpriseAppId, string uri, IList<string> aadDomains, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Type = @type;
             State = state;
@@ -47,10 +47,10 @@ namespace Azure.ResourceManager.KoreAIArtemis.Models
         }
 
         /// <summary> Type of Single Sign-On mechanism being used. </summary>
-        public SingleSignOnType Type { get; }
+        public KoreAIArtemisSingleSignOnType Type { get; }
 
         /// <summary> State of the Single Sign On for the resource. </summary>
-        public SingleSignOnStates? State { get; }
+        public KoreAIArtemisSingleSignOnState? State { get; }
 
         /// <summary> AAD enterprise application Id used to setup SSO. </summary>
         public string EnterpriseAppId { get; }

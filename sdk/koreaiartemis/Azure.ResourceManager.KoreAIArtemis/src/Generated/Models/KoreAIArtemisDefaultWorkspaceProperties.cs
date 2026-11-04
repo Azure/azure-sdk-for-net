@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.KoreAIArtemis.Models
         /// plan changes.
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal KoreAIArtemisDefaultWorkspaceProperties(string name, Product? product, IList<KoreAIArtemisMarketplaceDetails> marketplaceDetails, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal KoreAIArtemisDefaultWorkspaceProperties(string name, KoreAIArtemisWorkspaceProduct? product, IList<KoreAIArtemisMarketplaceDetails> marketplaceDetails, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Product = product;
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.KoreAIArtemis.Models
         public string Name { get; set; }
 
         /// <summary> Marketplace product selected for this Workspace. </summary>
-        public Product? Product { get; set; }
+        public KoreAIArtemisWorkspaceProduct? Product { get; set; }
 
         /// <summary>
         /// Azure Marketplace SaaS subscriptions linked to this Workspace.

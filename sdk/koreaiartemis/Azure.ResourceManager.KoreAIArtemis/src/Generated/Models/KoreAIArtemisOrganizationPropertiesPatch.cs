@@ -11,22 +11,22 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.KoreAIArtemis.Models
 {
     /// <summary> Mutable Organization properties (subset of OrganizationProperties). </summary>
-    public partial class OrganizationPropertiesUpdate
+    public partial class KoreAIArtemisOrganizationPropertiesPatch
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="OrganizationPropertiesUpdate"/>. </summary>
-        public OrganizationPropertiesUpdate()
+        /// <summary> Initializes a new instance of <see cref="KoreAIArtemisOrganizationPropertiesPatch"/>. </summary>
+        public KoreAIArtemisOrganizationPropertiesPatch()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="OrganizationPropertiesUpdate"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="KoreAIArtemisOrganizationPropertiesPatch"/>. </summary>
         /// <param name="partnerProperties"> Partner-specific (Kore) Organization properties. </param>
         /// <param name="user"> Azure customer profile metadata. </param>
         /// <param name="companyDetails"> Organization-tier company metadata. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal OrganizationPropertiesUpdate(OrganizationPartnerPropertiesUpdate partnerProperties, KoreAIArtemisUserDetails user, KoreAIArtemisCompanyDetails companyDetails, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal KoreAIArtemisOrganizationPropertiesPatch(KoreAIArtemisOrganizationPartnerPropertiesPatch partnerProperties, KoreAIArtemisUserDetails user, KoreAIArtemisCompanyDetails companyDetails, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             PartnerProperties = partnerProperties;
             User = user;
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.KoreAIArtemis.Models
         }
 
         /// <summary> Partner-specific (Kore) Organization properties. </summary>
-        public OrganizationPartnerPropertiesUpdate PartnerProperties { get; set; }
+        public KoreAIArtemisOrganizationPartnerPropertiesPatch PartnerProperties { get; set; }
 
         /// <summary> Azure customer profile metadata. </summary>
         public KoreAIArtemisUserDetails User { get; set; }

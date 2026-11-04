@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.KoreAIArtemis
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
     /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
-    [ModelReaderWriterBuildable(typeof(ActivateSaaSParameterRequest))]
+    [ModelReaderWriterBuildable(typeof(ActivateSaasContent))]
     [ModelReaderWriterBuildable(typeof(DiscoveredWorkspace))]
     [ModelReaderWriterBuildable(typeof(KoreAIArtemisCompanyDetails))]
     [ModelReaderWriterBuildable(typeof(KoreAIArtemisDefaultWorkspaceProperties))]
@@ -23,8 +23,10 @@ namespace Azure.ResourceManager.KoreAIArtemis
     [ModelReaderWriterBuildable(typeof(KoreAIArtemisOfferDetails))]
     [ModelReaderWriterBuildable(typeof(KoreAIArtemisOrganizationData))]
     [ModelReaderWriterBuildable(typeof(KoreAIArtemisOrganizationPartnerProperties))]
+    [ModelReaderWriterBuildable(typeof(KoreAIArtemisOrganizationPartnerPropertiesPatch))]
     [ModelReaderWriterBuildable(typeof(KoreAIArtemisOrganizationPatch))]
     [ModelReaderWriterBuildable(typeof(KoreAIArtemisOrganizationProperties))]
+    [ModelReaderWriterBuildable(typeof(KoreAIArtemisOrganizationPropertiesPatch))]
     [ModelReaderWriterBuildable(typeof(KoreAIArtemisOrganizationResource))]
     [ModelReaderWriterBuildable(typeof(KoreAIArtemisSingleSignOnProperties))]
     [ModelReaderWriterBuildable(typeof(KoreAIArtemisUserDetails))]
@@ -33,8 +35,6 @@ namespace Azure.ResourceManager.KoreAIArtemis
     [ModelReaderWriterBuildable(typeof(KoreAIArtemisWorkspaceProperties))]
     [ModelReaderWriterBuildable(typeof(KoreAIArtemisWorkspaceResource))]
     [ModelReaderWriterBuildable(typeof(ListWorkspacesResult))]
-    [ModelReaderWriterBuildable(typeof(OrganizationPartnerPropertiesUpdate))]
-    [ModelReaderWriterBuildable(typeof(OrganizationPropertiesUpdate))]
     [ModelReaderWriterBuildable(typeof(SaaSResourceDetailsResult))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(WorkspaceDetail))]
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.KoreAIArtemis
     [ModelReaderWriterBuildable(typeof(WorkspaceLinkedSaaSListResult))]
     [ModelReaderWriterBuildable(typeof(WorkspaceMarketplaceDetails))]
     [ModelReaderWriterBuildable(typeof(WorkspaceProject))]
-    [ModelReaderWriterBuildable(typeof(WorkspaceSaaSData))]
+    [ModelReaderWriterBuildable(typeof(WorkspaceSaasContent))]
     public partial class AzureResourceManagerKoreAIArtemisContext : ModelReaderWriterContext
     {
     }

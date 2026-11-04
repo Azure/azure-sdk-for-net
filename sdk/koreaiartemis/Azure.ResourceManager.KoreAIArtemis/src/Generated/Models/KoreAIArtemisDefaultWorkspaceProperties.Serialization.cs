@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.KoreAIArtemis.Models
                 return null;
             }
             string name = default;
-            Product? product = default;
+            KoreAIArtemisWorkspaceProduct? product = default;
             IList<KoreAIArtemisMarketplaceDetails> marketplaceDetails = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.KoreAIArtemis.Models
                     {
                         continue;
                     }
-                    product = new Product(prop.Value.GetString());
+                    product = new KoreAIArtemisWorkspaceProduct(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("marketplaceDetails"u8))

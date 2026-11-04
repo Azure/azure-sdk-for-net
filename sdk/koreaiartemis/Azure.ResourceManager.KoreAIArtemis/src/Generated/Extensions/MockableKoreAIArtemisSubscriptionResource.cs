@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.KoreAIArtemis.Mocking
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation<SaaSResourceDetailsResult>> ActivateResourceAsync(WaitUntil waitUntil, ActivateSaaSParameterRequest content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<SaaSResourceDetailsResult>> ActivateResourceAsync(WaitUntil waitUntil, ActivateSaasContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.KoreAIArtemis.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = SaaSOperationGroupRestClient.CreateActivateResourceRequest(Guid.Parse(Id.SubscriptionId), ActivateSaaSParameterRequest.ToRequestContent(content), context);
+                HttpMessage message = SaaSOperationGroupRestClient.CreateActivateResourceRequest(Guid.Parse(Id.SubscriptionId), ActivateSaasContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 KoreAIArtemisArmOperation<SaaSResourceDetailsResult> operation = new KoreAIArtemisArmOperation<SaaSResourceDetailsResult>(
                     new SaaSResourceDetailsResultOperationSource(),
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.KoreAIArtemis.Mocking
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation<SaaSResourceDetailsResult> ActivateResource(WaitUntil waitUntil, ActivateSaaSParameterRequest content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<SaaSResourceDetailsResult> ActivateResource(WaitUntil waitUntil, ActivateSaasContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.KoreAIArtemis.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = SaaSOperationGroupRestClient.CreateActivateResourceRequest(Guid.Parse(Id.SubscriptionId), ActivateSaaSParameterRequest.ToRequestContent(content), context);
+                HttpMessage message = SaaSOperationGroupRestClient.CreateActivateResourceRequest(Guid.Parse(Id.SubscriptionId), ActivateSaasContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 KoreAIArtemisArmOperation<SaaSResourceDetailsResult> operation = new KoreAIArtemisArmOperation<SaaSResourceDetailsResult>(
                     new SaaSResourceDetailsResultOperationSource(),

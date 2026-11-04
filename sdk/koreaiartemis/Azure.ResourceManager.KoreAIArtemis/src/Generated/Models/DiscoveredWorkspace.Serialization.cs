@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.KoreAIArtemis.Models
             string ownerEmail = default;
             bool? isDefault = default;
             KoreAIArtemisWorkspaceLifecycleStatus? status = default;
-            Product? product = default;
+            KoreAIArtemisWorkspaceProduct? product = default;
             IList<KoreAIArtemisMarketplaceDetails> marketplaceDetails = default;
             bool isManagedByLiftr = default;
             ResourceIdentifier armResourceId = default;
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.KoreAIArtemis.Models
                     {
                         continue;
                     }
-                    product = new Product(prop.Value.GetString());
+                    product = new KoreAIArtemisWorkspaceProduct(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("marketplaceDetails"u8))

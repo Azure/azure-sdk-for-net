@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.KoreAIArtemis.Models
                 return null;
             }
             IDictionary<string, string> tags = default;
-            OrganizationPropertiesUpdate properties = default;
+            KoreAIArtemisOrganizationPropertiesPatch properties = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.KoreAIArtemis.Models
                     {
                         continue;
                     }
-                    properties = OrganizationPropertiesUpdate.DeserializeOrganizationPropertiesUpdate(prop.Value, options);
+                    properties = KoreAIArtemisOrganizationPropertiesPatch.DeserializeKoreAIArtemisOrganizationPropertiesPatch(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

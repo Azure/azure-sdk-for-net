@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.KoreAIArtemis.Models
         /// <param name="isManagedByLiftr"> Indicates whether the Workspace is managed as an ARM resource through Liftr. </param>
         /// <param name="armResourceId"> ARM resource ID when the Workspace is managed through Liftr. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DiscoveredWorkspace(string partnerResourceId, string name, string ownerEmail, bool? isDefault, KoreAIArtemisWorkspaceLifecycleStatus? status, Product? product, IList<KoreAIArtemisMarketplaceDetails> marketplaceDetails, bool isManagedByLiftr, ResourceIdentifier armResourceId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DiscoveredWorkspace(string partnerResourceId, string name, string ownerEmail, bool? isDefault, KoreAIArtemisWorkspaceLifecycleStatus? status, KoreAIArtemisWorkspaceProduct? product, IList<KoreAIArtemisMarketplaceDetails> marketplaceDetails, bool isManagedByLiftr, ResourceIdentifier armResourceId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             PartnerResourceId = partnerResourceId;
             Name = name;
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.KoreAIArtemis.Models
         public KoreAIArtemisWorkspaceLifecycleStatus? Status { get; }
 
         /// <summary> Marketplace product selected for this Workspace. </summary>
-        public Product? Product { get; }
+        public KoreAIArtemisWorkspaceProduct? Product { get; }
 
         /// <summary> Azure Marketplace SaaS subscriptions linked to this Workspace. </summary>
         public IList<KoreAIArtemisMarketplaceDetails> MarketplaceDetails { get; }
