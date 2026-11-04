@@ -74,6 +74,14 @@ namespace Azure.ResourceManager.Search.Tests
             return lro.Value;
         }
 
+        protected string GenerateSearchServiceName(string prefix = "search")
+        {
+            // Preserve the random sequence and names used by older recordings.
+            string legacyName = Recording.GenerateAssetName(prefix);
+            string defaultName = Mode == RecordedTestMode.Playback ? null : $"{prefix}-{Guid.NewGuid():N}";
+            return Recording.GetVariable($"SERVICE_NAME_{legacyName}", defaultName) ?? legacyName;
+        }
+
         protected async Task<ArmOperation<SearchServiceResource>> CreateSearchServiceAsync(
             SearchServiceCollection collection, string name, SearchServiceData data)
         {

@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Search.Tests.Tests
         public async Task GetAsyncTest()
         {
             await setResourceGroup();
-            var name = Recording.GenerateAssetName("search");
+            var name = GenerateSearchServiceName();
             var data = new SearchServiceData(DefaultLocation)
             {
                 SearchSkuName = SearchServiceSkuName.Standard,
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Search.Tests.Tests
         public async Task DeleteAsyncTest()
         {
             await setResourceGroup();
-            var name = Recording.GenerateAssetName("search");
+            var name = GenerateSearchServiceName();
             var data = new SearchServiceData(DefaultLocation)
             {
                 SearchSkuName = SearchServiceSkuName.Standard,
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Search.Tests.Tests
         public async Task UpdateAsyncTest()
         {
             await setResourceGroup();
-            var name = Recording.GenerateAssetName("search");
+            var name = GenerateSearchServiceName();
             var data = new SearchServiceData(DefaultLocation)
             {
                 SearchSkuName = SearchServiceSkuName.Standard,
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Search.Tests.Tests
         public async Task GetAdminKeyAsync()
         {
             await setResourceGroup();
-            var name = Recording.GenerateAssetName("search");
+            var name = GenerateSearchServiceName();
             var data = new SearchServiceData(DefaultLocation)
             {
                 SearchSkuName = SearchServiceSkuName.Standard,
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Search.Tests.Tests
         public async Task RegenerateAdminKeyAsync()
         {
             await setResourceGroup();
-            var name = Recording.GenerateAssetName("search");
+            var name = GenerateSearchServiceName();
             var data = new SearchServiceData(DefaultLocation)
             {
                 SearchSkuName = SearchServiceSkuName.Standard,
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.Search.Tests.Tests
         public async Task CreateQueryKeyAsync()
         {
             await setResourceGroup();
-            var name = Recording.GenerateAssetName("search");
+            var name = GenerateSearchServiceName();
             var data = new SearchServiceData(DefaultLocation)
             {
                 SearchSkuName = SearchServiceSkuName.Standard,
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Search.Tests.Tests
         public async Task DeleteQueryKeyAsync()
         {
             await setResourceGroup();
-            var name = Recording.GenerateAssetName("search");
+            var name = GenerateSearchServiceName();
             var data = new SearchServiceData(DefaultLocation)
             {
                 SearchSkuName = SearchServiceSkuName.Standard,
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.Search.Tests.Tests
         public async Task GetQueryKeysBySearchServiceAsyncTest()
         {
             await setResourceGroup();
-            var name = Recording.GenerateAssetName("search");
+            var name = GenerateSearchServiceName();
             var data = new SearchServiceData(DefaultLocation)
             {
                 SearchSkuName = SearchServiceSkuName.Standard,
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.Search.Tests.Tests
         public async Task AddTagAsync()
         {
             await setResourceGroup();
-            var name = Recording.GenerateAssetName("search");
+            var name = GenerateSearchServiceName();
             var data = new SearchServiceData(DefaultLocation)
             {
                 SearchSkuName = SearchServiceSkuName.Standard,
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.Search.Tests.Tests
         public async Task SetTagsAsync()
         {
             await setResourceGroup();
-            var name = Recording.GenerateAssetName("search");
+            var name = GenerateSearchServiceName();
             var data = new SearchServiceData(DefaultLocation)
             {
                 SearchSkuName = SearchServiceSkuName.Standard,
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.Search.Tests.Tests
         public async Task RemoveTagAsync()
         {
             await setResourceGroup();
-            var name = Recording.GenerateAssetName("search");
+            var name = GenerateSearchServiceName();
             var data = new SearchServiceData(DefaultLocation)
             {
                 SearchSkuName = SearchServiceSkuName.Standard,
@@ -277,7 +277,7 @@ namespace Azure.ResourceManager.Search.Tests.Tests
         public async Task DisableAndEnableLocalAuthAsync()
         {
             await setResourceGroup();
-            var name = Recording.GenerateAssetName("search");
+            var name = GenerateSearchServiceName();
             var data = new SearchServiceData(DefaultLocation)
             {
                 SkuName = SearchSkuName.Basic,
@@ -340,7 +340,7 @@ namespace Azure.ResourceManager.Search.Tests.Tests
         public async Task DisableAndEnableSemanticSearchAsync()
         {
             await setResourceGroup();
-            var name = Recording.GenerateAssetName("search");
+            var name = GenerateSearchServiceName();
             var data = new SearchServiceData(TestEnvironment.GetSearchLocation("westcentralus"))
             {
                 SearchSkuName = SearchServiceSkuName.Standard,
@@ -370,7 +370,7 @@ namespace Azure.ResourceManager.Search.Tests.Tests
         public async Task UpgradeAsyncTest()
         {
             await setResourceGroup();
-            var name = Recording.GenerateAssetName("search");
+            var name = GenerateSearchServiceName();
             var data = new SearchServiceData(DefaultLocation)
             {
                 SearchSkuName = SearchServiceSkuName.Standard,

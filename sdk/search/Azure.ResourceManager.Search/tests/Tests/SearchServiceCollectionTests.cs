@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Search.Tests
         {
             await SetCollection();
 
-            var name = Recording.GenerateAssetName("search");
+            var name = GenerateSearchServiceName();
             var data = new SearchServiceData(DefaultLocation)
             {
                 SearchSkuName = SearchServiceSkuName.Standard,
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Search.Tests
         {
             await SetCollection();
 
-            var name = Recording.GenerateAssetName("search");
+            var name = GenerateSearchServiceName();
             var data = new SearchServiceData(DefaultLocation)
             {
                 SearchSkuName = SearchServiceSkuName.Standard,
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Search.Tests
         {
             await SetCollection();
 
-            var name1 = Recording.GenerateAssetName("search1");
+            var name1 = GenerateSearchServiceName("search1");
             var data1 = new SearchServiceData(DefaultLocation)
             {
                 SearchSkuName = SearchServiceSkuName.Standard,
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Search.Tests
                 HostingMode = SearchServiceHostingMode.Default
             };
 
-            var name2 = Recording.GenerateAssetName("search2");
+            var name2 = GenerateSearchServiceName("search2");
             var data2 = new SearchServiceData(DefaultLocation)
             {
                 SearchSkuName = SearchServiceSkuName.Standard,
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.Search.Tests
         {
             await SetCollection();
 
-            var name = Recording.GenerateAssetName("search");
+            var name = GenerateSearchServiceName();
             var data = new SearchServiceData(DefaultLocation)
             {
                 SearchSkuName = SearchServiceSkuName.Standard,
