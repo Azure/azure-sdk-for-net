@@ -385,32 +385,13 @@ namespace Azure.AI.Projects.Agents.Telemetry
                 // Handle image-based hosted agent - add all hosted-specific attributes including image
                 scope.SetTagMaybe(GenAiAgentHostedCpu, imageBasedHostedAgentDefinition.Cpu);
                 scope.SetTagMaybe(GenAiAgentHostedMemory, imageBasedHostedAgentDefinition.Memory);
-                scope.SetTagMaybe(GenAiAgentHostedImage, imageBasedHostedAgentDefinition.ContainerConfiguration.Image);
+                scope.SetTagMaybe(GenAiAgentHostedImage, imageBasedHostedAgentDefinition.ContainerConfiguration?.Image);
 
                 // Extract protocol and version from ContainerProtocolVersions if available
                 if (imageBasedHostedAgentDefinition.Versions != null &&
                     imageBasedHostedAgentDefinition.Versions.Count > 0)
                 {
                     var protocolVersion = imageBasedHostedAgentDefinition.Versions[0];
-
-                    // Set protocol name (convert enum to lowercase string for consistency with Python)
-                    string protocolName = protocolVersion.Protocol.ToString().ToLowerInvariant();
-                    scope.SetTagMaybe(GenAiAgentHostedProtocol, protocolName);
-                    scope.SetTagMaybe(GenAiAgentHostedProtocolVersion, protocolVersion.Version);
-                }
-            }
-            else if (agentDefinition is HostedAgentDefinition hostedAgentDefinition)
-            {
-                // Handle non-image-based hosted agent (fallback for base HostedAgentDefinition)
-                scope.SetTagMaybe(GenAiAgentHostedCpu, hostedAgentDefinition.Cpu);
-                scope.SetTagMaybe(GenAiAgentHostedMemory, hostedAgentDefinition.Memory);
-                scope.SetTagMaybe(GenAiAgentHostedImage, hostedAgentDefinition.ContainerConfiguration.Image);
-
-                // Extract protocol and version from ContainerProtocolVersions if available
-                if (hostedAgentDefinition.Versions != null &&
-                    hostedAgentDefinition.Versions.Count > 0)
-                {
-                    var protocolVersion = hostedAgentDefinition.Versions[0];
 
                     // Set protocol name (convert enum to lowercase string for consistency with Python)
                     string protocolName = protocolVersion.Protocol.ToString().ToLowerInvariant();

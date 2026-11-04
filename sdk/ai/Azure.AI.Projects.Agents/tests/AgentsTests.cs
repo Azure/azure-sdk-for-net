@@ -8,9 +8,11 @@ using System.IO;
 using System.IO.Compression;
 using System.Linq;
 using System.Text.Json;
+using System.Threading;
 using System.Threading.Tasks;
 using Azure.AI.Extensions.OpenAI;
 using Microsoft.ClientModel.TestFramework;
+using Microsoft.ClientModel.TestFramework.Mocks;
 using NUnit.Framework;
 using NUnit.Framework.Internal;
 using NUnit.Framework.Legacy;
@@ -483,6 +485,24 @@ public class AgentsTests : AgentsTestBase
         Assert.That(backwards.Count, Is.EqualTo(2));
         Assert.That(backwards[0].Id, Is.EqualTo(records[records.Count - 2].Id));
         Assert.That(backwards[1].Id, Is.EqualTo(records[records.Count - 3].Id));
+    }
+
+    [RecordedTest]
+    public async Task TestToolboxUpdateCancelation()
+    {
+        var transport = new MockPipelineTransport(_ =>
+            new MockPipelineResponse(200).WithContent("{}"))
+        {
+            ExpectSyncPipeline = false
+        };
+        var client = new AgentAdministrationClient(
+            new Uri("https://example.test/api/projects/p"),
+            new AgentAdministrationClientOptions { Transport = transport });
+        using var cancellation = new CancellationTokenSource();
+        cancellation.Cancel();
+        var options = new RequestOptions { CancellationToken = cancellation.Token };
+        Assert.CatchAsync<OperationCanceledException>(async () =>
+            await client.GetAgentToolboxes().UpdateDefaultVersionAsync("box", "v1", options));
     }
 
     [RecordedTest]
