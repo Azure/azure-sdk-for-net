@@ -117,6 +117,10 @@ namespace Azure.Analytics.PlanetaryComputer
             {
                 if (prop.NameEquals("id"u8))
                 {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     id = new Guid(prop.Value.GetString());
                     continue;
                 }

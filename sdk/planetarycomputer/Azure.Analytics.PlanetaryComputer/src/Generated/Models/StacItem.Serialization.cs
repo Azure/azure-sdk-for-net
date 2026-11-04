@@ -100,8 +100,11 @@ namespace Azure.Analytics.PlanetaryComputer
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("geometry"u8);
             writer.WriteObjectValue(Geometry, options);
-            writer.WritePropertyName("id"u8);
-            writer.WriteStringValue(Id);
+            if (LifecycleModelReaderWriterOptions.IsVisible(options, LifecycleVisibility.Read | LifecycleVisibility.Create | LifecycleVisibility.Update))
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
             if (Optional.IsDefined(Collection))
             {
                 writer.WritePropertyName("collection"u8);

@@ -345,7 +345,9 @@ namespace Azure.AI.ContentUnderstanding
             Argument.AssertNotNullOrEmpty(analyzerId, nameof(analyzerId));
             Argument.AssertNotNull(resource, nameof(resource));
 
-            Operation<BinaryData> result = CreateAnalyzer(waitUntil, analyzerId, resource, allowReplace, cancellationToken.ToRequestContext());
+            using Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(resource, new LifecycleModelReaderWriterOptions(LifecycleVisibility.Create | LifecycleVisibility.Update, "W"));
+            Operation<BinaryData> result = CreateAnalyzer(waitUntil, analyzerId, content, allowReplace, cancellationToken.ToRequestContext());
             return ProtocolOperationHelpers.Convert(result, response => (ContentAnalyzer)response, ClientDiagnostics, "ContentUnderstandingClient.CreateAnalyzer");
         }
 
@@ -362,7 +364,9 @@ namespace Azure.AI.ContentUnderstanding
             Argument.AssertNotNullOrEmpty(analyzerId, nameof(analyzerId));
             Argument.AssertNotNull(resource, nameof(resource));
 
-            Operation<BinaryData> result = await CreateAnalyzerAsync(waitUntil, analyzerId, resource, allowReplace, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            using Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(resource, new LifecycleModelReaderWriterOptions(LifecycleVisibility.Create | LifecycleVisibility.Update, "W"));
+            Operation<BinaryData> result = await CreateAnalyzerAsync(waitUntil, analyzerId, content, allowReplace, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return ProtocolOperationHelpers.Convert(result, response => (ContentAnalyzer)response, ClientDiagnostics, "ContentUnderstandingClient.CreateAnalyzer");
         }
 

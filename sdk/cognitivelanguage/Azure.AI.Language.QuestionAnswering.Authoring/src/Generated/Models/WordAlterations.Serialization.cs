@@ -78,18 +78,21 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             {
                 throw new FormatException($"The model {nameof(WordAlterations)} does not support writing '{format}' format.");
             }
-            writer.WritePropertyName("alterations"u8);
-            writer.WriteStartArray();
-            foreach (string item in Alterations)
+            if (LifecycleModelReaderWriterOptions.IsVisible(options, LifecycleVisibility.Read | LifecycleVisibility.Create | LifecycleVisibility.Update))
             {
-                if (item == null)
+                writer.WritePropertyName("alterations"u8);
+                writer.WriteStartArray();
+                foreach (string item in Alterations)
                 {
-                    writer.WriteNullValue();
-                    continue;
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    writer.WriteStringValue(item);
                 }
-                writer.WriteStringValue(item);
+                writer.WriteEndArray();
             }
-            writer.WriteEndArray();
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)

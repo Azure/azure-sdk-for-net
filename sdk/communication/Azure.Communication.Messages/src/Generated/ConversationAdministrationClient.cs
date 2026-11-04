@@ -133,7 +133,9 @@ namespace Azure.Communication.Messages
             Argument.AssertNotNull(conversation, nameof(conversation));
 
             CreateConversationRequest spreadModel = new CreateConversationRequest(conversation, initialMessage, default);
-            Response result = CreateConversation(spreadModel, cancellationToken.ToRequestContext());
+            using Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(spreadModel, new LifecycleModelReaderWriterOptions(LifecycleVisibility.Create, "W"));
+            Response result = CreateConversation(content, cancellationToken.ToRequestContext());
             return Response.FromValue((CommunicationConversation)result, result);
         }
 
@@ -148,7 +150,9 @@ namespace Azure.Communication.Messages
             Argument.AssertNotNull(conversation, nameof(conversation));
 
             CreateConversationRequest spreadModel = new CreateConversationRequest(conversation, initialMessage, default);
-            Response result = await CreateConversationAsync(spreadModel, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            using Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(spreadModel, new LifecycleModelReaderWriterOptions(LifecycleVisibility.Create, "W"));
+            Response result = await CreateConversationAsync(content, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((CommunicationConversation)result, result);
         }
 

@@ -86,19 +86,22 @@ namespace Azure.AI.ContentUnderstanding
             {
                 throw new FormatException($"The model {nameof(ContentUnderstandingDefaults)} does not support writing '{format}' format.");
             }
-            writer.WritePropertyName("modelDeployments"u8);
-            writer.WriteStartObject();
-            foreach (var item in ModelDeployments)
+            if (LifecycleModelReaderWriterOptions.IsVisible(options, LifecycleVisibility.Read | LifecycleVisibility.Create | LifecycleVisibility.Update))
             {
-                writer.WritePropertyName(item.Key);
-                if (item.Value == null)
+                writer.WritePropertyName("modelDeployments"u8);
+                writer.WriteStartObject();
+                foreach (var item in ModelDeployments)
                 {
-                    writer.WriteNullValue();
-                    continue;
+                    writer.WritePropertyName(item.Key);
+                    if (item.Value == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    writer.WriteStringValue(item.Value);
                 }
-                writer.WriteStringValue(item.Value);
+                writer.WriteEndObject();
             }
-            writer.WriteEndObject();
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)

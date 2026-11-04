@@ -149,56 +149,77 @@ namespace Azure.AI.ContentUnderstanding
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(BaseAnalyzerId))
+            if (LifecycleModelReaderWriterOptions.IsVisible(options, LifecycleVisibility.Read | LifecycleVisibility.Create))
             {
-                writer.WritePropertyName("baseAnalyzerId"u8);
-                writer.WriteStringValue(BaseAnalyzerId);
-            }
-            if (Optional.IsDefined(Config))
-            {
-                writer.WritePropertyName("config"u8);
-                writer.WriteObjectValue(Config, options);
-            }
-            if (Optional.IsDefined(FieldSchema))
-            {
-                writer.WritePropertyName("fieldSchema"u8);
-                writer.WriteObjectValue(FieldSchema, options);
-            }
-            if (Optional.IsDefined(HasDynamicFieldSchema))
-            {
-                writer.WritePropertyName("dynamicFieldSchema"u8);
-                writer.WriteBooleanValue(HasDynamicFieldSchema.Value);
-            }
-            if (Optional.IsDefined(ProcessingLocation))
-            {
-                writer.WritePropertyName("processingLocation"u8);
-                writer.WriteStringValue(ProcessingLocation.Value.ToString());
-            }
-            if (Optional.IsCollectionDefined(KnowledgeSources))
-            {
-                writer.WritePropertyName("knowledgeSources"u8);
-                writer.WriteStartArray();
-                foreach (KnowledgeSource item in KnowledgeSources)
+                if (Optional.IsDefined(BaseAnalyzerId))
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WritePropertyName("baseAnalyzerId"u8);
+                    writer.WriteStringValue(BaseAnalyzerId);
                 }
-                writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Models))
+            if (LifecycleModelReaderWriterOptions.IsVisible(options, LifecycleVisibility.Read | LifecycleVisibility.Create))
             {
-                writer.WritePropertyName("models"u8);
-                writer.WriteStartObject();
-                foreach (var item in Models)
+                if (Optional.IsDefined(Config))
                 {
-                    writer.WritePropertyName(item.Key);
-                    if (item.Value == null)
+                    writer.WritePropertyName("config"u8);
+                    writer.WriteObjectValue(Config, options);
+                }
+            }
+            if (LifecycleModelReaderWriterOptions.IsVisible(options, LifecycleVisibility.Read | LifecycleVisibility.Create))
+            {
+                if (Optional.IsDefined(FieldSchema))
+                {
+                    writer.WritePropertyName("fieldSchema"u8);
+                    writer.WriteObjectValue(FieldSchema, options);
+                }
+            }
+            if (LifecycleModelReaderWriterOptions.IsVisible(options, LifecycleVisibility.Read | LifecycleVisibility.Create))
+            {
+                if (Optional.IsDefined(HasDynamicFieldSchema))
+                {
+                    writer.WritePropertyName("dynamicFieldSchema"u8);
+                    writer.WriteBooleanValue(HasDynamicFieldSchema.Value);
+                }
+            }
+            if (LifecycleModelReaderWriterOptions.IsVisible(options, LifecycleVisibility.Read | LifecycleVisibility.Create))
+            {
+                if (Optional.IsDefined(ProcessingLocation))
+                {
+                    writer.WritePropertyName("processingLocation"u8);
+                    writer.WriteStringValue(ProcessingLocation.Value.ToString());
+                }
+            }
+            if (LifecycleModelReaderWriterOptions.IsVisible(options, LifecycleVisibility.Read | LifecycleVisibility.Create))
+            {
+                if (Optional.IsCollectionDefined(KnowledgeSources))
+                {
+                    writer.WritePropertyName("knowledgeSources"u8);
+                    writer.WriteStartArray();
+                    foreach (KnowledgeSource item in KnowledgeSources)
                     {
-                        writer.WriteNullValue();
-                        continue;
+                        writer.WriteObjectValue(item, options);
                     }
-                    writer.WriteStringValue(item.Value);
+                    writer.WriteEndArray();
                 }
-                writer.WriteEndObject();
+            }
+            if (LifecycleModelReaderWriterOptions.IsVisible(options, LifecycleVisibility.Read | LifecycleVisibility.Create))
+            {
+                if (Optional.IsCollectionDefined(Models))
+                {
+                    writer.WritePropertyName("models"u8);
+                    writer.WriteStartObject();
+                    foreach (var item in Models)
+                    {
+                        writer.WritePropertyName(item.Key);
+                        if (item.Value == null)
+                        {
+                            writer.WriteNullValue();
+                            continue;
+                        }
+                        writer.WriteStringValue(item.Value);
+                    }
+                    writer.WriteEndObject();
+                }
             }
             if (options.Format != "W" && Optional.IsDefined(SupportedModels))
             {

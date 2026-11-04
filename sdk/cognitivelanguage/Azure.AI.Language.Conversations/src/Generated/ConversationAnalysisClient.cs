@@ -324,7 +324,9 @@ namespace Azure.AI.Language.Conversations
         {
             Argument.AssertNotNull(analyzeConversationOperationInput, nameof(analyzeConversationOperationInput));
 
-            return AnalyzeConversationSubmitOperation(waitUntil, analyzeConversationOperationInput, cancellationToken.ToRequestContext());
+            using Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(analyzeConversationOperationInput, new LifecycleModelReaderWriterOptions(LifecycleVisibility.Create, "W"));
+            return AnalyzeConversationSubmitOperation(waitUntil, content, cancellationToken.ToRequestContext());
         }
 
         /// <summary> Analyzes the input conversation utterance. </summary>
@@ -336,7 +338,9 @@ namespace Azure.AI.Language.Conversations
         {
             Argument.AssertNotNull(analyzeConversationOperationInput, nameof(analyzeConversationOperationInput));
 
-            return await AnalyzeConversationSubmitOperationAsync(waitUntil, analyzeConversationOperationInput, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            using Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(analyzeConversationOperationInput, new LifecycleModelReaderWriterOptions(LifecycleVisibility.Create, "W"));
+            return await AnalyzeConversationSubmitOperationAsync(waitUntil, content, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
 
         /// <summary> Cancel a long-running job for text analysis of conversations. </summary>

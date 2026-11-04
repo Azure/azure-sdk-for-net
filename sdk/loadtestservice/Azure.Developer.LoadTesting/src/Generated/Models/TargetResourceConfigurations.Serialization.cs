@@ -81,8 +81,11 @@ namespace Azure.Developer.LoadTesting
             {
                 throw new FormatException($"The model {nameof(TargetResourceConfigurations)} does not support writing '{format}' format.");
             }
-            writer.WritePropertyName("kind"u8);
-            writer.WriteStringValue(Kind.ToString());
+            if (LifecycleModelReaderWriterOptions.IsVisible(options, LifecycleVisibility.Read | LifecycleVisibility.Create))
+            {
+                writer.WritePropertyName("kind"u8);
+                writer.WriteStringValue(Kind.ToString());
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)

@@ -83,8 +83,11 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            writer.WritePropertyName("source"u8);
-            writer.WriteStringValue(Source);
+            if (LifecycleModelReaderWriterOptions.IsVisible(options, LifecycleVisibility.Read | LifecycleVisibility.Create | LifecycleVisibility.Update))
+            {
+                writer.WritePropertyName("source"u8);
+                writer.WriteStringValue(Source);
+            }
             writer.WritePropertyName("sourceUri"u8);
             writer.WriteStringValue(SourceUri.AbsoluteUri);
             writer.WritePropertyName("sourceKind"u8);

@@ -86,8 +86,11 @@ namespace Azure.AI.ContentSafety
             {
                 throw new FormatException($"The model {nameof(TextBlocklist)} does not support writing '{format}' format.");
             }
-            writer.WritePropertyName("blocklistName"u8);
-            writer.WriteStringValue(Name);
+            if (LifecycleModelReaderWriterOptions.IsVisible(options, LifecycleVisibility.Read | LifecycleVisibility.Create | LifecycleVisibility.Query))
+            {
+                writer.WritePropertyName("blocklistName"u8);
+                writer.WriteStringValue(Name);
+            }
             if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
