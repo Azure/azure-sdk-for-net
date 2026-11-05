@@ -26,6 +26,25 @@ namespace System.ClientModel.Tests.Internal
 
         // No other explicit encoding besides "utf-8" is supported, so falls through to defaulting to "utf-8" based on Content-Type.
         [TestCase("application/x-www-form-urlencoded; charset=us-ascii", true, "Unicode (UTF-8)")]
+        [TestCase("application/problem+json", true, "Unicode (UTF-8)")]
+        [TestCase("application/problem+json; charset=utf-8", true, "Unicode (UTF-8)")]
+        [TestCase("application/problem+json;charset=utf-8", true, "Unicode (UTF-8)")]
+        [TestCase("application/problem+json; charset=\"utf-8\"", true, "Unicode (UTF-8)")]
+        [TestCase("application/problem+json;charset=\"utf-8\"", true, "Unicode (UTF-8)")]
+        [TestCase("application/merge-patch+json; charset=utf-8", true, "Unicode (UTF-8)")]
+        [TestCase("application/merge-patch+json;charset=utf-8", true, "Unicode (UTF-8)")]
+        [TestCase("application/vnd.api+json;charset=utf-8", true, "Unicode (UTF-8)")]
+        [TestCase("application/cloudevents+json; charset=utf-8", true, "Unicode (UTF-8)")]
+        [TestCase("application/vnd.microsoft.appconfig.kv+json; charset=utf-8", true, "Unicode (UTF-8)")]
+        [TestCase("application/xml;charset=utf-8", true, "Unicode (UTF-8)")]
+        [TestCase("application/xml; charset=\"utf-8\"", true, "Unicode (UTF-8)")]
+        [TestCase("application/soap+xml;charset=utf-8", true, "Unicode (UTF-8)")]
+        [TestCase("application/atom+xml; charset=utf-8", true, "Unicode (UTF-8)")]
+        [TestCase("random/thing;charset=utf-8", true, "Unicode (UTF-8)")]
+        [TestCase("random/thing; charset=\"utf-8\"", true, "Unicode (UTF-8)")]
+        [TestCase("random/thing;charset=\"utf-8\"", true, "Unicode (UTF-8)")]
+        [TestCase("application/octet-stream", false, null)]
+        [TestCase("image/png", false, null)]
 
         public void DetectsTextContentTypes(string contentType, bool isText, string expectedEncoding)
         {
