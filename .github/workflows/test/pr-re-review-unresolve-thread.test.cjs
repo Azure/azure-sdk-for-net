@@ -114,6 +114,151 @@ test("compiled safe-outputs config gives unresolve-review-thread room for more t
     "unresolve-review-thread needs an explicit max >= 2 so ingestion doesn't truncate multi-thread reopen runs to a single item");
 });
 
+test("compiled reply handler is restricted to the triggering PR and repository", () => {
+  const lock = fs.readFileSync(lockPath, "utf8");
+  const match = /^ +GH_AW_SAFE_OUTPUTS_HANDLER_CONFIG: "(.*)"\r?$/m.exec(lock);
+  assert.ok(match, "missing safe-output handler configuration");
+  const config = JSON.parse(JSON.parse(`"${match[1]}"`));
+  const reply = config.reply_to_pull_request_review_comment;
+  assert.ok(reply, "missing reply handler");
+  assert.equal(reply.target ?? "triggering", "triggering");
+  assert.ok(!reply.allowed_repos || reply.allowed_repos.length === 0, "reply handler must not allow cross-repository replies");
+});
+
+test("compiled reopen job downloads the applied safe-output manifest", () => {
+  const lock = fs.readFileSync(lockPath, "utf8");
+  const job = lock.match(/^  unresolve_review_thread:\n([\s\S]*?)(?=^  [a-zA-Z0-9_-]+:\n|(?![\s\S]))/m)?.[1];
+  assert.ok(job, "missing reopen job");
+  assert.match(job, /actions: read/);
+  assert.match(job, /name: Download applied safe-output manifest/);
+  assert.match(job, /name: safe-outputs-items/);
+  assert.match(job, /GH_AW_REPLY_MANIFEST:.*safe-output-items\.jsonl/);
+});
+
+test("does not reopen a thread when the agent did not request a matching reply", async () => {
+  const script = extractUnresolveScript(fs.readFileSync(workflowPath, "utf8"));
+  const items = [{ type: "unresolve_review_thread", comment_id: "101", reason: "still open" }];
+  const mutations = [];
+  const sandbox = {
+    process: { env: { GH_AW_DETECTION_CONCLUSION: "success", GH_AW_AGENT_OUTPUT: "fixture.json", GH_AW_REPLY_MANIFEST: "manifest.jsonl" } },
+    core: { warning: () => {}, info: () => {} },
+    context: { repo: { owner: "octo", repo: "widgets" }, payload: { pull_request: { number: 7, head: { sha: "deadbeef" } } } },
+    github: {
+      rest: { pulls: { get: async () => ({ data: { state: "open", draft: false, head: { sha: "deadbeef" } } }) } },
+      graphql: async (query, vars) => {
+        if (query.includes("unresolveReviewThread")) { mutations.push(vars.threadId); return {}; }
+        return { repository: { pullRequest: { reviewThreads: { pageInfo: { hasNextPage: false, endCursor: null }, nodes: [
+          { id: "thread-0", isResolved: true, comments: { pageInfo: { hasNextPage: false, endCursor: null }, nodes: [{ databaseId: 101 }] } },
+        ] } } } };
+      },
+    },
+    require: (name) => name === "fs" ? { readFileSync: () => JSON.stringify({ items, errors: [] }) } : require(name),
+  };
+  vm.createContext(sandbox);
+  await assert.rejects(() => vm.runInContext(`(async () => {\n${script}\n})()`, sandbox), /reply/i);
+  assert.deepEqual(mutations, [], "a reopen must not happen without a matching posted reply");
+});
+
+async function tryReopenWithEvidence({ manifest, rootId = 101, requestedRoot = rootId, requestedBody = "Still open." }) {
+  const script = extractUnresolveScript(fs.readFileSync(workflowPath, "utf8"));
+  const items = [
+    { type: "unresolve_review_thread", comment_id: String(rootId), reason: "still open" },
+    { type: "reply_to_pull_request_review_comment", comment_id: String(requestedRoot), body: requestedBody },
+  ];
+  const mutations = [];
+  const sandbox = {
+    process: { env: { GH_AW_DETECTION_CONCLUSION: "success", GH_AW_AGENT_OUTPUT: "fixture.json", GH_AW_REPLY_MANIFEST: "manifest.jsonl" } },
+    core: { warning: () => {}, info: () => {} },
+    context: { repo: { owner: "octo", repo: "widgets" }, payload: { pull_request: { number: 7, head: { sha: "deadbeef" } } } },
+    github: {
+      rest: { pulls: {
+        get: async () => ({ data: { state: "open", draft: false, head: { sha: "deadbeef" } } }),
+      } },
+      graphql: async (query, vars) => {
+        if (query.includes("unresolveReviewThread")) { mutations.push(vars.threadId); return {}; }
+        return { repository: { pullRequest: { reviewThreads: { pageInfo: { hasNextPage: false, endCursor: null }, nodes: [
+          { id: "thread-0", isResolved: true, comments: { pageInfo: { hasNextPage: false, endCursor: null }, nodes: [{ databaseId: rootId }] } },
+        ] } } } };
+      },
+    },
+    require: name => name === "fs" ? {
+      readFileSync: file => file === "manifest.jsonl" ? manifest : JSON.stringify({ items, errors: [] }),
+    } : require(name),
+  };
+  vm.createContext(sandbox);
+  let error;
+  try { await vm.runInContext(`(async () => {\n${script}\n})()`, sandbox); } catch (e) { error = e; }
+  return { error, mutations };
+}
+
+// Captured from safe-outputs-items in run 41568851809. Its id is the original
+// review comment, not the newly-created reply id (4450467376).
+test("accepts gh-aw's actual applied-reply manifest format", async () => {
+  const manifest = fs.readFileSync(path.join(__dirname, "fixtures/pr-re-review-applied-reply.jsonl"), "utf8");
+  const { error, mutations } = await tryReopenWithEvidence({ manifest, rootId: 4365208263 });
+  assert.ifError(error);
+  assert.deepEqual(mutations, ["thread-0"]);
+});
+
+for (const [label, manifest, requestedRoot, requestedBody] of [
+  ["no applied reply", "", 101, "Still open."],
+  ["a malformed applied-output manifest", "{", 101, "Still open."],
+  ["an empty requested reply", JSON.stringify({ type: "reply_to_pull_request_review_comment", provider: "github", id: 101 }), 101, " "],
+  ["an unrelated provider", JSON.stringify({ type: "reply_to_pull_request_review_comment", provider: "other", id: 101 }), 101, "Still open."],
+  ["a reply on a different thread", JSON.stringify({ type: "reply_to_pull_request_review_comment", provider: "github", id: 202 }), 101, "Still open."],
+  ["no reply requested for this thread", JSON.stringify({ type: "reply_to_pull_request_review_comment", provider: "github", id: 101 }), 202, "Still open."],
+]) {
+  test(`does not reopen with ${label}`, async () => {
+    const { error, mutations } = await tryReopenWithEvidence({ manifest, requestedRoot, requestedBody });
+    assert.ok(error, "expected the job to fail closed");
+    assert.deepEqual(mutations, []);
+  });
+}
+
+test("validates every reply before reopening any thread", async () => {
+  const script = extractUnresolveScript(fs.readFileSync(workflowPath, "utf8"));
+  const items = [
+    { type: "unresolve_review_thread", comment_id: "101", reason: "still open" },
+    { type: "unresolve_review_thread", comment_id: "202", reason: "still open" },
+    { type: "reply_to_pull_request_review_comment", comment_id: "101", body: "Still open." },
+  ];
+  const mutations = [];
+  const sandbox = {
+    process: { env: { GH_AW_DETECTION_CONCLUSION: "success", GH_AW_AGENT_OUTPUT: "fixture.json", GH_AW_REPLY_MANIFEST: "manifest.jsonl" } },
+    core: { warning: () => {}, info: () => {} },
+    context: { repo: { owner: "octo", repo: "widgets" }, payload: { pull_request: { number: 7, head: { sha: "deadbeef" } } } },
+    github: {
+      rest: { pulls: {
+        get: async () => ({ data: { state: "open", draft: false, head: { sha: "deadbeef" } } }),
+      } },
+      graphql: async (query, vars) => {
+        if (query.includes("unresolveReviewThread")) { mutations.push(vars.threadId); return {}; }
+        const nodes = [101, 202].map(id => ({ id: `thread-${id}`, isResolved: true, comments: { pageInfo: { hasNextPage: false, endCursor: null }, nodes: [{ databaseId: id }] } }));
+        return { repository: { pullRequest: { reviewThreads: { pageInfo: { hasNextPage: false, endCursor: null }, nodes } } } };
+      },
+    },
+    require: name => name === "fs" ? {
+      readFileSync: file => file === "manifest.jsonl" ? JSON.stringify({ type: "reply_to_pull_request_review_comment", provider: "github", id: 101 }) : JSON.stringify({ items, errors: [] }),
+    } : require(name),
+  };
+  vm.createContext(sandbox);
+  await assert.rejects(() => vm.runInContext(`(async () => {\n${script}\n})()`, sandbox), /reply/i);
+  assert.deepEqual(mutations, []);
+});
+
+// Provide same-thread applied replies while retaining the original reopen regression anchors.
+function addPostedReplies(sandbox, items, rootIds) {
+  for (const id of rootIds) {
+    items.push({ type: "reply_to_pull_request_review_comment", comment_id: String(id), body: "Still open." });
+  }
+  const manifest = rootIds.map(id => JSON.stringify({ type: "reply_to_pull_request_review_comment", provider: "github", id })).join("\n");
+  sandbox.process.env.GH_AW_REPLY_MANIFEST = "manifest.jsonl";
+  const oldRequire = sandbox.require;
+  sandbox.require = name => name === "fs" ? {
+    readFileSync: file => file === "manifest.jsonl" ? manifest : JSON.stringify({ items, errors: [] }),
+  } : oldRequire(name);
+}
+
 // This test documents already-correct behavior rather than a red/green bug fix: the job
 // script's loop was never capped at one item -- only the ingestion-side cardinality was.
 // It guards against a future regression in the script itself once ingestion is fixed to
@@ -159,6 +304,7 @@ test("reopens every item when multiple unresolve_review_thread entries survive i
       return require(name);
     },
   };
+  addPostedReplies(sandbox, items, [101, 202]);
   vm.createContext(sandbox);
   await vm.runInContext(`(async () => {\n${script}\n})()`, sandbox);
   assert.deepEqual(resolvedThreadIds.sort(), ["thread-0", "thread-1"], "both threads should have been reopened, not just the first");
@@ -223,6 +369,7 @@ test("finds a review thread when the target comment is beyond the thread's first
       return require(name);
     },
   };
+  addPostedReplies(sandbox, items, [1]);
   vm.createContext(sandbox);
   await vm.runInContext(`(async () => {\n${script}\n})()`, sandbox);
   assert.ok(secondPageRequested, "expected the script to paginate a thread's comments beyond its first page of 100");
