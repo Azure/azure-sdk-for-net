@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.ImpactReporting
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _insightsRestClient.CreateGetRequest(Id.SubscriptionId, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _insightsRestClient.CreateGetRequest(Id.SubscriptionId, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ImpactInsightData> response = Response.FromValue(ImpactInsightData.FromResponse(result), result);
                 if (response.Value == null)
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.ImpactReporting
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _insightsRestClient.CreateGetRequest(Id.SubscriptionId, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _insightsRestClient.CreateGetRequest(Id.SubscriptionId, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ImpactInsightData> response = Response.FromValue(ImpactInsightData.FromResponse(result), result);
                 if (response.Value == null)
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.ImpactReporting
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _insightsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _insightsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
@@ -270,7 +270,7 @@ namespace Azure.ResourceManager.ImpactReporting
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _insightsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _insightsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
@@ -325,7 +325,7 @@ namespace Azure.ResourceManager.ImpactReporting
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _insightsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.Parent.Name, Id.Name, ImpactInsightData.ToRequestContent(data), context);
+                using HttpMessage message = _insightsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.Parent.Name, Id.Name, ImpactInsightData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ImpactInsightData> response = Response.FromValue(ImpactInsightData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -381,7 +381,7 @@ namespace Azure.ResourceManager.ImpactReporting
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _insightsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.Parent.Name, Id.Name, ImpactInsightData.ToRequestContent(data), context);
+                using HttpMessage message = _insightsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.Parent.Name, Id.Name, ImpactInsightData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ImpactInsightData> response = Response.FromValue(ImpactInsightData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;

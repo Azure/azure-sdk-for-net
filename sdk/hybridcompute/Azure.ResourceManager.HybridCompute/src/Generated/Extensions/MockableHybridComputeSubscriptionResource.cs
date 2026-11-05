@@ -401,7 +401,7 @@ namespace Azure.ResourceManager.HybridCompute.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = LicensesRestClient.CreateValidateLicenseRequest(Guid.Parse(Id.SubscriptionId), HybridComputeLicenseData.ToRequestContent(data), context);
+                using HttpMessage message = LicensesRestClient.CreateValidateLicenseRequest(Guid.Parse(Id.SubscriptionId), HybridComputeLicenseData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 HybridComputeArmOperation<HybridComputeLicenseResource> operation = new HybridComputeArmOperation<HybridComputeLicenseResource>(
                     new HybridComputeLicenseResourceOperationSource(Client),
@@ -456,7 +456,7 @@ namespace Azure.ResourceManager.HybridCompute.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = LicensesRestClient.CreateValidateLicenseRequest(Guid.Parse(Id.SubscriptionId), HybridComputeLicenseData.ToRequestContent(data), context);
+                using HttpMessage message = LicensesRestClient.CreateValidateLicenseRequest(Guid.Parse(Id.SubscriptionId), HybridComputeLicenseData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 HybridComputeArmOperation<HybridComputeLicenseResource> operation = new HybridComputeArmOperation<HybridComputeLicenseResource>(
                     new HybridComputeLicenseResourceOperationSource(Client),
@@ -512,7 +512,7 @@ namespace Azure.ResourceManager.HybridCompute.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = PrivateLinkScopesRestClient.CreateGetValidationDetailsRequest(location, Guid.Parse(Id.SubscriptionId), privateLinkScopeId, context);
+                using HttpMessage message = PrivateLinkScopesRestClient.CreateGetValidationDetailsRequest(location, Guid.Parse(Id.SubscriptionId), privateLinkScopeId, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<PrivateLinkScopeValidationDetails> response = Response.FromValue(PrivateLinkScopeValidationDetails.FromResponse(result), result);
                 if (response.Value == null)
@@ -562,7 +562,7 @@ namespace Azure.ResourceManager.HybridCompute.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = PrivateLinkScopesRestClient.CreateGetValidationDetailsRequest(location, Guid.Parse(Id.SubscriptionId), privateLinkScopeId, context);
+                using HttpMessage message = PrivateLinkScopesRestClient.CreateGetValidationDetailsRequest(location, Guid.Parse(Id.SubscriptionId), privateLinkScopeId, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<PrivateLinkScopeValidationDetails> response = Response.FromValue(PrivateLinkScopeValidationDetails.FromResponse(result), result);
                 if (response.Value == null)

@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.ImpactReporting
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _connectorsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, connectorName, ImpactConnectorData.ToRequestContent(data), context);
+                using HttpMessage message = _connectorsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, connectorName, ImpactConnectorData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ImpactReportingArmOperation<ImpactConnectorResource> operation = new ImpactReportingArmOperation<ImpactConnectorResource>(
                     new ImpactConnectorResourceOperationSource(Client),
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.ImpactReporting
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _connectorsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, connectorName, ImpactConnectorData.ToRequestContent(data), context);
+                using HttpMessage message = _connectorsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, connectorName, ImpactConnectorData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ImpactReportingArmOperation<ImpactConnectorResource> operation = new ImpactReportingArmOperation<ImpactConnectorResource>(
                     new ImpactConnectorResourceOperationSource(Client),
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.ImpactReporting
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _connectorsRestClient.CreateGetRequest(Id.SubscriptionId, connectorName, context);
+                using HttpMessage message = _connectorsRestClient.CreateGetRequest(Id.SubscriptionId, connectorName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ImpactConnectorData> response = Response.FromValue(ImpactConnectorData.FromResponse(result), result);
                 if (response.Value == null)
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.ImpactReporting
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _connectorsRestClient.CreateGetRequest(Id.SubscriptionId, connectorName, context);
+                using HttpMessage message = _connectorsRestClient.CreateGetRequest(Id.SubscriptionId, connectorName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ImpactConnectorData> response = Response.FromValue(ImpactConnectorData.FromResponse(result), result);
                 if (response.Value == null)
@@ -358,7 +358,7 @@ namespace Azure.ResourceManager.ImpactReporting
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _connectorsRestClient.CreateGetRequest(Id.SubscriptionId, connectorName, context);
+                using HttpMessage message = _connectorsRestClient.CreateGetRequest(Id.SubscriptionId, connectorName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ImpactConnectorData> response = default;
@@ -415,7 +415,7 @@ namespace Azure.ResourceManager.ImpactReporting
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _connectorsRestClient.CreateGetRequest(Id.SubscriptionId, connectorName, context);
+                using HttpMessage message = _connectorsRestClient.CreateGetRequest(Id.SubscriptionId, connectorName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ImpactConnectorData> response = default;
@@ -472,7 +472,7 @@ namespace Azure.ResourceManager.ImpactReporting
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _connectorsRestClient.CreateGetRequest(Id.SubscriptionId, connectorName, context);
+                using HttpMessage message = _connectorsRestClient.CreateGetRequest(Id.SubscriptionId, connectorName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ImpactConnectorData> response = default;
@@ -533,7 +533,7 @@ namespace Azure.ResourceManager.ImpactReporting
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _connectorsRestClient.CreateGetRequest(Id.SubscriptionId, connectorName, context);
+                using HttpMessage message = _connectorsRestClient.CreateGetRequest(Id.SubscriptionId, connectorName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ImpactConnectorData> response = default;

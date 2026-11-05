@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.ImpactReporting
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _insightsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.Name, insightName, ImpactInsightData.ToRequestContent(data), context);
+                using HttpMessage message = _insightsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.Name, insightName, ImpactInsightData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ImpactInsightData> response = Response.FromValue(ImpactInsightData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.ImpactReporting
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _insightsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.Name, insightName, ImpactInsightData.ToRequestContent(data), context);
+                using HttpMessage message = _insightsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.Name, insightName, ImpactInsightData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ImpactInsightData> response = Response.FromValue(ImpactInsightData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.ImpactReporting
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _insightsRestClient.CreateGetRequest(Id.SubscriptionId, Id.Name, insightName, context);
+                using HttpMessage message = _insightsRestClient.CreateGetRequest(Id.SubscriptionId, Id.Name, insightName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ImpactInsightData> response = Response.FromValue(ImpactInsightData.FromResponse(result), result);
                 if (response.Value == null)
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.ImpactReporting
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _insightsRestClient.CreateGetRequest(Id.SubscriptionId, Id.Name, insightName, context);
+                using HttpMessage message = _insightsRestClient.CreateGetRequest(Id.SubscriptionId, Id.Name, insightName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ImpactInsightData> response = Response.FromValue(ImpactInsightData.FromResponse(result), result);
                 if (response.Value == null)
@@ -351,7 +351,7 @@ namespace Azure.ResourceManager.ImpactReporting
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _insightsRestClient.CreateGetRequest(Id.SubscriptionId, Id.Name, insightName, context);
+                using HttpMessage message = _insightsRestClient.CreateGetRequest(Id.SubscriptionId, Id.Name, insightName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ImpactInsightData> response = default;
@@ -408,7 +408,7 @@ namespace Azure.ResourceManager.ImpactReporting
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _insightsRestClient.CreateGetRequest(Id.SubscriptionId, Id.Name, insightName, context);
+                using HttpMessage message = _insightsRestClient.CreateGetRequest(Id.SubscriptionId, Id.Name, insightName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ImpactInsightData> response = default;
@@ -465,7 +465,7 @@ namespace Azure.ResourceManager.ImpactReporting
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _insightsRestClient.CreateGetRequest(Id.SubscriptionId, Id.Name, insightName, context);
+                using HttpMessage message = _insightsRestClient.CreateGetRequest(Id.SubscriptionId, Id.Name, insightName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ImpactInsightData> response = default;
@@ -526,7 +526,7 @@ namespace Azure.ResourceManager.ImpactReporting
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _insightsRestClient.CreateGetRequest(Id.SubscriptionId, Id.Name, insightName, context);
+                using HttpMessage message = _insightsRestClient.CreateGetRequest(Id.SubscriptionId, Id.Name, insightName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ImpactInsightData> response = default;

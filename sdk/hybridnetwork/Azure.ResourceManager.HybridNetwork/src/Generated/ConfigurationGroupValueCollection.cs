@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.HybridNetwork
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _configurationGroupValuesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, configurationGroupValueName, ConfigurationGroupValueData.ToRequestContent(data), context);
+                using HttpMessage message = _configurationGroupValuesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, configurationGroupValueName, ConfigurationGroupValueData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 HybridNetworkArmOperation<ConfigurationGroupValueResource> operation = new HybridNetworkArmOperation<ConfigurationGroupValueResource>(
                     new ConfigurationGroupValueResourceOperationSource(Client),
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.HybridNetwork
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _configurationGroupValuesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, configurationGroupValueName, ConfigurationGroupValueData.ToRequestContent(data), context);
+                using HttpMessage message = _configurationGroupValuesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, configurationGroupValueName, ConfigurationGroupValueData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 HybridNetworkArmOperation<ConfigurationGroupValueResource> operation = new HybridNetworkArmOperation<ConfigurationGroupValueResource>(
                     new ConfigurationGroupValueResourceOperationSource(Client),
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.HybridNetwork
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _configurationGroupValuesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, configurationGroupValueName, context);
+                using HttpMessage message = _configurationGroupValuesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, configurationGroupValueName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ConfigurationGroupValueData> response = Response.FromValue(ConfigurationGroupValueData.FromResponse(result), result);
                 if (response.Value == null)
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.HybridNetwork
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _configurationGroupValuesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, configurationGroupValueName, context);
+                using HttpMessage message = _configurationGroupValuesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, configurationGroupValueName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ConfigurationGroupValueData> response = Response.FromValue(ConfigurationGroupValueData.FromResponse(result), result);
                 if (response.Value == null)
@@ -357,7 +357,7 @@ namespace Azure.ResourceManager.HybridNetwork
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _configurationGroupValuesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, configurationGroupValueName, context);
+                using HttpMessage message = _configurationGroupValuesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, configurationGroupValueName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ConfigurationGroupValueData> response = default;
@@ -414,7 +414,7 @@ namespace Azure.ResourceManager.HybridNetwork
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _configurationGroupValuesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, configurationGroupValueName, context);
+                using HttpMessage message = _configurationGroupValuesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, configurationGroupValueName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ConfigurationGroupValueData> response = default;
@@ -471,7 +471,7 @@ namespace Azure.ResourceManager.HybridNetwork
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _configurationGroupValuesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, configurationGroupValueName, context);
+                using HttpMessage message = _configurationGroupValuesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, configurationGroupValueName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ConfigurationGroupValueData> response = default;
@@ -532,7 +532,7 @@ namespace Azure.ResourceManager.HybridNetwork
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _configurationGroupValuesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, configurationGroupValueName, context);
+                using HttpMessage message = _configurationGroupValuesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, configurationGroupValueName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ConfigurationGroupValueData> response = default;

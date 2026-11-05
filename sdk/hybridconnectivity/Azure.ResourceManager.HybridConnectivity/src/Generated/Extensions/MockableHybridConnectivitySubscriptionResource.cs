@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.HybridConnectivity.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = GenerateAwsTemplateRestClient.CreatePostGenerateAwsTemplateRequest(Guid.Parse(Id.SubscriptionId), GenerateAwsTemplateContent.ToRequestContent(content), context);
+                using HttpMessage message = GenerateAwsTemplateRestClient.CreatePostGenerateAwsTemplateRequest(Guid.Parse(Id.SubscriptionId), GenerateAwsTemplateContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<GenerateAwsTemplateResult> response = Response.FromValue(GenerateAwsTemplateResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.HybridConnectivity.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = GenerateAwsTemplateRestClient.CreatePostGenerateAwsTemplateRequest(Guid.Parse(Id.SubscriptionId), GenerateAwsTemplateContent.ToRequestContent(content), context);
+                using HttpMessage message = GenerateAwsTemplateRestClient.CreatePostGenerateAwsTemplateRequest(Guid.Parse(Id.SubscriptionId), GenerateAwsTemplateContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<GenerateAwsTemplateResult> response = Response.FromValue(GenerateAwsTemplateResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -298,7 +298,7 @@ namespace Azure.ResourceManager.HybridConnectivity.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = GenerateGcpTemplateRestClient.CreatePostGenerateGcpTemplateRequest(Guid.Parse(Id.SubscriptionId), GenerateGcpTemplateContent.ToRequestContent(content), context);
+                using HttpMessage message = GenerateGcpTemplateRestClient.CreatePostGenerateGcpTemplateRequest(Guid.Parse(Id.SubscriptionId), GenerateGcpTemplateContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<GenerateGcpTemplateResult> response = Response.FromValue(GenerateGcpTemplateResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -346,7 +346,7 @@ namespace Azure.ResourceManager.HybridConnectivity.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = GenerateGcpTemplateRestClient.CreatePostGenerateGcpTemplateRequest(Guid.Parse(Id.SubscriptionId), GenerateGcpTemplateContent.ToRequestContent(content), context);
+                using HttpMessage message = GenerateGcpTemplateRestClient.CreatePostGenerateGcpTemplateRequest(Guid.Parse(Id.SubscriptionId), GenerateGcpTemplateContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<GenerateGcpTemplateResult> response = Response.FromValue(GenerateGcpTemplateResult.FromResponse(result), result);
                 if (response.Value == null)

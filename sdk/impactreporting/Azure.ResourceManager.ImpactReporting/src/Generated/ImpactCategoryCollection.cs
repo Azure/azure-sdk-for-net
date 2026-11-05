@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.ImpactReporting
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _impactCategoriesRestClient.CreateGetRequest(Id.SubscriptionId, impactCategoryName, context);
+                using HttpMessage message = _impactCategoriesRestClient.CreateGetRequest(Id.SubscriptionId, impactCategoryName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ImpactCategoryData> response = Response.FromValue(ImpactCategoryData.FromResponse(result), result);
                 if (response.Value == null)
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.ImpactReporting
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _impactCategoriesRestClient.CreateGetRequest(Id.SubscriptionId, impactCategoryName, context);
+                using HttpMessage message = _impactCategoriesRestClient.CreateGetRequest(Id.SubscriptionId, impactCategoryName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ImpactCategoryData> response = Response.FromValue(ImpactCategoryData.FromResponse(result), result);
                 if (response.Value == null)
@@ -264,7 +264,7 @@ namespace Azure.ResourceManager.ImpactReporting
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _impactCategoriesRestClient.CreateGetRequest(Id.SubscriptionId, impactCategoryName, context);
+                using HttpMessage message = _impactCategoriesRestClient.CreateGetRequest(Id.SubscriptionId, impactCategoryName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ImpactCategoryData> response = default;
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.ImpactReporting
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _impactCategoriesRestClient.CreateGetRequest(Id.SubscriptionId, impactCategoryName, context);
+                using HttpMessage message = _impactCategoriesRestClient.CreateGetRequest(Id.SubscriptionId, impactCategoryName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ImpactCategoryData> response = default;
@@ -378,7 +378,7 @@ namespace Azure.ResourceManager.ImpactReporting
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _impactCategoriesRestClient.CreateGetRequest(Id.SubscriptionId, impactCategoryName, context);
+                using HttpMessage message = _impactCategoriesRestClient.CreateGetRequest(Id.SubscriptionId, impactCategoryName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ImpactCategoryData> response = default;
@@ -439,7 +439,7 @@ namespace Azure.ResourceManager.ImpactReporting
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _impactCategoriesRestClient.CreateGetRequest(Id.SubscriptionId, impactCategoryName, context);
+                using HttpMessage message = _impactCategoriesRestClient.CreateGetRequest(Id.SubscriptionId, impactCategoryName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ImpactCategoryData> response = default;

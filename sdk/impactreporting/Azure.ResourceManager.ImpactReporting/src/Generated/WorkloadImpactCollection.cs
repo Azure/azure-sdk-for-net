@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.ImpactReporting
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workloadImpactsRestClient.CreateCreateRequest(Id.SubscriptionId, workloadImpactName, WorkloadImpactData.ToRequestContent(data), context);
+                using HttpMessage message = _workloadImpactsRestClient.CreateCreateRequest(Id.SubscriptionId, workloadImpactName, WorkloadImpactData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ImpactReportingArmOperation<WorkloadImpactResource> operation = new ImpactReportingArmOperation<WorkloadImpactResource>(
                     new WorkloadImpactResourceOperationSource(Client),
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.ImpactReporting
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workloadImpactsRestClient.CreateCreateRequest(Id.SubscriptionId, workloadImpactName, WorkloadImpactData.ToRequestContent(data), context);
+                using HttpMessage message = _workloadImpactsRestClient.CreateCreateRequest(Id.SubscriptionId, workloadImpactName, WorkloadImpactData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ImpactReportingArmOperation<WorkloadImpactResource> operation = new ImpactReportingArmOperation<WorkloadImpactResource>(
                     new WorkloadImpactResourceOperationSource(Client),
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.ImpactReporting
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workloadImpactsRestClient.CreateGetRequest(Id.SubscriptionId, workloadImpactName, context);
+                using HttpMessage message = _workloadImpactsRestClient.CreateGetRequest(Id.SubscriptionId, workloadImpactName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<WorkloadImpactData> response = Response.FromValue(WorkloadImpactData.FromResponse(result), result);
                 if (response.Value == null)
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.ImpactReporting
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workloadImpactsRestClient.CreateGetRequest(Id.SubscriptionId, workloadImpactName, context);
+                using HttpMessage message = _workloadImpactsRestClient.CreateGetRequest(Id.SubscriptionId, workloadImpactName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<WorkloadImpactData> response = Response.FromValue(WorkloadImpactData.FromResponse(result), result);
                 if (response.Value == null)
@@ -358,7 +358,7 @@ namespace Azure.ResourceManager.ImpactReporting
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workloadImpactsRestClient.CreateGetRequest(Id.SubscriptionId, workloadImpactName, context);
+                using HttpMessage message = _workloadImpactsRestClient.CreateGetRequest(Id.SubscriptionId, workloadImpactName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<WorkloadImpactData> response = default;
@@ -415,7 +415,7 @@ namespace Azure.ResourceManager.ImpactReporting
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workloadImpactsRestClient.CreateGetRequest(Id.SubscriptionId, workloadImpactName, context);
+                using HttpMessage message = _workloadImpactsRestClient.CreateGetRequest(Id.SubscriptionId, workloadImpactName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<WorkloadImpactData> response = default;
@@ -472,7 +472,7 @@ namespace Azure.ResourceManager.ImpactReporting
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workloadImpactsRestClient.CreateGetRequest(Id.SubscriptionId, workloadImpactName, context);
+                using HttpMessage message = _workloadImpactsRestClient.CreateGetRequest(Id.SubscriptionId, workloadImpactName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<WorkloadImpactData> response = default;
@@ -533,7 +533,7 @@ namespace Azure.ResourceManager.ImpactReporting
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workloadImpactsRestClient.CreateGetRequest(Id.SubscriptionId, workloadImpactName, context);
+                using HttpMessage message = _workloadImpactsRestClient.CreateGetRequest(Id.SubscriptionId, workloadImpactName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<WorkloadImpactData> response = default;

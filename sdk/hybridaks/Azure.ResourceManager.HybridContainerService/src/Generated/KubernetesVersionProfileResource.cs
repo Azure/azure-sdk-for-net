@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.HybridContainerService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _kubernetesVersionProfilesRestClient.CreateCreateKubernetesVersionsRequest(Id.Parent.ToString(), KubernetesVersionProfileData.ToRequestContent(data), context);
+                using HttpMessage message = _kubernetesVersionProfilesRestClient.CreateCreateKubernetesVersionsRequest(Id.Parent.ToString(), KubernetesVersionProfileData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 HybridContainerServiceArmOperation<KubernetesVersionProfileResource> operation = new HybridContainerServiceArmOperation<KubernetesVersionProfileResource>(
                     new KubernetesVersionProfileResourceOperationSource(Client),
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.HybridContainerService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _kubernetesVersionProfilesRestClient.CreateCreateKubernetesVersionsRequest(Id.Parent.ToString(), KubernetesVersionProfileData.ToRequestContent(data), context);
+                using HttpMessage message = _kubernetesVersionProfilesRestClient.CreateCreateKubernetesVersionsRequest(Id.Parent.ToString(), KubernetesVersionProfileData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 HybridContainerServiceArmOperation<KubernetesVersionProfileResource> operation = new HybridContainerServiceArmOperation<KubernetesVersionProfileResource>(
                     new KubernetesVersionProfileResourceOperationSource(Client),
@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.HybridContainerService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _kubernetesVersionProfilesRestClient.CreateGetKubernetesVersionsRequest(Id.Parent.ToString(), context);
+                using HttpMessage message = _kubernetesVersionProfilesRestClient.CreateGetKubernetesVersionsRequest(Id.Parent.ToString(), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<KubernetesVersionProfileData> response = Response.FromValue(KubernetesVersionProfileData.FromResponse(result), result);
                 if (response.Value == null)
@@ -286,7 +286,7 @@ namespace Azure.ResourceManager.HybridContainerService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _kubernetesVersionProfilesRestClient.CreateGetKubernetesVersionsRequest(Id.Parent.ToString(), context);
+                using HttpMessage message = _kubernetesVersionProfilesRestClient.CreateGetKubernetesVersionsRequest(Id.Parent.ToString(), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<KubernetesVersionProfileData> response = Response.FromValue(KubernetesVersionProfileData.FromResponse(result), result);
                 if (response.Value == null)
@@ -335,7 +335,7 @@ namespace Azure.ResourceManager.HybridContainerService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _kubernetesVersionProfilesRestClient.CreateDeleteKubernetesVersionsRequest(Id.Parent.ToString(), context);
+                using HttpMessage message = _kubernetesVersionProfilesRestClient.CreateDeleteKubernetesVersionsRequest(Id.Parent.ToString(), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 HybridContainerServiceArmOperation operation = new HybridContainerServiceArmOperation(_kubernetesVersionProfilesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -384,7 +384,7 @@ namespace Azure.ResourceManager.HybridContainerService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _kubernetesVersionProfilesRestClient.CreateDeleteKubernetesVersionsRequest(Id.Parent.ToString(), context);
+                using HttpMessage message = _kubernetesVersionProfilesRestClient.CreateDeleteKubernetesVersionsRequest(Id.Parent.ToString(), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 HybridContainerServiceArmOperation operation = new HybridContainerServiceArmOperation(_kubernetesVersionProfilesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)

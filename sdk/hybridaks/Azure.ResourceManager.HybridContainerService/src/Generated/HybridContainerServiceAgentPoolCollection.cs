@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.HybridContainerService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _agentPoolsRestClient.CreateCreateOrUpdateRequest(Id.Parent.ToString(), agentPoolName, HybridContainerServiceAgentPoolData.ToRequestContent(data), context);
+                using HttpMessage message = _agentPoolsRestClient.CreateCreateOrUpdateRequest(Id.Parent.ToString(), agentPoolName, HybridContainerServiceAgentPoolData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 HybridContainerServiceArmOperation<HybridContainerServiceAgentPoolResource> operation = new HybridContainerServiceArmOperation<HybridContainerServiceAgentPoolResource>(
                     new HybridContainerServiceAgentPoolResourceOperationSource(Client),
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.HybridContainerService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _agentPoolsRestClient.CreateCreateOrUpdateRequest(Id.Parent.ToString(), agentPoolName, HybridContainerServiceAgentPoolData.ToRequestContent(data), context);
+                using HttpMessage message = _agentPoolsRestClient.CreateCreateOrUpdateRequest(Id.Parent.ToString(), agentPoolName, HybridContainerServiceAgentPoolData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 HybridContainerServiceArmOperation<HybridContainerServiceAgentPoolResource> operation = new HybridContainerServiceArmOperation<HybridContainerServiceAgentPoolResource>(
                     new HybridContainerServiceAgentPoolResourceOperationSource(Client),
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.HybridContainerService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _agentPoolsRestClient.CreateGetRequest(Id.Parent.ToString(), agentPoolName, context);
+                using HttpMessage message = _agentPoolsRestClient.CreateGetRequest(Id.Parent.ToString(), agentPoolName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<HybridContainerServiceAgentPoolData> response = Response.FromValue(HybridContainerServiceAgentPoolData.FromResponse(result), result);
                 if (response.Value == null)
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.HybridContainerService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _agentPoolsRestClient.CreateGetRequest(Id.Parent.ToString(), agentPoolName, context);
+                using HttpMessage message = _agentPoolsRestClient.CreateGetRequest(Id.Parent.ToString(), agentPoolName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<HybridContainerServiceAgentPoolData> response = Response.FromValue(HybridContainerServiceAgentPoolData.FromResponse(result), result);
                 if (response.Value == null)
@@ -357,7 +357,7 @@ namespace Azure.ResourceManager.HybridContainerService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _agentPoolsRestClient.CreateGetRequest(Id.Parent.ToString(), agentPoolName, context);
+                using HttpMessage message = _agentPoolsRestClient.CreateGetRequest(Id.Parent.ToString(), agentPoolName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<HybridContainerServiceAgentPoolData> response = default;
@@ -414,7 +414,7 @@ namespace Azure.ResourceManager.HybridContainerService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _agentPoolsRestClient.CreateGetRequest(Id.Parent.ToString(), agentPoolName, context);
+                using HttpMessage message = _agentPoolsRestClient.CreateGetRequest(Id.Parent.ToString(), agentPoolName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<HybridContainerServiceAgentPoolData> response = default;
@@ -471,7 +471,7 @@ namespace Azure.ResourceManager.HybridContainerService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _agentPoolsRestClient.CreateGetRequest(Id.Parent.ToString(), agentPoolName, context);
+                using HttpMessage message = _agentPoolsRestClient.CreateGetRequest(Id.Parent.ToString(), agentPoolName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<HybridContainerServiceAgentPoolData> response = default;
@@ -532,7 +532,7 @@ namespace Azure.ResourceManager.HybridContainerService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _agentPoolsRestClient.CreateGetRequest(Id.Parent.ToString(), agentPoolName, context);
+                using HttpMessage message = _agentPoolsRestClient.CreateGetRequest(Id.Parent.ToString(), agentPoolName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<HybridContainerServiceAgentPoolData> response = default;

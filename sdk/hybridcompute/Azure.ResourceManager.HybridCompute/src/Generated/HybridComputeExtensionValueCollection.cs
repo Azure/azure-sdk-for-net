@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.HybridCompute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _extensionMetadataRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, _publisher, _extensionType, version, context);
+                using HttpMessage message = _extensionMetadataRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, _publisher, _extensionType, version, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<HybridComputeExtensionValueData> response = Response.FromValue(HybridComputeExtensionValueData.FromResponse(result), result);
                 if (response.Value == null)
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.HybridCompute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _extensionMetadataRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, _publisher, _extensionType, version, context);
+                using HttpMessage message = _extensionMetadataRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, _publisher, _extensionType, version, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<HybridComputeExtensionValueData> response = Response.FromValue(HybridComputeExtensionValueData.FromResponse(result), result);
                 if (response.Value == null)
@@ -268,7 +268,7 @@ namespace Azure.ResourceManager.HybridCompute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _extensionMetadataRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, _publisher, _extensionType, version, context);
+                using HttpMessage message = _extensionMetadataRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, _publisher, _extensionType, version, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<HybridComputeExtensionValueData> response = default;
@@ -325,7 +325,7 @@ namespace Azure.ResourceManager.HybridCompute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _extensionMetadataRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, _publisher, _extensionType, version, context);
+                using HttpMessage message = _extensionMetadataRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, _publisher, _extensionType, version, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<HybridComputeExtensionValueData> response = default;
@@ -382,7 +382,7 @@ namespace Azure.ResourceManager.HybridCompute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _extensionMetadataRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, _publisher, _extensionType, version, context);
+                using HttpMessage message = _extensionMetadataRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, _publisher, _extensionType, version, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<HybridComputeExtensionValueData> response = default;
@@ -443,7 +443,7 @@ namespace Azure.ResourceManager.HybridCompute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _extensionMetadataRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, _publisher, _extensionType, version, context);
+                using HttpMessage message = _extensionMetadataRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, _publisher, _extensionType, version, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<HybridComputeExtensionValueData> response = default;

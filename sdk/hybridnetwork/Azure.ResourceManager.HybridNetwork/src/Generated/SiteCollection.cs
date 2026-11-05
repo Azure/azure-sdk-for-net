@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.HybridNetwork
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sitesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, siteName, SiteData.ToRequestContent(data), context);
+                using HttpMessage message = _sitesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, siteName, SiteData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 HybridNetworkArmOperation<SiteResource> operation = new HybridNetworkArmOperation<SiteResource>(
                     new SiteResourceOperationSource(Client),
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.HybridNetwork
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sitesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, siteName, SiteData.ToRequestContent(data), context);
+                using HttpMessage message = _sitesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, siteName, SiteData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 HybridNetworkArmOperation<SiteResource> operation = new HybridNetworkArmOperation<SiteResource>(
                     new SiteResourceOperationSource(Client),
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.HybridNetwork
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sitesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, siteName, context);
+                using HttpMessage message = _sitesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, siteName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<SiteData> response = Response.FromValue(SiteData.FromResponse(result), result);
                 if (response.Value == null)
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.HybridNetwork
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sitesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, siteName, context);
+                using HttpMessage message = _sitesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, siteName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<SiteData> response = Response.FromValue(SiteData.FromResponse(result), result);
                 if (response.Value == null)
@@ -357,7 +357,7 @@ namespace Azure.ResourceManager.HybridNetwork
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sitesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, siteName, context);
+                using HttpMessage message = _sitesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, siteName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<SiteData> response = default;
@@ -414,7 +414,7 @@ namespace Azure.ResourceManager.HybridNetwork
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sitesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, siteName, context);
+                using HttpMessage message = _sitesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, siteName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<SiteData> response = default;
@@ -471,7 +471,7 @@ namespace Azure.ResourceManager.HybridNetwork
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sitesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, siteName, context);
+                using HttpMessage message = _sitesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, siteName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<SiteData> response = default;
@@ -532,7 +532,7 @@ namespace Azure.ResourceManager.HybridNetwork
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sitesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, siteName, context);
+                using HttpMessage message = _sitesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, siteName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<SiteData> response = default;
