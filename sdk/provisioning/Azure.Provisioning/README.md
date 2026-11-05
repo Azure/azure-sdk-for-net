@@ -77,6 +77,57 @@ infra.Add(new ProvisioningOutput("connectionString", typeof(string))
 
 This feature resolves common scenarios where you need to reference nested properties or collection items as outputs.
 
+### Bicep extensions
+
+Use `BicepExtensionConstruct` to declare an extension in an `Infrastructure`.
+References can be extension names recognized by Bicep or artifact locations, such
+as an inline registry reference:
+
+```C# Snippet:DeclareBicepExtension
+Infrastructure infrastructure = new();
+BicepExtensionConstruct graph = new(
+    "br:mcr.microsoft.com/bicep/extensions/microsoftgraph/v1.0:1.0.0",
+    alias: "graph");
+infrastructure.Add(graph);
+
+string bicep = infrastructure.Build().Compile()["main.bicep"];
+```
+
+This emits:
+
+```bicep
+extension 'br:mcr.microsoft.com/bicep/extensions/microsoftgraph/v1.0:1.0.0' as graph
+```
+
+The alias is optional. When supplied, it identifies the extension namespace for
+qualified resource types and functions. A named extension without an alias uses
+its reference name. Artifact references are emitted as escaped string literals;
+pass references without surrounding quotes.
+
+Add provider-specific configuration values through `ProvisionableProperties`:
+
+```csharp
+ProvisioningParameter kubeConfig = new("kubeConfig", typeof(string)) { IsSecure = true };
+BicepExtensionConstruct kubernetes = new("kubernetes", alias: "k8s");
+kubernetes.ProvisionableProperties["namespace"] = new BicepValue<string>("default");
+kubernetes.ProvisionableProperties["kubeConfig"] = (BicepValue<string>)kubeConfig;
+infrastructure.Add(kubeConfig);
+infrastructure.Add(kubernetes);
+```
+
+Configuration is emitted in a `with` object and supports provisioning values,
+including parameters, expressions, lists, and nested objects. You can derive from
+`BicepExtensionConstruct` and use the protected property-definition helpers to
+expose strongly typed configuration. Bicep validates provider-specific schemas
+and expression restrictions.
+
+Extension declarations are local to their infrastructure's module and are
+included in both `Compile()` and `Save()` output. Extension resources remain
+separate `ProvisionableResource` constructs and can coexist with ARM resources.
+Inline registry references avoid an extension-name mapping in `bicepconfig.json`;
+extension-specific feature flags, deployment prerequisites, and authentication
+requirements still apply.
+
 ### `BicepValue` types
 
 `BicepValue` types are the foundation of `Azure.Provisioning`, providing a flexible type system that can represent literal .NET values, Bicep expressions, or unset properties. These types enable strongly-typed infrastructure definition while maintaining the flexibility needed for dynamic resource configuration.
