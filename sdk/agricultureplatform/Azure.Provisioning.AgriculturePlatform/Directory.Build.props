@@ -2,8 +2,6 @@
   <Import Project="$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory).., Directory.Build.props))\Directory.Build.props" />
 
   <PropertyGroup>
-    <ExperimentalProvisioning Condition="'$(ExperimentalProvisioning)' == ''">false</ExperimentalProvisioning>
-    <DefineConstants Condition="'$(ExperimentalProvisioning)' == 'true'">EXPERIMENTAL_PROVISIONING;$(DefineConstants)</DefineConstants>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <IsMgmtLibrary>true</IsMgmtLibrary>
     <!-- Model factory and cross-library type name analyzers do not apply to provisioning models. -->
