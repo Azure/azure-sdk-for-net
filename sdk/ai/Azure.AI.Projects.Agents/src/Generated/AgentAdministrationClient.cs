@@ -334,7 +334,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         [Experimental("SCME0004")]
-        internal virtual ClientResult<ProjectsAgentVersion> CreateAgentVersionFromCode(string agentName, string codeZipSha256, CreateAgentVersionFromCodeContent content, CancellationToken cancellationToken = default)
+        internal virtual ClientResult<ProjectsAgentVersion> CreateAgentVersionFromCode(string agentName, string codeZipSha256, CreateAgentVersionFromCodeRequest content, CancellationToken cancellationToken = default)
         {
             using MultiPartFormContent content0 = content.ToMultipartFormContent();
             ClientResult result = CreateAgentVersionFromCode(agentName, codeZipSha256, content0, content0.MediaType, cancellationToken.ToRequestOptions());
@@ -357,7 +357,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         [Experimental("SCME0004")]
-        internal virtual async Task<ClientResult<ProjectsAgentVersion>> CreateAgentVersionFromCodeAsync(string agentName, string codeZipSha256, CreateAgentVersionFromCodeContent content, CancellationToken cancellationToken = default)
+        internal virtual async Task<ClientResult<ProjectsAgentVersion>> CreateAgentVersionFromCodeAsync(string agentName, string codeZipSha256, CreateAgentVersionFromCodeRequest content, CancellationToken cancellationToken = default)
         {
             using MultiPartFormContent content0 = content.ToMultipartFormContent();
             ClientResult result = await CreateAgentVersionFromCodeAsync(agentName, codeZipSha256, content0, content0.MediaType, cancellationToken.ToRequestOptions()).ConfigureAwait(false);

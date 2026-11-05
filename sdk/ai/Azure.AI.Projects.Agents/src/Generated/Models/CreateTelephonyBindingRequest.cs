@@ -10,29 +10,29 @@ namespace Azure.AI.Projects.Agents
 {
     /// <summary>
     /// The request to create a telephony binding.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="CreateTeamsPhoneExtensibilityTelephonyBindingContent"/> and <see cref="CreateTwilioTelephonyBindingContent"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="CreateTeamsPhoneExtensibilityTelephonyBindingRequest"/> and <see cref="CreateTwilioTelephonyBindingRequest"/>.
     /// </summary>
     [Experimental("AAIP001")]
-    public abstract partial class CreateTelephonyBindingContent
+    internal abstract partial class CreateTelephonyBindingRequest
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="CreateTelephonyBindingContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="CreateTelephonyBindingRequest"/>. </summary>
         /// <param name="provider"> The telephony provider. </param>
         /// <param name="connectionName"> The Foundry connection name for the telephony provider. </param>
-        private protected CreateTelephonyBindingContent(TelephonyProvider provider, string connectionName)
+        private protected CreateTelephonyBindingRequest(TelephonyProvider provider, string connectionName)
         {
             Provider = provider;
             ConnectionName = connectionName;
         }
 
-        /// <summary> Initializes a new instance of <see cref="CreateTelephonyBindingContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="CreateTelephonyBindingRequest"/>. </summary>
         /// <param name="provider"> The telephony provider. </param>
         /// <param name="connectionName"> The Foundry connection name for the telephony provider. </param>
         /// <param name="label"> An optional display label for the binding. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CreateTelephonyBindingContent(TelephonyProvider provider, string connectionName, string label, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CreateTelephonyBindingRequest(TelephonyProvider provider, string connectionName, string label, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Provider = provider;
             ConnectionName = connectionName;
