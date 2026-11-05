@@ -31,7 +31,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="timeoutSeconds"> Execution timeout, from 1 to 300 seconds. If omitted, the service defaults to 60 seconds. </param>
         /// <param name="requireHandoff"> Require a non-blank handoff summary in each model-generated transfer call. Defaults to false; does not guarantee delivery to the recipient. </param>
         /// <param name="targets"> The non-empty set of logical targets that the model may select. </param>
-        internal VoiceAgentTransferSystemTool(string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, VoiceAgentSystemToolName name, string description, TimeSpan? timeoutSeconds, bool? requireHandoff, IList<VoiceAgentTransferTarget> targets) : base(@type, additionalBinaryDataProperties, name, description, timeoutSeconds)
+        internal VoiceAgentTransferSystemTool(VoiceAgentToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, VoiceAgentSystemToolName name, string description, TimeSpan? timeoutSeconds, bool? requireHandoff, IList<VoiceAgentTransferTarget> targets) : base(@type, additionalBinaryDataProperties, name, description, timeoutSeconds)
         {
             RequireHandoff = requireHandoff;
             Targets = targets;

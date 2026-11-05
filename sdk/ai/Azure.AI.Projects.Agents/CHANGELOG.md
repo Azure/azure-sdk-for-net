@@ -20,6 +20,7 @@
 - Telephony binding creation now accepts `TelephonyBinding` provider-specific models instead of the removed create-content models. Binding status fields and the binding-list status filter were removed.
 - Telephony transfer and outbound addresses now use the `TelephonyAddress` hierarchy with the `type` discriminator. Use `PhoneNumber`, `TeamsAddress`, or `SipAddress` instead of the removed destination models.
 - Outbound call-job creation now accepts `TelephonyCallJobCreate`, including a typed source address, and uses the `telephony_call_jobs` route.
+- `VoiceRecordingChannelLayout.Left` and `Right` now use the extensible `VoiceAudioRole` type instead of `string`. Their wire values remain `user` and `agent`.
 
 ### Bugs Fixed
 - Fixed typed persisted Realtime response status and output-modality serialization to use the external OpenAI enum values rather than treating them as ModelReaderWriter models.
@@ -27,9 +28,10 @@
 - Fixed the Realtime model factory to preserve newly added fields, including `Soundscape` and `PostCall`, without changing the order of its existing parameters.
 - Preserved the audio-output model factory's existing parameter order when introducing shared voice configuration.
 - Preserved typed deserialization of existing delegate configurations that omit `subagent_type`.
+- Fixed telephony call-history pagination to stop on terminal pages and use the correct cursor when paging backward.
 
 ### Other Changes
-- Regenerated from `feature/foundry-release` at [`57834b966f8efbe7486fd7ca32898f8983907249`](https://github.com/Azure/azure-rest-api-specs/tree/57834b966f8efbe7486fd7ca32898f8983907249), using OpenAI TypeSpec 1.34.1.
+- Regenerated from `feature/foundry-release` at [`b8f88e51044d37f43e39c58ebf4928da54f5b447`](https://github.com/Azure/azure-rest-api-specs/tree/b8f88e51044d37f43e39c58ebf4928da54f5b447), using OpenAI TypeSpec 1.34.1.
 
 ## 3.0.0-beta.6 (2026-10-30)
 

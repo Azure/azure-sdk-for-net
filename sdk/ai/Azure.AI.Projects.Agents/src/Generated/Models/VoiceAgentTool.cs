@@ -20,7 +20,7 @@ namespace Azure.AI.Projects.Agents
 
         /// <summary> Initializes a new instance of <see cref="VoiceAgentTool"/>. </summary>
         /// <param name="type"> The tool kind. </param>
-        private protected VoiceAgentTool(string @type)
+        private protected VoiceAgentTool(VoiceAgentToolType @type)
         {
             Type = @type;
         }
@@ -28,13 +28,13 @@ namespace Azure.AI.Projects.Agents
         /// <summary> Initializes a new instance of <see cref="VoiceAgentTool"/>. </summary>
         /// <param name="type"> The tool kind. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VoiceAgentTool(string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VoiceAgentTool(VoiceAgentToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Type = @type;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The tool kind. </summary>
-        internal string Type { get; set; }
+        internal VoiceAgentToolType Type { get; set; }
     }
 }

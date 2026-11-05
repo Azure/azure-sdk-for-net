@@ -24,7 +24,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="left"> The role carried on the left channel. Always `user`. </param>
         /// <param name="right"> The role carried on the right channel. Always `agent`. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VoiceRecordingChannelLayout(string left, string right, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VoiceRecordingChannelLayout(VoiceAudioRole left, VoiceAudioRole right, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Left = left;
             Right = right;
@@ -32,9 +32,9 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <summary> The role carried on the left channel. Always `user`. </summary>
-        public string Left { get; } = "user";
+        public VoiceAudioRole Left { get; } = "user";
 
         /// <summary> The role carried on the right channel. Always `agent`. </summary>
-        public string Right { get; } = "agent";
+        public VoiceAudioRole Right { get; } = "agent";
     }
 }

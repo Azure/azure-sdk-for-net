@@ -9974,8 +9974,8 @@ namespace Azure.AI.Projects.Agents
     public partial class VoiceRecordingChannelLayout : System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.VoiceRecordingChannelLayout>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.VoiceRecordingChannelLayout>
     {
         internal VoiceRecordingChannelLayout() { }
-        public string Left { get { throw null; } }
-        public string Right { get { throw null; } }
+        public Azure.AI.Projects.Agents.VoiceAudioRole Left { get { throw null; } }
+        public Azure.AI.Projects.Agents.VoiceAudioRole Right { get { throw null; } }
         protected virtual Azure.AI.Projects.Agents.VoiceRecordingChannelLayout JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.AI.Projects.Agents.VoiceRecordingChannelLayout PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }

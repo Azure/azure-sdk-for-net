@@ -12,6 +12,8 @@ namespace Azure.AI.Projects.Agents.Tests
     /// </summary>
     public static class ProjectsTestSanitizers
     {
+        internal const string LegacyAgentInsightsFeaturePattern = @"(?:^AgentInsights=V1Preview(?:,|$)|,AgentInsights=V1Preview(?=,|$))";
+
         internal const string LegacyRealtimeVoiceDefinitionPattern = @"(""definition""\s*:\s*\{\s*""kind""\s*:\s*""voice""\s*,)(?![^{}]*""sub_protocol""\s*:)";
         internal const string LegacyRealtimeVoiceDefinitionReplacement = "${1}\"sub_protocol\":\"realtime\",";
         internal const string LegacyTelephonyCallJobPathPattern = @"(/agents/[^/?]+/)telephony/call_jobs(?=/|:|\?|$)";
@@ -88,6 +90,16 @@ namespace Azure.AI.Projects.Agents.Tests
         public static void ApplySanitizers<TEnvironment>(RecordedTestBase<TEnvironment> testBase)
             where TEnvironment : TestEnvironment, new()
         {
+            if (testBase.Mode == RecordedTestMode.Playback)
+            {
+                // Older recordings opted into Agent Insights before its feature flag was retired.
+                testBase.HeaderRegexSanitizers.Add(new HeaderRegexSanitizer(new("Foundry-Features")
+                {
+                    Regex = LegacyAgentInsightsFeaturePattern,
+                    Value = string.Empty
+                }));
+            }
+
             // Remove default sanitizers that are too restrictive
             testBase.SanitizersToRemove.Add("AZSDK2003"); // Location header (we use a custom one)
             testBase.SanitizersToRemove.Add("AZSDK4001"); // Replaces entire host name (we want to keep structure)

@@ -14,7 +14,7 @@ namespace Azure.AI.Projects.Agents
     {
         /// <summary> Initializes a new instance of <see cref="VoiceAgentSystemTool"/>. </summary>
         /// <param name="name"> The service-managed control action. Known values are stable; additional values may be added over time. </param>
-        public VoiceAgentSystemTool(VoiceAgentSystemToolName name) : base("system")
+        public VoiceAgentSystemTool(VoiceAgentSystemToolName name) : base(VoiceAgentToolType.System)
         {
             Name = name;
         }
@@ -25,7 +25,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="name"> The service-managed control action. Known values are stable; additional values may be added over time. </param>
         /// <param name="description"> An optional description of the system tool. </param>
         /// <param name="timeoutSeconds"> Execution timeout, from 1 to 300 seconds. If omitted, the service defaults to 60 seconds. </param>
-        internal VoiceAgentSystemTool(string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, VoiceAgentSystemToolName name, string description, TimeSpan? timeoutSeconds) : base(@type, additionalBinaryDataProperties)
+        internal VoiceAgentSystemTool(VoiceAgentToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, VoiceAgentSystemToolName name, string description, TimeSpan? timeoutSeconds) : base(@type, additionalBinaryDataProperties)
         {
             Name = name;
             Description = description;

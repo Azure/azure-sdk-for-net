@@ -4,15 +4,20 @@
 
 ### Features Added
 
+- Added Agent Insights analysis priorities, generated summaries, and run-input models aligned with the current service contract.
+
 ### Breaking Changes
 
 - `EvaluatorGenerationArtifacts.Reference` now uses `VersionedDatasetReference` instead of the removed `DatasetReference` model, retaining the required dataset version.
+- `AgentInsightMonitors.GetInsights` and `GetInsightsAsync` now accept `categories`, `severities`, and `statuses` collections instead of singular filters.
+- Agent Insights monitor/run creation now uses generated method parameters instead of `AgentInsightMonitorCreate` and `AgentInsightRunCreate`. The retired overview models were removed in favor of monitor summaries.
 
 ### Bugs Fixed
 
 ### Other Changes
 
-- Regenerated from `feature/foundry-release` at [`57834b966f8efbe7486fd7ca32898f8983907249`](https://github.com/Azure/azure-rest-api-specs/tree/57834b966f8efbe7486fd7ca32898f8983907249).
+- Agent Insights no longer requires the `AgentInsights=V1Preview` feature header.
+- Regenerated from `feature/foundry-release` at [`b8f88e51044d37f43e39c58ebf4928da54f5b447`](https://github.com/Azure/azure-rest-api-specs/tree/b8f88e51044d37f43e39c58ebf4928da54f5b447).
 
 ## 3.0.0-beta.6 (2026-10-30)
 

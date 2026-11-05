@@ -22,13 +22,14 @@ public class VoiceAgentTelephonyPaginationVisitor : ScmLibraryVisitor
 {
     private const string AgentsNamespace = "Azure.AI.Projects.Agents";
     private const string CallJobsScope = "BetaVoiceAgentsTelephony.GetTelephonyCallJobs";
+    private const string CallHistoryScope = "BetaVoiceAgentsTelephony.GetTelephonyCalls";
     private const string CursorMethodName = "GetTelephonyContinuationCursor";
     private readonly Dictionary<string, CSharpType> _pageTypes = new(StringComparer.Ordinal);
 
     protected override ModelProvider PreVisitModel(InputModelType model, ModelProvider type)
     {
         if (type?.Type.Namespace == AgentsNamespace &&
-            type.Name is "TelephonyCampaignPageTelephonyCampaign" or "TelephonyCampaignValidationErrorPage" or "AgentsPagedResultTelephonyCallJob")
+            type.Name is "TelephonyCampaignPageTelephonyCampaign" or "TelephonyCampaignValidationErrorPage" or "AgentsPagedResultTelephonyCallJob" or "AgentsPagedResultTelephonyCallSummary")
         {
             _pageTypes[type.Name] = type.Type;
         }
@@ -39,7 +40,7 @@ public class VoiceAgentTelephonyPaginationVisitor : ScmLibraryVisitor
     {
         if (IsTelephonyPager(type))
         {
-            if (!type.Attributes.Any(attribute => attribute.Type.Equals(typeof(ExperimentalAttribute))))
+            if (!type.Attributes.Concat(type.CustomCodeView?.Attributes ?? []).Any(attribute => attribute.Type.Name == nameof(ExperimentalAttribute)))
             {
                 type.Update(attributes: [.. type.Attributes, new AttributeStatement(typeof(ExperimentalAttribute), Literal("AAIP001"))]);
             }
@@ -63,7 +64,7 @@ public class VoiceAgentTelephonyPaginationVisitor : ScmLibraryVisitor
     {
         if (IsTelephonyPager(method.EnclosingType) &&
             method.Signature.Name is "GetRawPages" or "GetRawPagesAsync" &&
-            expression.MethodName is "CreateGetAllRequest" or "CreateGetValidationErrorsRequest" or "CreateGetTelephonyCallJobsRequest")
+            expression.MethodName is "CreateGetAllRequest" or "CreateGetValidationErrorsRequest" or "CreateGetTelephonyCallJobsRequest" or "CreateGetTelephonyCallsRequest")
         {
             // Collection result constructors keep the request parameters after their client parameter.
             ParameterProvider[] parameters = method.EnclosingType.Constructors.Single().Signature.Parameters.Skip(1).ToArray();
@@ -94,9 +95,15 @@ public class VoiceAgentTelephonyPaginationVisitor : ScmLibraryVisitor
             "TelephonyCampaigns.GetAll" => "TelephonyCampaignPageTelephonyCampaign",
             "TelephonyCampaigns.GetValidationErrors" => "TelephonyCampaignValidationErrorPage",
             CallJobsScope => "AgentsPagedResultTelephonyCallJob",
+            CallHistoryScope => "AgentsPagedResultTelephonyCallSummary",
             _ => throw new InvalidOperationException($"Unexpected telephony paging scope {scope}.")
         };
-        string pageKind = scope == CallJobsScope ? "telephony call-job" : "telephony campaign";
+        string pageKind = scope switch
+        {
+            CallJobsScope => "telephony call-job",
+            CallHistoryScope => "telephony call-history",
+            _ => "telephony campaign"
+        };
         ParameterProvider page = new("page", $"The current telephony page.", _pageTypes[pageName]);
         ValueExpression value = page.AsVariable();
         return new MethodProvider(
@@ -122,6 +129,6 @@ public class VoiceAgentTelephonyPaginationVisitor : ScmLibraryVisitor
     private static bool IsTelephonyPager(TypeProvider type)
         => type.Type.Namespace == AgentsNamespace && type is CollectionResultDefinition
         {
-            ScopeName: "TelephonyCampaigns.GetAll" or "TelephonyCampaigns.GetValidationErrors" or CallJobsScope
+            ScopeName: "TelephonyCampaigns.GetAll" or "TelephonyCampaigns.GetValidationErrors" or CallJobsScope or CallHistoryScope
         };
 }

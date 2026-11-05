@@ -20,7 +20,7 @@ namespace Azure.AI.Projects.Agents
 
         /// <summary> Initializes a new instance of <see cref="VoiceAgentInterimResponseConfig"/>. </summary>
         /// <param name="type"> The interim-response implementation. </param>
-        private protected VoiceAgentInterimResponseConfig(string @type)
+        private protected VoiceAgentInterimResponseConfig(VoiceAgentInterimResponseType @type)
         {
             Type = @type;
             Triggers = new ChangeTrackingList<VoiceAgentInterimResponseTrigger>();
@@ -31,7 +31,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="triggers"> Conditions that may trigger one interim response. </param>
         /// <param name="latencyThresholdMs"> The latency threshold in milliseconds. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VoiceAgentInterimResponseConfig(string @type, IList<VoiceAgentInterimResponseTrigger> triggers, TimeSpan? latencyThresholdMs, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VoiceAgentInterimResponseConfig(VoiceAgentInterimResponseType @type, IList<VoiceAgentInterimResponseTrigger> triggers, TimeSpan? latencyThresholdMs, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Type = @type;
             Triggers = triggers;
@@ -40,7 +40,7 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <summary> The interim-response implementation. </summary>
-        internal string Type { get; set; }
+        internal VoiceAgentInterimResponseType Type { get; set; }
 
         /// <summary> Conditions that may trigger one interim response. </summary>
         public IList<VoiceAgentInterimResponseTrigger> Triggers { get; }
