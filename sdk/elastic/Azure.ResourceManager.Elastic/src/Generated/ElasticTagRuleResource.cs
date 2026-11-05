@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Elastic
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _tagRulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _tagRulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ElasticTagRuleData> response = Response.FromValue(ElasticTagRuleData.FromResponse(result), result);
                 if (response.Value == null)
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.Elastic
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _tagRulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _tagRulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ElasticTagRuleData> response = Response.FromValue(ElasticTagRuleData.FromResponse(result), result);
                 if (response.Value == null)
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.Elastic
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _tagRulesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _tagRulesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ElasticArmOperation operation = new ElasticArmOperation(_tagRulesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -269,7 +269,7 @@ namespace Azure.ResourceManager.Elastic
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _tagRulesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _tagRulesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ElasticArmOperation operation = new ElasticArmOperation(_tagRulesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -319,7 +319,7 @@ namespace Azure.ResourceManager.Elastic
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _tagRulesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ElasticTagRuleData.ToRequestContent(data), context);
+                using HttpMessage message = _tagRulesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ElasticTagRuleData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ElasticTagRuleData> response = Response.FromValue(ElasticTagRuleData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -372,7 +372,7 @@ namespace Azure.ResourceManager.Elastic
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _tagRulesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ElasticTagRuleData.ToRequestContent(data), context);
+                using HttpMessage message = _tagRulesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ElasticTagRuleData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ElasticTagRuleData> response = Response.FromValue(ElasticTagRuleData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;

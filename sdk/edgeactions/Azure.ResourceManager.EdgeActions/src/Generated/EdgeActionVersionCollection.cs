@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.EdgeActions
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _edgeActionVersionsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, version, EdgeActionVersionData.ToRequestContent(data), context);
+                using HttpMessage message = _edgeActionVersionsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, version, EdgeActionVersionData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 EdgeActionsArmOperation<EdgeActionVersionResource> operation = new EdgeActionsArmOperation<EdgeActionVersionResource>(
                     new EdgeActionVersionResourceOperationSource(Client),
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.EdgeActions
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _edgeActionVersionsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, version, EdgeActionVersionData.ToRequestContent(data), context);
+                using HttpMessage message = _edgeActionVersionsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, version, EdgeActionVersionData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 EdgeActionsArmOperation<EdgeActionVersionResource> operation = new EdgeActionsArmOperation<EdgeActionVersionResource>(
                     new EdgeActionVersionResourceOperationSource(Client),
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.EdgeActions
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _edgeActionVersionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, version, context);
+                using HttpMessage message = _edgeActionVersionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, version, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<EdgeActionVersionData> response = Response.FromValue(EdgeActionVersionData.FromResponse(result), result);
                 if (response.Value == null)
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.EdgeActions
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _edgeActionVersionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, version, context);
+                using HttpMessage message = _edgeActionVersionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, version, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<EdgeActionVersionData> response = Response.FromValue(EdgeActionVersionData.FromResponse(result), result);
                 if (response.Value == null)
@@ -369,7 +369,7 @@ namespace Azure.ResourceManager.EdgeActions
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _edgeActionVersionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, version, context);
+                using HttpMessage message = _edgeActionVersionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, version, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<EdgeActionVersionData> response = default;
@@ -426,7 +426,7 @@ namespace Azure.ResourceManager.EdgeActions
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _edgeActionVersionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, version, context);
+                using HttpMessage message = _edgeActionVersionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, version, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<EdgeActionVersionData> response = default;
@@ -483,7 +483,7 @@ namespace Azure.ResourceManager.EdgeActions
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _edgeActionVersionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, version, context);
+                using HttpMessage message = _edgeActionVersionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, version, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<EdgeActionVersionData> response = default;
@@ -544,7 +544,7 @@ namespace Azure.ResourceManager.EdgeActions
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _edgeActionVersionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, version, context);
+                using HttpMessage message = _edgeActionVersionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, version, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<EdgeActionVersionData> response = default;

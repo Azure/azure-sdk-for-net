@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.EdgeZones
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _extendedZonesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Name, context);
+                using HttpMessage message = _extendedZonesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ExtendedZoneData> response = Response.FromValue(ExtendedZoneData.FromResponse(result), result);
                 if (response.Value == null)
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.EdgeZones
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _extendedZonesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Name, context);
+                using HttpMessage message = _extendedZonesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ExtendedZoneData> response = Response.FromValue(ExtendedZoneData.FromResponse(result), result);
                 if (response.Value == null)
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.EdgeZones
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _extendedZonesRestClient.CreateRegisterRequest(Guid.Parse(Id.SubscriptionId), Id.Name, context);
+                using HttpMessage message = _extendedZonesRestClient.CreateRegisterRequest(Guid.Parse(Id.SubscriptionId), Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ExtendedZoneData> response = Response.FromValue(ExtendedZoneData.FromResponse(result), result);
                 if (response.Value == null)
@@ -266,7 +266,7 @@ namespace Azure.ResourceManager.EdgeZones
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _extendedZonesRestClient.CreateRegisterRequest(Guid.Parse(Id.SubscriptionId), Id.Name, context);
+                using HttpMessage message = _extendedZonesRestClient.CreateRegisterRequest(Guid.Parse(Id.SubscriptionId), Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ExtendedZoneData> response = Response.FromValue(ExtendedZoneData.FromResponse(result), result);
                 if (response.Value == null)
@@ -314,7 +314,7 @@ namespace Azure.ResourceManager.EdgeZones
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _extendedZonesRestClient.CreateUnregisterRequest(Guid.Parse(Id.SubscriptionId), Id.Name, context);
+                using HttpMessage message = _extendedZonesRestClient.CreateUnregisterRequest(Guid.Parse(Id.SubscriptionId), Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ExtendedZoneData> response = Response.FromValue(ExtendedZoneData.FromResponse(result), result);
                 if (response.Value == null)
@@ -362,7 +362,7 @@ namespace Azure.ResourceManager.EdgeZones
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _extendedZonesRestClient.CreateUnregisterRequest(Guid.Parse(Id.SubscriptionId), Id.Name, context);
+                using HttpMessage message = _extendedZonesRestClient.CreateUnregisterRequest(Guid.Parse(Id.SubscriptionId), Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ExtendedZoneData> response = Response.FromValue(ExtendedZoneData.FromResponse(result), result);
                 if (response.Value == null)

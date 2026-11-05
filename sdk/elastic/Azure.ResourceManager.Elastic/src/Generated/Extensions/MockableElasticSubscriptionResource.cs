@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.Elastic.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = OrganizationsOperationGroupRestClient.CreateGetApiKeyRequest(Guid.Parse(Id.SubscriptionId), ElasticUserEmailId.ToRequestContent(body), context);
+                using HttpMessage message = OrganizationsOperationGroupRestClient.CreateGetApiKeyRequest(Guid.Parse(Id.SubscriptionId), ElasticUserEmailId.ToRequestContent(body), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ElasticUserApiKeyResult> response = Response.FromValue(ElasticUserApiKeyResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.Elastic.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = OrganizationsOperationGroupRestClient.CreateGetApiKeyRequest(Guid.Parse(Id.SubscriptionId), ElasticUserEmailId.ToRequestContent(body), context);
+                using HttpMessage message = OrganizationsOperationGroupRestClient.CreateGetApiKeyRequest(Guid.Parse(Id.SubscriptionId), ElasticUserEmailId.ToRequestContent(body), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ElasticUserApiKeyResult> response = Response.FromValue(ElasticUserApiKeyResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.Elastic.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = OrganizationsOperationGroupRestClient.CreateGetElasticToAzureSubscriptionMappingRequest(Guid.Parse(Id.SubscriptionId), context);
+                using HttpMessage message = OrganizationsOperationGroupRestClient.CreateGetElasticToAzureSubscriptionMappingRequest(Guid.Parse(Id.SubscriptionId), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ElasticOrganizationToAzureSubscriptionMappingResult> response = Response.FromValue(ElasticOrganizationToAzureSubscriptionMappingResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -340,7 +340,7 @@ namespace Azure.ResourceManager.Elastic.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = OrganizationsOperationGroupRestClient.CreateGetElasticToAzureSubscriptionMappingRequest(Guid.Parse(Id.SubscriptionId), context);
+                using HttpMessage message = OrganizationsOperationGroupRestClient.CreateGetElasticToAzureSubscriptionMappingRequest(Guid.Parse(Id.SubscriptionId), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ElasticOrganizationToAzureSubscriptionMappingResult> response = Response.FromValue(ElasticOrganizationToAzureSubscriptionMappingResult.FromResponse(result), result);
                 if (response.Value == null)

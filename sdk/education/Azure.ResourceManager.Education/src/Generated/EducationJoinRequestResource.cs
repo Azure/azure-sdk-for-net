@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Education
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _joinRequestsRestClient.CreateGetRequest(Id.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Name, context);
+                using HttpMessage message = _joinRequestsRestClient.CreateGetRequest(Id.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<EducationJoinRequestData> response = Response.FromValue(EducationJoinRequestData.FromResponse(result), result);
                 if (response.Value == null)
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.Education
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _joinRequestsRestClient.CreateGetRequest(Id.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Name, context);
+                using HttpMessage message = _joinRequestsRestClient.CreateGetRequest(Id.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<EducationJoinRequestData> response = Response.FromValue(EducationJoinRequestData.FromResponse(result), result);
                 if (response.Value == null)
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.Education
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _joinRequestsRestClient.CreateApproveRequest(Id.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Name, context);
+                using HttpMessage message = _joinRequestsRestClient.CreateApproveRequest(Id.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 return response;
             }
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.Education
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _joinRequestsRestClient.CreateApproveRequest(Id.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Name, context);
+                using HttpMessage message = _joinRequestsRestClient.CreateApproveRequest(Id.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 return response;
             }
@@ -305,7 +305,7 @@ namespace Azure.ResourceManager.Education
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _joinRequestsRestClient.CreateDenyRequest(Id.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Name, context);
+                using HttpMessage message = _joinRequestsRestClient.CreateDenyRequest(Id.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 return response;
             }
@@ -348,7 +348,7 @@ namespace Azure.ResourceManager.Education
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _joinRequestsRestClient.CreateDenyRequest(Id.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Name, context);
+                using HttpMessage message = _joinRequestsRestClient.CreateDenyRequest(Id.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 return response;
             }

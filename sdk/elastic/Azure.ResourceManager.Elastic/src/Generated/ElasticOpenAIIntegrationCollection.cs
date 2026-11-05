@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Elastic
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _openAIIntegrationRPModelsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, integrationName, ElasticOpenAIIntegrationData.ToRequestContent(data), context);
+                using HttpMessage message = _openAIIntegrationRPModelsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, integrationName, ElasticOpenAIIntegrationData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ElasticOpenAIIntegrationData> response = Response.FromValue(ElasticOpenAIIntegrationData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.Elastic
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _openAIIntegrationRPModelsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, integrationName, ElasticOpenAIIntegrationData.ToRequestContent(data), context);
+                using HttpMessage message = _openAIIntegrationRPModelsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, integrationName, ElasticOpenAIIntegrationData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ElasticOpenAIIntegrationData> response = Response.FromValue(ElasticOpenAIIntegrationData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.Elastic
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _openAIIntegrationRPModelsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, integrationName, context);
+                using HttpMessage message = _openAIIntegrationRPModelsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, integrationName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ElasticOpenAIIntegrationData> response = Response.FromValue(ElasticOpenAIIntegrationData.FromResponse(result), result);
                 if (response.Value == null)
@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.Elastic
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _openAIIntegrationRPModelsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, integrationName, context);
+                using HttpMessage message = _openAIIntegrationRPModelsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, integrationName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ElasticOpenAIIntegrationData> response = Response.FromValue(ElasticOpenAIIntegrationData.FromResponse(result), result);
                 if (response.Value == null)
@@ -361,7 +361,7 @@ namespace Azure.ResourceManager.Elastic
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _openAIIntegrationRPModelsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, integrationName, context);
+                using HttpMessage message = _openAIIntegrationRPModelsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, integrationName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ElasticOpenAIIntegrationData> response = default;
@@ -418,7 +418,7 @@ namespace Azure.ResourceManager.Elastic
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _openAIIntegrationRPModelsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, integrationName, context);
+                using HttpMessage message = _openAIIntegrationRPModelsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, integrationName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ElasticOpenAIIntegrationData> response = default;
@@ -475,7 +475,7 @@ namespace Azure.ResourceManager.Elastic
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _openAIIntegrationRPModelsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, integrationName, context);
+                using HttpMessage message = _openAIIntegrationRPModelsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, integrationName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ElasticOpenAIIntegrationData> response = default;
@@ -536,7 +536,7 @@ namespace Azure.ResourceManager.Elastic
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _openAIIntegrationRPModelsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, integrationName, context);
+                using HttpMessage message = _openAIIntegrationRPModelsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, integrationName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ElasticOpenAIIntegrationData> response = default;
