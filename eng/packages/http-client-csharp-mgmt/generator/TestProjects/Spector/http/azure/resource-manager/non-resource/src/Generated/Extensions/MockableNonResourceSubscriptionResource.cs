@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.NonResource.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = NonResourceOperationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), location, parameter, context);
+                using HttpMessage message = NonResourceOperationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), location, parameter, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<Models.NonResource> response = Response.FromValue(Models.NonResource.FromResponse(result), result);
                 if (response.Value == null)
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.NonResource.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = NonResourceOperationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), location, parameter, context);
+                using HttpMessage message = NonResourceOperationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), location, parameter, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<Models.NonResource> response = Response.FromValue(Models.NonResource.FromResponse(result), result);
                 if (response.Value == null)
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.NonResource.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = NonResourceOperationsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), location, parameter, Models.NonResource.ToRequestContent(body), context);
+                using HttpMessage message = NonResourceOperationsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), location, parameter, Models.NonResource.ToRequestContent(body), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<Models.NonResource> response = Response.FromValue(Models.NonResource.FromResponse(result), result);
                 if (response.Value == null)
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.NonResource.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = NonResourceOperationsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), location, parameter, Models.NonResource.ToRequestContent(body), context);
+                using HttpMessage message = NonResourceOperationsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), location, parameter, Models.NonResource.ToRequestContent(body), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<Models.NonResource> response = Response.FromValue(Models.NonResource.FromResponse(result), result);
                 if (response.Value == null)
