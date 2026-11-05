@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _assessmentsRestClient.CreateGetRequest(Id.ToString(), assessmentName, expand?.ToString(), context);
+                using HttpMessage message = _assessmentsRestClient.CreateGetRequest(Id.ToString(), assessmentName, expand?.ToString(), context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<SecurityAssessmentData> response = default;
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _assessmentsRestClient.CreateGetRequest(Id.ToString(), assessmentName, expand?.ToString(), context);
+                using HttpMessage message = _assessmentsRestClient.CreateGetRequest(Id.ToString(), assessmentName, expand?.ToString(), context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<SecurityAssessmentData> response = default;

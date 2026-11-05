@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _securityContactsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), securityContactName.ToString(), SecurityContactData.ToRequestContent(data), context);
+                using HttpMessage message = _securityContactsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), securityContactName.ToString(), SecurityContactData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<SecurityContactData> response = Response.FromValue(SecurityContactData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _securityContactsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), securityContactName.ToString(), SecurityContactData.ToRequestContent(data), context);
+                using HttpMessage message = _securityContactsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), securityContactName.ToString(), SecurityContactData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<SecurityContactData> response = Response.FromValue(SecurityContactData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _securityContactsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), securityContactName.ToString(), context);
+                using HttpMessage message = _securityContactsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), securityContactName.ToString(), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<SecurityContactData> response = Response.FromValue(SecurityContactData.FromResponse(result), result);
                 if (response.Value == null)
@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _securityContactsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), securityContactName.ToString(), context);
+                using HttpMessage message = _securityContactsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), securityContactName.ToString(), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<SecurityContactData> response = Response.FromValue(SecurityContactData.FromResponse(result), result);
                 if (response.Value == null)
@@ -337,7 +337,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _securityContactsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), securityContactName.ToString(), context);
+                using HttpMessage message = _securityContactsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), securityContactName.ToString(), context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<SecurityContactData> response = default;
@@ -390,7 +390,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _securityContactsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), securityContactName.ToString(), context);
+                using HttpMessage message = _securityContactsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), securityContactName.ToString(), context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<SecurityContactData> response = default;
@@ -443,7 +443,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _securityContactsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), securityContactName.ToString(), context);
+                using HttpMessage message = _securityContactsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), securityContactName.ToString(), context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<SecurityContactData> response = default;
@@ -500,7 +500,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _securityContactsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), securityContactName.ToString(), context);
+                using HttpMessage message = _securityContactsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), securityContactName.ToString(), context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<SecurityContactData> response = default;

@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _subAssessmentsRestClient.CreateGetRequest(Id.Parent.ToString(), Id.Name, subAssessmentName, context);
+                using HttpMessage message = _subAssessmentsRestClient.CreateGetRequest(Id.Parent.ToString(), Id.Name, subAssessmentName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<SecuritySubAssessmentData> response = Response.FromValue(SecuritySubAssessmentData.FromResponse(result), result);
                 if (response.Value == null)
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _subAssessmentsRestClient.CreateGetRequest(Id.Parent.ToString(), Id.Name, subAssessmentName, context);
+                using HttpMessage message = _subAssessmentsRestClient.CreateGetRequest(Id.Parent.ToString(), Id.Name, subAssessmentName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<SecuritySubAssessmentData> response = Response.FromValue(SecuritySubAssessmentData.FromResponse(result), result);
                 if (response.Value == null)
@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _subAssessmentsRestClient.CreateGetRequest(Id.Parent.ToString(), Id.Name, subAssessmentName, context);
+                using HttpMessage message = _subAssessmentsRestClient.CreateGetRequest(Id.Parent.ToString(), Id.Name, subAssessmentName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<SecuritySubAssessmentData> response = default;
@@ -298,7 +298,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _subAssessmentsRestClient.CreateGetRequest(Id.Parent.ToString(), Id.Name, subAssessmentName, context);
+                using HttpMessage message = _subAssessmentsRestClient.CreateGetRequest(Id.Parent.ToString(), Id.Name, subAssessmentName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<SecuritySubAssessmentData> response = default;
@@ -355,7 +355,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _subAssessmentsRestClient.CreateGetRequest(Id.Parent.ToString(), Id.Name, subAssessmentName, context);
+                using HttpMessage message = _subAssessmentsRestClient.CreateGetRequest(Id.Parent.ToString(), Id.Name, subAssessmentName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<SecuritySubAssessmentData> response = default;
@@ -416,7 +416,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _subAssessmentsRestClient.CreateGetRequest(Id.Parent.ToString(), Id.Name, subAssessmentName, context);
+                using HttpMessage message = _subAssessmentsRestClient.CreateGetRequest(Id.Parent.ToString(), Id.Name, subAssessmentName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<SecuritySubAssessmentData> response = default;

@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _mdeOnboardingsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), context);
+                using HttpMessage message = _mdeOnboardingsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<MdeOnboardingData> response = Response.FromValue(MdeOnboardingData.FromResponse(result), result);
                 if (response.Value == null)
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _mdeOnboardingsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), context);
+                using HttpMessage message = _mdeOnboardingsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<MdeOnboardingData> response = Response.FromValue(MdeOnboardingData.FromResponse(result), result);
                 if (response.Value == null)

@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _apiCollectionsRestClient.CreateOnboardAzureApiManagementApiRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, apiId, context);
+                using HttpMessage message = _apiCollectionsRestClient.CreateOnboardAzureApiManagementApiRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, apiId, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 SecurityCenterArmOperation<ApiCollectionResource> operation = new SecurityCenterArmOperation<ApiCollectionResource>(
                     new ApiCollectionResourceOperationSource(Client),
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _apiCollectionsRestClient.CreateOnboardAzureApiManagementApiRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, apiId, context);
+                using HttpMessage message = _apiCollectionsRestClient.CreateOnboardAzureApiManagementApiRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, apiId, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 SecurityCenterArmOperation<ApiCollectionResource> operation = new SecurityCenterArmOperation<ApiCollectionResource>(
                     new ApiCollectionResourceOperationSource(Client),
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _apiCollectionsRestClient.CreateGetByAzureApiManagementServiceRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, apiId, context);
+                using HttpMessage message = _apiCollectionsRestClient.CreateGetByAzureApiManagementServiceRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, apiId, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ApiCollectionData> response = Response.FromValue(ApiCollectionData.FromResponse(result), result);
                 if (response.Value == null)
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _apiCollectionsRestClient.CreateGetByAzureApiManagementServiceRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, apiId, context);
+                using HttpMessage message = _apiCollectionsRestClient.CreateGetByAzureApiManagementServiceRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, apiId, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ApiCollectionData> response = Response.FromValue(ApiCollectionData.FromResponse(result), result);
                 if (response.Value == null)
@@ -365,7 +365,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _apiCollectionsRestClient.CreateGetByAzureApiManagementServiceRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, apiId, context);
+                using HttpMessage message = _apiCollectionsRestClient.CreateGetByAzureApiManagementServiceRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, apiId, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ApiCollectionData> response = default;
@@ -422,7 +422,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _apiCollectionsRestClient.CreateGetByAzureApiManagementServiceRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, apiId, context);
+                using HttpMessage message = _apiCollectionsRestClient.CreateGetByAzureApiManagementServiceRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, apiId, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ApiCollectionData> response = default;
@@ -479,7 +479,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _apiCollectionsRestClient.CreateGetByAzureApiManagementServiceRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, apiId, context);
+                using HttpMessage message = _apiCollectionsRestClient.CreateGetByAzureApiManagementServiceRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, apiId, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ApiCollectionData> response = default;
@@ -540,7 +540,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _apiCollectionsRestClient.CreateGetByAzureApiManagementServiceRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, apiId, context);
+                using HttpMessage message = _apiCollectionsRestClient.CreateGetByAzureApiManagementServiceRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, apiId, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ApiCollectionData> response = default;

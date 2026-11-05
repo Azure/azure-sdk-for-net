@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Resources.Policy
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _dataPolicyManifestsRestClient.CreateGetByPolicyModeRequest(Id.Name, context);
+                using HttpMessage message = _dataPolicyManifestsRestClient.CreateGetByPolicyModeRequest(Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<DataPolicyManifestData> response = Response.FromValue(DataPolicyManifestData.FromResponse(result), result);
                 if (response.Value == null)
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.Resources.Policy
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _dataPolicyManifestsRestClient.CreateGetByPolicyModeRequest(Id.Name, context);
+                using HttpMessage message = _dataPolicyManifestsRestClient.CreateGetByPolicyModeRequest(Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<DataPolicyManifestData> response = Response.FromValue(DataPolicyManifestData.FromResponse(result), result);
                 if (response.Value == null)

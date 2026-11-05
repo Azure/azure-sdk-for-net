@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.ResourceHealth
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _eventRestClient.CreateGetBySubscriptionIdAndTrackingIdRequest(Id.SubscriptionId, eventTrackingId, filter, queryStartTime, context);
+                using HttpMessage message = _eventRestClient.CreateGetBySubscriptionIdAndTrackingIdRequest(Id.SubscriptionId, eventTrackingId, filter, queryStartTime, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ResourceHealthEventData> response = Response.FromValue(ResourceHealthEventData.FromResponse(result), result);
                 if (response.Value == null)
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.ResourceHealth
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _eventRestClient.CreateGetBySubscriptionIdAndTrackingIdRequest(Id.SubscriptionId, eventTrackingId, filter, queryStartTime, context);
+                using HttpMessage message = _eventRestClient.CreateGetBySubscriptionIdAndTrackingIdRequest(Id.SubscriptionId, eventTrackingId, filter, queryStartTime, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ResourceHealthEventData> response = Response.FromValue(ResourceHealthEventData.FromResponse(result), result);
                 if (response.Value == null)
@@ -268,7 +268,7 @@ namespace Azure.ResourceManager.ResourceHealth
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _eventRestClient.CreateGetBySubscriptionIdAndTrackingIdRequest(Id.SubscriptionId, eventTrackingId, filter, queryStartTime, context);
+                using HttpMessage message = _eventRestClient.CreateGetBySubscriptionIdAndTrackingIdRequest(Id.SubscriptionId, eventTrackingId, filter, queryStartTime, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ResourceHealthEventData> response = default;
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.ResourceHealth
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _eventRestClient.CreateGetBySubscriptionIdAndTrackingIdRequest(Id.SubscriptionId, eventTrackingId, filter, queryStartTime, context);
+                using HttpMessage message = _eventRestClient.CreateGetBySubscriptionIdAndTrackingIdRequest(Id.SubscriptionId, eventTrackingId, filter, queryStartTime, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ResourceHealthEventData> response = default;
@@ -386,7 +386,7 @@ namespace Azure.ResourceManager.ResourceHealth
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _eventRestClient.CreateGetBySubscriptionIdAndTrackingIdRequest(Id.SubscriptionId, eventTrackingId, filter, queryStartTime, context);
+                using HttpMessage message = _eventRestClient.CreateGetBySubscriptionIdAndTrackingIdRequest(Id.SubscriptionId, eventTrackingId, filter, queryStartTime, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ResourceHealthEventData> response = default;
@@ -449,7 +449,7 @@ namespace Azure.ResourceManager.ResourceHealth
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _eventRestClient.CreateGetBySubscriptionIdAndTrackingIdRequest(Id.SubscriptionId, eventTrackingId, filter, queryStartTime, context);
+                using HttpMessage message = _eventRestClient.CreateGetBySubscriptionIdAndTrackingIdRequest(Id.SubscriptionId, eventTrackingId, filter, queryStartTime, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ResourceHealthEventData> response = default;

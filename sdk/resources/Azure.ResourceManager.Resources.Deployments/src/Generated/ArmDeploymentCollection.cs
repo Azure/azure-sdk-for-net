@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Resources.Deployments
                 {
                     CancellationToken = cancellationToken
                 };
-                Core.HttpMessage message = _armDeploymentsRestClient.CreateCreateOrUpdateAtScopeRequest(Id.ToString(), deploymentName, ArmDeploymentContent.ToRequestContent(content), context);
+                using Core.HttpMessage message = _armDeploymentsRestClient.CreateCreateOrUpdateAtScopeRequest(Id.ToString(), deploymentName, ArmDeploymentContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DeploymentsArmOperation<ArmDeploymentResource> operation = new DeploymentsArmOperation<ArmDeploymentResource>(
                     new ArmDeploymentResourceOperationSource(Client),
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Resources.Deployments
                 {
                     CancellationToken = cancellationToken
                 };
-                Core.HttpMessage message = _armDeploymentsRestClient.CreateCreateOrUpdateAtScopeRequest(Id.ToString(), deploymentName, ArmDeploymentContent.ToRequestContent(content), context);
+                using Core.HttpMessage message = _armDeploymentsRestClient.CreateCreateOrUpdateAtScopeRequest(Id.ToString(), deploymentName, ArmDeploymentContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DeploymentsArmOperation<ArmDeploymentResource> operation = new DeploymentsArmOperation<ArmDeploymentResource>(
                     new ArmDeploymentResourceOperationSource(Client),
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.Resources.Deployments
                 {
                     CancellationToken = cancellationToken
                 };
-                Core.HttpMessage message = _armDeploymentsRestClient.CreateGetAtScopeRequest(Id.ToString(), deploymentName, context);
+                using Core.HttpMessage message = _armDeploymentsRestClient.CreateGetAtScopeRequest(Id.ToString(), deploymentName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ArmDeploymentData> response = Response.FromValue(ArmDeploymentData.FromResponse(result), result);
                 if (response.Value == null)
@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.Resources.Deployments
                 {
                     CancellationToken = cancellationToken
                 };
-                Core.HttpMessage message = _armDeploymentsRestClient.CreateGetAtScopeRequest(Id.ToString(), deploymentName, context);
+                using Core.HttpMessage message = _armDeploymentsRestClient.CreateGetAtScopeRequest(Id.ToString(), deploymentName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ArmDeploymentData> response = Response.FromValue(ArmDeploymentData.FromResponse(result), result);
                 if (response.Value == null)
@@ -362,7 +362,7 @@ namespace Azure.ResourceManager.Resources.Deployments
                 {
                     CancellationToken = cancellationToken
                 };
-                Core.HttpMessage message = _armDeploymentsRestClient.CreateGetAtScopeRequest(Id.ToString(), deploymentName, context);
+                using Core.HttpMessage message = _armDeploymentsRestClient.CreateGetAtScopeRequest(Id.ToString(), deploymentName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ArmDeploymentData> response = default;
@@ -419,7 +419,7 @@ namespace Azure.ResourceManager.Resources.Deployments
                 {
                     CancellationToken = cancellationToken
                 };
-                Core.HttpMessage message = _armDeploymentsRestClient.CreateGetAtScopeRequest(Id.ToString(), deploymentName, context);
+                using Core.HttpMessage message = _armDeploymentsRestClient.CreateGetAtScopeRequest(Id.ToString(), deploymentName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ArmDeploymentData> response = default;
@@ -476,7 +476,7 @@ namespace Azure.ResourceManager.Resources.Deployments
                 {
                     CancellationToken = cancellationToken
                 };
-                Core.HttpMessage message = _armDeploymentsRestClient.CreateGetAtScopeRequest(Id.ToString(), deploymentName, context);
+                using Core.HttpMessage message = _armDeploymentsRestClient.CreateGetAtScopeRequest(Id.ToString(), deploymentName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ArmDeploymentData> response = default;
@@ -537,7 +537,7 @@ namespace Azure.ResourceManager.Resources.Deployments
                 {
                     CancellationToken = cancellationToken
                 };
-                Core.HttpMessage message = _armDeploymentsRestClient.CreateGetAtScopeRequest(Id.ToString(), deploymentName, context);
+                using Core.HttpMessage message = _armDeploymentsRestClient.CreateGetAtScopeRequest(Id.ToString(), deploymentName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ArmDeploymentData> response = default;

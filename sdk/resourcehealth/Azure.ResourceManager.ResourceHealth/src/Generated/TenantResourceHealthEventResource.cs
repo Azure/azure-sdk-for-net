@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.ResourceHealth
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _eventRestClient.CreateGetByTenantIdAndTrackingIdRequest(Id.Name, filter, queryStartTime, context);
+                using HttpMessage message = _eventRestClient.CreateGetByTenantIdAndTrackingIdRequest(Id.Name, filter, queryStartTime, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ResourceHealthEventData> response = Response.FromValue(ResourceHealthEventData.FromResponse(result), result);
                 if (response.Value == null)
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.ResourceHealth
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _eventRestClient.CreateGetByTenantIdAndTrackingIdRequest(Id.Name, filter, queryStartTime, context);
+                using HttpMessage message = _eventRestClient.CreateGetByTenantIdAndTrackingIdRequest(Id.Name, filter, queryStartTime, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ResourceHealthEventData> response = Response.FromValue(ResourceHealthEventData.FromResponse(result), result);
                 if (response.Value == null)
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.ResourceHealth
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _eventRestClient.CreateFetchDetailsByTenantIdAndTrackingIdRequest(Id.Name, context);
+                using HttpMessage message = _eventRestClient.CreateFetchDetailsByTenantIdAndTrackingIdRequest(Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ResourceHealthEventData> response = Response.FromValue(ResourceHealthEventData.FromResponse(result), result);
                 if (response.Value == null)
@@ -273,7 +273,7 @@ namespace Azure.ResourceManager.ResourceHealth
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _eventRestClient.CreateFetchDetailsByTenantIdAndTrackingIdRequest(Id.Name, context);
+                using HttpMessage message = _eventRestClient.CreateFetchDetailsByTenantIdAndTrackingIdRequest(Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ResourceHealthEventData> response = Response.FromValue(ResourceHealthEventData.FromResponse(result), result);
                 if (response.Value == null)

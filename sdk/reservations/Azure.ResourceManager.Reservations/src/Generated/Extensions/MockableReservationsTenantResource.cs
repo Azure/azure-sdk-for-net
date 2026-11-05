@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.Reservations.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = ReservationOrderRestClient.CreateCalculateReservationOrderRequest(ReservationPurchaseContent.ToRequestContent(content), context);
+                using HttpMessage message = ReservationOrderRestClient.CreateCalculateReservationOrderRequest(ReservationPurchaseContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<CalculatePriceResult> response = Response.FromValue(CalculatePriceResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.Reservations.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = ReservationOrderRestClient.CreateCalculateReservationOrderRequest(ReservationPurchaseContent.ToRequestContent(content), context);
+                using HttpMessage message = ReservationOrderRestClient.CreateCalculateReservationOrderRequest(ReservationPurchaseContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<CalculatePriceResult> response = Response.FromValue(CalculatePriceResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -280,7 +280,7 @@ namespace Azure.ResourceManager.Reservations.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = CalculateExchangeRestClient.CreateCalculateReservationExchangeRequest(CalculateExchangeContent.ToRequestContent(content), context);
+                using HttpMessage message = CalculateExchangeRestClient.CreateCalculateReservationExchangeRequest(CalculateExchangeContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ReservationsArmOperation<CalculateExchangeResult> operation = new ReservationsArmOperation<CalculateExchangeResult>(
                     new CalculateExchangeResultOperationSource(),
@@ -335,7 +335,7 @@ namespace Azure.ResourceManager.Reservations.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = CalculateExchangeRestClient.CreateCalculateReservationExchangeRequest(CalculateExchangeContent.ToRequestContent(content), context);
+                using HttpMessage message = CalculateExchangeRestClient.CreateCalculateReservationExchangeRequest(CalculateExchangeContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ReservationsArmOperation<CalculateExchangeResult> operation = new ReservationsArmOperation<CalculateExchangeResult>(
                     new CalculateExchangeResultOperationSource(),
@@ -390,7 +390,7 @@ namespace Azure.ResourceManager.Reservations.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = ExchangeRestClient.CreateExchangeRequest(ExchangeContent.ToRequestContent(content), context);
+                using HttpMessage message = ExchangeRestClient.CreateExchangeRequest(ExchangeContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ReservationsArmOperation<ExchangeResult> operation = new ReservationsArmOperation<ExchangeResult>(
                     new ExchangeResultOperationSource(),
@@ -445,7 +445,7 @@ namespace Azure.ResourceManager.Reservations.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = ExchangeRestClient.CreateExchangeRequest(ExchangeContent.ToRequestContent(content), context);
+                using HttpMessage message = ExchangeRestClient.CreateExchangeRequest(ExchangeContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ReservationsArmOperation<ExchangeResult> operation = new ReservationsArmOperation<ExchangeResult>(
                     new ExchangeResultOperationSource(),

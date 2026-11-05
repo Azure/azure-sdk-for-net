@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.Search
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _servicesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, default, context);
+                using HttpMessage message = _servicesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, default, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<SearchServiceData> response = Response.FromValue(SearchServiceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.Search
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _servicesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, default, context);
+                using HttpMessage message = _servicesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, default, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<SearchServiceData> response = Response.FromValue(SearchServiceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.Search
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _servicesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, SearchServicePatch.ToRequestContent(patch), default, context);
+                using HttpMessage message = _servicesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, SearchServicePatch.ToRequestContent(patch), default, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<SearchServiceData> response = Response.FromValue(SearchServiceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -300,7 +300,7 @@ namespace Azure.ResourceManager.Search
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _servicesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, SearchServicePatch.ToRequestContent(patch), default, context);
+                using HttpMessage message = _servicesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, SearchServicePatch.ToRequestContent(patch), default, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<SearchServiceData> response = Response.FromValue(SearchServiceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -351,7 +351,7 @@ namespace Azure.ResourceManager.Search
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _servicesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, default, context);
+                using HttpMessage message = _servicesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, default, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
@@ -404,7 +404,7 @@ namespace Azure.ResourceManager.Search
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _servicesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, default, context);
+                using HttpMessage message = _servicesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, default, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
@@ -455,7 +455,7 @@ namespace Azure.ResourceManager.Search
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _adminKeysRestClient.CreateGetAdminKeyRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, default, context);
+                using HttpMessage message = _adminKeysRestClient.CreateGetAdminKeyRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, default, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<SearchServiceAdminKeyResult> response = Response.FromValue(SearchServiceAdminKeyResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -504,7 +504,7 @@ namespace Azure.ResourceManager.Search
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _adminKeysRestClient.CreateGetAdminKeyRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, default, context);
+                using HttpMessage message = _adminKeysRestClient.CreateGetAdminKeyRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, default, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<SearchServiceAdminKeyResult> response = Response.FromValue(SearchServiceAdminKeyResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -558,7 +558,7 @@ namespace Azure.ResourceManager.Search
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _queryKeysRestClient.CreateCreateQueryKeyRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, name, default, context);
+                using HttpMessage message = _queryKeysRestClient.CreateCreateQueryKeyRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, name, default, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<SearchServiceQueryKey> response = Response.FromValue(SearchServiceQueryKey.FromResponse(result), result);
                 if (response.Value == null)
@@ -612,7 +612,7 @@ namespace Azure.ResourceManager.Search
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _queryKeysRestClient.CreateCreateQueryKeyRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, name, default, context);
+                using HttpMessage message = _queryKeysRestClient.CreateCreateQueryKeyRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, name, default, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<SearchServiceQueryKey> response = Response.FromValue(SearchServiceQueryKey.FromResponse(result), result);
                 if (response.Value == null)
@@ -828,7 +828,7 @@ namespace Azure.ResourceManager.Search
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _queryKeysRestClient.CreateDeleteQueryKeyRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, key, default, context);
+                using HttpMessage message = _queryKeysRestClient.CreateDeleteQueryKeyRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, key, default, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 return response;
             }
@@ -879,7 +879,7 @@ namespace Azure.ResourceManager.Search
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _queryKeysRestClient.CreateDeleteQueryKeyRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, key, default, context);
+                using HttpMessage message = _queryKeysRestClient.CreateDeleteQueryKeyRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, key, default, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 return response;
             }
@@ -924,7 +924,7 @@ namespace Azure.ResourceManager.Search
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _adminKeysRestClient.CreateRegenerateAdminKeyRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, keyKind.ToSerialString(), default, context);
+                using HttpMessage message = _adminKeysRestClient.CreateRegenerateAdminKeyRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, keyKind.ToSerialString(), default, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<SearchServiceAdminKeyResult> response = Response.FromValue(SearchServiceAdminKeyResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -974,7 +974,7 @@ namespace Azure.ResourceManager.Search
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _adminKeysRestClient.CreateRegenerateAdminKeyRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, keyKind.ToSerialString(), default, context);
+                using HttpMessage message = _adminKeysRestClient.CreateRegenerateAdminKeyRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, keyKind.ToSerialString(), default, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<SearchServiceAdminKeyResult> response = Response.FromValue(SearchServiceAdminKeyResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -1023,7 +1023,7 @@ namespace Azure.ResourceManager.Search
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _servicesRestClient.CreateUpgradeRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _servicesRestClient.CreateUpgradeRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 SearchArmOperation<SearchServiceResource> operation = new SearchArmOperation<SearchServiceResource>(
                     new SearchServiceResourceOperationSource(Client),
@@ -1078,7 +1078,7 @@ namespace Azure.ResourceManager.Search
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _servicesRestClient.CreateUpgradeRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _servicesRestClient.CreateUpgradeRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 SearchArmOperation<SearchServiceResource> operation = new SearchArmOperation<SearchServiceResource>(
                     new SearchServiceResourceOperationSource(Client),
@@ -1123,7 +1123,7 @@ namespace Azure.ResourceManager.Search
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _servicesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, default, context);
+                    using HttpMessage message = _servicesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, default, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<SearchServiceData> response = Response.FromValue(SearchServiceData.FromResponse(result), result);
                     return Response.FromValue(new SearchServiceResource(Client, response.Value), response.GetRawResponse());
@@ -1171,7 +1171,7 @@ namespace Azure.ResourceManager.Search
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _servicesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, default, context);
+                    using HttpMessage message = _servicesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, default, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<SearchServiceData> response = Response.FromValue(SearchServiceData.FromResponse(result), result);
                     return Response.FromValue(new SearchServiceResource(Client, response.Value), response.GetRawResponse());
@@ -1217,7 +1217,7 @@ namespace Azure.ResourceManager.Search
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _servicesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, default, context);
+                    using HttpMessage message = _servicesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, default, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<SearchServiceData> response = Response.FromValue(SearchServiceData.FromResponse(result), result);
                     return Response.FromValue(new SearchServiceResource(Client, response.Value), response.GetRawResponse());
@@ -1259,7 +1259,7 @@ namespace Azure.ResourceManager.Search
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _servicesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, default, context);
+                    using HttpMessage message = _servicesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, default, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<SearchServiceData> response = Response.FromValue(SearchServiceData.FromResponse(result), result);
                     return Response.FromValue(new SearchServiceResource(Client, response.Value), response.GetRawResponse());
@@ -1301,7 +1301,7 @@ namespace Azure.ResourceManager.Search
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _servicesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, default, context);
+                    using HttpMessage message = _servicesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, default, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<SearchServiceData> response = Response.FromValue(SearchServiceData.FromResponse(result), result);
                     return Response.FromValue(new SearchServiceResource(Client, response.Value), response.GetRawResponse());
@@ -1347,7 +1347,7 @@ namespace Azure.ResourceManager.Search
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _servicesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, default, context);
+                    using HttpMessage message = _servicesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, default, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<SearchServiceData> response = Response.FromValue(SearchServiceData.FromResponse(result), result);
                     return Response.FromValue(new SearchServiceResource(Client, response.Value), response.GetRawResponse());

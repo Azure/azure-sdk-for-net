@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Search.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = OfferingsRestClient.CreateFetchOfferingsRequest(context);
+                using HttpMessage message = OfferingsRestClient.CreateFetchOfferingsRequest(context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<SearchOfferingsResult> response = Response.FromValue(SearchOfferingsResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Search.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = OfferingsRestClient.CreateFetchOfferingsRequest(context);
+                using HttpMessage message = OfferingsRestClient.CreateFetchOfferingsRequest(context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<SearchOfferingsResult> response = Response.FromValue(SearchOfferingsResult.FromResponse(result), result);
                 if (response.Value == null)

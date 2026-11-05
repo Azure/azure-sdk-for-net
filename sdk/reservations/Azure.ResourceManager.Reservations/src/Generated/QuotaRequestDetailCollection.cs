@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Reservations
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _quotaRequestStatusRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _providerId, _location, id, context);
+                using HttpMessage message = _quotaRequestStatusRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _providerId, _location, id, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<QuotaRequestDetailData> response = Response.FromValue(QuotaRequestDetailData.FromResponse(result), result);
                 if (response.Value == null)
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Reservations
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _quotaRequestStatusRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _providerId, _location, id, context);
+                using HttpMessage message = _quotaRequestStatusRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _providerId, _location, id, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<QuotaRequestDetailData> response = Response.FromValue(QuotaRequestDetailData.FromResponse(result), result);
                 if (response.Value == null)
@@ -270,7 +270,7 @@ namespace Azure.ResourceManager.Reservations
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _quotaRequestStatusRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _providerId, _location, id, context);
+                using HttpMessage message = _quotaRequestStatusRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _providerId, _location, id, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<QuotaRequestDetailData> response = default;
@@ -323,7 +323,7 @@ namespace Azure.ResourceManager.Reservations
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _quotaRequestStatusRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _providerId, _location, id, context);
+                using HttpMessage message = _quotaRequestStatusRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _providerId, _location, id, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<QuotaRequestDetailData> response = default;
@@ -376,7 +376,7 @@ namespace Azure.ResourceManager.Reservations
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _quotaRequestStatusRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _providerId, _location, id, context);
+                using HttpMessage message = _quotaRequestStatusRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _providerId, _location, id, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<QuotaRequestDetailData> response = default;
@@ -433,7 +433,7 @@ namespace Azure.ResourceManager.Reservations
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _quotaRequestStatusRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _providerId, _location, id, context);
+                using HttpMessage message = _quotaRequestStatusRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _providerId, _location, id, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<QuotaRequestDetailData> response = default;

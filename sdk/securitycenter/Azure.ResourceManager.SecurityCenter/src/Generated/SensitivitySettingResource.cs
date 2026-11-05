@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sensitivitySettingsRestClient.CreateCreateOrUpdateRequest(SensitivitySettingCreateOrUpdateContent.ToRequestContent(content), context);
+                using HttpMessage message = _sensitivitySettingsRestClient.CreateCreateOrUpdateRequest(SensitivitySettingCreateOrUpdateContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<SensitivitySettingData> response = Response.FromValue(SensitivitySettingData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sensitivitySettingsRestClient.CreateCreateOrUpdateRequest(SensitivitySettingCreateOrUpdateContent.ToRequestContent(content), context);
+                using HttpMessage message = _sensitivitySettingsRestClient.CreateCreateOrUpdateRequest(SensitivitySettingCreateOrUpdateContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<SensitivitySettingData> response = Response.FromValue(SensitivitySettingData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sensitivitySettingsRestClient.CreateGetRequest(context);
+                using HttpMessage message = _sensitivitySettingsRestClient.CreateGetRequest(context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<SensitivitySettingData> response = Response.FromValue(SensitivitySettingData.FromResponse(result), result);
                 if (response.Value == null)
@@ -281,7 +281,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sensitivitySettingsRestClient.CreateGetRequest(context);
+                using HttpMessage message = _sensitivitySettingsRestClient.CreateGetRequest(context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<SensitivitySettingData> response = Response.FromValue(SensitivitySettingData.FromResponse(result), result);
                 if (response.Value == null)

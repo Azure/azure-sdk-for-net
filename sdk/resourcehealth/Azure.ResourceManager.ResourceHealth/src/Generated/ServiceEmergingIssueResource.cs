@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.ResourceHealth
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _emergingIssuesRestClient.CreateGetRequest(Id.Name, context);
+                using HttpMessage message = _emergingIssuesRestClient.CreateGetRequest(Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ServiceEmergingIssueData> response = Response.FromValue(ServiceEmergingIssueData.FromResponse(result), result);
                 if (response.Value == null)
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.ResourceHealth
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _emergingIssuesRestClient.CreateGetRequest(Id.Name, context);
+                using HttpMessage message = _emergingIssuesRestClient.CreateGetRequest(Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ServiceEmergingIssueData> response = Response.FromValue(ServiceEmergingIssueData.FromResponse(result), result);
                 if (response.Value == null)

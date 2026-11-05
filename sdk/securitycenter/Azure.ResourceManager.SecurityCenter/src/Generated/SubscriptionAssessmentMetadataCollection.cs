@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.SecurityCenter
     /// <summary>
     /// A class representing a collection of <see cref="SubscriptionAssessmentMetadataResource"/> and their operations.
     /// Each <see cref="SubscriptionAssessmentMetadataResource"/> in the collection will belong to the same instance of <see cref="SubscriptionResource"/>.
-    /// To get a <see cref="SubscriptionAssessmentMetadataCollection"/> instance call the GetSubscriptionAssessmentMetadatas method from an instance of <see cref="SubscriptionResource"/>.
+    /// To get a <see cref="SubscriptionAssessmentMetadataCollection"/> instance call the GetAllSubscriptionAssessmentMetadata method from an instance of <see cref="SubscriptionResource"/>.
     /// </summary>
     public partial class SubscriptionAssessmentMetadataCollection : ArmCollection, IEnumerable<SubscriptionAssessmentMetadataResource>, IAsyncEnumerable<SubscriptionAssessmentMetadataResource>
     {
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _assessmentsMetadataRestClient.CreateCreateInSubscriptionRequest(Guid.Parse(Id.SubscriptionId), assessmentMetadataName, SecurityAssessmentMetadataData.ToRequestContent(data), context);
+                using HttpMessage message = _assessmentsMetadataRestClient.CreateCreateInSubscriptionRequest(Guid.Parse(Id.SubscriptionId), assessmentMetadataName, SecurityAssessmentMetadataData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<SecurityAssessmentMetadataData> response = Response.FromValue(SecurityAssessmentMetadataData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _assessmentsMetadataRestClient.CreateCreateInSubscriptionRequest(Guid.Parse(Id.SubscriptionId), assessmentMetadataName, SecurityAssessmentMetadataData.ToRequestContent(data), context);
+                using HttpMessage message = _assessmentsMetadataRestClient.CreateCreateInSubscriptionRequest(Guid.Parse(Id.SubscriptionId), assessmentMetadataName, SecurityAssessmentMetadataData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<SecurityAssessmentMetadataData> response = Response.FromValue(SecurityAssessmentMetadataData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _assessmentsMetadataRestClient.CreateGetInSubscriptionRequest(Guid.Parse(Id.SubscriptionId), assessmentMetadataName, context);
+                using HttpMessage message = _assessmentsMetadataRestClient.CreateGetInSubscriptionRequest(Guid.Parse(Id.SubscriptionId), assessmentMetadataName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<SecurityAssessmentMetadataData> response = Response.FromValue(SecurityAssessmentMetadataData.FromResponse(result), result);
                 if (response.Value == null)
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _assessmentsMetadataRestClient.CreateGetInSubscriptionRequest(Guid.Parse(Id.SubscriptionId), assessmentMetadataName, context);
+                using HttpMessage message = _assessmentsMetadataRestClient.CreateGetInSubscriptionRequest(Guid.Parse(Id.SubscriptionId), assessmentMetadataName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<SecurityAssessmentMetadataData> response = Response.FromValue(SecurityAssessmentMetadataData.FromResponse(result), result);
                 if (response.Value == null)
@@ -352,7 +352,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _assessmentsMetadataRestClient.CreateGetInSubscriptionRequest(Guid.Parse(Id.SubscriptionId), assessmentMetadataName, context);
+                using HttpMessage message = _assessmentsMetadataRestClient.CreateGetInSubscriptionRequest(Guid.Parse(Id.SubscriptionId), assessmentMetadataName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<SecurityAssessmentMetadataData> response = default;
@@ -409,7 +409,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _assessmentsMetadataRestClient.CreateGetInSubscriptionRequest(Guid.Parse(Id.SubscriptionId), assessmentMetadataName, context);
+                using HttpMessage message = _assessmentsMetadataRestClient.CreateGetInSubscriptionRequest(Guid.Parse(Id.SubscriptionId), assessmentMetadataName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<SecurityAssessmentMetadataData> response = default;
@@ -466,7 +466,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _assessmentsMetadataRestClient.CreateGetInSubscriptionRequest(Guid.Parse(Id.SubscriptionId), assessmentMetadataName, context);
+                using HttpMessage message = _assessmentsMetadataRestClient.CreateGetInSubscriptionRequest(Guid.Parse(Id.SubscriptionId), assessmentMetadataName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<SecurityAssessmentMetadataData> response = default;
@@ -527,7 +527,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _assessmentsMetadataRestClient.CreateGetInSubscriptionRequest(Guid.Parse(Id.SubscriptionId), assessmentMetadataName, context);
+                using HttpMessage message = _assessmentsMetadataRestClient.CreateGetInSubscriptionRequest(Guid.Parse(Id.SubscriptionId), assessmentMetadataName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<SecurityAssessmentMetadataData> response = default;

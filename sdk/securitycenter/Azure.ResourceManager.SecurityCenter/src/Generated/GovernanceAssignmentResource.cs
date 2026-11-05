@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _governanceAssignmentsRestClient.CreateGetRequest(Id.Parent.Parent.ToString(), Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _governanceAssignmentsRestClient.CreateGetRequest(Id.Parent.Parent.ToString(), Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<GovernanceAssignmentData> response = Response.FromValue(GovernanceAssignmentData.FromResponse(result), result);
                 if (response.Value == null)
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _governanceAssignmentsRestClient.CreateGetRequest(Id.Parent.Parent.ToString(), Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _governanceAssignmentsRestClient.CreateGetRequest(Id.Parent.Parent.ToString(), Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<GovernanceAssignmentData> response = Response.FromValue(GovernanceAssignmentData.FromResponse(result), result);
                 if (response.Value == null)
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _governanceAssignmentsRestClient.CreateDeleteRequest(Id.Parent.Parent.ToString(), Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _governanceAssignmentsRestClient.CreateDeleteRequest(Id.Parent.Parent.ToString(), Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
@@ -270,7 +270,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _governanceAssignmentsRestClient.CreateDeleteRequest(Id.Parent.Parent.ToString(), Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _governanceAssignmentsRestClient.CreateDeleteRequest(Id.Parent.Parent.ToString(), Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
@@ -325,7 +325,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _governanceAssignmentsRestClient.CreateCreateOrUpdateRequest(Id.Parent.Parent.ToString(), Id.Parent.Name, Id.Name, GovernanceAssignmentData.ToRequestContent(data), context);
+                using HttpMessage message = _governanceAssignmentsRestClient.CreateCreateOrUpdateRequest(Id.Parent.Parent.ToString(), Id.Parent.Name, Id.Name, GovernanceAssignmentData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<GovernanceAssignmentData> response = Response.FromValue(GovernanceAssignmentData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -381,7 +381,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _governanceAssignmentsRestClient.CreateCreateOrUpdateRequest(Id.Parent.Parent.ToString(), Id.Parent.Name, Id.Name, GovernanceAssignmentData.ToRequestContent(data), context);
+                using HttpMessage message = _governanceAssignmentsRestClient.CreateCreateOrUpdateRequest(Id.Parent.Parent.ToString(), Id.Parent.Name, Id.Name, GovernanceAssignmentData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<GovernanceAssignmentData> response = Response.FromValue(GovernanceAssignmentData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;

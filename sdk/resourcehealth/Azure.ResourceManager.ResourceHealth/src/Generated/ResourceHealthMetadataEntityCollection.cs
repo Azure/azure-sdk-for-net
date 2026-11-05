@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.ResourceHealth
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _metadataRestClient.CreateGetEntityRequest(name, context);
+                using HttpMessage message = _metadataRestClient.CreateGetEntityRequest(name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ResourceHealthMetadataEntityData> response = Response.FromValue(ResourceHealthMetadataEntityData.FromResponse(result), result);
                 if (response.Value == null)
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.ResourceHealth
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _metadataRestClient.CreateGetEntityRequest(name, context);
+                using HttpMessage message = _metadataRestClient.CreateGetEntityRequest(name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ResourceHealthMetadataEntityData> response = Response.FromValue(ResourceHealthMetadataEntityData.FromResponse(result), result);
                 if (response.Value == null)
@@ -242,7 +242,7 @@ namespace Azure.ResourceManager.ResourceHealth
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _metadataRestClient.CreateGetEntityRequest(name, context);
+                using HttpMessage message = _metadataRestClient.CreateGetEntityRequest(name, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ResourceHealthMetadataEntityData> response = default;
@@ -299,7 +299,7 @@ namespace Azure.ResourceManager.ResourceHealth
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _metadataRestClient.CreateGetEntityRequest(name, context);
+                using HttpMessage message = _metadataRestClient.CreateGetEntityRequest(name, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ResourceHealthMetadataEntityData> response = default;
@@ -356,7 +356,7 @@ namespace Azure.ResourceManager.ResourceHealth
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _metadataRestClient.CreateGetEntityRequest(name, context);
+                using HttpMessage message = _metadataRestClient.CreateGetEntityRequest(name, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ResourceHealthMetadataEntityData> response = default;
@@ -417,7 +417,7 @@ namespace Azure.ResourceManager.ResourceHealth
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _metadataRestClient.CreateGetEntityRequest(name, context);
+                using HttpMessage message = _metadataRestClient.CreateGetEntityRequest(name, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ResourceHealthMetadataEntityData> response = default;

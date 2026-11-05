@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _jitNetworkAccessPoliciesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _ascLocation, jitNetworkAccessPolicyName, JitNetworkAccessPolicyData.ToRequestContent(data), context);
+                using HttpMessage message = _jitNetworkAccessPoliciesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _ascLocation, jitNetworkAccessPolicyName, JitNetworkAccessPolicyData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<JitNetworkAccessPolicyData> response = Response.FromValue(JitNetworkAccessPolicyData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _jitNetworkAccessPoliciesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _ascLocation, jitNetworkAccessPolicyName, JitNetworkAccessPolicyData.ToRequestContent(data), context);
+                using HttpMessage message = _jitNetworkAccessPoliciesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _ascLocation, jitNetworkAccessPolicyName, JitNetworkAccessPolicyData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<JitNetworkAccessPolicyData> response = Response.FromValue(JitNetworkAccessPolicyData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _jitNetworkAccessPoliciesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _ascLocation, jitNetworkAccessPolicyName, context);
+                using HttpMessage message = _jitNetworkAccessPoliciesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _ascLocation, jitNetworkAccessPolicyName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<JitNetworkAccessPolicyData> response = Response.FromValue(JitNetworkAccessPolicyData.FromResponse(result), result);
                 if (response.Value == null)
@@ -257,7 +257,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _jitNetworkAccessPoliciesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _ascLocation, jitNetworkAccessPolicyName, context);
+                using HttpMessage message = _jitNetworkAccessPoliciesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _ascLocation, jitNetworkAccessPolicyName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<JitNetworkAccessPolicyData> response = Response.FromValue(JitNetworkAccessPolicyData.FromResponse(result), result);
                 if (response.Value == null)
@@ -374,7 +374,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _jitNetworkAccessPoliciesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _ascLocation, jitNetworkAccessPolicyName, context);
+                using HttpMessage message = _jitNetworkAccessPoliciesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _ascLocation, jitNetworkAccessPolicyName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<JitNetworkAccessPolicyData> response = default;
@@ -431,7 +431,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _jitNetworkAccessPoliciesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _ascLocation, jitNetworkAccessPolicyName, context);
+                using HttpMessage message = _jitNetworkAccessPoliciesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _ascLocation, jitNetworkAccessPolicyName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<JitNetworkAccessPolicyData> response = default;
@@ -488,7 +488,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _jitNetworkAccessPoliciesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _ascLocation, jitNetworkAccessPolicyName, context);
+                using HttpMessage message = _jitNetworkAccessPoliciesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _ascLocation, jitNetworkAccessPolicyName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<JitNetworkAccessPolicyData> response = default;
@@ -549,7 +549,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _jitNetworkAccessPoliciesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _ascLocation, jitNetworkAccessPolicyName, context);
+                using HttpMessage message = _jitNetworkAccessPoliciesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _ascLocation, jitNetworkAccessPolicyName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<JitNetworkAccessPolicyData> response = default;

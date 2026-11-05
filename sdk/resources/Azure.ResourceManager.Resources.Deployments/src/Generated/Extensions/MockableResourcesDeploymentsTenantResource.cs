@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Resources.Deployments.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                Core.HttpMessage message = DeploymentsOperationGroupRestClient.CreateCalculateDeploymentTemplateHashRequest(RequestContent.Create(template), context);
+                using Core.HttpMessage message = DeploymentsOperationGroupRestClient.CreateCalculateDeploymentTemplateHashRequest(RequestContent.Create(template), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<TemplateHashResult> response = Response.FromValue(TemplateHashResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.Resources.Deployments.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                Core.HttpMessage message = DeploymentsOperationGroupRestClient.CreateCalculateDeploymentTemplateHashRequest(RequestContent.Create(template), context);
+                using Core.HttpMessage message = DeploymentsOperationGroupRestClient.CreateCalculateDeploymentTemplateHashRequest(RequestContent.Create(template), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<TemplateHashResult> response = Response.FromValue(TemplateHashResult.FromResponse(result), result);
                 if (response.Value == null)

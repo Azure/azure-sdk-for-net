@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.ResourceConnector.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = AppliancesRestClient.CreateGetApplianceTelemetryConfigRequest(Id.SubscriptionId, context);
+                using HttpMessage message = AppliancesRestClient.CreateGetApplianceTelemetryConfigRequest(Id.SubscriptionId, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ApplianceTelemetryConfigResult> response = Response.FromValue(ApplianceTelemetryConfigResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.ResourceConnector.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = AppliancesRestClient.CreateGetApplianceTelemetryConfigRequest(Id.SubscriptionId, context);
+                using HttpMessage message = AppliancesRestClient.CreateGetApplianceTelemetryConfigRequest(Id.SubscriptionId, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ApplianceTelemetryConfigResult> response = Response.FromValue(ApplianceTelemetryConfigResult.FromResponse(result), result);
                 if (response.Value == null)
