@@ -2,12 +2,12 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Serialization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.AspNetCore.SignalR.Protocol;
 using Microsoft.Azure.SignalR;
@@ -102,24 +102,27 @@ namespace SignalRServiceExtension.Tests
         {
             var mock = new Mock<IEndpointRouter>();
             var connectionStrings = FakeEndpointUtils.GetFakeConnectionString(2).ToArray();
+            var initialEndpoint = new ServiceEndpoint(connectionStrings[0]);
+            var updatedEndpoint = new ServiceEndpoint(connectionStrings[1]);
             var initialEndpointObserved = new TaskCompletionSource<ServiceEndpoint[]>(TaskCreationOptions.RunContinuationsAsynchronously);
-            var updatedEndpointObserved = new TaskCompletionSource<ServiceEndpoint[]>(TaskCreationOptions.RunContinuationsAsynchronously);
-            mock.Setup(router => router.GetNegotiateEndpoint(It.IsAny<HttpContext>(), It.IsAny<IEnumerable<ServiceEndpoint>>()))
-                .Callback<HttpContext, IEnumerable<ServiceEndpoint>>((_, endpoints) =>
+            var endpointsTransitionObserved = new TaskCompletionSource<ServiceEndpoint[]>(TaskCreationOptions.RunContinuationsAsynchronously);
+            var observedEndpointSets = new ConcurrentDictionary<string, byte>();
+            mock.Setup(router => router.GetEndpointsForUser(It.IsAny<string>(), It.IsAny<IEnumerable<ServiceEndpoint>>()))
+                .Callback<string, IEnumerable<ServiceEndpoint>>((_, endpoints) =>
                 {
                     var currentEndpoints = endpoints.ToArray();
-                    if (currentEndpoints.Length != 1)
+                    observedEndpointSets.TryAdd(string.Join(", ", currentEndpoints.Select(endpoint => endpoint.Endpoint)), 0);
+                    if (currentEndpoints.Length == 1 && currentEndpoints[0].Endpoint == initialEndpoint.Endpoint)
                     {
+                        initialEndpointObserved.TrySetResult(currentEndpoints);
                         return;
                     }
 
-                    if (currentEndpoints[0].ConnectionString == connectionStrings[0])
+                    if (currentEndpoints.Length == 2
+                        && currentEndpoints.Any(endpoint => endpoint.Endpoint == initialEndpoint.Endpoint)
+                        && currentEndpoints.Any(endpoint => endpoint.Endpoint == updatedEndpoint.Endpoint))
                     {
-                        initialEndpointObserved.TrySetResult(currentEndpoints);
-                    }
-                    else if (currentEndpoints[0].ConnectionString == connectionStrings[1])
-                    {
-                        updatedEndpointObserved.TrySetResult(currentEndpoints);
+                        endpointsTransitionObserved.TrySetResult(currentEndpoints);
                     }
                 });
             var configuration = new ConfigurationRoot(new List<IConfigurationProvider>() { new MemoryConfigurationProvider(new()) });
@@ -134,21 +137,22 @@ namespace SignalRServiceExtension.Tests
             await hubContext.ClientManager.UserExistsAsync("a");
             var initialEndpoints = await initialEndpointObserved.Task.WaitAsync(timeout.Token);
             Assert.Single(initialEndpoints);
-            Assert.Equal(connectionStrings[0], initialEndpoints[0].ConnectionString);
+            Assert.Equal(initialEndpoint.Endpoint, initialEndpoints[0].Endpoint);
 
             configuration[Constants.AzureSignalRConnectionStringName] = connectionStrings[1];
             configuration.Reload();
 
-            while (!updatedEndpointObserved.Task.IsCompleted)
+            while (!endpointsTransitionObserved.Task.IsCompleted && !timeout.IsCancellationRequested)
             {
-                timeout.Token.ThrowIfCancellationRequested();
                 await hubContext.ClientManager.UserExistsAsync("a").WaitAsync(timeout.Token);
-                await Task.WhenAny(updatedEndpointObserved.Task, Task.Delay(TimeSpan.FromMilliseconds(50), timeout.Token));
+                await Task.WhenAny(endpointsTransitionObserved.Task, Task.Delay(TimeSpan.FromMilliseconds(50), timeout.Token));
             }
 
-            var updatedEndpoints = await updatedEndpointObserved.Task.WaitAsync(timeout.Token);
-            Assert.Single(updatedEndpoints);
-            Assert.Equal(connectionStrings[1], updatedEndpoints[0].ConnectionString);
+            Assert.True(endpointsTransitionObserved.Task.IsCompleted, $"Observed endpoint sets: {string.Join(" | ", observedEndpointSets.Keys)}");
+            var updatedEndpoints = await endpointsTransitionObserved.Task.WaitAsync(timeout.Token);
+            Assert.Equal(2, updatedEndpoints.Length);
+            Assert.Contains(updatedEndpoints, endpoint => endpoint.Endpoint == initialEndpoint.Endpoint);
+            Assert.Contains(updatedEndpoints, endpoint => endpoint.Endpoint == updatedEndpoint.Endpoint);
         }
 
         [Theory]
