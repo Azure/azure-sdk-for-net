@@ -26,6 +26,24 @@ namespace Azure.ResourceManager.Compute.Recommender.Mocking
         {
         }
 
+        /// <summary> Gets an object representing a <see cref="ComputeRecommenderPlacementScoresResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ComputeRecommenderPlacementScoresResource"/> object. </returns>
+        public virtual ComputeRecommenderPlacementScoresResource GetComputeRecommenderPlacementScoresResource(ResourceIdentifier id)
+        {
+            ComputeRecommenderPlacementScoresResource.ValidateResourceId(id);
+            return new ComputeRecommenderPlacementScoresResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="ComputePlacementScoresResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ComputePlacementScoresResource"/> object. </returns>
+        public virtual ComputePlacementScoresResource GetComputePlacementScoresResource(ResourceIdentifier id)
+        {
+            ComputePlacementScoresResource.ValidateResourceId(id);
+            return new ComputePlacementScoresResource(Client, id);
+        }
+
         /// <summary> Gets an object representing a <see cref="ComputeSkuMixPlacementResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ComputeSkuMixPlacementResource"/> object. </returns>
@@ -33,15 +51,6 @@ namespace Azure.ResourceManager.Compute.Recommender.Mocking
         {
             ComputeSkuMixPlacementResource.ValidateResourceId(id);
             return new ComputeSkuMixPlacementResource(Client, id);
-        }
-
-        /// <summary> Gets an object representing a <see cref="ComputeRecommenderDiagnosticResource"/> along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ComputeRecommenderDiagnosticResource"/> object. </returns>
-        public virtual ComputeRecommenderDiagnosticResource GetComputeRecommenderDiagnosticResource(ResourceIdentifier id)
-        {
-            ComputeRecommenderDiagnosticResource.ValidateResourceId(id);
-            return new ComputeRecommenderDiagnosticResource(Client, id);
         }
     }
 }

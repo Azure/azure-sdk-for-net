@@ -95,10 +95,10 @@ namespace Azure.ResourceManager.Compute.Recommender.Models
                 writer.WritePropertyName("score"u8);
                 writer.WriteStringValue(Score);
             }
-            if (Optional.IsDefined(IsQuotaAvailable))
+            if (Optional.IsDefined(PlacementPreference))
             {
-                writer.WritePropertyName("isQuotaAvailable"u8);
-                writer.WriteBooleanValue(IsQuotaAvailable.Value);
+                writer.WritePropertyName("placementPreference"u8);
+                writer.WriteNumberValue(PlacementPreference.Value);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.Compute.Recommender.Models
             AzureLocation? region = default;
             string availabilityZone = default;
             string score = default;
-            bool? isQuotaAvailable = default;
+            int? placementPreference = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -174,13 +174,13 @@ namespace Azure.ResourceManager.Compute.Recommender.Models
                     score = prop.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("isQuotaAvailable"u8))
+                if (prop.NameEquals("placementPreference"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    isQuotaAvailable = prop.Value.GetBoolean();
+                    placementPreference = prop.Value.GetInt32();
                     continue;
                 }
                 if (options.Format != "W")
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.Compute.Recommender.Models
                 region,
                 availabilityZone,
                 score,
-                isQuotaAvailable,
+                placementPreference,
                 additionalBinaryDataProperties);
         }
     }

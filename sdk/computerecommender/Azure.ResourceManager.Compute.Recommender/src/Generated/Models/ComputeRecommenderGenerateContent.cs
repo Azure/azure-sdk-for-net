@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Azure.Core;
 using Azure.ResourceManager.Compute.Recommender;
 
@@ -19,16 +20,20 @@ namespace Azure.ResourceManager.Compute.Recommender.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ComputeRecommenderGenerateContent"/>. </summary>
-        public ComputeRecommenderGenerateContent()
+        /// <param name="desiredSizes"> The desired virtual machine SKU sizes. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="desiredSizes"/> is null. </exception>
+        public ComputeRecommenderGenerateContent(IEnumerable<ComputeRecommenderResourceSize> desiredSizes)
         {
+            Argument.AssertNotNull(desiredSizes, nameof(desiredSizes));
+
             DesiredLocations = new ChangeTrackingList<AzureLocation>();
-            DesiredSizes = new ChangeTrackingList<ComputeRecommenderResourceSize>();
+            DesiredSizes = desiredSizes.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="ComputeRecommenderGenerateContent"/>. </summary>
-        /// <param name="desiredLocations"> The desired regions. </param>
+        /// <param name="desiredLocations"> The desired regions. If not set, the location from the request URI is used as the desired location. Each location in this list must be a valid Azure region. </param>
         /// <param name="desiredSizes"> The desired virtual machine SKU sizes. </param>
-        /// <param name="desiredCount"> Desired instance count per region/zone based on the scope. </param>
+        /// <param name="desiredCount"> Desired instance count per region/zone based on the scope. If not set, defaults to 1. </param>
         /// <param name="availabilityZones"> Defines if the scope is zonal or regional. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal ComputeRecommenderGenerateContent(IList<AzureLocation> desiredLocations, IList<ComputeRecommenderResourceSize> desiredSizes, int? desiredCount, bool? availabilityZones, IDictionary<string, BinaryData> additionalBinaryDataProperties)
@@ -40,13 +45,18 @@ namespace Azure.ResourceManager.Compute.Recommender.Models
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> The desired regions. </summary>
+        /// <summary> Initializes a new instance of <see cref="ComputeRecommenderGenerateContent"/>. </summary>
+        public ComputeRecommenderGenerateContent() : this(default)
+        {
+        }
+
+        /// <summary> The desired regions. If not set, the location from the request URI is used as the desired location. Each location in this list must be a valid Azure region. </summary>
         public IList<AzureLocation> DesiredLocations { get; }
 
         /// <summary> The desired virtual machine SKU sizes. </summary>
         public IList<ComputeRecommenderResourceSize> DesiredSizes { get; }
 
-        /// <summary> Desired instance count per region/zone based on the scope. </summary>
+        /// <summary> Desired instance count per region/zone based on the scope. If not set, defaults to 1. </summary>
         public int? DesiredCount { get; set; }
 
         /// <summary> Defines if the scope is zonal or regional. </summary>

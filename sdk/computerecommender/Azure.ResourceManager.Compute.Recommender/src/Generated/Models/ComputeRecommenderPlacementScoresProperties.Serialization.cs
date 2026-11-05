@@ -13,52 +13,52 @@ using Azure.ResourceManager.Compute.Recommender;
 
 namespace Azure.ResourceManager.Compute.Recommender.Models
 {
-    /// <summary> Contains additional properties of a diagnostic. </summary>
-    internal partial class ComputeRecommenderDiagnosticProperties : IJsonModel<ComputeRecommenderDiagnosticProperties>
+    /// <summary> Contains additional properties of a placement scores resource. </summary>
+    internal partial class ComputeRecommenderPlacementScoresProperties : IJsonModel<ComputeRecommenderPlacementScoresProperties>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ComputeRecommenderDiagnosticProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual ComputeRecommenderPlacementScoresProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ComputeRecommenderDiagnosticProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ComputeRecommenderPlacementScoresProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeComputeRecommenderDiagnosticProperties(document.RootElement, options);
+                        return DeserializeComputeRecommenderPlacementScoresProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ComputeRecommenderDiagnosticProperties)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ComputeRecommenderPlacementScoresProperties)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ComputeRecommenderDiagnosticProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ComputeRecommenderPlacementScoresProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerComputeRecommenderContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ComputeRecommenderDiagnosticProperties)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ComputeRecommenderPlacementScoresProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ComputeRecommenderDiagnosticProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<ComputeRecommenderPlacementScoresProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ComputeRecommenderDiagnosticProperties IPersistableModel<ComputeRecommenderDiagnosticProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        ComputeRecommenderPlacementScoresProperties IPersistableModel<ComputeRecommenderPlacementScoresProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ComputeRecommenderDiagnosticProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ComputeRecommenderPlacementScoresProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ComputeRecommenderDiagnosticProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ComputeRecommenderPlacementScoresProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -69,10 +69,10 @@ namespace Azure.ResourceManager.Compute.Recommender.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ComputeRecommenderDiagnosticProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ComputeRecommenderPlacementScoresProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ComputeRecommenderDiagnosticProperties)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ComputeRecommenderPlacementScoresProperties)} does not support writing '{format}' format.");
             }
             if (Optional.IsCollectionDefined(SupportedResourceTypes))
             {
@@ -108,24 +108,24 @@ namespace Azure.ResourceManager.Compute.Recommender.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ComputeRecommenderDiagnosticProperties IJsonModel<ComputeRecommenderDiagnosticProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        ComputeRecommenderPlacementScoresProperties IJsonModel<ComputeRecommenderPlacementScoresProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ComputeRecommenderDiagnosticProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual ComputeRecommenderPlacementScoresProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ComputeRecommenderDiagnosticProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ComputeRecommenderPlacementScoresProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ComputeRecommenderDiagnosticProperties)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ComputeRecommenderPlacementScoresProperties)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeComputeRecommenderDiagnosticProperties(document.RootElement, options);
+            return DeserializeComputeRecommenderPlacementScoresProperties(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ComputeRecommenderDiagnosticProperties DeserializeComputeRecommenderDiagnosticProperties(JsonElement element, ModelReaderWriterOptions options)
+        internal static ComputeRecommenderPlacementScoresProperties DeserializeComputeRecommenderPlacementScoresProperties(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.Compute.Recommender.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ComputeRecommenderDiagnosticProperties(supportedResourceTypes ?? new ChangeTrackingList<string>(), additionalBinaryDataProperties);
+            return new ComputeRecommenderPlacementScoresProperties(supportedResourceTypes ?? new ChangeTrackingList<string>(), additionalBinaryDataProperties);
         }
     }
 }

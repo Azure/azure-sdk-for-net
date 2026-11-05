@@ -19,40 +19,40 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.Compute.Recommender
 {
     /// <summary>
-    /// A class representing a ComputeRecommenderDiagnostic along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ComputeRecommenderDiagnosticResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SubscriptionResource"/> using the GetComputeRecommenderDiagnostic method.
+    /// A class representing a ComputePlacementScores along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ComputePlacementScoresResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SubscriptionResource"/> using the GetComputePlacementScores method.
     /// </summary>
-    public partial class ComputeRecommenderDiagnosticResource : ArmResource
+    public partial class ComputePlacementScoresResource : ArmResource
     {
-        private readonly ClientDiagnostics _spotPlacementScoresClientDiagnostics;
-        private readonly SpotPlacementScores _spotPlacementScoresRestClient;
-        private readonly ComputeRecommenderDiagnosticData _data;
+        private readonly ClientDiagnostics _computePlacementScoresClientDiagnostics;
+        private readonly ComputePlacementScores _computePlacementScoresRestClient;
+        private readonly ComputePlacementScoresData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Compute/locations/placementScores";
 
-        /// <summary> Initializes a new instance of ComputeRecommenderDiagnosticResource for mocking. </summary>
-        protected ComputeRecommenderDiagnosticResource()
+        /// <summary> Initializes a new instance of ComputePlacementScoresResource for mocking. </summary>
+        protected ComputePlacementScoresResource()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ComputeRecommenderDiagnosticResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="ComputePlacementScoresResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal ComputeRecommenderDiagnosticResource(ArmClient client, ComputeRecommenderDiagnosticData data) : this(client, data.Id)
+        internal ComputePlacementScoresResource(ArmClient client, ComputePlacementScoresData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ComputeRecommenderDiagnosticResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="ComputePlacementScoresResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal ComputeRecommenderDiagnosticResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal ComputePlacementScoresResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string computeRecommenderDiagnosticApiVersion);
-            _spotPlacementScoresClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute.Recommender", ResourceType.Namespace, Diagnostics);
-            _spotPlacementScoresRestClient = new SpotPlacementScores(_spotPlacementScoresClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, computeRecommenderDiagnosticApiVersion ?? "2026-09-05-preview");
+            TryGetApiVersion(ResourceType, out string computePlacementScoresApiVersion);
+            _computePlacementScoresClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute.Recommender", ResourceType.Namespace, Diagnostics);
+            _computePlacementScoresRestClient = new ComputePlacementScores(_computePlacementScoresClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, computePlacementScoresApiVersion ?? "2026-10-05-preview");
             ValidateResourceId(id);
         }
 
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Compute.Recommender
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        public virtual ComputeRecommenderDiagnosticData Data
+        public virtual ComputePlacementScoresData Data
         {
             get
             {
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Compute.Recommender
         /// <param name="location"> The location. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, AzureLocation location)
         {
-            string resourceId = $"/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/placementScores/spot";
+            string resourceId = $"/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/placementScores/regular";
             return new ResourceIdentifier(resourceId);
         }
 
@@ -92,30 +92,30 @@ namespace Azure.ResourceManager.Compute.Recommender
         }
 
         /// <summary>
-        /// Gets Spot Placement Scores metadata.
+        /// Gets Compute Placement Scores metadata.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/placementScores/spot. </description>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/placementScores/regular. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> ComputeDiagnosticBases_Get. </description>
+        /// <description> ComputePlacementScores_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-09-05-preview. </description>
+        /// <description> 2026-10-05-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="ComputeRecommenderDiagnosticResource"/>. </description>
+        /// <description> <see cref="ComputePlacementScoresResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ComputeRecommenderDiagnosticResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ComputePlacementScoresResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _spotPlacementScoresClientDiagnostics.CreateScope("ComputeRecommenderDiagnosticResource.Get");
+            using DiagnosticScope scope = _computePlacementScoresClientDiagnostics.CreateScope("ComputePlacementScoresResource.Get");
             scope.Start();
             try
             {
@@ -123,14 +123,14 @@ namespace Azure.ResourceManager.Compute.Recommender
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _spotPlacementScoresRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, context);
+                HttpMessage message = _computePlacementScoresRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<ComputeRecommenderDiagnosticData> response = Response.FromValue(ComputeRecommenderDiagnosticData.FromResponse(result), result);
+                Response<ComputePlacementScoresData> response = Response.FromValue(ComputePlacementScoresData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new ComputeRecommenderDiagnosticResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ComputePlacementScoresResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -140,30 +140,30 @@ namespace Azure.ResourceManager.Compute.Recommender
         }
 
         /// <summary>
-        /// Gets Spot Placement Scores metadata.
+        /// Gets Compute Placement Scores metadata.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/placementScores/spot. </description>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/placementScores/regular. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> ComputeDiagnosticBases_Get. </description>
+        /// <description> ComputePlacementScores_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-09-05-preview. </description>
+        /// <description> 2026-10-05-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="ComputeRecommenderDiagnosticResource"/>. </description>
+        /// <description> <see cref="ComputePlacementScoresResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ComputeRecommenderDiagnosticResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<ComputePlacementScoresResource> Get(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _spotPlacementScoresClientDiagnostics.CreateScope("ComputeRecommenderDiagnosticResource.Get");
+            using DiagnosticScope scope = _computePlacementScoresClientDiagnostics.CreateScope("ComputePlacementScoresResource.Get");
             scope.Start();
             try
             {
@@ -171,14 +171,14 @@ namespace Azure.ResourceManager.Compute.Recommender
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _spotPlacementScoresRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, context);
+                HttpMessage message = _computePlacementScoresRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<ComputeRecommenderDiagnosticData> response = Response.FromValue(ComputeRecommenderDiagnosticData.FromResponse(result), result);
+                Response<ComputePlacementScoresData> response = Response.FromValue(ComputePlacementScoresData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new ComputeRecommenderDiagnosticResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ComputePlacementScoresResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -188,34 +188,34 @@ namespace Azure.ResourceManager.Compute.Recommender
         }
 
         /// <summary>
-        /// Generates placement scores for Spot VM skus.
+        /// Generates placement scores for Compute VM skus.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/placementScores/spot/generate. </description>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/placementScores/regular/generate. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> ComputeDiagnosticBases_Post. </description>
+        /// <description> ComputePlacementScores_Post. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-09-05-preview. </description>
+        /// <description> 2026-10-05-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="ComputeRecommenderDiagnosticResource"/>. </description>
+        /// <description> <see cref="ComputePlacementScoresResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="content"> SpotPlacementScores object supplied in the body of the Post spot placement scores operation. </param>
+        /// <param name="content"> ComputePlacementScores object supplied in the body of the Post compute placement scores operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<ComputeRecommenderGenerateResult>> GenerateAsync(ComputeRecommenderGenerateContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ComputePlacementScoresGenerateResult>> GenerateAsync(ComputePlacementScoresGenerateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = _spotPlacementScoresClientDiagnostics.CreateScope("ComputeRecommenderDiagnosticResource.Generate");
+            using DiagnosticScope scope = _computePlacementScoresClientDiagnostics.CreateScope("ComputePlacementScoresResource.Generate");
             scope.Start();
             try
             {
@@ -223,9 +223,9 @@ namespace Azure.ResourceManager.Compute.Recommender
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _spotPlacementScoresRestClient.CreateGenerateRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, ComputeRecommenderGenerateContent.ToRequestContent(content), context);
+                HttpMessage message = _computePlacementScoresRestClient.CreateGenerateRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, ComputePlacementScoresGenerateContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<ComputeRecommenderGenerateResult> response = Response.FromValue(ComputeRecommenderGenerateResult.FromResponse(result), result);
+                Response<ComputePlacementScoresGenerateResult> response = Response.FromValue(ComputePlacementScoresGenerateResult.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -240,34 +240,34 @@ namespace Azure.ResourceManager.Compute.Recommender
         }
 
         /// <summary>
-        /// Generates placement scores for Spot VM skus.
+        /// Generates placement scores for Compute VM skus.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/placementScores/spot/generate. </description>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/placementScores/regular/generate. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> ComputeDiagnosticBases_Post. </description>
+        /// <description> ComputePlacementScores_Post. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-09-05-preview. </description>
+        /// <description> 2026-10-05-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="ComputeRecommenderDiagnosticResource"/>. </description>
+        /// <description> <see cref="ComputePlacementScoresResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="content"> SpotPlacementScores object supplied in the body of the Post spot placement scores operation. </param>
+        /// <param name="content"> ComputePlacementScores object supplied in the body of the Post compute placement scores operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<ComputeRecommenderGenerateResult> Generate(ComputeRecommenderGenerateContent content, CancellationToken cancellationToken = default)
+        public virtual Response<ComputePlacementScoresGenerateResult> Generate(ComputePlacementScoresGenerateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = _spotPlacementScoresClientDiagnostics.CreateScope("ComputeRecommenderDiagnosticResource.Generate");
+            using DiagnosticScope scope = _computePlacementScoresClientDiagnostics.CreateScope("ComputePlacementScoresResource.Generate");
             scope.Start();
             try
             {
@@ -275,9 +275,9 @@ namespace Azure.ResourceManager.Compute.Recommender
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _spotPlacementScoresRestClient.CreateGenerateRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, ComputeRecommenderGenerateContent.ToRequestContent(content), context);
+                HttpMessage message = _computePlacementScoresRestClient.CreateGenerateRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, ComputePlacementScoresGenerateContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<ComputeRecommenderGenerateResult> response = Response.FromValue(ComputeRecommenderGenerateResult.FromResponse(result), result);
+                Response<ComputePlacementScoresGenerateResult> response = Response.FromValue(ComputePlacementScoresGenerateResult.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());

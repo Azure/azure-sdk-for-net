@@ -28,6 +28,60 @@ namespace Azure.ResourceManager.Compute.Recommender.Mocking
         }
 
         /// <summary>
+        /// Gets Spot Placement Scores metadata.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/placementScores/spot. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> SpotPlacementScores_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-10-05-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ComputeRecommenderPlacementScoresResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <returns> Returns a <see cref="ComputeRecommenderPlacementScoresResource"/> object. </returns>
+        public virtual ComputeRecommenderPlacementScoresResource GetComputeRecommenderPlacementScores()
+        {
+            return new ComputeRecommenderPlacementScoresResource(Client, Id.AppendProviderResource("Microsoft.Compute", "locations", "spot"));
+        }
+
+        /// <summary>
+        /// Gets Compute Placement Scores metadata.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/placementScores/regular. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ComputePlacementScores_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-10-05-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ComputePlacementScoresResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <returns> Returns a <see cref="ComputePlacementScoresResource"/> object. </returns>
+        public virtual ComputePlacementScoresResource GetComputePlacementScores()
+        {
+            return new ComputePlacementScoresResource(Client, Id.AppendProviderResource("Microsoft.Compute", "locations", "regular"));
+        }
+
+        /// <summary>
         /// Gets SkuMixPlacement scoring metadata.
         /// <list type="bullet">
         /// <item>
@@ -40,7 +94,7 @@ namespace Azure.ResourceManager.Compute.Recommender.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-09-05-preview. </description>
+        /// <description> 2026-10-05-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -52,33 +106,6 @@ namespace Azure.ResourceManager.Compute.Recommender.Mocking
         public virtual ComputeSkuMixPlacementResource GetComputeSkuMixPlacement()
         {
             return new ComputeSkuMixPlacementResource(Client, Id.AppendProviderResource("Microsoft.Compute", "locations", "recommendations"));
-        }
-
-        /// <summary>
-        /// Gets Spot Placement Scores metadata.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/placementScores/spot. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ComputeDiagnosticBases_Get. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-09-05-preview. </description>
-        /// </item>
-        /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="ComputeRecommenderDiagnosticResource"/>. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <returns> Returns a <see cref="ComputeRecommenderDiagnosticResource"/> object. </returns>
-        public virtual ComputeRecommenderDiagnosticResource GetComputeRecommenderDiagnostic()
-        {
-            return new ComputeRecommenderDiagnosticResource(Client, Id.AppendProviderResource("Microsoft.Compute", "locations", "spot"));
         }
     }
 }
