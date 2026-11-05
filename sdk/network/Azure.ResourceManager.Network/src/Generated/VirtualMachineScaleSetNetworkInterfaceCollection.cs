@@ -45,11 +45,10 @@ namespace Azure.ResourceManager.Network
         /// <param name="virtualmachineIndex"> The virtualmachineIndex for the resource. </param>
         internal VirtualMachineScaleSetNetworkInterfaceCollection(ArmClient client, ResourceIdentifier id, string virtualMachineScaleSetName, string virtualmachineIndex) : base(client, id)
         {
-            TryGetApiVersion(VirtualMachineScaleSetNetworkInterfaceResource.ResourceType, out string virtualMachineScaleSetNetworkInterfaceApiVersion);
             _virtualMachineScaleSetName = virtualMachineScaleSetName;
             _virtualmachineIndex = virtualmachineIndex;
             _virtualMachineScaleSetNetworkInterfacesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", VirtualMachineScaleSetNetworkInterfaceResource.ResourceType.Namespace, Diagnostics);
-            _virtualMachineScaleSetNetworkInterfacesRestClient = new VirtualMachineScaleSetNetworkInterfaces(_virtualMachineScaleSetNetworkInterfacesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, virtualMachineScaleSetNetworkInterfaceApiVersion ?? "2018-10-01");
+            _virtualMachineScaleSetNetworkInterfacesRestClient = new VirtualMachineScaleSetNetworkInterfaces(_virtualMachineScaleSetNetworkInterfacesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.Compute/virtualMachineScaleSets/virtualMachines/networkInterfaces", out string virtualMachineScaleSetNetworkInterfacesApiVersionOverride) ? virtualMachineScaleSetNetworkInterfacesApiVersionOverride : "2018-10-01");
             ValidateResourceId(id);
         }
 
@@ -72,7 +71,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> NetworkInterfaces_GetVirtualMachineScaleSetNetworkInterface. </description>
+        /// <description> VmssNetworkInterfaces_GetVirtualMachineScaleSetNetworkInterface. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -122,7 +121,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> NetworkInterfaces_GetVirtualMachineScaleSetNetworkInterface. </description>
+        /// <description> VmssNetworkInterfaces_GetVirtualMachineScaleSetNetworkInterface. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -172,7 +171,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> NetworkInterfaces_ListVirtualMachineScaleSetVMNetworkInterfaces. </description>
+        /// <description> VmssNetworkInterfaces_ListVirtualMachineScaleSetVMNetworkInterfaces. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -207,7 +206,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> NetworkInterfaces_ListVirtualMachineScaleSetVMNetworkInterfaces. </description>
+        /// <description> VmssNetworkInterfaces_ListVirtualMachineScaleSetVMNetworkInterfaces. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -242,7 +241,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> NetworkInterfaces_GetVirtualMachineScaleSetNetworkInterface. </description>
+        /// <description> VmssNetworkInterfaces_GetVirtualMachineScaleSetNetworkInterface. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -300,7 +299,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> NetworkInterfaces_GetVirtualMachineScaleSetNetworkInterface. </description>
+        /// <description> VmssNetworkInterfaces_GetVirtualMachineScaleSetNetworkInterface. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -358,7 +357,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> NetworkInterfaces_GetVirtualMachineScaleSetNetworkInterface. </description>
+        /// <description> VmssNetworkInterfaces_GetVirtualMachineScaleSetNetworkInterface. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -420,7 +419,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> NetworkInterfaces_GetVirtualMachineScaleSetNetworkInterface. </description>
+        /// <description> VmssNetworkInterfaces_GetVirtualMachineScaleSetNetworkInterface. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>

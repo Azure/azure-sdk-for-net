@@ -33,6 +33,46 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Properties of the subgroup. </summary>
         [WirePath("properties")]
-        public SubgroupProperties Properties { get; }
+        internal SubgroupProperties Properties { get; }
+
+        /// <summary> The unique identifier of the subgroup. </summary>
+        [WirePath("properties.internalSubgroupId")]
+        public string InternalSubgroupId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.InternalSubgroupId;
+            }
+        }
+
+        /// <summary> A list of virtual machine references. </summary>
+        [WirePath("properties.virtualMachines")]
+        public IReadOnlyList<NetworkSubResource> VirtualMachines
+        {
+            get
+            {
+                return Properties is null ? default : Properties.VirtualMachines;
+            }
+        }
+
+        /// <summary> The provisioning state of the subgroup. </summary>
+        [WirePath("properties.provisioningState")]
+        public NetworkProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
+
+        /// <summary> Resource ID. </summary>
+        [WirePath("properties.interconnectBlock.id")]
+        public ResourceIdentifier InterconnectBlockId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.InterconnectBlockId;
+            }
+        }
     }
 }

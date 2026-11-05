@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Network
         internal VirtualNetworkTapCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _virtualNetworkTapsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", VirtualNetworkTapResource.ResourceType.Namespace, Diagnostics);
-            _virtualNetworkTapsRestClient = new VirtualNetworkTaps(_virtualNetworkTapsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
+            _virtualNetworkTapsRestClient = new VirtualNetworkTaps(_virtualNetworkTapsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.Network/virtualNetworkTaps", out string virtualNetworkTapsApiVersionOverride) ? virtualNetworkTapsApiVersionOverride : "2026-03-01");
             ValidateResourceId(id);
         }
 

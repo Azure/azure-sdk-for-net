@@ -48,9 +48,8 @@ namespace Azure.ResourceManager.Network
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal VirtualMachineScaleSetNetworkInterfaceIPConfigurationResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string virtualMachineScaleSetNetworkInterfaceIPConfigurationApiVersion);
             _virtualMachineScaleSetNetworkInterfaceIPConfigurationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, Diagnostics);
-            _virtualMachineScaleSetNetworkInterfaceIPConfigurationsRestClient = new VirtualMachineScaleSetNetworkInterfaceIPConfigurations(_virtualMachineScaleSetNetworkInterfaceIPConfigurationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, virtualMachineScaleSetNetworkInterfaceIPConfigurationApiVersion ?? "2018-10-01");
+            _virtualMachineScaleSetNetworkInterfaceIPConfigurationsRestClient = new VirtualMachineScaleSetNetworkInterfaceIPConfigurations(_virtualMachineScaleSetNetworkInterfaceIPConfigurationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.Compute/virtualMachineScaleSets/virtualMachines/networkInterfaces/ipConfigurations", out string virtualMachineScaleSetNetworkInterfaceIPConfigurationsApiVersionOverride) ? virtualMachineScaleSetNetworkInterfaceIPConfigurationsApiVersionOverride : "2018-10-01");
             ValidateResourceId(id);
         }
 
@@ -102,7 +101,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> NetworkInterfaceIPConfigurations_GetVirtualMachineScaleSetIpConfiguration. </description>
+        /// <description> VmssNetworkInterfaceIPConfigurations_GetVirtualMachineScaleSetIpConfiguration. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -151,7 +150,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> NetworkInterfaceIPConfigurations_GetVirtualMachineScaleSetIpConfiguration. </description>
+        /// <description> VmssNetworkInterfaceIPConfigurations_GetVirtualMachineScaleSetIpConfiguration. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>

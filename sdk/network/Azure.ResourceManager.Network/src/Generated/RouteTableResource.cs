@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Network
         internal RouteTableResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _routeTablesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, Diagnostics);
-            _routeTablesRestClient = new RouteTables(_routeTablesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
+            _routeTablesRestClient = new RouteTables(_routeTablesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.Network/routeTables", out string routeTablesApiVersionOverride) ? routeTablesApiVersionOverride : "2026-03-01");
             ValidateResourceId(id);
         }
 

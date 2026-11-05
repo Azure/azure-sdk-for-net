@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Network
         internal VirtualRouterCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _virtualRoutersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", VirtualRouterResource.ResourceType.Namespace, Diagnostics);
-            _virtualRoutersRestClient = new VirtualRouters(_virtualRoutersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
+            _virtualRoutersRestClient = new VirtualRouters(_virtualRoutersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.Network/virtualRouters", out string virtualRoutersApiVersionOverride) ? virtualRoutersApiVersionOverride : "2026-03-01");
             ValidateResourceId(id);
         }
 

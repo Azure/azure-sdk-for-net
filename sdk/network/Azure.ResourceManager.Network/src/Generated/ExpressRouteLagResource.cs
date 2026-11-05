@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Network
         internal ExpressRouteLagResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _expressRouteLagsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, Diagnostics);
-            _expressRouteLagsRestClient = new ExpressRouteLags(_expressRouteLagsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
+            _expressRouteLagsRestClient = new ExpressRouteLags(_expressRouteLagsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.Network/expressRouteLags", out string expressRouteLagsApiVersionOverride) ? expressRouteLagsApiVersionOverride : "2026-03-01");
             ValidateResourceId(id);
         }
 

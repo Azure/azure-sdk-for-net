@@ -24,6 +24,42 @@ namespace Azure.ResourceManager.Network.Tests
     {
         private const string ReferenceId = "/subscriptions/00000000-0000-0000-0000-000000000001/resourceGroups/rg/providers/Microsoft.Network/virtualNetworks/vnet";
 
+        [Test]
+        public void VirtualNetworkApplianceCapabilitiesUseTheNativeResourceBase()
+        {
+            Type modelType = typeof(VirtualNetworkApplianceCapabilityData);
+            Assert.That(modelType.BaseType, Is.EqualTo(typeof(global::Azure.ResourceManager.Models.ResourceData)));
+            Assert.That(modelType.GetProperty(nameof(VirtualNetworkApplianceCapabilityData.Properties)).DeclaringType, Is.EqualTo(modelType));
+            Assert.That(modelType.Assembly.GetType("Azure.ResourceManager.Network.Models.VirtualNetworkApplianceCapabilityBaseData"), Is.Null);
+        }
+
+        [TestCase("NAT64", typeof(Nat64Capability))]
+        [TestCase("PLGateway", typeof(PLGatewayCapability))]
+        [TestCase("PLGatewayFastpath", typeof(PLGatewayFastpathCapability))]
+        [TestCase("PLIPForwarders", typeof(PLIPForwardersCapability))]
+        public void VirtualNetworkApplianceCapabilitiesPreservePolymorphicWireStorage(string kind, Type expectedType)
+        {
+            const string capabilityId = "/subscriptions/00000000-0000-0000-0000-000000000001/resourceGroups/rg/providers/Microsoft.Network/virtualNetworkAppliances/appliance/capabilities/capability";
+            foreach (string format in new[] { "J", "W" })
+            {
+                var options = new ModelReaderWriterOptions(format);
+                var model = ModelReaderWriter.Read<VirtualNetworkApplianceCapabilityData>(BinaryData.FromString(
+                    $$$"""{"id":"{{{capabilityId}}}","name":"capability","type":"Microsoft.Network/virtualNetworkAppliances/capabilities","kind":"{{{kind}}}","properties":{"linkedResourceId":"{{{ReferenceId}}}","provisioningState":"Succeeded"}}"""), options);
+                Assert.That(model.GetType(), Is.EqualTo(expectedType));
+                Assert.That(model.Id.ToString(), Is.EqualTo(capabilityId));
+                Assert.That(model.Properties.LinkedResourceId.ToString(), Is.EqualTo(ReferenceId));
+                Assert.That(model.Properties.ProvisioningState, Is.EqualTo(NetworkProvisioningState.Succeeded));
+                using JsonDocument json = JsonDocument.Parse(ModelReaderWriter.Write(model, options));
+                Assert.That(json.RootElement.GetProperty("kind").GetString(), Is.EqualTo(kind));
+                if (format == "J")
+                {
+                    Assert.That(json.RootElement.GetProperty("id").GetString(), Is.EqualTo(capabilityId));
+                    Assert.That(json.RootElement.GetProperty("properties").GetProperty("linkedResourceId").GetString(), Is.EqualTo(ReferenceId));
+                    Assert.That(json.RootElement.GetProperty("properties").GetProperty("provisioningState").GetString(), Is.EqualTo("Succeeded"));
+                }
+            }
+        }
+
         [TestCase("GetNetworkInterfaceLoadBalancers", typeof(Pageable<LoadBalancerResource>))]
         [TestCase("GetNetworkInterfaceLoadBalancersAsync", typeof(AsyncPageable<LoadBalancerResource>))]
         public void NetworkInterfaceLoadBalancerMethodsKeepReleasedNamesAndSignatures(string methodName, Type returnType)

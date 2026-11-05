@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Network
         internal NatGatewayResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _natGatewaysClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, Diagnostics);
-            _natGatewaysRestClient = new NatGateways(_natGatewaysClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
+            _natGatewaysRestClient = new NatGateways(_natGatewaysClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.Network/natGateways", out string natGatewaysApiVersionOverride) ? natGatewaysApiVersionOverride : "2026-03-01");
             ValidateResourceId(id);
         }
 
