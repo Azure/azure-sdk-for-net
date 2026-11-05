@@ -6,7 +6,6 @@
     <DefineConstants Condition="'$(ExperimentalProvisioning)' == 'true'">EXPERIMENTAL_PROVISIONING;$(DefineConstants)</DefineConstants>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <IsMgmtLibrary>true</IsMgmtLibrary>
-    <Nullable>enable</Nullable>
     <!-- Model factory and cross-library type name analyzers do not apply to provisioning models. -->
     <NoWarn>$(NoWarn);AZC0034;AZC0035</NoWarn>
   </PropertyGroup>
