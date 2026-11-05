@@ -670,6 +670,7 @@ namespace Azure.Storage.Files.DataLake.Models
         public DataLakeFileScheduleDeletionOptions(System.DateTimeOffset? expiresOn) { }
         public DataLakeFileScheduleDeletionOptions(System.TimeSpan timeToExpire, Azure.Storage.Files.DataLake.Models.DataLakeFileExpirationOrigin setRelativeTo) { }
         public System.DateTimeOffset? ExpiresOn { get { throw null; } }
+        public string LeaseId { get { throw null; } set { } }
         public Azure.Storage.Files.DataLake.Models.DataLakeFileExpirationOrigin? SetExpiryRelativeTo { get { throw null; } }
         public System.TimeSpan? TimeToExpire { get { throw null; } }
     }

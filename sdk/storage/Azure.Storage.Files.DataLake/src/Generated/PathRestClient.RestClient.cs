@@ -690,7 +690,7 @@ namespace Azure.Storage.Files.DataLake
             return message;
         }
 
-        internal HttpMessage CreateSetExpiryRequest(string expiryOptions, string expiresOn, int? timeout, RequestContext context)
+        internal HttpMessage CreateSetExpiryRequest(string expiryOptions, string expiresOn, string leaseId, int? timeout, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -711,6 +711,10 @@ namespace Azure.Storage.Files.DataLake
             if (expiresOn != null)
             {
                 request.Headers.SetValue("x-ms-expiry-time", expiresOn);
+            }
+            if (leaseId != null)
+            {
+                request.Headers.SetValue("x-ms-lease-id", leaseId);
             }
             return message;
         }

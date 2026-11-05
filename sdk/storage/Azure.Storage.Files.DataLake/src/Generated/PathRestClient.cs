@@ -1050,17 +1050,18 @@ namespace Azure.Storage.Files.DataLake
         /// </summary>
         /// <param name="expiryOptions"> Required. Indicates mode of the expiry time. </param>
         /// <param name="expiresOn"> The time to set the blob to expiry. </param>
+        /// <param name="leaseId"> If specified, the operation only succeeds if the resource's lease is active and matches this ID. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://learn.microsoft.com/rest/api/storageservices/setting-timeouts-for-blob-service-operations"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response SetExpiry(string expiryOptions, string expiresOn = default, int? timeout = default, RequestContext context = null)
+        public virtual Response SetExpiry(string expiryOptions, string expiresOn = default, string leaseId = default, int? timeout = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("PathRestClient.SetExpiry");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateSetExpiryRequest(expiryOptions, expiresOn, timeout, context);
+                using HttpMessage message = CreateSetExpiryRequest(expiryOptions, expiresOn, leaseId, timeout, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -1080,17 +1081,18 @@ namespace Azure.Storage.Files.DataLake
         /// </summary>
         /// <param name="expiryOptions"> Required. Indicates mode of the expiry time. </param>
         /// <param name="expiresOn"> The time to set the blob to expiry. </param>
+        /// <param name="leaseId"> If specified, the operation only succeeds if the resource's lease is active and matches this ID. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://learn.microsoft.com/rest/api/storageservices/setting-timeouts-for-blob-service-operations"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> SetExpiryAsync(string expiryOptions, string expiresOn = default, int? timeout = default, RequestContext context = null)
+        public virtual async Task<Response> SetExpiryAsync(string expiryOptions, string expiresOn = default, string leaseId = default, int? timeout = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("PathRestClient.SetExpiry");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateSetExpiryRequest(expiryOptions, expiresOn, timeout, context);
+                using HttpMessage message = CreateSetExpiryRequest(expiryOptions, expiresOn, leaseId, timeout, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -1103,23 +1105,25 @@ namespace Azure.Storage.Files.DataLake
         /// <summary> Sets the time a blob will expire and be deleted. </summary>
         /// <param name="expiryOptions"> Required. Indicates mode of the expiry time. </param>
         /// <param name="expiresOn"> The time to set the blob to expiry. </param>
+        /// <param name="leaseId"> If specified, the operation only succeeds if the resource's lease is active and matches this ID. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://learn.microsoft.com/rest/api/storageservices/setting-timeouts-for-blob-service-operations"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response SetExpiry(PathExpiryOptions expiryOptions, string expiresOn = default, int? timeout = default, CancellationToken cancellationToken = default)
+        public virtual Response SetExpiry(PathExpiryOptions expiryOptions, string expiresOn = default, string leaseId = default, int? timeout = default, CancellationToken cancellationToken = default)
         {
-            return SetExpiry(expiryOptions.ToString(), expiresOn, timeout, cancellationToken.ToRequestContext());
+            return SetExpiry(expiryOptions.ToString(), expiresOn, leaseId, timeout, cancellationToken.ToRequestContext());
         }
 
         /// <summary> Sets the time a blob will expire and be deleted. </summary>
         /// <param name="expiryOptions"> Required. Indicates mode of the expiry time. </param>
         /// <param name="expiresOn"> The time to set the blob to expiry. </param>
+        /// <param name="leaseId"> If specified, the operation only succeeds if the resource's lease is active and matches this ID. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://learn.microsoft.com/rest/api/storageservices/setting-timeouts-for-blob-service-operations"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response> SetExpiryAsync(PathExpiryOptions expiryOptions, string expiresOn = default, int? timeout = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> SetExpiryAsync(PathExpiryOptions expiryOptions, string expiresOn = default, string leaseId = default, int? timeout = default, CancellationToken cancellationToken = default)
         {
-            return await SetExpiryAsync(expiryOptions.ToString(), expiresOn, timeout, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return await SetExpiryAsync(expiryOptions.ToString(), expiresOn, leaseId, timeout, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
 
         /// <summary>
