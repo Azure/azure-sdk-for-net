@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.NotificationHubs.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = NamespacesRestClient.CreateCheckNotificationHubNamespaceAvailabilityRequest(Guid.Parse(Id.SubscriptionId), NotificationHubAvailabilityContent.ToRequestContent(content), context);
+                using HttpMessage message = NamespacesRestClient.CreateCheckNotificationHubNamespaceAvailabilityRequest(Guid.Parse(Id.SubscriptionId), NotificationHubAvailabilityContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<NotificationHubAvailabilityResult> response = Response.FromValue(NotificationHubAvailabilityResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.NotificationHubs.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = NamespacesRestClient.CreateCheckNotificationHubNamespaceAvailabilityRequest(Guid.Parse(Id.SubscriptionId), NotificationHubAvailabilityContent.ToRequestContent(content), context);
+                using HttpMessage message = NamespacesRestClient.CreateCheckNotificationHubNamespaceAvailabilityRequest(Guid.Parse(Id.SubscriptionId), NotificationHubAvailabilityContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<NotificationHubAvailabilityResult> response = Response.FromValue(NotificationHubAvailabilityResult.FromResponse(result), result);
                 if (response.Value == null)

@@ -310,7 +310,7 @@ namespace Azure.ResourceManager.Peering.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = PeeringClientRestClient.CreateCheckPeeringServiceProviderAvailabilityRequest(Id.SubscriptionId, CheckPeeringServiceProviderAvailabilityContent.ToRequestContent(content), context);
+                using HttpMessage message = PeeringClientRestClient.CreateCheckPeeringServiceProviderAvailabilityRequest(Id.SubscriptionId, CheckPeeringServiceProviderAvailabilityContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<PeeringServiceProviderAvailability> response = Response.FromValue(new PeeringServiceProviderAvailability(JsonDocument.Parse(result.Content, ModelSerializationExtensions.JsonDocumentOptions).RootElement.GetString()), result);
                 if (response.Value == null)
@@ -358,7 +358,7 @@ namespace Azure.ResourceManager.Peering.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = PeeringClientRestClient.CreateCheckPeeringServiceProviderAvailabilityRequest(Id.SubscriptionId, CheckPeeringServiceProviderAvailabilityContent.ToRequestContent(content), context);
+                using HttpMessage message = PeeringClientRestClient.CreateCheckPeeringServiceProviderAvailabilityRequest(Id.SubscriptionId, CheckPeeringServiceProviderAvailabilityContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<PeeringServiceProviderAvailability> response = Response.FromValue(new PeeringServiceProviderAvailability(JsonDocument.Parse(result.Content, ModelSerializationExtensions.JsonDocumentOptions).RootElement.GetString()), result);
                 if (response.Value == null)
@@ -402,7 +402,7 @@ namespace Azure.ResourceManager.Peering.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = PeeringServicesRestClient.CreateInitializePeeringServiceConnectionMonitorRequest(Id.SubscriptionId, context);
+                using HttpMessage message = PeeringServicesRestClient.CreateInitializePeeringServiceConnectionMonitorRequest(Id.SubscriptionId, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 return response;
             }
@@ -441,7 +441,7 @@ namespace Azure.ResourceManager.Peering.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = PeeringServicesRestClient.CreateInitializePeeringServiceConnectionMonitorRequest(Id.SubscriptionId, context);
+                using HttpMessage message = PeeringServicesRestClient.CreateInitializePeeringServiceConnectionMonitorRequest(Id.SubscriptionId, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 return response;
             }
@@ -643,7 +643,7 @@ namespace Azure.ResourceManager.Peering.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = LookingGlassRestClient.CreateInvokeLookingGlassRequest(Id.SubscriptionId, command.ToString(), sourceType.ToString(), sourceLocation, destinationIP, context);
+                using HttpMessage message = LookingGlassRestClient.CreateInvokeLookingGlassRequest(Id.SubscriptionId, command.ToString(), sourceType.ToString(), sourceLocation, destinationIP, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<LookingGlassOutput> response = Response.FromValue(LookingGlassOutput.FromResponse(result), result);
                 if (response.Value == null)
@@ -696,7 +696,7 @@ namespace Azure.ResourceManager.Peering.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = LookingGlassRestClient.CreateInvokeLookingGlassRequest(Id.SubscriptionId, command.ToString(), sourceType.ToString(), sourceLocation, destinationIP, context);
+                using HttpMessage message = LookingGlassRestClient.CreateInvokeLookingGlassRequest(Id.SubscriptionId, command.ToString(), sourceType.ToString(), sourceLocation, destinationIP, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<LookingGlassOutput> response = Response.FromValue(LookingGlassOutput.FromResponse(result), result);
                 if (response.Value == null)

@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _webCategoriesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), name, expand, context);
+                using HttpMessage message = _webCategoriesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), name, expand, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<AzureWebCategoryData> response = Response.FromValue(AzureWebCategoryData.FromResponse(result), result);
                 if (response.Value == null)
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _webCategoriesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), name, expand, context);
+                using HttpMessage message = _webCategoriesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), name, expand, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<AzureWebCategoryData> response = Response.FromValue(AzureWebCategoryData.FromResponse(result), result);
                 if (response.Value == null)
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _webCategoriesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), name, expand, context);
+                using HttpMessage message = _webCategoriesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), name, expand, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<AzureWebCategoryData> response = default;
@@ -303,7 +303,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _webCategoriesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), name, expand, context);
+                using HttpMessage message = _webCategoriesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), name, expand, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<AzureWebCategoryData> response = default;
@@ -361,7 +361,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _webCategoriesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), name, expand, context);
+                using HttpMessage message = _webCategoriesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), name, expand, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<AzureWebCategoryData> response = default;
@@ -423,7 +423,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _webCategoriesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), name, expand, context);
+                using HttpMessage message = _webCategoriesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), name, expand, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<AzureWebCategoryData> response = default;

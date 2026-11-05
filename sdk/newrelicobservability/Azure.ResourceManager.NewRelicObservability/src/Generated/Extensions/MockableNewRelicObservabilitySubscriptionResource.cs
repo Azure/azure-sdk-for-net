@@ -384,7 +384,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = SaaSRestClient.CreateActivateResourceRequest(Id.SubscriptionId, ActivateSaaSParameterContent.ToRequestContent(content), context);
+                using HttpMessage message = SaaSRestClient.CreateActivateResourceRequest(Id.SubscriptionId, ActivateSaaSParameterContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<NewRelicObservabilitySaaSResourceDetailsResult> response = Response.FromValue(NewRelicObservabilitySaaSResourceDetailsResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -432,7 +432,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = SaaSRestClient.CreateActivateResourceRequest(Id.SubscriptionId, ActivateSaaSParameterContent.ToRequestContent(content), context);
+                using HttpMessage message = SaaSRestClient.CreateActivateResourceRequest(Id.SubscriptionId, ActivateSaaSParameterContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<NewRelicObservabilitySaaSResourceDetailsResult> response = Response.FromValue(NewRelicObservabilitySaaSResourceDetailsResult.FromResponse(result), result);
                 if (response.Value == null)

@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _hubVirtualNetworkConnectionsRestClient.CreateGetHubVirtualNetworkConnectionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _hubVirtualNetworkConnectionsRestClient.CreateGetHubVirtualNetworkConnectionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<HubVirtualNetworkConnectionData> response = Response.FromValue(HubVirtualNetworkConnectionData.FromResponse(result), result);
                 if (response.Value == null)
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _hubVirtualNetworkConnectionsRestClient.CreateGetHubVirtualNetworkConnectionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _hubVirtualNetworkConnectionsRestClient.CreateGetHubVirtualNetworkConnectionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<HubVirtualNetworkConnectionData> response = Response.FromValue(HubVirtualNetworkConnectionData.FromResponse(result), result);
                 if (response.Value == null)
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _hubVirtualNetworkConnectionsRestClient.CreateDeleteHubVirtualNetworkConnectionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _hubVirtualNetworkConnectionsRestClient.CreateDeleteHubVirtualNetworkConnectionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NetworkArmOperation operation = new NetworkArmOperation(_hubVirtualNetworkConnectionsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -269,7 +269,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _hubVirtualNetworkConnectionsRestClient.CreateDeleteHubVirtualNetworkConnectionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _hubVirtualNetworkConnectionsRestClient.CreateDeleteHubVirtualNetworkConnectionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NetworkArmOperation operation = new NetworkArmOperation(_hubVirtualNetworkConnectionsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _hubVirtualNetworkConnectionsRestClient.CreateCreateOrUpdateHubVirtualNetworkConnectionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, HubVirtualNetworkConnectionData.ToRequestContent(data), context);
+                using HttpMessage message = _hubVirtualNetworkConnectionsRestClient.CreateCreateOrUpdateHubVirtualNetworkConnectionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, HubVirtualNetworkConnectionData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NetworkArmOperation<HubVirtualNetworkConnectionResource> operation = new NetworkArmOperation<HubVirtualNetworkConnectionResource>(
                     new HubVirtualNetworkConnectionResourceOperationSource(Client),
@@ -381,7 +381,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _hubVirtualNetworkConnectionsRestClient.CreateCreateOrUpdateHubVirtualNetworkConnectionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, HubVirtualNetworkConnectionData.ToRequestContent(data), context);
+                using HttpMessage message = _hubVirtualNetworkConnectionsRestClient.CreateCreateOrUpdateHubVirtualNetworkConnectionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, HubVirtualNetworkConnectionData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NetworkArmOperation<HubVirtualNetworkConnectionResource> operation = new NetworkArmOperation<HubVirtualNetworkConnectionResource>(
                     new HubVirtualNetworkConnectionResourceOperationSource(Client),

@@ -278,7 +278,7 @@ namespace Azure.ResourceManager.OperationalInsights.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = OperationStatusesRestClient.CreateGetRequest(location, asyncOperationId, Guid.Parse(Id.SubscriptionId), context);
+                using HttpMessage message = OperationStatusesRestClient.CreateGetRequest(location, asyncOperationId, Guid.Parse(Id.SubscriptionId), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<OperationalInsightsOperationStatus> response = Response.FromValue(OperationalInsightsOperationStatus.FromResponse(result), result);
                 if (response.Value == null)
@@ -328,7 +328,7 @@ namespace Azure.ResourceManager.OperationalInsights.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = OperationStatusesRestClient.CreateGetRequest(location, asyncOperationId, Guid.Parse(Id.SubscriptionId), context);
+                using HttpMessage message = OperationStatusesRestClient.CreateGetRequest(location, asyncOperationId, Guid.Parse(Id.SubscriptionId), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<OperationalInsightsOperationStatus> response = Response.FromValue(OperationalInsightsOperationStatus.FromResponse(result), result);
                 if (response.Value == null)

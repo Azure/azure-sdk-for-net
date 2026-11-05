@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.OracleDatabase
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _oracleSubscriptionsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), OracleSubscriptionData.ToRequestContent(data), context);
+                using HttpMessage message = _oracleSubscriptionsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), OracleSubscriptionData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 OracleDatabaseArmOperation<OracleSubscriptionResource> operation = new OracleDatabaseArmOperation<OracleSubscriptionResource>(
                     new OracleSubscriptionResourceOperationSource(Client),
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.OracleDatabase
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _oracleSubscriptionsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), OracleSubscriptionData.ToRequestContent(data), context);
+                using HttpMessage message = _oracleSubscriptionsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), OracleSubscriptionData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 OracleDatabaseArmOperation<OracleSubscriptionResource> operation = new OracleDatabaseArmOperation<OracleSubscriptionResource>(
                     new OracleSubscriptionResourceOperationSource(Client),
@@ -240,7 +240,7 @@ namespace Azure.ResourceManager.OracleDatabase
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _oracleSubscriptionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), context);
+                using HttpMessage message = _oracleSubscriptionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<OracleSubscriptionData> response = Response.FromValue(OracleSubscriptionData.FromResponse(result), result);
                 if (response.Value == null)
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.OracleDatabase
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _oracleSubscriptionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), context);
+                using HttpMessage message = _oracleSubscriptionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<OracleSubscriptionData> response = Response.FromValue(OracleSubscriptionData.FromResponse(result), result);
                 if (response.Value == null)
@@ -341,7 +341,7 @@ namespace Azure.ResourceManager.OracleDatabase
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _oracleSubscriptionsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), OracleSubscriptionPatch.ToRequestContent(patch), context);
+                using HttpMessage message = _oracleSubscriptionsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), OracleSubscriptionPatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 OracleDatabaseArmOperation<OracleSubscriptionResource> operation = new OracleDatabaseArmOperation<OracleSubscriptionResource>(
                     new OracleSubscriptionResourceOperationSource(Client),
@@ -400,7 +400,7 @@ namespace Azure.ResourceManager.OracleDatabase
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _oracleSubscriptionsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), OracleSubscriptionPatch.ToRequestContent(patch), context);
+                using HttpMessage message = _oracleSubscriptionsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), OracleSubscriptionPatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 OracleDatabaseArmOperation<OracleSubscriptionResource> operation = new OracleDatabaseArmOperation<OracleSubscriptionResource>(
                     new OracleSubscriptionResourceOperationSource(Client),
@@ -455,7 +455,7 @@ namespace Azure.ResourceManager.OracleDatabase
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _oracleSubscriptionsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), context);
+                using HttpMessage message = _oracleSubscriptionsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 OracleDatabaseArmOperation operation = new OracleDatabaseArmOperation(_oracleSubscriptionsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -504,7 +504,7 @@ namespace Azure.ResourceManager.OracleDatabase
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _oracleSubscriptionsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), context);
+                using HttpMessage message = _oracleSubscriptionsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 OracleDatabaseArmOperation operation = new OracleDatabaseArmOperation(_oracleSubscriptionsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -557,7 +557,7 @@ namespace Azure.ResourceManager.OracleDatabase
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _oracleSubscriptionsRestClient.CreateAddAzureSubscriptionsRequest(Guid.Parse(Id.SubscriptionId), OracleAzureSubscriptionsContent.ToRequestContent(content), context);
+                using HttpMessage message = _oracleSubscriptionsRestClient.CreateAddAzureSubscriptionsRequest(Guid.Parse(Id.SubscriptionId), OracleAzureSubscriptionsContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 OracleDatabaseArmOperation operation = new OracleDatabaseArmOperation(_oracleSubscriptionsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -610,7 +610,7 @@ namespace Azure.ResourceManager.OracleDatabase
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _oracleSubscriptionsRestClient.CreateAddAzureSubscriptionsRequest(Guid.Parse(Id.SubscriptionId), OracleAzureSubscriptionsContent.ToRequestContent(content), context);
+                using HttpMessage message = _oracleSubscriptionsRestClient.CreateAddAzureSubscriptionsRequest(Guid.Parse(Id.SubscriptionId), OracleAzureSubscriptionsContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 OracleDatabaseArmOperation operation = new OracleDatabaseArmOperation(_oracleSubscriptionsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -659,7 +659,7 @@ namespace Azure.ResourceManager.OracleDatabase
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _oracleSubscriptionsRestClient.CreateGetActivationLinksRequest(Guid.Parse(Id.SubscriptionId), context);
+                using HttpMessage message = _oracleSubscriptionsRestClient.CreateGetActivationLinksRequest(Guid.Parse(Id.SubscriptionId), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 OracleDatabaseArmOperation<CloudAccountActivationLinks> operation = new OracleDatabaseArmOperation<CloudAccountActivationLinks>(
                     new CloudAccountActivationLinksOperationSource(),
@@ -714,7 +714,7 @@ namespace Azure.ResourceManager.OracleDatabase
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _oracleSubscriptionsRestClient.CreateGetActivationLinksRequest(Guid.Parse(Id.SubscriptionId), context);
+                using HttpMessage message = _oracleSubscriptionsRestClient.CreateGetActivationLinksRequest(Guid.Parse(Id.SubscriptionId), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 OracleDatabaseArmOperation<CloudAccountActivationLinks> operation = new OracleDatabaseArmOperation<CloudAccountActivationLinks>(
                     new CloudAccountActivationLinksOperationSource(),
@@ -769,7 +769,7 @@ namespace Azure.ResourceManager.OracleDatabase
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _oracleSubscriptionsRestClient.CreateGetCloudAccountDetailsRequest(Guid.Parse(Id.SubscriptionId), context);
+                using HttpMessage message = _oracleSubscriptionsRestClient.CreateGetCloudAccountDetailsRequest(Guid.Parse(Id.SubscriptionId), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 OracleDatabaseArmOperation<CloudAccountDetails> operation = new OracleDatabaseArmOperation<CloudAccountDetails>(
                     new CloudAccountDetailsOperationSource(),
@@ -824,7 +824,7 @@ namespace Azure.ResourceManager.OracleDatabase
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _oracleSubscriptionsRestClient.CreateGetCloudAccountDetailsRequest(Guid.Parse(Id.SubscriptionId), context);
+                using HttpMessage message = _oracleSubscriptionsRestClient.CreateGetCloudAccountDetailsRequest(Guid.Parse(Id.SubscriptionId), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 OracleDatabaseArmOperation<CloudAccountDetails> operation = new OracleDatabaseArmOperation<CloudAccountDetails>(
                     new CloudAccountDetailsOperationSource(),
@@ -879,7 +879,7 @@ namespace Azure.ResourceManager.OracleDatabase
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _oracleSubscriptionsRestClient.CreateGetSaasSubscriptionDetailsRequest(Guid.Parse(Id.SubscriptionId), context);
+                using HttpMessage message = _oracleSubscriptionsRestClient.CreateGetSaasSubscriptionDetailsRequest(Guid.Parse(Id.SubscriptionId), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 OracleDatabaseArmOperation<SaasSubscriptionDetails> operation = new OracleDatabaseArmOperation<SaasSubscriptionDetails>(
                     new SaasSubscriptionDetailsOperationSource(),
@@ -934,7 +934,7 @@ namespace Azure.ResourceManager.OracleDatabase
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _oracleSubscriptionsRestClient.CreateGetSaasSubscriptionDetailsRequest(Guid.Parse(Id.SubscriptionId), context);
+                using HttpMessage message = _oracleSubscriptionsRestClient.CreateGetSaasSubscriptionDetailsRequest(Guid.Parse(Id.SubscriptionId), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 OracleDatabaseArmOperation<SaasSubscriptionDetails> operation = new OracleDatabaseArmOperation<SaasSubscriptionDetails>(
                     new SaasSubscriptionDetailsOperationSource(),

@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _vpnLinkConnectionsRestClient.CreateSetOrInitDefaultSharedKeyRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, VpnLinkConnectionSharedKeyData.ToRequestContent(data), context);
+                using HttpMessage message = _vpnLinkConnectionsRestClient.CreateSetOrInitDefaultSharedKeyRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, VpnLinkConnectionSharedKeyData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NetworkArmOperation<VpnLinkConnectionSharedKeyResource> operation = new NetworkArmOperation<VpnLinkConnectionSharedKeyResource>(
                     new VpnLinkConnectionSharedKeyResourceOperationSource(Client),
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _vpnLinkConnectionsRestClient.CreateSetOrInitDefaultSharedKeyRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, VpnLinkConnectionSharedKeyData.ToRequestContent(data), context);
+                using HttpMessage message = _vpnLinkConnectionsRestClient.CreateSetOrInitDefaultSharedKeyRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, VpnLinkConnectionSharedKeyData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NetworkArmOperation<VpnLinkConnectionSharedKeyResource> operation = new NetworkArmOperation<VpnLinkConnectionSharedKeyResource>(
                     new VpnLinkConnectionSharedKeyResourceOperationSource(Client),
@@ -242,7 +242,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _vpnLinkConnectionsRestClient.CreateGetSharedKeyRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, context);
+                using HttpMessage message = _vpnLinkConnectionsRestClient.CreateGetSharedKeyRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<VpnLinkConnectionSharedKeyData> response = Response.FromValue(VpnLinkConnectionSharedKeyData.FromResponse(result), result);
                 if (response.Value == null)
@@ -290,7 +290,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _vpnLinkConnectionsRestClient.CreateGetSharedKeyRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, context);
+                using HttpMessage message = _vpnLinkConnectionsRestClient.CreateGetSharedKeyRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<VpnLinkConnectionSharedKeyData> response = Response.FromValue(VpnLinkConnectionSharedKeyData.FromResponse(result), result);
                 if (response.Value == null)
@@ -338,7 +338,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _vpnLinkConnectionsRestClient.CreateGetDefaultSharedKeyRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, context);
+                using HttpMessage message = _vpnLinkConnectionsRestClient.CreateGetDefaultSharedKeyRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<VpnLinkConnectionSharedKeyData> response = Response.FromValue(VpnLinkConnectionSharedKeyData.FromResponse(result), result);
                 if (response.Value == null)
@@ -386,7 +386,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _vpnLinkConnectionsRestClient.CreateGetDefaultSharedKeyRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, context);
+                using HttpMessage message = _vpnLinkConnectionsRestClient.CreateGetDefaultSharedKeyRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<VpnLinkConnectionSharedKeyData> response = Response.FromValue(VpnLinkConnectionSharedKeyData.FromResponse(result), result);
                 if (response.Value == null)

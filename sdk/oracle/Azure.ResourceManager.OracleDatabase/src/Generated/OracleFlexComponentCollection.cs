@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.OracleDatabase
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _flexComponentsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, flexComponentName, context);
+                using HttpMessage message = _flexComponentsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, flexComponentName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<OracleFlexComponentData> response = Response.FromValue(OracleFlexComponentData.FromResponse(result), result);
                 if (response.Value == null)
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.OracleDatabase
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _flexComponentsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, flexComponentName, context);
+                using HttpMessage message = _flexComponentsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, flexComponentName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<OracleFlexComponentData> response = Response.FromValue(OracleFlexComponentData.FromResponse(result), result);
                 if (response.Value == null)
@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.OracleDatabase
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _flexComponentsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, flexComponentName, context);
+                using HttpMessage message = _flexComponentsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, flexComponentName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<OracleFlexComponentData> response = default;
@@ -318,7 +318,7 @@ namespace Azure.ResourceManager.OracleDatabase
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _flexComponentsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, flexComponentName, context);
+                using HttpMessage message = _flexComponentsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, flexComponentName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<OracleFlexComponentData> response = default;
@@ -375,7 +375,7 @@ namespace Azure.ResourceManager.OracleDatabase
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _flexComponentsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, flexComponentName, context);
+                using HttpMessage message = _flexComponentsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, flexComponentName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<OracleFlexComponentData> response = default;
@@ -436,7 +436,7 @@ namespace Azure.ResourceManager.OracleDatabase
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _flexComponentsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, flexComponentName, context);
+                using HttpMessage message = _flexComponentsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, flexComponentName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<OracleFlexComponentData> response = default;

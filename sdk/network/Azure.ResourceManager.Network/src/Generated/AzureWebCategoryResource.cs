@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _webCategoriesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Name, expand, context);
+                using HttpMessage message = _webCategoriesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Name, expand, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<AzureWebCategoryData> response = Response.FromValue(AzureWebCategoryData.FromResponse(result), result);
                 if (response.Value == null)
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _webCategoriesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Name, expand, context);
+                using HttpMessage message = _webCategoriesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Name, expand, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<AzureWebCategoryData> response = Response.FromValue(AzureWebCategoryData.FromResponse(result), result);
                 if (response.Value == null)

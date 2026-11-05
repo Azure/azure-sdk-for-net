@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _applicationGatewayWafDynamicManifestsDefaultRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, context);
+                using HttpMessage message = _applicationGatewayWafDynamicManifestsDefaultRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ApplicationGatewayWafDynamicManifestData> response = Response.FromValue(ApplicationGatewayWafDynamicManifestData.FromResponse(result), result);
                 if (response.Value == null)
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _applicationGatewayWafDynamicManifestsDefaultRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, context);
+                using HttpMessage message = _applicationGatewayWafDynamicManifestsDefaultRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ApplicationGatewayWafDynamicManifestData> response = Response.FromValue(ApplicationGatewayWafDynamicManifestData.FromResponse(result), result);
                 if (response.Value == null)

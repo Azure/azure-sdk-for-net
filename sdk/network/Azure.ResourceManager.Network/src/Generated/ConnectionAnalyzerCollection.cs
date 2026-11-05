@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkWatchersRestClient.CreateConnectionAnalyzersCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, connectionAnalyzerName, ConnectionAnalyzerData.ToRequestContent(data), context);
+                using HttpMessage message = _networkWatchersRestClient.CreateConnectionAnalyzersCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, connectionAnalyzerName, ConnectionAnalyzerData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NetworkArmOperation<ConnectionAnalyzerResource> operation = new NetworkArmOperation<ConnectionAnalyzerResource>(
                     new ConnectionAnalyzerResourceOperationSource(Client),
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkWatchersRestClient.CreateConnectionAnalyzersCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, connectionAnalyzerName, ConnectionAnalyzerData.ToRequestContent(data), context);
+                using HttpMessage message = _networkWatchersRestClient.CreateConnectionAnalyzersCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, connectionAnalyzerName, ConnectionAnalyzerData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NetworkArmOperation<ConnectionAnalyzerResource> operation = new NetworkArmOperation<ConnectionAnalyzerResource>(
                     new ConnectionAnalyzerResourceOperationSource(Client),
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkWatchersRestClient.CreateConnectionAnalyzersGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, connectionAnalyzerName, context);
+                using HttpMessage message = _networkWatchersRestClient.CreateConnectionAnalyzersGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, connectionAnalyzerName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ConnectionAnalyzerData> response = Response.FromValue(ConnectionAnalyzerData.FromResponse(result), result);
                 if (response.Value == null)
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkWatchersRestClient.CreateConnectionAnalyzersGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, connectionAnalyzerName, context);
+                using HttpMessage message = _networkWatchersRestClient.CreateConnectionAnalyzersGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, connectionAnalyzerName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ConnectionAnalyzerData> response = Response.FromValue(ConnectionAnalyzerData.FromResponse(result), result);
                 if (response.Value == null)
@@ -368,7 +368,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkWatchersRestClient.CreateConnectionAnalyzersGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, connectionAnalyzerName, context);
+                using HttpMessage message = _networkWatchersRestClient.CreateConnectionAnalyzersGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, connectionAnalyzerName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ConnectionAnalyzerData> response = default;
@@ -425,7 +425,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkWatchersRestClient.CreateConnectionAnalyzersGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, connectionAnalyzerName, context);
+                using HttpMessage message = _networkWatchersRestClient.CreateConnectionAnalyzersGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, connectionAnalyzerName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ConnectionAnalyzerData> response = default;
@@ -482,7 +482,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkWatchersRestClient.CreateConnectionAnalyzersGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, connectionAnalyzerName, context);
+                using HttpMessage message = _networkWatchersRestClient.CreateConnectionAnalyzersGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, connectionAnalyzerName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ConnectionAnalyzerData> response = default;
@@ -543,7 +543,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkWatchersRestClient.CreateConnectionAnalyzersGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, connectionAnalyzerName, context);
+                using HttpMessage message = _networkWatchersRestClient.CreateConnectionAnalyzersGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, connectionAnalyzerName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ConnectionAnalyzerData> response = default;

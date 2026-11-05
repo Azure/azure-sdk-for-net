@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _accessBridgesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, accessBridgeName.ToString(), NetworkCloudAccessBridgeData.ToRequestContent(data), context);
+                using HttpMessage message = _accessBridgesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, accessBridgeName.ToString(), NetworkCloudAccessBridgeData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NetworkCloudArmOperation<NetworkCloudAccessBridgeResource> operation = new NetworkCloudArmOperation<NetworkCloudAccessBridgeResource>(
                     new NetworkCloudAccessBridgeResourceOperationSource(Client),
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _accessBridgesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, accessBridgeName.ToString(), NetworkCloudAccessBridgeData.ToRequestContent(data), context);
+                using HttpMessage message = _accessBridgesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, accessBridgeName.ToString(), NetworkCloudAccessBridgeData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NetworkCloudArmOperation<NetworkCloudAccessBridgeResource> operation = new NetworkCloudArmOperation<NetworkCloudAccessBridgeResource>(
                     new NetworkCloudAccessBridgeResourceOperationSource(Client),
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _accessBridgesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, accessBridgeName.ToString(), context);
+                using HttpMessage message = _accessBridgesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, accessBridgeName.ToString(), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<NetworkCloudAccessBridgeData> response = Response.FromValue(NetworkCloudAccessBridgeData.FromResponse(result), result);
                 if (response.Value == null)
@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _accessBridgesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, accessBridgeName.ToString(), context);
+                using HttpMessage message = _accessBridgesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, accessBridgeName.ToString(), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<NetworkCloudAccessBridgeData> response = Response.FromValue(NetworkCloudAccessBridgeData.FromResponse(result), result);
                 if (response.Value == null)
@@ -360,7 +360,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _accessBridgesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, accessBridgeName.ToString(), context);
+                using HttpMessage message = _accessBridgesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, accessBridgeName.ToString(), context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<NetworkCloudAccessBridgeData> response = default;
@@ -413,7 +413,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _accessBridgesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, accessBridgeName.ToString(), context);
+                using HttpMessage message = _accessBridgesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, accessBridgeName.ToString(), context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<NetworkCloudAccessBridgeData> response = default;
@@ -466,7 +466,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _accessBridgesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, accessBridgeName.ToString(), context);
+                using HttpMessage message = _accessBridgesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, accessBridgeName.ToString(), context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<NetworkCloudAccessBridgeData> response = default;
@@ -523,7 +523,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _accessBridgesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, accessBridgeName.ToString(), context);
+                using HttpMessage message = _accessBridgesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, accessBridgeName.ToString(), context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<NetworkCloudAccessBridgeData> response = default;

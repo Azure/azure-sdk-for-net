@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.NapsterOmniagentApi
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _organizationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _organizationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<NapsterOrganizationData> response = Response.FromValue(NapsterOrganizationData.FromResponse(result), result);
                 if (response.Value == null)
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.NapsterOmniagentApi
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _organizationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _organizationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<NapsterOrganizationData> response = Response.FromValue(NapsterOrganizationData.FromResponse(result), result);
                 if (response.Value == null)
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.NapsterOmniagentApi
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _organizationsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, NapsterOrganizationPatch.ToRequestContent(patch), context);
+                using HttpMessage message = _organizationsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, NapsterOrganizationPatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NapsterOmniagentApiArmOperation<NapsterOrganizationResource> operation = new NapsterOmniagentApiArmOperation<NapsterOrganizationResource>(
                     new NapsterOrganizationResourceOperationSource(Client),
@@ -285,7 +285,7 @@ namespace Azure.ResourceManager.NapsterOmniagentApi
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _organizationsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, NapsterOrganizationPatch.ToRequestContent(patch), context);
+                using HttpMessage message = _organizationsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, NapsterOrganizationPatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NapsterOmniagentApiArmOperation<NapsterOrganizationResource> operation = new NapsterOmniagentApiArmOperation<NapsterOrganizationResource>(
                     new NapsterOrganizationResourceOperationSource(Client),
@@ -340,7 +340,7 @@ namespace Azure.ResourceManager.NapsterOmniagentApi
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _organizationsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _organizationsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NapsterOmniagentApiArmOperation operation = new NapsterOmniagentApiArmOperation(_organizationsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -389,7 +389,7 @@ namespace Azure.ResourceManager.NapsterOmniagentApi
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _organizationsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _organizationsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NapsterOmniagentApiArmOperation operation = new NapsterOmniagentApiArmOperation(_organizationsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -437,7 +437,7 @@ namespace Azure.ResourceManager.NapsterOmniagentApi
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _organizationsRestClient.CreateLatestLinkedSaaSRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _organizationsRestClient.CreateLatestLinkedSaaSRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<LatestLinkedSaaSResult> response = Response.FromValue(LatestLinkedSaaSResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -485,7 +485,7 @@ namespace Azure.ResourceManager.NapsterOmniagentApi
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _organizationsRestClient.CreateLatestLinkedSaaSRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _organizationsRestClient.CreateLatestLinkedSaaSRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<LatestLinkedSaaSResult> response = Response.FromValue(LatestLinkedSaaSResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -538,7 +538,7 @@ namespace Azure.ResourceManager.NapsterOmniagentApi
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _organizationsRestClient.CreateLinkSaaSRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, SaaSInfo.ToRequestContent(content), context);
+                using HttpMessage message = _organizationsRestClient.CreateLinkSaaSRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, SaaSInfo.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NapsterOmniagentApiArmOperation<NapsterOrganizationResource> operation = new NapsterOmniagentApiArmOperation<NapsterOrganizationResource>(
                     new NapsterOrganizationResourceOperationSource(Client),
@@ -597,7 +597,7 @@ namespace Azure.ResourceManager.NapsterOmniagentApi
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _organizationsRestClient.CreateLinkSaaSRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, SaaSInfo.ToRequestContent(content), context);
+                using HttpMessage message = _organizationsRestClient.CreateLinkSaaSRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, SaaSInfo.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NapsterOmniagentApiArmOperation<NapsterOrganizationResource> operation = new NapsterOmniagentApiArmOperation<NapsterOrganizationResource>(
                     new NapsterOrganizationResourceOperationSource(Client),
@@ -642,7 +642,7 @@ namespace Azure.ResourceManager.NapsterOmniagentApi
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _organizationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _organizationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<NapsterOrganizationData> response = Response.FromValue(NapsterOrganizationData.FromResponse(result), result);
                     return Response.FromValue(new NapsterOrganizationResource(Client, response.Value), response.GetRawResponse());
@@ -690,7 +690,7 @@ namespace Azure.ResourceManager.NapsterOmniagentApi
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _organizationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _organizationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<NapsterOrganizationData> response = Response.FromValue(NapsterOrganizationData.FromResponse(result), result);
                     return Response.FromValue(new NapsterOrganizationResource(Client, response.Value), response.GetRawResponse());
@@ -736,7 +736,7 @@ namespace Azure.ResourceManager.NapsterOmniagentApi
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _organizationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _organizationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<NapsterOrganizationData> response = Response.FromValue(NapsterOrganizationData.FromResponse(result), result);
                     return Response.FromValue(new NapsterOrganizationResource(Client, response.Value), response.GetRawResponse());
@@ -778,7 +778,7 @@ namespace Azure.ResourceManager.NapsterOmniagentApi
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _organizationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _organizationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<NapsterOrganizationData> response = Response.FromValue(NapsterOrganizationData.FromResponse(result), result);
                     return Response.FromValue(new NapsterOrganizationResource(Client, response.Value), response.GetRawResponse());
@@ -820,7 +820,7 @@ namespace Azure.ResourceManager.NapsterOmniagentApi
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _organizationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _organizationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<NapsterOrganizationData> response = Response.FromValue(NapsterOrganizationData.FromResponse(result), result);
                     return Response.FromValue(new NapsterOrganizationResource(Client, response.Value), response.GetRawResponse());
@@ -866,7 +866,7 @@ namespace Azure.ResourceManager.NapsterOmniagentApi
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _organizationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _organizationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<NapsterOrganizationData> response = Response.FromValue(NapsterOrganizationData.FromResponse(result), result);
                     return Response.FromValue(new NapsterOrganizationResource(Client, response.Value), response.GetRawResponse());

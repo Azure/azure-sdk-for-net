@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.OracleDatabase
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _cloudExadataInfrastructuresRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _cloudExadataInfrastructuresRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<CloudExadataInfrastructureData> response = Response.FromValue(CloudExadataInfrastructureData.FromResponse(result), result);
                 if (response.Value == null)
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.OracleDatabase
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _cloudExadataInfrastructuresRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _cloudExadataInfrastructuresRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<CloudExadataInfrastructureData> response = Response.FromValue(CloudExadataInfrastructureData.FromResponse(result), result);
                 if (response.Value == null)
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.OracleDatabase
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _cloudExadataInfrastructuresRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, CloudExadataInfrastructurePatch.ToRequestContent(patch), context);
+                using HttpMessage message = _cloudExadataInfrastructuresRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, CloudExadataInfrastructurePatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 OracleDatabaseArmOperation<CloudExadataInfrastructureResource> operation = new OracleDatabaseArmOperation<CloudExadataInfrastructureResource>(
                     new CloudExadataInfrastructureResourceOperationSource(Client),
@@ -285,7 +285,7 @@ namespace Azure.ResourceManager.OracleDatabase
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _cloudExadataInfrastructuresRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, CloudExadataInfrastructurePatch.ToRequestContent(patch), context);
+                using HttpMessage message = _cloudExadataInfrastructuresRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, CloudExadataInfrastructurePatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 OracleDatabaseArmOperation<CloudExadataInfrastructureResource> operation = new OracleDatabaseArmOperation<CloudExadataInfrastructureResource>(
                     new CloudExadataInfrastructureResourceOperationSource(Client),
@@ -340,7 +340,7 @@ namespace Azure.ResourceManager.OracleDatabase
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _cloudExadataInfrastructuresRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _cloudExadataInfrastructuresRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 OracleDatabaseArmOperation operation = new OracleDatabaseArmOperation(_cloudExadataInfrastructuresClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -389,7 +389,7 @@ namespace Azure.ResourceManager.OracleDatabase
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _cloudExadataInfrastructuresRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _cloudExadataInfrastructuresRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 OracleDatabaseArmOperation operation = new OracleDatabaseArmOperation(_cloudExadataInfrastructuresClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -438,7 +438,7 @@ namespace Azure.ResourceManager.OracleDatabase
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _cloudExadataInfrastructuresRestClient.CreateAddStorageCapacityRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _cloudExadataInfrastructuresRestClient.CreateAddStorageCapacityRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 OracleDatabaseArmOperation<CloudExadataInfrastructureResource> operation = new OracleDatabaseArmOperation<CloudExadataInfrastructureResource>(
                     new CloudExadataInfrastructureResourceOperationSource(Client),
@@ -493,7 +493,7 @@ namespace Azure.ResourceManager.OracleDatabase
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _cloudExadataInfrastructuresRestClient.CreateAddStorageCapacityRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _cloudExadataInfrastructuresRestClient.CreateAddStorageCapacityRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 OracleDatabaseArmOperation<CloudExadataInfrastructureResource> operation = new OracleDatabaseArmOperation<CloudExadataInfrastructureResource>(
                     new CloudExadataInfrastructureResourceOperationSource(Client),
@@ -552,7 +552,7 @@ namespace Azure.ResourceManager.OracleDatabase
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _cloudExadataInfrastructuresRestClient.CreateConfigureExascaleRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ConfigureExascaleCloudExadataInfrastructureDetails.ToRequestContent(details), context);
+                using HttpMessage message = _cloudExadataInfrastructuresRestClient.CreateConfigureExascaleRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ConfigureExascaleCloudExadataInfrastructureDetails.ToRequestContent(details), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 OracleDatabaseArmOperation<CloudExadataInfrastructureResource> operation = new OracleDatabaseArmOperation<CloudExadataInfrastructureResource>(
                     new CloudExadataInfrastructureResourceOperationSource(Client),
@@ -611,7 +611,7 @@ namespace Azure.ResourceManager.OracleDatabase
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _cloudExadataInfrastructuresRestClient.CreateConfigureExascaleRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ConfigureExascaleCloudExadataInfrastructureDetails.ToRequestContent(details), context);
+                using HttpMessage message = _cloudExadataInfrastructuresRestClient.CreateConfigureExascaleRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ConfigureExascaleCloudExadataInfrastructureDetails.ToRequestContent(details), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 OracleDatabaseArmOperation<CloudExadataInfrastructureResource> operation = new OracleDatabaseArmOperation<CloudExadataInfrastructureResource>(
                     new CloudExadataInfrastructureResourceOperationSource(Client),
@@ -656,7 +656,7 @@ namespace Azure.ResourceManager.OracleDatabase
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _cloudExadataInfrastructuresRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _cloudExadataInfrastructuresRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<CloudExadataInfrastructureData> response = Response.FromValue(CloudExadataInfrastructureData.FromResponse(result), result);
                     return Response.FromValue(new CloudExadataInfrastructureResource(Client, response.Value), response.GetRawResponse());
@@ -704,7 +704,7 @@ namespace Azure.ResourceManager.OracleDatabase
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _cloudExadataInfrastructuresRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _cloudExadataInfrastructuresRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<CloudExadataInfrastructureData> response = Response.FromValue(CloudExadataInfrastructureData.FromResponse(result), result);
                     return Response.FromValue(new CloudExadataInfrastructureResource(Client, response.Value), response.GetRawResponse());
@@ -750,7 +750,7 @@ namespace Azure.ResourceManager.OracleDatabase
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _cloudExadataInfrastructuresRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _cloudExadataInfrastructuresRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<CloudExadataInfrastructureData> response = Response.FromValue(CloudExadataInfrastructureData.FromResponse(result), result);
                     return Response.FromValue(new CloudExadataInfrastructureResource(Client, response.Value), response.GetRawResponse());
@@ -792,7 +792,7 @@ namespace Azure.ResourceManager.OracleDatabase
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _cloudExadataInfrastructuresRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _cloudExadataInfrastructuresRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<CloudExadataInfrastructureData> response = Response.FromValue(CloudExadataInfrastructureData.FromResponse(result), result);
                     return Response.FromValue(new CloudExadataInfrastructureResource(Client, response.Value), response.GetRawResponse());
@@ -834,7 +834,7 @@ namespace Azure.ResourceManager.OracleDatabase
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _cloudExadataInfrastructuresRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _cloudExadataInfrastructuresRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<CloudExadataInfrastructureData> response = Response.FromValue(CloudExadataInfrastructureData.FromResponse(result), result);
                     return Response.FromValue(new CloudExadataInfrastructureResource(Client, response.Value), response.GetRawResponse());
@@ -880,7 +880,7 @@ namespace Azure.ResourceManager.OracleDatabase
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _cloudExadataInfrastructuresRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _cloudExadataInfrastructuresRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<CloudExadataInfrastructureData> response = Response.FromValue(CloudExadataInfrastructureData.FromResponse(result), result);
                     return Response.FromValue(new CloudExadataInfrastructureResource(Client, response.Value), response.GetRawResponse());

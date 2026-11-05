@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serviceEndpointPolicyDefinitionsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, serviceEndpointPolicyDefinitionName, ServiceEndpointPolicyDefinitionData.ToRequestContent(data), context);
+                using HttpMessage message = _serviceEndpointPolicyDefinitionsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, serviceEndpointPolicyDefinitionName, ServiceEndpointPolicyDefinitionData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NetworkArmOperation<ServiceEndpointPolicyDefinitionResource> operation = new NetworkArmOperation<ServiceEndpointPolicyDefinitionResource>(
                     new ServiceEndpointPolicyDefinitionResourceOperationSource(Client),
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serviceEndpointPolicyDefinitionsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, serviceEndpointPolicyDefinitionName, ServiceEndpointPolicyDefinitionData.ToRequestContent(data), context);
+                using HttpMessage message = _serviceEndpointPolicyDefinitionsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, serviceEndpointPolicyDefinitionName, ServiceEndpointPolicyDefinitionData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NetworkArmOperation<ServiceEndpointPolicyDefinitionResource> operation = new NetworkArmOperation<ServiceEndpointPolicyDefinitionResource>(
                     new ServiceEndpointPolicyDefinitionResourceOperationSource(Client),
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serviceEndpointPolicyDefinitionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, serviceEndpointPolicyDefinitionName, context);
+                using HttpMessage message = _serviceEndpointPolicyDefinitionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, serviceEndpointPolicyDefinitionName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ServiceEndpointPolicyDefinitionData> response = Response.FromValue(ServiceEndpointPolicyDefinitionData.FromResponse(result), result);
                 if (response.Value == null)
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serviceEndpointPolicyDefinitionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, serviceEndpointPolicyDefinitionName, context);
+                using HttpMessage message = _serviceEndpointPolicyDefinitionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, serviceEndpointPolicyDefinitionName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ServiceEndpointPolicyDefinitionData> response = Response.FromValue(ServiceEndpointPolicyDefinitionData.FromResponse(result), result);
                 if (response.Value == null)
@@ -369,7 +369,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serviceEndpointPolicyDefinitionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, serviceEndpointPolicyDefinitionName, context);
+                using HttpMessage message = _serviceEndpointPolicyDefinitionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, serviceEndpointPolicyDefinitionName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ServiceEndpointPolicyDefinitionData> response = default;
@@ -426,7 +426,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serviceEndpointPolicyDefinitionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, serviceEndpointPolicyDefinitionName, context);
+                using HttpMessage message = _serviceEndpointPolicyDefinitionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, serviceEndpointPolicyDefinitionName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ServiceEndpointPolicyDefinitionData> response = default;
@@ -483,7 +483,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serviceEndpointPolicyDefinitionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, serviceEndpointPolicyDefinitionName, context);
+                using HttpMessage message = _serviceEndpointPolicyDefinitionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, serviceEndpointPolicyDefinitionName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ServiceEndpointPolicyDefinitionData> response = default;
@@ -544,7 +544,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serviceEndpointPolicyDefinitionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, serviceEndpointPolicyDefinitionName, context);
+                using HttpMessage message = _serviceEndpointPolicyDefinitionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, serviceEndpointPolicyDefinitionName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ServiceEndpointPolicyDefinitionData> response = default;

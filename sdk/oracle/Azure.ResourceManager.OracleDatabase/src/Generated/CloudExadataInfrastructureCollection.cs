@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.OracleDatabase
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _cloudExadataInfrastructuresRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, cloudexadatainfrastructurename, CloudExadataInfrastructureData.ToRequestContent(data), context);
+                using HttpMessage message = _cloudExadataInfrastructuresRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, cloudexadatainfrastructurename, CloudExadataInfrastructureData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 OracleDatabaseArmOperation<CloudExadataInfrastructureResource> operation = new OracleDatabaseArmOperation<CloudExadataInfrastructureResource>(
                     new CloudExadataInfrastructureResourceOperationSource(Client),
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.OracleDatabase
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _cloudExadataInfrastructuresRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, cloudexadatainfrastructurename, CloudExadataInfrastructureData.ToRequestContent(data), context);
+                using HttpMessage message = _cloudExadataInfrastructuresRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, cloudexadatainfrastructurename, CloudExadataInfrastructureData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 OracleDatabaseArmOperation<CloudExadataInfrastructureResource> operation = new OracleDatabaseArmOperation<CloudExadataInfrastructureResource>(
                     new CloudExadataInfrastructureResourceOperationSource(Client),
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.OracleDatabase
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _cloudExadataInfrastructuresRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, cloudexadatainfrastructurename, context);
+                using HttpMessage message = _cloudExadataInfrastructuresRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, cloudexadatainfrastructurename, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<CloudExadataInfrastructureData> response = Response.FromValue(CloudExadataInfrastructureData.FromResponse(result), result);
                 if (response.Value == null)
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.OracleDatabase
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _cloudExadataInfrastructuresRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, cloudexadatainfrastructurename, context);
+                using HttpMessage message = _cloudExadataInfrastructuresRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, cloudexadatainfrastructurename, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<CloudExadataInfrastructureData> response = Response.FromValue(CloudExadataInfrastructureData.FromResponse(result), result);
                 if (response.Value == null)
@@ -357,7 +357,7 @@ namespace Azure.ResourceManager.OracleDatabase
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _cloudExadataInfrastructuresRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, cloudexadatainfrastructurename, context);
+                using HttpMessage message = _cloudExadataInfrastructuresRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, cloudexadatainfrastructurename, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<CloudExadataInfrastructureData> response = default;
@@ -414,7 +414,7 @@ namespace Azure.ResourceManager.OracleDatabase
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _cloudExadataInfrastructuresRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, cloudexadatainfrastructurename, context);
+                using HttpMessage message = _cloudExadataInfrastructuresRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, cloudexadatainfrastructurename, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<CloudExadataInfrastructureData> response = default;
@@ -471,7 +471,7 @@ namespace Azure.ResourceManager.OracleDatabase
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _cloudExadataInfrastructuresRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, cloudexadatainfrastructurename, context);
+                using HttpMessage message = _cloudExadataInfrastructuresRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, cloudexadatainfrastructurename, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<CloudExadataInfrastructureData> response = default;
@@ -532,7 +532,7 @@ namespace Azure.ResourceManager.OracleDatabase
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _cloudExadataInfrastructuresRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, cloudexadatainfrastructurename, context);
+                using HttpMessage message = _cloudExadataInfrastructuresRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, cloudexadatainfrastructurename, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<CloudExadataInfrastructureData> response = default;

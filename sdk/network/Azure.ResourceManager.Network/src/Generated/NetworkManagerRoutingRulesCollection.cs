@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Network
     /// <summary>
     /// A class representing a collection of <see cref="NetworkManagerRoutingRulesResource"/> and their operations.
     /// Each <see cref="NetworkManagerRoutingRulesResource"/> in the collection will belong to the same instance of <see cref="NetworkManagerRoutingConfigurationResource"/>.
-    /// To get a <see cref="NetworkManagerRoutingRulesCollection"/> instance call the GetNetworkManagerRoutingRules method from an instance of <see cref="NetworkManagerRoutingConfigurationResource"/>.
+    /// To get a <see cref="NetworkManagerRoutingRulesCollection"/> instance call the GetAllNetworkManagerRoutingRules method from an instance of <see cref="NetworkManagerRoutingConfigurationResource"/>.
     /// </summary>
     public partial class NetworkManagerRoutingRulesCollection : ArmCollection, IEnumerable<NetworkManagerRoutingRulesResource>, IAsyncEnumerable<NetworkManagerRoutingRulesResource>
     {
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _routingRuleCollectionsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ruleCollectionName, NetworkManagerRoutingRulesData.ToRequestContent(data), context);
+                using HttpMessage message = _routingRuleCollectionsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ruleCollectionName, NetworkManagerRoutingRulesData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<NetworkManagerRoutingRulesData> response = Response.FromValue(NetworkManagerRoutingRulesData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _routingRuleCollectionsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ruleCollectionName, NetworkManagerRoutingRulesData.ToRequestContent(data), context);
+                using HttpMessage message = _routingRuleCollectionsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ruleCollectionName, NetworkManagerRoutingRulesData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<NetworkManagerRoutingRulesData> response = Response.FromValue(NetworkManagerRoutingRulesData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _routingRuleCollectionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ruleCollectionName, context);
+                using HttpMessage message = _routingRuleCollectionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ruleCollectionName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<NetworkManagerRoutingRulesData> response = Response.FromValue(NetworkManagerRoutingRulesData.FromResponse(result), result);
                 if (response.Value == null)
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _routingRuleCollectionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ruleCollectionName, context);
+                using HttpMessage message = _routingRuleCollectionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ruleCollectionName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<NetworkManagerRoutingRulesData> response = Response.FromValue(NetworkManagerRoutingRulesData.FromResponse(result), result);
                 if (response.Value == null)
@@ -373,7 +373,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _routingRuleCollectionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ruleCollectionName, context);
+                using HttpMessage message = _routingRuleCollectionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ruleCollectionName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<NetworkManagerRoutingRulesData> response = default;
@@ -430,7 +430,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _routingRuleCollectionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ruleCollectionName, context);
+                using HttpMessage message = _routingRuleCollectionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ruleCollectionName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<NetworkManagerRoutingRulesData> response = default;
@@ -487,7 +487,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _routingRuleCollectionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ruleCollectionName, context);
+                using HttpMessage message = _routingRuleCollectionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ruleCollectionName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<NetworkManagerRoutingRulesData> response = default;
@@ -548,7 +548,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _routingRuleCollectionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ruleCollectionName, context);
+                using HttpMessage message = _routingRuleCollectionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ruleCollectionName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<NetworkManagerRoutingRulesData> response = default;

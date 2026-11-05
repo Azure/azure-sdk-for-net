@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.OnlineExperimentation
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _onlineExperimentationWorkspacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _onlineExperimentationWorkspacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<OnlineExperimentationWorkspaceData> response = Response.FromValue(OnlineExperimentationWorkspaceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.OnlineExperimentation
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _onlineExperimentationWorkspacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _onlineExperimentationWorkspacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<OnlineExperimentationWorkspaceData> response = Response.FromValue(OnlineExperimentationWorkspaceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.OnlineExperimentation
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _onlineExperimentationWorkspacesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, OnlineExperimentationWorkspacePatch.ToRequestContent(patch), context);
+                using HttpMessage message = _onlineExperimentationWorkspacesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, OnlineExperimentationWorkspacePatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 OnlineExperimentationArmOperation<OnlineExperimentationWorkspaceResource> operation = new OnlineExperimentationArmOperation<OnlineExperimentationWorkspaceResource>(
                     new OnlineExperimentationWorkspaceResourceOperationSource(Client),
@@ -285,7 +285,7 @@ namespace Azure.ResourceManager.OnlineExperimentation
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _onlineExperimentationWorkspacesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, OnlineExperimentationWorkspacePatch.ToRequestContent(patch), context);
+                using HttpMessage message = _onlineExperimentationWorkspacesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, OnlineExperimentationWorkspacePatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 OnlineExperimentationArmOperation<OnlineExperimentationWorkspaceResource> operation = new OnlineExperimentationArmOperation<OnlineExperimentationWorkspaceResource>(
                     new OnlineExperimentationWorkspaceResourceOperationSource(Client),
@@ -340,7 +340,7 @@ namespace Azure.ResourceManager.OnlineExperimentation
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _onlineExperimentationWorkspacesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _onlineExperimentationWorkspacesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 OnlineExperimentationArmOperation operation = new OnlineExperimentationArmOperation(_onlineExperimentationWorkspacesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -389,7 +389,7 @@ namespace Azure.ResourceManager.OnlineExperimentation
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _onlineExperimentationWorkspacesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _onlineExperimentationWorkspacesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 OnlineExperimentationArmOperation operation = new OnlineExperimentationArmOperation(_onlineExperimentationWorkspacesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -428,7 +428,7 @@ namespace Azure.ResourceManager.OnlineExperimentation
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _onlineExperimentationWorkspacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _onlineExperimentationWorkspacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<OnlineExperimentationWorkspaceData> response = Response.FromValue(OnlineExperimentationWorkspaceData.FromResponse(result), result);
                     return Response.FromValue(new OnlineExperimentationWorkspaceResource(Client, response.Value), response.GetRawResponse());
@@ -476,7 +476,7 @@ namespace Azure.ResourceManager.OnlineExperimentation
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _onlineExperimentationWorkspacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _onlineExperimentationWorkspacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<OnlineExperimentationWorkspaceData> response = Response.FromValue(OnlineExperimentationWorkspaceData.FromResponse(result), result);
                     return Response.FromValue(new OnlineExperimentationWorkspaceResource(Client, response.Value), response.GetRawResponse());
@@ -522,7 +522,7 @@ namespace Azure.ResourceManager.OnlineExperimentation
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _onlineExperimentationWorkspacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _onlineExperimentationWorkspacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<OnlineExperimentationWorkspaceData> response = Response.FromValue(OnlineExperimentationWorkspaceData.FromResponse(result), result);
                     return Response.FromValue(new OnlineExperimentationWorkspaceResource(Client, response.Value), response.GetRawResponse());
@@ -564,7 +564,7 @@ namespace Azure.ResourceManager.OnlineExperimentation
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _onlineExperimentationWorkspacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _onlineExperimentationWorkspacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<OnlineExperimentationWorkspaceData> response = Response.FromValue(OnlineExperimentationWorkspaceData.FromResponse(result), result);
                     return Response.FromValue(new OnlineExperimentationWorkspaceResource(Client, response.Value), response.GetRawResponse());
@@ -606,7 +606,7 @@ namespace Azure.ResourceManager.OnlineExperimentation
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _onlineExperimentationWorkspacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _onlineExperimentationWorkspacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<OnlineExperimentationWorkspaceData> response = Response.FromValue(OnlineExperimentationWorkspaceData.FromResponse(result), result);
                     return Response.FromValue(new OnlineExperimentationWorkspaceResource(Client, response.Value), response.GetRawResponse());
@@ -652,7 +652,7 @@ namespace Azure.ResourceManager.OnlineExperimentation
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _onlineExperimentationWorkspacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _onlineExperimentationWorkspacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<OnlineExperimentationWorkspaceData> response = Response.FromValue(OnlineExperimentationWorkspaceData.FromResponse(result), result);
                     return Response.FromValue(new OnlineExperimentationWorkspaceResource(Client, response.Value), response.GetRawResponse());

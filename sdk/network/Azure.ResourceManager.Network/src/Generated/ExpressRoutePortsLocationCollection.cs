@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _expressRoutePortsLocationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), locationName, context);
+                using HttpMessage message = _expressRoutePortsLocationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), locationName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ExpressRoutePortsLocationData> response = Response.FromValue(ExpressRoutePortsLocationData.FromResponse(result), result);
                 if (response.Value == null)
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _expressRoutePortsLocationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), locationName, context);
+                using HttpMessage message = _expressRoutePortsLocationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), locationName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ExpressRoutePortsLocationData> response = Response.FromValue(ExpressRoutePortsLocationData.FromResponse(result), result);
                 if (response.Value == null)
@@ -242,7 +242,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _expressRoutePortsLocationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), locationName, context);
+                using HttpMessage message = _expressRoutePortsLocationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), locationName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ExpressRoutePortsLocationData> response = default;
@@ -299,7 +299,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _expressRoutePortsLocationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), locationName, context);
+                using HttpMessage message = _expressRoutePortsLocationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), locationName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ExpressRoutePortsLocationData> response = default;
@@ -356,7 +356,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _expressRoutePortsLocationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), locationName, context);
+                using HttpMessage message = _expressRoutePortsLocationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), locationName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ExpressRoutePortsLocationData> response = default;
@@ -417,7 +417,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _expressRoutePortsLocationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), locationName, context);
+                using HttpMessage message = _expressRoutePortsLocationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), locationName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ExpressRoutePortsLocationData> response = default;

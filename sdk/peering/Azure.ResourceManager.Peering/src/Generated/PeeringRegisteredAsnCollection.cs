@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Peering
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _registeredAsnsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, registeredAsnName, PeeringRegisteredAsnData.ToRequestContent(data), context);
+                using HttpMessage message = _registeredAsnsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, registeredAsnName, PeeringRegisteredAsnData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<PeeringRegisteredAsnData> response = Response.FromValue(PeeringRegisteredAsnData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.Peering
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _registeredAsnsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, registeredAsnName, PeeringRegisteredAsnData.ToRequestContent(data), context);
+                using HttpMessage message = _registeredAsnsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, registeredAsnName, PeeringRegisteredAsnData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<PeeringRegisteredAsnData> response = Response.FromValue(PeeringRegisteredAsnData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.Peering
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _registeredAsnsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, registeredAsnName, context);
+                using HttpMessage message = _registeredAsnsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, registeredAsnName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<PeeringRegisteredAsnData> response = Response.FromValue(PeeringRegisteredAsnData.FromResponse(result), result);
                 if (response.Value == null)
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.Peering
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _registeredAsnsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, registeredAsnName, context);
+                using HttpMessage message = _registeredAsnsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, registeredAsnName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<PeeringRegisteredAsnData> response = Response.FromValue(PeeringRegisteredAsnData.FromResponse(result), result);
                 if (response.Value == null)
@@ -363,7 +363,7 @@ namespace Azure.ResourceManager.Peering
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _registeredAsnsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, registeredAsnName, context);
+                using HttpMessage message = _registeredAsnsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, registeredAsnName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<PeeringRegisteredAsnData> response = default;
@@ -420,7 +420,7 @@ namespace Azure.ResourceManager.Peering
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _registeredAsnsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, registeredAsnName, context);
+                using HttpMessage message = _registeredAsnsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, registeredAsnName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<PeeringRegisteredAsnData> response = default;
@@ -477,7 +477,7 @@ namespace Azure.ResourceManager.Peering
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _registeredAsnsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, registeredAsnName, context);
+                using HttpMessage message = _registeredAsnsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, registeredAsnName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<PeeringRegisteredAsnData> response = default;
@@ -538,7 +538,7 @@ namespace Azure.ResourceManager.Peering
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _registeredAsnsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, registeredAsnName, context);
+                using HttpMessage message = _registeredAsnsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, registeredAsnName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<PeeringRegisteredAsnData> response = default;

@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _expressRouteCrossConnectionPeeringsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _expressRouteCrossConnectionPeeringsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ExpressRouteCrossConnectionPeeringData> response = Response.FromValue(ExpressRouteCrossConnectionPeeringData.FromResponse(result), result);
                 if (response.Value == null)
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _expressRouteCrossConnectionPeeringsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _expressRouteCrossConnectionPeeringsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ExpressRouteCrossConnectionPeeringData> response = Response.FromValue(ExpressRouteCrossConnectionPeeringData.FromResponse(result), result);
                 if (response.Value == null)
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _expressRouteCrossConnectionPeeringsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _expressRouteCrossConnectionPeeringsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NetworkArmOperation operation = new NetworkArmOperation(_expressRouteCrossConnectionPeeringsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -274,7 +274,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _expressRouteCrossConnectionPeeringsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _expressRouteCrossConnectionPeeringsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NetworkArmOperation operation = new NetworkArmOperation(_expressRouteCrossConnectionPeeringsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -328,7 +328,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _expressRouteCrossConnectionsRestClient.CreateGetArpTableExpressRouteCrossConnectionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, devicePath, context);
+                using HttpMessage message = _expressRouteCrossConnectionsRestClient.CreateGetArpTableExpressRouteCrossConnectionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, devicePath, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NetworkArmOperation<ExpressRouteCircuitsArpTableListResult> operation = new NetworkArmOperation<ExpressRouteCircuitsArpTableListResult>(
                     new ExpressRouteCircuitsArpTableListResultOperationSource(),
@@ -388,7 +388,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _expressRouteCrossConnectionsRestClient.CreateGetArpTableExpressRouteCrossConnectionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, devicePath, context);
+                using HttpMessage message = _expressRouteCrossConnectionsRestClient.CreateGetArpTableExpressRouteCrossConnectionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, devicePath, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NetworkArmOperation<ExpressRouteCircuitsArpTableListResult> operation = new NetworkArmOperation<ExpressRouteCircuitsArpTableListResult>(
                     new ExpressRouteCircuitsArpTableListResultOperationSource(),
@@ -448,7 +448,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _expressRouteCrossConnectionsRestClient.CreateGetRoutesTableExpressRouteCrossConnectionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, devicePath, context);
+                using HttpMessage message = _expressRouteCrossConnectionsRestClient.CreateGetRoutesTableExpressRouteCrossConnectionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, devicePath, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NetworkArmOperation<ExpressRouteCircuitsRoutesTableListResult> operation = new NetworkArmOperation<ExpressRouteCircuitsRoutesTableListResult>(
                     new ExpressRouteCircuitsRoutesTableListResultOperationSource(),
@@ -508,7 +508,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _expressRouteCrossConnectionsRestClient.CreateGetRoutesTableExpressRouteCrossConnectionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, devicePath, context);
+                using HttpMessage message = _expressRouteCrossConnectionsRestClient.CreateGetRoutesTableExpressRouteCrossConnectionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, devicePath, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NetworkArmOperation<ExpressRouteCircuitsRoutesTableListResult> operation = new NetworkArmOperation<ExpressRouteCircuitsRoutesTableListResult>(
                     new ExpressRouteCircuitsRoutesTableListResultOperationSource(),
@@ -568,7 +568,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _expressRouteCrossConnectionsRestClient.CreateGetRoutesTableSummaryExpressRouteCrossConnectionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, devicePath, context);
+                using HttpMessage message = _expressRouteCrossConnectionsRestClient.CreateGetRoutesTableSummaryExpressRouteCrossConnectionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, devicePath, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NetworkArmOperation<ExpressRouteCrossConnectionsRoutesTableSummaryListResult> operation = new NetworkArmOperation<ExpressRouteCrossConnectionsRoutesTableSummaryListResult>(
                     new ExpressRouteCrossConnectionsRoutesTableSummaryListResultOperationSource(),
@@ -628,7 +628,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _expressRouteCrossConnectionsRestClient.CreateGetRoutesTableSummaryExpressRouteCrossConnectionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, devicePath, context);
+                using HttpMessage message = _expressRouteCrossConnectionsRestClient.CreateGetRoutesTableSummaryExpressRouteCrossConnectionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, devicePath, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NetworkArmOperation<ExpressRouteCrossConnectionsRoutesTableSummaryListResult> operation = new NetworkArmOperation<ExpressRouteCrossConnectionsRoutesTableSummaryListResult>(
                     new ExpressRouteCrossConnectionsRoutesTableSummaryListResultOperationSource(),
@@ -687,7 +687,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _expressRouteCrossConnectionPeeringsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ExpressRouteCrossConnectionPeeringData.ToRequestContent(data), context);
+                using HttpMessage message = _expressRouteCrossConnectionPeeringsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ExpressRouteCrossConnectionPeeringData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NetworkArmOperation<ExpressRouteCrossConnectionPeeringResource> operation = new NetworkArmOperation<ExpressRouteCrossConnectionPeeringResource>(
                     new ExpressRouteCrossConnectionPeeringResourceOperationSource(Client),
@@ -746,7 +746,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _expressRouteCrossConnectionPeeringsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ExpressRouteCrossConnectionPeeringData.ToRequestContent(data), context);
+                using HttpMessage message = _expressRouteCrossConnectionPeeringsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ExpressRouteCrossConnectionPeeringData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NetworkArmOperation<ExpressRouteCrossConnectionPeeringResource> operation = new NetworkArmOperation<ExpressRouteCrossConnectionPeeringResource>(
                     new ExpressRouteCrossConnectionPeeringResourceOperationSource(Client),
