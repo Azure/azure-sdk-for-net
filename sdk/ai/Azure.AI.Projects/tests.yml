@@ -1,3 +1,4 @@
+# cspell:ignore pscore
 trigger: none
 pr: none
 
@@ -23,9 +24,8 @@ parameters:
       - 3
       - 4
   - name: identityResourceGroup
-    displayName: 'Resource group with shared identities (optional, kept for parity with Python pipeline)'
+    displayName: 'Existing resource group with the Python pipeline shared identities'
     type: string
-    default: ''
   - name: modelName
     displayName: 'Model deployment name'
     type: string
@@ -56,11 +56,17 @@ extends:
         ServiceConnection: azure-sdk-tests
     Location: 'East US'
     MaxParallel: ${{ parameters.testQueueCount }}
+    TimeoutInMinutes: 120
     DeployTestResources: false
     UseFederatedAuth: true
-    IgnoreTestFailures: true
+    IgnoreTestFailures: false
     EnvVars:
       CLIENTMODEL_TEST_MODE: Live
+      FOUNDRY_PROJECT_ENDPOINT: $(FOUNDRY_PROJECT_ENDPOINT)
+      FOUNDRY_MODEL_NAME: $(FOUNDRY_MODEL_NAME)
+      FOUNDRY_AGENT_NAME: $(FOUNDRY_AGENT_NAME)
+      AZURE_SUBSCRIPTION_ID: $(AZURE_SUBSCRIPTION_ID)
+      AZURE_TENANT_ID: $(AZURE_TENANT_ID)
     MatrixConfigs:
       - Name: ai_projects_samples_single_run
         Path: sdk/ai/Azure.AI.Projects/tests/Samples/ci/sample-slice-matrix.json
@@ -73,8 +79,8 @@ extends:
       - AdditionalTestFilters=^\(\(FullyQualifiedName~Azure\.AI\.(Projects\.Tests\.Samples|Projects\.Agents\.Tests\.Samples|Extensions\.OpenAI\.Tests\.Samples).*$
     PreSteps:
       - pwsh: |
-          $selectionKind = '${{ parameters.selectionKind }}'
-          $selection = '${{ parameters.selection }}'
+          $selectionKind = $env:SAMPLE_SELECTION_KIND
+          $selection = $env:SAMPLE_SELECTION
 
           if ([string]::IsNullOrWhiteSpace($selection)) {
             throw 'selection must not be empty.'
@@ -106,28 +112,65 @@ extends:
             $additionalTestFilters = '(' + ($uniqueFilters -join '|') + ')'
           }
           elseif ($selectionKind -eq 'test-id') {
-            $additionalTestFilters = $selection
+            $additionalTestFilters = '(' + ($items -join '|') + ')'
           }
           else {
             throw "Unsupported selectionKind: $selectionKind"
           }
 
-          if (-not [string]::IsNullOrWhiteSpace($env:AdditionalTestFilters)) {
-            $additionalTestFilters = $env:AdditionalTestFilters
+          if ([string]::IsNullOrWhiteSpace($env:SAMPLE_SLICE_FILTER)) {
+            throw 'The worker matrix must provide a sample slice filter.'
           }
-
-          $validationEndpoint = $env:LLM_VALIDATION_PROJECT_ENDPOINT
-          if ([string]::IsNullOrWhiteSpace($validationEndpoint)) {
-            throw 'Set LLM_VALIDATION_PROJECT_ENDPOINT in the pipeline variables.'
-          }
+          $additionalTestFilters = "($additionalTestFilters)&($env:SAMPLE_SLICE_FILTER)"
 
           Write-Host "Using AdditionalTestFilters: $additionalTestFilters"
-          Write-Host "##vso[task.setvariable variable=FOUNDRY_PROJECT_ENDPOINT]$validationEndpoint"
-          Write-Host "##vso[task.setvariable variable=FOUNDRY_MODEL_NAME]${{ parameters.modelName }}"
-          Write-Host "##vso[task.setvariable variable=FOUNDRY_AGENT_NAME]sample-agent"
+          Write-Host "##vso[task.setvariable variable=AdditionalTestFilters]$additionalTestFilters"
         displayName: 'Prepare sample test filter and deployment parameters'
+        env:
+          SAMPLE_SELECTION_KIND: ${{ parameters.selectionKind }}
+          SAMPLE_SELECTION: ${{ parameters.selection }}
+          SAMPLE_SLICE_FILTER: $(AdditionalTestFilters)
+      - task: AzureCLI@2
+        displayName: 'Provision Standard Foundry and model with shared identities'
+        inputs:
+          azureSubscription: azure-sdk-tests
+          scriptType: pscore
+          scriptLocation: inlineScript
+          inlineScript: |
+            & './sdk/ai/Azure.AI.Projects/tests/Samples/ci/Invoke-StandardProvisioning.ps1' `
+              -OutputDirectory $env:STANDARD_FOUNDRY_DIRECTORY `
+              -IdentityResourceGroup $env:SAMPLE_IDENTITY_RESOURCE_GROUP -QueueName $env:SAMPLE_QUEUE_NAME `
+              -ModelName $env:SAMPLE_MODEL_NAME -ModelVersion $env:SAMPLE_MODEL_VERSION `
+              -ModelSku $env:SAMPLE_MODEL_SKU -ModelCapacity ([int] $env:SAMPLE_MODEL_CAPACITY) -ConfirmProvisioning
+        env:
+          STANDARD_FOUNDRY_DIRECTORY: $(Build.ArtifactStagingDirectory)/standard-foundry
+          AZURE_SUBSCRIPTION_ID: $(AZURE_SUBSCRIPTION_ID)
+          AZURE_TENANT_ID: $(AZURE_TENANT_ID)
+          SAMPLE_QUEUE_NAME: $(SampleQueueName)
+          SAMPLE_IDENTITY_RESOURCE_GROUP: ${{ parameters.identityResourceGroup }}
+          SAMPLE_MODEL_NAME: ${{ parameters.modelName }}
+          SAMPLE_MODEL_VERSION: ${{ parameters.modelVersion }}
+          SAMPLE_MODEL_SKU: ${{ parameters.modelSku }}
+          SAMPLE_MODEL_CAPACITY: ${{ parameters.modelCapacity }}
     PostSteps:
+      - task: AzureCLI@2
+        displayName: 'Clean up this worker Standard Foundry resources'
+        condition: always()
+        inputs:
+          azureSubscription: azure-sdk-tests
+          scriptType: pscore
+          scriptLocation: inlineScript
+          inlineScript: |
+            & './sdk/ai/Azure.AI.Projects/tests/Samples/ci/Remove-SampleResources.ps1' `
+              -StatePath (Join-Path $env:STANDARD_FOUNDRY_DIRECTORY 'deployment-state.json') `
+              -QueueName $env:SAMPLE_QUEUE_NAME -ConfirmCleanup
+        env:
+          STANDARD_FOUNDRY_DIRECTORY: $(Build.ArtifactStagingDirectory)/standard-foundry
+          AZURE_SUBSCRIPTION_ID: $(AZURE_SUBSCRIPTION_ID)
+          AZURE_TENANT_ID: $(AZURE_TENANT_ID)
+          SAMPLE_QUEUE_NAME: $(SampleQueueName)
       - pwsh: |
+          New-Item -ItemType Directory -Force -Path '$(Build.ArtifactStagingDirectory)/standard-foundry' | Out-Null
           $artifactDir = Join-Path '$(Build.ArtifactStagingDirectory)' 'sample-console-output'
           New-Item -ItemType Directory -Force -Path $artifactDir | Out-Null
 
@@ -165,6 +208,13 @@ extends:
           }
         displayName: 'Collect sample Console.WriteLine output'
         condition: always()
+
+      - template: /eng/common/pipelines/templates/steps/publish-1es-artifact.yml
+        parameters:
+          CustomCondition: always()
+          ArtifactPath: '$(Build.ArtifactStagingDirectory)/standard-foundry'
+          ArtifactName: 'standard-foundry-$(Agent.JobName)-$(System.JobAttempt)'
+          SbomEnabled: false
 
       - template: /eng/common/pipelines/templates/steps/publish-1es-artifact.yml
         parameters:
