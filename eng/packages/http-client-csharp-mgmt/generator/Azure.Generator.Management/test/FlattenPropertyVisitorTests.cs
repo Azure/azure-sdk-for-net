@@ -1923,6 +1923,132 @@ namespace Azure.Generator.Mgmt.Tests
         }
 
         /// <summary>
+        /// Regression test for https://github.com/Azure/azure-sdk-for-net/issues/63548.
+        ///
+        /// When an optional wrapper with a single required non-nullable reference-type property is
+        /// safe-flattened, assigning null to the flattened property should clear the
+        /// wrapper instead of invoking its required-argument constructor with null.
+        /// </summary>
+        [Test]
+        public void TestSafeFlattenNullAssignmentClearsOptionalWrapperForRequiredNonNullableReferenceProperty()
+        {
+            var valueProperty = InputFactory.Property(
+                "value",
+                InputPrimitiveType.String,
+                isRequired: true,
+                serializedName: "value");
+
+            var wrapperModel = InputFactory.Model(
+                "WrapperModel",
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json,
+                properties: [valueProperty]);
+
+            var wrapperProperty = InputFactory.Property(
+                "wrapper",
+                wrapperModel,
+                isRequired: false,
+                serializedName: "wrapper");
+
+            var parentModel = InputFactory.Model(
+                "ParentModel",
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json,
+                properties: [wrapperProperty]);
+
+            var plugin = ManagementMockHelpers.LoadMockPlugin(
+                inputModels: () => [parentModel, wrapperModel]);
+
+            var parentProvider = plugin.Object.TypeFactory.CreateModel(parentModel);
+            Assert.That(parentProvider, Is.Not.Null);
+
+            var visitTypeCore = typeof(LibraryVisitor).GetMethod(
+                "VisitTypeCore",
+                BindingFlags.NonPublic | BindingFlags.Instance);
+            Assert.That(visitTypeCore, Is.Not.Null);
+
+            foreach (var visitor in ManagementClientGenerator.Instance.Visitors)
+            {
+                visitTypeCore!.Invoke(visitor, [parentProvider!]);
+            }
+
+            var rendered = new TypeProviderWriter(parentProvider!).Write().Content;
+
+            Assert.That(
+                rendered,
+                Does.Match(@"value\s+is\s+null"),
+                "The safe-flattened setter should explicitly handle null assignment.");
+
+            Assert.That(
+                rendered,
+                Does.Match(@"Wrapper\s*=\s*(?:\(value\s+is\s+null\)|value\s+is\s+null)\s*\?\s*default\s*:"),
+                "Null assignment should clear the optional wrapper before constructing it.");
+
+            Assert.That(
+                rendered,
+                Does.Match(@"new\s+[\w\.:]*WrapperModel\s*\(\s*value\s*\)"),
+                "Non-null assignment should continue to construct the required wrapper.");
+        }
+
+        /// <summary>
+        /// Verifies that a required nullable reference leaf keeps the existing
+        /// wrapper-construction setter semantics. Unlike #63548, constructing
+        /// the wrapper with null is valid and represents a present wrapper whose
+        /// required child is null.
+        /// </summary>
+        [Test]
+        public void TestSafeFlattenNullAssignmentPreservesWrapperForRequiredNullableReferenceProperty()
+        {
+            var valueProperty = InputFactory.Property(
+                "value",
+                new InputNullableType(InputPrimitiveType.String),
+                isRequired: true,
+                serializedName: "value");
+
+            var wrapperModel = InputFactory.Model(
+                "NullableWrapperModel",
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json,
+                properties: [valueProperty]);
+
+            var wrapperProperty = InputFactory.Property(
+                "wrapper",
+                wrapperModel,
+                isRequired: false,
+                serializedName: "wrapper");
+
+            var parentModel = InputFactory.Model(
+                "NullableParentModel",
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json,
+                properties: [wrapperProperty]);
+
+            var plugin = ManagementMockHelpers.LoadMockPlugin(
+                inputModels: () => [parentModel, wrapperModel]);
+
+            var parentProvider = plugin.Object.TypeFactory.CreateModel(parentModel);
+            Assert.That(parentProvider, Is.Not.Null);
+
+            var visitTypeCore = typeof(LibraryVisitor).GetMethod(
+                "VisitTypeCore",
+                BindingFlags.NonPublic | BindingFlags.Instance);
+            Assert.That(visitTypeCore, Is.Not.Null);
+
+            foreach (var visitor in ManagementClientGenerator.Instance.Visitors)
+            {
+                visitTypeCore!.Invoke(visitor, [parentProvider!]);
+            }
+
+            var rendered = new TypeProviderWriter(parentProvider!).Write().Content;
+
+            Assert.That(
+                rendered,
+                Does.Not.Match(@"Wrapper\s*=\s*(?:\(value\s+is\s+null\)|value\s+is\s+null)\s*\?\s*default\s*:"),
+                "A required nullable leaf must not clear its optional wrapper.");
+
+            Assert.That(
+                rendered,
+                Does.Match(@"Wrapper\s*=\s*new\s+[\w\.:]*NullableWrapperModel\s*\(\s*value\s*\)"),
+                "Null remains a valid child value, so the setter should preserve wrapper construction.");
+        }
+
+        /// <summary>
         /// Verifies the fix for https://github.com/microsoft/typespec/issues/7380.
         ///
         /// When SafeFlatten chains across 3+ levels of single-property models the immediate

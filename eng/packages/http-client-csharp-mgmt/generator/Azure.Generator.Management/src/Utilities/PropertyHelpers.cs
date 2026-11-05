@@ -203,6 +203,17 @@ namespace Azure.Generator.Management.Utilities
                     });
                     setter.Add(internalPropertyExpression.Property(innerProperty.Name).Assign(Value).Terminate());
                 }
+                else if (internalProperty.WireInfo?.IsRequired == false && innerProperty.WireInfo?.IsRequired == true && !innerProperty.Type.IsNullable && !innerProperty.Type.IsValueType && !innerProperty.Type.IsCollection)
+                {
+                    // Safe-flatten has only one public leaf, so an absent reference value
+                    // represents an absent optional wrapper. Avoid constructing a required non-nullable leaf
+                    // wrapper with null, which would fail its constructor validation.
+                    setter.Add(internalPropertyExpression.Assign(
+                        new TernaryConditionalExpression(
+                            Value.Is(Null),
+                            Default,
+                            New.Instance(innerModel.Type!, Value))).Terminate());
+                }
                 else
                 {
                     setter.Add(internalPropertyExpression.Assign(New.Instance(innerModel.Type, Value)).Terminate());

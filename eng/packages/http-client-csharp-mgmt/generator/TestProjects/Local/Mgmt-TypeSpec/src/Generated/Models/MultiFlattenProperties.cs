@@ -68,7 +68,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
             }
             set
             {
-                Inner = new SafeFlattenInner(value);
+                Inner = value is null ? default : new SafeFlattenInner(value);
             }
         }
     }
