@@ -102,8 +102,19 @@ namespace Azure.AI.Extensions.OpenAI.Tests
 
         public override AuthenticationTokenProvider Credential => Mode switch
         {
-            RecordedTestMode.Live or RecordedTestMode.Record => new DefaultAzureCredential(),
+            RecordedTestMode.Live or RecordedTestMode.Record => CreateCredential(),
             _ => base.Credential
         };
+
+        private static AuthenticationTokenProvider CreateCredential()
+        {
+            string tenantId = Environment.GetEnvironmentVariable("AZURE_TENANT_ID");
+            if (!string.IsNullOrWhiteSpace(tenantId))
+            {
+                return new DefaultAzureCredential(new DefaultAzureCredentialOptions { TenantId = tenantId });
+            }
+
+            return new DefaultAzureCredential();
+        }
     }
 }
