@@ -9,57 +9,52 @@ using System.Text.Json;
 
 namespace Azure.AI.Projects.Agents
 {
-    /// <summary> Delegate tasks to a Responses model managed by the Live session. </summary>
-    public partial class LiveResponsesDelegationParam : LiveDelegation, IJsonModel<LiveResponsesDelegationParam>
+    /// <summary> Delegate tasks to your application. The Live session emits delegation events that your backend handles. </summary>
+    public partial class LiveSessionUpdateParamsDelegationLiveClientDelegationParam : LiveSessionUpdateParamsDelegation, IJsonModel<LiveSessionUpdateParamsDelegationLiveClientDelegationParam>
     {
-        /// <summary> Initializes a new instance of <see cref="LiveResponsesDelegationParam"/> for deserialization. </summary>
-        internal LiveResponsesDelegationParam()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override LiveDelegation PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override LiveSessionUpdateParamsDelegation PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<LiveResponsesDelegationParam>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<LiveSessionUpdateParamsDelegationLiveClientDelegationParam>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeLiveResponsesDelegationParam(document.RootElement, options);
+                        return DeserializeLiveSessionUpdateParamsDelegationLiveClientDelegationParam(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(LiveResponsesDelegationParam)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LiveSessionUpdateParamsDelegationLiveClientDelegationParam)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<LiveResponsesDelegationParam>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<LiveSessionUpdateParamsDelegationLiveClientDelegationParam>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureAIProjectsAgentsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(LiveResponsesDelegationParam)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LiveSessionUpdateParamsDelegationLiveClientDelegationParam)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<LiveResponsesDelegationParam>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<LiveSessionUpdateParamsDelegationLiveClientDelegationParam>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        LiveResponsesDelegationParam IPersistableModel<LiveResponsesDelegationParam>.Create(BinaryData data, ModelReaderWriterOptions options) => (LiveResponsesDelegationParam)PersistableModelCreateCore(data, options);
+        LiveSessionUpdateParamsDelegationLiveClientDelegationParam IPersistableModel<LiveSessionUpdateParamsDelegationLiveClientDelegationParam>.Create(BinaryData data, ModelReaderWriterOptions options) => (LiveSessionUpdateParamsDelegationLiveClientDelegationParam)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<LiveResponsesDelegationParam>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<LiveSessionUpdateParamsDelegationLiveClientDelegationParam>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<LiveResponsesDelegationParam>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<LiveSessionUpdateParamsDelegationLiveClientDelegationParam>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -70,10 +65,10 @@ namespace Azure.AI.Projects.Agents
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<LiveResponsesDelegationParam>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<LiveSessionUpdateParamsDelegationLiveClientDelegationParam>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LiveResponsesDelegationParam)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(LiveSessionUpdateParamsDelegationLiveClientDelegationParam)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(AcknowledgementDelayMs))
@@ -81,44 +76,41 @@ namespace Azure.AI.Projects.Agents
                 writer.WritePropertyName("acknowledgement_delay_ms"u8);
                 writer.WriteNumberValue(AcknowledgementDelayMs.Value);
             }
-            writer.WritePropertyName("responses"u8);
-            writer.WriteObjectValue(Responses, options);
         }
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        LiveResponsesDelegationParam IJsonModel<LiveResponsesDelegationParam>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (LiveResponsesDelegationParam)JsonModelCreateCore(ref reader, options);
+        LiveSessionUpdateParamsDelegationLiveClientDelegationParam IJsonModel<LiveSessionUpdateParamsDelegationLiveClientDelegationParam>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (LiveSessionUpdateParamsDelegationLiveClientDelegationParam)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override LiveDelegation JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override LiveSessionUpdateParamsDelegation JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<LiveResponsesDelegationParam>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<LiveSessionUpdateParamsDelegationLiveClientDelegationParam>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LiveResponsesDelegationParam)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(LiveSessionUpdateParamsDelegationLiveClientDelegationParam)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeLiveResponsesDelegationParam(document.RootElement, options);
+            return DeserializeLiveSessionUpdateParamsDelegationLiveClientDelegationParam(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static LiveResponsesDelegationParam DeserializeLiveResponsesDelegationParam(JsonElement element, ModelReaderWriterOptions options)
+        internal static LiveSessionUpdateParamsDelegationLiveClientDelegationParam DeserializeLiveSessionUpdateParamsDelegationLiveClientDelegationParam(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            DelegationType @type = default;
+            LiveSessionUpdateParamsDelegationType @type = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             long? acknowledgementDelayMs = default;
-            LiveResponsesDelegationSettingsInputParam responses = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = new DelegationType(prop.Value.GetString());
+                    @type = new LiveSessionUpdateParamsDelegationType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("acknowledgement_delay_ms"u8))
@@ -130,17 +122,12 @@ namespace Azure.AI.Projects.Agents
                     acknowledgementDelayMs = prop.Value.GetInt64();
                     continue;
                 }
-                if (prop.NameEquals("responses"u8))
-                {
-                    responses = LiveResponsesDelegationSettingsInputParam.DeserializeLiveResponsesDelegationSettingsInputParam(prop.Value, options);
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new LiveResponsesDelegationParam(@type, additionalBinaryDataProperties, acknowledgementDelayMs, responses);
+            return new LiveSessionUpdateParamsDelegationLiveClientDelegationParam(@type, additionalBinaryDataProperties, acknowledgementDelayMs);
         }
     }
 }

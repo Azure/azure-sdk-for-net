@@ -5,7 +5,6 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using System.Text.Json;
 
 namespace Azure.AI.Projects.Agents
 {
@@ -15,7 +14,7 @@ namespace Azure.AI.Projects.Agents
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
-        private BinaryData _delegation;
+        private LiveSessionUpdateParamsDelegation _delegation;
         private bool _delegationIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="LiveSessionUpdateParams"/>. </summary>
@@ -28,56 +27,15 @@ namespace Azure.AI.Projects.Agents
         /// <param name="delegation"></param>
         /// <param name="triggers"> At most one Decisions trigger per transcript event type. Triggers run independently of delegation. On update, omit triggers to keep the current configuration, send a list to replace it, or send an empty list to disable triggers. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal LiveSessionUpdateParams(BinaryData delegation, IList<LiveDecisionTriggerInputParam> triggers, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal LiveSessionUpdateParams(LiveSessionUpdateParamsDelegation delegation, IList<LiveDecisionTriggerInputParam> triggers, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             _delegation = delegation;
             Triggers = triggers;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary>
-        /// Gets or sets the Delegation.
-        /// <para> To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
-        /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
-        /// <para>
-        /// <remarks>
-        /// Supported types:
-        /// <list type="bullet">
-        /// <item>
-        /// <description> <see cref="LiveClientDelegationParam"/>. </description>
-        /// </item>
-        /// <item>
-        /// <description> <see cref="LiveResponsesDelegationUpdateParam"/>. </description>
-        /// </item>
-        /// <item>
-        /// <description> <see cref="LiveDecisionsDelegationUpdateParam"/>. </description>
-        /// </item>
-        /// </list>
-        /// </remarks>
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term> BinaryData.FromObjectAsJson("foo"). </term>
-        /// <description> Creates a payload of "foo". </description>
-        /// </item>
-        /// <item>
-        /// <term> BinaryData.FromString("\"foo\""). </term>
-        /// <description> Creates a payload of "foo". </description>
-        /// </item>
-        /// <item>
-        /// <term> BinaryData.FromObjectAsJson(new { key = "value" }). </term>
-        /// <description> Creates a payload of { "key": "value" }. </description>
-        /// </item>
-        /// <item>
-        /// <term> BinaryData.FromString("{\"key\": \"value\"}"). </term>
-        /// <description> Creates a payload of { "key": "value" }. </description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        public BinaryData Delegation
+        /// <summary> Gets or sets the Delegation. </summary>
+        public LiveSessionUpdateParamsDelegation Delegation
         {
             get
             {

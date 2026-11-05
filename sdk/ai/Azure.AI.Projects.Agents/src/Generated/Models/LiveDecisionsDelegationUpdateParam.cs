@@ -10,34 +10,26 @@ namespace Azure.AI.Projects.Agents
 {
     /// <summary> The LiveDecisionsDelegationUpdateParam. </summary>
     [Experimental("AAIP001")]
-    public partial class LiveDecisionsDelegationUpdateParam
+    public partial class LiveDecisionsDelegationUpdateParam : LiveSessionUpdateParamsDelegation
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
-
         /// <summary> Initializes a new instance of <see cref="LiveDecisionsDelegationUpdateParam"/>. </summary>
-        public LiveDecisionsDelegationUpdateParam()
+        public LiveDecisionsDelegationUpdateParam() : base(LiveSessionUpdateParamsDelegationType.Decisions)
         {
         }
 
         /// <summary> Initializes a new instance of <see cref="LiveDecisionsDelegationUpdateParam"/>. </summary>
-        /// <param name="acknowledgementDelayMs"> Milliseconds to wait before requesting an automatic spoken acknowledgement for a delegation. The model may still speak before this delay. Any commentary or thinking appended to the session cancels all pending acknowledgements, including those for other delegations. Defaults to 400 for Decisions sessions and 0 (request immediately) for other sessions. Omission in a session update preserves the current value. Updates apply to subsequent delegations. </param>
         /// <param name="type"></param>
-        /// <param name="decisions"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal LiveDecisionsDelegationUpdateParam(long? acknowledgementDelayMs, string @type, LiveDecisionsSettingsUpdateParam decisions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        /// <param name="acknowledgementDelayMs"> Milliseconds to wait before requesting an automatic spoken acknowledgement for a delegation. The model may still speak before this delay. Any commentary or thinking appended to the session cancels all pending acknowledgements, including those for other delegations. Defaults to 400 for Decisions sessions and 0 (request immediately) for other sessions. Omission in a session update preserves the current value. Updates apply to subsequent delegations. </param>
+        /// <param name="decisions"></param>
+        internal LiveDecisionsDelegationUpdateParam(LiveSessionUpdateParamsDelegationType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, long? acknowledgementDelayMs, LiveDecisionsSettingsUpdateParam decisions) : base(@type, additionalBinaryDataProperties)
         {
             AcknowledgementDelayMs = acknowledgementDelayMs;
-            Type = @type;
             Decisions = decisions;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Milliseconds to wait before requesting an automatic spoken acknowledgement for a delegation. The model may still speak before this delay. Any commentary or thinking appended to the session cancels all pending acknowledgements, including those for other delegations. Defaults to 400 for Decisions sessions and 0 (request immediately) for other sessions. Omission in a session update preserves the current value. Updates apply to subsequent delegations. </summary>
         public long? AcknowledgementDelayMs { get; set; }
-
-        /// <summary> Gets the Type. </summary>
-        internal string Type { get; } = "decisions";
 
         /// <summary> Gets or sets the Decisions. </summary>
         public LiveDecisionsSettingsUpdateParam Decisions { get; set; }

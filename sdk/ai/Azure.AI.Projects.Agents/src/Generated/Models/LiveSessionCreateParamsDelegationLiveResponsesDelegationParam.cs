@@ -10,24 +10,24 @@ namespace Azure.AI.Projects.Agents
 {
     /// <summary> Delegate tasks to a Responses model managed by the Live session. </summary>
     [Experimental("AAIP001")]
-    public partial class LiveResponsesDelegationParam : LiveDelegation
+    public partial class LiveSessionCreateParamsDelegationLiveResponsesDelegationParam : LiveSessionCreateParamsDelegation
     {
-        /// <summary> Initializes a new instance of <see cref="LiveResponsesDelegationParam"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="LiveSessionCreateParamsDelegationLiveResponsesDelegationParam"/>. </summary>
         /// <param name="responses"> Backend model, prompt, and tools used when the Live session delegates a task to Responses. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="responses"/> is null. </exception>
-        public LiveResponsesDelegationParam(LiveResponsesDelegationSettingsInputParam responses) : base(DelegationType.Responses)
+        public LiveSessionCreateParamsDelegationLiveResponsesDelegationParam(LiveResponsesDelegationSettingsInputParam responses) : base(LiveSessionCreateParamsDelegationType.Responses)
         {
             Argument.AssertNotNull(responses, nameof(responses));
 
             Responses = responses;
         }
 
-        /// <summary> Initializes a new instance of <see cref="LiveResponsesDelegationParam"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="LiveSessionCreateParamsDelegationLiveResponsesDelegationParam"/>. </summary>
         /// <param name="type"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="acknowledgementDelayMs"> Milliseconds to wait before requesting an automatic spoken acknowledgement for a delegation. The model may still speak before this delay. Any commentary or thinking appended to the session cancels all pending acknowledgements, including those for other delegations. Defaults to 400 for Decisions sessions and 0 (request immediately) for other sessions. Omission in a session update preserves the current value. Updates apply to subsequent delegations. </param>
         /// <param name="responses"> Backend model, prompt, and tools used when the Live session delegates a task to Responses. </param>
-        internal LiveResponsesDelegationParam(DelegationType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, long? acknowledgementDelayMs, LiveResponsesDelegationSettingsInputParam responses) : base(@type, additionalBinaryDataProperties)
+        internal LiveSessionCreateParamsDelegationLiveResponsesDelegationParam(LiveSessionCreateParamsDelegationType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, long? acknowledgementDelayMs, LiveResponsesDelegationSettingsInputParam responses) : base(@type, additionalBinaryDataProperties)
         {
             AcknowledgementDelayMs = acknowledgementDelayMs;
             Responses = responses;

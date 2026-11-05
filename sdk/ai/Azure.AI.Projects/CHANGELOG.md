@@ -24,7 +24,7 @@
 
 ### Other Changes
 
-- Regenerated from the published Foundry definitions in [Azure/azure-rest-api-specs#47196](https://github.com/Azure/azure-rest-api-specs/pull/47196) at `a8ba157506e523c4274cd5f5d3288a2ae45235ab`.
+- Regenerated from `feature/foundry-release` at [`4ea2e73c87f09a311f1b6018ddcb23f3cf7ed0df`](https://github.com/Azure/azure-rest-api-specs/tree/4ea2e73c87f09a311f1b6018ddcb23f3cf7ed0df).
 
 ## 3.0.0-beta.6 (2026-10-30)
 

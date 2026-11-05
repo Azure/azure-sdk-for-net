@@ -9,56 +9,56 @@ using System.Text.Json;
 
 namespace Azure.AI.Projects.Agents
 {
-    internal partial class UnknownLiveDelegation : LiveDelegation, IJsonModel<LiveDelegation>
+    internal partial class UnknownLiveSessionCreateParamsDelegation : LiveSessionCreateParamsDelegation, IJsonModel<LiveSessionCreateParamsDelegation>
     {
-        /// <summary> Initializes a new instance of <see cref="UnknownLiveDelegation"/> for deserialization. </summary>
-        internal UnknownLiveDelegation()
+        /// <summary> Initializes a new instance of <see cref="UnknownLiveSessionCreateParamsDelegation"/> for deserialization. </summary>
+        internal UnknownLiveSessionCreateParamsDelegation()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override LiveDelegation PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override LiveSessionCreateParamsDelegation PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<LiveDelegation>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<LiveSessionCreateParamsDelegation>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeLiveDelegation(document.RootElement, options);
+                        return DeserializeLiveSessionCreateParamsDelegation(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(LiveDelegation)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LiveSessionCreateParamsDelegation)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<LiveDelegation>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<LiveSessionCreateParamsDelegation>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureAIProjectsAgentsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(LiveDelegation)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LiveSessionCreateParamsDelegation)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<LiveDelegation>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<LiveSessionCreateParamsDelegation>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        LiveDelegation IPersistableModel<LiveDelegation>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        LiveSessionCreateParamsDelegation IPersistableModel<LiveSessionCreateParamsDelegation>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<LiveDelegation>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<LiveSessionCreateParamsDelegation>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<LiveDelegation>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<LiveSessionCreateParamsDelegation>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -69,46 +69,46 @@ namespace Azure.AI.Projects.Agents
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<LiveDelegation>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<LiveSessionCreateParamsDelegation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LiveDelegation)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(LiveSessionCreateParamsDelegation)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
         }
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        LiveDelegation IJsonModel<LiveDelegation>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        LiveSessionCreateParamsDelegation IJsonModel<LiveSessionCreateParamsDelegation>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override LiveDelegation JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override LiveSessionCreateParamsDelegation JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<LiveDelegation>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<LiveSessionCreateParamsDelegation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LiveDelegation)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(LiveSessionCreateParamsDelegation)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeLiveDelegation(document.RootElement, options);
+            return DeserializeLiveSessionCreateParamsDelegation(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static UnknownLiveDelegation DeserializeUnknownLiveDelegation(JsonElement element, ModelReaderWriterOptions options)
+        internal static UnknownLiveSessionCreateParamsDelegation DeserializeUnknownLiveSessionCreateParamsDelegation(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            DelegationType @type = default;
+            LiveSessionCreateParamsDelegationType @type = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = new DelegationType(prop.Value.GetString());
+                    @type = new LiveSessionCreateParamsDelegationType(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -116,7 +116,7 @@ namespace Azure.AI.Projects.Agents
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new UnknownLiveDelegation(@type, additionalBinaryDataProperties);
+            return new UnknownLiveSessionCreateParamsDelegation(@type, additionalBinaryDataProperties);
         }
     }
 }

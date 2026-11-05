@@ -20,6 +20,8 @@ public class LiveExperimentalDependencyTests
     [TestCase(typeof(LiveDecisionScoreLevelParam))]
     [TestCase(typeof(LiveDecisionInputJsonParam))]
     [TestCase(typeof(LiveDecisionJsonObject))]
+    [TestCase(typeof(LiveSessionCreateParamsDelegationLiveClientDelegationParam))]
+    [TestCase(typeof(LiveSessionUpdateParamsDelegationLiveClientDelegationParam))]
     [TestCase(typeof(DecisionResult))]
     [TestCase(typeof(AnswerResource))]
     [TestCase(typeof(AnswerResourcePredicate))]

@@ -5,7 +5,6 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using System.Text.Json;
 
 namespace Azure.AI.Projects.Agents
 {
@@ -17,7 +16,7 @@ namespace Azure.AI.Projects.Agents
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
         private string _instructions;
         private bool _instructionsIsDefined;
-        private BinaryData _delegation;
+        private LiveSessionCreateParamsDelegation _delegation;
         private bool _delegationIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="LiveSessionCreateParams"/>. </summary>
@@ -39,7 +38,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="store"> Whether to store the session for later forking and recording download. Defaults to false for new sessions. </param>
         /// <param name="client"> Startup-only capabilities for an untrusted frontend attached to a unified WebRTC session. Trusted sideband connections are unaffected. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal LiveSessionCreateParams(ModelIdsLive model, string instructions, IList<LiveInitialItem> input, LiveInitialSessionAudioParam audio, BinaryData delegation, IList<LiveDecisionTriggerInputParam> triggers, bool? store, LiveClientConfigParam client, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal LiveSessionCreateParams(ModelIdsLive model, string instructions, IList<LiveInitialItem> input, LiveInitialSessionAudioParam audio, LiveSessionCreateParamsDelegation delegation, IList<LiveDecisionTriggerInputParam> triggers, bool? store, LiveClientConfigParam client, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Model = model;
             _instructions = instructions;
@@ -75,49 +74,8 @@ namespace Azure.AI.Projects.Agents
         /// <summary> Startup audio configuration. Only primary WebSockets accept audio.format; WebRTC and SIP negotiate their media format. Voice and format are immutable after startup. </summary>
         public LiveInitialSessionAudioParam Audio { get; set; }
 
-        /// <summary>
-        /// Gets or sets the Delegation.
-        /// <para> To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
-        /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
-        /// <para>
-        /// <remarks>
-        /// Supported types:
-        /// <list type="bullet">
-        /// <item>
-        /// <description> <see cref="LiveClientDelegationParam"/>. </description>
-        /// </item>
-        /// <item>
-        /// <description> <see cref="LiveResponsesDelegationParam"/>. </description>
-        /// </item>
-        /// <item>
-        /// <description> <see cref="LiveDecisionsDelegationParam"/>. </description>
-        /// </item>
-        /// </list>
-        /// </remarks>
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term> BinaryData.FromObjectAsJson("foo"). </term>
-        /// <description> Creates a payload of "foo". </description>
-        /// </item>
-        /// <item>
-        /// <term> BinaryData.FromString("\"foo\""). </term>
-        /// <description> Creates a payload of "foo". </description>
-        /// </item>
-        /// <item>
-        /// <term> BinaryData.FromObjectAsJson(new { key = "value" }). </term>
-        /// <description> Creates a payload of { "key": "value" }. </description>
-        /// </item>
-        /// <item>
-        /// <term> BinaryData.FromString("{\"key\": \"value\"}"). </term>
-        /// <description> Creates a payload of { "key": "value" }. </description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        public BinaryData Delegation
+        /// <summary> Gets or sets the Delegation. </summary>
+        public LiveSessionCreateParamsDelegation Delegation
         {
             get
             {

@@ -97,7 +97,7 @@ namespace Extensions.Plugin.Visitors
 
         private static bool IsLiveDecisionDependency(InputModelType modelType, ModelProvider type)
         {
-            // These upstream Decisions models lack Foundry preview metadata and are only exposed by Live.
+            // These upstream Live models lack Foundry preview metadata and are only exposed by Live.
             // Scope the fallback to exact source identities in Agents, not arbitrary dependencies of Live
             // models: those can be shared with stable APIs. Existing inheritance and factory handling below
             // also cover the QuestionParam, LiveDecisionQuestion, and AnswerResource descendants.
@@ -111,6 +111,8 @@ namespace Extensions.Plugin.Visitors
                     "OpenAI.LiveDecisionScoreLevelParam" or
                     "OpenAI.LiveDecisionInputJsonParam" or
                     "OpenAI.LiveDecisionJsonObject" or
+                    "OpenAI.LiveSessionCreateParamsDelegationLiveClientDelegationParam" or
+                    "OpenAI.LiveSessionUpdateParamsDelegationLiveClientDelegationParam" or
                     "OpenAI.DecisionResponse" or
                     "OpenAI.AnswerResource" or
                     "OpenAI.ChoiceProbabilityResource" or

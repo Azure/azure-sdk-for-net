@@ -10,11 +10,11 @@ using System.Text.Json;
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> The LiveDecisionsDelegationUpdateParam. </summary>
-    public partial class LiveDecisionsDelegationUpdateParam : IJsonModel<LiveDecisionsDelegationUpdateParam>
+    public partial class LiveDecisionsDelegationUpdateParam : LiveSessionUpdateParamsDelegation, IJsonModel<LiveDecisionsDelegationUpdateParam>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual LiveDecisionsDelegationUpdateParam PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override LiveSessionUpdateParamsDelegation PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<LiveDecisionsDelegationUpdateParam>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -30,7 +30,7 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<LiveDecisionsDelegationUpdateParam>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -47,7 +47,7 @@ namespace Azure.AI.Projects.Agents
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        LiveDecisionsDelegationUpdateParam IPersistableModel<LiveDecisionsDelegationUpdateParam>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        LiveDecisionsDelegationUpdateParam IPersistableModel<LiveDecisionsDelegationUpdateParam>.Create(BinaryData data, ModelReaderWriterOptions options) => (LiveDecisionsDelegationUpdateParam)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<LiveDecisionsDelegationUpdateParam>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
@@ -63,49 +63,33 @@ namespace Azure.AI.Projects.Agents
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<LiveDecisionsDelegationUpdateParam>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(LiveDecisionsDelegationUpdateParam)} does not support writing '{format}' format.");
             }
+            base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(AcknowledgementDelayMs))
             {
                 writer.WritePropertyName("acknowledgement_delay_ms"u8);
                 writer.WriteNumberValue(AcknowledgementDelayMs.Value);
             }
-            writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(Type);
             if (Optional.IsDefined(Decisions))
             {
                 writer.WritePropertyName("decisions"u8);
                 writer.WriteObjectValue(Decisions, options);
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
-            {
-                foreach (var item in _additionalBinaryDataProperties)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        LiveDecisionsDelegationUpdateParam IJsonModel<LiveDecisionsDelegationUpdateParam>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        LiveDecisionsDelegationUpdateParam IJsonModel<LiveDecisionsDelegationUpdateParam>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (LiveDecisionsDelegationUpdateParam)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual LiveDecisionsDelegationUpdateParam JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override LiveSessionUpdateParamsDelegation JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<LiveDecisionsDelegationUpdateParam>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -124,12 +108,17 @@ namespace Azure.AI.Projects.Agents
             {
                 return null;
             }
-            long? acknowledgementDelayMs = default;
-            string @type = default;
-            LiveDecisionsSettingsUpdateParam decisions = default;
+            LiveSessionUpdateParamsDelegationType @type = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            long? acknowledgementDelayMs = default;
+            LiveDecisionsSettingsUpdateParam decisions = default;
             foreach (var prop in element.EnumerateObject())
             {
+                if (prop.NameEquals("type"u8))
+                {
+                    @type = new LiveSessionUpdateParamsDelegationType(prop.Value.GetString());
+                    continue;
+                }
                 if (prop.NameEquals("acknowledgement_delay_ms"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -137,11 +126,6 @@ namespace Azure.AI.Projects.Agents
                         continue;
                     }
                     acknowledgementDelayMs = prop.Value.GetInt64();
-                    continue;
-                }
-                if (prop.NameEquals("type"u8))
-                {
-                    @type = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("decisions"u8))
@@ -158,7 +142,7 @@ namespace Azure.AI.Projects.Agents
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new LiveDecisionsDelegationUpdateParam(acknowledgementDelayMs, @type, decisions, additionalBinaryDataProperties);
+            return new LiveDecisionsDelegationUpdateParam(@type, additionalBinaryDataProperties, acknowledgementDelayMs, decisions);
         }
     }
 }

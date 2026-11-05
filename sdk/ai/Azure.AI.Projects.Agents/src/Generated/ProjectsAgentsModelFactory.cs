@@ -479,7 +479,7 @@ namespace Azure.AI.Projects.Agents
         /// </param>
         /// <param name="parallelToolCalls"> Whether the model may call multiple tools in parallel. </param>
         /// <param name="structuredInputs"> Template inputs for session instructions and supported greetings. </param>
-        /// <param name="subagentConfig"> Optional configuration for sibling Foundry text agents that this voice agent may consult as background specialists. </param>
+        /// <param name="subagentConfig"> Optional subagent configuration. Set `subagent_type` to `delegate` for delegated background specialists or `inline` for inline voice subagents. </param>
         /// <param name="store"> Persists conversation content and audio in Foundry, not native Live recordings. Defaults to false. </param>
         /// <param name="soundscape"> Optional background ambience and event cues, stored with the agent version and separate from the audio configuration. Currently rendered only for telephony calls, not browser WebRTC or direct voice WebSocket sessions. Omit this property to disable all auxiliary audio. Persisted conversation recordings do not include the soundscape mix. </param>
         /// <param name="postCall"> Optional post-call delivery configuration. After each session ends, the service notifies the configured destinations. </param>
@@ -863,12 +863,8 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <summary>
-        /// Output audio configuration for a voice agent.
-        /// Provider-specific fields are selected by `voice_type`:
-        /// <list type="bullet"><item><description>`openai`: `voice` and `speed`.</description></item><item><description>`azure-standard`: `voice`, `voice_locale`, `speed`, `voice_temperature`, `custom_lexicon_url`,</description></item></list>
-        ///   `custom_text_normalization_url`, `prefer_locales`, `style`, `pitch`, and `volume`.
-        /// <list type="bullet"><item><description>`azure-custom`: all `azure-standard` fields except `style`, plus `custom_voice_endpoint_id`.</description></item><item><description>`azure-personal`: all `azure-standard` fields except `style`, plus `personal_voice_model`.</description></item><item><description>`avatar-voice-sync`: all `azure-standard` fields except `voice` and `style`, plus `personal_voice_model`; the voice name is derived from the avatar.</description></item><item><description>`azure-realtime-native`: `voice` and `speed`.</description></item></list>
-        /// `format` and `output_audio_timestamp_types` apply to every voice type.
+        /// Output audio configuration for a voice agent. Extends the voice configuration with the session-level `format` and
+        /// `output_audio_timestamp_types` settings, which apply to every voice type.
         /// </summary>
         /// <param name="format"> The output audio format. Applies to every `voice_type` and defaults to 24 kHz PCM. </param>
         /// <param name="voice"> The voice name or identifier. Applies to `openai`, `azure-standard`, `azure-custom`, `azure-personal`, and `azure-realtime-native`. It does not apply to `avatar-voice-sync`, which derives the voice name from the avatar. </param>
@@ -893,7 +889,6 @@ namespace Azure.AI.Projects.Agents
             outputAudioTimestampTypes ??= new ChangeTrackingList<VoiceAgentAudioTimestampType>();
 
             return new VoiceAgentAudioOutputConfig(
-                format,
                 voice,
                 voiceType,
                 voiceLocale,
@@ -907,7 +902,54 @@ namespace Azure.AI.Projects.Agents
                 volume,
                 customVoiceEndpointId,
                 personalVoiceModel,
-                outputAudioTimestampTypes.ToList(),
+                additionalBinaryDataProperties: null,
+                format,
+                outputAudioTimestampTypes.ToList());
+        }
+
+        /// <summary>
+        /// Voice output configuration. Inline subagents use it directly as their voice override, and the session-level
+        /// output audio configuration extends it.
+        /// Provider-specific fields are selected by `voice_type`:
+        /// <list type="bullet"><item><description>`openai`: `voice` and `speed`.</description></item><item><description>`azure-standard`: `voice`, `voice_locale`, `speed`, `voice_temperature`, `custom_lexicon_url`,</description></item></list>
+        ///   `custom_text_normalization_url`, `prefer_locales`, `style`, `pitch`, and `volume`.
+        /// <list type="bullet"><item><description>`azure-custom`: all `azure-standard` fields except `style`, plus `custom_voice_endpoint_id`.</description></item><item><description>`azure-personal`: all `azure-standard` fields except `style`, plus `personal_voice_model`.</description></item><item><description>`avatar-voice-sync`: all `azure-standard` fields except `voice` and `style`, plus `personal_voice_model`;</description></item></list>
+        ///   the voice name is derived from the avatar.
+        /// <list type="bullet"><item><description>`azure-realtime-native`: `voice` and `speed`.</description></item></list>
+        /// </summary>
+        /// <param name="voice"> The voice name or identifier. Applies to `openai`, `azure-standard`, `azure-custom`, `azure-personal`, and `azure-realtime-native`. It does not apply to `avatar-voice-sync`, which derives the voice name from the avatar. </param>
+        /// <param name="voiceType"> The voice implementation. </param>
+        /// <param name="voiceLocale"> The enforced BCP-47 output locale. Applies to `azure-standard`, `azure-custom`, `azure-personal`, and `avatar-voice-sync`. </param>
+        /// <param name="speed"> The numeric output speed multiplier. Applies to all known `voice_type` values and defaults to 1. </param>
+        /// <param name="voiceTemperature"> The voice variation temperature. Applies to `azure-standard`, `azure-custom`, `azure-personal`, and `avatar-voice-sync`. </param>
+        /// <param name="customLexiconUrl"> The URL of a custom pronunciation lexicon. Applies to `azure-standard`, `azure-custom`, `azure-personal`, and `avatar-voice-sync`. </param>
+        /// <param name="customTextNormalizationUrl"> The URL of a custom text-normalization configuration. Applies to `azure-standard`, `azure-custom`, `azure-personal`, and `avatar-voice-sync`. </param>
+        /// <param name="preferLocales"> Preferred BCP-47 locales for multilingual synthesis. Applies to `azure-standard`, `azure-custom`, `azure-personal`, and `avatar-voice-sync`. </param>
+        /// <param name="style"> The voice speaking style. Applies only when `voice_type` is `azure-standard`. </param>
+        /// <param name="pitch"> The voice pitch adjustment. Applies to `azure-standard`, `azure-custom`, `azure-personal`, and `avatar-voice-sync`. </param>
+        /// <param name="volume"> The voice volume adjustment. Applies to `azure-standard`, `azure-custom`, `azure-personal`, and `avatar-voice-sync`. </param>
+        /// <param name="customVoiceEndpointId"> The Azure custom-voice deployment endpoint identifier. Applies only when `voice_type` is `azure-custom`. </param>
+        /// <param name="personalVoiceModel"> The Azure personal or avatar voice model. Applies only when `voice_type` is `azure-personal` or `avatar-voice-sync`. </param>
+        /// <returns> A new <see cref="Agents.VoiceAgentVoiceConfig"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static VoiceAgentVoiceConfig VoiceAgentVoiceConfig(string voice = default, VoiceType? voiceType = default, string voiceLocale = default, float? speed = default, float? voiceTemperature = default, Uri customLexiconUrl = default, Uri customTextNormalizationUrl = default, IEnumerable<string> preferLocales = default, string style = default, string pitch = default, string volume = default, string customVoiceEndpointId = default, string personalVoiceModel = default)
+        {
+            preferLocales ??= new ChangeTrackingList<string>();
+
+            return new VoiceAgentVoiceConfig(
+                voice,
+                voiceType,
+                voiceLocale,
+                speed,
+                voiceTemperature,
+                customLexiconUrl,
+                customTextNormalizationUrl,
+                preferLocales.ToList(),
+                style,
+                pitch,
+                volume,
+                customVoiceEndpointId,
+                personalVoiceModel,
                 additionalBinaryDataProperties: null);
         }
 
@@ -1195,20 +1237,137 @@ namespace Azure.AI.Projects.Agents
 
         /// <summary> A service-managed control that acts on the active voice session without customer code or external authentication. </summary>
         /// <param name="description"> An optional description of the system tool. </param>
+        /// <param name="timeoutSeconds"> Execution timeout, from 1 to 300 seconds. If omitted, the service defaults to 60 seconds. </param>
         /// <returns> A new <see cref="Agents.VoiceAgentSystemTool"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static VoiceAgentSystemTool VoiceAgentSystemTool(string description = default)
+        public static VoiceAgentSystemTool VoiceAgentSystemTool(string description = default, TimeSpan? timeoutSeconds = default)
         {
-            return new VoiceAgentSystemTool("system", additionalBinaryDataProperties: null, default, description);
+            return new VoiceAgentSystemTool("system", additionalBinaryDataProperties: null, default, description, timeoutSeconds);
         }
 
         /// <summary> A service-managed control that ends the active conversation. </summary>
         /// <param name="description"> An optional description of the system tool. </param>
+        /// <param name="timeoutSeconds"> Execution timeout, from 1 to 300 seconds. If omitted, the service defaults to 60 seconds. </param>
         /// <returns> A new <see cref="Agents.VoiceAgentEndConversationSystemTool"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static VoiceAgentEndConversationSystemTool VoiceAgentEndConversationSystemTool(string description = default)
+        public static VoiceAgentEndConversationSystemTool VoiceAgentEndConversationSystemTool(string description = default, TimeSpan? timeoutSeconds = default)
         {
-            return new VoiceAgentEndConversationSystemTool("system", additionalBinaryDataProperties: null, VoiceAgentSystemToolName.EndConversation, description);
+            return new VoiceAgentEndConversationSystemTool("system", additionalBinaryDataProperties: null, VoiceAgentSystemToolName.EndConversation, description, timeoutSeconds);
+        }
+
+        /// <summary> Switches supported conversation language settings. </summary>
+        /// <param name="description"> An optional description of the system tool. </param>
+        /// <param name="timeoutSeconds"> Execution timeout, from 1 to 300 seconds. If omitted, the service defaults to 60 seconds. </param>
+        /// <returns> A new <see cref="Agents.VoiceAgentLanguageDetectionSystemTool"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static VoiceAgentLanguageDetectionSystemTool VoiceAgentLanguageDetectionSystemTool(string description = default, TimeSpan? timeoutSeconds = default)
+        {
+            return new VoiceAgentLanguageDetectionSystemTool("system", additionalBinaryDataProperties: null, VoiceAgentSystemToolName.LanguageDetection, description, timeoutSeconds);
+        }
+
+        /// <summary> Retrieves the unchanged transcript of the last user audio turn. </summary>
+        /// <param name="description"> An optional description of the system tool. </param>
+        /// <param name="timeoutSeconds"> Execution timeout, from 1 to 300 seconds. If omitted, the service defaults to 60 seconds. </param>
+        /// <returns> A new <see cref="Agents.VoiceAgentDigitRecognitionSystemTool"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static VoiceAgentDigitRecognitionSystemTool VoiceAgentDigitRecognitionSystemTool(string description = default, TimeSpan? timeoutSeconds = default)
+        {
+            return new VoiceAgentDigitRecognitionSystemTool("system", additionalBinaryDataProperties: null, VoiceAgentSystemToolName.DigitRecognition, description, timeoutSeconds);
+        }
+
+        /// <summary> Collects one complete SMS from an explicitly selected sender. </summary>
+        /// <param name="description"> An optional description of the system tool. </param>
+        /// <param name="timeoutSeconds"> Execution timeout, from 1 to 300 seconds. If omitted, the service defaults to 60 seconds. </param>
+        /// <returns> A new <see cref="Agents.VoiceAgentCollectSmsSystemTool"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static VoiceAgentCollectSmsSystemTool VoiceAgentCollectSmsSystemTool(string description = default, TimeSpan? timeoutSeconds = default)
+        {
+            return new VoiceAgentCollectSmsSystemTool("system", additionalBinaryDataProperties: null, VoiceAgentSystemToolName.CollectSms, description, timeoutSeconds);
+        }
+
+        /// <summary> Collects keypad digits on the current call. </summary>
+        /// <param name="description"> An optional description of the system tool. </param>
+        /// <param name="timeoutSeconds"> Execution timeout, from 1 to 300 seconds. If omitted, the service defaults to 60 seconds. </param>
+        /// <returns> A new <see cref="Agents.VoiceAgentCollectDtmfSystemTool"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static VoiceAgentCollectDtmfSystemTool VoiceAgentCollectDtmfSystemTool(string description = default, TimeSpan? timeoutSeconds = default)
+        {
+            return new VoiceAgentCollectDtmfSystemTool("system", additionalBinaryDataProperties: null, VoiceAgentSystemToolName.CollectDtmf, description, timeoutSeconds);
+        }
+
+        /// <summary> Requests a transfer to an explicitly configured logical target. </summary>
+        /// <param name="description"> An optional description of the system tool. </param>
+        /// <param name="timeoutSeconds"> Execution timeout, from 1 to 300 seconds. If omitted, the service defaults to 60 seconds. </param>
+        /// <param name="requireHandoff"> Require a non-blank handoff summary in each model-generated transfer call. Defaults to false; does not guarantee delivery to the recipient. </param>
+        /// <param name="targets"> The non-empty set of logical targets that the model may select. </param>
+        /// <returns> A new <see cref="Agents.VoiceAgentTransferSystemTool"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static VoiceAgentTransferSystemTool VoiceAgentTransferSystemTool(string description = default, TimeSpan? timeoutSeconds = default, bool? requireHandoff = default, IEnumerable<VoiceAgentTransferTarget> targets = default)
+        {
+            targets ??= new ChangeTrackingList<VoiceAgentTransferTarget>();
+
+            return new VoiceAgentTransferSystemTool(
+                "system",
+                additionalBinaryDataProperties: null,
+                VoiceAgentSystemToolName.Transfer,
+                description,
+                timeoutSeconds,
+                requireHandoff,
+                targets.ToList());
+        }
+
+        /// <summary> A configured logical transfer target. Only its name and description are model-visible; destinations and routing are executor settings. </summary>
+        /// <param name="name"> The non-blank logical target name. Names must be unique after trimming within the transfer tool. </param>
+        /// <param name="description"> A description that helps the model select this target. </param>
+        /// <param name="destinations"> The concrete destinations for this transfer target. </param>
+        /// <param name="routing"> The trusted routing policy for this target. </param>
+        /// <returns> A new <see cref="Agents.VoiceAgentTransferTarget"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static VoiceAgentTransferTarget VoiceAgentTransferTarget(string name = default, string description = default, IEnumerable<VoiceAgentTransferDestination> destinations = default, VoiceAgentTransferRouting routing = default)
+        {
+            destinations ??= new ChangeTrackingList<VoiceAgentTransferDestination>();
+
+            return new VoiceAgentTransferTarget(name, description, destinations.ToList(), routing, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The canonical system-tool transfer destination. </summary>
+        /// <param name="type"> The destination format: phone_number for an E.164 number, teams for a Teams identifier, or sip for a SIP URI. </param>
+        /// <param name="value"> The concrete address. Phone numbers use E.164; Teams and SIP identifiers are validated against the selected provider's capabilities. </param>
+        /// <returns> A new <see cref="Agents.VoiceAgentTransferDestination"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static VoiceAgentTransferDestination VoiceAgentTransferDestination(VoiceAgentTransferDestinationType @type = default, string value = default)
+        {
+            return new VoiceAgentTransferDestination(@type, value, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The configured transfer routing policy. The model selects a target name, not destinations or routing settings. </summary>
+        /// <param name="strategy"> The routing strategy. Current native Telephony transfer supports ACS sequential and random routing only. </param>
+        /// <param name="ringTimeoutSeconds"> Per-destination ring timeout in seconds, from 1 to 300. If omitted, the service defaults to 20 seconds. Must not exceed the tool's timeout_seconds. ACS allows at most 180 seconds. </param>
+        /// <returns> A new <see cref="Agents.VoiceAgentTransferRouting"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static VoiceAgentTransferRouting VoiceAgentTransferRouting(VoiceAgentTransferStrategy strategy = default, int? ringTimeoutSeconds = default)
+        {
+            return new VoiceAgentTransferRouting(strategy, ringTimeoutSeconds, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Sends literal or templated keypad digits. </summary>
+        /// <param name="description"> An optional description of the system tool. </param>
+        /// <param name="timeoutSeconds"> Execution timeout, from 1 to 300 seconds. If omitted, the service defaults to 60 seconds. </param>
+        /// <returns> A new <see cref="Agents.VoiceAgentSendDtmfSystemTool"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static VoiceAgentSendDtmfSystemTool VoiceAgentSendDtmfSystemTool(string description = default, TimeSpan? timeoutSeconds = default)
+        {
+            return new VoiceAgentSendDtmfSystemTool("system", additionalBinaryDataProperties: null, VoiceAgentSystemToolName.SendDtmf, description, timeoutSeconds);
+        }
+
+        /// <summary> Sends a text message from the Agent's SMS-capable number. </summary>
+        /// <param name="description"> An optional description of the system tool. </param>
+        /// <param name="timeoutSeconds"> Execution timeout, from 1 to 300 seconds. If omitted, the service defaults to 60 seconds. </param>
+        /// <returns> A new <see cref="Agents.VoiceAgentSendSmsSystemTool"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static VoiceAgentSendSmsSystemTool VoiceAgentSendSmsSystemTool(string description = default, TimeSpan? timeoutSeconds = default)
+        {
+            return new VoiceAgentSendSmsSystemTool("system", additionalBinaryDataProperties: null, VoiceAgentSystemToolName.SendSms, description, timeoutSeconds);
         }
 
         /// <summary> A reference to a Foundry toolbox, which is a versioned bundle of tools executed through its MCP endpoint. </summary>
@@ -1222,15 +1381,28 @@ namespace Azure.AI.Projects.Agents
             return new VoiceAgentToolboxTool("toolbox", additionalBinaryDataProperties: null, toolboxName, toolboxVersion, responseScheduling);
         }
 
-        /// <summary> Configuration for sibling Foundry text agents that a voice agent may consult. </summary>
-        /// <param name="subagents"> The sibling Foundry text agents, in the same project, that this voice agent may consult. </param>
+        /// <summary>
+        /// Configuration for delegated background specialists or inline voice subagents. For compatibility with existing
+        /// delegate configurations, the service treats an omitted `subagent_type` as `delegate`.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Agents.VoiceAgentDelegateSubagentConfig"/> and <see cref="Agents.VoiceAgentInlineSubagentConfig"/>.
+        /// </summary>
+        /// <param name="subagentType"> The subagent mode. </param>
         /// <returns> A new <see cref="Agents.VoiceAgentSubagentConfig"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static VoiceAgentSubagentConfig VoiceAgentSubagentConfig(IEnumerable<VoiceAgentSubagent> subagents = default)
+        public static VoiceAgentSubagentConfig VoiceAgentSubagentConfig(string subagentType = default)
+        {
+            return new UnknownVoiceAgentSubagentConfig(new VoiceAgentSubagentType(subagentType), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Configuration for referenced Foundry agents invoked as delegated background specialists. </summary>
+        /// <param name="subagents"> The sibling Foundry text agents, in the same project, that this Voice Agent may consult. </param>
+        /// <returns> A new <see cref="Agents.VoiceAgentDelegateSubagentConfig"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static VoiceAgentDelegateSubagentConfig VoiceAgentDelegateSubagentConfig(IEnumerable<VoiceAgentSubagent> subagents = default)
         {
             subagents ??= new ChangeTrackingList<VoiceAgentSubagent>();
 
-            return new VoiceAgentSubagentConfig(subagents.ToList(), additionalBinaryDataProperties: null);
+            return new VoiceAgentDelegateSubagentConfig(VoiceAgentSubagentType.Delegate, additionalBinaryDataProperties: null, subagents.ToList());
         }
 
         /// <summary> A sibling Foundry text agent that a voice agent may consult as a background specialist. </summary>
@@ -1273,6 +1445,111 @@ namespace Azure.AI.Projects.Agents
                 progressInstructions,
                 progressUpdateInterval,
                 additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Configuration for inline voice subagents that may become active through Handoff. </summary>
+        /// <param name="subagents">
+        /// Inline voice subagents owned and versioned with the parent Voice Agent. `$entrypoint` must be first, followed
+        /// by at least one specialist and at most 31 additional subagents. Each subagent declares its outgoing
+        /// `handoff_conditions`; condition identifiers and the 128-condition limit apply across the entire Agent.
+        /// </param>
+        /// <param name="handoffPolicy"> Session-wide Handoff limits. Requires `$entrypoint` with at least one outgoing condition. When omitted, the service permits up to 16 completed and 16 attempted handoffs. </param>
+        /// <returns> A new <see cref="Agents.VoiceAgentInlineSubagentConfig"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static VoiceAgentInlineSubagentConfig VoiceAgentInlineSubagentConfig(IEnumerable<InlineVoiceSubagent> subagents = default, VoiceAgentHandoffPolicy handoffPolicy = default)
+        {
+            subagents ??= new ChangeTrackingList<InlineVoiceSubagent>();
+
+            return new VoiceAgentInlineSubagentConfig(VoiceAgentSubagentType.Inline, additionalBinaryDataProperties: null, subagents.ToList(), handoffPolicy);
+        }
+
+        /// <summary> One inline voice subagent owned and versioned with its parent Voice Agent, not a separate Agent resource. </summary>
+        /// <param name="id"> The subagent identifier. New Handoff authoring requires `$entrypoint` as the first subagent; other values use the normal handoff ID grammar. </param>
+        /// <param name="displayDescription"> A non-empty display-only description of the specialist behavior. This value is not provided to the model. </param>
+        /// <param name="model"> The target model for a cascaded graph. Realtime graphs reject this property and retain the connection model. </param>
+        /// <param name="instructions"> Subagent-specific instructions. With default inheritance, non-empty instructions follow the original top-level instructions. Omission, null, or an empty string adds nothing after that base. With inheritance disabled, only this value applies. </param>
+        /// <param name="inheritBaseInstructions"> Whether the subagent inherits the original top-level instructions before applying its own non-empty instructions. Defaults to true; set to false to opt out. </param>
+        /// <param name="tools"> Customer tools available to this subagent. Omission or null selects an empty customer tool set. </param>
+        /// <param name="toolChoice"> Tool-selection behavior for this subagent. If omitted, the service defaults to auto. Null also selects auto. </param>
+        /// <param name="audioOutput"> The output voice configuration activated for this subagent, using the same flat voice fields as the top-level audio output. Omission inherits the entrypoint configuration; a supplied object replaces the voice-specific settings. </param>
+        /// <param name="temperature"> The sampling temperature for a compatible subagent model, from 0 through 2. </param>
+        /// <param name="maxResponseOutputTokens"> The maximum output-token count for one response while this subagent is active. </param>
+        /// <param name="reasoningEffort"> Reasoning effort for a compatible subagent model. </param>
+        /// <param name="voiceAdaptation"> Voice-optimized instruction adaptation for this subagent. Null disables adaptation. </param>
+        /// <param name="interimResponse"> Interim-response settings for this subagent. Null disables interim responses. </param>
+        /// <param name="parallelToolCalls"> Whether this subagent may call customer tools in parallel. If omitted, the service defaults to false. Subagents with outgoing handoff conditions must use `false`. </param>
+        /// <param name="handoffConditions"> Outgoing handoffs from this subagent. The containing subagent supplies each condition's source. The service permits at most 128 conditions across the entire Agent. </param>
+        /// <returns> A new <see cref="Agents.InlineVoiceSubagent"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static InlineVoiceSubagent InlineVoiceSubagent(string id = default, string displayDescription = default, string model = default, string instructions = default, bool? inheritBaseInstructions = default, IEnumerable<VoiceAgentTool> tools = default, BinaryData toolChoice = default, VoiceAgentVoiceConfig audioOutput = default, float? temperature = default, BinaryData maxResponseOutputTokens = default, VoiceAgentHandoffReasoningEffort? reasoningEffort = default, VoiceAgentHandoffVoiceAdaptation voiceAdaptation = default, VoiceAgentInterimResponseConfig interimResponse = default, bool? parallelToolCalls = default, IEnumerable<VoiceAgentHandoffCondition> handoffConditions = default)
+        {
+            tools ??= new ChangeTrackingList<VoiceAgentTool>();
+            handoffConditions ??= new ChangeTrackingList<VoiceAgentHandoffCondition>();
+
+            return new InlineVoiceSubagent(
+                id,
+                "inline",
+                "voice",
+                displayDescription,
+                model,
+                instructions,
+                inheritBaseInstructions,
+                tools.ToList(),
+                toolChoice,
+                audioOutput,
+                temperature,
+                maxResponseOutputTokens,
+                reasoningEffort,
+                voiceAdaptation,
+                interimResponse,
+                parallelToolCalls,
+                handoffConditions.ToList(),
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Voice-optimized instruction adaptation applied while a handoff node is active. </summary>
+        /// <returns> A new <see cref="Agents.VoiceAgentHandoffVoiceAdaptation"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static VoiceAgentHandoffVoiceAdaptation VoiceAgentHandoffVoiceAdaptation()
+        {
+            return new VoiceAgentHandoffVoiceAdaptation("auto", additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> One allowed outgoing handoff from an inline voice subagent. </summary>
+        /// <param name="id"> The handoff condition identifier. </param>
+        /// <param name="target"> The target subagent identifier or `$entrypoint`. The containing subagent supplies the source. </param>
+        /// <param name="condition"> Natural-language routing guidance supplied alongside the active subagent instructions, from 1 through 500 characters. This is not an executable Boolean predicate. </param>
+        /// <param name="cancelOnInterruption"> Whether user interruption before commit cancels the pending handoff. If omitted, the service defaults to false. </param>
+        /// <param name="delay"> The minimum delay before target activation, in milliseconds, from 0 through 10000. If omitted, the service defaults to 0. </param>
+        /// <param name="transferMessage">
+        /// Optional deterministic source-voice announcement played before target activation. Supported by cascaded
+        /// pipelines and realtime pipelines using local Azure TTS; model-native realtime voice requires omission or null.
+        /// At most 500 characters. If omitted or null, no announcement is played.
+        /// </param>
+        /// <param name="targetResponse"> Whether Voice Live automatically starts a response after target activation. If omitted, the service defaults to `auto`. </param>
+        /// <returns> A new <see cref="Agents.VoiceAgentHandoffCondition"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static VoiceAgentHandoffCondition VoiceAgentHandoffCondition(string id = default, string target = default, string condition = default, bool? cancelOnInterruption = default, TimeSpan? delay = default, string transferMessage = default, VoiceAgentHandoffTargetResponse? targetResponse = default)
+        {
+            return new VoiceAgentHandoffCondition(
+                id,
+                target,
+                condition,
+                cancelOnInterruption,
+                delay,
+                transferMessage,
+                targetResponse,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Session-wide limits shared by all handoff conditions in one Voice Agent session. </summary>
+        /// <param name="maxTransfers"> The maximum number of successfully completed handoffs in one session, from 1 through 100. If omitted, the service defaults to 16. </param>
+        /// <param name="maxAttempts"> The maximum number of attempted handoffs, from 1 through 100. If omitted, the service uses `max_transfers`. The service requires this value to be greater than or equal to `max_transfers`. </param>
+        /// <returns> A new <see cref="Agents.VoiceAgentHandoffPolicy"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static VoiceAgentHandoffPolicy VoiceAgentHandoffPolicy(int? maxTransfers = default, int? maxAttempts = default)
+        {
+            return new VoiceAgentHandoffPolicy(maxTransfers, maxAttempts, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Post-call delivery configuration. </summary>
@@ -2591,7 +2868,7 @@ namespace Azure.AI.Projects.Agents
 
         /// <summary>
         /// The request to create a telephony binding.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Agents.CreateTeamsPhoneExtensibilityTelephonyBindingContent"/> and <see cref="Agents.CreateTwilioTelephonyBindingContent"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Agents.CreateSipTelephonyBindingContent"/>, <see cref="Agents.CreateTeamsPhoneExtensibilityTelephonyBindingContent"/>, and <see cref="Agents.CreateTwilioTelephonyBindingContent"/>.
         /// </summary>
         /// <param name="provider"> The telephony provider. </param>
         /// <param name="connectionName"> The Foundry connection name for the telephony provider. </param>
@@ -2632,16 +2909,36 @@ namespace Azure.AI.Projects.Agents
             return new CreateTwilioTelephonyBindingContent(TelephonyProvider.Twilio, connectionName, label, additionalBinaryDataProperties: null, phoneNumber);
         }
 
+        /// <summary> The request to create an inbound SIP binding. </summary>
+        /// <param name="connectionName"> The Foundry connection name for the telephony provider. </param>
+        /// <param name="label"> An optional display label for the binding. </param>
+        /// <param name="phoneNumber"> For UI display only. </param>
+        /// <param name="allowedCallingNumbers"> Omit or send [] to allow any caller. Entries match the entire normalized E.164 caller number. </param>
+        /// <returns> A new <see cref="Agents.CreateSipTelephonyBindingContent"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static CreateSipTelephonyBindingContent CreateSipTelephonyBindingContent(string connectionName = default, string label = default, string phoneNumber = default, IEnumerable<string> allowedCallingNumbers = default)
+        {
+            allowedCallingNumbers ??= new ChangeTrackingList<string>();
+
+            return new CreateSipTelephonyBindingContent(
+                TelephonyProvider.Sip,
+                connectionName,
+                label,
+                additionalBinaryDataProperties: null,
+                phoneNumber,
+                allowedCallingNumbers.ToList());
+        }
+
         /// <summary>
         /// A telephony binding owned by a voice agent.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Agents.TeamsPhoneExtensibilityTelephonyBinding"/> and <see cref="Agents.TwilioTelephonyBinding"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Agents.SipTelephonyBinding"/>, <see cref="Agents.TeamsPhoneExtensibilityTelephonyBinding"/>, and <see cref="Agents.TwilioTelephonyBinding"/>.
         /// </summary>
         /// <param name="id"> The service-generated binding identifier. </param>
         /// <param name="provider"> The telephony provider. </param>
         /// <param name="connectionName"> The Foundry connection name for the telephony provider. </param>
         /// <param name="label"> The optional display label for the binding. </param>
         /// <param name="status"> The lifecycle status. </param>
-        /// <param name="incomingCallUrl"> The service-generated webhook URL to configure with the telephony provider. </param>
+        /// <param name="incomingCallUrl"> The service-generated webhook URL to configure with the telephony provider. For SIP bindings, this is a SIP URI. </param>
         /// <returns> A new <see cref="Agents.TelephonyBinding"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
         public static TelephonyBinding TelephonyBinding(string id = default, string provider = default, string connectionName = default, string label = default, TelephonyBindingStatus status = default, Uri incomingCallUrl = default)
@@ -2661,7 +2958,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="connectionName"> The Foundry connection name for the telephony provider. </param>
         /// <param name="label"> The optional display label for the binding. </param>
         /// <param name="status"> The lifecycle status. </param>
-        /// <param name="incomingCallUrl"> The service-generated webhook URL to configure with the telephony provider. </param>
+        /// <param name="incomingCallUrl"> The service-generated webhook URL to configure with the telephony provider. For SIP bindings, this is a SIP URI. </param>
         /// <param name="phoneNumber"> The optional display phone number for the Teams resource account. </param>
         /// <param name="resourceAccountObjectId"> The Microsoft Teams resource-account object identifier as a GUID. </param>
         /// <returns> A new <see cref="Agents.TeamsPhoneExtensibilityTelephonyBinding"/> instance for mocking. </returns>
@@ -2685,7 +2982,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="connectionName"> The Foundry connection name for the telephony provider. </param>
         /// <param name="label"> The optional display label for the binding. </param>
         /// <param name="status"> The lifecycle status. </param>
-        /// <param name="incomingCallUrl"> The service-generated webhook URL to configure with the telephony provider. </param>
+        /// <param name="incomingCallUrl"> The service-generated webhook URL to configure with the telephony provider. For SIP bindings, this is a SIP URI. </param>
         /// <param name="phoneNumber"> The Twilio E.164 phone number. </param>
         /// <returns> A new <see cref="Agents.TwilioTelephonyBinding"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
@@ -2702,16 +2999,42 @@ namespace Azure.AI.Projects.Agents
                 phoneNumber);
         }
 
+        /// <summary> A SIP binding. </summary>
+        /// <param name="id"> The service-generated binding identifier. </param>
+        /// <param name="connectionName"> The Foundry connection name for the telephony provider. </param>
+        /// <param name="label"> The optional display label for the binding. </param>
+        /// <param name="status"> The lifecycle status. </param>
+        /// <param name="incomingCallUrl"> The service-generated webhook URL to configure with the telephony provider. For SIP bindings, this is a SIP URI. </param>
+        /// <param name="phoneNumber"> For UI display only. </param>
+        /// <param name="allowedCallingNumbers"> Omit or send [] to allow any caller. Entries match the entire normalized E.164 caller number. </param>
+        /// <returns> A new <see cref="Agents.SipTelephonyBinding"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static SipTelephonyBinding SipTelephonyBinding(string id = default, string connectionName = default, string label = default, TelephonyBindingStatus status = default, Uri incomingCallUrl = default, string phoneNumber = default, IEnumerable<string> allowedCallingNumbers = default)
+        {
+            allowedCallingNumbers ??= new ChangeTrackingList<string>();
+
+            return new SipTelephonyBinding(
+                id,
+                TelephonyProvider.Sip,
+                connectionName,
+                label,
+                status,
+                incomingCallUrl,
+                additionalBinaryDataProperties: null,
+                phoneNumber,
+                allowedCallingNumbers.ToList());
+        }
+
         /// <summary>
         /// A telephony binding returned in a list, including its entity tag.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Agents.TeamsPhoneExtensibilityTelephonyBindingListItem"/> and <see cref="Agents.TwilioTelephonyBindingListItem"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Agents.SipTelephonyBindingListItem"/>, <see cref="Agents.TeamsPhoneExtensibilityTelephonyBindingListItem"/>, and <see cref="Agents.TwilioTelephonyBindingListItem"/>.
         /// </summary>
         /// <param name="id"> The service-generated binding identifier. </param>
         /// <param name="provider"> The telephony provider. </param>
         /// <param name="connectionName"> The Foundry connection name for the telephony provider. </param>
         /// <param name="label"> The optional display label for the binding. </param>
         /// <param name="status"> The lifecycle status. </param>
-        /// <param name="incomingCallUrl"> The service-generated webhook URL to configure with the telephony provider. </param>
+        /// <param name="incomingCallUrl"> The service-generated webhook URL to configure with the telephony provider. For SIP bindings, this is a SIP URI. </param>
         /// <param name="etag"> The entity tag to send in the `If-Match` header when updating or deleting this binding. </param>
         /// <returns> A new <see cref="Agents.TelephonyBindingListItem"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
@@ -2733,7 +3056,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="connectionName"> The Foundry connection name for the telephony provider. </param>
         /// <param name="label"> The optional display label for the binding. </param>
         /// <param name="status"> The lifecycle status. </param>
-        /// <param name="incomingCallUrl"> The service-generated webhook URL to configure with the telephony provider. </param>
+        /// <param name="incomingCallUrl"> The service-generated webhook URL to configure with the telephony provider. For SIP bindings, this is a SIP URI. </param>
         /// <param name="etag"> The entity tag to send in the `If-Match` header when updating or deleting this binding. </param>
         /// <param name="phoneNumber"> The optional display phone number for the Teams resource account. </param>
         /// <param name="resourceAccountObjectId"> The Microsoft Teams resource-account object identifier as a GUID. </param>
@@ -2759,7 +3082,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="connectionName"> The Foundry connection name for the telephony provider. </param>
         /// <param name="label"> The optional display label for the binding. </param>
         /// <param name="status"> The lifecycle status. </param>
-        /// <param name="incomingCallUrl"> The service-generated webhook URL to configure with the telephony provider. </param>
+        /// <param name="incomingCallUrl"> The service-generated webhook URL to configure with the telephony provider. For SIP bindings, this is a SIP URI. </param>
         /// <param name="etag"> The entity tag to send in the `If-Match` header when updating or deleting this binding. </param>
         /// <param name="phoneNumber"> The Twilio E.164 phone number. </param>
         /// <returns> A new <see cref="Agents.TwilioTelephonyBindingListItem"/> instance for mocking. </returns>
@@ -2776,6 +3099,34 @@ namespace Azure.AI.Projects.Agents
                 etag,
                 additionalBinaryDataProperties: null,
                 phoneNumber);
+        }
+
+        /// <summary> A SIP binding returned in a list, including its entity tag. </summary>
+        /// <param name="id"> The service-generated binding identifier. </param>
+        /// <param name="connectionName"> The Foundry connection name for the telephony provider. </param>
+        /// <param name="label"> The optional display label for the binding. </param>
+        /// <param name="status"> The lifecycle status. </param>
+        /// <param name="incomingCallUrl"> The service-generated webhook URL to configure with the telephony provider. For SIP bindings, this is a SIP URI. </param>
+        /// <param name="etag"> The entity tag to send in the `If-Match` header when updating or deleting this binding. </param>
+        /// <param name="phoneNumber"> For UI display only. </param>
+        /// <param name="allowedCallingNumbers"> Omit or send [] to allow any caller. Entries match the entire normalized E.164 caller number. </param>
+        /// <returns> A new <see cref="Agents.SipTelephonyBindingListItem"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static SipTelephonyBindingListItem SipTelephonyBindingListItem(string id = default, string connectionName = default, string label = default, TelephonyBindingStatus status = default, Uri incomingCallUrl = default, string etag = default, string phoneNumber = default, IEnumerable<string> allowedCallingNumbers = default)
+        {
+            allowedCallingNumbers ??= new ChangeTrackingList<string>();
+
+            return new SipTelephonyBindingListItem(
+                id,
+                TelephonyProvider.Sip,
+                connectionName,
+                label,
+                status,
+                incomingCallUrl,
+                etag,
+                additionalBinaryDataProperties: null,
+                phoneNumber,
+                allowedCallingNumbers.ToList());
         }
 
         /// <summary> A summary of a durable inbound call to a voice agent. </summary>
@@ -3022,7 +3373,7 @@ namespace Azure.AI.Projects.Agents
 
         /// <summary> A request to create one durable direct outbound call job. </summary>
         /// <param name="destination"> The phone destination to call. </param>
-        /// <param name="connectionName"> The Foundry connection name in the current project used to originate the call. Its category selects Twilio or Azure Communication Services / Teams Phone extensibility. No inbound telephony binding is required. </param>
+        /// <param name="connectionName"> The Foundry connection name in the current project used to originate the call. Its category selects Twilio, Azure Communication Services / Teams Phone extensibility, or SIP. No inbound telephony binding is required. </param>
         /// <param name="source"> The caller identity used to originate the call. For a Twilio connection, provide an authorized E.164 phone number. For an Azure Communication Services / Teams Phone extensibility connection, provide the Teams Resource Account object ID. The identity type is inferred from the connection category; originating does not change inbound routing. </param>
         /// <param name="purpose"> An optional customer-declared purpose for placing the call. </param>
         /// <param name="structuredInputs"> Structured input values available to the agent and greeting for this call. Agent-declared inputs are validated against their schemas; omitted optional inputs may use their Agent-defined default values, while omitted required inputs are rejected. Additional inputs remain available as dynamic template variables. </param>
@@ -3090,7 +3441,7 @@ namespace Azure.AI.Projects.Agents
 
         /// <summary> A durable direct or campaign-created outbound call intent. </summary>
         /// <param name="destination"> The phone destination to call. </param>
-        /// <param name="connectionName"> The Foundry connection name in the current project used to originate the call. Its category selects Twilio or Azure Communication Services / Teams Phone extensibility. No inbound telephony binding is required. </param>
+        /// <param name="connectionName"> The Foundry connection name in the current project used to originate the call. Its category selects Twilio, Azure Communication Services / Teams Phone extensibility, or SIP. No inbound telephony binding is required. </param>
         /// <param name="source"> The caller identity used to originate the call. For a Twilio connection, provide an authorized E.164 phone number. For an Azure Communication Services / Teams Phone extensibility connection, provide the Teams Resource Account object ID. The identity type is inferred from the connection category; originating does not change inbound routing. </param>
         /// <param name="purpose"> An optional customer-declared purpose for placing the call. </param>
         /// <param name="structuredInputs"> Structured input values available to the agent and greeting for this call. Agent-declared inputs are validated against their schemas; omitted optional inputs may use their Agent-defined default values, while omitted required inputs are rejected. Additional inputs remain available as dynamic template variables. </param>
@@ -4661,7 +5012,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="client"> Startup-only capabilities for an untrusted frontend attached to a unified WebRTC session. Trusted sideband connections are unaffected. </param>
         /// <returns> A new <see cref="Agents.LiveSessionCreateParams"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static LiveSessionCreateParams LiveSessionCreateParams(ModelIdsLive model = default, string instructions = default, IEnumerable<LiveInitialItem> input = default, LiveInitialSessionAudioParam audio = default, BinaryData delegation = default, IEnumerable<LiveDecisionTriggerInputParam> triggers = default, bool? store = default, LiveClientConfigParam client = default)
+        public static LiveSessionCreateParams LiveSessionCreateParams(ModelIdsLive model = default, string instructions = default, IEnumerable<LiveInitialItem> input = default, LiveInitialSessionAudioParam audio = default, LiveSessionCreateParamsDelegation delegation = default, IEnumerable<LiveDecisionTriggerInputParam> triggers = default, bool? store = default, LiveClientConfigParam client = default)
         {
             input ??= new ChangeTrackingList<LiveInitialItem>();
             triggers ??= new ChangeTrackingList<LiveDecisionTriggerInputParam>();
@@ -4779,45 +5130,46 @@ namespace Azure.AI.Projects.Agents
             return new LiveInitialOutputTextContentPartParam("output_text", text, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Delegate tasks to your application. The Live session emits delegation events that your backend handles. </summary>
-        /// <param name="acknowledgementDelayMs"> Milliseconds to wait before requesting an automatic spoken acknowledgement for a delegation. The model may still speak before this delay. Any commentary or thinking appended to the session cancels all pending acknowledgements, including those for other delegations. Defaults to 400 for Decisions sessions and 0 (request immediately) for other sessions. Omission in a session update preserves the current value. Updates apply to subsequent delegations. </param>
-        /// <returns> A new <see cref="Agents.LiveClientDelegationParam"/> instance for mocking. </returns>
-        [Experimental("AAIP001")]
-        public static LiveClientDelegationParam LiveClientDelegationParam(long? acknowledgementDelayMs = default)
-        {
-            return new LiveClientDelegationParam(DelegationType.Client, additionalBinaryDataProperties: null, acknowledgementDelayMs);
-        }
-
         /// <summary>
-        /// Who handles tasks delegated by the Live model. Omitted or null selects your application; use `responses` to let the API manage a Responses backend.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Agents.LiveClientDelegationParam"/> and <see cref="Agents.LiveResponsesDelegationParam"/>.
+        /// Who handles tasks delegated by the Live model. Omitted or null selects your application; use `responses` or `decisions` to delegate to the corresponding API.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Agents.LiveSessionCreateParamsDelegationLiveClientDelegationParam"/>, <see cref="Agents.LiveSessionCreateParamsDelegationLiveDecisionsDelegationParam"/>, and <see cref="Agents.LiveSessionCreateParamsDelegationLiveResponsesDelegationParam"/>.
         /// </summary>
         /// <param name="type"></param>
-        /// <returns> A new <see cref="Agents.LiveDelegation"/> instance for mocking. </returns>
-        [Experimental("AAIP001")]
-        public static LiveDelegation LiveDelegation(string @type = default)
+        /// <returns> A new <see cref="Agents.LiveSessionCreateParamsDelegation"/> instance for mocking. </returns>
+#pragma warning disable AAIP001 // This generated code depends on experimental functionality.
+        public static LiveSessionCreateParamsDelegation LiveSessionCreateParamsDelegation(string @type = default)
         {
-            return new UnknownLiveDelegation(new DelegationType(@type), additionalBinaryDataProperties: null);
+            return new UnknownLiveSessionCreateParamsDelegation(new LiveSessionCreateParamsDelegationType(@type), additionalBinaryDataProperties: null);
+        }
+#pragma warning restore AAIP001 // This generated code depends on experimental functionality.
+
+        /// <summary> Delegate tasks to your application. The Live session emits delegation events that your backend handles. </summary>
+        /// <param name="acknowledgementDelayMs"> Milliseconds to wait before requesting an automatic spoken acknowledgement for a delegation. The model may still speak before this delay. Any commentary or thinking appended to the session cancels all pending acknowledgements, including those for other delegations. Defaults to 400 for Decisions sessions and 0 (request immediately) for other sessions. Omission in a session update preserves the current value. Updates apply to subsequent delegations. </param>
+        /// <returns> A new <see cref="Agents.LiveSessionCreateParamsDelegationLiveClientDelegationParam"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static LiveSessionCreateParamsDelegationLiveClientDelegationParam LiveSessionCreateParamsDelegationLiveClientDelegationParam(long? acknowledgementDelayMs = default)
+        {
+            return new LiveSessionCreateParamsDelegationLiveClientDelegationParam(LiveSessionCreateParamsDelegationType.Client, additionalBinaryDataProperties: null, acknowledgementDelayMs);
         }
 
         /// <summary> Delegate tasks to a Responses model managed by the Live session. </summary>
         /// <param name="acknowledgementDelayMs"> Milliseconds to wait before requesting an automatic spoken acknowledgement for a delegation. The model may still speak before this delay. Any commentary or thinking appended to the session cancels all pending acknowledgements, including those for other delegations. Defaults to 400 for Decisions sessions and 0 (request immediately) for other sessions. Omission in a session update preserves the current value. Updates apply to subsequent delegations. </param>
         /// <param name="responses"> Backend model, prompt, and tools used when the Live session delegates a task to Responses. </param>
-        /// <returns> A new <see cref="Agents.LiveResponsesDelegationParam"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Agents.LiveSessionCreateParamsDelegationLiveResponsesDelegationParam"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static LiveResponsesDelegationParam LiveResponsesDelegationParam(long? acknowledgementDelayMs = default, LiveResponsesDelegationSettingsInputParam responses = default)
+        public static LiveSessionCreateParamsDelegationLiveResponsesDelegationParam LiveSessionCreateParamsDelegationLiveResponsesDelegationParam(long? acknowledgementDelayMs = default, LiveResponsesDelegationSettingsInputParam responses = default)
         {
-            return new LiveResponsesDelegationParam(DelegationType.Responses, additionalBinaryDataProperties: null, acknowledgementDelayMs, responses);
+            return new LiveSessionCreateParamsDelegationLiveResponsesDelegationParam(LiveSessionCreateParamsDelegationType.Responses, additionalBinaryDataProperties: null, acknowledgementDelayMs, responses);
         }
 
-        /// <summary> The LiveDecisionsDelegationParam. </summary>
+        /// <summary> The LiveSessionCreateParamsDelegationLiveDecisionsDelegationParam. </summary>
         /// <param name="acknowledgementDelayMs"> Milliseconds to wait before requesting an automatic spoken acknowledgement for a delegation. The model may still speak before this delay. Any commentary or thinking appended to the session cancels all pending acknowledgements, including those for other delegations. Defaults to 400. Updates apply to subsequent delegations. </param>
         /// <param name="decisions"></param>
-        /// <returns> A new <see cref="Agents.LiveDecisionsDelegationParam"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Agents.LiveSessionCreateParamsDelegationLiveDecisionsDelegationParam"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static LiveDecisionsDelegationParam LiveDecisionsDelegationParam(long? acknowledgementDelayMs = default, LiveDecisionsSettingsInputParam decisions = default)
+        public static LiveSessionCreateParamsDelegationLiveDecisionsDelegationParam LiveSessionCreateParamsDelegationLiveDecisionsDelegationParam(long? acknowledgementDelayMs = default, LiveDecisionsSettingsInputParam decisions = default)
         {
-            return new LiveDecisionsDelegationParam(acknowledgementDelayMs, "decisions", decisions, additionalBinaryDataProperties: null);
+            return new LiveSessionCreateParamsDelegationLiveDecisionsDelegationParam(LiveSessionCreateParamsDelegationType.Decisions, additionalBinaryDataProperties: null, acknowledgementDelayMs, decisions);
         }
 
         /// <summary> The LiveDecisionsSettingsInputParam. </summary>
@@ -5004,12 +5356,25 @@ namespace Azure.AI.Projects.Agents
         /// <param name="triggers"> At most one Decisions trigger per transcript event type. Triggers run independently of delegation. On update, omit triggers to keep the current configuration, send a list to replace it, or send an empty list to disable triggers. </param>
         /// <returns> A new <see cref="Agents.LiveSessionUpdateParams"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static LiveSessionUpdateParams LiveSessionUpdateParams(BinaryData delegation = default, IEnumerable<LiveDecisionTriggerInputParam> triggers = default)
+        public static LiveSessionUpdateParams LiveSessionUpdateParams(LiveSessionUpdateParamsDelegation delegation = default, IEnumerable<LiveDecisionTriggerInputParam> triggers = default)
         {
             triggers ??= new ChangeTrackingList<LiveDecisionTriggerInputParam>();
 
             return new LiveSessionUpdateParams(delegation, triggers.ToList(), additionalBinaryDataProperties: null);
         }
+
+        /// <summary>
+        /// Delegation settings to update. The delegation type must match the current session; omitted settings retain their values.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Agents.LiveDecisionsDelegationUpdateParam"/>, <see cref="Agents.LiveResponsesDelegationUpdateParam"/>, and <see cref="Agents.LiveSessionUpdateParamsDelegationLiveClientDelegationParam"/>.
+        /// </summary>
+        /// <param name="type"></param>
+        /// <returns> A new <see cref="Agents.LiveSessionUpdateParamsDelegation"/> instance for mocking. </returns>
+#pragma warning disable AAIP001 // This generated code depends on experimental functionality.
+        public static LiveSessionUpdateParamsDelegation LiveSessionUpdateParamsDelegation(string @type = default)
+        {
+            return new UnknownLiveSessionUpdateParamsDelegation(new LiveSessionUpdateParamsDelegationType(@type), additionalBinaryDataProperties: null);
+        }
+#pragma warning restore AAIP001 // This generated code depends on experimental functionality.
 
         /// <summary> Update the Responses backend for an existing Live session without changing delegation ownership. </summary>
         /// <param name="acknowledgementDelayMs"> Milliseconds to wait before requesting an automatic spoken acknowledgement for a delegation. The model may still speak before this delay. Any commentary or thinking appended to the session cancels all pending acknowledgements, including those for other delegations. Defaults to 400 for Decisions sessions and 0 (request immediately) for other sessions. Omission in a session update preserves the current value. Updates apply to subsequent delegations. </param>
@@ -5018,7 +5383,7 @@ namespace Azure.AI.Projects.Agents
         [Experimental("AAIP001")]
         public static LiveResponsesDelegationUpdateParam LiveResponsesDelegationUpdateParam(long? acknowledgementDelayMs = default, LiveResponsesDelegationSettingsUpdateInputParam responses = default)
         {
-            return new LiveResponsesDelegationUpdateParam(acknowledgementDelayMs, "responses", responses, additionalBinaryDataProperties: null);
+            return new LiveResponsesDelegationUpdateParam(LiveSessionUpdateParamsDelegationType.Responses, additionalBinaryDataProperties: null, acknowledgementDelayMs, responses);
         }
 
         /// <summary> Updates to the Responses backend of an existing Live session. Omitted settings retain their current values. </summary>
@@ -5057,7 +5422,7 @@ namespace Azure.AI.Projects.Agents
         [Experimental("AAIP001")]
         public static LiveDecisionsDelegationUpdateParam LiveDecisionsDelegationUpdateParam(long? acknowledgementDelayMs = default, LiveDecisionsSettingsUpdateParam decisions = default)
         {
-            return new LiveDecisionsDelegationUpdateParam(acknowledgementDelayMs, "decisions", decisions, additionalBinaryDataProperties: null);
+            return new LiveDecisionsDelegationUpdateParam(LiveSessionUpdateParamsDelegationType.Decisions, additionalBinaryDataProperties: null, acknowledgementDelayMs, decisions);
         }
 
         /// <summary> The LiveDecisionsSettingsUpdateParam. </summary>
@@ -5070,6 +5435,15 @@ namespace Azure.AI.Projects.Agents
             questions ??= new ChangeTrackingList<LiveDecisionQuestion>();
 
             return new LiveDecisionsSettingsUpdateParam(model, questions.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Delegate tasks to your application. The Live session emits delegation events that your backend handles. </summary>
+        /// <param name="acknowledgementDelayMs"> Milliseconds to wait before requesting an automatic spoken acknowledgement for a delegation. The model may still speak before this delay. Any commentary or thinking appended to the session cancels all pending acknowledgements, including those for other delegations. Defaults to 400 for Decisions sessions and 0 (request immediately) for other sessions. Omission in a session update preserves the current value. Updates apply to subsequent delegations. </param>
+        /// <returns> A new <see cref="Agents.LiveSessionUpdateParamsDelegationLiveClientDelegationParam"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static LiveSessionUpdateParamsDelegationLiveClientDelegationParam LiveSessionUpdateParamsDelegationLiveClientDelegationParam(long? acknowledgementDelayMs = default)
+        {
+            return new LiveSessionUpdateParamsDelegationLiveClientDelegationParam(LiveSessionUpdateParamsDelegationType.Client, additionalBinaryDataProperties: null, acknowledgementDelayMs);
         }
 
         /// <summary> Send audio to a Live session over its primary WebSocket. WebRTC and SIP sessions send audio over their media transport. </summary>

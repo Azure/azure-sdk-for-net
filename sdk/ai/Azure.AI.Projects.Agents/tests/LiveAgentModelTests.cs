@@ -100,7 +100,7 @@ public class LiveAgentModelTests
             {
                 Format = new LiveSessionAudioFormatPCMParam(LiveSessionAudioFormatPCMParamRate._24000)
             },
-            Delegation = BinaryData.FromString("""{"type":"client"}""")
+            Delegation = new LiveSessionCreateParamsDelegationLiveClientDelegationParam()
         })
         {
             EventId = "start_1"
@@ -114,6 +114,7 @@ public class LiveAgentModelTests
             Assert.That(roundTrip.Session.Model, Is.EqualTo(ModelIdsLive.GptLive1));
             Assert.That(roundTrip.Session.Store, Is.True);
             Assert.That(roundTrip.Session.Audio.Format, Is.TypeOf<LiveSessionAudioFormatPCMParam>());
+            Assert.That(roundTrip.Session.Delegation, Is.TypeOf<LiveSessionCreateParamsDelegationLiveClientDelegationParam>());
             Assert.That(document.RootElement.GetProperty("session").GetProperty("audio").GetProperty("format").GetProperty("rate").GetInt32(), Is.EqualTo(24000));
             Assert.That(document.RootElement.GetProperty("session").GetProperty("delegation").ValueKind, Is.EqualTo(JsonValueKind.Object));
         });
