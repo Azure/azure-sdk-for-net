@@ -22,22 +22,22 @@ namespace Azure.ResourceManager.NetworkSecurity
     /// <summary>
     /// A class representing a collection of <see cref="NeuroShieldResource"/> and their operations.
     /// Each <see cref="NeuroShieldResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
-    /// To get a <see cref="NeuroShieldResourceCollection"/> instance call the GetNeuroShieldResources method from an instance of <see cref="ResourceGroupResource"/>.
+    /// To get a <see cref="NeuroShieldCollection"/> instance call the GetNeuroShields method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
-    public partial class NeuroShieldResourceCollection : ArmCollection, IEnumerable<NeuroShieldResource>, IAsyncEnumerable<NeuroShieldResource>
+    public partial class NeuroShieldCollection : ArmCollection, IEnumerable<NeuroShieldResource>, IAsyncEnumerable<NeuroShieldResource>
     {
         private readonly ClientDiagnostics _neuroShieldsClientDiagnostics;
         private readonly NeuroShields _neuroShieldsRestClient;
 
-        /// <summary> Initializes a new instance of NeuroShieldResourceCollection for mocking. </summary>
-        protected NeuroShieldResourceCollection()
+        /// <summary> Initializes a new instance of NeuroShieldCollection for mocking. </summary>
+        protected NeuroShieldCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="NeuroShieldResourceCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="NeuroShieldCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal NeuroShieldResourceCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal NeuroShieldCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _neuroShieldsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.NetworkSecurity", NeuroShieldResource.ResourceType.Namespace, Diagnostics);
             _neuroShieldsRestClient = new NeuroShields(_neuroShieldsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.NetworkSecurity/neuroShields", out string neuroShieldsApiVersionOverride) ? neuroShieldsApiVersionOverride : "2026-10-01-preview");
@@ -78,12 +78,12 @@ namespace Azure.ResourceManager.NetworkSecurity
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="neuroShieldName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="neuroShieldName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<ArmOperation<NeuroShieldResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string neuroShieldName, NeuroShieldResourceData data, ETag? ifMatch = default, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<NeuroShieldResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string neuroShieldName, NeuroShieldData data, ETag? ifMatch = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(neuroShieldName, nameof(neuroShieldName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _neuroShieldsClientDiagnostics.CreateScope("NeuroShieldResourceCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _neuroShieldsClientDiagnostics.CreateScope("NeuroShieldCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -91,9 +91,9 @@ namespace Azure.ResourceManager.NetworkSecurity
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _neuroShieldsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, neuroShieldName, NeuroShieldResourceData.ToRequestContent(data), ifMatch, context);
+                HttpMessage message = _neuroShieldsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, neuroShieldName, NeuroShieldData.ToRequestContent(data), ifMatch, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<NeuroShieldResourceData> response = Response.FromValue(NeuroShieldResourceData.FromResponse(result), result);
+                Response<NeuroShieldData> response = Response.FromValue(NeuroShieldData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
                 NetworkSecurityArmOperation<NeuroShieldResource> operation = new NetworkSecurityArmOperation<NeuroShieldResource>(Response.FromValue(new NeuroShieldResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
@@ -134,12 +134,12 @@ namespace Azure.ResourceManager.NetworkSecurity
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="neuroShieldName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="neuroShieldName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ArmOperation<NeuroShieldResource> CreateOrUpdate(WaitUntil waitUntil, string neuroShieldName, NeuroShieldResourceData data, ETag? ifMatch = default, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<NeuroShieldResource> CreateOrUpdate(WaitUntil waitUntil, string neuroShieldName, NeuroShieldData data, ETag? ifMatch = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(neuroShieldName, nameof(neuroShieldName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _neuroShieldsClientDiagnostics.CreateScope("NeuroShieldResourceCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _neuroShieldsClientDiagnostics.CreateScope("NeuroShieldCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -147,9 +147,9 @@ namespace Azure.ResourceManager.NetworkSecurity
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _neuroShieldsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, neuroShieldName, NeuroShieldResourceData.ToRequestContent(data), ifMatch, context);
+                HttpMessage message = _neuroShieldsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, neuroShieldName, NeuroShieldData.ToRequestContent(data), ifMatch, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<NeuroShieldResourceData> response = Response.FromValue(NeuroShieldResourceData.FromResponse(result), result);
+                Response<NeuroShieldData> response = Response.FromValue(NeuroShieldData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
                 NetworkSecurityArmOperation<NeuroShieldResource> operation = new NetworkSecurityArmOperation<NeuroShieldResource>(Response.FromValue(new NeuroShieldResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.NetworkSecurity
         {
             Argument.AssertNotNullOrEmpty(neuroShieldName, nameof(neuroShieldName));
 
-            using DiagnosticScope scope = _neuroShieldsClientDiagnostics.CreateScope("NeuroShieldResourceCollection.Get");
+            using DiagnosticScope scope = _neuroShieldsClientDiagnostics.CreateScope("NeuroShieldCollection.Get");
             scope.Start();
             try
             {
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.NetworkSecurity
                 };
                 HttpMessage message = _neuroShieldsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, neuroShieldName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<NeuroShieldResourceData> response = Response.FromValue(NeuroShieldResourceData.FromResponse(result), result);
+                Response<NeuroShieldData> response = Response.FromValue(NeuroShieldData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -240,7 +240,7 @@ namespace Azure.ResourceManager.NetworkSecurity
         {
             Argument.AssertNotNullOrEmpty(neuroShieldName, nameof(neuroShieldName));
 
-            using DiagnosticScope scope = _neuroShieldsClientDiagnostics.CreateScope("NeuroShieldResourceCollection.Get");
+            using DiagnosticScope scope = _neuroShieldsClientDiagnostics.CreateScope("NeuroShieldCollection.Get");
             scope.Start();
             try
             {
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.NetworkSecurity
                 };
                 HttpMessage message = _neuroShieldsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, neuroShieldName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<NeuroShieldResourceData> response = Response.FromValue(NeuroShieldResourceData.FromResponse(result), result);
+                Response<NeuroShieldData> response = Response.FromValue(NeuroShieldData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -291,14 +291,14 @@ namespace Azure.ResourceManager.NetworkSecurity
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<NeuroShieldResourceData, NeuroShieldResource>(new NeuroShieldResourceDataAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<NeuroShieldData, NeuroShieldResource>(new NeuroShieldDataAsyncCollectionResultOfT(
                 _neuroShieldsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
                 maxCount,
                 skipToken,
                 context,
-                "NeuroShieldResourceCollection.GetAll"), data => new NeuroShieldResource(Client, data));
+                "NeuroShieldCollection.GetAll"), data => new NeuroShieldResource(Client, data));
         }
 
         /// <summary>
@@ -328,14 +328,14 @@ namespace Azure.ResourceManager.NetworkSecurity
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<NeuroShieldResourceData, NeuroShieldResource>(new NeuroShieldResourceDataCollectionResultOfT(
+            return new PageableWrapper<NeuroShieldData, NeuroShieldResource>(new NeuroShieldDataCollectionResultOfT(
                 _neuroShieldsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
                 maxCount,
                 skipToken,
                 context,
-                "NeuroShieldResourceCollection.GetAll"), data => new NeuroShieldResource(Client, data));
+                "NeuroShieldCollection.GetAll"), data => new NeuroShieldResource(Client, data));
         }
 
         /// <summary>
@@ -363,7 +363,7 @@ namespace Azure.ResourceManager.NetworkSecurity
         {
             Argument.AssertNotNullOrEmpty(neuroShieldName, nameof(neuroShieldName));
 
-            using DiagnosticScope scope = _neuroShieldsClientDiagnostics.CreateScope("NeuroShieldResourceCollection.Exists");
+            using DiagnosticScope scope = _neuroShieldsClientDiagnostics.CreateScope("NeuroShieldCollection.Exists");
             scope.Start();
             try
             {
@@ -374,14 +374,14 @@ namespace Azure.ResourceManager.NetworkSecurity
                 HttpMessage message = _neuroShieldsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, neuroShieldName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
-                Response<NeuroShieldResourceData> response = default;
+                Response<NeuroShieldData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(NeuroShieldResourceData.FromResponse(result), result);
+                        response = Response.FromValue(NeuroShieldData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((NeuroShieldResourceData)null, result);
+                        response = Response.FromValue((NeuroShieldData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -420,7 +420,7 @@ namespace Azure.ResourceManager.NetworkSecurity
         {
             Argument.AssertNotNullOrEmpty(neuroShieldName, nameof(neuroShieldName));
 
-            using DiagnosticScope scope = _neuroShieldsClientDiagnostics.CreateScope("NeuroShieldResourceCollection.Exists");
+            using DiagnosticScope scope = _neuroShieldsClientDiagnostics.CreateScope("NeuroShieldCollection.Exists");
             scope.Start();
             try
             {
@@ -431,14 +431,14 @@ namespace Azure.ResourceManager.NetworkSecurity
                 HttpMessage message = _neuroShieldsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, neuroShieldName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
-                Response<NeuroShieldResourceData> response = default;
+                Response<NeuroShieldData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(NeuroShieldResourceData.FromResponse(result), result);
+                        response = Response.FromValue(NeuroShieldData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((NeuroShieldResourceData)null, result);
+                        response = Response.FromValue((NeuroShieldData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -477,7 +477,7 @@ namespace Azure.ResourceManager.NetworkSecurity
         {
             Argument.AssertNotNullOrEmpty(neuroShieldName, nameof(neuroShieldName));
 
-            using DiagnosticScope scope = _neuroShieldsClientDiagnostics.CreateScope("NeuroShieldResourceCollection.GetIfExists");
+            using DiagnosticScope scope = _neuroShieldsClientDiagnostics.CreateScope("NeuroShieldCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -488,14 +488,14 @@ namespace Azure.ResourceManager.NetworkSecurity
                 HttpMessage message = _neuroShieldsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, neuroShieldName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
-                Response<NeuroShieldResourceData> response = default;
+                Response<NeuroShieldData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(NeuroShieldResourceData.FromResponse(result), result);
+                        response = Response.FromValue(NeuroShieldData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((NeuroShieldResourceData)null, result);
+                        response = Response.FromValue((NeuroShieldData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -538,7 +538,7 @@ namespace Azure.ResourceManager.NetworkSecurity
         {
             Argument.AssertNotNullOrEmpty(neuroShieldName, nameof(neuroShieldName));
 
-            using DiagnosticScope scope = _neuroShieldsClientDiagnostics.CreateScope("NeuroShieldResourceCollection.GetIfExists");
+            using DiagnosticScope scope = _neuroShieldsClientDiagnostics.CreateScope("NeuroShieldCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -549,14 +549,14 @@ namespace Azure.ResourceManager.NetworkSecurity
                 HttpMessage message = _neuroShieldsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, neuroShieldName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
-                Response<NeuroShieldResourceData> response = default;
+                Response<NeuroShieldData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(NeuroShieldResourceData.FromResponse(result), result);
+                        response = Response.FromValue(NeuroShieldData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((NeuroShieldResourceData)null, result);
+                        response = Response.FromValue((NeuroShieldData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);

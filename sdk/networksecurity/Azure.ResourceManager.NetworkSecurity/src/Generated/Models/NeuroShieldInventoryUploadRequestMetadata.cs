@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.NetworkSecurity.Models
         /// <param name="requestedOn"> The time when the resource provider accepted the request. </param>
         /// <param name="expiresOn"> The time after which Neuron agents must stop observing the request. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NeuroShieldInventoryUploadRequestMetadata(string requestId, DateTimeOffset requestedOn, DateTimeOffset expiresOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal NeuroShieldInventoryUploadRequestMetadata(Guid requestId, DateTimeOffset requestedOn, DateTimeOffset expiresOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             RequestId = requestId;
             RequestedOn = requestedOn;
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.NetworkSecurity.Models
         }
 
         /// <summary> The stable identifier for the request. </summary>
-        public string RequestId { get; }
+        public Guid RequestId { get; }
 
         /// <summary> The time when the resource provider accepted the request. </summary>
         public DateTimeOffset RequestedOn { get; }

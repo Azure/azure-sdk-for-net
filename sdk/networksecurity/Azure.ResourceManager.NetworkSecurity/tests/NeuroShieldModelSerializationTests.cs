@@ -107,14 +107,40 @@ namespace Azure.ResourceManager.NetworkSecurity.Tests
         }
 
         [Test]
-        public void InventoryRequestIdRemainsOpaqueString()
+        public void InventoryRequestMetadataRoundTripsGuid()
         {
+            var requestId = new Guid("12345678-1234-5678-9abc-123456789abc");
             var metadata = ModelReaderWriter.Read<NeuroShieldInventoryUploadRequestMetadata>(
-                BinaryData.FromString("""{"requestId":"opaque-request-id","requestedAt":"2026-11-04T00:00:00Z","expiresAt":"2026-11-05T00:00:00Z"}"""));
+                BinaryData.FromString($$"""{"requestId":"{{requestId:D}}","requestedAt":"2026-11-04T00:00:00Z","expiresAt":"2026-11-05T00:00:00Z"}"""));
 
-            Assert.That(metadata.RequestId, Is.EqualTo("opaque-request-id"));
+            Guid actualRequestId = metadata.RequestId;
+            Assert.That(actualRequestId, Is.EqualTo(requestId));
             using var document = JsonDocument.Parse(ModelReaderWriter.Write(metadata));
-            Assert.That(document.RootElement.GetProperty("requestId").GetString(), Is.EqualTo("opaque-request-id"));
+            Assert.That(document.RootElement.GetProperty("requestId").GetString(), Is.EqualTo(requestId.ToString("D")));
+
+            var factoryModel = ArmNetworkSecurityModelFactory.NeuroShieldInventoryUploadRequestMetadata(
+                requestId, metadata.RequestedOn, metadata.ExpiresOn);
+            Assert.That(ModelReaderWriter.Read<NeuroShieldInventoryUploadRequestMetadata>(
+                ModelReaderWriter.Write(factoryModel)).RequestId, Is.EqualTo(requestId));
+        }
+
+        [Test]
+        public void InventoryRequestResultRoundTripsGuid()
+        {
+            var requestId = new Guid("12345678-1234-5678-9abc-123456789abc");
+            var result = ModelReaderWriter.Read<NeuroShieldInventoryUploadRequestResult>(
+                BinaryData.FromString($$"""{"requestId":"{{requestId:D}}","requestedAt":"2026-11-04T00:00:00Z","expiresAt":"2026-11-05T00:00:00Z","deduplicated":true}"""));
+
+            Guid actualRequestId = result.RequestId;
+            Assert.That(actualRequestId, Is.EqualTo(requestId));
+            Assert.That(result.Deduplicated, Is.True);
+            using var document = JsonDocument.Parse(ModelReaderWriter.Write(result));
+            Assert.That(document.RootElement.GetProperty("requestId").GetString(), Is.EqualTo(requestId.ToString("D")));
+
+            var factoryModel = ArmNetworkSecurityModelFactory.NeuroShieldInventoryUploadRequestResult(
+                requestId, result.RequestedOn, result.ExpiresOn, result.Deduplicated);
+            Assert.That(ModelReaderWriter.Read<NeuroShieldInventoryUploadRequestResult>(
+                ModelReaderWriter.Write(factoryModel)).RequestId, Is.EqualTo(requestId));
         }
     }
 }

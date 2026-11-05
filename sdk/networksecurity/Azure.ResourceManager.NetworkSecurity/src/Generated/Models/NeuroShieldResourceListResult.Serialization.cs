@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.NetworkSecurity.Models
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
-            foreach (NeuroShieldResourceData item in Value)
+            foreach (NeuroShieldData item in Value)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -141,17 +141,17 @@ namespace Azure.ResourceManager.NetworkSecurity.Models
             {
                 return null;
             }
-            IList<NeuroShieldResourceData> value = default;
+            IList<NeuroShieldData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    List<NeuroShieldResourceData> array = new List<NeuroShieldResourceData>();
+                    List<NeuroShieldData> array = new List<NeuroShieldData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(NeuroShieldResourceData.DeserializeNeuroShieldResourceData(item, options));
+                        array.Add(NeuroShieldData.DeserializeNeuroShieldData(item, options));
                     }
                     value = array;
                     continue;
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.NetworkSecurity.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new NeuroShieldResourceListResult(value ?? new ChangeTrackingList<NeuroShieldResourceData>(), nextLink, additionalBinaryDataProperties);
+            return new NeuroShieldResourceListResult(value ?? new ChangeTrackingList<NeuroShieldData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

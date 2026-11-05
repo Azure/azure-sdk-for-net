@@ -14,7 +14,7 @@ using Azure.ResourceManager.NetworkSecurity.Models;
 
 namespace Azure.ResourceManager.NetworkSecurity
 {
-    internal partial class NeuroShieldResourceData0CollectionResultOfT : Pageable<NeuroShieldResourceData>
+    internal partial class NeuroShieldData0CollectionResultOfT : Pageable<NeuroShieldData>
     {
         private readonly NeuroShields _client;
         private readonly Guid _subscriptionId;
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.NetworkSecurity
         private readonly RequestContext _context;
         private readonly string _diagnosticScope;
 
-        /// <summary> Initializes a new instance of NeuroShieldResourceData0CollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <summary> Initializes a new instance of NeuroShieldData0CollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The NeuroShields client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="maxCount"> The maximum number of items to return. </param>
         /// <param name="skipToken"> The continuation token used to retrieve the next page. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public NeuroShieldResourceData0CollectionResultOfT(NeuroShields client, Guid subscriptionId, int? maxCount, string skipToken, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public NeuroShieldData0CollectionResultOfT(NeuroShields client, Guid subscriptionId, int? maxCount, string skipToken, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -40,11 +40,11 @@ namespace Azure.ResourceManager.NetworkSecurity
             _diagnosticScope = diagnosticScope;
         }
 
-        /// <summary> Gets the pages of NeuroShieldResourceData0CollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of NeuroShieldData0CollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of NeuroShieldResourceData0CollectionResultOfT as an enumerable collection. </returns>
-        public override IEnumerable<Page<NeuroShieldResourceData>> AsPages(string continuationToken, int? pageSizeHint)
+        /// <returns> The pages of NeuroShieldData0CollectionResultOfT as an enumerable collection. </returns>
+        public override IEnumerable<Page<NeuroShieldData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken, UriKind.RelativeOrAbsolute) : null;
             while (true)
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.NetworkSecurity
                 }
                 NeuroShieldResourceListResult result = NeuroShieldResourceListResult.FromResponse(response);
                 nextPage = result.NextLink;
-                yield return Page<NeuroShieldResourceData>.FromValues((IReadOnlyList<NeuroShieldResourceData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                yield return Page<NeuroShieldData>.FromValues((IReadOnlyList<NeuroShieldData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

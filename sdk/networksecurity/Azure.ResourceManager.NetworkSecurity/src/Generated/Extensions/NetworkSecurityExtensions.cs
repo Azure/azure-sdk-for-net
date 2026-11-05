@@ -129,27 +129,27 @@ namespace Azure.ResourceManager.NetworkSecurity
         }
 
         /// <summary>
-        /// Gets a collection of NeuroShieldResources in the <see cref="ResourceGroupResource"/>
+        /// Gets a collection of NeuroShields in the <see cref="ResourceGroupResource"/>
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableNetworkSecurityResourceGroupResource.GetNeuroShieldResources()"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableNetworkSecurityResourceGroupResource.GetNeuroShields()"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> An object representing collection of NeuroShieldResources and their operations over a NeuroShieldResource. </returns>
-        public static NeuroShieldResourceCollection GetNeuroShieldResources(this ResourceGroupResource resourceGroupResource)
+        /// <returns> An object representing collection of NeuroShields and their operations over a NeuroShieldResource. </returns>
+        public static NeuroShieldCollection GetNeuroShields(this ResourceGroupResource resourceGroupResource)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableNetworkSecurityResourceGroupResource(resourceGroupResource).GetNeuroShieldResources();
+            return GetMockableNetworkSecurityResourceGroupResource(resourceGroupResource).GetNeuroShields();
         }
 
         /// <summary>
         /// Gets a NeuroShield resource.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableNetworkSecurityResourceGroupResource.GetNeuroShieldResourceAsync(string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableNetworkSecurityResourceGroupResource.GetNeuroShieldAsync(string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
@@ -157,18 +157,18 @@ namespace Azure.ResourceManager.NetworkSecurity
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<NeuroShieldResource>> GetNeuroShieldResourceAsync(this ResourceGroupResource resourceGroupResource, string neuroShieldName, CancellationToken cancellationToken = default)
+        public static async Task<Response<NeuroShieldResource>> GetNeuroShieldAsync(this ResourceGroupResource resourceGroupResource, string neuroShieldName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return await GetMockableNetworkSecurityResourceGroupResource(resourceGroupResource).GetNeuroShieldResourceAsync(neuroShieldName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableNetworkSecurityResourceGroupResource(resourceGroupResource).GetNeuroShieldAsync(neuroShieldName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Gets a NeuroShield resource.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableNetworkSecurityResourceGroupResource.GetNeuroShieldResource(string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableNetworkSecurityResourceGroupResource.GetNeuroShield(string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
@@ -176,18 +176,18 @@ namespace Azure.ResourceManager.NetworkSecurity
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<NeuroShieldResource> GetNeuroShieldResource(this ResourceGroupResource resourceGroupResource, string neuroShieldName, CancellationToken cancellationToken = default)
+        public static Response<NeuroShieldResource> GetNeuroShield(this ResourceGroupResource resourceGroupResource, string neuroShieldName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableNetworkSecurityResourceGroupResource(resourceGroupResource).GetNeuroShieldResource(neuroShieldName, cancellationToken);
+            return GetMockableNetworkSecurityResourceGroupResource(resourceGroupResource).GetNeuroShield(neuroShieldName, cancellationToken);
         }
 
         /// <summary>
         /// Gets all NeuroShield resources in a subscription.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableNetworkSecuritySubscriptionResource.GetNeuroShieldResourcesAsync(int?, string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableNetworkSecuritySubscriptionResource.GetNeuroShieldsAsync(int?, string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
@@ -196,18 +196,18 @@ namespace Azure.ResourceManager.NetworkSecurity
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> A collection of <see cref="NeuroShieldResource"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<NeuroShieldResource> GetNeuroShieldResourcesAsync(this SubscriptionResource subscriptionResource, int? maxCount = default, string skipToken = default, CancellationToken cancellationToken = default)
+        public static AsyncPageable<NeuroShieldResource> GetNeuroShieldsAsync(this SubscriptionResource subscriptionResource, int? maxCount = default, string skipToken = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableNetworkSecuritySubscriptionResource(subscriptionResource).GetNeuroShieldResourcesAsync(maxCount, skipToken, cancellationToken);
+            return GetMockableNetworkSecuritySubscriptionResource(subscriptionResource).GetNeuroShieldsAsync(maxCount, skipToken, cancellationToken);
         }
 
         /// <summary>
         /// Gets all NeuroShield resources in a subscription.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableNetworkSecuritySubscriptionResource.GetNeuroShieldResources(int?, string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableNetworkSecuritySubscriptionResource.GetNeuroShields(int?, string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
@@ -216,18 +216,18 @@ namespace Azure.ResourceManager.NetworkSecurity
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> A collection of <see cref="NeuroShieldResource"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<NeuroShieldResource> GetNeuroShieldResources(this SubscriptionResource subscriptionResource, int? maxCount = default, string skipToken = default, CancellationToken cancellationToken = default)
+        public static Pageable<NeuroShieldResource> GetNeuroShields(this SubscriptionResource subscriptionResource, int? maxCount = default, string skipToken = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableNetworkSecuritySubscriptionResource(subscriptionResource).GetNeuroShieldResources(maxCount, skipToken, cancellationToken);
+            return GetMockableNetworkSecuritySubscriptionResource(subscriptionResource).GetNeuroShields(maxCount, skipToken, cancellationToken);
         }
 
         /// <summary>
         /// Gets the status of an asynchronous NeuroShield operation.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableNetworkSecuritySubscriptionResource.GetAsync(AzureLocation, string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableNetworkSecuritySubscriptionResource.GetNeuroShieldOperationStatusAsync(AzureLocation, string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
@@ -235,18 +235,18 @@ namespace Azure.ResourceManager.NetworkSecurity
         /// <param name="operationId"> The ID of an ongoing asynchronous NeuroShield operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static async Task<Response<OperationStatusResult>> GetAsync(this SubscriptionResource subscriptionResource, AzureLocation location, string operationId, CancellationToken cancellationToken = default)
+        public static async Task<Response<OperationStatusResult>> GetNeuroShieldOperationStatusAsync(this SubscriptionResource subscriptionResource, AzureLocation location, string operationId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return await GetMockableNetworkSecuritySubscriptionResource(subscriptionResource).GetAsync(location, operationId, cancellationToken).ConfigureAwait(false);
+            return await GetMockableNetworkSecuritySubscriptionResource(subscriptionResource).GetNeuroShieldOperationStatusAsync(location, operationId, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Gets the status of an asynchronous NeuroShield operation.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableNetworkSecuritySubscriptionResource.Get(AzureLocation, string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableNetworkSecuritySubscriptionResource.GetNeuroShieldOperationStatus(AzureLocation, string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
@@ -254,11 +254,11 @@ namespace Azure.ResourceManager.NetworkSecurity
         /// <param name="operationId"> The ID of an ongoing asynchronous NeuroShield operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static Response<OperationStatusResult> Get(this SubscriptionResource subscriptionResource, AzureLocation location, string operationId, CancellationToken cancellationToken = default)
+        public static Response<OperationStatusResult> GetNeuroShieldOperationStatus(this SubscriptionResource subscriptionResource, AzureLocation location, string operationId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableNetworkSecuritySubscriptionResource(subscriptionResource).Get(location, operationId, cancellationToken);
+            return GetMockableNetworkSecuritySubscriptionResource(subscriptionResource).GetNeuroShieldOperationStatus(location, operationId, cancellationToken);
         }
     }
 }

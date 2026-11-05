@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.NetworkSecurity.Models
             {
                 return null;
             }
-            string requestId = default;
+            Guid requestId = default;
             DateTimeOffset requestedOn = default;
             DateTimeOffset expiresOn = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.NetworkSecurity.Models
             {
                 if (prop.NameEquals("requestId"u8))
                 {
-                    requestId = prop.Value.GetString();
+                    requestId = new Guid(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("requestedAt"u8))

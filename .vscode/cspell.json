@@ -936,12 +936,6 @@
       ]
     },
     {
-      "filename": "**/sdk/networksecurity/Azure.ResourceManager.NetworkSecurity/**/*.cs",
-      "words": [
-        "neuro"
-      ]
-    },
-    {
       "filename": "**/sdk/keyvault/**/*.cs",
       "words": [
         "deletesas",

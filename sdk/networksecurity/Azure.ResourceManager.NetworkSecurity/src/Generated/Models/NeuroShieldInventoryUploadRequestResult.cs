@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.NetworkSecurity.Models
         /// <param name="requestedOn"> The time when the resource provider accepted the request. </param>
         /// <param name="expiresOn"> The time when the request expires. </param>
         /// <param name="deduplicated"> Indicates whether an existing unexpired request was reused. </param>
-        internal NeuroShieldInventoryUploadRequestResult(string requestId, DateTimeOffset requestedOn, DateTimeOffset expiresOn, bool deduplicated)
+        internal NeuroShieldInventoryUploadRequestResult(Guid requestId, DateTimeOffset requestedOn, DateTimeOffset expiresOn, bool deduplicated)
         {
             RequestId = requestId;
             RequestedOn = requestedOn;
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.NetworkSecurity.Models
         /// <param name="expiresOn"> The time when the request expires. </param>
         /// <param name="deduplicated"> Indicates whether an existing unexpired request was reused. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NeuroShieldInventoryUploadRequestResult(string requestId, DateTimeOffset requestedOn, DateTimeOffset expiresOn, bool deduplicated, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal NeuroShieldInventoryUploadRequestResult(Guid requestId, DateTimeOffset requestedOn, DateTimeOffset expiresOn, bool deduplicated, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             RequestId = requestId;
             RequestedOn = requestedOn;
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.NetworkSecurity.Models
         }
 
         /// <summary> The stable identifier for the accepted request. </summary>
-        public string RequestId { get; }
+        public Guid RequestId { get; }
 
         /// <summary> The time when the resource provider accepted the request. </summary>
         public DateTimeOffset RequestedOn { get; }

@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.NetworkSecurity.Models;
+using Azure.ResourceManager.Resources;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.NetworkSecurity.Tests
@@ -136,6 +137,23 @@ namespace Azure.ResourceManager.NetworkSecurity.Tests
             Assert.That(transport.Requests[1].Uri.ToString(), Is.EqualTo(pollingUri));
             Assert.That(transport.Requests[2].Method, Is.EqualTo(RequestMethod.Get));
             Assert.That(transport.Requests[2].Uri.ToString(), Is.EqualTo($"https://management.azure.com{ResourceId}?api-version={ApiVersion}"));
+        }
+
+        [TestCase(false)]
+        [TestCase(true)]
+        public async Task GetNeuroShieldOperationStatusUsesSubscriptionAndLocationScope(bool isAsync)
+        {
+            var transport = new MockTransport(new MockResponse(200).SetContent("""{"status":"Succeeded"}"""));
+            var subscription = CreateClient(transport).GetSubscriptionResource(SubscriptionResource.CreateResourceIdentifier(SubscriptionId));
+
+            var response = isAsync
+                ? await subscription.GetNeuroShieldOperationStatusAsync(AzureLocation.EastUS, "test-operation")
+                : subscription.GetNeuroShieldOperationStatus(AzureLocation.EastUS, "test-operation");
+
+            Assert.That(response.Value.Status, Is.EqualTo("Succeeded"));
+            Assert.That(transport.SingleRequest.Method, Is.EqualTo(RequestMethod.Get));
+            Assert.That(transport.SingleRequest.Uri.ToString(), Is.EqualTo(
+                $"https://management.azure.com/subscriptions/{SubscriptionId}/providers/Microsoft.NetworkSecurity/locations/eastus/neuroShieldOperationStatuses/test-operation?api-version={ApiVersion}"));
         }
 
         private static ArmClient CreateClient(MockTransport transport)

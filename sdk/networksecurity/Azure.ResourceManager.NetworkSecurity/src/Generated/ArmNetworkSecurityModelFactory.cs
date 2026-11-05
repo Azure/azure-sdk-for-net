@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.NetworkSecurity;
@@ -27,12 +28,12 @@ namespace Azure.ResourceManager.NetworkSecurity.Models
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> Properties of the NeuroShield resource. </param>
         /// <param name="eTag"> If eTag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields. </param>
-        /// <returns> A new <see cref="NetworkSecurity.NeuroShieldResourceData"/> instance for mocking. </returns>
-        public static NeuroShieldResourceData NeuroShieldResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, NeuroShieldProperties properties = default, string eTag = default)
+        /// <returns> A new <see cref="NetworkSecurity.NeuroShieldData"/> instance for mocking. </returns>
+        public static NeuroShieldData NeuroShieldData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, NeuroShieldProperties properties = default, ETag? eTag = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new NeuroShieldResourceData(
+            return new NeuroShieldData(
                 id,
                 name,
                 resourceType,
@@ -62,7 +63,7 @@ namespace Azure.ResourceManager.NetworkSecurity.Models
         /// line feed, and carriage return are not allowed.
         /// </param>
         /// <returns> A new <see cref="Models.NeuroShieldProperties"/> instance for mocking. </returns>
-        public static NeuroShieldProperties NeuroShieldProperties(ProvisioningStateNeuroShield? provisioningState = default, string resourceGuid = default, NeuroShieldResponseMode responseMode = default, NeuroShieldSeverityThreshold? severityThreshold = default, string description = default)
+        public static NeuroShieldProperties NeuroShieldProperties(ProvisioningStateNeuroShield? provisioningState = default, Guid? resourceGuid = default, NeuroShieldResponseMode responseMode = default, NeuroShieldSeverityThreshold? severityThreshold = default, string description = default)
         {
             return new NeuroShieldProperties(
                 provisioningState,
@@ -76,10 +77,10 @@ namespace Azure.ResourceManager.NetworkSecurity.Models
         /// <summary> Patch request body for updating a NeuroShield resource. </summary>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="properties"> Patch properties for the NeuroShield resource. </param>
-        /// <returns> A new <see cref="Models.NeuroShieldResourcePatch"/> instance for mocking. </returns>
-        public static NeuroShieldResourcePatch NeuroShieldResourcePatch(NeuroShieldPatchTags tags = default, NeuroShieldPatchProperties properties = default)
+        /// <returns> A new <see cref="Models.NeuroShieldPatch"/> instance for mocking. </returns>
+        public static NeuroShieldPatch NeuroShieldPatch(NeuroShieldPatchTags tags = default, NeuroShieldPatchProperties properties = default)
         {
-            return new NeuroShieldResourcePatch(tags, properties, default);
+            return new NeuroShieldPatch(tags, properties, default);
         }
 
         /// <summary> The NeuroShieldPatchTags. </summary>
@@ -229,19 +230,26 @@ namespace Azure.ResourceManager.NetworkSecurity.Models
         /// nonzero principalId and clientId. Other identity kinds reject a nonempty map.
         /// </param>
         /// <returns> A new <see cref="Models.NeuroShieldProtectedResourceIdentity"/> instance for mocking. </returns>
-        public static NeuroShieldProtectedResourceIdentity NeuroShieldProtectedResourceIdentity(string principalId = default, string tenantId = default, ManagedServiceIdentityType @type = default, NeuroShieldProtectedResourceIdentityUserAssignedIdentities userAssignedIdentities = default)
+        public static NeuroShieldProtectedResourceIdentity NeuroShieldProtectedResourceIdentity(Guid? principalId = default, Guid? tenantId = default, ManagedServiceIdentityType @type = default, IDictionary<string, NeuroShieldProtectedResourceUserAssignedIdentity> userAssignedIdentities = default)
         {
-            return new NeuroShieldProtectedResourceIdentity(principalId, tenantId, @type, userAssignedIdentities, default);
+            userAssignedIdentities ??= new ChangeTrackingDictionary<string, NeuroShieldProtectedResourceUserAssignedIdentity>();
+
+            return new NeuroShieldProtectedResourceIdentity(principalId, tenantId, @type, userAssignedIdentities ?? new ChangeTrackingDictionary<string, NeuroShieldProtectedResourceUserAssignedIdentity>(), default);
         }
 
-        /// <summary> The NeuroShieldProtectedResourceIdentityUserAssignedIdentities. </summary>
-        /// <param name="additionalProperties"></param>
-        /// <returns> A new <see cref="Models.NeuroShieldProtectedResourceIdentityUserAssignedIdentities"/> instance for mocking. </returns>
-        public static NeuroShieldProtectedResourceIdentityUserAssignedIdentities NeuroShieldProtectedResourceIdentityUserAssignedIdentities(IDictionary<string, BinaryData> additionalProperties = default)
+        /// <summary> Caller-supplied identifiers of a user-assigned identity associated with the target. </summary>
+        /// <param name="principalId">
+        /// Microsoft Entra service principal ID of the target's user-assigned identity.
+        /// A non-null, nonzero value is required when using UserAssigned.
+        /// </param>
+        /// <param name="clientId">
+        /// Microsoft Entra client ID of the target's user-assigned identity.
+        /// A non-null, nonzero value is required when using UserAssigned.
+        /// </param>
+        /// <returns> A new <see cref="Models.NeuroShieldProtectedResourceUserAssignedIdentity"/> instance for mocking. </returns>
+        public static NeuroShieldProtectedResourceUserAssignedIdentity NeuroShieldProtectedResourceUserAssignedIdentity(Guid? principalId = default, Guid? clientId = default)
         {
-            additionalProperties ??= new ChangeTrackingDictionary<string, BinaryData>();
-
-            return new NeuroShieldProtectedResourceIdentityUserAssignedIdentities(additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>());
+            return new NeuroShieldProtectedResourceUserAssignedIdentity(principalId, clientId, default);
         }
 
         /// <summary> A server-owned request for the Neuron agents associated with a protected resource to upload fresh inventory. </summary>
@@ -249,7 +257,7 @@ namespace Azure.ResourceManager.NetworkSecurity.Models
         /// <param name="requestedOn"> The time when the resource provider accepted the request. </param>
         /// <param name="expiresOn"> The time after which Neuron agents must stop observing the request. </param>
         /// <returns> A new <see cref="Models.NeuroShieldInventoryUploadRequestMetadata"/> instance for mocking. </returns>
-        public static NeuroShieldInventoryUploadRequestMetadata NeuroShieldInventoryUploadRequestMetadata(string requestId = default, DateTimeOffset requestedOn = default, DateTimeOffset expiresOn = default)
+        public static NeuroShieldInventoryUploadRequestMetadata NeuroShieldInventoryUploadRequestMetadata(Guid requestId = default, DateTimeOffset requestedOn = default, DateTimeOffset expiresOn = default)
         {
             return new NeuroShieldInventoryUploadRequestMetadata(requestId, requestedOn, expiresOn, default);
         }
@@ -260,7 +268,7 @@ namespace Azure.ResourceManager.NetworkSecurity.Models
         /// <param name="expiresOn"> The time when the request expires. </param>
         /// <param name="deduplicated"> Indicates whether an existing unexpired request was reused. </param>
         /// <returns> A new <see cref="Models.NeuroShieldInventoryUploadRequestResult"/> instance for mocking. </returns>
-        public static NeuroShieldInventoryUploadRequestResult NeuroShieldInventoryUploadRequestResult(string requestId = default, DateTimeOffset requestedOn = default, DateTimeOffset expiresOn = default, bool deduplicated = default)
+        public static NeuroShieldInventoryUploadRequestResult NeuroShieldInventoryUploadRequestResult(Guid requestId = default, DateTimeOffset requestedOn = default, DateTimeOffset expiresOn = default, bool deduplicated = default)
         {
             return new NeuroShieldInventoryUploadRequestResult(requestId, requestedOn, expiresOn, deduplicated, default);
         }

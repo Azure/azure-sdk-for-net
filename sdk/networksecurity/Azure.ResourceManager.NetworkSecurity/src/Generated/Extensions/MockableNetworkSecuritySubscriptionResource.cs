@@ -68,19 +68,19 @@ namespace Azure.ResourceManager.NetworkSecurity.Mocking
         /// <param name="skipToken"> The continuation token used to retrieve the next page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="NeuroShieldResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<NeuroShieldResource> GetNeuroShieldResourcesAsync(int? maxCount = default, string skipToken = default, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<NeuroShieldResource> GetNeuroShieldsAsync(int? maxCount = default, string skipToken = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<NeuroShieldResourceData, NeuroShieldResource>(new NeuroShieldResourceDataAsync0CollectionResultOfT(
+            return new AsyncPageableWrapper<NeuroShieldData, NeuroShieldResource>(new NeuroShieldDataAsync0CollectionResultOfT(
                 NeuroShieldsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 maxCount,
                 skipToken,
                 context,
-                "MockableNetworkSecuritySubscriptionResource.GetNeuroShieldResources"), data => new NeuroShieldResource(Client, data));
+                "MockableNetworkSecuritySubscriptionResource.GetNeuroShields"), data => new NeuroShieldResource(Client, data));
         }
 
         /// <summary>
@@ -104,19 +104,19 @@ namespace Azure.ResourceManager.NetworkSecurity.Mocking
         /// <param name="skipToken"> The continuation token used to retrieve the next page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="NeuroShieldResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<NeuroShieldResource> GetNeuroShieldResources(int? maxCount = default, string skipToken = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<NeuroShieldResource> GetNeuroShields(int? maxCount = default, string skipToken = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<NeuroShieldResourceData, NeuroShieldResource>(new NeuroShieldResourceData0CollectionResultOfT(
+            return new PageableWrapper<NeuroShieldData, NeuroShieldResource>(new NeuroShieldData0CollectionResultOfT(
                 NeuroShieldsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 maxCount,
                 skipToken,
                 context,
-                "MockableNetworkSecuritySubscriptionResource.GetNeuroShieldResources"), data => new NeuroShieldResource(Client, data));
+                "MockableNetworkSecuritySubscriptionResource.GetNeuroShields"), data => new NeuroShieldResource(Client, data));
         }
 
         /// <summary>
@@ -141,11 +141,11 @@ namespace Azure.ResourceManager.NetworkSecurity.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<OperationStatusResult>> GetAsync(AzureLocation location, string operationId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<OperationStatusResult>> GetNeuroShieldOperationStatusAsync(AzureLocation location, string operationId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
 
-            using DiagnosticScope scope = NeuroShieldOperationStatusesClientDiagnostics.CreateScope("MockableNetworkSecuritySubscriptionResource.Get");
+            using DiagnosticScope scope = NeuroShieldOperationStatusesClientDiagnostics.CreateScope("MockableNetworkSecuritySubscriptionResource.GetNeuroShieldOperationStatus");
             scope.Start();
             try
             {
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.NetworkSecurity.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = NeuroShieldOperationStatusesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), location, operationId, context);
+                HttpMessage message = NeuroShieldOperationStatusesRestClient.CreateGetNeuroShieldOperationStatusRequest(Guid.Parse(Id.SubscriptionId), location, operationId, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<OperationStatusResult> response = Response.FromValue(ModelReaderWriter.Read<OperationStatusResult>(result.Content, ModelSerializationExtensions.WireOptions, AzureResourceManagerNetworkSecurityContext.Default), result);
                 if (response.Value == null)
@@ -191,11 +191,11 @@ namespace Azure.ResourceManager.NetworkSecurity.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<OperationStatusResult> Get(AzureLocation location, string operationId, CancellationToken cancellationToken = default)
+        public virtual Response<OperationStatusResult> GetNeuroShieldOperationStatus(AzureLocation location, string operationId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
 
-            using DiagnosticScope scope = NeuroShieldOperationStatusesClientDiagnostics.CreateScope("MockableNetworkSecuritySubscriptionResource.Get");
+            using DiagnosticScope scope = NeuroShieldOperationStatusesClientDiagnostics.CreateScope("MockableNetworkSecuritySubscriptionResource.GetNeuroShieldOperationStatus");
             scope.Start();
             try
             {
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.NetworkSecurity.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = NeuroShieldOperationStatusesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), location, operationId, context);
+                HttpMessage message = NeuroShieldOperationStatusesRestClient.CreateGetNeuroShieldOperationStatusRequest(Guid.Parse(Id.SubscriptionId), location, operationId, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<OperationStatusResult> response = Response.FromValue(ModelReaderWriter.Read<OperationStatusResult>(result.Content, ModelSerializationExtensions.WireOptions, AzureResourceManagerNetworkSecurityContext.Default), result);
                 if (response.Value == null)

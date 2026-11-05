@@ -5,9 +5,3 @@
 ### Features Added
 
 - Initial release of the Azure Network Security management client library, supporting NeuroShield resources, protected resources, findings, mitigations, and summaries.
-
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
