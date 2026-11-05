@@ -14,7 +14,7 @@ using Azure.ResourceManager.NetworkSecurity.Models;
 
 namespace Azure.ResourceManager.NetworkSecurity
 {
-    internal partial class NeuroShieldDataCollectionResultOfT : Pageable<NeuroShieldData>
+    internal partial class NeuroShieldResourceDataCollectionResultOfT : Pageable<NeuroShieldResourceData>
     {
         private readonly NeuroShields _client;
         private readonly Guid _subscriptionId;
@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.NetworkSecurity
         private readonly RequestContext _context;
         private readonly string _diagnosticScope;
 
-        /// <summary> Initializes a new instance of NeuroShieldDataCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <summary> Initializes a new instance of NeuroShieldResourceDataCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The NeuroShields client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.NetworkSecurity
         /// <param name="skipToken"> The continuation token used to retrieve the next page. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public NeuroShieldDataCollectionResultOfT(NeuroShields client, Guid subscriptionId, string resourceGroupName, int? maxCount, string skipToken, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public NeuroShieldResourceDataCollectionResultOfT(NeuroShields client, Guid subscriptionId, string resourceGroupName, int? maxCount, string skipToken, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -43,11 +43,11 @@ namespace Azure.ResourceManager.NetworkSecurity
             _diagnosticScope = diagnosticScope;
         }
 
-        /// <summary> Gets the pages of NeuroShieldDataCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of NeuroShieldResourceDataCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of NeuroShieldDataCollectionResultOfT as an enumerable collection. </returns>
-        public override IEnumerable<Page<NeuroShieldData>> AsPages(string continuationToken, int? pageSizeHint)
+        /// <returns> The pages of NeuroShieldResourceDataCollectionResultOfT as an enumerable collection. </returns>
+        public override IEnumerable<Page<NeuroShieldResourceData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken, UriKind.RelativeOrAbsolute) : null;
             while (true)
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.NetworkSecurity
                 }
                 NeuroShieldResourceListResult result = NeuroShieldResourceListResult.FromResponse(response);
                 nextPage = result.NextLink;
-                yield return Page<NeuroShieldData>.FromValues((IReadOnlyList<NeuroShieldData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                yield return Page<NeuroShieldResourceData>.FromValues((IReadOnlyList<NeuroShieldResourceData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

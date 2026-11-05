@@ -17,7 +17,7 @@ using Azure.ResourceManager.NetworkSecurity.Models;
 
 namespace Azure.ResourceManager.NetworkSecurity
 {
-    internal partial class NeuroShieldDataAsyncCollectionResultOfT : AsyncPageable<NeuroShieldData>
+    internal partial class NeuroShieldResourceDataAsyncCollectionResultOfT : AsyncPageable<NeuroShieldResourceData>
     {
         private readonly NeuroShields _client;
         private readonly Guid _subscriptionId;
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.NetworkSecurity
         private readonly RequestContext _context;
         private readonly string _diagnosticScope;
 
-        /// <summary> Initializes a new instance of NeuroShieldDataAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <summary> Initializes a new instance of NeuroShieldResourceDataAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The NeuroShields client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.NetworkSecurity
         /// <param name="skipToken"> The continuation token used to retrieve the next page. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public NeuroShieldDataAsyncCollectionResultOfT(NeuroShields client, Guid subscriptionId, string resourceGroupName, int? maxCount, string skipToken, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public NeuroShieldResourceDataAsyncCollectionResultOfT(NeuroShields client, Guid subscriptionId, string resourceGroupName, int? maxCount, string skipToken, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -46,11 +46,11 @@ namespace Azure.ResourceManager.NetworkSecurity
             _diagnosticScope = diagnosticScope;
         }
 
-        /// <summary> Gets the pages of NeuroShieldDataAsyncCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of NeuroShieldResourceDataAsyncCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of NeuroShieldDataAsyncCollectionResultOfT as an enumerable collection. </returns>
-        public override IAsyncEnumerable<Page<NeuroShieldData>> AsPages(string continuationToken, int? pageSizeHint)
+        /// <returns> The pages of NeuroShieldResourceDataAsyncCollectionResultOfT as an enumerable collection. </returns>
+        public override IAsyncEnumerable<Page<NeuroShieldResourceData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             return AsPagesAsync(continuationToken, pageSizeHint, _context?.CancellationToken ?? default);
         }
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.NetworkSecurity
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        private async IAsyncEnumerable<Page<NeuroShieldData>> AsPagesAsync(string continuationToken, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken)
+        private async IAsyncEnumerable<Page<NeuroShieldResourceData>> AsPagesAsync(string continuationToken, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken, UriKind.RelativeOrAbsolute) : null;
             while (true)
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.NetworkSecurity
                 }
                 NeuroShieldResourceListResult result = NeuroShieldResourceListResult.FromResponse(response);
                 nextPage = result.NextLink;
-                yield return Page<NeuroShieldData>.FromValues((IReadOnlyList<NeuroShieldData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                yield return Page<NeuroShieldResourceData>.FromValues((IReadOnlyList<NeuroShieldResourceData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.NetworkSecurity.Models
         /// line feed, and carriage return are not allowed.
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NeuroShieldProperties(ProvisioningStateNeuroShield? provisioningState, Guid? resourceGuid, NeuroShieldResponseMode responseMode, NeuroShieldSeverityThreshold? severityThreshold, string description, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal NeuroShieldProperties(ProvisioningStateNeuroShield? provisioningState, string resourceGuid, NeuroShieldResponseMode responseMode, NeuroShieldSeverityThreshold? severityThreshold, string description, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             ResourceGuid = resourceGuid;
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.NetworkSecurity.Models
         public ProvisioningStateNeuroShield? ProvisioningState { get; }
 
         /// <summary> System-generated globally unique identifier (GUID) for the NeuroShield resource. </summary>
-        public Guid? ResourceGuid { get; }
+        public string ResourceGuid { get; }
 
         /// <summary>
         /// Response mode that controls mitigation serving behavior. A full create or

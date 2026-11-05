@@ -16,7 +16,6 @@ namespace Azure.ResourceManager.NetworkSecurity
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
     /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
-    [ModelReaderWriterBuildable(typeof(NeuroShieldData))]
     [ModelReaderWriterBuildable(typeof(NeuroShieldFindingData))]
     [ModelReaderWriterBuildable(typeof(NeuroShieldFindingProperties))]
     [ModelReaderWriterBuildable(typeof(NeuroShieldFindingResource))]
@@ -26,16 +25,17 @@ namespace Azure.ResourceManager.NetworkSecurity
     [ModelReaderWriterBuildable(typeof(NeuroShieldMitigationData))]
     [ModelReaderWriterBuildable(typeof(NeuroShieldMitigationProperties))]
     [ModelReaderWriterBuildable(typeof(NeuroShieldMitigationResource))]
-    [ModelReaderWriterBuildable(typeof(NeuroShieldPatch))]
     [ModelReaderWriterBuildable(typeof(NeuroShieldPatchProperties))]
     [ModelReaderWriterBuildable(typeof(NeuroShieldPatchTags))]
     [ModelReaderWriterBuildable(typeof(NeuroShieldProperties))]
     [ModelReaderWriterBuildable(typeof(NeuroShieldProtectedResource))]
     [ModelReaderWriterBuildable(typeof(NeuroShieldProtectedResourceData))]
     [ModelReaderWriterBuildable(typeof(NeuroShieldProtectedResourceIdentity))]
+    [ModelReaderWriterBuildable(typeof(NeuroShieldProtectedResourceIdentityUserAssignedIdentities))]
     [ModelReaderWriterBuildable(typeof(NeuroShieldProtectedResourceProperties))]
-    [ModelReaderWriterBuildable(typeof(NeuroShieldProtectedResourceUserAssignedIdentity))]
     [ModelReaderWriterBuildable(typeof(NeuroShieldResource))]
+    [ModelReaderWriterBuildable(typeof(NeuroShieldResourceData))]
+    [ModelReaderWriterBuildable(typeof(NeuroShieldResourcePatch))]
     [ModelReaderWriterBuildable(typeof(NeuroShieldSummaryData))]
     [ModelReaderWriterBuildable(typeof(NeuroShieldSummaryProperties))]
     [ModelReaderWriterBuildable(typeof(NeuroShieldSummaryResource))]

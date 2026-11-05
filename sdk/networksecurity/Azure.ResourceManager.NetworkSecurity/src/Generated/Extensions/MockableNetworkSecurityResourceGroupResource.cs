@@ -31,11 +31,11 @@ namespace Azure.ResourceManager.NetworkSecurity.Mocking
         {
         }
 
-        /// <summary> Gets a collection of NeuroShields in the <see cref="ResourceGroupResource"/>. </summary>
-        /// <returns> An object representing collection of NeuroShields and their operations over a NeuroShieldResource. </returns>
-        public virtual NeuroShieldCollection GetNeuroShields()
+        /// <summary> Gets a collection of NeuroShieldResources in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of NeuroShieldResources and their operations over a NeuroShieldResource. </returns>
+        public virtual NeuroShieldResourceCollection GetNeuroShieldResources()
         {
-            return GetCachedClient(client => new NeuroShieldCollection(client, Id));
+            return GetCachedClient(client => new NeuroShieldResourceCollection(client, Id));
         }
 
         /// <summary>
@@ -60,11 +60,11 @@ namespace Azure.ResourceManager.NetworkSecurity.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="neuroShieldName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="neuroShieldName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<NeuroShieldResource>> GetNeuroShieldAsync(string neuroShieldName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<NeuroShieldResource>> GetNeuroShieldResourceAsync(string neuroShieldName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(neuroShieldName, nameof(neuroShieldName));
 
-            return await GetNeuroShields().GetAsync(neuroShieldName, cancellationToken).ConfigureAwait(false);
+            return await GetNeuroShieldResources().GetAsync(neuroShieldName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.NetworkSecurity.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="neuroShieldName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="neuroShieldName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<NeuroShieldResource> GetNeuroShield(string neuroShieldName, CancellationToken cancellationToken = default)
+        public virtual Response<NeuroShieldResource> GetNeuroShieldResource(string neuroShieldName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(neuroShieldName, nameof(neuroShieldName));
 
-            return GetNeuroShields().Get(neuroShieldName, cancellationToken);
+            return GetNeuroShieldResources().Get(neuroShieldName, cancellationToken);
         }
     }
 }

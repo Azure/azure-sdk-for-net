@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.NetworkSecurity;
 
 namespace Azure.ResourceManager.NetworkSecurity.Models
 {
@@ -30,7 +29,6 @@ namespace Azure.ResourceManager.NetworkSecurity.Models
         public NeuroShieldProtectedResourceIdentity(ManagedServiceIdentityType @type)
         {
             Type = @type;
-            UserAssignedIdentities = new ChangeTrackingDictionary<string, NeuroShieldProtectedResourceUserAssignedIdentity>();
         }
 
         /// <summary> Initializes a new instance of <see cref="NeuroShieldProtectedResourceIdentity"/>. </summary>
@@ -53,7 +51,7 @@ namespace Azure.ResourceManager.NetworkSecurity.Models
         /// nonzero principalId and clientId. Other identity kinds reject a nonempty map.
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NeuroShieldProtectedResourceIdentity(Guid? principalId, Guid? tenantId, ManagedServiceIdentityType @type, IDictionary<string, NeuroShieldProtectedResourceUserAssignedIdentity> userAssignedIdentities, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal NeuroShieldProtectedResourceIdentity(string principalId, string tenantId, ManagedServiceIdentityType @type, NeuroShieldProtectedResourceIdentityUserAssignedIdentities userAssignedIdentities, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             PrincipalId = principalId;
             TenantId = tenantId;
@@ -66,13 +64,13 @@ namespace Azure.ResourceManager.NetworkSecurity.Models
         /// Microsoft Entra service principal ID of the target's system-assigned identity.
         /// A nonzero value is required for SystemAssigned; omit for UserAssigned.
         /// </summary>
-        public Guid? PrincipalId { get; set; }
+        public string PrincipalId { get; set; }
 
         /// <summary>
         /// Microsoft Entra tenant ID of the target's system-assigned identity.
         /// A nonzero value is required for SystemAssigned; omit for UserAssigned.
         /// </summary>
-        public Guid? TenantId { get; set; }
+        public string TenantId { get; set; }
 
         /// <summary>
         /// Type of the target identity. None, SystemAssigned, and UserAssigned are supported.
@@ -86,6 +84,6 @@ namespace Azure.ResourceManager.NetworkSecurity.Models
         /// For UserAssigned, supply exactly one non-null entry with a nonblank key and
         /// nonzero principalId and clientId. Other identity kinds reject a nonempty map.
         /// </summary>
-        public IDictionary<string, NeuroShieldProtectedResourceUserAssignedIdentity> UserAssignedIdentities { get; }
+        public NeuroShieldProtectedResourceIdentityUserAssignedIdentities UserAssignedIdentities { get; set; }
     }
 }

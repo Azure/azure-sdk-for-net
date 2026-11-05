@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.NetworkSecurity.Models
             if (options.Format != "W" && Optional.IsDefined(ResourceGuid))
             {
                 writer.WritePropertyName("resourceGuid"u8);
-                writer.WriteStringValue(ResourceGuid.Value);
+                writer.WriteStringValue(ResourceGuid);
             }
             writer.WritePropertyName("responseMode"u8);
             writer.WriteStringValue(ResponseMode.ToString());
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.NetworkSecurity.Models
                 return null;
             }
             ProvisioningStateNeuroShield? provisioningState = default;
-            Guid? resourceGuid = default;
+            string resourceGuid = default;
             NeuroShieldResponseMode responseMode = default;
             NeuroShieldSeverityThreshold? severityThreshold = default;
             string description = default;
@@ -162,11 +162,7 @@ namespace Azure.ResourceManager.NetworkSecurity.Models
                 }
                 if (prop.NameEquals("resourceGuid"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    resourceGuid = new Guid(prop.Value.GetString());
+                    resourceGuid = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("responseMode"u8))

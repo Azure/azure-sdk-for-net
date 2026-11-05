@@ -19,9 +19,9 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.NetworkSecurity
 {
     /// <summary>
-    /// A class representing a NeuroShield along with the instance operations that can be performed on it.
+    /// A class representing a NeuroShieldResource along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="NeuroShieldResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetNeuroShields method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetNeuroShieldResources method.
     /// </summary>
     public partial class NeuroShieldResource : ArmResource
     {
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.NetworkSecurity
         private readonly NeuroShieldFindings _neuroShieldFindingsRestClient;
         private readonly ClientDiagnostics _neuroShieldMitigationsClientDiagnostics;
         private readonly NeuroShieldMitigations _neuroShieldMitigationsRestClient;
-        private readonly NeuroShieldData _data;
+        private readonly NeuroShieldResourceData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.NetworkSecurity/neuroShields";
 
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.NetworkSecurity
         /// <summary> Initializes a new instance of <see cref="NeuroShieldResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal NeuroShieldResource(ArmClient client, NeuroShieldData data) : this(client, data.Id)
+        internal NeuroShieldResource(ArmClient client, NeuroShieldResourceData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
@@ -54,13 +54,13 @@ namespace Azure.ResourceManager.NetworkSecurity
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal NeuroShieldResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string neuroShieldApiVersion);
+            TryGetApiVersion(ResourceType, out string neuroShieldResourceApiVersion);
             _neuroShieldsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.NetworkSecurity", ResourceType.Namespace, Diagnostics);
             _neuroShieldsRestClient = new NeuroShields(_neuroShieldsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.NetworkSecurity/neuroShields", out string neuroShieldsApiVersionOverride) ? neuroShieldsApiVersionOverride : "2026-10-01-preview");
             _neuroShieldFindingsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.NetworkSecurity", ResourceType.Namespace, Diagnostics);
-            _neuroShieldFindingsRestClient = new NeuroShieldFindings(_neuroShieldFindingsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, neuroShieldApiVersion ?? "2026-10-01-preview");
+            _neuroShieldFindingsRestClient = new NeuroShieldFindings(_neuroShieldFindingsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, neuroShieldResourceApiVersion ?? "2026-10-01-preview");
             _neuroShieldMitigationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.NetworkSecurity", ResourceType.Namespace, Diagnostics);
-            _neuroShieldMitigationsRestClient = new NeuroShieldMitigations(_neuroShieldMitigationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, neuroShieldApiVersion ?? "2026-10-01-preview");
+            _neuroShieldMitigationsRestClient = new NeuroShieldMitigations(_neuroShieldMitigationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, neuroShieldResourceApiVersion ?? "2026-10-01-preview");
             ValidateResourceId(id);
         }
 
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.NetworkSecurity
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        public virtual NeuroShieldData Data
+        public virtual NeuroShieldResourceData Data
         {
             get
             {
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.NetworkSecurity
                 };
                 HttpMessage message = _neuroShieldsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<NeuroShieldData> response = Response.FromValue(NeuroShieldData.FromResponse(result), result);
+                Response<NeuroShieldResourceData> response = Response.FromValue(NeuroShieldResourceData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.NetworkSecurity
                 };
                 HttpMessage message = _neuroShieldsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<NeuroShieldData> response = Response.FromValue(NeuroShieldData.FromResponse(result), result);
+                Response<NeuroShieldResourceData> response = Response.FromValue(NeuroShieldResourceData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.NetworkSecurity
         /// <param name="ifMatch"> The entity tag that makes the request conditional. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual async Task<Response<NeuroShieldResource>> UpdateAsync(NeuroShieldPatch patch, ETag? ifMatch = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<NeuroShieldResource>> UpdateAsync(NeuroShieldResourcePatch patch, ETag? ifMatch = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
@@ -233,9 +233,9 @@ namespace Azure.ResourceManager.NetworkSecurity
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _neuroShieldsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, NeuroShieldPatch.ToRequestContent(patch), ifMatch, context);
+                HttpMessage message = _neuroShieldsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, NeuroShieldResourcePatch.ToRequestContent(patch), ifMatch, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<NeuroShieldData> response = Response.FromValue(NeuroShieldData.FromResponse(result), result);
+                Response<NeuroShieldResourceData> response = Response.FromValue(NeuroShieldResourceData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -274,7 +274,7 @@ namespace Azure.ResourceManager.NetworkSecurity
         /// <param name="ifMatch"> The entity tag that makes the request conditional. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual Response<NeuroShieldResource> Update(NeuroShieldPatch patch, ETag? ifMatch = default, CancellationToken cancellationToken = default)
+        public virtual Response<NeuroShieldResource> Update(NeuroShieldResourcePatch patch, ETag? ifMatch = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
@@ -286,9 +286,9 @@ namespace Azure.ResourceManager.NetworkSecurity
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _neuroShieldsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, NeuroShieldPatch.ToRequestContent(patch), ifMatch, context);
+                HttpMessage message = _neuroShieldsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, NeuroShieldResourcePatch.ToRequestContent(patch), ifMatch, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<NeuroShieldData> response = Response.FromValue(NeuroShieldData.FromResponse(result), result);
+                Response<NeuroShieldResourceData> response = Response.FromValue(NeuroShieldResourceData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());

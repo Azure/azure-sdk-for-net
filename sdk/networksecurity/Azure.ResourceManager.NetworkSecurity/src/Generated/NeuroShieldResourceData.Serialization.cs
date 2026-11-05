@@ -18,10 +18,10 @@ using Azure.ResourceManager.NetworkSecurity.Models;
 namespace Azure.ResourceManager.NetworkSecurity
 {
     /// <summary> Azure Resource Manager tracked resource representing a NeuroShield instance. </summary>
-    public partial class NeuroShieldData : TrackedResourceData, IJsonModel<NeuroShieldData>
+    public partial class NeuroShieldResourceData : TrackedResourceData, IJsonModel<NeuroShieldResourceData>
     {
-        /// <summary> Initializes a new instance of <see cref="NeuroShieldData"/> for deserialization. </summary>
-        internal NeuroShieldData()
+        /// <summary> Initializes a new instance of <see cref="NeuroShieldResourceData"/> for deserialization. </summary>
+        internal NeuroShieldResourceData()
         {
         }
 
@@ -29,62 +29,62 @@ namespace Azure.ResourceManager.NetworkSecurity
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<NeuroShieldData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<NeuroShieldResourceData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeNeuroShieldData(document.RootElement, options);
+                        return DeserializeNeuroShieldResourceData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NeuroShieldData)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NeuroShieldResourceData)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<NeuroShieldData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<NeuroShieldResourceData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkSecurityContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(NeuroShieldData)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NeuroShieldResourceData)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<NeuroShieldData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<NeuroShieldResourceData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        NeuroShieldData IPersistableModel<NeuroShieldData>.Create(BinaryData data, ModelReaderWriterOptions options) => (NeuroShieldData)PersistableModelCreateCore(data, options);
+        NeuroShieldResourceData IPersistableModel<NeuroShieldResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => (NeuroShieldResourceData)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<NeuroShieldData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<NeuroShieldResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="neuroShieldData"> The <see cref="NeuroShieldData"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(NeuroShieldData neuroShieldData)
+        /// <param name="neuroShieldResourceData"> The <see cref="NeuroShieldResourceData"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(NeuroShieldResourceData neuroShieldResourceData)
         {
-            if (neuroShieldData == null)
+            if (neuroShieldResourceData == null)
             {
                 return null;
             }
-            return RequestContent.Create(neuroShieldData, ModelSerializationExtensions.WireOptions);
+            return RequestContent.Create(neuroShieldResourceData, ModelSerializationExtensions.WireOptions);
         }
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="NeuroShieldData"/> from. </param>
-        internal static NeuroShieldData FromResponse(Response response)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="NeuroShieldResourceData"/> from. </param>
+        internal static NeuroShieldResourceData FromResponse(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeNeuroShieldData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return DeserializeNeuroShieldResourceData(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<NeuroShieldData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<NeuroShieldResourceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -95,10 +95,10 @@ namespace Azure.ResourceManager.NetworkSecurity
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<NeuroShieldData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<NeuroShieldResourceData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NeuroShieldData)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(NeuroShieldResourceData)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("properties"u8);
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.NetworkSecurity
             if (options.Format != "W" && Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
-                writer.WriteStringValue(ETag.Value.ToString());
+                writer.WriteStringValue(ETag);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -127,24 +127,24 @@ namespace Azure.ResourceManager.NetworkSecurity
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        NeuroShieldData IJsonModel<NeuroShieldData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (NeuroShieldData)JsonModelCreateCore(ref reader, options);
+        NeuroShieldResourceData IJsonModel<NeuroShieldResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (NeuroShieldResourceData)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<NeuroShieldData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<NeuroShieldResourceData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NeuroShieldData)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(NeuroShieldResourceData)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeNeuroShieldData(document.RootElement, options);
+            return DeserializeNeuroShieldResourceData(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static NeuroShieldData DeserializeNeuroShieldData(JsonElement element, ModelReaderWriterOptions options)
+        internal static NeuroShieldResourceData DeserializeNeuroShieldResourceData(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.NetworkSecurity
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             NeuroShieldProperties properties = default;
-            ETag? eTag = default;
+            string eTag = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -226,11 +226,7 @@ namespace Azure.ResourceManager.NetworkSecurity
                 }
                 if (prop.NameEquals("etag"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    eTag = new ETag(prop.Value.GetString());
+                    eTag = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -238,7 +234,7 @@ namespace Azure.ResourceManager.NetworkSecurity
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new NeuroShieldData(
+            return new NeuroShieldResourceData(
                 id,
                 name,
                 resourceType,

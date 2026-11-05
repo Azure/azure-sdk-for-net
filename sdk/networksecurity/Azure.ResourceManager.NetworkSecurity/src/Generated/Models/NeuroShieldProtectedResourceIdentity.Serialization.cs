@@ -86,25 +86,19 @@ namespace Azure.ResourceManager.NetworkSecurity.Models
             if (Optional.IsDefined(PrincipalId))
             {
                 writer.WritePropertyName("principalId"u8);
-                writer.WriteStringValue(PrincipalId.Value);
+                writer.WriteStringValue(PrincipalId);
             }
             if (Optional.IsDefined(TenantId))
             {
                 writer.WritePropertyName("tenantId"u8);
-                writer.WriteStringValue(TenantId.Value);
+                writer.WriteStringValue(TenantId);
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type.ToString());
-            if (Optional.IsCollectionDefined(UserAssignedIdentities))
+            if (Optional.IsDefined(UserAssignedIdentities))
             {
                 writer.WritePropertyName("userAssignedIdentities"u8);
-                writer.WriteStartObject();
-                foreach (var item in UserAssignedIdentities)
-                {
-                    writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value, options);
-                }
-                writer.WriteEndObject();
+                writer.WriteObjectValue(UserAssignedIdentities, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -148,29 +142,21 @@ namespace Azure.ResourceManager.NetworkSecurity.Models
             {
                 return null;
             }
-            Guid? principalId = default;
-            Guid? tenantId = default;
+            string principalId = default;
+            string tenantId = default;
             ManagedServiceIdentityType @type = default;
-            IDictionary<string, NeuroShieldProtectedResourceUserAssignedIdentity> userAssignedIdentities = default;
+            NeuroShieldProtectedResourceIdentityUserAssignedIdentities userAssignedIdentities = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("principalId"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    principalId = new Guid(prop.Value.GetString());
+                    principalId = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("tenantId"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    tenantId = new Guid(prop.Value.GetString());
+                    tenantId = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("type"u8))
@@ -184,12 +170,7 @@ namespace Azure.ResourceManager.NetworkSecurity.Models
                     {
                         continue;
                     }
-                    Dictionary<string, NeuroShieldProtectedResourceUserAssignedIdentity> dictionary = new Dictionary<string, NeuroShieldProtectedResourceUserAssignedIdentity>();
-                    foreach (var prop0 in prop.Value.EnumerateObject())
-                    {
-                        dictionary.Add(prop0.Name, NeuroShieldProtectedResourceUserAssignedIdentity.DeserializeNeuroShieldProtectedResourceUserAssignedIdentity(prop0.Value, options));
-                    }
-                    userAssignedIdentities = dictionary;
+                    userAssignedIdentities = NeuroShieldProtectedResourceIdentityUserAssignedIdentities.DeserializeNeuroShieldProtectedResourceIdentityUserAssignedIdentities(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -197,7 +178,7 @@ namespace Azure.ResourceManager.NetworkSecurity.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new NeuroShieldProtectedResourceIdentity(principalId, tenantId, @type, userAssignedIdentities ?? new ChangeTrackingDictionary<string, NeuroShieldProtectedResourceUserAssignedIdentity>(), additionalBinaryDataProperties);
+            return new NeuroShieldProtectedResourceIdentity(principalId, tenantId, @type, userAssignedIdentities, additionalBinaryDataProperties);
         }
     }
 }
