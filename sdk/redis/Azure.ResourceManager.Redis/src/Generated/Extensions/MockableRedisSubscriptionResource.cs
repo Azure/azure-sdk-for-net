@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.Redis.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = RedisOperationGroupRestClient.CreateCheckRedisNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), RedisNameAvailabilityContent.ToRequestContent(content), context);
+                using HttpMessage message = RedisOperationGroupRestClient.CreateCheckRedisNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), RedisNameAvailabilityContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 return response;
             }
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.Redis.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = RedisOperationGroupRestClient.CreateCheckRedisNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), RedisNameAvailabilityContent.ToRequestContent(content), context);
+                using HttpMessage message = RedisOperationGroupRestClient.CreateCheckRedisNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), RedisNameAvailabilityContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 return response;
             }
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.Redis.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = AsyncOperationStatusOperationGroupRestClient.CreateGetAsyncOperationStatusRequest(location, operationId, Guid.Parse(Id.SubscriptionId), context);
+                using HttpMessage message = AsyncOperationStatusOperationGroupRestClient.CreateGetAsyncOperationStatusRequest(location, operationId, Guid.Parse(Id.SubscriptionId), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<RedisOperationStatus> response = Response.FromValue(RedisOperationStatus.FromResponse(result), result);
                 if (response.Value == null)
@@ -278,7 +278,7 @@ namespace Azure.ResourceManager.Redis.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = AsyncOperationStatusOperationGroupRestClient.CreateGetAsyncOperationStatusRequest(location, operationId, Guid.Parse(Id.SubscriptionId), context);
+                using HttpMessage message = AsyncOperationStatusOperationGroupRestClient.CreateGetAsyncOperationStatusRequest(location, operationId, Guid.Parse(Id.SubscriptionId), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<RedisOperationStatus> response = Response.FromValue(RedisOperationStatus.FromResponse(result), result);
                 if (response.Value == null)

@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.Relay.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = ClustersRestClient.CreateGetAvailableClusterRegionRequest(Id.SubscriptionId, context);
+                using HttpMessage message = ClustersRestClient.CreateGetAvailableClusterRegionRequest(Id.SubscriptionId, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<AvailableRelayClustersList> response = Response.FromValue(AvailableRelayClustersList.FromResponse(result), result);
                 if (response.Value == null)
@@ -242,7 +242,7 @@ namespace Azure.ResourceManager.Relay.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = ClustersRestClient.CreateGetAvailableClusterRegionRequest(Id.SubscriptionId, context);
+                using HttpMessage message = ClustersRestClient.CreateGetAvailableClusterRegionRequest(Id.SubscriptionId, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<AvailableRelayClustersList> response = Response.FromValue(AvailableRelayClustersList.FromResponse(result), result);
                 if (response.Value == null)
@@ -290,7 +290,7 @@ namespace Azure.ResourceManager.Relay.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = NamespacesRestClient.CreateCheckRelayNamespaceNameAvailabilityRequest(Id.SubscriptionId, RelayNameAvailabilityContent.ToRequestContent(content), context);
+                using HttpMessage message = NamespacesRestClient.CreateCheckRelayNamespaceNameAvailabilityRequest(Id.SubscriptionId, RelayNameAvailabilityContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<RelayNameAvailabilityResult> response = Response.FromValue(RelayNameAvailabilityResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -338,7 +338,7 @@ namespace Azure.ResourceManager.Relay.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = NamespacesRestClient.CreateCheckRelayNamespaceNameAvailabilityRequest(Id.SubscriptionId, RelayNameAvailabilityContent.ToRequestContent(content), context);
+                using HttpMessage message = NamespacesRestClient.CreateCheckRelayNamespaceNameAvailabilityRequest(Id.SubscriptionId, RelayNameAvailabilityContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<RelayNameAvailabilityResult> response = Response.FromValue(RelayNameAvailabilityResult.FromResponse(result), result);
                 if (response.Value == null)

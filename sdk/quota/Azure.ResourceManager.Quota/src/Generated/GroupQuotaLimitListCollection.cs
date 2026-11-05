@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Quota
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _groupQuotaLimitListsRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, resourceProviderName, location, context);
+                using HttpMessage message = _groupQuotaLimitListsRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, resourceProviderName, location, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<GroupQuotaLimitListData> response = Response.FromValue(GroupQuotaLimitListData.FromResponse(result), result);
                 if (response.Value == null)
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Quota
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _groupQuotaLimitListsRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, resourceProviderName, location, context);
+                using HttpMessage message = _groupQuotaLimitListsRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, resourceProviderName, location, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<GroupQuotaLimitListData> response = Response.FromValue(GroupQuotaLimitListData.FromResponse(result), result);
                 if (response.Value == null)
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.Quota
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _groupQuotaLimitListsRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, resourceProviderName, location, context);
+                using HttpMessage message = _groupQuotaLimitListsRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, resourceProviderName, location, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<GroupQuotaLimitListData> response = default;
@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.Quota
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _groupQuotaLimitListsRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, resourceProviderName, location, context);
+                using HttpMessage message = _groupQuotaLimitListsRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, resourceProviderName, location, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<GroupQuotaLimitListData> response = default;
@@ -302,7 +302,7 @@ namespace Azure.ResourceManager.Quota
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _groupQuotaLimitListsRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, resourceProviderName, location, context);
+                using HttpMessage message = _groupQuotaLimitListsRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, resourceProviderName, location, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<GroupQuotaLimitListData> response = default;
@@ -364,7 +364,7 @@ namespace Azure.ResourceManager.Quota
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _groupQuotaLimitListsRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, resourceProviderName, location, context);
+                using HttpMessage message = _groupQuotaLimitListsRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, resourceProviderName, location, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<GroupQuotaLimitListData> response = default;

@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Quota
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _groupQuotasEnforcementStatusesRestClient.CreateCreateOrUpdateRequest(Id.Parent.Name, Id.Name, resourceProviderName, location, GroupQuotasEnforcementStatusData.ToRequestContent(data), context);
+                using HttpMessage message = _groupQuotasEnforcementStatusesRestClient.CreateCreateOrUpdateRequest(Id.Parent.Name, Id.Name, resourceProviderName, location, GroupQuotasEnforcementStatusData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 QuotaArmOperation<GroupQuotasEnforcementStatusResource> operation = new QuotaArmOperation<GroupQuotasEnforcementStatusResource>(
                     new GroupQuotasEnforcementStatusResourceOperationSource(Client),
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.Quota
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _groupQuotasEnforcementStatusesRestClient.CreateCreateOrUpdateRequest(Id.Parent.Name, Id.Name, resourceProviderName, location, GroupQuotasEnforcementStatusData.ToRequestContent(data), context);
+                using HttpMessage message = _groupQuotasEnforcementStatusesRestClient.CreateCreateOrUpdateRequest(Id.Parent.Name, Id.Name, resourceProviderName, location, GroupQuotasEnforcementStatusData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 QuotaArmOperation<GroupQuotasEnforcementStatusResource> operation = new QuotaArmOperation<GroupQuotasEnforcementStatusResource>(
                     new GroupQuotasEnforcementStatusResourceOperationSource(Client),
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.Quota
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _groupQuotasEnforcementStatusesRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, resourceProviderName, location, context);
+                using HttpMessage message = _groupQuotasEnforcementStatusesRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, resourceProviderName, location, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<GroupQuotasEnforcementStatusData> response = Response.FromValue(GroupQuotasEnforcementStatusData.FromResponse(result), result);
                 if (response.Value == null)
@@ -258,7 +258,7 @@ namespace Azure.ResourceManager.Quota
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _groupQuotasEnforcementStatusesRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, resourceProviderName, location, context);
+                using HttpMessage message = _groupQuotasEnforcementStatusesRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, resourceProviderName, location, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<GroupQuotasEnforcementStatusData> response = Response.FromValue(GroupQuotasEnforcementStatusData.FromResponse(result), result);
                 if (response.Value == null)
@@ -308,7 +308,7 @@ namespace Azure.ResourceManager.Quota
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _groupQuotasEnforcementStatusesRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, resourceProviderName, location, context);
+                using HttpMessage message = _groupQuotasEnforcementStatusesRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, resourceProviderName, location, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<GroupQuotasEnforcementStatusData> response = default;
@@ -366,7 +366,7 @@ namespace Azure.ResourceManager.Quota
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _groupQuotasEnforcementStatusesRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, resourceProviderName, location, context);
+                using HttpMessage message = _groupQuotasEnforcementStatusesRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, resourceProviderName, location, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<GroupQuotasEnforcementStatusData> response = default;
@@ -424,7 +424,7 @@ namespace Azure.ResourceManager.Quota
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _groupQuotasEnforcementStatusesRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, resourceProviderName, location, context);
+                using HttpMessage message = _groupQuotasEnforcementStatusesRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, resourceProviderName, location, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<GroupQuotasEnforcementStatusData> response = default;
@@ -486,7 +486,7 @@ namespace Azure.ResourceManager.Quota
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _groupQuotasEnforcementStatusesRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, resourceProviderName, location, context);
+                using HttpMessage message = _groupQuotasEnforcementStatusesRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, resourceProviderName, location, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<GroupQuotasEnforcementStatusData> response = default;

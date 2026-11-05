@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = CheckNameAvailabilityRestClient.CreateCheckDataReplicationNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), location, DataReplicationNameAvailabilityContent.ToRequestContent(content), context);
+                using HttpMessage message = CheckNameAvailabilityRestClient.CreateCheckDataReplicationNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), location, DataReplicationNameAvailabilityContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<DataReplicationNameAvailabilityResult> response = Response.FromValue(DataReplicationNameAvailabilityResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -240,7 +240,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = CheckNameAvailabilityRestClient.CreateCheckDataReplicationNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), location, DataReplicationNameAvailabilityContent.ToRequestContent(content), context);
+                using HttpMessage message = CheckNameAvailabilityRestClient.CreateCheckDataReplicationNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), location, DataReplicationNameAvailabilityContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<DataReplicationNameAvailabilityResult> response = Response.FromValue(DataReplicationNameAvailabilityResult.FromResponse(result), result);
                 if (response.Value == null)

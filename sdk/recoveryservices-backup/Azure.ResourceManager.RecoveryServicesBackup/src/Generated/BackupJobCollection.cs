@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _backupJobRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, _vaultName, jobName, context);
+                using HttpMessage message = _backupJobRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, _vaultName, jobName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<BackupJobData> response = Response.FromValue(BackupJobData.FromResponse(result), result);
                 if (response.Value == null)
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _backupJobRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, _vaultName, jobName, context);
+                using HttpMessage message = _backupJobRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, _vaultName, jobName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<BackupJobData> response = Response.FromValue(BackupJobData.FromResponse(result), result);
                 if (response.Value == null)
@@ -270,7 +270,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _backupJobRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, _vaultName, jobName, context);
+                using HttpMessage message = _backupJobRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, _vaultName, jobName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<BackupJobData> response = default;
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _backupJobRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, _vaultName, jobName, context);
+                using HttpMessage message = _backupJobRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, _vaultName, jobName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<BackupJobData> response = default;
@@ -384,7 +384,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _backupJobRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, _vaultName, jobName, context);
+                using HttpMessage message = _backupJobRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, _vaultName, jobName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<BackupJobData> response = default;
@@ -445,7 +445,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _backupJobRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, _vaultName, jobName, context);
+                using HttpMessage message = _backupJobRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, _vaultName, jobName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<BackupJobData> response = default;

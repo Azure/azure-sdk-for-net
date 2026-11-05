@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.RedHatOpenShift
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _platformWorkloadIdentityRoleSetRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _platformWorkloadIdentityRoleSetRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<OpenShiftPlatformWorkloadIdentityRoleSetData> response = Response.FromValue(OpenShiftPlatformWorkloadIdentityRoleSetData.FromResponse(result), result);
                 if (response.Value == null)
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.RedHatOpenShift
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _platformWorkloadIdentityRoleSetRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _platformWorkloadIdentityRoleSetRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<OpenShiftPlatformWorkloadIdentityRoleSetData> response = Response.FromValue(OpenShiftPlatformWorkloadIdentityRoleSetData.FromResponse(result), result);
                 if (response.Value == null)

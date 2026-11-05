@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.RedHatOpenShift
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _openShiftClustersRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceName, OpenShiftClusterData.ToRequestContent(data), context);
+                using HttpMessage message = _openShiftClustersRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceName, OpenShiftClusterData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RedHatOpenShiftArmOperation<OpenShiftClusterResource> operation = new RedHatOpenShiftArmOperation<OpenShiftClusterResource>(
                     new OpenShiftClusterResourceOperationSource(Client),
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.RedHatOpenShift
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _openShiftClustersRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceName, OpenShiftClusterData.ToRequestContent(data), context);
+                using HttpMessage message = _openShiftClustersRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceName, OpenShiftClusterData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RedHatOpenShiftArmOperation<OpenShiftClusterResource> operation = new RedHatOpenShiftArmOperation<OpenShiftClusterResource>(
                     new OpenShiftClusterResourceOperationSource(Client),
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.RedHatOpenShift
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _openShiftClustersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceName, context);
+                using HttpMessage message = _openShiftClustersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<OpenShiftClusterData> response = Response.FromValue(OpenShiftClusterData.FromResponse(result), result);
                 if (response.Value == null)
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.RedHatOpenShift
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _openShiftClustersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceName, context);
+                using HttpMessage message = _openShiftClustersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<OpenShiftClusterData> response = Response.FromValue(OpenShiftClusterData.FromResponse(result), result);
                 if (response.Value == null)
@@ -357,7 +357,7 @@ namespace Azure.ResourceManager.RedHatOpenShift
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _openShiftClustersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceName, context);
+                using HttpMessage message = _openShiftClustersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<OpenShiftClusterData> response = default;
@@ -414,7 +414,7 @@ namespace Azure.ResourceManager.RedHatOpenShift
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _openShiftClustersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceName, context);
+                using HttpMessage message = _openShiftClustersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<OpenShiftClusterData> response = default;
@@ -471,7 +471,7 @@ namespace Azure.ResourceManager.RedHatOpenShift
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _openShiftClustersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceName, context);
+                using HttpMessage message = _openShiftClustersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<OpenShiftClusterData> response = default;
@@ -532,7 +532,7 @@ namespace Azure.ResourceManager.RedHatOpenShift
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _openShiftClustersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceName, context);
+                using HttpMessage message = _openShiftClustersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<OpenShiftClusterData> response = default;

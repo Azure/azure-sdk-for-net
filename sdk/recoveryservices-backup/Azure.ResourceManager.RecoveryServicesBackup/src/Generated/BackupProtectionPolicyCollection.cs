@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _protectionPoliciesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, _vaultName, policyName, BackupProtectionPolicyData.ToRequestContent(data), xMsAuthorizationAuxiliary, context);
+                using HttpMessage message = _protectionPoliciesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, _vaultName, policyName, BackupProtectionPolicyData.ToRequestContent(data), xMsAuthorizationAuxiliary, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<BackupProtectionPolicyData> response = Response.FromValue(BackupProtectionPolicyData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _protectionPoliciesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, _vaultName, policyName, BackupProtectionPolicyData.ToRequestContent(data), xMsAuthorizationAuxiliary, context);
+                using HttpMessage message = _protectionPoliciesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, _vaultName, policyName, BackupProtectionPolicyData.ToRequestContent(data), xMsAuthorizationAuxiliary, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<BackupProtectionPolicyData> response = Response.FromValue(BackupProtectionPolicyData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _protectionPoliciesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, _vaultName, policyName, context);
+                using HttpMessage message = _protectionPoliciesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, _vaultName, policyName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<BackupProtectionPolicyData> response = Response.FromValue(BackupProtectionPolicyData.FromResponse(result), result);
                 if (response.Value == null)
@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _protectionPoliciesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, _vaultName, policyName, context);
+                using HttpMessage message = _protectionPoliciesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, _vaultName, policyName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<BackupProtectionPolicyData> response = Response.FromValue(BackupProtectionPolicyData.FromResponse(result), result);
                 if (response.Value == null)
@@ -384,7 +384,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _protectionPoliciesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, _vaultName, policyName, context);
+                using HttpMessage message = _protectionPoliciesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, _vaultName, policyName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<BackupProtectionPolicyData> response = default;
@@ -441,7 +441,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _protectionPoliciesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, _vaultName, policyName, context);
+                using HttpMessage message = _protectionPoliciesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, _vaultName, policyName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<BackupProtectionPolicyData> response = default;
@@ -498,7 +498,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _protectionPoliciesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, _vaultName, policyName, context);
+                using HttpMessage message = _protectionPoliciesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, _vaultName, policyName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<BackupProtectionPolicyData> response = default;
@@ -559,7 +559,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _protectionPoliciesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, _vaultName, policyName, context);
+                using HttpMessage message = _protectionPoliciesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, _vaultName, policyName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<BackupProtectionPolicyData> response = default;

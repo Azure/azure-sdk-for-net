@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.RecoveryServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _vaultsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, vaultName, RecoveryServicesVaultData.ToRequestContent(data), xMsAuthorizationAuxiliary, context);
+                using HttpMessage message = _vaultsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, vaultName, RecoveryServicesVaultData.ToRequestContent(data), xMsAuthorizationAuxiliary, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RecoveryServicesArmOperation<RecoveryServicesVaultResource> operation = new RecoveryServicesArmOperation<RecoveryServicesVaultResource>(
                     new RecoveryServicesVaultResourceOperationSource(Client),
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.RecoveryServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _vaultsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, vaultName, RecoveryServicesVaultData.ToRequestContent(data), xMsAuthorizationAuxiliary, context);
+                using HttpMessage message = _vaultsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, vaultName, RecoveryServicesVaultData.ToRequestContent(data), xMsAuthorizationAuxiliary, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RecoveryServicesArmOperation<RecoveryServicesVaultResource> operation = new RecoveryServicesArmOperation<RecoveryServicesVaultResource>(
                     new RecoveryServicesVaultResourceOperationSource(Client),
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.RecoveryServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _vaultsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, vaultName, context);
+                using HttpMessage message = _vaultsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, vaultName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<RecoveryServicesVaultData> response = Response.FromValue(RecoveryServicesVaultData.FromResponse(result), result);
                 if (response.Value == null)
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.RecoveryServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _vaultsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, vaultName, context);
+                using HttpMessage message = _vaultsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, vaultName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<RecoveryServicesVaultData> response = Response.FromValue(RecoveryServicesVaultData.FromResponse(result), result);
                 if (response.Value == null)
@@ -359,7 +359,7 @@ namespace Azure.ResourceManager.RecoveryServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _vaultsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, vaultName, context);
+                using HttpMessage message = _vaultsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, vaultName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<RecoveryServicesVaultData> response = default;
@@ -416,7 +416,7 @@ namespace Azure.ResourceManager.RecoveryServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _vaultsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, vaultName, context);
+                using HttpMessage message = _vaultsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, vaultName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<RecoveryServicesVaultData> response = default;
@@ -473,7 +473,7 @@ namespace Azure.ResourceManager.RecoveryServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _vaultsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, vaultName, context);
+                using HttpMessage message = _vaultsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, vaultName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<RecoveryServicesVaultData> response = default;
@@ -534,7 +534,7 @@ namespace Azure.ResourceManager.RecoveryServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _vaultsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, vaultName, context);
+                using HttpMessage message = _vaultsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, vaultName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<RecoveryServicesVaultData> response = default;

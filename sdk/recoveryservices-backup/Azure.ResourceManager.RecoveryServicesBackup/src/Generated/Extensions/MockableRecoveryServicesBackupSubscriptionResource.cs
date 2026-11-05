@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = ProtectionIntentOperationGroupRestClient.CreateValidateProtectionIntentRequest(location, Id.SubscriptionId, PreValidateEnableBackupContent.ToRequestContent(content), context);
+                using HttpMessage message = ProtectionIntentOperationGroupRestClient.CreateValidateProtectionIntentRequest(location, Id.SubscriptionId, PreValidateEnableBackupContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<PreValidateEnableBackupResult> response = Response.FromValue(PreValidateEnableBackupResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = ProtectionIntentOperationGroupRestClient.CreateValidateProtectionIntentRequest(location, Id.SubscriptionId, PreValidateEnableBackupContent.ToRequestContent(content), context);
+                using HttpMessage message = ProtectionIntentOperationGroupRestClient.CreateValidateProtectionIntentRequest(location, Id.SubscriptionId, PreValidateEnableBackupContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<PreValidateEnableBackupResult> response = Response.FromValue(PreValidateEnableBackupResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = BackupStatusRestClient.CreateGetBackupStatusRequest(location, Id.SubscriptionId, BackupStatusContent.ToRequestContent(content), context);
+                using HttpMessage message = BackupStatusRestClient.CreateGetBackupStatusRequest(location, Id.SubscriptionId, BackupStatusContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<BackupStatusResult> response = Response.FromValue(BackupStatusResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = BackupStatusRestClient.CreateGetBackupStatusRequest(location, Id.SubscriptionId, BackupStatusContent.ToRequestContent(content), context);
+                using HttpMessage message = BackupStatusRestClient.CreateGetBackupStatusRequest(location, Id.SubscriptionId, BackupStatusContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<BackupStatusResult> response = Response.FromValue(BackupStatusResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -283,7 +283,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = FeatureSupportRestClient.CreateValidateFeatureSupportRequest(location, Id.SubscriptionId, FeatureSupportContent.ToRequestContent(content), context);
+                using HttpMessage message = FeatureSupportRestClient.CreateValidateFeatureSupportRequest(location, Id.SubscriptionId, FeatureSupportContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<VmResourceFeatureSupportResult> response = Response.FromValue(VmResourceFeatureSupportResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -332,7 +332,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = FeatureSupportRestClient.CreateValidateFeatureSupportRequest(location, Id.SubscriptionId, FeatureSupportContent.ToRequestContent(content), context);
+                using HttpMessage message = FeatureSupportRestClient.CreateValidateFeatureSupportRequest(location, Id.SubscriptionId, FeatureSupportContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<VmResourceFeatureSupportResult> response = Response.FromValue(VmResourceFeatureSupportResult.FromResponse(result), result);
                 if (response.Value == null)

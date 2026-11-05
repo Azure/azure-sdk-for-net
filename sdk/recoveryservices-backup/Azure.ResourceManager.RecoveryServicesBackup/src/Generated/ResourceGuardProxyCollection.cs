@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _resourceGuardProxyRestClient.CreatePutRequest(Id.SubscriptionId, Id.ResourceGroupName, _vaultName, resourceGuardProxyName, ResourceGuardProxyData.ToRequestContent(data), context);
+                using HttpMessage message = _resourceGuardProxyRestClient.CreatePutRequest(Id.SubscriptionId, Id.ResourceGroupName, _vaultName, resourceGuardProxyName, ResourceGuardProxyData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ResourceGuardProxyData> response = Response.FromValue(ResourceGuardProxyData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _resourceGuardProxyRestClient.CreatePutRequest(Id.SubscriptionId, Id.ResourceGroupName, _vaultName, resourceGuardProxyName, ResourceGuardProxyData.ToRequestContent(data), context);
+                using HttpMessage message = _resourceGuardProxyRestClient.CreatePutRequest(Id.SubscriptionId, Id.ResourceGroupName, _vaultName, resourceGuardProxyName, ResourceGuardProxyData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ResourceGuardProxyData> response = Response.FromValue(ResourceGuardProxyData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _resourceGuardProxyRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, _vaultName, resourceGuardProxyName, context);
+                using HttpMessage message = _resourceGuardProxyRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, _vaultName, resourceGuardProxyName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ResourceGuardProxyData> response = Response.FromValue(ResourceGuardProxyData.FromResponse(result), result);
                 if (response.Value == null)
@@ -257,7 +257,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _resourceGuardProxyRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, _vaultName, resourceGuardProxyName, context);
+                using HttpMessage message = _resourceGuardProxyRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, _vaultName, resourceGuardProxyName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ResourceGuardProxyData> response = Response.FromValue(ResourceGuardProxyData.FromResponse(result), result);
                 if (response.Value == null)
@@ -374,7 +374,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _resourceGuardProxyRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, _vaultName, resourceGuardProxyName, context);
+                using HttpMessage message = _resourceGuardProxyRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, _vaultName, resourceGuardProxyName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ResourceGuardProxyData> response = default;
@@ -431,7 +431,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _resourceGuardProxyRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, _vaultName, resourceGuardProxyName, context);
+                using HttpMessage message = _resourceGuardProxyRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, _vaultName, resourceGuardProxyName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ResourceGuardProxyData> response = default;
@@ -488,7 +488,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _resourceGuardProxyRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, _vaultName, resourceGuardProxyName, context);
+                using HttpMessage message = _resourceGuardProxyRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, _vaultName, resourceGuardProxyName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ResourceGuardProxyData> response = default;
@@ -549,7 +549,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _resourceGuardProxyRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, _vaultName, resourceGuardProxyName, context);
+                using HttpMessage message = _resourceGuardProxyRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, _vaultName, resourceGuardProxyName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ResourceGuardProxyData> response = default;
