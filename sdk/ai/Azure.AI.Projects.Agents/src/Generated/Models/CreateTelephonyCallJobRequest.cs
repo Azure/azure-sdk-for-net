@@ -11,7 +11,7 @@ namespace Azure.AI.Projects.Agents
 {
     /// <summary> A request to create one durable direct outbound call job. </summary>
     [Experimental("AAIP001")]
-    internal partial class CreateTelephonyCallJobRequest
+    public partial class CreateTelephonyCallJobRequest
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

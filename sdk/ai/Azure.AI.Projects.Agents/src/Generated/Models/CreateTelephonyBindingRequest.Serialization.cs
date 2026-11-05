@@ -14,7 +14,7 @@ namespace Azure.AI.Projects.Agents
     /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="CreateTeamsPhoneExtensibilityTelephonyBindingRequest"/> and <see cref="CreateTwilioTelephonyBindingRequest"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownCreateTelephonyBindingRequest))]
-    internal abstract partial class CreateTelephonyBindingRequest : IJsonModel<CreateTelephonyBindingRequest>
+    public abstract partial class CreateTelephonyBindingRequest : IJsonModel<CreateTelephonyBindingRequest>
     {
         /// <summary> Initializes a new instance of <see cref="CreateTelephonyBindingRequest"/> for deserialization. </summary>
         internal CreateTelephonyBindingRequest()

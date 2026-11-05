@@ -10,7 +10,7 @@ namespace Azure.AI.Projects.Agents
 {
     /// <summary> The request to create a Twilio binding. </summary>
     [Experimental("AAIP001")]
-    internal partial class CreateTwilioTelephonyBindingRequest : CreateTelephonyBindingRequest
+    public partial class CreateTwilioTelephonyBindingRequest : CreateTelephonyBindingRequest
     {
         /// <summary> Initializes a new instance of <see cref="CreateTwilioTelephonyBindingRequest"/>. </summary>
         /// <param name="connectionName"> The Foundry connection name for the telephony provider. </param>

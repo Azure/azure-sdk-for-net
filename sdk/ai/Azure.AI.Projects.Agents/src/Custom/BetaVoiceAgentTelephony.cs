@@ -31,7 +31,7 @@ public partial class BetaVoiceAgentsTelephony
     /// <exception cref="ArgumentException"> <paramref name="agentName"/> is an empty string, and was expected to be non-empty. </exception>
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
     [Experimental("AAIP001")]
-    public virtual ClientResult<TelephonyBinding> CreateTelephonyBinding(string agentName, CreateTelephonyBindingContent telephonyBinding, CancellationToken cancellationToken = default)
+    public virtual ClientResult<TelephonyBinding> CreateTelephonyBinding(string agentName, CreateTelephonyBindingRequest telephonyBinding, CancellationToken cancellationToken = default)
     {
         return CreateTelephonyBinding(
             agentName: agentName,
@@ -49,7 +49,7 @@ public partial class BetaVoiceAgentsTelephony
     /// <exception cref="ArgumentException"> <paramref name="agentName"/> is an empty string, and was expected to be non-empty. </exception>
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
     [Experimental("AAIP001")]
-    public virtual async Task<ClientResult<TelephonyBinding>> CreateTelephonyBindingAsync(string agentName, CreateTelephonyBindingContent telephonyBinding, CancellationToken cancellationToken = default)
+    public virtual async Task<ClientResult<TelephonyBinding>> CreateTelephonyBindingAsync(string agentName, CreateTelephonyBindingRequest telephonyBinding, CancellationToken cancellationToken = default)
     {
         return await CreateTelephonyBindingAsync(
             agentName: agentName,
@@ -586,7 +586,7 @@ public partial class BetaVoiceAgentsTelephony
     /// <exception cref="ArgumentException"> <paramref name="agentName"/> or <paramref name="idempotencyKey"/> is an empty string, and was expected to be non-empty. </exception>
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
     [Experimental("AAIP001")]
-    public virtual ClientResult<TelephonyCallJob> CreateTelephonyCallJob(string agentName, string idempotencyKey, CreateTelephonyCallJobContent body, CancellationToken cancellationToken = default)
+    public virtual ClientResult<TelephonyCallJob> CreateTelephonyCallJob(string agentName, string idempotencyKey, CreateTelephonyCallJobRequest body, CancellationToken cancellationToken = default)
     {
         return CreateTelephonyCallJob(
             agentName: agentName,
@@ -606,7 +606,7 @@ public partial class BetaVoiceAgentsTelephony
     /// <exception cref="ArgumentException"> <paramref name="agentName"/> or <paramref name="idempotencyKey"/> is an empty string, and was expected to be non-empty. </exception>
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
     [Experimental("AAIP001")]
-    public virtual async Task<ClientResult<TelephonyCallJob>> CreateTelephonyCallJobAsync(string agentName, string idempotencyKey, CreateTelephonyCallJobContent body, CancellationToken cancellationToken = default)
+    public virtual async Task<ClientResult<TelephonyCallJob>> CreateTelephonyCallJobAsync(string agentName, string idempotencyKey, CreateTelephonyCallJobRequest body, CancellationToken cancellationToken = default)
     {
         return await CreateTelephonyCallJobAsync(
             agentName: agentName,

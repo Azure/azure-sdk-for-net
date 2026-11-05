@@ -100,6 +100,18 @@ namespace Azure.AI.Projects.Agents
     [ModelReaderWriterBuildable(typeof(ContainerSkill))]
     [ModelReaderWriterBuildable(typeof(ContentFilterConfiguration))]
     [ModelReaderWriterBuildable(typeof(CreateAgentVersionFromManifestRequest))]
+#pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.CreateTeamsPhoneExtensibilityTelephonyBindingRequest is experimental and may change in future versions.
+    [ModelReaderWriterBuildable(typeof(CreateTeamsPhoneExtensibilityTelephonyBindingRequest))]
+#pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.CreateTeamsPhoneExtensibilityTelephonyBindingRequest is experimental and may change in future versions.
+#pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.CreateTelephonyBindingRequest is experimental and may change in future versions.
+    [ModelReaderWriterBuildable(typeof(CreateTelephonyBindingRequest))]
+#pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.CreateTelephonyBindingRequest is experimental and may change in future versions.
+#pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.CreateTelephonyCallJobRequest is experimental and may change in future versions.
+    [ModelReaderWriterBuildable(typeof(CreateTelephonyCallJobRequest))]
+#pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.CreateTelephonyCallJobRequest is experimental and may change in future versions.
+#pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.CreateTwilioTelephonyBindingRequest is experimental and may change in future versions.
+    [ModelReaderWriterBuildable(typeof(CreateTwilioTelephonyBindingRequest))]
+#pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.CreateTwilioTelephonyBindingRequest is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(DeclarativeAgentDefinition))]
     [ModelReaderWriterBuildable(typeof(EntraAuthorizationScheme))]
     [ModelReaderWriterBuildable(typeof(EvaluationAzureStandardVoiceModelConfiguration))]

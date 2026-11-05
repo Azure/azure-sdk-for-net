@@ -1042,7 +1042,7 @@ public class VoiceAgentRestTelemetryTests
             return operation switch
             {
                 "delete" => isAsync ? await conversations.DeleteAgentConversationAsync(AgentName, "conv_123") : conversations.DeleteAgentConversation(AgentName, "conv_123"),
-                "create_binding" => isAsync ? await telephony.CreateTelephonyBindingAsync(AgentName, new CreateTwilioTelephonyBindingContent("private-connection", "+15555550101"), CancellationToken.None) : telephony.CreateTelephonyBinding(AgentName, new CreateTwilioTelephonyBindingContent("private-connection", "+15555550101"), CancellationToken.None),
+                "create_binding" => isAsync ? await telephony.CreateTelephonyBindingAsync(AgentName, new CreateTwilioTelephonyBindingRequest("private-connection", "+15555550101"), CancellationToken.None) : telephony.CreateTelephonyBinding(AgentName, new CreateTwilioTelephonyBindingRequest("private-connection", "+15555550101"), CancellationToken.None),
                 "delete_binding" => isAsync ? await telephony.DeleteTelephonyBindingAsync(AgentName, "binding_123", "*", CancellationToken.None) : telephony.DeleteTelephonyBinding(AgentName, "binding_123", "*", CancellationToken.None),
                 "create_call_job" => isAsync ? await telephony.CreateTelephonyCallJobAsync(AgentName, "private-idempotency", CallJobContent(), CancellationToken.None) : telephony.CreateTelephonyCallJob(AgentName, "private-idempotency", CallJobContent(), CancellationToken.None),
                 "cancel_call_job" => isAsync ? await telephony.CancelTelephonyCallJobAsync(AgentName, "job_123", "*", CancellationToken.None) : telephony.CancelTelephonyCallJob(AgentName, "job_123", "*", CancellationToken.None),
@@ -1070,9 +1070,9 @@ public class VoiceAgentRestTelemetryTests
         };
     }
 
-    private static CreateTelephonyCallJobContent CallJobContent()
+    private static CreateTelephonyCallJobRequest CallJobContent()
     {
-        CreateTelephonyCallJobContent content = new(new TelephonyOutboundDestination(TelephonyOutboundDestinationType.PhoneNumber, "+15555550101"), "private-connection", "+15555550102") { Purpose = PrivateContent };
+        CreateTelephonyCallJobRequest content = new(new TelephonyOutboundDestination(TelephonyOutboundDestinationType.PhoneNumber, "+15555550101"), "private-connection", "+15555550102") { Purpose = PrivateContent };
         content.StructuredInputs["secret"] = BinaryData.FromString("\"private-rest-content\"");
         return content;
     }

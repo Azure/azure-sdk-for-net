@@ -1908,6 +1908,49 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <summary>
+        /// The request to create a telephony binding.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Agents.CreateTeamsPhoneExtensibilityTelephonyBindingRequest"/> and <see cref="Agents.CreateTwilioTelephonyBindingRequest"/>.
+        /// </summary>
+        /// <param name="provider"> The telephony provider. </param>
+        /// <param name="connectionName"> The Foundry connection name for the telephony provider. </param>
+        /// <param name="label"> An optional display label for the binding. </param>
+        /// <returns> A new <see cref="Agents.CreateTelephonyBindingRequest"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static CreateTelephonyBindingRequest CreateTelephonyBindingRequest(string provider = default, string connectionName = default, string label = default)
+        {
+            return new UnknownCreateTelephonyBindingRequest(new TelephonyProvider(provider), connectionName, label, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The request to create a Microsoft Teams Phone extensibility binding. </summary>
+        /// <param name="connectionName"> The Foundry connection name for the telephony provider. </param>
+        /// <param name="label"> An optional display label for the binding. </param>
+        /// <param name="phoneNumber"> The optional display phone number for the Teams resource account. </param>
+        /// <param name="resourceAccountObjectId"> The Microsoft Teams resource-account object identifier as a GUID. </param>
+        /// <returns> A new <see cref="Agents.CreateTeamsPhoneExtensibilityTelephonyBindingRequest"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static CreateTeamsPhoneExtensibilityTelephonyBindingRequest CreateTeamsPhoneExtensibilityTelephonyBindingRequest(string connectionName = default, string label = default, string phoneNumber = default, string resourceAccountObjectId = default)
+        {
+            return new CreateTeamsPhoneExtensibilityTelephonyBindingRequest(
+                TelephonyProvider.TeamsPhoneExtensibility,
+                connectionName,
+                label,
+                additionalBinaryDataProperties: null,
+                phoneNumber,
+                resourceAccountObjectId);
+        }
+
+        /// <summary> The request to create a Twilio binding. </summary>
+        /// <param name="connectionName"> The Foundry connection name for the telephony provider. </param>
+        /// <param name="label"> An optional display label for the binding. </param>
+        /// <param name="phoneNumber"> The Twilio E.164 phone number. </param>
+        /// <returns> A new <see cref="Agents.CreateTwilioTelephonyBindingRequest"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static CreateTwilioTelephonyBindingRequest CreateTwilioTelephonyBindingRequest(string connectionName = default, string label = default, string phoneNumber = default)
+        {
+            return new CreateTwilioTelephonyBindingRequest(TelephonyProvider.Twilio, connectionName, label, additionalBinaryDataProperties: null, phoneNumber);
+        }
+
+        /// <summary>
         /// A telephony binding owned by a voice agent.
         /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Agents.TeamsPhoneExtensibilityTelephonyBinding"/> and <see cref="Agents.TwilioTelephonyBinding"/>.
         /// </summary>
@@ -2293,6 +2336,31 @@ namespace Azure.AI.Projects.Agents
         public static SipTelephonyTransferDestination SipTelephonyTransferDestination(Uri value = default)
         {
             return new SipTelephonyTransferDestination(TelephonyTransferDestinationKind.Sip, additionalBinaryDataProperties: null, value);
+        }
+
+        /// <summary> A request to create one durable direct outbound call job. </summary>
+        /// <param name="destination"> The phone destination to call. </param>
+        /// <param name="connectionName"> The Foundry connection name in the current project used to originate the call. Its category selects Twilio or Azure Communication Services / Teams Phone extensibility. No inbound telephony binding is required. </param>
+        /// <param name="source"> The caller identity used to originate the call. For a Twilio connection, provide an authorized E.164 phone number. For an Azure Communication Services / Teams Phone extensibility connection, provide the Teams Resource Account object ID. The identity type is inferred from the connection category; originating does not change inbound routing. </param>
+        /// <param name="purpose"> An optional customer-declared purpose for placing the call. </param>
+        /// <param name="structuredInputs"> Structured input values available to the agent and greeting for this call. Agent-declared inputs are validated against their schemas; omitted optional inputs may use their Agent-defined default values, while omitted required inputs are rejected. Additional inputs remain available as dynamic template variables. </param>
+        /// <param name="schedule"> The optional execution window. </param>
+        /// <param name="retryPolicy"> The provider-attempt retry policy. Omit it for one attempt with no retry delay. </param>
+        /// <returns> A new <see cref="Agents.CreateTelephonyCallJobRequest"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static CreateTelephonyCallJobRequest CreateTelephonyCallJobRequest(TelephonyOutboundDestination destination = default, string connectionName = default, string source = default, string purpose = default, IDictionary<string, BinaryData> structuredInputs = default, TelephonyCallJobSchedule schedule = default, TelephonyOutboundRetryPolicy retryPolicy = default)
+        {
+            structuredInputs ??= new ChangeTrackingDictionary<string, BinaryData>();
+
+            return new CreateTelephonyCallJobRequest(
+                destination,
+                connectionName,
+                source,
+                purpose,
+                structuredInputs,
+                schedule,
+                retryPolicy,
+                additionalBinaryDataProperties: null);
         }
 
         /// <summary> The destination of an outbound call. </summary>
