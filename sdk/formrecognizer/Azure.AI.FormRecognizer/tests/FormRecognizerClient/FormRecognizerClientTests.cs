@@ -32,12 +32,13 @@ namespace Azure.AI.FormRecognizer.Tests
         /// Creates a fake <see cref="FormRecognizerClient" />.
         /// </summary>
         /// <returns>The fake <see cref="FormRecognizerClient" />.</returns>
-        private FormRecognizerClient CreateClient()
+        private FormRecognizerClient CreateClient(FormRecognizerClientOptions options = default)
         {
             var fakeEndpoint = new Uri("http://notreal.azure.com");
             var fakeCredential = new AzureKeyCredential("fakeKey");
 
-            return new FormRecognizerClient(fakeEndpoint, fakeCredential, new FormRecognizerClientOptions() { Retry = { Delay = TimeSpan.Zero, Mode = RetryMode.Fixed } });
+            options ??= new FormRecognizerClientOptions() { Retry = { Delay = TimeSpan.Zero, Mode = RetryMode.Fixed } };
+            return new FormRecognizerClient(fakeEndpoint, fakeCredential, options);
         }
 
         /// <summary>
@@ -45,7 +46,7 @@ namespace Azure.AI.FormRecognizer.Tests
         /// Test Framework functionalities.
         /// </summary>
         /// <returns>The instrumented <see cref="FormRecognizerClient" />.</returns>
-        private FormRecognizerClient CreateInstrumentedClient() => InstrumentClient(CreateClient());
+        private FormRecognizerClient CreateInstrumentedClient(FormRecognizerClientOptions options = default) => InstrumentClient(CreateClient(options));
 
         #region Client
         /// <summary>
@@ -101,21 +102,31 @@ namespace Azure.AI.FormRecognizer.Tests
             Assert.Throws<ArgumentNullException>(() => new FormRecognizerClient(endpoint, keyCredential, null));
         }
 
-        [Test]
-        public async Task FormRecognizerClientThrowsWithNonExistingResourceEndpoint()
+        [TestCase(0)]
+        [TestCase(502)]
+        public void FormRecognizerClientThrowsOnRequestFailure(int status)
         {
-            var client = CreateInstrumentedClient();
+            var transport = new MockTransport(_ => status == 0
+                ? throw new RequestFailedException(0, "Connection failed.")
+                : new MockResponse(status));
+            var client = CreateInstrumentedClient(new FormRecognizerClientOptions
+            {
+                Transport = transport,
+                Retry = { Delay = TimeSpan.Zero, Mode = RetryMode.Fixed }
+            });
+            var uri = FormRecognizerTestEnvironment.CreateUri(TestFile.Form1);
 
-            try
+            if (status == 0)
             {
-                var uri = FormRecognizerTestEnvironment.CreateUri(TestFile.Form1);
-                await client.StartRecognizeContentFromUriAsync(uri);
+                var exception = Assert.ThrowsAsync<AggregateException>(() => client.StartRecognizeContentFromUriAsync(uri));
+                Assert.That(exception.InnerExceptions, Has.Count.EqualTo(4));
+                Assert.That(exception.InnerExceptions.All(ex => ex is RequestFailedException { Status: 0 }), Is.True);
             }
-            catch (AggregateException ex)
+            else
             {
-                var innerExceptions = ex.InnerExceptions.ToList();
-                Assert.IsTrue(innerExceptions.All(ex => ex is RequestFailedException));
+                Assert.That(Assert.ThrowsAsync<RequestFailedException>(() => client.StartRecognizeContentFromUriAsync(uri)).Status, Is.EqualTo(status));
             }
+            Assert.That(transport.Requests, Has.Count.EqualTo(4));
         }
 
         #endregion
