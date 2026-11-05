@@ -22,15 +22,18 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
         private readonly SignalROptions _options;
         private readonly IConfiguration _configuration;
         private readonly IEndpointRouter _router;
+        // Allows tests to replace transport services without bypassing configuration setup.
+        private readonly Func<ServiceManagerBuilder, ServiceManager> _serviceManagerFactory;
         private readonly ConcurrentDictionary<string, IInternalServiceHubContextStore> _store = new();
 
-        public ServiceManagerStore(IConfiguration configuration, ILoggerFactory loggerFactory, AzureComponentFactory azureComponentFactory, IOptions<SignalROptions> options, IEndpointRouter router = null)
+        public ServiceManagerStore(IConfiguration configuration, ILoggerFactory loggerFactory, AzureComponentFactory azureComponentFactory, IOptions<SignalROptions> options, IEndpointRouter router = null, Func<ServiceManagerBuilder, ServiceManager> serviceManagerFactory = null)
         {
             _loggerFactory = loggerFactory;
             _azureComponentFactory = azureComponentFactory;
             _options = options.Value;
             _configuration = configuration;
             _router = router;
+            _serviceManagerFactory = serviceManagerFactory ?? (builder => builder.BuildServiceManager());
         }
 
         public IInternalServiceHubContextStore GetOrAddByConnectionStringKey(string connectionStringKey)
@@ -74,7 +77,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
             {
                 serviceManagerBuilder.WithRouter(_router);
             }
-            var serviceManager = serviceManagerBuilder.BuildServiceManager();
+            var serviceManager = _serviceManagerFactory(serviceManagerBuilder);
             return new ServiceCollection()
                 .AddSingleton(serviceManager)
                 .AddOptions()

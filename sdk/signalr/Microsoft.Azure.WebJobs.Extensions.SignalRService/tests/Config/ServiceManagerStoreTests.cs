@@ -4,10 +4,12 @@
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Serialization;
+using Microsoft.AspNetCore.Connections;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.AspNetCore.SignalR.Protocol;
 using Microsoft.Azure.SignalR;
@@ -25,6 +27,7 @@ using Microsoft.Extensions.Options;
 using Moq;
 using Xunit;
 using Constants = Microsoft.Azure.WebJobs.Extensions.SignalRService.Constants;
+using IConnectionFactory = Microsoft.Azure.SignalR.IConnectionFactory;
 
 namespace SignalRServiceExtension.Tests
 {
@@ -104,6 +107,20 @@ namespace SignalRServiceExtension.Tests
             var connectionStrings = FakeEndpointUtils.GetFakeConnectionString(2).ToArray();
             var initialEndpoint = new ServiceEndpoint(connectionStrings[0]);
             var updatedEndpoint = new ServiceEndpoint(connectionStrings[1]);
+            var updatedConnectionStarted = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
+            var updatedConnection = new TaskCompletionSource<ConnectionContext>(TaskCreationOptions.RunContinuationsAsynchronously);
+            // Fail at the transport boundary, keeping real endpoint initialization and reload logic
+            // without DNS, HTTP, or a service-protocol handshake.
+            var connectionFactory = new Mock<IConnectionFactory>(MockBehavior.Strict);
+            connectionFactory.Setup(factory => factory.ConnectAsync(
+                It.Is<HubServiceEndpoint>(endpoint => endpoint.Endpoint == initialEndpoint.Endpoint),
+                It.IsAny<TransferFormat>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<CancellationToken>()))
+                .ThrowsAsync(new IOException("Simulated connection failure."));
+            connectionFactory.Setup(factory => factory.ConnectAsync(
+                It.Is<HubServiceEndpoint>(endpoint => endpoint.Endpoint == updatedEndpoint.Endpoint),
+                It.IsAny<TransferFormat>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<CancellationToken>()))
+                .Callback(() => updatedConnectionStarted.TrySetResult(true))
+                .Returns(updatedConnection.Task);
             var initialEndpointObserved = new TaskCompletionSource<ServiceEndpoint[]>(TaskCreationOptions.RunContinuationsAsynchronously);
             var endpointsTransitionObserved = new TaskCompletionSource<ServiceEndpoint[]>(TaskCreationOptions.RunContinuationsAsynchronously);
             var observedEndpointSets = new ConcurrentDictionary<string, byte>();
@@ -125,11 +142,14 @@ namespace SignalRServiceExtension.Tests
                         endpointsTransitionObserved.TrySetResult(currentEndpoints);
                     }
                 });
-            var configuration = new ConfigurationRoot(new List<IConfigurationProvider>() { new MemoryConfigurationProvider(new()) });
+            using var configuration = new ConfigurationRoot(new List<IConfigurationProvider>() { new MemoryConfigurationProvider(new()) });
             configuration[Constants.AzureSignalRConnectionStringName] = connectionStrings[0];
             // Only persistent mode supports hot reload.
             configuration[Constants.ServiceTransportTypeName] = "Persistent";
-            var managerStore = new ServiceManagerStore(configuration, NullLoggerFactory.Instance, SingletonAzureComponentFactory.Instance, Options.Create(new SignalROptions()), mock.Object);
+            await using var managerStore = new ServiceManagerStore(configuration, NullLoggerFactory.Instance, SingletonAzureComponentFactory.Instance, Options.Create(new SignalROptions()), mock.Object,
+                builder => builder
+                    .ConfigureServices(services => services.AddSingleton(connectionFactory.Object))
+                    .BuildServiceManager());
             var hubContextStore = managerStore.GetOrAddByConnectionStringKey(Constants.AzureSignalRConnectionStringName);
             var hubContext = await hubContextStore.GetAsync("hub") as ServiceHubContext;
 
@@ -140,22 +160,36 @@ namespace SignalRServiceExtension.Tests
             Assert.Single(initialEndpoints);
             Assert.Equal(initialEndpoint.Endpoint, initialEndpoints[0].Endpoint);
 
-            configuration[Constants.AzureSignalRConnectionStringName] = connectionStrings[1];
-            configuration.Reload();
-
-            // The new endpoint is appended only after its first connection attempt finishes,
-            // which can take longer than a fixed delay for these fake endpoints.
-            while (!endpointsTransitionObserved.Task.IsCompleted && !timeout.IsCancellationRequested)
+            try
             {
-                await hubContext.ClientManager.UserExistsAsync("a", timeout.Token);
-                await Task.WhenAny(endpointsTransitionObserved.Task, Task.Delay(TimeSpan.FromMilliseconds(50), timeout.Token));
-            }
+                configuration[Constants.AzureSignalRConnectionStringName] = connectionStrings[1];
+                configuration.Reload();
+                await Task.WhenAny(updatedConnectionStarted.Task, Task.Delay(Timeout.InfiniteTimeSpan, timeout.Token));
+                Assert.True(updatedConnectionStarted.Task.IsCompleted, "The updated endpoint did not attempt to connect.");
 
-            Assert.True(endpointsTransitionObserved.Task.IsCompleted, $"Observed endpoint sets: {string.Join(" | ", observedEndpointSets.Keys)}");
-            var updatedEndpoints = await endpointsTransitionObserved.Task;
-            Assert.Equal(2, updatedEndpoints.Length);
-            Assert.Contains(updatedEndpoints, endpoint => endpoint.Endpoint == initialEndpoint.Endpoint);
-            Assert.Contains(updatedEndpoints, endpoint => endpoint.Endpoint == updatedEndpoint.Endpoint);
+                await hubContext.ClientManager.UserExistsAsync("a", timeout.Token);
+                var pendingEndpoints = Assert.IsAssignableFrom<IEnumerable<ServiceEndpoint>>(mock.Invocations.Last().Arguments[1]);
+                Assert.Equal(initialEndpoint.Endpoint, Assert.Single(pendingEndpoints).Endpoint);
+
+                // Release the first connection attempt explicitly; only then can the new endpoint be routed.
+                updatedConnection.SetException(new IOException("Simulated connection failure."));
+                while (!endpointsTransitionObserved.Task.IsCompleted && !timeout.IsCancellationRequested)
+                {
+                    await hubContext.ClientManager.UserExistsAsync("a", timeout.Token);
+                    await Task.WhenAny(endpointsTransitionObserved.Task, Task.Delay(TimeSpan.FromMilliseconds(50), timeout.Token));
+                }
+
+                Assert.True(endpointsTransitionObserved.Task.IsCompleted, $"Observed endpoint sets: {string.Join(" | ", observedEndpointSets.Keys)}");
+                var updatedEndpoints = await endpointsTransitionObserved.Task;
+                Assert.Equal(2, updatedEndpoints.Length);
+                Assert.Contains(updatedEndpoints, endpoint => endpoint.Endpoint == initialEndpoint.Endpoint);
+                Assert.Contains(updatedEndpoints, endpoint => endpoint.Endpoint == updatedEndpoint.Endpoint);
+                connectionFactory.VerifyAll();
+            }
+            finally
+            {
+                updatedConnection.TrySetCanceled();
+            }
         }
 
         [Theory]
