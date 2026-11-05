@@ -2,17 +2,6 @@
 # gates on it when failOnFailedTests is true.
 
 parameters:
-  - name: matrixStageName
-    type: string
-    default: Prepare
-  - name: evalStageName
-    type: string
-    default: Eval
-  - name: artifactPrefix
-    # Literal prefix, including any separator (e.g. 'forced-'); must match the shard job.
-    # Callers are responsible for unique final artifact names across tracks in one build.
-    type: string
-    default: ''
   - name: failOnFailedTests
     # Only single-run evaluations support this gate; multi-run observations must leave it off.
     type: boolean
@@ -34,22 +23,15 @@ jobs:
     workspace:
       clean: all
     variables:
-      EvalExpectedMatrix: $[ stageDependencies.${{ parameters.matrixStageName }}.generate_eval_matrix.outputs['detect.matrix'] ]
+      EvalExpectedMatrix: $[ stageDependencies.Prepare.generate_eval_matrix.outputs['detect.matrix'] ]
     templateContext:
       outputs:
         - output: pipelineArtifact
           displayName: 'Retain selected build summary and saved bundle'
-          artifactName: 'eval-summary-${{ parameters.artifactPrefix }}$(System.JobAttempt)'
+          artifactName: 'eval-summary-$(System.JobAttempt)'
           targetPath: $(Build.ArtifactStagingDirectory)/eval-summary
           condition: always()
     steps:
-      # Dashboard archives identify a single build-wide summary, not separate tracks.
-      - ${{ if and(ne(parameters.artifactPrefix, ''), or(parameters.createDashboardBundle, parameters.publishDashboardResults)) }}:
-        - script: |
-            echo "##vso[task.logissue type=error]Prefixed eval tracks support artifact-only summaries, not dashboard bundles or publication."
-            exit 1
-          displayName: 'Reject ambiguous multi-track dashboard identity'
-
       - checkout: self
         clean: true
         fetchDepth: 1
@@ -59,15 +41,14 @@ jobs:
         inputs:
           version: 24.x
 
-      # Download only this track's result data; an empty prefix retains all eval-result-* artifacts.
       - task: DownloadPipelineArtifact@2
         displayName: 'Download all shard results'
         inputs:
           buildType: 'current'
           itemPattern: |
-            eval-result-${{ parameters.artifactPrefix }}*/results.jsonl
-            eval-result-${{ parameters.artifactPrefix }}*/shard.json
-            eval-result-${{ parameters.artifactPrefix }}*/**/*.junit.xml
+            eval-result-*/results.jsonl
+            eval-result-*/shard.json
+            eval-result-*/**/*.junit.xml
           targetPath: $(Pipeline.Workspace)/eval-results
 
       # Only attempt verification needs the current build token; rendering uses saved evidence.
@@ -79,7 +60,6 @@ jobs:
         env:
           SYSTEM_ACCESSTOKEN: $(System.AccessToken)
           EVAL_EXPECTED_MATRIX: $(EvalExpectedMatrix)
-          EVAL_STAGE_NAME: ${{ parameters.evalStageName }}
 
       - script: |
           node --experimental-strip-types "$(Build.SourcesDirectory)/eng/common/scripts/eval/build-eval-summary.ts" \
@@ -91,7 +71,6 @@ jobs:
         condition: always()
         env:
           EVAL_EXPECTED_MATRIX: $(EvalExpectedMatrix)
-          EVAL_ARTIFACT_PREFIX: ${{ parameters.artifactPrefix }}
 
       - ${{ if or(parameters.createDashboardBundle, parameters.publishDashboardResults) }}:
         - template: ../steps/eval-publish-results.yml
