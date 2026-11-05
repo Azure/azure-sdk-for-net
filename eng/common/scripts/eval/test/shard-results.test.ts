@@ -70,7 +70,7 @@ function runSummary(root, shards, options = {}) {
     const child = runCli("build-eval-summary.ts", [
         "--results-root", path.join(root, "download"), "--selected-root", path.join(root, "selected"),
         "--output-path", output,
-    ], { TF_BUILD: "true", EVAL_EXPECTED_MATRIX: matrix, EVAL_ARTIFACT_PREFIX: "",
+    ], { TF_BUILD: "true", EVAL_EXPECTED_MATRIX: matrix,
         EVAL_FAIL_ON_FAILED_TESTS: "false", ...options.env });
     return {
         child, markdown: fs.readFileSync(output, "utf8"),
@@ -152,90 +152,28 @@ test("single-run gating does not bypass missing-result completeness failures", (
     assert.equal(result.result.complete, false);
 });
 
-test("same-build tracks select their own artifacts and authoritative retry evidence", (t) => {
-    const root = setup(t);
-    const shard = "area_same";
-    const matrix = { leg: { shardName: shard } };
-    const timeline = { records: [
-        { type: "Job", identifier: "EvalForced.RunShard.leg", attempt: 1, state: "completed", result: "succeeded" },
-        { type: "Job", identifier: "EvalForced.RunShard.leg", attempt: 2, state: "completed", result: "failed" },
-        { type: "Job", identifier: "EvalTrigger.RunShard.leg", attempt: 3, state: "completed", result: "succeeded" },
-    ] };
-    for (const [prefix, attempt] of [["forced-", 1], ["forced-", 2], ["trigger-", 3], ["forced-extra-", 4]]) {
-        const source = invocation(root, `${prefix}${attempt}`);
-        stageShardResults({ resultsRoot: source,
-            outputDirectory: path.join(root, "download", `eval-result-${prefix}${shard}-${attempt}`),
-            shardName: shard, attempt });
-    }
-    const evidence = latestShardAttempts(timeline, matrix, "EvalForced");
-    fs.writeFileSync(path.join(root, "job-attempts.json"), JSON.stringify(evidence));
-    const result = runSummary(root, [shard], { env: { EVAL_ARTIFACT_PREFIX: "forced-" } });
-    assert.equal(result.child.status, 0, result.child.stderr);
-    assert.equal(result.result.complete, true);
-    assert.deepEqual(result.index.attempts, [{
-        shard, attempt: 2, directory: `eval-result-forced-${shard}-2`,
-    }]);
-    assert.equal(result.result.totals.scenarios, 1);
-    assert.deepEqual(latestShardAttempts(timeline, matrix, "EvalTrigger").attempts[shard], { attempt: 3, complete: true });
-    assert.throws(() => latestShardAttempts(timeline, matrix, "../Eval"), /Invalid eval stage/);
-    // A newer failed attempt without an artifact must not reuse the older complete run.
-    const selectedRoot = path.join(root, "selected-missing");
-    const missing = selectSummaryResults({
-        resultsRoot: path.join(root, "download"), selectedRoot, expectedShards: [shard],
-        artifactPrefix: "forced-",
-        jobAttempts: { schemaVersion: 1, valid: true, attempts: { [shard]: { attempt: 4, complete: true } } },
-    });
-    assert.equal(missing.complete, false);
-    assert.deepEqual(missing.shardInput.attempts, []);
-});
-
-test("literal prefixes publish names selected by Summary without adding separators", (t) => {
+test("shard job artifact names preserve hyphenated shard identities through Summary selection", (t) => {
     const load = name => fs.readFileSync(new URL(`../../../pipelines/templates/jobs/${name}.yml`, import.meta.url), "utf8");
     const shardTemplate = load("eval-shard");
     const resultName = shardTemplate.match(/^          artifactName: '(eval-result-[^'\r\n]+)'\r?$/m);
-    const debugName = shardTemplate.match(/^          artifactName: '(eval-debug-[^'\r\n]+)'\r?$/m);
-    const summaryName = load("eval-summarize").match(/^          artifactName: '(eval-summary-[^'\r\n]+)'\r?$/m);
     assert.ok(resultName);
-    assert.ok(debugName);
-    assert.ok(summaryName);
-    for (const prefix of ["", "forced-", "trigger-", "forced", "forced-extra-"]) {
-        const root = setup(t);
-        const shard = "extra-area_same";
-        const render = expression => expression.replace("${{ parameters.artifactPrefix }}", prefix)
-            .replace("$(shardName)", shard).replace("$(System.JobAttempt)", "1");
-        const name = render(resultName[1]);
-        assert.equal(name, `eval-result-${prefix}${shard}-1`);
-        assert.equal(render(debugName[1]), `eval-debug-${prefix}${shard}-1`);
-        assert.equal(render(summaryName[1]), `eval-summary-${prefix}1`);
-        const source = invocation(root, "source");
-        stageShardResults({ resultsRoot: source, outputDirectory: path.join(root, "download", name),
-            shardName: shard, attempt: 1 });
-        fs.writeFileSync(path.join(root, "job-attempts.json"), JSON.stringify({
-            schemaVersion: 1, valid: true, attempts: { [shard]: { attempt: 1, complete: true } },
-        }));
-        const result = runSummary(root, [shard], { env: { EVAL_ARTIFACT_PREFIX: prefix } });
-        assert.equal(result.child.status, 0, result.child.stderr);
-        assert.equal(result.result.complete, true);
-        assert.deepEqual(result.index.attempts, [{ shard, attempt: 1, directory: name }]);
+    const root = setup(t);
+    const shard = "extra-area_same";
+    for (const attempt of [1, 2]) {
+        const name = resultName[1].replace("$(shardName)", shard).replace("$(System.JobAttempt)", String(attempt));
+        stageShardResults({ resultsRoot: invocation(root, `source-${attempt}`),
+            outputDirectory: path.join(root, "download", name), shardName: shard, attempt });
     }
+    fs.writeFileSync(path.join(root, "job-attempts.json"), JSON.stringify({
+        schemaVersion: 1, valid: true, attempts: { [shard]: { attempt: 2, complete: true } },
+    }));
+    const result = runSummary(root, [shard]);
+    assert.equal(result.child.status, 0, result.child.stderr);
+    assert.equal(result.result.complete, true);
+    assert.deepEqual(result.index.attempts, [{ shard, attempt: 2, directory: `eval-result-${shard}-2` }]);
 });
 
-test("job templates retain literal prefixes while the stage template uses unprefixed defaults", () => {
-    const load = name => fs.readFileSync(new URL(`../../../pipelines/templates/${name}.yml`, import.meta.url), "utf8");
-    for (const name of ["jobs/eval-shard", "jobs/eval-summarize"]) {
-        const template = load(name);
-        assert.match(template, /^  - name: artifactPrefix\r?\n(?:    #[^\r\n]*\r?\n)*    type: string\r?\n    default: ''\r?$/m);
-        assert.doesNotMatch(template, /^  - name: artifactNamespace\r?$/m);
-    }
-    const summary = load("jobs/eval-summarize");
-    const render = summary.split(/^      - script: \|\r?$/m).find(section => section.includes("build-eval-summary.ts"));
-    assert.ok(render);
-    assert.match(render, /^          EVAL_ARTIFACT_PREFIX: \$\{\{ parameters\.artifactPrefix \}\}\r?$/m);
-    assert.match(summary, /^      - \$\{\{ if and\(ne\(parameters\.artifactPrefix, ''\), or\(parameters\.createDashboardBundle, parameters\.publishDashboardResults\)\) \}\}:\r?$/m);
-    assert.doesNotMatch(load("stages/archetype-eval"), /\bartifactPrefix\b/);
-});
-
-test("Summary download source applies the literal prefix to all result-file patterns", () => {
+test("Summary downloads only build-wide result data", () => {
     const summary = fs.readFileSync(new URL("../../../pipelines/templates/jobs/eval-summarize.yml", import.meta.url), "utf8");
     const download = summary.split(/^      - task: /m).find(section =>
         section.split(/\r?\n/, 1)[0] === "DownloadPipelineArtifact@2");
@@ -244,31 +182,7 @@ test("Summary download source applies the literal prefix to all result-file patt
     assert.ok(block);
     const patterns = block[1].trim().split(/\r?\n/).map(line => line.trim());
     const files = ["results.jsonl", "shard.json", "**/*.junit.xml"];
-    assert.deepEqual(patterns, files.map(file => `eval-result-\${{ parameters.artifactPrefix }}*/${file}`));
-    for (const prefix of ["", "forced-", "trigger-", "forced"]) {
-        assert.deepEqual(patterns.map(pattern => pattern.replace("${{ parameters.artifactPrefix }}", prefix)),
-            files.map(file => `eval-result-${prefix}*/${file}`));
-    }
-});
-
-test("empty artifact prefix preserves legacy names and invalid prefixes are rejected", (t) => {
-    const root = setup(t);
-    const shard = "area_test";
-    artifact(root, shard, 1);
-    const result = selectSummaryResults({
-        resultsRoot: path.join(root, "download"), selectedRoot: path.join(root, "selected"),
-        expectedShards: [shard], jobAttempts: readJson(path.join(root, "job-attempts.json")),
-        artifactPrefix: "",
-    });
-    assert.equal(result.complete, true);
-    assert.deepEqual(result.shardInput.attempts, [{ shard, attempt: 1, directory: `eval-result-${shard}-1` }]);
-    for (const [index, prefix] of ["../escape", "with spaces", "forced.extra", "/", null, 123, "x".repeat(201)].entries()) {
-        assert.throws(() => selectSummaryResults({
-            resultsRoot: path.join(root, "download"), selectedRoot: path.join(root, `invalid-${index}`),
-            expectedShards: [shard], jobAttempts: readJson(path.join(root, "job-attempts.json")),
-            artifactPrefix: prefix,
-        }), /Invalid artifact prefix/);
-    }
+    assert.deepEqual(patterns, files.map(file => `eval-result-*/${file}`));
 });
 
 test("completed failing evaluations stage exact raw bytes and all JUnit, but no unrelated files", (t) => {
@@ -667,7 +581,8 @@ const timelineEnv = { SYSTEM_COLLECTIONURI: "https://dev.azure.com/azure-sdk/", 
 const timelineRecord = { type: "Job", identifier: "Eval.RunShard.a", attempt: 1, state: "completed", result: "failed" };
 
 test("timeline uses matrix identifiers, highest attempts and completed state, rejecting ambiguous attempts", () => {
-    const matrix = { a: { shardName: "a" } }, records = [timelineRecord, { ...timelineRecord, attempt: 2 }];
+    const matrix = { a: { shardName: "a" } }, records = [timelineRecord, { ...timelineRecord, attempt: 2 },
+        { ...timelineRecord, identifier: "OtherEval.RunShard.a", attempt: 3 }];
     assert.deepEqual(latestShardAttempts({ records }, matrix).attempts.a, { attempt: 2, complete: true });
     records[1].result = "canceled";
     assert.equal(latestShardAttempts({ records }, matrix).attempts.a.complete, false);
