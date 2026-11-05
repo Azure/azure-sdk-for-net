@@ -13,7 +13,7 @@ using Azure.ResourceManager.Compute.BulkActions;
 
 namespace Azure.ResourceManager.Compute.BulkActions.Models
 {
-    /// <summary> Configuration and status of a scheduled action. </summary>
+    /// <summary> Configuration and status of a recurring bulk action. </summary>
     public partial class ScheduledActionProperties : IJsonModel<ScheduledActionProperties>
     {
         /// <summary> Initializes a new instance of <see cref="ScheduledActionProperties"/> for deserialization. </summary>

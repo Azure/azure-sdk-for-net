@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             writer.WritePropertyName("dataType"u8);
             writer.WriteStringValue(DataType.ToString());
-            if (_thresholdIsDefined || Optional.IsDefined(Threshold))
+            if (Optional.IsDefined(Threshold, _thresholdIsDefined))
             {
                 if (Threshold != null)
                 {

@@ -13,10 +13,14 @@ namespace Azure.Security.Attestation
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
     /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
+    [ModelReaderWriterBuildable(typeof(AttestationOpenIdMetadata))]
     [ModelReaderWriterBuildable(typeof(AttestationResult))]
     [ModelReaderWriterBuildable(typeof(PolicyCertificatesModificationResult))]
     [ModelReaderWriterBuildable(typeof(PolicyModificationResult))]
+    [ModelReaderWriterBuildable(typeof(SealedAttestationResult))]
     [ModelReaderWriterBuildable(typeof(StoredAttestationPolicy))]
+    [ModelReaderWriterBuildable(typeof(TcbBaseline))]
+    [ModelReaderWriterBuildable(typeof(TcbBaselineResult))]
     [ModelReaderWriterBuildable(typeof(TpmAttestationRequest))]
     [ModelReaderWriterBuildable(typeof(TpmAttestationResponse))]
     public partial class AzureSecurityAttestationContext : ModelReaderWriterContext

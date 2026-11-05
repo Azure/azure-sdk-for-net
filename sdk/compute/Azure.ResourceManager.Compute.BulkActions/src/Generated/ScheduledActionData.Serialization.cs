@@ -17,7 +17,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Compute.BulkActions
 {
-    /// <summary> A recurring action that operates on specified compute resources. </summary>
+    /// <summary> A recurring bulk action that operates on specified compute resources. </summary>
     public partial class ScheduledActionData : TrackedResourceData, IJsonModel<ScheduledActionData>
     {
         /// <summary> Initializes a new instance of <see cref="ScheduledActionData"/> for deserialization. </summary>

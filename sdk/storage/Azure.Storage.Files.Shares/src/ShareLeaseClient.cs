@@ -127,14 +127,19 @@ namespace Azure.Storage.Files.Shares.Specialized
         private static string CreateUniqueLeaseId() => Guid.NewGuid().ToString();
 
         /// <summary>
-        /// Ensure either the File or Share is present.
+        /// Ensure either the File or Share is present, and that the File is
+        /// not addressed by file ID.
         /// </summary>
-        private void EnsureClient()
+        private void EnsureClient(string operationName)
         {
             if (FileClient == null && ShareClient == null)
             {
                 // This can only happen if someone's not being careful while mocking
                 throw ShareErrors.FileOrShareMissing(nameof(ShareLeaseClient), nameof(FileClient), nameof(ShareClient));
+            }
+            if (FileClient != null)
+            {
+                ShareErrors.AssertNotFileIdAddressed(FileClient.IsFileIdAddressed, operationName);
             }
         }
 
@@ -325,7 +330,7 @@ namespace Azure.Storage.Files.Shares.Specialized
             bool async,
             CancellationToken cancellationToken)
         {
-            EnsureClient();
+            EnsureClient(nameof(Acquire));
             using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(ShareLeaseClient)))
             {
                 ClientConfiguration.Pipeline.LogMethodEnter(
@@ -512,7 +517,7 @@ namespace Azure.Storage.Files.Shares.Specialized
             bool async,
             CancellationToken cancellationToken)
         {
-            EnsureClient();
+            EnsureClient(nameof(Release));
             using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(ShareLeaseClient)))
             {
                 ClientConfiguration.Pipeline.LogMethodEnter(
@@ -686,7 +691,7 @@ namespace Azure.Storage.Files.Shares.Specialized
             bool async,
             CancellationToken cancellationToken)
         {
-            EnsureClient();
+            EnsureClient(nameof(Change));
             using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(ShareLeaseClient)))
             {
                 ClientConfiguration.Pipeline.LogMethodEnter(
@@ -870,7 +875,7 @@ namespace Azure.Storage.Files.Shares.Specialized
             bool async,
             CancellationToken cancellationToken)
         {
-            EnsureClient();
+            EnsureClient(nameof(Break));
             using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(ShareLeaseClient)))
             {
                 ClientConfiguration.Pipeline.LogMethodEnter(
@@ -1040,7 +1045,7 @@ namespace Azure.Storage.Files.Shares.Specialized
             bool async,
             CancellationToken cancellationToken)
         {
-            EnsureClient();
+            EnsureClient(nameof(Renew));
             using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(ShareLeaseClient)))
             {
                 ClientConfiguration.Pipeline.LogMethodEnter(

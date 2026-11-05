@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             {
                 throw new FormatException($"The model {nameof(VnetSolution)} does not support writing '{format}' format.");
             }
-            if (_solutionTypeIsDefined || Optional.IsDefined(SolutionType))
+            if (Optional.IsDefined(SolutionType, _solutionTypeIsDefined))
             {
                 if (SolutionType != null)
                 {

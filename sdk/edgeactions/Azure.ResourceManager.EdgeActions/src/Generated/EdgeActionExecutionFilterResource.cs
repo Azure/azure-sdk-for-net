@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.EdgeActions
         {
             TryGetApiVersion(ResourceType, out string edgeActionExecutionFilterApiVersion);
             _edgeActionExecutionFiltersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.EdgeActions", ResourceType.Namespace, Diagnostics);
-            _edgeActionExecutionFiltersRestClient = new EdgeActionExecutionFilters(_edgeActionExecutionFiltersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, edgeActionExecutionFilterApiVersion ?? "2025-12-01-preview");
+            _edgeActionExecutionFiltersRestClient = new EdgeActionExecutionFilters(_edgeActionExecutionFiltersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, edgeActionExecutionFilterApiVersion ?? "2026-10-01");
             ValidateResourceId(id);
         }
 
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.EdgeActions
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-12-01-preview. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.EdgeActions
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-12-01-preview. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.EdgeActions
         }
 
         /// <summary>
-        /// Update a EdgeActionExecutionFilter
+        /// Updates the properties and tags of an Edge Action execution filter. Omitted tags are preserved, an empty tags object clears all tags, and supplied tags replace the entire tag collection. Null tags are rejected.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.EdgeActions
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-12-01-preview. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.EdgeActions
         }
 
         /// <summary>
-        /// Update a EdgeActionExecutionFilter
+        /// Updates the properties and tags of an Edge Action execution filter. Omitted tags are preserved, an empty tags object clears all tags, and supplied tags replace the entire tag collection. Null tags are rejected.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -263,7 +263,7 @@ namespace Azure.ResourceManager.EdgeActions
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-12-01-preview. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.EdgeActions
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-12-01-preview. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -371,7 +371,7 @@ namespace Azure.ResourceManager.EdgeActions
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-12-01-preview. </description>
+        /// <description> 2026-10-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>

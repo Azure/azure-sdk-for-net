@@ -40,9 +40,8 @@ namespace Azure.ResourceManager.HDInsight
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal HDInsightClusterCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(HDInsightClusterResource.ResourceType, out string hdInsightClusterApiVersion);
             _hdInsightClusterClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HDInsight", HDInsightClusterResource.ResourceType.Namespace, Diagnostics);
-            _hdInsightClusterRestClient = new HDInsightCluster(_hdInsightClusterClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, hdInsightClusterApiVersion ?? "2025-01-15-preview");
+            _hdInsightClusterRestClient = new HDInsightCluster(_hdInsightClusterClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.HDInsight/clusters", out string hdInsightClusterApiVersionOverride) ? hdInsightClusterApiVersionOverride : "2025-01-15-preview");
             ValidateResourceId(id);
         }
 

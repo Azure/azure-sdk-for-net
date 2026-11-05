@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 throw new FormatException($"The model {nameof(MachineLearningEndpointDeploymentProperties)} does not support writing '{format}' format.");
             }
-            if (_codeConfigurationIsDefined || Optional.IsDefined(CodeConfiguration))
+            if (Optional.IsDefined(CodeConfiguration, _codeConfigurationIsDefined))
             {
                 if (CodeConfiguration != null)
                 {
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("codeConfiguration"u8);
                 }
             }
-            if (_descriptionIsDefined || Optional.IsDefined(Description))
+            if (Optional.IsDefined(Description, _descriptionIsDefined))
             {
                 if (Description != null)
                 {
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("description"u8);
                 }
             }
-            if (_environmentIdIsDefined || Optional.IsDefined(EnvironmentId))
+            if (Optional.IsDefined(EnvironmentId, _environmentIdIsDefined))
             {
                 if (EnvironmentId != null)
                 {

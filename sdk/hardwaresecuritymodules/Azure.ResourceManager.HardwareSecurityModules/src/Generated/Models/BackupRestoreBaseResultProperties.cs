@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
         private DateTimeOffset? _endOn;
-        internal bool _endOnIsDefined;
+        private protected bool _endOnIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="BackupRestoreBaseResultProperties"/>. </summary>
         internal BackupRestoreBaseResultProperties()

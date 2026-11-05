@@ -52,9 +52,8 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal DevTestLabGlobalScheduleResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string devTestLabGlobalScheduleApiVersion);
             _devTestLabGlobalSchedulesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DevTestLabs", ResourceType.Namespace, Diagnostics);
-            _devTestLabGlobalSchedulesRestClient = new DevTestLabGlobalSchedules(_devTestLabGlobalSchedulesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, devTestLabGlobalScheduleApiVersion ?? "2018-09-15");
+            _devTestLabGlobalSchedulesRestClient = new DevTestLabGlobalSchedules(_devTestLabGlobalSchedulesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.DevTestLab/schedules", out string devTestLabGlobalSchedulesApiVersionOverride) ? devTestLabGlobalSchedulesApiVersionOverride : "2018-09-15");
             ValidateResourceId(id);
         }
 

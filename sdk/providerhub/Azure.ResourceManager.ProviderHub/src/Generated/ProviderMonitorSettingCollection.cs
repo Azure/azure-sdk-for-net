@@ -39,9 +39,8 @@ namespace Azure.ResourceManager.ProviderHub
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ProviderMonitorSettingCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ProviderMonitorSettingResource.ResourceType, out string providerMonitorSettingApiVersion);
             _providerMonitorSettingsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ProviderHub", ProviderMonitorSettingResource.ResourceType.Namespace, Diagnostics);
-            _providerMonitorSettingsRestClient = new ProviderMonitorSettings(_providerMonitorSettingsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, providerMonitorSettingApiVersion ?? "2025-10-01");
+            _providerMonitorSettingsRestClient = new ProviderMonitorSettings(_providerMonitorSettingsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.ProviderHub/providerMonitorSettings", out string providerMonitorSettingsApiVersionOverride) ? providerMonitorSettingsApiVersionOverride : "2025-10-01");
             ValidateResourceId(id);
         }
 

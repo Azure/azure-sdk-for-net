@@ -19,11 +19,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
     public partial class MachineLearningJobProperties : MachineLearningResourceBase
     {
         private string _displayName;
-        internal bool _displayNameIsDefined;
+        private protected bool _displayNameIsDefined;
         private MachineLearningIdentityConfiguration _identity;
-        internal bool _identityIsDefined;
+        private protected bool _identityIsDefined;
         private NotificationSetting _notificationSetting;
-        internal bool _notificationSettingIsDefined;
+        private protected bool _notificationSettingIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="MachineLearningJobProperties"/>. </summary>
         /// <param name="jobType"> [Required] Specifies the type of job. </param>

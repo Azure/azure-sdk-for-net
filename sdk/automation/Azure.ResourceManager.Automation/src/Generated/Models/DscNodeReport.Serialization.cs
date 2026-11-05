@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Automation.Models
             {
                 throw new FormatException($"The model {nameof(DscNodeReport)} does not support writing '{format}' format.");
             }
-            if (_endOnIsDefined || Optional.IsDefined(EndOn))
+            if (Optional.IsDefined(EndOn, _endOnIsDefined))
             {
                 if (EndOn != null)
                 {
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Automation.Models
                 writer.WritePropertyName("lastModifiedTime"u8);
                 writer.WriteStringValue(LastModifiedOn.Value, "O");
             }
-            if (_startOnIsDefined || Optional.IsDefined(StartOn))
+            if (Optional.IsDefined(StartOn, _startOnIsDefined))
             {
                 if (StartOn != null)
                 {

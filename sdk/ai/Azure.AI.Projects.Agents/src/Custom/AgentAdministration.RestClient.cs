@@ -38,7 +38,7 @@ public partial class AgentAdministrationClient
         {
             using PipelineMessage message = CreateCreateAgentRequest(content, foundryFeatures, options);
             var result = ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
-            otelScope?.RecordCreateAgentResponse(result);
+            otelScope?.RecordCreateAgentResponse(result, message.BufferResponse);
             return result;
         }
         catch (Exception ex)
@@ -72,7 +72,7 @@ public partial class AgentAdministrationClient
         {
             using PipelineMessage message = CreateCreateAgentRequest(content, foundryFeatures, options);
             var result = ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
-            otelScope?.RecordCreateAgentResponse(result);
+            otelScope?.RecordCreateAgentResponse(result, message.BufferResponse);
             return result;
         }
         catch (Exception ex)
@@ -109,7 +109,7 @@ public partial class AgentAdministrationClient
         {
             using PipelineMessage message = CreateCreateAgentVersionRequest(agentName, content, foundryFeatures, options);
             var result = ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
-            otelScope?.RecordCreateAgentVersionResponse(result);
+            otelScope?.RecordCreateAgentVersionResponse(result, message.BufferResponse);
             return result;
         }
         catch (Exception ex)
@@ -146,7 +146,7 @@ public partial class AgentAdministrationClient
         {
             using PipelineMessage message = CreateCreateAgentVersionRequest(agentName, content, foundryFeatures, options);
             var result = ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
-            otelScope?.RecordCreateAgentVersionResponse(result);
+            otelScope?.RecordCreateAgentVersionResponse(result, message.BufferResponse);
             return result;
         }
         catch (Exception ex)
@@ -183,7 +183,7 @@ public partial class AgentAdministrationClient
         {
             using PipelineMessage message = CreateCreateAgentVersionFromManifestRequest(agentName, content, options);
             var result = ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
-            otelScope?.RecordCreateAgentVersionResponse(result);
+            otelScope?.RecordCreateAgentVersionResponse(result, message.BufferResponse);
             return result;
         }
         catch (Exception ex)
@@ -220,7 +220,7 @@ public partial class AgentAdministrationClient
         {
             using PipelineMessage message = CreateCreateAgentVersionFromManifestRequest(agentName, content, options);
             var result = ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
-            otelScope?.RecordCreateAgentVersionResponse(result);
+            otelScope?.RecordCreateAgentVersionResponse(result, message.BufferResponse);
             return result;
         }
         catch (Exception ex)
@@ -254,7 +254,7 @@ public partial class AgentAdministrationClient
         {
             using PipelineMessage message = CreateCreateAgentFromManifestRequest(content, options);
             var result = ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
-            otelScope?.RecordCreateAgentResponse(result);
+            otelScope?.RecordCreateAgentResponse(result, message.BufferResponse);
             return result;
         }
         catch (Exception ex)
@@ -288,7 +288,7 @@ public partial class AgentAdministrationClient
         {
             using PipelineMessage message = CreateCreateAgentFromManifestRequest(content, options);
             var result = ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
-            otelScope?.RecordCreateAgentResponse(result);
+            otelScope?.RecordCreateAgentResponse(result, message.BufferResponse);
             return result;
         }
         catch (Exception ex)
@@ -358,7 +358,7 @@ public partial class AgentAdministrationClient
         {
             using PipelineMessage message = CreateUpdateAgentRequest(agentName, content, foundryFeatures, options);
             var result = ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
-            otelScope?.RecordUpdateAgentResponse(result);
+            otelScope?.RecordUpdateAgentResponse(result, message.BufferResponse);
             return result;
         }
         catch (Exception ex)
@@ -396,7 +396,7 @@ public partial class AgentAdministrationClient
         {
             using PipelineMessage message = CreateUpdateAgentRequest(agentName, content, foundryFeatures, options);
             var result = ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
-            otelScope?.RecordUpdateAgentResponse(result);
+            otelScope?.RecordUpdateAgentResponse(result, message.BufferResponse);
             return result;
         }
         catch (Exception ex)
@@ -433,7 +433,7 @@ public partial class AgentAdministrationClient
         {
             using PipelineMessage message = CreateUpdateAgentFromManifestRequest(agentName, content, options);
             var result = ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
-            otelScope?.RecordUpdateAgentResponse(result);
+            otelScope?.RecordUpdateAgentResponse(result, message.BufferResponse);
             return result;
         }
         catch (Exception ex)
@@ -470,7 +470,7 @@ public partial class AgentAdministrationClient
         {
             using PipelineMessage message = CreateUpdateAgentFromManifestRequest(agentName, content, options);
             var result = ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
-            otelScope?.RecordUpdateAgentResponse(result);
+            otelScope?.RecordUpdateAgentResponse(result, message.BufferResponse);
             return result;
         }
         catch (Exception ex)

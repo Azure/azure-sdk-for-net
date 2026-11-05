@@ -96,18 +96,6 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                 writer.WritePropertyName("capacityType"u8);
                 writer.WriteStringValue(CapacityType.Value.ToString());
             }
-            if (Optional.IsDefined(MinCapacity))
-            {
-                writer.WritePropertyName("minCapacity"u8);
-                writer.WriteNumberValue(MinCapacity.Value);
-            }
-            if (Optional.IsDefined(PartialFulfillmentPolicy))
-            {
-                writer.WritePropertyName("partialFulfillmentPolicy"u8);
-                writer.WriteObjectValue(PartialFulfillmentPolicy, options);
-            }
-            writer.WritePropertyName("priorityProfile"u8);
-            writer.WriteObjectValue(PriorityProfile, options);
             writer.WritePropertyName("computeProfile"u8);
             writer.WriteObjectValue(ComputeProfile, options);
             if (Optional.IsDefined(ExecutionParameters))
@@ -161,9 +149,6 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
             BulkInstancesOperationProvisioningState? provisioningState = default;
             int capacity = default;
             CapacityType? capacityType = default;
-            int? minCapacity = default;
-            PartialFulfillmentPolicy partialFulfillmentPolicy = default;
-            PriorityProfile priorityProfile = default;
             ComputeProfile computeProfile = default;
             BulkActionExecutionParameterDetail executionParameters = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -201,29 +186,6 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                     capacityType = new CapacityType(prop.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("minCapacity"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    minCapacity = prop.Value.GetInt32();
-                    continue;
-                }
-                if (prop.NameEquals("partialFulfillmentPolicy"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    partialFulfillmentPolicy = PartialFulfillmentPolicy.DeserializePartialFulfillmentPolicy(prop.Value, options);
-                    continue;
-                }
-                if (prop.NameEquals("priorityProfile"u8))
-                {
-                    priorityProfile = PriorityProfile.DeserializePriorityProfile(prop.Value, options);
-                    continue;
-                }
                 if (prop.NameEquals("computeProfile"u8))
                 {
                     computeProfile = ComputeProfile.DeserializeComputeProfile(prop.Value, options);
@@ -248,9 +210,6 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                 provisioningState,
                 capacity,
                 capacityType,
-                minCapacity,
-                partialFulfillmentPolicy,
-                priorityProfile,
                 computeProfile,
                 executionParameters,
                 additionalBinaryDataProperties);

@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 throw new FormatException($"The model {nameof(MachineLearningContainerResourceSettings)} does not support writing '{format}' format.");
             }
-            if (_cpuIsDefined || Optional.IsDefined(Cpu))
+            if (Optional.IsDefined(Cpu, _cpuIsDefined))
             {
                 if (Cpu != null)
                 {
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("cpu"u8);
                 }
             }
-            if (_gpuIsDefined || Optional.IsDefined(Gpu))
+            if (Optional.IsDefined(Gpu, _gpuIsDefined))
             {
                 if (Gpu != null)
                 {
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("gpu"u8);
                 }
             }
-            if (_memoryIsDefined || Optional.IsDefined(Memory))
+            if (Optional.IsDefined(Memory, _memoryIsDefined))
             {
                 if (Memory != null)
                 {

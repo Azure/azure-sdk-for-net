@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 throw new FormatException($"The model {nameof(DestinationAssetContent)} does not support writing '{format}' format.");
             }
-            if (_destinationNameIsDefined || Optional.IsDefined(DestinationName))
+            if (Optional.IsDefined(DestinationName, _destinationNameIsDefined))
             {
                 if (DestinationName != null)
                 {
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("destinationName"u8);
                 }
             }
-            if (_destinationVersionIsDefined || Optional.IsDefined(DestinationVersion))
+            if (Optional.IsDefined(DestinationVersion, _destinationVersionIsDefined))
             {
                 if (DestinationVersion != null)
                 {
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("destinationVersion"u8);
                 }
             }
-            if (_registryNameIsDefined || Optional.IsDefined(RegistryName))
+            if (Optional.IsDefined(RegistryName, _registryNameIsDefined))
             {
                 if (RegistryName != null)
                 {

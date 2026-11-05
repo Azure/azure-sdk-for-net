@@ -16,9 +16,9 @@ namespace Azure.ResourceManager.Automation.Models
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
         private DateTimeOffset? _expireOn;
-        internal bool _expireOnIsDefined;
+        private bool _expireOnIsDefined;
         private DateTimeOffset? _nextRunOn;
-        internal bool _nextRunOnIsDefined;
+        private bool _nextRunOnIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="SoftwareUpdateConfigurationScheduleProperties"/>. </summary>
         public SoftwareUpdateConfigurationScheduleProperties()

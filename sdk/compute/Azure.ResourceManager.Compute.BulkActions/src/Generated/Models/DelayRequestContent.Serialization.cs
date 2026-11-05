@@ -14,7 +14,7 @@ using Azure.ResourceManager.Compute.BulkActions;
 
 namespace Azure.ResourceManager.Compute.BulkActions.Models
 {
-    /// <summary> Request body for delaying a scheduled action occurrence. </summary>
+    /// <summary> Request body for delaying a recurring bulk action occurrence. </summary>
     public partial class DelayRequestContent : IJsonModel<DelayRequestContent>
     {
         /// <summary> Initializes a new instance of <see cref="DelayRequestContent"/> for deserialization. </summary>

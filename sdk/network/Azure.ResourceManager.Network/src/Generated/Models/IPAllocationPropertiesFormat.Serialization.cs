@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("prefix"u8);
                 writer.WriteStringValue(Prefix);
             }
-            if (_prefixLengthIsDefined || Optional.IsDefined(PrefixLength))
+            if (Optional.IsDefined(PrefixLength, _prefixLengthIsDefined))
             {
                 if (PrefixLength != null)
                 {

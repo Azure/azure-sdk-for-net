@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.MongoDBAtlas.Models
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
         private bool? _isBackupsEnabled;
-        internal bool _isBackupsEnabledIsDefined;
+        private bool _isBackupsEnabledIsDefined;
         private string _state;
-        internal bool _stateIsDefined;
+        private bool _stateIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="MongoDBAtlasClusterProperties"/>. </summary>
         /// <param name="clusterTier"> Cluster tier (FREE, FLEX, M10, M30). </param>

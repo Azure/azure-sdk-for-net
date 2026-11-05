@@ -28,31 +28,31 @@ namespace Azure.ResourceManager.MachineLearning.Models
     public partial class ImageModelDistributionSettingsObjectDetection : ImageModelDistributionSettings
     {
         private string _boxDetectionsPerImage;
-        internal bool _boxDetectionsPerImageIsDefined;
+        private bool _boxDetectionsPerImageIsDefined;
         private string _boxScoreThreshold;
-        internal bool _boxScoreThresholdIsDefined;
+        private bool _boxScoreThresholdIsDefined;
         private string _imageSize;
-        internal bool _imageSizeIsDefined;
+        private bool _imageSizeIsDefined;
         private string _maxSize;
-        internal bool _maxSizeIsDefined;
+        private bool _maxSizeIsDefined;
         private string _minSize;
-        internal bool _minSizeIsDefined;
+        private bool _minSizeIsDefined;
         private string _modelSize;
-        internal bool _modelSizeIsDefined;
+        private bool _modelSizeIsDefined;
         private string _multiScale;
-        internal bool _multiScaleIsDefined;
+        private bool _multiScaleIsDefined;
         private string _nmsIouThreshold;
-        internal bool _nmsIouThresholdIsDefined;
+        private bool _nmsIouThresholdIsDefined;
         private string _tileGridSize;
-        internal bool _tileGridSizeIsDefined;
+        private bool _tileGridSizeIsDefined;
         private string _tileOverlapRatio;
-        internal bool _tileOverlapRatioIsDefined;
+        private bool _tileOverlapRatioIsDefined;
         private string _tilePredictionsNmsThreshold;
-        internal bool _tilePredictionsNmsThresholdIsDefined;
+        private bool _tilePredictionsNmsThresholdIsDefined;
         private string _validationIouThreshold;
-        internal bool _validationIouThresholdIsDefined;
+        private bool _validationIouThresholdIsDefined;
         private string _validationMetricType;
-        internal bool _validationMetricTypeIsDefined;
+        private bool _validationMetricTypeIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="ImageModelDistributionSettingsObjectDetection"/>. </summary>
         public ImageModelDistributionSettingsObjectDetection()

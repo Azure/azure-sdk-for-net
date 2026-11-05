@@ -17,11 +17,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
     public partial class MachineLearningCommandJob : MachineLearningJobProperties
     {
         private MachineLearningDistributionConfiguration _distribution;
-        internal bool _distributionIsDefined;
+        private bool _distributionIsDefined;
         private BinaryData _parameters;
-        internal bool _parametersIsDefined;
+        private bool _parametersIsDefined;
         private QueueSettings _queueSettings;
-        internal bool _queueSettingsIsDefined;
+        private bool _queueSettingsIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="MachineLearningCommandJob"/>. </summary>
         /// <param name="command"> [Required] The command to execute on startup of the job. eg. "python train.py". </param>

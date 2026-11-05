@@ -52,9 +52,8 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ActivityLogAlertResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string activityLogAlertApiVersion);
             _activityLogAlertsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Monitor", ResourceType.Namespace, Diagnostics);
-            _activityLogAlertsRestClient = new ActivityLogAlerts(_activityLogAlertsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, activityLogAlertApiVersion ?? "2023-01-01-preview");
+            _activityLogAlertsRestClient = new ActivityLogAlerts(_activityLogAlertsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 

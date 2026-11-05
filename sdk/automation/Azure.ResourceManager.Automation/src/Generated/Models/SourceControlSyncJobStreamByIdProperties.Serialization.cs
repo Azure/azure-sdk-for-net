@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Automation.Models
                 writer.WritePropertyName("summary"u8);
                 writer.WriteStringValue(Summary);
             }
-            if (options.Format != "W" && (_timeIsDefined || Optional.IsDefined(Time)))
+            if (options.Format != "W" && Optional.IsDefined(Time, _timeIsDefined))
             {
                 if (Time != null)
                 {

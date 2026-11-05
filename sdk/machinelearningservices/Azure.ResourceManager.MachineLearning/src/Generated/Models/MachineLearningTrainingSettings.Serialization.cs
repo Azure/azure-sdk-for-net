@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WritePropertyName("ensembleModelDownloadTimeout"u8);
                 writer.WriteStringValue(EnsembleModelDownloadTimeout.Value, "P");
             }
-            if (_stackEnsembleSettingsIsDefined || Optional.IsDefined(StackEnsembleSettings))
+            if (Optional.IsDefined(StackEnsembleSettings, _stackEnsembleSettingsIsDefined))
             {
                 if (StackEnsembleSettings != null)
                 {

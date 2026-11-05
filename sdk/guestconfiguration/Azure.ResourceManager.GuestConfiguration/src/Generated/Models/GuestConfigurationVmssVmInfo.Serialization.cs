@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                 writer.WritePropertyName("latestReportId"u8);
                 writer.WriteStringValue(LatestReportId.Value);
             }
-            if (options.Format != "W" && (_lastComplianceCheckedOnIsDefined || Optional.IsDefined(LastComplianceCheckedOn)))
+            if (options.Format != "W" && Optional.IsDefined(LastComplianceCheckedOn, _lastComplianceCheckedOnIsDefined))
             {
                 if (LastComplianceCheckedOn != null)
                 {

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Authorization.Models
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
         private DateTimeOffset? _createdOn;
-        internal bool _createdOnIsDefined;
+        private bool _createdOnIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="AccessReviewContactedReviewerProperties"/>. </summary>
         internal AccessReviewContactedReviewerProperties()

@@ -39,9 +39,8 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal EdgeContextCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(EdgeContextResource.ResourceType, out string edgeContextApiVersion);
             _contextsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.WorkloadOrchestration", EdgeContextResource.ResourceType.Namespace, Diagnostics);
-            _contextsRestClient = new Contexts(_contextsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, edgeContextApiVersion ?? "2025-06-01");
+            _contextsRestClient = new Contexts(_contextsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.Edge/contexts", out string contextsApiVersionOverride) ? contextsApiVersionOverride : "2025-06-01");
             ValidateResourceId(id);
         }
 

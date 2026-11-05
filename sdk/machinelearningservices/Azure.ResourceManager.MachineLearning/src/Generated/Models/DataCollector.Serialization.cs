@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WriteObjectValue(item.Value, options);
             }
             writer.WriteEndObject();
-            if (_requestLoggingIsDefined || Optional.IsDefined(RequestLogging))
+            if (Optional.IsDefined(RequestLogging, _requestLoggingIsDefined))
             {
                 if (RequestLogging != null)
                 {

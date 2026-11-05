@@ -39,9 +39,8 @@ namespace Azure.ResourceManager.AgriculturePlatform
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal AgricultureServiceCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(AgricultureServiceResource.ResourceType, out string agricultureServiceApiVersion);
             _agriServiceClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AgriculturePlatform", AgricultureServiceResource.ResourceType.Namespace, Diagnostics);
-            _agriServiceRestClient = new AgriService(_agriServiceClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, agricultureServiceApiVersion ?? "2024-06-01-preview");
+            _agriServiceRestClient = new AgriService(_agriServiceClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.AgriculturePlatform/agriServices", out string agriServiceApiVersionOverride) ? agriServiceApiVersionOverride : "2024-06-01-preview");
             ValidateResourceId(id);
         }
 

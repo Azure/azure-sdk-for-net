@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
     public partial class AzureResourceInfo : TargetServiceBaseInfo
     {
         private AzureResourceBaseProperties _resourceProperties;
-        internal bool _resourcePropertiesIsDefined;
+        private bool _resourcePropertiesIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="AzureResourceInfo"/>. </summary>
         public AzureResourceInfo() : base(TargetServiceType.AzureResource)

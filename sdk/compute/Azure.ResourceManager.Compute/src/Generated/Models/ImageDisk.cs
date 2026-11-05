@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Compute.Models
         internal DiskEncryptionSetParameters DiskEncryptionSet { get; set; }
 
         /// <summary> Resource Id. </summary>
-        public ResourceIdentifier SnapshotId
+        public virtual ResourceIdentifier SnapshotId
         {
             get
             {
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> Resource Id. </summary>
-        public ResourceIdentifier ManagedDiskId
+        public virtual ResourceIdentifier ManagedDiskId
         {
             get
             {
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> Resource Id. </summary>
-        public ResourceIdentifier DiskEncryptionSetId
+        public virtual ResourceIdentifier DiskEncryptionSetId
         {
             get
             {

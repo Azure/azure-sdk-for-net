@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
     public partial class UserAssignedIdentityAuthInfo : AuthBaseInfo
     {
         private string _userName;
-        internal bool _userNameIsDefined;
+        private bool _userNameIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="UserAssignedIdentityAuthInfo"/>. </summary>
         public UserAssignedIdentityAuthInfo() : base(LinkerAuthType.UserAssignedIdentity)

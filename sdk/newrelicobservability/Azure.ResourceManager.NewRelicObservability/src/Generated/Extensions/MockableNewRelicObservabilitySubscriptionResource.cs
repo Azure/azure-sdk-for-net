@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Mocking
 
         private ClientDiagnostics MonitorsClientDiagnostics => _monitorsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.NewRelicObservability.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Monitors MonitorsRestClient => _monitorsRestClient ??= new Monitors(MonitorsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-06-01");
+        private Monitors MonitorsRestClient => _monitorsRestClient ??= new Monitors(MonitorsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("NewRelic.Observability/monitors", out string apiVersion) ? apiVersion : "2026-06-01");
 
         private ClientDiagnostics AccountsClientDiagnostics => _accountsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.NewRelicObservability.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 

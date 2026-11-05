@@ -80,7 +80,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                 throw new FormatException($"The model {nameof(ClusterCreateProperties)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            if (_publicNetworkAccessIsDefined || Optional.IsDefined(PublicNetworkAccess))
+            if (Optional.IsDefined(PublicNetworkAccess, _publicNetworkAccessIsDefined))
             {
                 if (PublicNetworkAccess != null)
                 {

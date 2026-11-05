@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 throw new FormatException($"The model {nameof(MonitorDefinition)} does not support writing '{format}' format.");
             }
-            if (_alertNotificationSettingsIsDefined || Optional.IsDefined(AlertNotificationSettings))
+            if (Optional.IsDefined(AlertNotificationSettings, _alertNotificationSettingsIsDefined))
             {
                 if (AlertNotificationSettings != null)
                 {
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             writer.WritePropertyName("computeConfiguration"u8);
             writer.WriteObjectValue(ComputeConfiguration, options);
-            if (_monitoringTargetIsDefined || Optional.IsDefined(MonitoringTarget))
+            if (Optional.IsDefined(MonitoringTarget, _monitoringTargetIsDefined))
             {
                 if (MonitoringTarget != null)
                 {

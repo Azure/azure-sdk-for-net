@@ -95,10 +95,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
             _storageDirectory = storageDirectory;
 
-            // Statsbeat picks its region from the configured ingestion endpoint and attributes every
-            // measurement to the configured key. With no connection string there is neither, and a
-            // routed destination cannot supply them: it is chosen per item, long after this runs.
-            _statsbeat = _connectionVars.IsUnconfigured ? null : InitializeStatsbeat(options, _connectionVars, platform);
+            _statsbeat = InitializeStatsbeat(options, _connectionVars, platform, multiEndpointEnabled);
 
             // Nothing can be addressed to a component the process does not have, so the handler would
             // drain an empty directory to an endpoint that names nobody. Not creating it keeps that
@@ -234,7 +231,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             return null;
         }
 
-        private static AzureMonitorStatsbeat? InitializeStatsbeat(AzureMonitorExporterOptions options, ConnectionVars connectionVars, IPlatform platform)
+        private static AzureMonitorStatsbeat? InitializeStatsbeat(AzureMonitorExporterOptions options, ConnectionVars connectionVars, IPlatform platform, bool multiEndpointEnabled)
         {
             if (options.EnableStatsbeat && connectionVars != null)
             {
@@ -256,7 +253,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                         return null;
                     }
 
-                    return new AzureMonitorStatsbeat(connectionVars, platform);
+                    return new AzureMonitorStatsbeat(connectionVars, platform, multiEndpointEnabled: multiEndpointEnabled);
                 }
                 catch (Exception ex)
                 {
@@ -422,6 +419,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                 return ExportResult.Failure;
             }
 
+            _statsbeat?.ObserveAttach(routeBatch);
+
             // Shutdown flushes the final batch through this path. A group with a storage partition is
             // written to it; one without still gets a bounded POST rather than the pipeline's 100
             // second network timeout, so process exit is never held on an unreachable endpoint.
@@ -535,6 +534,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                 }
 
                 storage?.TransmissionStateManager.EnableBackOff(httpMessage.HasResponse ? httpMessage.Response : null);
+
+                if (statusCode == ResponseStatusCodes.Unauthorized || statusCode == ResponseStatusCodes.Forbidden)
+                {
+                    AzureMonitorExporterEventSource.Log.RoutedAuthenticationFailed(group.Description, statusCode, group.IsAad);
+                }
 
                 var transmission = HttpPipelineHelper.ProcessTransmissionResult(httpMessage, storage?.BlobProvider, blob: null, _connectionVars, origin, group.IsAad, telemetrySchemaTypeCounter: null, networkSdkStats);
                 var accepted = AcceptedCount(transmission.ItemsAccepted, itemCount);

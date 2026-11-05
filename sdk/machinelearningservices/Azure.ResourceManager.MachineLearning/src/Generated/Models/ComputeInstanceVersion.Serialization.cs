@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 throw new FormatException($"The model {nameof(ComputeInstanceVersion)} does not support writing '{format}' format.");
             }
-            if (_runtimeIsDefined || Optional.IsDefined(Runtime))
+            if (Optional.IsDefined(Runtime, _runtimeIsDefined))
             {
                 if (Runtime != null)
                 {

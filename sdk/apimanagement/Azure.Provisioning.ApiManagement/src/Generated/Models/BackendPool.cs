@@ -14,7 +14,7 @@ namespace Azure.Provisioning.ApiManagement
     internal partial class BackendPool : ProvisionableConstruct
     {
         private BicepList<BackendPoolItem> _poolServices;
-        private BackendFailureResponse _failureResponse;
+        private BackendFailureResult _failureResponse;
         private BackendSessionAffinity _sessionAffinity;
 
         /// <summary> Creates a new BackendPool. </summary>
@@ -38,7 +38,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the FailureResponse. </summary>
-        internal BackendFailureResponse FailureResponse
+        internal BackendFailureResult FailureResponse
         {
             get
             {
@@ -78,7 +78,7 @@ namespace Azure.Provisioning.ApiManagement
             {
                 if (FailureResponse is null)
                 {
-                    FailureResponse = new BackendFailureResponse();
+                    FailureResponse = new BackendFailureResult();
                 }
                 FailureResponse.StatusCode = value;
             }
@@ -106,7 +106,7 @@ namespace Azure.Provisioning.ApiManagement
         {
             base.DefineProvisionableProperties();
             _poolServices = DefineListProperty<BackendPoolItem>(nameof(PoolServices), new string[] { "services" });
-            _failureResponse = DefineModelProperty<BackendFailureResponse>(nameof(FailureResponse), new string[] { "failureResponse" });
+            _failureResponse = DefineModelProperty<BackendFailureResult>(nameof(FailureResponse), new string[] { "failureResponse" });
             _sessionAffinity = DefineModelProperty<BackendSessionAffinity>(nameof(SessionAffinity), new string[] { "sessionAffinity" });
             DefineAdditionalProperties();
         }

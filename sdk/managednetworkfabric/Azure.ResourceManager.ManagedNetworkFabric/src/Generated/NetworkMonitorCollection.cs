@@ -39,9 +39,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal NetworkMonitorCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(NetworkMonitorResource.ResourceType, out string networkMonitorApiVersion);
             _networkMonitorsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ManagedNetworkFabric", NetworkMonitorResource.ResourceType.Namespace, Diagnostics);
-            _networkMonitorsRestClient = new NetworkMonitors(_networkMonitorsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, networkMonitorApiVersion ?? "2025-07-15");
+            _networkMonitorsRestClient = new NetworkMonitors(_networkMonitorsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.ManagedNetworkFabric/networkMonitors", out string networkMonitorsApiVersionOverride) ? networkMonitorsApiVersionOverride : "2025-07-15");
             ValidateResourceId(id);
         }
 

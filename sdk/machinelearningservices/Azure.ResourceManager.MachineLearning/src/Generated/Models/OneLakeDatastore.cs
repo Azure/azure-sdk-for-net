@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     public partial class OneLakeDatastore : MachineLearningDatastoreProperties
     {
         private string _endpoint;
-        internal bool _endpointIsDefined;
+        private bool _endpointIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="OneLakeDatastore"/>. </summary>
         /// <param name="credentials"> [Required] Account credentials. </param>

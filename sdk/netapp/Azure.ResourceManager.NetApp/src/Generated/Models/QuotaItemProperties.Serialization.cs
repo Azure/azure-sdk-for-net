@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 writer.WritePropertyName("default"u8);
                 writer.WriteNumberValue(Default.Value);
             }
-            if (options.Format != "W" && (_usageIsDefined || Optional.IsDefined(Usage)))
+            if (options.Format != "W" && Optional.IsDefined(Usage, _usageIsDefined))
             {
                 if (Usage != null)
                 {

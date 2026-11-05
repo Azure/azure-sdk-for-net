@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Automation.Models
                 writer.WritePropertyName("value"u8);
                 writer.WriteStringValue(Value);
             }
-            if (_isEncryptedIsDefined || Optional.IsDefined(IsEncrypted))
+            if (Optional.IsDefined(IsEncrypted, _isEncryptedIsDefined))
             {
                 if (IsEncrypted != null)
                 {

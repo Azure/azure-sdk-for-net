@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
         private string _nextLink;
-        internal bool _nextLinkIsDefined;
+        private bool _nextLinkIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="AgentDeploymentResourceArmPaginatedResult"/>. </summary>
         internal AgentDeploymentResourceArmPaginatedResult()

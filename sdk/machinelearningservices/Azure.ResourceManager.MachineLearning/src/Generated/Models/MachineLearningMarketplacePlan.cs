@@ -17,11 +17,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
         private string _offerId;
-        internal bool _offerIdIsDefined;
+        private bool _offerIdIsDefined;
         private string _planId;
-        internal bool _planIdIsDefined;
+        private bool _planIdIsDefined;
         private string _publisherId;
-        internal bool _publisherIdIsDefined;
+        private bool _publisherIdIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="MachineLearningMarketplacePlan"/>. </summary>
         internal MachineLearningMarketplacePlan()

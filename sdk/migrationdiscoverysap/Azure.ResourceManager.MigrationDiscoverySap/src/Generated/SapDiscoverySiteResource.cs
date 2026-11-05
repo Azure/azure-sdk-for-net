@@ -53,9 +53,8 @@ namespace Azure.ResourceManager.MigrationDiscoverySap
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal SapDiscoverySiteResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string sapDiscoverySiteApiVersion);
             _sapDiscoverySitesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MigrationDiscoverySap", ResourceType.Namespace, Diagnostics);
-            _sapDiscoverySitesRestClient = new SAPDiscoverySites(_sapDiscoverySitesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, sapDiscoverySiteApiVersion ?? "2023-10-01-preview");
+            _sapDiscoverySitesRestClient = new SAPDiscoverySites(_sapDiscoverySitesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.Workloads/sapDiscoverySites", out string sapDiscoverySitesApiVersionOverride) ? sapDiscoverySitesApiVersionOverride : "2023-10-01-preview");
             ValidateResourceId(id);
         }
 

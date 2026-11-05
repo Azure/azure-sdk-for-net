@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 throw new FormatException($"The model {nameof(MachineLearningWebhook)} does not support writing '{format}' format.");
             }
-            if (_eventTypeIsDefined || Optional.IsDefined(EventType))
+            if (Optional.IsDefined(EventType, _eventTypeIsDefined))
             {
                 if (EventType != null)
                 {

@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             TryGetApiVersion(ResourceType, out string apiGatewayApiVersion);
             _apiGatewayClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ResourceType.Namespace, Diagnostics);
-            _apiGatewayRestClient = new ApiGateway(_apiGatewayClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, apiGatewayApiVersion ?? "2025-09-01-preview");
+            _apiGatewayRestClient = new ApiGateway(_apiGatewayClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.ApiManagement/gateways", out string apiGatewayApiVersionOverride) ? apiGatewayApiVersionOverride : "2025-09-01-preview");
             _apiManagementGatewaySkusClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ResourceType.Namespace, Diagnostics);
             _apiManagementGatewaySkusRestClient = new ApiManagementGatewaySkus(_apiManagementGatewaySkusClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, apiGatewayApiVersion ?? "2025-09-01-preview");
             ValidateResourceId(id);

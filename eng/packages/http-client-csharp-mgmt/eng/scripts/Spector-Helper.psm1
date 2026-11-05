@@ -9,6 +9,7 @@ $supportedSpecs = @(
     "http/azure/resource-manager/multi-service-shared-models"
     "http/azure/resource-manager/non-resource"
     "http/azure/resource-manager/operation-templates"
+    "http/azure/resource-manager/resources"
     "http/azure/resource-manager/service-group"
 )
 

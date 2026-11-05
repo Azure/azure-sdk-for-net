@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
             {
                 throw new FormatException($"The model {nameof(OciRepository)} does not support writing '{format}' format.");
             }
-            if (_uriIsDefined || Optional.IsDefined(Uri))
+            if (Optional.IsDefined(Uri, _uriIsDefined))
             {
                 if (Uri != null)
                 {
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
                     writer.WriteNull("url"u8);
                 }
             }
-            if (_timeoutInSecondsIsDefined || Optional.IsDefined(TimeoutInSeconds))
+            if (Optional.IsDefined(TimeoutInSeconds, _timeoutInSecondsIsDefined))
             {
                 if (TimeoutInSeconds != null)
                 {
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
                     writer.WriteNull("timeoutInSeconds"u8);
                 }
             }
-            if (_syncIntervalInSecondsIsDefined || Optional.IsDefined(SyncIntervalInSeconds))
+            if (Optional.IsDefined(SyncIntervalInSeconds, _syncIntervalInSecondsIsDefined))
             {
                 if (SyncIntervalInSeconds != null)
                 {
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
                 writer.WritePropertyName("useWorkloadIdentity"u8);
                 writer.WriteBooleanValue(UseWorkloadIdentity.Value);
             }
-            if (_serviceAccountNameIsDefined || Optional.IsDefined(ServiceAccountName))
+            if (Optional.IsDefined(ServiceAccountName, _serviceAccountNameIsDefined))
             {
                 if (ServiceAccountName != null)
                 {
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
                 writer.WritePropertyName("tlsConfig"u8);
                 writer.WriteObjectValue(TlsConfig, options);
             }
-            if (_localAuthRefIsDefined || Optional.IsDefined(LocalAuthRef))
+            if (Optional.IsDefined(LocalAuthRef, _localAuthRefIsDefined))
             {
                 if (LocalAuthRef != null)
                 {

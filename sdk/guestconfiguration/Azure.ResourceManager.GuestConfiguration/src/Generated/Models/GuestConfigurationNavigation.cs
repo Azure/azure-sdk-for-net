@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
         private string _assignmentSource;
-        internal bool _assignmentSourceIsDefined;
+        private bool _assignmentSourceIsDefined;
         private string _contentType;
-        internal bool _contentTypeIsDefined;
+        private bool _contentTypeIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="GuestConfigurationNavigation"/>. </summary>
         public GuestConfigurationNavigation()

@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 throw new FormatException($"The model {nameof(MachineLearningKubernetesProperties)} does not support writing '{format}' format.");
             }
-            if (_relayConnectionStringIsDefined || Optional.IsDefined(RelayConnectionString))
+            if (Optional.IsDefined(RelayConnectionString, _relayConnectionStringIsDefined))
             {
                 if (RelayConnectionString != null)
                 {
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("relayConnectionString"u8);
                 }
             }
-            if (_serviceBusConnectionStringIsDefined || Optional.IsDefined(ServiceBusConnectionString))
+            if (Optional.IsDefined(ServiceBusConnectionString, _serviceBusConnectionStringIsDefined))
             {
                 if (ServiceBusConnectionString != null)
                 {
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("serviceBusConnectionString"u8);
                 }
             }
-            if (_extensionPrincipalIdIsDefined || Optional.IsDefined(ExtensionPrincipalId))
+            if (Optional.IsDefined(ExtensionPrincipalId, _extensionPrincipalIdIsDefined))
             {
                 if (ExtensionPrincipalId != null)
                 {

@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         /// <param name="startsOn"> The date and time, including UTC offset, when the schedule becomes active. </param>
         /// <param name="endsOn"> The date and time, including UTC offset, after which no new occurrences are scheduled. </param>
         /// <param name="schedule"> Changes to the recurring schedule. </param>
-        /// <param name="notificationSettings"> Notification settings that apply to the scheduled action. </param>
+        /// <param name="notificationSettings"> Notification settings that apply to the recurring bulk action. </param>
         /// <param name="disabled"> Indicates whether new occurrences are disabled. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal ScheduledActionUpdateProperties(ScheduledActionsResourceType? resourceType, ScheduledActionType? actionType, DateTimeOffset? startsOn, DateTimeOffset? endsOn, ScheduledActionsSchedulePatch schedule, IList<NotificationProperties> notificationSettings, bool? disabled, IDictionary<string, BinaryData> additionalBinaryDataProperties)
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         /// <summary> Changes to the recurring schedule. </summary>
         public ScheduledActionsSchedulePatch Schedule { get; set; }
 
-        /// <summary> Notification settings that apply to the scheduled action. </summary>
+        /// <summary> Notification settings that apply to the recurring bulk action. </summary>
         public IList<NotificationProperties> NotificationSettings { get; }
 
         /// <summary> Indicates whether new occurrences are disabled. </summary>

@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
                 writer.WriteEndObject();
             }
-            if (_isCredentialsInHeadersIsDefined || Optional.IsDefined(IsCredentialsInHeaders))
+            if (Optional.IsDefined(IsCredentialsInHeaders, _isCredentialsInHeadersIsDefined))
             {
                 if (IsCredentialsInHeaders != null)
                 {
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     writer.WriteNull("isCredentialsInHeaders"u8);
                 }
             }
-            if (_isJsonRequestIsDefined || Optional.IsDefined(IsJsonRequest))
+            if (Optional.IsDefined(IsJsonRequest, _isJsonRequestIsDefined))
             {
                 if (IsJsonRequest != null)
                 {

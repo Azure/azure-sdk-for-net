@@ -20,7 +20,7 @@ namespace Azure.Provisioning.Sql
         private BicepValue<string> _name;
         private SystemData _systemData;
         private SqlAgentConfigurationProperties _properties;
-        private ResourceReference<ManagedInstance> _parent;
+        private ProvisioningResourceReference<ManagedInstance> _parent;
 
         /// <summary> Creates a new SqlAgentConfiguration. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -39,13 +39,18 @@ namespace Azure.Provisioning.Sql
             }
         }
 
-        /// <summary> Gets the Name. </summary>
+        /// <summary> Gets or sets the Name. </summary>
         public BicepValue<string> Name
         {
             get
             {
                 Initialize();
                 return _name;
+            }
+            set
+            {
+                Initialize();
+                _name.Assign(value);
             }
         }
 
@@ -114,7 +119,7 @@ namespace Azure.Provisioning.Sql
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true, defaultValue: "current");
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _properties = DefineModelProperty<SqlAgentConfigurationProperties>(nameof(Properties), new string[] { "properties" });
-            _parent = DefineResource<ManagedInstance>(nameof(Parent), new string[] { "parent" }, isRequired: true);
+            _parent = new ProvisioningResourceReference<ManagedInstance>(DefineProperty<string>(nameof(Parent), new string[] { "parent" }));
             DefineAdditionalProperties();
         }
 

@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 throw new FormatException($"The model {nameof(FirewallPolicyExplicitProxy)} does not support writing '{format}' format.");
             }
-            if (_enableExplicitProxyIsDefined || Optional.IsDefined(EnableExplicitProxy))
+            if (Optional.IsDefined(EnableExplicitProxy, _enableExplicitProxyIsDefined))
             {
                 if (EnableExplicitProxy != null)
                 {
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("httpsPort"u8);
                 writer.WriteNumberValue(HttpsPort.Value);
             }
-            if (_enablePacFileIsDefined || Optional.IsDefined(EnablePacFile))
+            if (Optional.IsDefined(EnablePacFile, _enablePacFileIsDefined))
             {
                 if (EnablePacFile != null)
                 {

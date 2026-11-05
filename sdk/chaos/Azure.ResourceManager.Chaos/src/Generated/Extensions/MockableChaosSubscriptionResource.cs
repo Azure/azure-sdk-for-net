@@ -45,15 +45,15 @@ namespace Azure.ResourceManager.Chaos.Mocking
 
         private ClientDiagnostics ExperimentsClientDiagnostics => _experimentsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Chaos.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Experiments ExperimentsRestClient => _experimentsRestClient ??= new Experiments(ExperimentsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-08-01-preview");
+        private Experiments ExperimentsRestClient => _experimentsRestClient ??= new Experiments(ExperimentsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.Chaos/experiments", out string apiVersion) ? apiVersion : "2026-08-01-preview");
 
         private ClientDiagnostics PrivateAccessesClientDiagnostics => _privateAccessesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Chaos.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private PrivateAccesses PrivateAccessesRestClient => _privateAccessesRestClient ??= new PrivateAccesses(PrivateAccessesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-08-01-preview");
+        private PrivateAccesses PrivateAccessesRestClient => _privateAccessesRestClient ??= new PrivateAccesses(PrivateAccessesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.Chaos/privateAccesses", out string apiVersion0) ? apiVersion0 : "2026-08-01-preview");
 
         private ClientDiagnostics WorkspacesClientDiagnostics => _workspacesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Chaos.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Workspaces WorkspacesRestClient => _workspacesRestClient ??= new Workspaces(WorkspacesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-08-01-preview");
+        private Workspaces WorkspacesRestClient => _workspacesRestClient ??= new Workspaces(WorkspacesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.Chaos/workspaces", out string apiVersion1) ? apiVersion1 : "2026-08-01-preview");
 
         private ClientDiagnostics OperationStatusesClientDiagnostics => _operationStatusesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Chaos.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Chaos.Mocking
         /// <returns> An object representing collection of ChaosActions and their operations over a ChaosActionResource. </returns>
         public virtual ChaosActionCollection GetChaosActions(AzureLocation location)
         {
-            return GetCachedClient(client => new ChaosActionCollection(client, Id, location));
+            return new ChaosActionCollection(Client, Id, location);
         }
 
         /// <summary>
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Chaos.Mocking
         /// <returns> An object representing collection of ChaosTargetMetadata and their operations over a ChaosTargetMetadataResource. </returns>
         public virtual ChaosTargetMetadataCollection GetAllChaosTargetMetadata(AzureLocation location)
         {
-            return GetCachedClient(client => new ChaosTargetMetadataCollection(client, Id, location));
+            return new ChaosTargetMetadataCollection(Client, Id, location);
         }
 
         /// <summary>

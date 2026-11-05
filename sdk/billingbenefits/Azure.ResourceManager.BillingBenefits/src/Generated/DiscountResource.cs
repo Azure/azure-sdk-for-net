@@ -56,7 +56,13 @@ namespace Azure.ResourceManager.BillingBenefits
         {
             TryGetApiVersion(ResourceType, out string discountApiVersion);
             _discountsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.BillingBenefits", ResourceType.Namespace, Diagnostics);
-            _discountsRestClient = new Discounts(_discountsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, discountApiVersion ?? "2025-12-01-preview");
+            _discountsRestClient = new Discounts(
+                _discountsClientDiagnostics,
+                Pipeline,
+                Diagnostics.ApplicationId,
+                Endpoint,
+                discountApiVersion ?? "2025-12-01-preview",
+                resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             _discountClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.BillingBenefits", ResourceType.Namespace, Diagnostics);
             _discountRestClient = new Discount(_discountClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, discountApiVersion ?? "2025-12-01-preview");
             ValidateResourceId(id);

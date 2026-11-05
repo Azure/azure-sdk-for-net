@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Extensions.Models
             {
                 throw new FormatException($"The model {nameof(KubernetesClusterExtensionScope)} does not support writing '{format}' format.");
             }
-            if (_clusterIsDefined || Optional.IsDefined(Cluster))
+            if (Optional.IsDefined(Cluster, _clusterIsDefined))
             {
                 if (Cluster != null)
                 {
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Extensions.Models
                     writer.WriteNull("cluster"u8);
                 }
             }
-            if (_namespaceIsDefined || Optional.IsDefined(Namespace))
+            if (Optional.IsDefined(Namespace, _namespaceIsDefined))
             {
                 if (Namespace != null)
                 {

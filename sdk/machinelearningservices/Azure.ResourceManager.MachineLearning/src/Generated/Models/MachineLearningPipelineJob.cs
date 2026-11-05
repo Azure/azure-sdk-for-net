@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     public partial class MachineLearningPipelineJob : MachineLearningJobProperties
     {
         private BinaryData _settings;
-        internal bool _settingsIsDefined;
+        private bool _settingsIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="MachineLearningPipelineJob"/>. </summary>
         public MachineLearningPipelineJob() : base(JobType.Pipeline)

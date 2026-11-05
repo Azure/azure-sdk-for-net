@@ -65,7 +65,13 @@ namespace Azure.ResourceManager.Sql
         {
             TryGetApiVersion(ResourceType, out string sqlServerApiVersion);
             _serversClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ResourceType.Namespace, Diagnostics);
-            _serversRestClient = new Servers(_serversClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, sqlServerApiVersion ?? "2025-08-01-preview");
+            _serversRestClient = new Servers(
+                _serversClientDiagnostics,
+                Pipeline,
+                Diagnostics.ApplicationId,
+                Endpoint,
+                sqlServerApiVersion ?? "2025-08-01-preview",
+                resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             _tdeCertificatesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ResourceType.Namespace, Diagnostics);
             _tdeCertificatesRestClient = new TdeCertificates(_tdeCertificatesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, sqlServerApiVersion ?? "2025-08-01-preview");
             _replicationLinksClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ResourceType.Namespace, Diagnostics);

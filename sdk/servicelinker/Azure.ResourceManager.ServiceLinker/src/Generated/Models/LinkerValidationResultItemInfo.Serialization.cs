@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (_descriptionIsDefined || Optional.IsDefined(Description))
+            if (Optional.IsDefined(Description, _descriptionIsDefined))
             {
                 if (Description != null)
                 {
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                     writer.WriteNull("description"u8);
                 }
             }
-            if (_resultIsDefined || Optional.IsDefined(Result))
+            if (Optional.IsDefined(Result, _resultIsDefined))
             {
                 if (Result != null)
                 {
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                     writer.WriteNull("result"u8);
                 }
             }
-            if (_errorMessageIsDefined || Optional.IsDefined(ErrorMessage))
+            if (Optional.IsDefined(ErrorMessage, _errorMessageIsDefined))
             {
                 if (ErrorMessage != null)
                 {
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                     writer.WriteNull("errorMessage"u8);
                 }
             }
-            if (_errorCodeIsDefined || Optional.IsDefined(ErrorCode))
+            if (Optional.IsDefined(ErrorCode, _errorCodeIsDefined))
             {
                 if (ErrorCode != null)
                 {

@@ -11,20 +11,20 @@ Playwright is an open-source framework for end-to-end testing and browser automa
 5. Enter a name and expiration date, and then generate the token.
 6. Copy the token immediately. You can't retrieve its value later.
 
-> **Warning:** Use Microsoft Entra ID when the MCP client supports it. Workspace access tokens are less secure and are disabled by default. Treat an access token like a password, and never commit it to source control or include it in prompts or logs.
+> **Warning:** Prefer Microsoft Entra ID authentication when supported by the Browser Automation connection. Workspace access tokens are less secure and are disabled by default. Treat an access token like a password, and never commit it to source control or include it in prompts or logs.
 
 ## Configure Microsoft Foundry
 
-**Note:** The `BrowserAutomationTool` is using MCP connection as opposed to `BrowserAutomationPreviewTool`, which uses the serverless connection.
+**Note:** `BrowserAutomationTool` uses a Browser Automation project connection as opposed to `BrowserAutomationPreviewTool`, which uses a Serverless connection type.
 
-See the [Playwright Workspaces remote MCP quickstart](https://learn.microsoft.com/azure/app-testing/playwright-cloud-browsers/quickstart-automate-browser-tasks-remote-mcp) to configure the connection. Microsoft Entra ID is the preferred authentication method. For instructions to create a project connection, see [Automate browsers with the Playwright Workspaces remote MCP server](https://learn.microsoft.com/azure/app-testing/playwright-cloud-browsers/how-to-playwright-workspaces-remote-mcp). You can also use a workspace access token as described in the following steps.
-1. In the Microsoft foundry portal select **Build**.
-2. On the left panel select **Tools** sectrion and click **Connect a tool**.
-3. In the opened window select **Custom** tab, choose **Model Context Protocol (MCP)** and click **Create**.
-4. Name the connection.
-5. Open the Playwright workspace in the Azure portal and copy the Mcp endpoint address to `Remote MCP Server endpoint` (Mcp endpoint can be found on the **Overview** section).
-6. Paste the token generagted in the previous section to "Credential" section and name this key `x-api-k`.
-7. Click **Connect**.
+Follow [Set up Browser Automation in Microsoft Foundry](https://learn.microsoft.com/azure/foundry/agents/how-to/tools/browser-automation#set-up-browser-automation) to connect your Playwright workspace:
+
+1. Open your project in the Microsoft Foundry portal and select **Build** > **Tools**.
+2. Select **Create a toolbox** and enter a name and description.
+3. Under **Tools**, select **Add**, choose **Browser Automation**, and select **Add tool**.
+4. Enter a connection name, select your **Playwright Workspace**, and choose the authentication method.
+5. Select **Connect**, then **Publish** to save the toolbox.
+6. Set `BROWSER_AUTOMATION_NAME` to the connection name you entered. The sample looks up the connection and passes its ID to the tool.
 
 ## Run this sample.
 
@@ -33,7 +33,7 @@ See the [Playwright Workspaces remote MCP quickstart](https://learn.microsoft.co
 ```C# Snippet:Sample_CreateProjectClient_BrowserAutomotion
 var projectEndpoint = System.Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
 var modelDeploymentName = System.Environment.GetEnvironmentVariable("FOUNDRY_MODEL_NAME");
-var playwrightConnectionName = System.Environment.GetEnvironmentVariable("PLAYWRIGHT_MCP_CONNECTION_NAME");
+var playwrightConnectionName = System.Environment.GetEnvironmentVariable("BROWSER_AUTOMATION_NAME");
 AIProjectClientOptions options = new()
 {
     NetworkTimeout = TimeSpan.FromMinutes(5)
@@ -41,13 +41,14 @@ AIProjectClientOptions options = new()
 AIProjectClient projectClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential(), options: options);
 ```
 
-2. Create an agent with a `BrowserAutomationTool`, and pass the MCP project connection name to `BrowserAutomationToolConnectionOptions`.
+2. Look up the Browser Automation connection by name, create an agent with a `BrowserAutomationTool`, and pass the returned connection ID to `BrowserAutomationToolConnectionOptions`.
 
 Synchronous sample:
 ```C# Snippet:Sample_CreateAgent_BrowserAutomotion_Sync
+AIProjectConnection playwrightConnection = projectClient.Connections.GetConnection(playwrightConnectionName);
 BrowserAutomationTool playwrightTool = new(
     new BrowserAutomationToolOptions(
-        new BrowserAutomationToolConnectionOptions(playwrightConnectionName)
+        new BrowserAutomationToolConnectionOptions(playwrightConnection.Id)
     ));
 
 DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
@@ -64,9 +65,10 @@ ProjectsAgentVersion agentVersion = projectClient.AgentAdministrationClient.Crea
 
 Asynchronous sample:
 ```C# Snippet:Sample_CreateAgent_BrowserAutomotion_Async
+AIProjectConnection playwrightConnection = await projectClient.Connections.GetConnectionAsync(playwrightConnectionName);
 BrowserAutomationTool playwrightTool = new(
     new BrowserAutomationToolOptions(
-        new BrowserAutomationToolConnectionOptions(playwrightConnectionName)
+        new BrowserAutomationToolConnectionOptions(playwrightConnection.Id)
     ));
 
 DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
@@ -81,14 +83,13 @@ ProjectsAgentVersion agentVersion = await projectClient.AgentAdministrationClien
     options: new(agentDefinition));
 ```
 
-3. Create a `ParseResponse` helper method to process streaming response updates from the agent.
+3. Create a `ParseResponse` helper method to process streaming response updates from the agent. Handle failed or incomplete responses using the SDK's typed updates.
+
+> **Warning:** Streaming text and complete messages can include a live-view URL that grants access to the browser session. Treat that URL as sensitive: use it only in a trusted local terminal and redact it before sharing output or saving logs.
 
 ```C# Snippet:Sample_ParseResponse_BrowserAutomotion
 private static void ParseResponse(StreamingResponseUpdate streamResponse)
 {
-    StringBuilder errorMessage = new();
-    string errorCode = default;
-    bool hasError = false;
     if (streamResponse is StreamingResponseCreatedUpdate createUpdate)
     {
         Console.WriteLine($"Stream response created with ID: {createUpdate.Response.Id}");
@@ -103,19 +104,15 @@ private static void ParseResponse(StreamingResponseUpdate streamResponse)
     }
     else if (streamResponse is StreamingResponseErrorUpdate errorUpdate)
     {
-        hasError = true;
-        if (!string.IsNullOrEmpty(errorUpdate.Code))
-        {
-            errorCode = errorUpdate.Code;
-        }
-        if (!string.IsNullOrEmpty(errorUpdate.Message))
-        {
-            errorMessage.Append(errorUpdate.Message);
-        }
+        throw new InvalidOperationException($"The stream has failed: {errorUpdate.Message}, error code: {errorUpdate.Code}");
     }
-    if (hasError)
+    else if (streamResponse is StreamingResponseFailedUpdate failedUpdate)
     {
-        throw new InvalidOperationException($"The stream has failed with the error: {errorMessage}, error code: {errorCode}");
+        throw new InvalidOperationException($"The response has failed: {failedUpdate.Response.Error?.Message}, error code: {failedUpdate.Response.Error?.Code}");
+    }
+    else if (streamResponse is StreamingResponseIncompleteUpdate incompleteUpdate)
+    {
+        throw new InvalidOperationException($"The response cannot be completed. Check the request for safety or guardrail requirements and review response {incompleteUpdate.Response.Id} for details, including output limits.");
     }
 }
 ```
@@ -124,7 +121,8 @@ private static void ParseResponse(StreamingResponseUpdate streamResponse)
 
 Synchronous sample:
 ```C# Snippet:Sample_CreateResponse_BrowserAutomotion_Sync
-ProjectResponsesClient responseClient = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgent(agentVersion.Name);
+ProjectResponsesClient responseClient = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgent(
+    new AgentReference(agentVersion.Name, agentVersion.Version));
 CreateResponseOptions responseOptions = new()
 {
     ToolChoice = ResponseToolChoice.CreateRequiredChoice(),
@@ -147,7 +145,8 @@ foreach (StreamingResponseUpdate update in responseClient.CreateResponseStreamin
 
 Asynchronous sample:
 ```C# Snippet:Sample_CreateResponse_BrowserAutomotion_Async
-ProjectResponsesClient responseClient = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgent(agentVersion.Name);
+ProjectResponsesClient responseClient = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgent(
+    new AgentReference(agentVersion.Name, agentVersion.Version));
 CreateResponseOptions responseOptions = new()
 {
     ToolChoice = ResponseToolChoice.CreateRequiredChoice(),
@@ -168,7 +167,7 @@ await foreach (StreamingResponseUpdate update in responseClient.CreateResponseSt
 }
 ```
 
-5. After the sample completes, delete the agent version that you created.
+5. After the sample completes, delete the agent version that you created. Agents can be reused across responses. Delete an agent version only when it is no longer needed.
 
 Synchronous sample:
 ```C# Snippet:Sample_Cleanup_BrowserAutomotion_Sync

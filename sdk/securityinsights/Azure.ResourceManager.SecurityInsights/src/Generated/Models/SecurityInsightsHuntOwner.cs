@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
         private Guid? _objectId;
-        internal bool _objectIdIsDefined;
+        private bool _objectIdIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="SecurityInsightsHuntOwner"/>. </summary>
         public SecurityInsightsHuntOwner()

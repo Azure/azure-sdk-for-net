@@ -17,11 +17,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
         private Uri _blobUri;
-        internal bool _blobUriIsDefined;
+        private bool _blobUriIsDefined;
         private DataReferenceCredential _credential;
-        internal bool _credentialIsDefined;
+        private bool _credentialIsDefined;
         private string _storageAccountArmId;
-        internal bool _storageAccountArmIdIsDefined;
+        private bool _storageAccountArmIdIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="GetBlobReferenceForConsumptionDto"/>. </summary>
         internal GetBlobReferenceForConsumptionDto()

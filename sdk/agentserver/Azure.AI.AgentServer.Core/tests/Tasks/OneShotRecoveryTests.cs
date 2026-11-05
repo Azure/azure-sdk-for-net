@@ -1,6 +1,8 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+#pragma warning disable AAAS003 // Exercise experimental per-task protocol activation.
+
 using System;
 using System.Collections.Generic;
 using System.Text.Json.Serialization;
@@ -145,6 +147,42 @@ public sealed class OneShotRecoveryTests
 
         // The recovered run completes and the one-shot record is auto-deleted.
         await host2.WaitUntilDeletedAsync("rec-1", TimeSpan.FromSeconds(5));
+    }
+
+    [Test]
+    public async Task DisabledRegistration_PreservesTaskUntilOwningProtocolIsEnabled()
+    {
+        var registry1 = new TaskRegistry();
+        using var host1 = TaskTestHost.Create(sharedRegistry: registry1);
+        host1.Builder.AddTask<string, string>("protocol-task", async (ctx, ct) =>
+        {
+            await ctx.ExitForRecoveryAsync(ct);
+            return ctx.Input;
+        });
+        host1.SignalShutdown();
+        TaskRun<string> run = await host1.Invoker.StartAsync<string, string>(
+            "protocol-task", "payload", new RunOptions { TaskId = "protocol-1" });
+        await host1.WaitUntilInactiveAsync(run.TaskId, TimeSpan.FromSeconds(5));
+
+        bool enabled = false;
+        var registry2 = new TaskRegistry();
+        using var host2 = host1.Restart(registry2);
+        host2.Builder.AddTask<string, string>(
+            "protocol-task",
+            (ctx, ct) => Task.FromResult("recovered:" + ctx.Input),
+            configure: options => options.IsEnabled = () => enabled);
+
+        Assert.That(await host2.Engine.ScanAndRecoverAsync(), Is.Zero);
+        Assert.That(await host2.Invoker.GetActiveRunAsync<string>("protocol-task", run.TaskId), Is.Null);
+        Assert.That((await host2.Store.GetAsync(run.TaskId))!.Status, Is.EqualTo("in_progress"));
+        ResilientTaskException exception = Assert.ThrowsAsync<ResilientTaskException>(
+            () => host2.Invoker.StartAsync<string, string>(
+                "protocol-task", "new", new RunOptions { TaskId = "new-1" }))!;
+        Assert.That(exception.ErrorCode, Is.EqualTo(ResilientTaskErrorCode.NotEnabled));
+
+        enabled = true;
+        Assert.That(await host2.Engine.ScanAndRecoverAsync(), Is.EqualTo(1));
+        await host2.WaitUntilDeletedAsync(run.TaskId, TimeSpan.FromSeconds(5));
     }
 
     [Test]

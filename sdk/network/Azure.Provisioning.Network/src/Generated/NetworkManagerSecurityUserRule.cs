@@ -23,12 +23,12 @@ namespace Azure.Provisioning.Network
         private SystemData _systemData;
         private SecurityUserRulePropertiesFormat _properties;
         private BicepValue<ETag> _eTag;
-        private ResourceReference<NetworkManagerSecurityUserRules> _parent;
+        private ProvisioningResourceReference<NetworkManagerSecurityUserRules> _parent;
 
         /// <summary> Creates a new NetworkManagerSecurityUserRule. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
         /// <param name="resourceVersion"> The resource API version. </param>
-        public NetworkManagerSecurityUserRule(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.Network/networkManagers/securityUserConfigurations/ruleCollections/rules", resourceVersion ?? "2026-01-01")
+        public NetworkManagerSecurityUserRule(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.Network/networkManagers/securityUserConfigurations/ruleCollections/rules", resourceVersion ?? "2026-03-01")
         {
         }
 
@@ -261,7 +261,7 @@ namespace Azure.Provisioning.Network
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _properties = DefineModelProperty<SecurityUserRulePropertiesFormat>(nameof(Properties), new string[] { "properties" });
             _eTag = DefineProperty<ETag>(nameof(ETag), new string[] { "etag" }, isOutput: true);
-            _parent = DefineResource<NetworkManagerSecurityUserRules>(nameof(Parent), new string[] { "parent" }, isRequired: true);
+            _parent = new ProvisioningResourceReference<NetworkManagerSecurityUserRules>(DefineProperty<string>(nameof(Parent), new string[] { "parent" }));
             DefineAdditionalProperties();
         }
 
@@ -286,6 +286,8 @@ namespace Azure.Provisioning.Network
         /// <summary></summary>
         public static partial class ResourceVersions
         {
+            /// <summary> API version "2026-03-01". </summary>
+            public static readonly string V2026_03_01 = "2026-03-01";
             /// <summary> API version "2026-01-01". </summary>
             public static readonly string V2026_01_01 = "2026-01-01";
             /// <summary> API version "2025-09-01". </summary>

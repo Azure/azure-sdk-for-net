@@ -17,11 +17,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
         private string _propagation;
-        internal bool _propagationIsDefined;
+        private bool _propagationIsDefined;
         private bool? _shouldCreateHostPath;
-        internal bool _shouldCreateHostPathIsDefined;
+        private bool _shouldCreateHostPathIsDefined;
         private string _selinux;
-        internal bool _selinuxIsDefined;
+        private bool _selinuxIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="MountBindOptions"/>. </summary>
         public MountBindOptions()

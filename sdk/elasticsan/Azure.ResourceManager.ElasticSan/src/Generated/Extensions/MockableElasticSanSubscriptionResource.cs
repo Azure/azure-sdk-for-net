@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.ElasticSan.Mocking
 
         private ClientDiagnostics ElasticSansClientDiagnostics => _elasticSansClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ElasticSan.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ElasticSans ElasticSansRestClient => _elasticSansRestClient ??= new ElasticSans(ElasticSansClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-05-01-preview");
+        private ElasticSans ElasticSansRestClient => _elasticSansRestClient ??= new ElasticSans(ElasticSansClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.ElasticSan/elasticSans", out string apiVersion) ? apiVersion : "2026-05-01-preview");
 
         private ClientDiagnostics SkusClientDiagnostics => _skusClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ElasticSan.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 

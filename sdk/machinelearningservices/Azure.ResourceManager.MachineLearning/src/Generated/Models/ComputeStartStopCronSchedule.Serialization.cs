@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 throw new FormatException($"The model {nameof(ComputeStartStopCronSchedule)} does not support writing '{format}' format.");
             }
-            if (_startTimeIsDefined || Optional.IsDefined(StartTime))
+            if (Optional.IsDefined(StartTime, _startTimeIsDefined))
             {
                 if (StartTime != null)
                 {

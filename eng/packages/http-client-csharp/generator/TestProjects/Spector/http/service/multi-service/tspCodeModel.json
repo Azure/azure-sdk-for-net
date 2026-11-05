@@ -200,7 +200,6 @@
                 "$id": "17",
                 "name": "test",
                 "isExactName": false,
-                "resourceName": "Foo",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -356,7 +355,6 @@
                 "$id": "27",
                 "name": "test",
                 "isExactName": false,
-                "resourceName": "Bar",
                 "accessibility": "public",
                 "parameters": [
                   {

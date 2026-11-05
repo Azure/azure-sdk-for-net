@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Avs.Mocking
 
         private ClientDiagnostics PrivateCloudsClientDiagnostics => _privateCloudsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Avs.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private PrivateClouds PrivateCloudsRestClient => _privateCloudsRestClient ??= new PrivateClouds(PrivateCloudsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-03-01");
+        private PrivateClouds PrivateCloudsRestClient => _privateCloudsRestClient ??= new PrivateClouds(PrivateCloudsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.AVS/privateClouds", out string apiVersion) ? apiVersion : "2026-03-01");
 
         private ClientDiagnostics LocationsClientDiagnostics => _locationsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Avs.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 

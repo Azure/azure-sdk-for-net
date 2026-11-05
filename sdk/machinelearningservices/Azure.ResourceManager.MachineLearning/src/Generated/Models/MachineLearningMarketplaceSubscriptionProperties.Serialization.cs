@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 throw new FormatException($"The model {nameof(MachineLearningMarketplaceSubscriptionProperties)} does not support writing '{format}' format.");
             }
-            if (options.Format != "W" && (_marketplacePlanIsDefined || Optional.IsDefined(MarketplacePlan)))
+            if (options.Format != "W" && Optional.IsDefined(MarketplacePlan, _marketplacePlanIsDefined))
             {
                 if (MarketplacePlan != null)
                 {

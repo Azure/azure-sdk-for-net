@@ -1,0 +1,5 @@
+{
+  "apiVersions": {
+    "Azure.ResourceManager.Resources": "2023-12-01-preview"
+  }
+}

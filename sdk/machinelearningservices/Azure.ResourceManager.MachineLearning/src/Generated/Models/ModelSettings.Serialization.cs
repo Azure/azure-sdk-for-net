@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 throw new FormatException($"The model {nameof(ModelSettings)} does not support writing '{format}' format.");
             }
-            if (_modelIdIsDefined || Optional.IsDefined(ModelId))
+            if (Optional.IsDefined(ModelId, _modelIdIsDefined))
             {
                 if (ModelId != null)
                 {

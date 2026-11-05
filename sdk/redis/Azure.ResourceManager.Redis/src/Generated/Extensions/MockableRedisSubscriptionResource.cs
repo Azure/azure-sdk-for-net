@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Redis.Mocking
 
         private ClientDiagnostics RedisResourcesClientDiagnostics => _redisResourcesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Redis.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private RedisResources RedisResourcesRestClient => _redisResourcesRestClient ??= new RedisResources(RedisResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-08-01-preview");
+        private RedisResources RedisResourcesRestClient => _redisResourcesRestClient ??= new RedisResources(RedisResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.Cache/redis", out string apiVersion) ? apiVersion : "2025-08-01-preview");
 
         private ClientDiagnostics RedisOperationGroupClientDiagnostics => _redisOperationGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Redis.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 

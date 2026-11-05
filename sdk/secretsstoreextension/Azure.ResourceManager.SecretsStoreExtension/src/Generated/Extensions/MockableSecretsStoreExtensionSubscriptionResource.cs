@@ -38,11 +38,11 @@ namespace Azure.ResourceManager.SecretsStoreExtension.Mocking
 
         private ClientDiagnostics AzureKeyVaultSecretProviderClassesClientDiagnostics => _azureKeyVaultSecretProviderClassesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SecretsStoreExtension.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private AzureKeyVaultSecretProviderClasses AzureKeyVaultSecretProviderClassesRestClient => _azureKeyVaultSecretProviderClassesRestClient ??= new AzureKeyVaultSecretProviderClasses(AzureKeyVaultSecretProviderClassesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-09-25-preview");
+        private AzureKeyVaultSecretProviderClasses AzureKeyVaultSecretProviderClassesRestClient => _azureKeyVaultSecretProviderClassesRestClient ??= new AzureKeyVaultSecretProviderClasses(AzureKeyVaultSecretProviderClassesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.SecretSyncController/azureKeyVaultSecretProviderClasses", out string apiVersion) ? apiVersion : "2026-09-25-preview");
 
         private ClientDiagnostics SecretSyncsClientDiagnostics => _secretSyncsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SecretsStoreExtension.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private SecretSyncs SecretSyncsRestClient => _secretSyncsRestClient ??= new SecretSyncs(SecretSyncsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-09-25-preview");
+        private SecretSyncs SecretSyncsRestClient => _secretSyncsRestClient ??= new SecretSyncs(SecretSyncsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.SecretSyncController/secretSyncs", out string apiVersion0) ? apiVersion0 : "2026-09-25-preview");
 
         /// <summary>
         /// Lists the AzureKeyVaultSecretProviderClass instances within an Azure subscription.

@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
         private AzureLocation? _location;
-        internal bool _locationIsDefined;
+        private bool _locationIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="SecurityCenterStandardData"/>. </summary>
         public SecurityCenterStandardData()

@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 throw new FormatException($"The model {nameof(BatchEndpointDefaults)} does not support writing '{format}' format.");
             }
-            if (_deploymentNameIsDefined || Optional.IsDefined(DeploymentName))
+            if (Optional.IsDefined(DeploymentName, _deploymentNameIsDefined))
             {
                 if (DeploymentName != null)
                 {

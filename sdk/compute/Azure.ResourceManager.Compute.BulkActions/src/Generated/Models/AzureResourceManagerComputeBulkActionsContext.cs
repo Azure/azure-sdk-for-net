@@ -9,6 +9,7 @@ using System.ClientModel.Primitives;
 using Azure;
 using Azure.ResourceManager.Compute.BulkActions.Models;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute.BulkActions
 {
@@ -27,13 +28,13 @@ namespace Azure.ResourceManager.Compute.BulkActions
     [ModelReaderWriterBuildable(typeof(BulkActionsExecuteReimageRequestContent))]
     [ModelReaderWriterBuildable(typeof(BulkActionsOSProfileProvisioningContent))]
     [ModelReaderWriterBuildable(typeof(BulkActionsReimageResourceOperationResponseResult))]
+    [ModelReaderWriterBuildable(typeof(BulkActionsVirtualMachinePlacement))]
     [ModelReaderWriterBuildable(typeof(BulkActionsVirtualMachineReimageParametersContent))]
     [ModelReaderWriterBuildable(typeof(BulkActionVMExtension))]
     [ModelReaderWriterBuildable(typeof(BulkActionVMExtensionProperties))]
     [ModelReaderWriterBuildable(typeof(BulkActionVMProperties))]
     [ModelReaderWriterBuildable(typeof(BulkCreateCustomOverride))]
     [ModelReaderWriterBuildable(typeof(BulkCreateCustomOverridesProfile))]
-    [ModelReaderWriterBuildable(typeof(BulkCreateCustomPriorityProfile))]
     [ModelReaderWriterBuildable(typeof(BulkCreateCustomProperties))]
     [ModelReaderWriterBuildable(typeof(BulkCreateCustomResolvedItem))]
     [ModelReaderWriterBuildable(typeof(BulkCreateCustomVirtualMachineInfo))]
@@ -63,6 +64,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
     [ModelReaderWriterBuildable(typeof(ExecuteDeleteContent))]
     [ModelReaderWriterBuildable(typeof(ExecuteHibernateContent))]
     [ModelReaderWriterBuildable(typeof(ExecuteStartContent))]
+    [ModelReaderWriterBuildable(typeof(ExtendedLocation))]
     [ModelReaderWriterBuildable(typeof(GetBulkOperationStatusContent))]
     [ModelReaderWriterBuildable(typeof(GetBulkOperationStatusResult))]
     [ModelReaderWriterBuildable(typeof(HardwareProfile))]
@@ -93,9 +95,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
     [ModelReaderWriterBuildable(typeof(OSDisk))]
     [ModelReaderWriterBuildable(typeof(OSImageNotificationProfile))]
     [ModelReaderWriterBuildable(typeof(OSProfile))]
-    [ModelReaderWriterBuildable(typeof(PartialFulfillmentPolicy))]
     [ModelReaderWriterBuildable(typeof(PatchSettings))]
-    [ModelReaderWriterBuildable(typeof(PriorityProfile))]
     [ModelReaderWriterBuildable(typeof(ProxyAgentSettings))]
     [ModelReaderWriterBuildable(typeof(PublicIPAddressSku))]
     [ModelReaderWriterBuildable(typeof(ReimagePayload))]

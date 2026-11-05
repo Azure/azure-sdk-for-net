@@ -6,9 +6,8 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.AI.Projects.Agents;
 
-namespace OpenAI
+namespace Azure.AI.Projects.Agents
 {
     /// <summary> The MisalignmentErrorDetailsResource. </summary>
     internal partial class MisalignmentErrorDetailsResource : IJsonModel<MisalignmentErrorDetailsResource>
@@ -71,6 +70,18 @@ namespace OpenAI
             {
                 throw new FormatException($"The model {nameof(MisalignmentErrorDetailsResource)} does not support writing '{format}' format.");
             }
+            if (Optional.IsDefined(ReviewTarget, _reviewTargetIsDefined))
+            {
+                if (ReviewTarget != null)
+                {
+                    writer.WritePropertyName("review_target"u8);
+                    writer.WriteStringValue(ReviewTarget);
+                }
+                else
+                {
+                    writer.WriteNull("review_target"u8);
+                }
+            }
             if (Optional.IsDefined(ErrorType))
             {
                 writer.WritePropertyName("error_type"u8);
@@ -128,12 +139,25 @@ namespace OpenAI
             {
                 return null;
             }
+            bool reviewTargetIsDefined = false;
+            string reviewTarget = default;
             MisalignmentErrorType? errorType = default;
             string detailedExplanation = default;
             MisalignmentSteer steer = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
+                if (prop.NameEquals("review_target"u8))
+                {
+                    reviewTargetIsDefined = true;
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        reviewTarget = null;
+                        continue;
+                    }
+                    reviewTarget = prop.Value.GetString();
+                    continue;
+                }
                 if (prop.NameEquals("error_type"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -162,7 +186,10 @@ namespace OpenAI
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new MisalignmentErrorDetailsResource(errorType, detailedExplanation, steer, additionalBinaryDataProperties);
+            return new MisalignmentErrorDetailsResource(reviewTarget, errorType, detailedExplanation, steer, additionalBinaryDataProperties)
+            {
+                _reviewTargetIsDefined = reviewTargetIsDefined
+            };
         }
     }
 }

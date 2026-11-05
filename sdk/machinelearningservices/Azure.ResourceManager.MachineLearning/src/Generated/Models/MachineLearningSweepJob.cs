@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
     public partial class MachineLearningSweepJob : MachineLearningJobProperties
     {
         private MachineLearningEarlyTerminationPolicy _earlyTermination;
-        internal bool _earlyTerminationIsDefined;
+        private bool _earlyTerminationIsDefined;
         private QueueSettings _queueSettings;
-        internal bool _queueSettingsIsDefined;
+        private bool _queueSettingsIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="MachineLearningSweepJob"/>. </summary>
         /// <param name="description"> The asset description text. </param>

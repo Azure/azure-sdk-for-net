@@ -17,6 +17,7 @@ namespace Azure.Provisioning.Compute
         private VirtualMachineScaleSetOSDisk _osDisk;
         private BicepList<VirtualMachineScaleSetDataDisk> _dataDisks;
         private BicepValue<DiskControllerType> _diskControllerKind;
+        private BicepValue<DiskApiVersion> _diskApiVersion;
 
         /// <summary> Creates a new VirtualMachineScaleSetStorageProfile. </summary>
         public VirtualMachineScaleSetStorageProfile()
@@ -83,6 +84,21 @@ namespace Azure.Provisioning.Compute
             }
         }
 
+        /// <summary> Gets or sets the DiskApiVersion. </summary>
+        public BicepValue<DiskApiVersion> DiskApiVersion
+        {
+            get
+            {
+                Initialize();
+                return _diskApiVersion;
+            }
+            set
+            {
+                Initialize();
+                _diskApiVersion.Assign(value);
+            }
+        }
+
         /// <summary> Define all the provisionable properties for VirtualMachineScaleSetStorageProfile. </summary>
         protected override void DefineProvisionableProperties()
         {
@@ -91,6 +107,7 @@ namespace Azure.Provisioning.Compute
             _osDisk = DefineModelProperty<VirtualMachineScaleSetOSDisk>(nameof(OSDisk), new string[] { "osDisk" });
             _dataDisks = DefineListProperty<VirtualMachineScaleSetDataDisk>(nameof(DataDisks), new string[] { "dataDisks" });
             _diskControllerKind = DefineProperty<DiskControllerType>(nameof(DiskControllerKind), new string[] { "diskControllerType" });
+            _diskApiVersion = DefineProperty<DiskApiVersion>(nameof(DiskApiVersion), new string[] { "diskApiVersion" });
             DefineAdditionalProperties();
         }
 

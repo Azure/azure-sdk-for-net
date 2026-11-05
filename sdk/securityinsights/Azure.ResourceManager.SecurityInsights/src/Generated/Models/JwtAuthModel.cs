@@ -15,9 +15,9 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     public partial class JwtAuthModel : CcpAuthConfig
     {
         private bool? _isCredentialsInHeaders;
-        internal bool _isCredentialsInHeadersIsDefined;
+        private bool _isCredentialsInHeadersIsDefined;
         private bool? _isJsonRequest;
-        internal bool _isJsonRequestIsDefined;
+        private bool _isJsonRequestIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="JwtAuthModel"/>. </summary>
         /// <param name="tokenEndpoint"> Token endpoint to request JWT. </param>

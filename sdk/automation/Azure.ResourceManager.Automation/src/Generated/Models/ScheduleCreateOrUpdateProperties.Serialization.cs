@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Automation.Models
             }
             writer.WritePropertyName("startTime"u8);
             writer.WriteStringValue(StartsOn, "O");
-            if (_expiresOnIsDefined || Optional.IsDefined(ExpiresOn))
+            if (Optional.IsDefined(ExpiresOn, _expiresOnIsDefined))
             {
                 if (ExpiresOn != null)
                 {

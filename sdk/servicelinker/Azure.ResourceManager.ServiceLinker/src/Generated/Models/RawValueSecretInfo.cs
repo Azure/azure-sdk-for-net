@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
     public partial class RawValueSecretInfo : SecretBaseInfo
     {
         private string _value;
-        internal bool _valueIsDefined;
+        private bool _valueIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="RawValueSecretInfo"/>. </summary>
         public RawValueSecretInfo() : base(LinkerSecretType.RawValue)

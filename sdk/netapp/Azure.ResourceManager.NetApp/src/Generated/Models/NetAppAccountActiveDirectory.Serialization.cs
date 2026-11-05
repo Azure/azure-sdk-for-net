@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.NetApp.Models
             {
                 throw new FormatException($"The model {nameof(NetAppAccountActiveDirectory)} does not support writing '{format}' format.");
             }
-            if (_activeDirectoryIdIsDefined || Optional.IsDefined(ActiveDirectoryId))
+            if (Optional.IsDefined(ActiveDirectoryId, _activeDirectoryIdIsDefined))
             {
                 if (ActiveDirectoryId != null)
                 {

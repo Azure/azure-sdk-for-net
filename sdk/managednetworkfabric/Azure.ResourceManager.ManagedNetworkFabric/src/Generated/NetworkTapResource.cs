@@ -52,9 +52,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal NetworkTapResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string networkTapApiVersion);
             _networkTapsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ManagedNetworkFabric", ResourceType.Namespace, Diagnostics);
-            _networkTapsRestClient = new NetworkTaps(_networkTapsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, networkTapApiVersion ?? "2025-07-15");
+            _networkTapsRestClient = new NetworkTaps(_networkTapsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.ManagedNetworkFabric/networkTaps", out string networkTapsApiVersionOverride) ? networkTapsApiVersionOverride : "2025-07-15");
             ValidateResourceId(id);
         }
 

@@ -16,15 +16,15 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
         private Uri _uri;
-        internal bool _uriIsDefined;
+        private bool _uriIsDefined;
         private long? _timeoutInSeconds;
-        internal bool _timeoutInSecondsIsDefined;
+        private bool _timeoutInSecondsIsDefined;
         private long? _syncIntervalInSeconds;
-        internal bool _syncIntervalInSecondsIsDefined;
+        private bool _syncIntervalInSecondsIsDefined;
         private string _serviceAccountName;
-        internal bool _serviceAccountNameIsDefined;
+        private bool _serviceAccountNameIsDefined;
         private string _localAuthRef;
-        internal bool _localAuthRefIsDefined;
+        private bool _localAuthRefIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="OciRepositoryPatch"/>. </summary>
         public OciRepositoryPatch()

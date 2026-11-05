@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             {
                 throw new FormatException($"The model {nameof(DaprProperties)} does not support writing '{format}' format.");
             }
-            if (_versionIsDefined || Optional.IsDefined(Version))
+            if (Optional.IsDefined(Version, _versionIsDefined))
             {
                 if (Version != null)
                 {
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                     writer.WriteNull("version"u8);
                 }
             }
-            if (_componentTypeIsDefined || Optional.IsDefined(ComponentType))
+            if (Optional.IsDefined(ComponentType, _componentTypeIsDefined))
             {
                 if (ComponentType != null)
                 {
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                     writer.WriteNull("componentType"u8);
                 }
             }
-            if (_secretStoreComponentIsDefined || Optional.IsDefined(SecretStoreComponent))
+            if (Optional.IsDefined(SecretStoreComponent, _secretStoreComponentIsDefined))
             {
                 if (SecretStoreComponent != null)
                 {
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && (_runtimeVersionIsDefined || Optional.IsDefined(RuntimeVersion)))
+            if (options.Format != "W" && Optional.IsDefined(RuntimeVersion, _runtimeVersionIsDefined))
             {
                 if (RuntimeVersion != null)
                 {
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                     writer.WriteNull("runtimeVersion"u8);
                 }
             }
-            if (options.Format != "W" && (_bindingComponentDirectionIsDefined || Optional.IsDefined(BindingComponentDirection)))
+            if (options.Format != "W" && Optional.IsDefined(BindingComponentDirection, _bindingComponentDirectionIsDefined))
             {
                 if (BindingComponentDirection != null)
                 {

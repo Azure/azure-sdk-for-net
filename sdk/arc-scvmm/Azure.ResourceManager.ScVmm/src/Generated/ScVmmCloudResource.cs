@@ -52,9 +52,8 @@ namespace Azure.ResourceManager.ScVmm
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ScVmmCloudResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string scVmmCloudApiVersion);
             _cloudsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ScVmm", ResourceType.Namespace, Diagnostics);
-            _cloudsRestClient = new Clouds(_cloudsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, scVmmCloudApiVersion ?? "2025-03-13");
+            _cloudsRestClient = new Clouds(_cloudsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.ScVmm/clouds", out string cloudsApiVersionOverride) ? cloudsApiVersionOverride : "2025-03-13");
             ValidateResourceId(id);
         }
 

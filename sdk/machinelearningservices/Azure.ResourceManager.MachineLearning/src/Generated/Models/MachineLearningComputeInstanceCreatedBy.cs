@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
         private string _userName;
-        internal bool _userNameIsDefined;
+        private bool _userNameIsDefined;
         private string _userId;
-        internal bool _userIdIsDefined;
+        private bool _userIdIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="MachineLearningComputeInstanceCreatedBy"/>. </summary>
         internal MachineLearningComputeInstanceCreatedBy()

@@ -39,9 +39,8 @@ namespace Azure.ResourceManager.Discovery
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal DiscoveryToolCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(DiscoveryToolResource.ResourceType, out string discoveryToolApiVersion);
             _toolsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Discovery", DiscoveryToolResource.ResourceType.Namespace, Diagnostics);
-            _toolsRestClient = new Tools(_toolsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, discoveryToolApiVersion ?? "2026-06-01");
+            _toolsRestClient = new Tools(_toolsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.Discovery/tools", out string toolsApiVersionOverride) ? toolsApiVersionOverride : "2026-06-01");
             ValidateResourceId(id);
         }
 

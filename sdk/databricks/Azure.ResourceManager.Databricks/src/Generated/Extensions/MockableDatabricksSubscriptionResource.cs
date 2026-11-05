@@ -38,11 +38,11 @@ namespace Azure.ResourceManager.Databricks.Mocking
 
         private ClientDiagnostics WorkspacesClientDiagnostics => _workspacesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Databricks.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Workspaces WorkspacesRestClient => _workspacesRestClient ??= new Workspaces(WorkspacesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-01-01");
+        private Workspaces WorkspacesRestClient => _workspacesRestClient ??= new Workspaces(WorkspacesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.Databricks/workspaces", out string apiVersion) ? apiVersion : "2026-01-01");
 
         private ClientDiagnostics AccessConnectorsClientDiagnostics => _accessConnectorsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Databricks.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private AccessConnectors AccessConnectorsRestClient => _accessConnectorsRestClient ??= new AccessConnectors(AccessConnectorsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-01-01");
+        private AccessConnectors AccessConnectorsRestClient => _accessConnectorsRestClient ??= new AccessConnectors(AccessConnectorsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.Databricks/accessConnectors", out string apiVersion0) ? apiVersion0 : "2026-01-01");
 
         /// <summary>
         /// Gets all the workspaces within a subscription.

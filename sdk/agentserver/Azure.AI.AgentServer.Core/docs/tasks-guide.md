@@ -146,9 +146,17 @@ task engine, task store, or hosted credential; it does not run a startup recover
 or periodic recovery loop. Starting a registered task throws a
 `ResilientTaskException` with `ResilientTaskErrorCode.NotEnabled`.
 
-Responses applications normally opt in through
-`ResponsesServerOptions.ResilientBackground = true`, which enables the same Core
-runtime automatically.
+Responses applications opt in independently through
+`ResponsesServerOptions.ResilientBackground` or `SteerableConversations`. A
+Responses opt-in does not enable Invocations tasks in a composed host, and
+the Core switch alone does not opt Responses in. Application tasks started
+within a Responses handler inherit its protocol scope and recover only when
+that protocol remains enabled after restart; unscoped Core tasks and Invocations
+tasks still require the explicit Core switch. Older task records without an
+owner marker are recovered as Core-owned unless the registration supplies its
+own activation check. Existing Invocations chains continue under the explicit
+Core opt-in. Protocol-scoping helpers and the per-task activation option are
+experimental (`AAAS003`); applications do not need them for ordinary task opt-in.
 
 ### One-shot
 

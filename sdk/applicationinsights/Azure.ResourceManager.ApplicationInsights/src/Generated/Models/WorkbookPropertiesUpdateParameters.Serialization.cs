@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 }
                 writer.WriteEndArray();
             }
-            if (_descriptionIsDefined || Optional.IsDefined(Description))
+            if (Optional.IsDefined(Description, _descriptionIsDefined))
             {
                 if (Description != null)
                 {
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                     writer.WriteNull("description"u8);
                 }
             }
-            if (_revisionIsDefined || Optional.IsDefined(Revision))
+            if (Optional.IsDefined(Revision, _revisionIsDefined))
             {
                 if (Revision != null)
                 {

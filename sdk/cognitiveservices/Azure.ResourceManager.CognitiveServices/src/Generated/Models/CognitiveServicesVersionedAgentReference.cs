@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
     public partial class CognitiveServicesVersionedAgentReference : CognitiveServicesAgentReferenceProperties
     {
         private string _agentVersion;
-        internal bool _agentVersionIsDefined;
+        private bool _agentVersionIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="CognitiveServicesVersionedAgentReference"/>. </summary>
         public CognitiveServicesVersionedAgentReference()

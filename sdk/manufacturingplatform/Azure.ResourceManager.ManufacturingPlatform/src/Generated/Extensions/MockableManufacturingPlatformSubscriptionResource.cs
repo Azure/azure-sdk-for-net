@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.ManufacturingPlatform.Mocking
 
         private ClientDiagnostics ManufacturingDataServicesClientDiagnostics => _manufacturingDataServicesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ManufacturingPlatform.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ManufacturingDataServices ManufacturingDataServicesRestClient => _manufacturingDataServicesRestClient ??= new ManufacturingDataServices(ManufacturingDataServicesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-03-01");
+        private ManufacturingDataServices ManufacturingDataServicesRestClient => _manufacturingDataServicesRestClient ??= new ManufacturingDataServices(ManufacturingDataServicesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.ManufacturingPlatform/manufacturingDataServices", out string apiVersion) ? apiVersion : "2025-03-01");
 
         /// <summary>
         /// List MdsResource resources by subscription ID

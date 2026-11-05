@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
-            if (_propertiesIsDefined || Optional.IsDefined(Properties))
+            if (Optional.IsDefined(Properties, _propertiesIsDefined))
             {
                 if (Properties != null)
                 {

@@ -11,7 +11,7 @@ using Azure.ResourceManager.Compute.BulkActions;
 
 namespace Azure.ResourceManager.Compute.BulkActions.Models
 {
-    /// <summary> The current state of a scheduled action occurrence. </summary>
+    /// <summary> The current state of a recurring bulk action occurrence. </summary>
     public readonly partial struct OccurrenceState : IEquatable<OccurrenceState>
     {
         private readonly string _value;

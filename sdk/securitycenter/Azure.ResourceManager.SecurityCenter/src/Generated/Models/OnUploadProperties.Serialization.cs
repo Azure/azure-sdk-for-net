@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 writer.WritePropertyName("capGBPerMonth"u8);
                 writer.WriteNumberValue(CapGBPerMonth.Value);
             }
-            if (_filtersIsDefined || Optional.IsDefined(Filters))
+            if (Optional.IsDefined(Filters, _filtersIsDefined))
             {
                 if (Filters != null)
                 {

@@ -52,9 +52,8 @@ namespace Azure.ResourceManager.Databricks
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal DatabricksAccessConnectorResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string databricksAccessConnectorApiVersion);
             _accessConnectorsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Databricks", ResourceType.Namespace, Diagnostics);
-            _accessConnectorsRestClient = new AccessConnectors(_accessConnectorsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, databricksAccessConnectorApiVersion ?? "2026-01-01");
+            _accessConnectorsRestClient = new AccessConnectors(_accessConnectorsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.Databricks/accessConnectors", out string accessConnectorsApiVersionOverride) ? accessConnectorsApiVersionOverride : "2026-01-01");
             ValidateResourceId(id);
         }
 

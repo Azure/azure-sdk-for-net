@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
                 writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties, options);
             }
-            if (_locationIsDefined || Optional.IsDefined(Location))
+            if (Optional.IsDefined(Location, _locationIsDefined))
             {
                 if (Location != null)
                 {

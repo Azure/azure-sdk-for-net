@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (_certIsDefined || Optional.IsDefined(Cert))
+            if (Optional.IsDefined(Cert, _certIsDefined))
             {
                 if (Cert != null)
                 {
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("cert"u8);
                 }
             }
-            if (_keyIsDefined || Optional.IsDefined(Key))
+            if (Optional.IsDefined(Key, _keyIsDefined))
             {
                 if (Key != null)
                 {
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("key"u8);
                 }
             }
-            if (_cnameIsDefined || Optional.IsDefined(Cname))
+            if (Optional.IsDefined(Cname, _cnameIsDefined))
             {
                 if (Cname != null)
                 {
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("cname"u8);
                 }
             }
-            if (_leafDomainLabelIsDefined || Optional.IsDefined(LeafDomainLabel))
+            if (Optional.IsDefined(LeafDomainLabel, _leafDomainLabelIsDefined))
             {
                 if (LeafDomainLabel != null)
                 {

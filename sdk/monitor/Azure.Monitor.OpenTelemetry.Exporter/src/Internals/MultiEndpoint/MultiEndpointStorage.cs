@@ -535,7 +535,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.MultiEndpoint
                         innerProvider,
                         blobProvider,
                         transmissionStateManager,
-                        new TransmitFromStorageHandler(restClient, blobProvider, transmissionStateManager, _connectionVars, isAad, _networkSdkStatsManager, directory, trackUri));
+                        new TransmitFromStorageHandler(restClient, blobProvider, transmissionStateManager, _connectionVars, isAad, _networkSdkStatsManager, directory, trackUri, route));
 
                     _partitions[key] = created;
 

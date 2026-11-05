@@ -2923,6 +2923,196 @@ namespace BasicTypeSpec
             return Response.FromValue((ThingModel)result, result);
         }
 
+        /// <summary>
+        /// [Protocol Method] RoundTripResourceIdentifiers
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceId"></param>
+        /// <param name="queryId"></param>
+        /// <param name="headerId"></param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/>, <paramref name="queryId"/>, <paramref name="headerId"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceId"/>, <paramref name="queryId"/> or <paramref name="headerId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response RoundTripResourceIdentifiers(ResourceIdentifier resourceId, ResourceIdentifier queryId, ResourceIdentifier headerId, RequestContent content, RequestContext context = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BasicTypeSpecClient.RoundTripResourceIdentifiers");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(resourceId, nameof(resourceId));
+                Argument.AssertNotNullOrEmpty(queryId, nameof(queryId));
+                Argument.AssertNotNullOrEmpty(headerId, nameof(headerId));
+                Argument.AssertNotNull(content, nameof(content));
+
+                using HttpMessage message = CreateRoundTripResourceIdentifiersRequest(resourceId, queryId, headerId, content, context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] RoundTripResourceIdentifiers
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceId"></param>
+        /// <param name="queryId"></param>
+        /// <param name="headerId"></param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/>, <paramref name="queryId"/>, <paramref name="headerId"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceId"/>, <paramref name="queryId"/> or <paramref name="headerId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> RoundTripResourceIdentifiersAsync(ResourceIdentifier resourceId, ResourceIdentifier queryId, ResourceIdentifier headerId, RequestContent content, RequestContext context = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BasicTypeSpecClient.RoundTripResourceIdentifiers");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(resourceId, nameof(resourceId));
+                Argument.AssertNotNullOrEmpty(queryId, nameof(queryId));
+                Argument.AssertNotNullOrEmpty(headerId, nameof(headerId));
+                Argument.AssertNotNull(content, nameof(content));
+
+                using HttpMessage message = CreateRoundTripResourceIdentifiersRequest(resourceId, queryId, headerId, content, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> RoundTripResourceIdentifiers. </summary>
+        /// <param name="resourceId"></param>
+        /// <param name="queryId"></param>
+        /// <param name="headerId"></param>
+        /// <param name="body"></param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/>, <paramref name="queryId"/>, <paramref name="headerId"/> or <paramref name="body"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceId"/>, <paramref name="queryId"/> or <paramref name="headerId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<ResourceIdentifierModel> RoundTripResourceIdentifiers(ResourceIdentifier resourceId, ResourceIdentifier queryId, ResourceIdentifier headerId, ResourceIdentifierModel body, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceId, nameof(resourceId));
+            Argument.AssertNotNullOrEmpty(queryId, nameof(queryId));
+            Argument.AssertNotNullOrEmpty(headerId, nameof(headerId));
+            Argument.AssertNotNull(body, nameof(body));
+
+            using RequestContent content = body.ToRequestContent("J");
+            Response result = RoundTripResourceIdentifiers(resourceId, queryId, headerId, content, cancellationToken.ToRequestContext());
+            return Response.FromValue((ResourceIdentifierModel)result, result);
+        }
+
+        /// <summary> RoundTripResourceIdentifiers. </summary>
+        /// <param name="resourceId"></param>
+        /// <param name="queryId"></param>
+        /// <param name="headerId"></param>
+        /// <param name="body"></param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/>, <paramref name="queryId"/>, <paramref name="headerId"/> or <paramref name="body"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceId"/>, <paramref name="queryId"/> or <paramref name="headerId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response<ResourceIdentifierModel>> RoundTripResourceIdentifiersAsync(ResourceIdentifier resourceId, ResourceIdentifier queryId, ResourceIdentifier headerId, ResourceIdentifierModel body, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceId, nameof(resourceId));
+            Argument.AssertNotNullOrEmpty(queryId, nameof(queryId));
+            Argument.AssertNotNullOrEmpty(headerId, nameof(headerId));
+            Argument.AssertNotNull(body, nameof(body));
+
+            using RequestContent content = body.ToRequestContent("J");
+            Response result = await RoundTripResourceIdentifiersAsync(resourceId, queryId, headerId, content, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return Response.FromValue((ResourceIdentifierModel)result, result);
+        }
+
+        /// <summary>
+        /// [Protocol Method] GetResourceIdentifiersXml
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response GetResourceIdentifiersXml(RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BasicTypeSpecClient.GetResourceIdentifiersXml");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetResourceIdentifiersXmlRequest(context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] GetResourceIdentifiersXml
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> GetResourceIdentifiersXmlAsync(RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BasicTypeSpecClient.GetResourceIdentifiersXml");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetResourceIdentifiersXmlRequest(context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> GetResourceIdentifiersXml. </summary>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<ResourceIdentifierModel> GetResourceIdentifiersXml(CancellationToken cancellationToken = default)
+        {
+            Response result = GetResourceIdentifiersXml(cancellationToken.ToRequestContext());
+            return Response.FromValue((ResourceIdentifierModel)result, result);
+        }
+
+        /// <summary> GetResourceIdentifiersXml. </summary>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response<ResourceIdentifierModel>> GetResourceIdentifiersXmlAsync(CancellationToken cancellationToken = default)
+        {
+            Response result = await GetResourceIdentifiersXmlAsync(cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return Response.FromValue((ResourceIdentifierModel)result, result);
+        }
+
         /// <summary> Initializes a new instance of PlantOperations. </summary>
         public virtual PlantOperations GetPlantOperationsClient()
         {

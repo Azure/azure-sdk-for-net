@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
         private MachineLearningEarlyTerminationPolicy _earlyTermination;
-        internal bool _earlyTerminationIsDefined;
+        private bool _earlyTerminationIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="ImageSweepSettings"/>. </summary>
         /// <param name="samplingAlgorithm"> [Required] Type of the hyperparameter sampling algorithms. </param>

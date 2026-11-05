@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                 writer.WritePropertyName("assignmentType"u8);
                 writer.WriteStringValue(AssignmentType.Value.ToString());
             }
-            if (options.Format != "W" && (_assignmentSourceIsDefined || Optional.IsDefined(AssignmentSource)))
+            if (options.Format != "W" && Optional.IsDefined(AssignmentSource, _assignmentSourceIsDefined))
             {
                 if (AssignmentSource != null)
                 {
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                     writer.WriteNull("assignmentSource"u8);
                 }
             }
-            if (options.Format != "W" && (_contentTypeIsDefined || Optional.IsDefined(ContentType)))
+            if (options.Format != "W" && Optional.IsDefined(ContentType, _contentTypeIsDefined))
             {
                 if (ContentType != null)
                 {

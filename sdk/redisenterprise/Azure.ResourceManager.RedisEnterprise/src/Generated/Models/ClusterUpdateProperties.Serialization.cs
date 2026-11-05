@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                 throw new FormatException($"The model {nameof(ClusterUpdateProperties)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            if (_publicNetworkAccessIsDefined || Optional.IsDefined(PublicNetworkAccess))
+            if (Optional.IsDefined(PublicNetworkAccess, _publicNetworkAccessIsDefined))
             {
                 if (PublicNetworkAccess != null)
                 {

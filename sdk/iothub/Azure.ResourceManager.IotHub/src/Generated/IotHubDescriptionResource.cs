@@ -54,7 +54,13 @@ namespace Azure.ResourceManager.IotHub
         {
             TryGetApiVersion(ResourceType, out string iotHubDescriptionApiVersion);
             _iotHubResourceClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.IotHub", ResourceType.Namespace, Diagnostics);
-            _iotHubResourceRestClient = new IotHubResource(_iotHubResourceClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, iotHubDescriptionApiVersion ?? "2026-10-01-preview");
+            _iotHubResourceRestClient = new IotHubResource(
+                _iotHubResourceClientDiagnostics,
+                Pipeline,
+                Diagnostics.ApplicationId,
+                Endpoint,
+                iotHubDescriptionApiVersion ?? "2026-10-01-preview",
+                resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 

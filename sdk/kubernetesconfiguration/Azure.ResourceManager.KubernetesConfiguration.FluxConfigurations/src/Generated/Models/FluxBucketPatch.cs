@@ -16,19 +16,19 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
         private string _uri;
-        internal bool _uriIsDefined;
+        private bool _uriIsDefined;
         private string _bucketName;
-        internal bool _bucketNameIsDefined;
+        private bool _bucketNameIsDefined;
         private bool? _isInsecure;
-        internal bool _isInsecureIsDefined;
+        private bool _isInsecureIsDefined;
         private long? _timeoutInSeconds;
-        internal bool _timeoutInSecondsIsDefined;
+        private bool _timeoutInSecondsIsDefined;
         private long? _syncIntervalInSeconds;
-        internal bool _syncIntervalInSecondsIsDefined;
+        private bool _syncIntervalInSecondsIsDefined;
         private string _accessKey;
-        internal bool _accessKeyIsDefined;
+        private bool _accessKeyIsDefined;
         private string _localAuthRef;
-        internal bool _localAuthRefIsDefined;
+        private bool _localAuthRefIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="FluxBucketPatch"/>. </summary>
         public FluxBucketPatch()

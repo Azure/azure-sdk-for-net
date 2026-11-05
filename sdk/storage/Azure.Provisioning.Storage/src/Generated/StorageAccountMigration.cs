@@ -19,12 +19,12 @@ namespace Azure.Provisioning.Storage
         private BicepValue<string> _name;
         private SystemData _systemData;
         private StorageAccountMigrationProperties _storageAccountMigrationDetails;
-        private ResourceReference<StorageAccount> _parent;
+        private ProvisioningResourceReference<StorageAccount> _parent;
 
         /// <summary> Creates a new StorageAccountMigration. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
         /// <param name="resourceVersion"> The resource API version. </param>
-        internal StorageAccountMigration(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.Storage/storageAccounts/accountMigrations", resourceVersion ?? "2025-06-01")
+        internal StorageAccountMigration(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.Storage/storageAccounts/accountMigrations", resourceVersion ?? "2026-06-01")
         {
         }
 
@@ -132,7 +132,7 @@ namespace Azure.Provisioning.Storage
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _storageAccountMigrationDetails = DefineModelProperty<StorageAccountMigrationProperties>(nameof(StorageAccountMigrationDetails), new string[] { "properties" });
-            _parent = DefineResource<StorageAccount>(nameof(Parent), new string[] { "parent" }, isRequired: true);
+            _parent = new ProvisioningResourceReference<StorageAccount>(DefineProperty<string>(nameof(Parent), new string[] { "parent" }));
             DefineAdditionalProperties();
         }
 
@@ -152,6 +152,12 @@ namespace Azure.Provisioning.Storage
         /// <summary></summary>
         public static partial class ResourceVersions
         {
+            /// <summary> API version "2026-06-01". </summary>
+            public static readonly string V2026_06_01 = "2026-06-01";
+            /// <summary> API version "2026-04-01". </summary>
+            public static readonly string V2026_04_01 = "2026-04-01";
+            /// <summary> API version "2025-08-01". </summary>
+            public static readonly string V2025_08_01 = "2025-08-01";
             /// <summary> API version "2025-06-01". </summary>
             public static readonly string V2025_06_01 = "2025-06-01";
         }

@@ -38,7 +38,13 @@ namespace Azure.ResourceManager.StorageActions.Mocking
 
         private ClientDiagnostics StorageTasksClientDiagnostics => _storageTasksClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.StorageActions.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private StorageTasks StorageTasksRestClient => _storageTasksRestClient ??= new StorageTasks(StorageTasksClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2023-01-01");
+        private StorageTasks StorageTasksRestClient => _storageTasksRestClient ??= new StorageTasks(
+            StorageTasksClientDiagnostics,
+            Pipeline,
+            Diagnostics.ApplicationId,
+            Endpoint,
+            "2023-01-01",
+            resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
 
         /// <summary>
         /// Lists all the storage tasks available under the subscription.

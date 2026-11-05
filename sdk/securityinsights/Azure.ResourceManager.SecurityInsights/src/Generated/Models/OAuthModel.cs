@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     public partial class OAuthModel : CcpAuthConfig
     {
         private bool? _isCredentialsInHeaders;
-        internal bool _isCredentialsInHeadersIsDefined;
+        private bool _isCredentialsInHeadersIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="OAuthModel"/>. </summary>
         /// <param name="clientSecret"> The Application (client) secret that the OAuth provider assigned to your app. </param>

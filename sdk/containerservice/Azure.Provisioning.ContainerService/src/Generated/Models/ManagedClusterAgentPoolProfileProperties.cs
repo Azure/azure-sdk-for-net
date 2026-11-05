@@ -65,6 +65,7 @@ namespace Azure.Provisioning.ContainerService
         private AgentPoolSecurityProfile _securityProfile;
         private AgentPoolGpuProfile _gpuProfile;
         private AgentPoolGatewayProfile _gatewayProfile;
+        private AgentPoolArtifactStreamingProfile _artifactStreamingProfile;
         private VirtualMachinesProfile _virtualMachinesProfile;
         private BicepList<AgentPoolVirtualMachineNodes> _virtualMachineNodesStatus;
         private AgentPoolStatus _status;
@@ -395,13 +396,18 @@ namespace Azure.Provisioning.ContainerService
             }
         }
 
-        /// <summary> Gets the NodeImageVersion. </summary>
+        /// <summary> Gets or sets the NodeImageVersion. </summary>
         public BicepValue<string> NodeImageVersion
         {
             get
             {
                 Initialize();
                 return _nodeImageVersion;
+            }
+            set
+            {
+                Initialize();
+                _nodeImageVersion.Assign(value);
             }
         }
 
@@ -805,6 +811,21 @@ namespace Azure.Provisioning.ContainerService
             }
         }
 
+        /// <summary> Gets or sets the ArtifactStreamingProfile. </summary>
+        internal AgentPoolArtifactStreamingProfile ArtifactStreamingProfile
+        {
+            get
+            {
+                Initialize();
+                return _artifactStreamingProfile;
+            }
+            set
+            {
+                Initialize();
+                AssignOrReplace(ref _artifactStreamingProfile, value);
+            }
+        }
+
         /// <summary> Gets or sets the VirtualMachinesProfile. </summary>
         internal VirtualMachinesProfile VirtualMachinesProfile
         {
@@ -950,12 +971,29 @@ namespace Azure.Provisioning.ContainerService
             }
         }
 
-        /// <summary> Gets or sets the Manual. </summary>
-        public BicepList<ManualScaleProfile> VirtualMachinesScaleManual
+        /// <summary> Gets or sets the IsArtifactStreamingEnabled. </summary>
+        public BicepValue<bool> IsArtifactStreamingEnabled
         {
             get
             {
-                return VirtualMachinesProfile is null ? default : VirtualMachinesProfile.ScaleManual;
+                return ArtifactStreamingProfile is null ? default : ArtifactStreamingProfile.IsArtifactStreamingEnabled;
+            }
+            set
+            {
+                if (ArtifactStreamingProfile is null)
+                {
+                    ArtifactStreamingProfile = new AgentPoolArtifactStreamingProfile();
+                }
+                ArtifactStreamingProfile.IsArtifactStreamingEnabled = value;
+            }
+        }
+
+        /// <summary> Gets or sets the Scale. </summary>
+        public AgentPoolScaleProfile VirtualMachinesScale
+        {
+            get
+            {
+                return VirtualMachinesProfile is null ? default : VirtualMachinesProfile.Scale;
             }
             set
             {
@@ -963,7 +1001,7 @@ namespace Azure.Provisioning.ContainerService
                 {
                     VirtualMachinesProfile = new VirtualMachinesProfile();
                 }
-                VirtualMachinesProfile.ScaleManual = value;
+                VirtualMachinesProfile.Scale = value;
             }
         }
 
@@ -1006,7 +1044,7 @@ namespace Azure.Provisioning.ContainerService
             _mode = DefineProperty<AgentPoolMode>(nameof(Mode), new string[] { "mode" });
             _orchestratorVersion = DefineProperty<string>(nameof(OrchestratorVersion), new string[] { "orchestratorVersion" });
             _currentOrchestratorVersion = DefineProperty<string>(nameof(CurrentOrchestratorVersion), new string[] { "currentOrchestratorVersion" }, isOutput: true);
-            _nodeImageVersion = DefineProperty<string>(nameof(NodeImageVersion), new string[] { "nodeImageVersion" }, isOutput: true);
+            _nodeImageVersion = DefineProperty<string>(nameof(NodeImageVersion), new string[] { "nodeImageVersion" });
             _upgradeSettings = DefineModelProperty<AgentPoolUpgradeSettings>(nameof(UpgradeSettings), new string[] { "upgradeSettings" });
             _provisioningState = DefineProperty<string>(nameof(ProvisioningState), new string[] { "provisioningState" }, isOutput: true);
             _powerState = DefineModelProperty<ContainerServicePowerState>(nameof(PowerState), new string[] { "powerState" });
@@ -1034,6 +1072,7 @@ namespace Azure.Provisioning.ContainerService
             _securityProfile = DefineModelProperty<AgentPoolSecurityProfile>(nameof(SecurityProfile), new string[] { "securityProfile" });
             _gpuProfile = DefineModelProperty<AgentPoolGpuProfile>(nameof(GpuProfile), new string[] { "gpuProfile" });
             _gatewayProfile = DefineModelProperty<AgentPoolGatewayProfile>(nameof(GatewayProfile), new string[] { "gatewayProfile" });
+            _artifactStreamingProfile = DefineModelProperty<AgentPoolArtifactStreamingProfile>(nameof(ArtifactStreamingProfile), new string[] { "artifactStreamingProfile" });
             _virtualMachinesProfile = DefineModelProperty<VirtualMachinesProfile>(nameof(VirtualMachinesProfile), new string[] { "virtualMachinesProfile" });
             _virtualMachineNodesStatus = DefineListProperty<AgentPoolVirtualMachineNodes>(nameof(VirtualMachineNodesStatus), new string[] { "virtualMachineNodesStatus" });
             _status = DefineModelProperty<AgentPoolStatus>(nameof(Status), new string[] { "status" });

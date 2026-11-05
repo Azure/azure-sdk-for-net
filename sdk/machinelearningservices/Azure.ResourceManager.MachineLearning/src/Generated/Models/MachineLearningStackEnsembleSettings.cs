@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
         private BinaryData _stackMetaLearnerKWargs;
-        internal bool _stackMetaLearnerKWargsIsDefined;
+        private bool _stackMetaLearnerKWargsIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="MachineLearningStackEnsembleSettings"/>. </summary>
         public MachineLearningStackEnsembleSettings()
