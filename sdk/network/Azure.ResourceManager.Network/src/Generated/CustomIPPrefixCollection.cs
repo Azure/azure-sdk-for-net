@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Network
         internal CustomIPPrefixCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _customIPPrefixesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", CustomIPPrefixResource.ResourceType.Namespace, Diagnostics);
-            _customIPPrefixesRestClient = new CustomIPPrefixes(_customIPPrefixesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
+            _customIPPrefixesRestClient = new CustomIPPrefixes(_customIPPrefixesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.Network/customIpPrefixes", out string customIPPrefixesApiVersionOverride) ? customIPPrefixesApiVersionOverride : "2026-03-01");
             ValidateResourceId(id);
         }
 

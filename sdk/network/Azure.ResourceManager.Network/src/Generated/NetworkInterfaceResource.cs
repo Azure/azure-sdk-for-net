@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Network
         {
             TryGetApiVersion(ResourceType, out string networkInterfaceApiVersion);
             _networkInterfacesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, Diagnostics);
-            _networkInterfacesRestClient = new NetworkInterfaces(_networkInterfacesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
+            _networkInterfacesRestClient = new NetworkInterfaces(_networkInterfacesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.Network/networkInterfaces", out string networkInterfacesApiVersionOverride) ? networkInterfacesApiVersionOverride : "2026-03-01");
             _networkInterfaceLoadBalancersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, Diagnostics);
             _networkInterfaceLoadBalancersRestClient = new NetworkInterfaceLoadBalancers(_networkInterfaceLoadBalancersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, networkInterfaceApiVersion ?? "2026-03-01");
             ValidateResourceId(id);

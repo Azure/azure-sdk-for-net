@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Network
         internal IPAllocationCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _ipAllocationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", IPAllocationResource.ResourceType.Namespace, Diagnostics);
-            _ipAllocationsRestClient = new IPAllocations(_ipAllocationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
+            _ipAllocationsRestClient = new IPAllocations(_ipAllocationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.Network/IpAllocations", out string ipAllocationsApiVersionOverride) ? ipAllocationsApiVersionOverride : "2026-03-01");
             ValidateResourceId(id);
         }
 

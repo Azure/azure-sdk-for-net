@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Network
         internal InterconnectGroupCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _interconnectGroupsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", InterconnectGroupResource.ResourceType.Namespace, Diagnostics);
-            _interconnectGroupsRestClient = new InterconnectGroups(_interconnectGroupsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
+            _interconnectGroupsRestClient = new InterconnectGroups(_interconnectGroupsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.Network/interconnectGroups", out string interconnectGroupsApiVersionOverride) ? interconnectGroupsApiVersionOverride : "2026-03-01");
             ValidateResourceId(id);
         }
 

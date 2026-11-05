@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Network
         internal VirtualWanCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _virtualWansClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", VirtualWanResource.ResourceType.Namespace, Diagnostics);
-            _virtualWansRestClient = new VirtualWans(_virtualWansClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
+            _virtualWansRestClient = new VirtualWans(_virtualWansClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.Network/virtualWans", out string virtualWansApiVersionOverride) ? virtualWansApiVersionOverride : "2026-03-01");
             ValidateResourceId(id);
         }
 

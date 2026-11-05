@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Network
         internal NetworkSecurityGroupCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _networkSecurityGroupsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", NetworkSecurityGroupResource.ResourceType.Namespace, Diagnostics);
-            _networkSecurityGroupsRestClient = new NetworkSecurityGroups(_networkSecurityGroupsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
+            _networkSecurityGroupsRestClient = new NetworkSecurityGroups(_networkSecurityGroupsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.Network/networkSecurityGroups", out string networkSecurityGroupsApiVersionOverride) ? networkSecurityGroupsApiVersionOverride : "2026-03-01");
             ValidateResourceId(id);
         }
 

@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Network
         internal RouteFilterCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _routeFiltersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", RouteFilterResource.ResourceType.Namespace, Diagnostics);
-            _routeFiltersRestClient = new RouteFilters(_routeFiltersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
+            _routeFiltersRestClient = new RouteFilters(_routeFiltersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.Network/routeFilters", out string routeFiltersApiVersionOverride) ? routeFiltersApiVersionOverride : "2026-03-01");
             ValidateResourceId(id);
         }
 

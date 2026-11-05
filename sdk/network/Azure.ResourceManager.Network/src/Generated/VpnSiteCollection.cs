@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Network
         internal VpnSiteCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _vpnSitesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", VpnSiteResource.ResourceType.Namespace, Diagnostics);
-            _vpnSitesRestClient = new VpnSites(_vpnSitesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
+            _vpnSitesRestClient = new VpnSites(_vpnSitesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.Network/vpnSites", out string vpnSitesApiVersionOverride) ? vpnSitesApiVersionOverride : "2026-03-01");
             ValidateResourceId(id);
         }
 

@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Network
         internal NetworkProfileResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _networkProfilesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, Diagnostics);
-            _networkProfilesRestClient = new NetworkProfiles(_networkProfilesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
+            _networkProfilesRestClient = new NetworkProfiles(_networkProfilesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.Network/networkProfiles", out string networkProfilesApiVersionOverride) ? networkProfilesApiVersionOverride : "2026-03-01");
             ValidateResourceId(id);
         }
 

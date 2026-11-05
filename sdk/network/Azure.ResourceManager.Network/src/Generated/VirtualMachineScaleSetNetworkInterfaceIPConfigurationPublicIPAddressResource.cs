@@ -48,9 +48,8 @@ namespace Azure.ResourceManager.Network
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal VirtualMachineScaleSetNetworkInterfaceIPConfigurationPublicIPAddressResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string virtualMachineScaleSetNetworkInterfaceIPConfigurationPublicIPAddressApiVersion);
             _virtualMachineScaleSetNetworkInterfaceIPConfigurationPublicIPAddressesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, Diagnostics);
-            _virtualMachineScaleSetNetworkInterfaceIPConfigurationPublicIPAddressesRestClient = new VirtualMachineScaleSetNetworkInterfaceIPConfigurationPublicIPAddresses(_virtualMachineScaleSetNetworkInterfaceIPConfigurationPublicIPAddressesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, virtualMachineScaleSetNetworkInterfaceIPConfigurationPublicIPAddressApiVersion ?? "2018-10-01");
+            _virtualMachineScaleSetNetworkInterfaceIPConfigurationPublicIPAddressesRestClient = new VirtualMachineScaleSetNetworkInterfaceIPConfigurationPublicIPAddresses(_virtualMachineScaleSetNetworkInterfaceIPConfigurationPublicIPAddressesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.Compute/virtualMachineScaleSets/virtualMachines/networkInterfaces/ipconfigurations/publicipaddresses", out string virtualMachineScaleSetNetworkInterfaceIPConfigurationPublicIPAddressesApiVersionOverride) ? virtualMachineScaleSetNetworkInterfaceIPConfigurationPublicIPAddressesApiVersionOverride : "2018-10-01");
             ValidateResourceId(id);
         }
 
@@ -103,7 +102,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> PublicIPAddresses_GetVirtualMachineScaleSetPublicIPAddress. </description>
+        /// <description> VmssPublicIPAddresses_GetVirtualMachineScaleSetPublicIPAddress. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -152,7 +151,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> PublicIPAddresses_GetVirtualMachineScaleSetPublicIPAddress. </description>
+        /// <description> VmssPublicIPAddresses_GetVirtualMachineScaleSetPublicIPAddress. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
