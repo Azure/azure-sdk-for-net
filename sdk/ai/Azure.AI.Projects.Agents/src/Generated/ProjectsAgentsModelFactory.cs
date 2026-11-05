@@ -2526,6 +2526,37 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <summary>
+        /// A persisted voice conversation. The Foundry envelope that owns a voice agent's stored
+        /// transcript, responses, per-turn metrics, and audio. It is the parent, retention, and delete boundary:
+        /// deleting it cascades to its responses, items, metrics, and audio. When finalization fails, any partial persisted
+        /// responses, items, and item audio remain readable.
+        /// </summary>
+        /// <param name="id"> The unique id of the conversation. </param>
+        /// <param name="status"> The lifecycle status of the conversation. </param>
+        /// <param name="createdOn"> The Unix timestamp (in seconds) for when the conversation was created. </param>
+        /// <param name="completedOn"> The Unix timestamp (in seconds) for when session and persistence finalization reached the terminal `completed` or `failed` status. Absent while `status` is `in_progress`. </param>
+        /// <param name="metadata"> A set of key-value pairs attached to the conversation. </param>
+        /// <param name="usage"> Final aggregate token usage across all responses in this conversation. Absent while `status` is `in_progress` and populated after successful `completed` finalization; it may be absent when `status` is `failed`, and values are not guaranteed to be reported incrementally. </param>
+        /// <param name="lastError"> The terminal error that prevented persistence finalization. Present only when `status` is `failed`. </param>
+        /// <returns> A new <see cref="Agents.VoiceConversation"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static VoiceConversation VoiceConversation(string id = default, VoiceConversationStatus status = default, DateTimeOffset createdOn = default, DateTimeOffset? completedOn = default, IDictionary<string, string> metadata = default, RealtimeResponseUsage usage = default, FoundryOpenAIError lastError = default)
+        {
+            metadata ??= new ChangeTrackingDictionary<string, string>();
+
+            return new VoiceConversation(
+                id,
+                "voice.conversation",
+                status,
+                createdOn,
+                completedOn,
+                metadata,
+                usage,
+                lastError,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary>
         /// A persisted voice response representing one model inference turn within a conversation. In list results the
         /// `output` projection may be omitted; retrieve the
         /// full response (`GET .../responses/{response_id}`) or the paged response-items route
@@ -2722,6 +2753,32 @@ namespace Azure.AI.Projects.Agents
             return new VoiceRecordingChannelLayout("user", "agent", additionalBinaryDataProperties: null);
         }
 
+        /// <summary> A Live session persisted when effective store is true. Uses voice-conversation lifecycle and retention; items are retrieved separately. </summary>
+        /// <param name="id"> The unique id of the conversation. </param>
+        /// <param name="status"> The lifecycle status of the conversation. </param>
+        /// <param name="createdOn"> The Unix timestamp (in seconds) for when the conversation was created. </param>
+        /// <param name="completedOn"> The Unix timestamp (in seconds) for when session and persistence finalization reached the terminal `completed` or `failed` status. Absent while `status` is `in_progress`. </param>
+        /// <param name="metadata"> A set of key-value pairs attached to the conversation. </param>
+        /// <param name="lastError"> The terminal error that prevented persistence finalization. Present only when `status` is `failed`. </param>
+        /// <param name="usage"> Cumulative Live audio usage, excluding delegated-model tokens. May be absent after abnormal close. </param>
+        /// <returns> A new <see cref="Agents.VoiceAgentLiveConversation"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static VoiceAgentLiveConversation VoiceAgentLiveConversation(string id = default, VoiceConversationStatus status = default, DateTimeOffset createdOn = default, DateTimeOffset? completedOn = default, IDictionary<string, string> metadata = default, FoundryOpenAIError lastError = default, LiveSessionUsage usage = default)
+        {
+            metadata ??= new ChangeTrackingDictionary<string, string>();
+
+            return new VoiceAgentLiveConversation(
+                id,
+                "voice.conversation",
+                status,
+                createdOn,
+                completedOn,
+                metadata,
+                lastError,
+                usage,
+                additionalBinaryDataProperties: null);
+        }
+
         /// <summary> Cumulative audio duration for a Live session. Values are totals for the session, not increments to sum across usage events. </summary>
         /// <param name="seconds"> The cumulative Live audio duration in seconds. Do not sum this value across usage events. </param>
         /// <returns> A new <see cref="Agents.LiveSessionUsage"/> instance for mocking. </returns>
@@ -2867,69 +2924,6 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <summary>
-        /// The request to create a telephony binding.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Agents.CreateSipTelephonyBindingContent"/>, <see cref="Agents.CreateTeamsPhoneExtensibilityTelephonyBindingContent"/>, and <see cref="Agents.CreateTwilioTelephonyBindingContent"/>.
-        /// </summary>
-        /// <param name="provider"> The telephony provider. </param>
-        /// <param name="connectionName"> The Foundry connection name for the telephony provider. </param>
-        /// <param name="label"> An optional display label for the binding. </param>
-        /// <returns> A new <see cref="Agents.CreateTelephonyBindingContent"/> instance for mocking. </returns>
-        [Experimental("AAIP001")]
-        public static CreateTelephonyBindingContent CreateTelephonyBindingContent(string provider = default, string connectionName = default, string label = default)
-        {
-            return new UnknownCreateTelephonyBindingContent(new TelephonyProvider(provider), connectionName, label, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> The request to create a Microsoft Teams Phone extensibility binding. </summary>
-        /// <param name="connectionName"> The Foundry connection name for the telephony provider. </param>
-        /// <param name="label"> An optional display label for the binding. </param>
-        /// <param name="phoneNumber"> The optional display phone number for the Teams resource account. </param>
-        /// <param name="resourceAccountObjectId"> The Microsoft Teams resource-account object identifier as a GUID. </param>
-        /// <returns> A new <see cref="Agents.CreateTeamsPhoneExtensibilityTelephonyBindingContent"/> instance for mocking. </returns>
-        [Experimental("AAIP001")]
-        public static CreateTeamsPhoneExtensibilityTelephonyBindingContent CreateTeamsPhoneExtensibilityTelephonyBindingContent(string connectionName = default, string label = default, string phoneNumber = default, string resourceAccountObjectId = default)
-        {
-            return new CreateTeamsPhoneExtensibilityTelephonyBindingContent(
-                TelephonyProvider.TeamsPhoneExtensibility,
-                connectionName,
-                label,
-                additionalBinaryDataProperties: null,
-                phoneNumber,
-                resourceAccountObjectId);
-        }
-
-        /// <summary> The request to create a Twilio binding. </summary>
-        /// <param name="connectionName"> The Foundry connection name for the telephony provider. </param>
-        /// <param name="label"> An optional display label for the binding. </param>
-        /// <param name="phoneNumber"> The Twilio E.164 phone number. </param>
-        /// <returns> A new <see cref="Agents.CreateTwilioTelephonyBindingContent"/> instance for mocking. </returns>
-        [Experimental("AAIP001")]
-        public static CreateTwilioTelephonyBindingContent CreateTwilioTelephonyBindingContent(string connectionName = default, string label = default, string phoneNumber = default)
-        {
-            return new CreateTwilioTelephonyBindingContent(TelephonyProvider.Twilio, connectionName, label, additionalBinaryDataProperties: null, phoneNumber);
-        }
-
-        /// <summary> The request to create an inbound SIP binding. </summary>
-        /// <param name="connectionName"> The Foundry connection name for the telephony provider. </param>
-        /// <param name="label"> An optional display label for the binding. </param>
-        /// <param name="phoneNumber"> For UI display only. </param>
-        /// <param name="allowedCallingNumbers"> Omit or send [] to allow any caller. Entries match the entire normalized E.164 caller number. </param>
-        /// <returns> A new <see cref="Agents.CreateSipTelephonyBindingContent"/> instance for mocking. </returns>
-        [Experimental("AAIP001")]
-        public static CreateSipTelephonyBindingContent CreateSipTelephonyBindingContent(string connectionName = default, string label = default, string phoneNumber = default, IEnumerable<string> allowedCallingNumbers = default)
-        {
-            allowedCallingNumbers ??= new ChangeTrackingList<string>();
-
-            return new CreateSipTelephonyBindingContent(
-                TelephonyProvider.Sip,
-                connectionName,
-                label,
-                additionalBinaryDataProperties: null,
-                phoneNumber,
-                allowedCallingNumbers.ToList());
-        }
-
-        /// <summary>
         /// A telephony binding owned by a voice agent.
         /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Agents.SipTelephonyBinding"/>, <see cref="Agents.TeamsPhoneExtensibilityTelephonyBinding"/>, and <see cref="Agents.TwilioTelephonyBinding"/>.
         /// </summary>
@@ -2937,18 +2931,16 @@ namespace Azure.AI.Projects.Agents
         /// <param name="provider"> The telephony provider. </param>
         /// <param name="connectionName"> The Foundry connection name for the telephony provider. </param>
         /// <param name="label"> The optional display label for the binding. </param>
-        /// <param name="status"> The lifecycle status. </param>
-        /// <param name="incomingCallUrl"> The service-generated webhook URL to configure with the telephony provider. For SIP bindings, this is a SIP URI. </param>
+        /// <param name="incomingCallUrl"> The service-generated incoming address: an HTTPS webhook for webhook-based providers or a SIP/SIPS ingress URI for SIP. </param>
         /// <returns> A new <see cref="Agents.TelephonyBinding"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static TelephonyBinding TelephonyBinding(string id = default, string provider = default, string connectionName = default, string label = default, TelephonyBindingStatus status = default, Uri incomingCallUrl = default)
+        public static TelephonyBinding TelephonyBinding(string id = default, string provider = default, string connectionName = default, string label = default, Uri incomingCallUrl = default)
         {
             return new UnknownTelephonyBinding(
                 id,
                 new TelephonyProvider(provider),
                 connectionName,
                 label,
-                status,
                 incomingCallUrl,
                 additionalBinaryDataProperties: null);
         }
@@ -2957,20 +2949,18 @@ namespace Azure.AI.Projects.Agents
         /// <param name="id"> The service-generated binding identifier. </param>
         /// <param name="connectionName"> The Foundry connection name for the telephony provider. </param>
         /// <param name="label"> The optional display label for the binding. </param>
-        /// <param name="status"> The lifecycle status. </param>
-        /// <param name="incomingCallUrl"> The service-generated webhook URL to configure with the telephony provider. For SIP bindings, this is a SIP URI. </param>
+        /// <param name="incomingCallUrl"> The service-generated incoming address: an HTTPS webhook for webhook-based providers or a SIP/SIPS ingress URI for SIP. </param>
         /// <param name="phoneNumber"> The optional display phone number for the Teams resource account. </param>
         /// <param name="resourceAccountObjectId"> The Microsoft Teams resource-account object identifier as a GUID. </param>
         /// <returns> A new <see cref="Agents.TeamsPhoneExtensibilityTelephonyBinding"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static TeamsPhoneExtensibilityTelephonyBinding TeamsPhoneExtensibilityTelephonyBinding(string id = default, string connectionName = default, string label = default, TelephonyBindingStatus status = default, Uri incomingCallUrl = default, string phoneNumber = default, string resourceAccountObjectId = default)
+        public static TeamsPhoneExtensibilityTelephonyBinding TeamsPhoneExtensibilityTelephonyBinding(string id = default, string connectionName = default, string label = default, Uri incomingCallUrl = default, string phoneNumber = default, string resourceAccountObjectId = default)
         {
             return new TeamsPhoneExtensibilityTelephonyBinding(
                 id,
                 TelephonyProvider.TeamsPhoneExtensibility,
                 connectionName,
                 label,
-                status,
                 incomingCallUrl,
                 additionalBinaryDataProperties: null,
                 phoneNumber,
@@ -2981,35 +2971,32 @@ namespace Azure.AI.Projects.Agents
         /// <param name="id"> The service-generated binding identifier. </param>
         /// <param name="connectionName"> The Foundry connection name for the telephony provider. </param>
         /// <param name="label"> The optional display label for the binding. </param>
-        /// <param name="status"> The lifecycle status. </param>
-        /// <param name="incomingCallUrl"> The service-generated webhook URL to configure with the telephony provider. For SIP bindings, this is a SIP URI. </param>
+        /// <param name="incomingCallUrl"> The service-generated incoming address: an HTTPS webhook for webhook-based providers or a SIP/SIPS ingress URI for SIP. </param>
         /// <param name="phoneNumber"> The Twilio E.164 phone number. </param>
         /// <returns> A new <see cref="Agents.TwilioTelephonyBinding"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static TwilioTelephonyBinding TwilioTelephonyBinding(string id = default, string connectionName = default, string label = default, TelephonyBindingStatus status = default, Uri incomingCallUrl = default, string phoneNumber = default)
+        public static TwilioTelephonyBinding TwilioTelephonyBinding(string id = default, string connectionName = default, string label = default, Uri incomingCallUrl = default, string phoneNumber = default)
         {
             return new TwilioTelephonyBinding(
                 id,
                 TelephonyProvider.Twilio,
                 connectionName,
                 label,
-                status,
                 incomingCallUrl,
                 additionalBinaryDataProperties: null,
                 phoneNumber);
         }
 
-        /// <summary> A SIP binding. </summary>
+        /// <summary> Inbound binding using a same-project SipInbound connection for authentication/network restrictions. Creation does not prove regional runtime readiness. </summary>
         /// <param name="id"> The service-generated binding identifier. </param>
         /// <param name="connectionName"> The Foundry connection name for the telephony provider. </param>
         /// <param name="label"> The optional display label for the binding. </param>
-        /// <param name="status"> The lifecycle status. </param>
-        /// <param name="incomingCallUrl"> The service-generated webhook URL to configure with the telephony provider. For SIP bindings, this is a SIP URI. </param>
-        /// <param name="phoneNumber"> For UI display only. </param>
-        /// <param name="allowedCallingNumbers"> Omit or send [] to allow any caller. Entries match the entire normalized E.164 caller number. </param>
+        /// <param name="incomingCallUrl"> The service-generated incoming address: an HTTPS webhook for webhook-based providers or a SIP/SIPS ingress URI for SIP. </param>
+        /// <param name="phoneNumber"> Optional display metadata, not a routing key or E.164-constrained destination. </param>
+        /// <param name="allowedCallingNumbers"> Exact E.164 caller numbers or restricted anchored patterns, validated by the service. Omit or use [] for no restriction. </param>
         /// <returns> A new <see cref="Agents.SipTelephonyBinding"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static SipTelephonyBinding SipTelephonyBinding(string id = default, string connectionName = default, string label = default, TelephonyBindingStatus status = default, Uri incomingCallUrl = default, string phoneNumber = default, IEnumerable<string> allowedCallingNumbers = default)
+        public static SipTelephonyBinding SipTelephonyBinding(string id = default, string connectionName = default, string label = default, Uri incomingCallUrl = default, string phoneNumber = default, IEnumerable<string> allowedCallingNumbers = default)
         {
             allowedCallingNumbers ??= new ChangeTrackingList<string>();
 
@@ -3018,7 +3005,6 @@ namespace Azure.AI.Projects.Agents
                 TelephonyProvider.Sip,
                 connectionName,
                 label,
-                status,
                 incomingCallUrl,
                 additionalBinaryDataProperties: null,
                 phoneNumber,
@@ -3033,19 +3019,17 @@ namespace Azure.AI.Projects.Agents
         /// <param name="provider"> The telephony provider. </param>
         /// <param name="connectionName"> The Foundry connection name for the telephony provider. </param>
         /// <param name="label"> The optional display label for the binding. </param>
-        /// <param name="status"> The lifecycle status. </param>
-        /// <param name="incomingCallUrl"> The service-generated webhook URL to configure with the telephony provider. For SIP bindings, this is a SIP URI. </param>
+        /// <param name="incomingCallUrl"> The service-generated HTTPS webhook or SIP/SIPS ingress URI to configure with the telephony provider. </param>
         /// <param name="etag"> The entity tag to send in the `If-Match` header when updating or deleting this binding. </param>
         /// <returns> A new <see cref="Agents.TelephonyBindingListItem"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static TelephonyBindingListItem TelephonyBindingListItem(string id = default, string provider = default, string connectionName = default, string label = default, TelephonyBindingStatus status = default, Uri incomingCallUrl = default, string etag = default)
+        public static TelephonyBindingListItem TelephonyBindingListItem(string id = default, string provider = default, string connectionName = default, string label = default, Uri incomingCallUrl = default, string etag = default)
         {
             return new UnknownTelephonyBindingListItem(
                 id,
                 new TelephonyProvider(provider),
                 connectionName,
                 label,
-                status,
                 incomingCallUrl,
                 etag,
                 additionalBinaryDataProperties: null);
@@ -3055,21 +3039,19 @@ namespace Azure.AI.Projects.Agents
         /// <param name="id"> The service-generated binding identifier. </param>
         /// <param name="connectionName"> The Foundry connection name for the telephony provider. </param>
         /// <param name="label"> The optional display label for the binding. </param>
-        /// <param name="status"> The lifecycle status. </param>
-        /// <param name="incomingCallUrl"> The service-generated webhook URL to configure with the telephony provider. For SIP bindings, this is a SIP URI. </param>
+        /// <param name="incomingCallUrl"> The service-generated HTTPS webhook or SIP/SIPS ingress URI to configure with the telephony provider. </param>
         /// <param name="etag"> The entity tag to send in the `If-Match` header when updating or deleting this binding. </param>
         /// <param name="phoneNumber"> The optional display phone number for the Teams resource account. </param>
         /// <param name="resourceAccountObjectId"> The Microsoft Teams resource-account object identifier as a GUID. </param>
         /// <returns> A new <see cref="Agents.TeamsPhoneExtensibilityTelephonyBindingListItem"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static TeamsPhoneExtensibilityTelephonyBindingListItem TeamsPhoneExtensibilityTelephonyBindingListItem(string id = default, string connectionName = default, string label = default, TelephonyBindingStatus status = default, Uri incomingCallUrl = default, string etag = default, string phoneNumber = default, string resourceAccountObjectId = default)
+        public static TeamsPhoneExtensibilityTelephonyBindingListItem TeamsPhoneExtensibilityTelephonyBindingListItem(string id = default, string connectionName = default, string label = default, Uri incomingCallUrl = default, string etag = default, string phoneNumber = default, string resourceAccountObjectId = default)
         {
             return new TeamsPhoneExtensibilityTelephonyBindingListItem(
                 id,
                 TelephonyProvider.TeamsPhoneExtensibility,
                 connectionName,
                 label,
-                status,
                 incomingCallUrl,
                 etag,
                 additionalBinaryDataProperties: null,
@@ -3081,38 +3063,35 @@ namespace Azure.AI.Projects.Agents
         /// <param name="id"> The service-generated binding identifier. </param>
         /// <param name="connectionName"> The Foundry connection name for the telephony provider. </param>
         /// <param name="label"> The optional display label for the binding. </param>
-        /// <param name="status"> The lifecycle status. </param>
-        /// <param name="incomingCallUrl"> The service-generated webhook URL to configure with the telephony provider. For SIP bindings, this is a SIP URI. </param>
+        /// <param name="incomingCallUrl"> The service-generated HTTPS webhook or SIP/SIPS ingress URI to configure with the telephony provider. </param>
         /// <param name="etag"> The entity tag to send in the `If-Match` header when updating or deleting this binding. </param>
         /// <param name="phoneNumber"> The Twilio E.164 phone number. </param>
         /// <returns> A new <see cref="Agents.TwilioTelephonyBindingListItem"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static TwilioTelephonyBindingListItem TwilioTelephonyBindingListItem(string id = default, string connectionName = default, string label = default, TelephonyBindingStatus status = default, Uri incomingCallUrl = default, string etag = default, string phoneNumber = default)
+        public static TwilioTelephonyBindingListItem TwilioTelephonyBindingListItem(string id = default, string connectionName = default, string label = default, Uri incomingCallUrl = default, string etag = default, string phoneNumber = default)
         {
             return new TwilioTelephonyBindingListItem(
                 id,
                 TelephonyProvider.Twilio,
                 connectionName,
                 label,
-                status,
                 incomingCallUrl,
                 etag,
                 additionalBinaryDataProperties: null,
                 phoneNumber);
         }
 
-        /// <summary> A SIP binding returned in a list, including its entity tag. </summary>
+        /// <summary> An inbound SIP binding returned in a list, including its current entity tag. </summary>
         /// <param name="id"> The service-generated binding identifier. </param>
         /// <param name="connectionName"> The Foundry connection name for the telephony provider. </param>
         /// <param name="label"> The optional display label for the binding. </param>
-        /// <param name="status"> The lifecycle status. </param>
-        /// <param name="incomingCallUrl"> The service-generated webhook URL to configure with the telephony provider. For SIP bindings, this is a SIP URI. </param>
+        /// <param name="incomingCallUrl"> The service-generated HTTPS webhook or SIP/SIPS ingress URI to configure with the telephony provider. </param>
         /// <param name="etag"> The entity tag to send in the `If-Match` header when updating or deleting this binding. </param>
-        /// <param name="phoneNumber"> For UI display only. </param>
-        /// <param name="allowedCallingNumbers"> Omit or send [] to allow any caller. Entries match the entire normalized E.164 caller number. </param>
+        /// <param name="phoneNumber"> Optional display phone metadata, not a routing key. </param>
+        /// <param name="allowedCallingNumbers"> Current exact E.164 caller numbers or restricted fully anchored patterns. </param>
         /// <returns> A new <see cref="Agents.SipTelephonyBindingListItem"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static SipTelephonyBindingListItem SipTelephonyBindingListItem(string id = default, string connectionName = default, string label = default, TelephonyBindingStatus status = default, Uri incomingCallUrl = default, string etag = default, string phoneNumber = default, IEnumerable<string> allowedCallingNumbers = default)
+        public static SipTelephonyBindingListItem SipTelephonyBindingListItem(string id = default, string connectionName = default, string label = default, Uri incomingCallUrl = default, string etag = default, string phoneNumber = default, IEnumerable<string> allowedCallingNumbers = default)
         {
             allowedCallingNumbers ??= new ChangeTrackingList<string>();
 
@@ -3121,7 +3100,6 @@ namespace Azure.AI.Projects.Agents
                 TelephonyProvider.Sip,
                 connectionName,
                 label,
-                status,
                 incomingCallUrl,
                 etag,
                 additionalBinaryDataProperties: null,
@@ -3324,86 +3302,77 @@ namespace Azure.AI.Projects.Agents
         /// <summary> A named destination to which the voice agent may transfer a call. </summary>
         /// <param name="name"> The unique name exposed to the voice agent for this transfer target. </param>
         /// <param name="description"> A description that helps the voice agent decide when to use this target. </param>
-        /// <param name="destination"> The provider-specific transfer destination. </param>
+        /// <param name="destination"> The shared typed address to transfer to. The selected provider validates supported destination types. </param>
         /// <returns> A new <see cref="Agents.TelephonyTransferTarget"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static TelephonyTransferTarget TelephonyTransferTarget(string name = default, string description = default, TelephonyTransferDestination destination = default)
+        public static TelephonyTransferTarget TelephonyTransferTarget(string name = default, string description = default, TelephonyAddress destination = default)
         {
             return new TelephonyTransferTarget(name, description, destination, additionalBinaryDataProperties: null);
         }
 
         /// <summary>
-        /// A destination for a telephony transfer target.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Agents.PSTNTelephonyTransferDestination"/>, <see cref="Agents.SipTelephonyTransferDestination"/>, and <see cref="Agents.TeamsTelephonyTransferDestination"/>.
+        /// Shared source, recipient and transfer address. Connections validate each role before dialing; unsupported types fail. New types may be added.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Agents.PhoneNumber"/>, <see cref="Agents.SipAddress"/>, and <see cref="Agents.TeamsAddress"/>.
         /// </summary>
-        /// <param name="kind"> The telephony transfer destination type. </param>
-        /// <returns> A new <see cref="Agents.TelephonyTransferDestination"/> instance for mocking. </returns>
+        /// <param name="type"> Endpoint address type. </param>
+        /// <param name="value"> Concrete address value. Known variants apply their format constraints; unknown variants are rejected before dialing. </param>
+        /// <returns> A new <see cref="Agents.TelephonyAddress"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static TelephonyTransferDestination TelephonyTransferDestination(string kind = default)
+        public static TelephonyAddress TelephonyAddress(string @type = default, string value = default)
         {
-            return new UnknownTelephonyTransferDestination(new TelephonyTransferDestinationKind(kind), additionalBinaryDataProperties: null);
+            return new UnknownTelephonyAddress(new TelephonyAddressType(@type), value, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> A PSTN destination for a telephony transfer target. </summary>
-        /// <param name="value"> The E.164 phone number to call. </param>
-        /// <returns> A new <see cref="Agents.PSTNTelephonyTransferDestination"/> instance for mocking. </returns>
+        /// <summary> Phone-number address used by supported source and destination roles. </summary>
+        /// <param name="value"> E.164 phone number. </param>
+        /// <returns> A new <see cref="Agents.PhoneNumber"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static PSTNTelephonyTransferDestination PSTNTelephonyTransferDestination(string value = default)
+        public static PhoneNumber PhoneNumber(string value = default)
         {
-            return new PSTNTelephonyTransferDestination(TelephonyTransferDestinationKind.Pstn, additionalBinaryDataProperties: null, value);
+            return new PhoneNumber(TelephonyAddressType.PhoneNumber, additionalBinaryDataProperties: null, value);
         }
 
-        /// <summary> A Microsoft Teams destination for a telephony transfer target. </summary>
-        /// <param name="value"> The Microsoft Teams user or resource-account identifier. </param>
-        /// <returns> A new <see cref="Agents.TeamsTelephonyTransferDestination"/> instance for mocking. </returns>
+        /// <summary> Teams source/transfer identity, validated by role and provider. Not supported for outbound recipients. </summary>
+        /// <param name="value"> Source: nonempty resource-account GUID. Transfer: user/resource-account GUID or 28:orgid:{guid}. </param>
+        /// <returns> A new <see cref="Agents.TeamsAddress"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static TeamsTelephonyTransferDestination TeamsTelephonyTransferDestination(string value = default)
+        public static TeamsAddress TeamsAddress(string value = default)
         {
-            return new TeamsTelephonyTransferDestination(TelephonyTransferDestinationKind.Teams, additionalBinaryDataProperties: null, value);
+            return new TeamsAddress(TelephonyAddressType.Teams, additionalBinaryDataProperties: null, value);
         }
 
-        /// <summary> A SIP destination for a telephony transfer target. </summary>
+        /// <summary> SIP/SIPS transfer address, subject to provider validation. SIP outbound sources and recipients use phone_number, not SIP URIs. </summary>
         /// <param name="value"> The SIP or SIPS URI to call. </param>
-        /// <returns> A new <see cref="Agents.SipTelephonyTransferDestination"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Agents.SipAddress"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static SipTelephonyTransferDestination SipTelephonyTransferDestination(Uri value = default)
+        public static SipAddress SipAddress(string value = default)
         {
-            return new SipTelephonyTransferDestination(TelephonyTransferDestinationKind.Sip, additionalBinaryDataProperties: null, value);
+            return new SipAddress(TelephonyAddressType.Sip, additionalBinaryDataProperties: null, value);
         }
 
-        /// <summary> A request to create one durable direct outbound call job. </summary>
+        /// <summary> The direct outbound call to create. </summary>
         /// <param name="destination"> The phone destination to call. </param>
-        /// <param name="connectionName"> The Foundry connection name in the current project used to originate the call. Its category selects Twilio, Azure Communication Services / Teams Phone extensibility, or SIP. No inbound telephony binding is required. </param>
-        /// <param name="source"> The caller identity used to originate the call. For a Twilio connection, provide an authorized E.164 phone number. For an Azure Communication Services / Teams Phone extensibility connection, provide the Teams Resource Account object ID. The identity type is inferred from the connection category; originating does not change inbound routing. </param>
+        /// <param name="connectionName"> Same-project Twilio, ACS/Teams Phone extensibility or SipOutbound connection; no inbound binding needed. SIP requires CustomKeys and a DNS target, revalidated before dialing, not a connectivity guarantee. </param>
         /// <param name="purpose"> An optional customer-declared purpose for placing the call. </param>
-        /// <param name="structuredInputs"> Structured input values available to the agent and greeting for this call. Agent-declared inputs are validated against their schemas; omitted optional inputs may use their Agent-defined default values, while omitted required inputs are rejected. Additional inputs remain available as dynamic template variables. </param>
+        /// <param name="structuredInputs"> Agent/greeting inputs, including nested JSON and null. Agent schemas, required fields and defaults apply. </param>
         /// <param name="schedule"> The optional execution window. </param>
-        /// <param name="retryPolicy"> The provider-attempt retry policy. Omit it for one attempt with no retry delay. </param>
-        /// <returns> A new <see cref="Agents.CreateTelephonyCallJobContent"/> instance for mocking. </returns>
+        /// <param name="retryPolicy"> Frozen retry policy. Omission at creation returns fixed_interval with max_attempts=1 and interval=0 seconds: one initial attempt, no retry. </param>
+        /// <param name="source"> Caller identity: phone_number for Twilio/SIP, or a teams resource-account GUID for ACS/Teams Phone extensibility. No sip source URI. </param>
+        /// <returns> A new <see cref="Agents.TelephonyCallJobCreate"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static CreateTelephonyCallJobContent CreateTelephonyCallJobContent(TelephonyOutboundDestination destination = default, string connectionName = default, string source = default, string purpose = default, IDictionary<string, BinaryData> structuredInputs = default, TelephonyCallJobSchedule schedule = default, TelephonyOutboundRetryPolicy retryPolicy = default)
+        public static TelephonyCallJobCreate TelephonyCallJobCreate(TelephonyAddress destination = default, string connectionName = default, string purpose = default, IDictionary<string, BinaryData> structuredInputs = default, TelephonyCallJobSchedule schedule = default, TelephonyOutboundRetryPolicy retryPolicy = default, TelephonyAddress source = default)
         {
             structuredInputs ??= new ChangeTrackingDictionary<string, BinaryData>();
 
-            return new CreateTelephonyCallJobContent(
+            return new TelephonyCallJobCreate(
                 destination,
                 connectionName,
-                source,
                 purpose,
                 structuredInputs,
                 schedule,
                 retryPolicy,
+                source,
                 additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> The destination of an outbound call. </summary>
-        /// <param name="type"> The destination type. Only E.164 phone numbers are currently supported. </param>
-        /// <param name="value"> The destination E.164 phone number. </param>
-        /// <returns> A new <see cref="Agents.TelephonyOutboundDestination"/> instance for mocking. </returns>
-        [Experimental("AAIP001")]
-        public static TelephonyOutboundDestination TelephonyOutboundDestination(TelephonyOutboundDestinationType @type = default, string value = default)
-        {
-            return new TelephonyOutboundDestination(@type, value, additionalBinaryDataProperties: null);
         }
 
         /// <summary> The optional execution window for a direct outbound call. </summary>
@@ -3418,7 +3387,7 @@ namespace Azure.AI.Projects.Agents
 
         /// <summary>
         /// The retry policy for one durable outbound call intent. `max_attempts` includes the first attempt. Strategy-specific settings are defined by the derived policy.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Agents.TelephonyOutboundFixedIntervalRetryPolicyResult"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Agents.FixedIntervalRetryPolicy"/>.
         /// </summary>
         /// <param name="type"> The retry strategy. Only fixed-interval retries are currently supported. </param>
         /// <param name="maxAttempts"> The maximum number of provider attempts, including the first attempt. Defaults to 1. </param>
@@ -3429,49 +3398,48 @@ namespace Azure.AI.Projects.Agents
             return new UnknownTelephonyOutboundRetryPolicy(new TelephonyOutboundRetryPolicyType(@type), maxAttempts, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> The frozen fixed-interval retry policy returned for an outbound call or campaign. </summary>
+        /// <summary> Shared direct-call/Campaign retry policy. Omission means one attempt; CallJobs return max_attempts=1 and interval=0 seconds. </summary>
         /// <param name="maxAttempts"> The maximum number of provider attempts, including the first attempt. Defaults to 1. </param>
-        /// <param name="interval"> The fixed delay in seconds between attempts. </param>
-        /// <returns> A new <see cref="Agents.TelephonyOutboundFixedIntervalRetryPolicyResult"/> instance for mocking. </returns>
+        /// <param name="interval"> The nonnegative delay between attempts, from 0 to 2147483647 seconds. Zero permits an immediate retry, subject to scheduling and capacity. </param>
+        /// <returns> A new <see cref="Agents.FixedIntervalRetryPolicy"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static TelephonyOutboundFixedIntervalRetryPolicyResult TelephonyOutboundFixedIntervalRetryPolicyResult(int? maxAttempts = default, TimeSpan interval = default)
+        public static FixedIntervalRetryPolicy FixedIntervalRetryPolicy(int? maxAttempts = default, TimeSpan interval = default)
         {
-            return new TelephonyOutboundFixedIntervalRetryPolicyResult(TelephonyOutboundRetryPolicyType.FixedInterval, maxAttempts, additionalBinaryDataProperties: null, interval);
+            return new FixedIntervalRetryPolicy(TelephonyOutboundRetryPolicyType.FixedInterval, maxAttempts, additionalBinaryDataProperties: null, interval);
         }
 
         /// <summary> A durable direct or campaign-created outbound call intent. </summary>
         /// <param name="destination"> The phone destination to call. </param>
-        /// <param name="connectionName"> The Foundry connection name in the current project used to originate the call. Its category selects Twilio, Azure Communication Services / Teams Phone extensibility, or SIP. No inbound telephony binding is required. </param>
-        /// <param name="source"> The caller identity used to originate the call. For a Twilio connection, provide an authorized E.164 phone number. For an Azure Communication Services / Teams Phone extensibility connection, provide the Teams Resource Account object ID. The identity type is inferred from the connection category; originating does not change inbound routing. </param>
+        /// <param name="connectionName"> Same-project Twilio, ACS/Teams Phone extensibility or SipOutbound connection; no inbound binding needed. SIP requires CustomKeys and a DNS target, revalidated before dialing, not a connectivity guarantee. </param>
         /// <param name="purpose"> An optional customer-declared purpose for placing the call. </param>
-        /// <param name="structuredInputs"> Structured input values available to the agent and greeting for this call. Agent-declared inputs are validated against their schemas; omitted optional inputs may use their Agent-defined default values, while omitted required inputs are rejected. Additional inputs remain available as dynamic template variables. </param>
+        /// <param name="structuredInputs"> Agent/greeting inputs, including nested JSON and null. Agent schemas, required fields and defaults apply. </param>
         /// <param name="schedule"> The optional execution window. </param>
         /// <param name="id"> The service-generated call-job identifier. </param>
         /// <param name="agentName"> The name of the voice agent used at execution time. </param>
         /// <param name="status"> The current call-job lifecycle status. </param>
         /// <param name="cancellation"> The recorded cancellation request, when cancellation was requested. </param>
-        /// <param name="retryPolicy"> The frozen provider-attempt retry policy. </param>
+        /// <param name="retryPolicy"> Frozen retry policy. Omission at creation returns fixed_interval with max_attempts=1 and interval=0 seconds: one initial attempt, no retry. </param>
         /// <param name="attemptCount"> The number of provider attempts created so far. </param>
         /// <param name="nextAttemptOn"> The Unix timestamp in seconds at which the next retry becomes eligible. </param>
         /// <param name="terminalReason"> The stable service-generated reason for the overall outbound call job, which can span multiple provider attempts, when available. Interpret this with `status`: a queued job can retain a temporary dispatch-deferral reason. Additional string codes may be returned. </param>
         /// <param name="revision"> The monotonically increasing optimistic-concurrency revision. </param>
         /// <param name="createdOn"> The Unix timestamp in seconds when the call job was created. </param>
         /// <param name="updatedOn"> The Unix timestamp in seconds when the call job was last updated. </param>
+        /// <param name="source"> Caller identity: phone_number for Twilio/SIP, or a teams resource-account GUID for ACS/Teams Phone extensibility. No sip source URI. </param>
+        /// <param name="campaignName"> Owning Campaign, absent for direct calls. Instance-bound despite name reuse; Campaign deletion hides then removes its jobs. </param>
         /// <returns> A new <see cref="Agents.TelephonyCallJob"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static TelephonyCallJob TelephonyCallJob(TelephonyOutboundDestination destination = default, string connectionName = default, string source = default, string purpose = default, IDictionary<string, BinaryData> structuredInputs = default, TelephonyCallJobSchedule schedule = default, string id = default, string agentName = default, TelephonyCallJobStatus status = default, TelephonyCallJobCancellation cancellation = default, TelephonyOutboundRetryPolicy retryPolicy = default, int attemptCount = default, DateTimeOffset? nextAttemptOn = default, TelephonyCallJobTerminalReason? terminalReason = default, long revision = default, DateTimeOffset createdOn = default, DateTimeOffset updatedOn = default)
+        public static TelephonyCallJob TelephonyCallJob(TelephonyAddress destination = default, string connectionName = default, string purpose = default, IDictionary<string, BinaryData> structuredInputs = default, TelephonyCallJobSchedule schedule = default, string id = default, string agentName = default, TelephonyCallJobStatus status = default, TelephonyCallJobCancellation cancellation = default, TelephonyOutboundRetryPolicy retryPolicy = default, int attemptCount = default, DateTimeOffset? nextAttemptOn = default, TelephonyCallJobTerminalReason? terminalReason = default, long revision = default, DateTimeOffset createdOn = default, DateTimeOffset updatedOn = default, TelephonyAddress source = default, string campaignName = default)
         {
             structuredInputs ??= new ChangeTrackingDictionary<string, BinaryData>();
 
             return new TelephonyCallJob(
                 destination,
                 connectionName,
-                source,
                 purpose,
                 structuredInputs,
                 schedule,
                 id,
-                "telephony.call_job",
                 agentName,
                 status,
                 cancellation,
@@ -3482,6 +3450,8 @@ namespace Azure.AI.Projects.Agents
                 revision,
                 createdOn,
                 updatedOn,
+                source,
+                campaignName,
                 additionalBinaryDataProperties: null);
         }
 
@@ -3495,6 +3465,166 @@ namespace Azure.AI.Projects.Agents
         public static TelephonyCallJobCancellation TelephonyCallJobCancellation(string requestedBy = default, string mode = default, DateTimeOffset requestedOn = default, long revision = default)
         {
             return new TelephonyCallJobCancellation(requestedBy, mode, requestedOn, revision, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Agent-owned outbound call Campaign. Creation/replacement authorizes execution after successful preparation. </summary>
+        /// <param name="connectionName"> Human-readable name of the provider connection in the current project. </param>
+        /// <param name="source"> Typed caller address shared with generated CallJobs. The connection validates source support separately from recipient support. </param>
+        /// <param name="recipients"> 1-100 recipients, exclusive with recipient_dataset. The whole UTF-8 request is limited to 1 MiB. Omitted from reads; retain the submission for row correlation. </param>
+        /// <param name="recipientDataset"> Same-project CSV/JSON/JSONL uri_file, exclusive with recipients. Omitted version pins latest per preparation. Limits: 1-1,000,000 rows, 256 MiB decoded/file, 1 MiB/row. </param>
+        /// <param name="schedule"> Dispatch schedule; omission equals ImmediateSchedule. Every mode waits for successful preparation, then follows its schedule and available capacity. </param>
+        /// <param name="retryPolicy"> Per-recipient retries. Omit for one attempt; generated CallJobs return fixed_interval with max_attempts=1 and interval=0 seconds. </param>
+        /// <param name="status"> Business execution state. Each asynchronous action has its own retained operation monitor. </param>
+        /// <param name="error"> Preparation/control failure, cleared on retry. Never includes secrets or raw recipient values. </param>
+        /// <param name="name"> Immutable name supplied as campaign_name in the PUT path, not the request body; echoed in responses. Unique within the project and Agent. </param>
+        /// <param name="createdOn"> Creation time. </param>
+        /// <param name="updatedOn"> Last observable progress update. </param>
+        /// <param name="etag"> Conditional-action token, not a cache validator. Changes with control state, not progress. </param>
+        /// <param name="operationId"> Latest accepted action, for discovery only. Poll the initiating response's Operation-Id/Operation-Location instead. </param>
+        /// <param name="finishedOn"> Time of terminal completion for the current round; cleared when failed preparation is replaced. </param>
+        /// <param name="lockedAgentVersion"> Latest Agent version pinned once per preparation and shared by retries/calls. Omitted until resolved; replacement clears it. Unavailable pins fail without fallback. </param>
+        /// <param name="progress"> Available partial accounting even when the job fails or is cancelled. </param>
+        /// <returns> A new <see cref="Agents.TelephonyCampaign"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static TelephonyCampaign TelephonyCampaign(string connectionName = default, TelephonyAddress source = default, IEnumerable<TelephonyRecipient> recipients = default, DatasetReference recipientDataset = default, TelephonyCampaignSchedule schedule = default, TelephonyOutboundRetryPolicy retryPolicy = default, TelephonyCampaignStatus status = default, FoundryOpenAIError error = default, string name = default, DateTimeOffset createdOn = default, DateTimeOffset updatedOn = default, string etag = default, string operationId = default, DateTimeOffset? finishedOn = default, string lockedAgentVersion = default, TelephonyCampaignProgress progress = default)
+        {
+            recipients ??= new ChangeTrackingList<TelephonyRecipient>();
+
+            return new TelephonyCampaign(
+                connectionName,
+                source,
+                recipients.ToList(),
+                recipientDataset,
+                schedule,
+                retryPolicy,
+                status,
+                error,
+                name,
+                createdOn,
+                updatedOn,
+                etag,
+                operationId,
+                finishedOn,
+                lockedAgentVersion,
+                progress,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> One recipient in an inline campaign input. Each input position is a separate intended call, including repeated destinations. </summary>
+        /// <param name="destination"> Recipient address; currently phone_number only. Unsupported types fail preparation; future variants can reuse this field. </param>
+        /// <param name="structuredInputs"> Agent inputs with nested JSON/null, unique names and depth at most 16. Agent schemas/defaults apply. Replay preserves types, exact numbers, array order and null/omission, but ignores object order; use lossless numeric serialization. </param>
+        /// <param name="scheduledOn"> Earliest dispatch time for recipient scheduling. Required only when schedule.type is recipient; forbidden for other modes. </param>
+        /// <returns> A new <see cref="Agents.TelephonyRecipient"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static TelephonyRecipient TelephonyRecipient(TelephonyAddress destination = default, IDictionary<string, BinaryData> structuredInputs = default, DateTimeOffset? scheduledOn = default)
+        {
+            structuredInputs ??= new ChangeTrackingDictionary<string, BinaryData>();
+
+            return new TelephonyRecipient(destination, structuredInputs, scheduledOn, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Reference to a Foundry Dataset in the current project. Consuming operations define supported Dataset kinds and resolution behavior. </summary>
+        /// <param name="name"> Dataset name. </param>
+        /// <param name="version"> Optional Dataset version. Omit to select latest when the consuming operation resolves the reference. </param>
+        /// <returns> A new <see cref="Agents.DatasetReference"/> instance for mocking. </returns>
+        public static DatasetReference DatasetReference(string name = default, string version = default)
+        {
+            return new DatasetReference(name, version, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary>
+        /// Creation authorizes dialing; every scheduling mode waits for successful preparation.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Agents.AtTimeSchedule"/>, <see cref="Agents.ImmediateSchedule"/>, and <see cref="Agents.PerRecipientSchedule"/>.
+        /// </summary>
+        /// <param name="type"> How each recipient's earliest dispatch time is determined. </param>
+        /// <param name="expiresOn"> Exclusive deadline for new attempts, including retries; active calls may finish. Must be later than every scheduled_at. </param>
+        /// <returns> A new <see cref="Agents.TelephonyCampaignSchedule"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static TelephonyCampaignSchedule TelephonyCampaignSchedule(string @type = default, DateTimeOffset? expiresOn = default)
+        {
+            return new UnknownTelephonyCampaignSchedule(new TelephonyCampaignScheduleType(@type), expiresOn, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Dispatch automatically as soon as preparation succeeds and capacity permits. </summary>
+        /// <param name="expiresOn"> Exclusive deadline for new attempts, including retries; active calls may finish. Must be later than every scheduled_at. </param>
+        /// <returns> A new <see cref="Agents.ImmediateSchedule"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static ImmediateSchedule ImmediateSchedule(DateTimeOffset? expiresOn = default)
+        {
+            return new ImmediateSchedule(TelephonyCampaignScheduleType.Immediate, expiresOn, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Uses one earliest dispatch time for all recipients. Past times are allowed; preparation must still succeed. </summary>
+        /// <param name="expiresOn"> Exclusive deadline for new attempts, including retries; active calls may finish. Must be later than every scheduled_at. </param>
+        /// <param name="scheduledOn"> Common earliest dispatch time; successful preparation is required. </param>
+        /// <returns> A new <see cref="Agents.AtTimeSchedule"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static AtTimeSchedule AtTimeSchedule(DateTimeOffset? expiresOn = default, DateTimeOffset scheduledOn = default)
+        {
+            return new AtTimeSchedule(TelephonyCampaignScheduleType.Scheduled, expiresOn, additionalBinaryDataProperties: null, scheduledOn);
+        }
+
+        /// <summary> Uses each recipient's scheduled_at: RFC 3339 with timezone in Datasets, Unix seconds for inline recipients. </summary>
+        /// <param name="expiresOn"> Exclusive deadline for new attempts, including retries; active calls may finish. Must be later than every scheduled_at. </param>
+        /// <returns> A new <see cref="Agents.PerRecipientSchedule"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static PerRecipientSchedule PerRecipientSchedule(DateTimeOffset? expiresOn = default)
+        {
+            return new PerRecipientSchedule(TelephonyCampaignScheduleType.Recipient, expiresOn, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Recipient execution counts, zero until preparation succeeds; then mutually exclusive and summing to total_recipients. </summary>
+        /// <param name="totalRecipients"> Total input rows, including invalid rows. Omitted until known; never an estimate. </param>
+        /// <param name="pending"> Recipients waiting for their schedule, capacity or retry after preparation has completed. </param>
+        /// <param name="active"> Recipients with a durable origination reservation or unresolved provider attempt, including dispatching before a call ID is received. </param>
+        /// <param name="completed"> Recipients whose CallJob completed; not proof of business success. </param>
+        /// <param name="failed"> Recipients whose CallJob exhausted retries or failed. </param>
+        /// <param name="cancelled"> Recipients cancelled before completion. Does not include dispatch-window expiry. </param>
+        /// <param name="expired"> Recipients whose dispatch deadline elapsed before a new attempt could start. </param>
+        /// <returns> A new <see cref="Agents.TelephonyCampaignProgress"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static TelephonyCampaignProgress TelephonyCampaignProgress(long? totalRecipients = default, long pending = default, long active = default, long completed = default, long failed = default, long cancelled = default, long expired = default)
+        {
+            return new TelephonyCampaignProgress(
+                totalRecipients,
+                pending,
+                active,
+                completed,
+                failed,
+                cancelled,
+                expired,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Preparation/cancel/delete monitor bound to its original Campaign instance/round, independent of later actions. Omits result. Retained for the Campaign lifetime and at least 24 hours after both completion and deletion. </summary>
+        /// <param name="id"> Server-assigned unique identifier. </param>
+        /// <param name="status"> Current lifecycle status. </param>
+        /// <param name="error"> Error details — populated only on failure. </param>
+        /// <param name="kind"> Work tracked by this monitor. </param>
+        /// <param name="createdOn"> Creation time of this operation. </param>
+        /// <param name="finishedOn"> When preparation, cancellation or deletion finished. </param>
+        /// <returns> A new <see cref="Agents.TelephonyCampaignOperation"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static TelephonyCampaignOperation TelephonyCampaignOperation(string id = default, AgentsJobStatus status = default, FoundryOpenAIError error = default, TelephonyCampaignOperationKind kind = default, DateTimeOffset createdOn = default, DateTimeOffset? finishedOn = default)
+        {
+            return new TelephonyCampaignOperation(
+                id,
+                status,
+                error,
+                kind,
+                createdOn,
+                finishedOn,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Invalid-row diagnostic for current preparation; execution errors are in CallJobs. </summary>
+        /// <param name="rowNumber"> One-based source row or inline item position. </param>
+        /// <param name="error"> Row validation error; param identifies the field. Never includes raw values or secrets. </param>
+        /// <returns> A new <see cref="Agents.TelephonyCampaignValidationError"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static TelephonyCampaignValidationError TelephonyCampaignValidationError(long rowNumber = default, FoundryOpenAIError error = default)
+        {
+            return new TelephonyCampaignValidationError(rowNumber, error, additionalBinaryDataProperties: null);
         }
 
         /// <summary>
@@ -4280,6 +4410,40 @@ namespace Azure.AI.Projects.Agents
         public static SessionDirectoryEntry SessionDirectoryEntry(string name = default, long sizeInBytes = default, bool isDirectory = default, DateTimeOffset modifiedOn = default)
         {
             return new SessionDirectoryEntry(name, sizeInBytes, isDirectory, modifiedOn, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Agent optimization job resource — a long-running job that produces candidate changes to a Foundry agent configuration. </summary>
+        /// <param name="id"> Server-assigned unique identifier. </param>
+        /// <param name="result"> Result produced on success. </param>
+        /// <param name="status"> Current lifecycle status. </param>
+        /// <param name="error"> Error details — populated only on failure. </param>
+        /// <param name="displayName"> Human-readable label. Omitted when no label is needed; it has no uniqueness, routing, or idempotency semantics. </param>
+        /// <param name="targetConfiguration"> Foundry agent whose configuration is optimized. Omitted when the workflow does not target a registered Foundry agent. </param>
+        /// <param name="optimizationModelConfiguration"> Model used to generate candidate changes. An existing deployment name is also accepted. </param>
+        /// <param name="optimizationConfiguration"> Type-specific optimization configuration. </param>
+        /// <param name="runDurationMs"> Duration for which the job has been running, in milliseconds. </param>
+        /// <param name="createdOn"> The timestamp when the job was created, represented in Unix time. </param>
+        /// <param name="updatedOn"> The timestamp when the job was last updated, represented in Unix time. </param>
+        /// <param name="warnings"> Non-fatal warnings emitted during optimization. Omitted when no warnings were produced. </param>
+        /// <returns> A new <see cref="Agents.AgentOptimizationJob"/> instance for mocking. </returns>
+        public static AgentOptimizationJob AgentOptimizationJob(string id = default, AgentOptimizationJobResult result = default, AgentsJobStatus status = default, FoundryOpenAIError error = default, string displayName = default, AgentOptimizationTargetConfiguration targetConfiguration = default, AgentOptimizationModelConfiguration optimizationModelConfiguration = default, AgentOptimizationConfigurationBase optimizationConfiguration = default, TimeSpan runDurationMs = default, DateTimeOffset createdOn = default, DateTimeOffset updatedOn = default, IEnumerable<string> warnings = default)
+        {
+            warnings ??= new ChangeTrackingList<string>();
+
+            return new AgentOptimizationJob(
+                id,
+                result,
+                status,
+                error,
+                displayName,
+                targetConfiguration,
+                optimizationModelConfiguration,
+                optimizationConfiguration,
+                runDurationMs,
+                createdOn,
+                updatedOn,
+                warnings.ToList(),
+                additionalBinaryDataProperties: null);
         }
 
         /// <summary> Partial or terminal result produced by an agent optimization job. </summary>

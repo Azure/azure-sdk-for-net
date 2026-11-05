@@ -13,10 +13,10 @@ namespace Azure.AI.Projects.Agents;
 
 [Experimental("AAIP001")]
 [CodeGenType("AgentTelephony")]
-[CodeGenSuppress("GetTelephonyBindings", typeof(string), typeof(AgentDefinitionOptInKeys?), typeof(TelephonyProvider?), typeof(TelephonyBindingStatus?), typeof(int?), typeof(AgentListOrder?), typeof(string), typeof(string), typeof(CancellationToken))]
-[CodeGenSuppress("GetTelephonyBindingsAsync", typeof(string), typeof(AgentDefinitionOptInKeys?), typeof(TelephonyProvider?), typeof(TelephonyBindingStatus?), typeof(int?), typeof(AgentListOrder?), typeof(string), typeof(string), typeof(CancellationToken))]
-[CodeGenSuppress("GetTelephonyBindings", typeof(string), typeof(string), typeof(string), typeof(string), typeof(int?), typeof(string), typeof(string), typeof(string), typeof(RequestOptions))]
-[CodeGenSuppress("GetTelephonyBindingsAsync", typeof(string), typeof(string), typeof(string), typeof(string), typeof(int?), typeof(string), typeof(string), typeof(string), typeof(RequestOptions))]
+[CodeGenSuppress("GetTelephonyBindings", typeof(string), typeof(AgentDefinitionOptInKeys?), typeof(TelephonyProvider?), typeof(int?), typeof(AgentListOrder?), typeof(string), typeof(string), typeof(CancellationToken))]
+[CodeGenSuppress("GetTelephonyBindingsAsync", typeof(string), typeof(AgentDefinitionOptInKeys?), typeof(TelephonyProvider?), typeof(int?), typeof(AgentListOrder?), typeof(string), typeof(string), typeof(CancellationToken))]
+[CodeGenSuppress("GetTelephonyBindings", typeof(string), typeof(string), typeof(string), typeof(int?), typeof(string), typeof(string), typeof(string), typeof(RequestOptions))]
+[CodeGenSuppress("GetTelephonyBindingsAsync", typeof(string), typeof(string), typeof(string), typeof(int?), typeof(string), typeof(string), typeof(string), typeof(RequestOptions))]
 [CodeGenSuppress("GetTelephonyCalls", typeof(string), typeof(AgentDefinitionOptInKeys?), typeof(TelephonyProvider?), typeof(TelephonyCallStatus?), typeof(DateTimeOffset?), typeof(DateTimeOffset?), typeof(AgentListOrder?), typeof(string), typeof(string), typeof(CancellationToken))]
 [CodeGenSuppress("GetTelephonyCallsAsync", typeof(string), typeof(AgentDefinitionOptInKeys?), typeof(TelephonyProvider?), typeof(TelephonyCallStatus?), typeof(DateTimeOffset?), typeof(DateTimeOffset?), typeof(AgentListOrder?), typeof(string), typeof(string), typeof(CancellationToken))]
 [CodeGenSuppress("GetTelephonyCalls", typeof(string), typeof(string), typeof(string), typeof(string), typeof(DateTimeOffset?), typeof(DateTimeOffset?), typeof(string), typeof(string), typeof(string), typeof(RequestOptions))]
@@ -31,11 +31,11 @@ public partial class BetaVoiceAgentsTelephony
     /// <exception cref="ArgumentException"> <paramref name="agentName"/> is an empty string, and was expected to be non-empty. </exception>
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
     [Experimental("AAIP001")]
-    public virtual ClientResult<TelephonyBinding> CreateTelephonyBinding(string agentName, CreateTelephonyBindingContent telephonyBinding, CancellationToken cancellationToken = default)
+    public virtual ClientResult<TelephonyBinding> CreateTelephonyBinding(string agentName, TelephonyBinding telephonyBinding, CancellationToken cancellationToken = default)
     {
         return CreateTelephonyBinding(
             agentName: agentName,
-            telephonyBinding: telephonyBinding,
+            binding: telephonyBinding,
             foundryFeatures: default,
             cancellationToken: cancellationToken
         );
@@ -49,11 +49,11 @@ public partial class BetaVoiceAgentsTelephony
     /// <exception cref="ArgumentException"> <paramref name="agentName"/> is an empty string, and was expected to be non-empty. </exception>
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
     [Experimental("AAIP001")]
-    public virtual async Task<ClientResult<TelephonyBinding>> CreateTelephonyBindingAsync(string agentName, CreateTelephonyBindingContent telephonyBinding, CancellationToken cancellationToken = default)
+    public virtual async Task<ClientResult<TelephonyBinding>> CreateTelephonyBindingAsync(string agentName, TelephonyBinding telephonyBinding, CancellationToken cancellationToken = default)
     {
         return await CreateTelephonyBindingAsync(
             agentName: agentName,
-            telephonyBinding: telephonyBinding,
+            binding: telephonyBinding,
             foundryFeatures: default,
             cancellationToken: cancellationToken
         ).ConfigureAwait(false);
@@ -62,7 +62,6 @@ public partial class BetaVoiceAgentsTelephony
     /// <summary> Returns the telephony bindings owned by the voice agent named in the path. </summary>
     /// <param name="agentName"> The name of the voice agent whose bindings are listed. </param>
     /// <param name="provider"> Filters bindings by provider. </param>
-    /// <param name="status"> Filters bindings by lifecycle status. </param>
     /// <param name="limit">
     /// A limit on the number of objects to be returned. Limit can range between 1 and 100, and the
     /// default is 20.
@@ -86,7 +85,7 @@ public partial class BetaVoiceAgentsTelephony
     /// <exception cref="ArgumentException"> <paramref name="agentName"/> is an empty string, and was expected to be non-empty. </exception>
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
     [Experimental("AAIP001")]
-    public virtual CollectionResult<TelephonyBindingListItem> GetTelephonyBindings(string agentName, TelephonyProvider? provider = default, TelephonyBindingStatus? status = default, int? limit = default, AgentListOrder? order = default, string after = default, string before = default, CancellationToken cancellationToken = default)
+    public virtual CollectionResult<TelephonyBindingListItem> GetTelephonyBindings(string agentName, TelephonyProvider? provider = default, int? limit = default, AgentListOrder? order = default, string after = default, string before = default, CancellationToken cancellationToken = default)
     {
         Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
 
@@ -96,7 +95,6 @@ public partial class BetaVoiceAgentsTelephony
                 => CreateGetTelephonyBindingsRequest(
                     agentName: localCollectionOptions.ExtraQueryMap["agentName"],
                     provider: localCollectionOptions.ExtraQueryMap[nameof(TelephonyProvider)],
-                    status: localCollectionOptions.ExtraQueryMap[nameof(TelephonyBindingStatus)],
                     foundryFeatures: default,
                     limit: localCollectionOptions.Limit,
                     order: localCollectionOptions.Order,
@@ -107,7 +105,6 @@ public partial class BetaVoiceAgentsTelephony
             new InternalOpenAICollectionResultOptions(limit, order?.ToString(), after, before, extraQueryMap: new Dictionary<string, string>() {
                 { "agentName", agentName },
                 { nameof(TelephonyProvider), provider?.ToString() },
-                { nameof(TelephonyBindingStatus),  status?.ToString() },
             }),
             cancellationToken.ToRequestOptions());
     }
@@ -115,7 +112,6 @@ public partial class BetaVoiceAgentsTelephony
     /// <summary> Returns the telephony bindings owned by the voice agent named in the path. </summary>
     /// <param name="agentName"> The name of the voice agent whose bindings are listed. </param>
     /// <param name="provider"> Filters bindings by provider. </param>
-    /// <param name="status"> Filters bindings by lifecycle status. </param>
     /// <param name="limit">
     /// A limit on the number of objects to be returned. Limit can range between 1 and 100, and the
     /// default is 20.
@@ -139,7 +135,7 @@ public partial class BetaVoiceAgentsTelephony
     /// <exception cref="ArgumentException"> <paramref name="agentName"/> is an empty string, and was expected to be non-empty. </exception>
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
     [Experimental("AAIP001")]
-    public virtual AsyncCollectionResult<TelephonyBindingListItem> GetTelephonyBindingsAsync(string agentName, TelephonyProvider? provider = default, TelephonyBindingStatus? status = default, int? limit = default, AgentListOrder? order = default, string after = default, string before = default, CancellationToken cancellationToken = default)
+    public virtual AsyncCollectionResult<TelephonyBindingListItem> GetTelephonyBindingsAsync(string agentName, TelephonyProvider? provider = default, int? limit = default, AgentListOrder? order = default, string after = default, string before = default, CancellationToken cancellationToken = default)
     {
         Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
 
@@ -149,7 +145,6 @@ public partial class BetaVoiceAgentsTelephony
                 => CreateGetTelephonyBindingsRequest(
                     agentName: localCollectionOptions.ExtraQueryMap["agentName"],
                     provider: localCollectionOptions.ExtraQueryMap[nameof(TelephonyProvider)],
-                    status: localCollectionOptions.ExtraQueryMap[nameof(TelephonyBindingStatus)],
                     foundryFeatures: default,
                     limit: localCollectionOptions.Limit,
                     order: localCollectionOptions.Order,
@@ -160,7 +155,6 @@ public partial class BetaVoiceAgentsTelephony
             new InternalOpenAICollectionResultOptions(limit, order?.ToString(), after, before, extraQueryMap: new Dictionary<string, string>() {
                 { "agentName", agentName },
                 { nameof(TelephonyProvider), provider?.ToString() },
-                { nameof(TelephonyBindingStatus),  status?.ToString() },
             }),
             cancellationToken.ToRequestOptions());
     }
@@ -586,12 +580,12 @@ public partial class BetaVoiceAgentsTelephony
     /// <exception cref="ArgumentException"> <paramref name="agentName"/> or <paramref name="idempotencyKey"/> is an empty string, and was expected to be non-empty. </exception>
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
     [Experimental("AAIP001")]
-    public virtual ClientResult<TelephonyCallJob> CreateTelephonyCallJob(string agentName, string idempotencyKey, CreateTelephonyCallJobContent body, CancellationToken cancellationToken = default)
+    public virtual ClientResult<TelephonyCallJob> CreateTelephonyCallJob(string agentName, string idempotencyKey, TelephonyCallJobCreate body, CancellationToken cancellationToken = default)
     {
         return CreateTelephonyCallJob(
             agentName: agentName,
             idempotencyKey: idempotencyKey,
-            body: body,
+            job: body,
             foundryFeatures: default,
             cancellationToken: cancellationToken
         );
@@ -606,12 +600,12 @@ public partial class BetaVoiceAgentsTelephony
     /// <exception cref="ArgumentException"> <paramref name="agentName"/> or <paramref name="idempotencyKey"/> is an empty string, and was expected to be non-empty. </exception>
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
     [Experimental("AAIP001")]
-    public virtual async Task<ClientResult<TelephonyCallJob>> CreateTelephonyCallJobAsync(string agentName, string idempotencyKey, CreateTelephonyCallJobContent body, CancellationToken cancellationToken = default)
+    public virtual async Task<ClientResult<TelephonyCallJob>> CreateTelephonyCallJobAsync(string agentName, string idempotencyKey, TelephonyCallJobCreate body, CancellationToken cancellationToken = default)
     {
         return await CreateTelephonyCallJobAsync(
             agentName: agentName,
             idempotencyKey: idempotencyKey,
-            body: body,
+            job: body,
             foundryFeatures: default,
             cancellationToken: cancellationToken
         ).ConfigureAwait(false);

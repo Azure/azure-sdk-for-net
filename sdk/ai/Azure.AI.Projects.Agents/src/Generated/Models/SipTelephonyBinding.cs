@@ -8,17 +8,17 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects.Agents
 {
-    /// <summary> A SIP binding. </summary>
+    /// <summary> Inbound binding using a same-project SipInbound connection for authentication/network restrictions. Creation does not prove regional runtime readiness. </summary>
     [Experimental("AAIP001")]
     public partial class SipTelephonyBinding : TelephonyBinding
     {
         /// <summary> Initializes a new instance of <see cref="SipTelephonyBinding"/>. </summary>
-        /// <param name="id"> The service-generated binding identifier. </param>
         /// <param name="connectionName"> The Foundry connection name for the telephony provider. </param>
-        /// <param name="status"> The lifecycle status. </param>
-        /// <param name="incomingCallUrl"> The service-generated webhook URL to configure with the telephony provider. For SIP bindings, this is a SIP URI. </param>
-        internal SipTelephonyBinding(string id, string connectionName, TelephonyBindingStatus status, Uri incomingCallUrl) : base(id, TelephonyProvider.Sip, connectionName, status, incomingCallUrl)
+        /// <exception cref="ArgumentNullException"> <paramref name="connectionName"/> is null. </exception>
+        public SipTelephonyBinding(string connectionName) : base(TelephonyProvider.Sip, connectionName)
         {
+            Argument.AssertNotNull(connectionName, nameof(connectionName));
+
             AllowedCallingNumbers = new ChangeTrackingList<string>();
         }
 
@@ -27,21 +27,20 @@ namespace Azure.AI.Projects.Agents
         /// <param name="provider"> The telephony provider. </param>
         /// <param name="connectionName"> The Foundry connection name for the telephony provider. </param>
         /// <param name="label"> The optional display label for the binding. </param>
-        /// <param name="status"> The lifecycle status. </param>
-        /// <param name="incomingCallUrl"> The service-generated webhook URL to configure with the telephony provider. For SIP bindings, this is a SIP URI. </param>
+        /// <param name="incomingCallUrl"> The service-generated incoming address: an HTTPS webhook for webhook-based providers or a SIP/SIPS ingress URI for SIP. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="phoneNumber"> For UI display only. </param>
-        /// <param name="allowedCallingNumbers"> Omit or send [] to allow any caller. Entries match the entire normalized E.164 caller number. </param>
-        internal SipTelephonyBinding(string id, TelephonyProvider provider, string connectionName, string label, TelephonyBindingStatus status, Uri incomingCallUrl, IDictionary<string, BinaryData> additionalBinaryDataProperties, string phoneNumber, IList<string> allowedCallingNumbers) : base(id, provider, connectionName, label, status, incomingCallUrl, additionalBinaryDataProperties)
+        /// <param name="phoneNumber"> Optional display metadata, not a routing key or E.164-constrained destination. </param>
+        /// <param name="allowedCallingNumbers"> Exact E.164 caller numbers or restricted anchored patterns, validated by the service. Omit or use [] for no restriction. </param>
+        internal SipTelephonyBinding(string id, TelephonyProvider provider, string connectionName, string label, Uri incomingCallUrl, IDictionary<string, BinaryData> additionalBinaryDataProperties, string phoneNumber, IList<string> allowedCallingNumbers) : base(id, provider, connectionName, label, incomingCallUrl, additionalBinaryDataProperties)
         {
             PhoneNumber = phoneNumber;
             AllowedCallingNumbers = allowedCallingNumbers;
         }
 
-        /// <summary> For UI display only. </summary>
-        public string PhoneNumber { get; }
+        /// <summary> Optional display metadata, not a routing key or E.164-constrained destination. </summary>
+        public string PhoneNumber { get; set; }
 
-        /// <summary> Omit or send [] to allow any caller. Entries match the entire normalized E.164 caller number. </summary>
+        /// <summary> Exact E.164 caller numbers or restricted anchored patterns, validated by the service. Omit or use [] for no restriction. </summary>
         public IList<string> AllowedCallingNumbers { get; }
     }
 }

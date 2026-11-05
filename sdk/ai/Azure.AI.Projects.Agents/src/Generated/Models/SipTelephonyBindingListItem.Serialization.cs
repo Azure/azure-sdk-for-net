@@ -9,7 +9,7 @@ using System.Text.Json;
 
 namespace Azure.AI.Projects.Agents
 {
-    /// <summary> A SIP binding returned in a list, including its entity tag. </summary>
+    /// <summary> An inbound SIP binding returned in a list, including its current entity tag. </summary>
     public partial class SipTelephonyBindingListItem : TelephonyBindingListItem, IJsonModel<SipTelephonyBindingListItem>
     {
         /// <summary> Initializes a new instance of <see cref="SipTelephonyBindingListItem"/> for deserialization. </summary>
@@ -127,7 +127,6 @@ namespace Azure.AI.Projects.Agents
             TelephonyProvider provider = default;
             string connectionName = default;
             string label = default;
-            TelephonyBindingStatus status = default;
             Uri incomingCallUrl = default;
             string etag = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -153,11 +152,6 @@ namespace Azure.AI.Projects.Agents
                 if (prop.NameEquals("label"u8))
                 {
                     label = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("status"u8))
-                {
-                    status = new TelephonyBindingStatus(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("incoming_call_url"u8))
@@ -206,7 +200,6 @@ namespace Azure.AI.Projects.Agents
                 provider,
                 connectionName,
                 label,
-                status,
                 incomingCallUrl,
                 etag,
                 additionalBinaryDataProperties,

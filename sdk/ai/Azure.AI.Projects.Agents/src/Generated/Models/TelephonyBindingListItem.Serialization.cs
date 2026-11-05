@@ -89,8 +89,6 @@ namespace Azure.AI.Projects.Agents
                 writer.WritePropertyName("label"u8);
                 writer.WriteStringValue(Label);
             }
-            writer.WritePropertyName("status"u8);
-            writer.WriteStringValue(Status.ToString());
             writer.WritePropertyName("incoming_call_url"u8);
             writer.WriteStringValue(IncomingCallUrl.AbsoluteUri);
             if (options.Format != "W")

@@ -9,7 +9,8 @@ using System.Text.Json;
 
 namespace Azure.AI.Projects.Agents
 {
-    internal partial class FoundryOpenAIError : IJsonModel<FoundryOpenAIError>
+    /// <summary> The FoundryOpenAIError. </summary>
+    public partial class FoundryOpenAIError : IJsonModel<FoundryOpenAIError>
     {
         /// <summary> Initializes a new instance of <see cref="FoundryOpenAIError"/> for deserialization. </summary>
         internal FoundryOpenAIError()

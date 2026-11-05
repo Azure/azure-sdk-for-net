@@ -11,10 +11,15 @@
 - Added experimental inline voice subagents with handoff conditions, policies, and per-subagent voice configuration.
 - Added experimental language-detection, digit-recognition, transfer, SMS, and DTMF system-tool configuration, including execution timeouts.
 - Added experimental SIP telephony binding models and allowed-caller configuration.
+- Added experimental telephony campaign configuration, schedules, operation-bound completion reads, pagination, and validation-error APIs.
+- Added the public `FoundryOpenAIError` data model for typed campaign failure details while keeping exception-formatting helpers internal.
 
 ### Breaking Changes
 - Realtime voice definitions now emit the required `sub_protocol` discriminator with the value `realtime`.
 - `VoiceAgentSubagentConfig` is now an abstract base class. Use `VoiceAgentDelegateSubagentConfig` for referenced agents or `VoiceAgentInlineSubagentConfig` for inline handoff graphs.
+- Telephony binding creation now accepts `TelephonyBinding` provider-specific models instead of the removed create-content models. Binding status fields and the binding-list status filter were removed.
+- Telephony transfer and outbound addresses now use the `TelephonyAddress` hierarchy with the `type` discriminator. Use `PhoneNumber`, `TeamsAddress`, or `SipAddress` instead of the removed destination models.
+- Outbound call-job creation now accepts `TelephonyCallJobCreate`, including a typed source address, and uses the `telephony_call_jobs` route.
 
 ### Bugs Fixed
 - Fixed typed persisted Realtime response status and output-modality serialization to use the external OpenAI enum values rather than treating them as ModelReaderWriter models.
@@ -24,7 +29,7 @@
 - Preserved typed deserialization of existing delegate configurations that omit `subagent_type`.
 
 ### Other Changes
-- Regenerated from `feature/foundry-release` at [`4ea2e73c87f09a311f1b6018ddcb23f3cf7ed0df`](https://github.com/Azure/azure-rest-api-specs/tree/4ea2e73c87f09a311f1b6018ddcb23f3cf7ed0df), using OpenAI TypeSpec 1.34.1.
+- Regenerated from `feature/foundry-release` at [`57834b966f8efbe7486fd7ca32898f8983907249`](https://github.com/Azure/azure-rest-api-specs/tree/57834b966f8efbe7486fd7ca32898f8983907249), using OpenAI TypeSpec 1.34.1.
 
 ## 3.0.0-beta.6 (2026-10-30)
 

@@ -133,17 +133,17 @@ public class VoiceAgentContractCompatibilityTests
     }
 
     [Test]
-    public void TelephonyAndSystemToolTransferDestinationsKeepDistinctDiscriminators()
+    public void TelephonyAndSystemToolTransferDestinationsUsePublishedTypeDiscriminators()
     {
-        PSTNTelephonyTransferDestination telephony = new("+15555550123");
+        PhoneNumber telephony = new("+15555550123");
         VoiceAgentTransferDestination systemTool = new(VoiceAgentTransferDestinationType.PhoneNumber, "+15555550123");
         using JsonDocument telephonyDocument = JsonDocument.Parse(ModelReaderWriter.Write(telephony, new("W")));
         using JsonDocument systemToolDocument = JsonDocument.Parse(ModelReaderWriter.Write(systemTool, new("W")));
 
         Assert.Multiple(() =>
         {
-            Assert.That(telephonyDocument.RootElement.GetProperty("kind").GetString(), Is.EqualTo("pstn"));
-            Assert.That(telephonyDocument.RootElement.TryGetProperty("type", out _), Is.False);
+            Assert.That(telephonyDocument.RootElement.GetProperty("type").GetString(), Is.EqualTo("phone_number"));
+            Assert.That(telephonyDocument.RootElement.TryGetProperty("kind", out _), Is.False);
             Assert.That(systemToolDocument.RootElement.GetProperty("type").GetString(), Is.EqualTo("phone_number"));
             Assert.That(systemToolDocument.RootElement.TryGetProperty("kind", out _), Is.False);
         });
