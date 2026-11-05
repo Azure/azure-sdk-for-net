@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Sql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _timeZonesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _locationName, timeZoneId, context);
+                using HttpMessage message = _timeZonesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _locationName, timeZoneId, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<SqlTimeZoneData> response = Response.FromValue(SqlTimeZoneData.FromResponse(result), result);
                 if (response.Value == null)
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.Sql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _timeZonesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _locationName, timeZoneId, context);
+                using HttpMessage message = _timeZonesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _locationName, timeZoneId, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<SqlTimeZoneData> response = Response.FromValue(SqlTimeZoneData.FromResponse(result), result);
                 if (response.Value == null)
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.Sql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _timeZonesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _locationName, timeZoneId, context);
+                using HttpMessage message = _timeZonesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _locationName, timeZoneId, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<SqlTimeZoneData> response = default;
@@ -303,7 +303,7 @@ namespace Azure.ResourceManager.Sql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _timeZonesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _locationName, timeZoneId, context);
+                using HttpMessage message = _timeZonesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _locationName, timeZoneId, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<SqlTimeZoneData> response = default;
@@ -360,7 +360,7 @@ namespace Azure.ResourceManager.Sql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _timeZonesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _locationName, timeZoneId, context);
+                using HttpMessage message = _timeZonesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _locationName, timeZoneId, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<SqlTimeZoneData> response = default;
@@ -421,7 +421,7 @@ namespace Azure.ResourceManager.Sql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _timeZonesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _locationName, timeZoneId, context);
+                using HttpMessage message = _timeZonesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _locationName, timeZoneId, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<SqlTimeZoneData> response = default;

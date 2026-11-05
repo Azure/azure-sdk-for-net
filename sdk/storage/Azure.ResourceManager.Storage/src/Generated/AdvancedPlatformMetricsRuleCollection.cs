@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Storage
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _advancedPlatformMetricsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, advancedPlatformMetricsRuleType.ToString(), AdvancedPlatformMetricsRuleData.ToRequestContent(data), context);
+                using HttpMessage message = _advancedPlatformMetricsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, advancedPlatformMetricsRuleType.ToString(), AdvancedPlatformMetricsRuleData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<AdvancedPlatformMetricsRuleData> response = Response.FromValue(AdvancedPlatformMetricsRuleData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.Storage
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _advancedPlatformMetricsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, advancedPlatformMetricsRuleType.ToString(), AdvancedPlatformMetricsRuleData.ToRequestContent(data), context);
+                using HttpMessage message = _advancedPlatformMetricsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, advancedPlatformMetricsRuleType.ToString(), AdvancedPlatformMetricsRuleData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<AdvancedPlatformMetricsRuleData> response = Response.FromValue(AdvancedPlatformMetricsRuleData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.Storage
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _advancedPlatformMetricsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, advancedPlatformMetricsRuleType.ToString(), context);
+                using HttpMessage message = _advancedPlatformMetricsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, advancedPlatformMetricsRuleType.ToString(), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<AdvancedPlatformMetricsRuleData> response = Response.FromValue(AdvancedPlatformMetricsRuleData.FromResponse(result), result);
                 if (response.Value == null)
@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.Storage
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _advancedPlatformMetricsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, advancedPlatformMetricsRuleType.ToString(), context);
+                using HttpMessage message = _advancedPlatformMetricsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, advancedPlatformMetricsRuleType.ToString(), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<AdvancedPlatformMetricsRuleData> response = Response.FromValue(AdvancedPlatformMetricsRuleData.FromResponse(result), result);
                 if (response.Value == null)
@@ -348,7 +348,7 @@ namespace Azure.ResourceManager.Storage
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _advancedPlatformMetricsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, advancedPlatformMetricsRuleType.ToString(), context);
+                using HttpMessage message = _advancedPlatformMetricsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, advancedPlatformMetricsRuleType.ToString(), context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<AdvancedPlatformMetricsRuleData> response = default;
@@ -401,7 +401,7 @@ namespace Azure.ResourceManager.Storage
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _advancedPlatformMetricsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, advancedPlatformMetricsRuleType.ToString(), context);
+                using HttpMessage message = _advancedPlatformMetricsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, advancedPlatformMetricsRuleType.ToString(), context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<AdvancedPlatformMetricsRuleData> response = default;
@@ -454,7 +454,7 @@ namespace Azure.ResourceManager.Storage
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _advancedPlatformMetricsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, advancedPlatformMetricsRuleType.ToString(), context);
+                using HttpMessage message = _advancedPlatformMetricsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, advancedPlatformMetricsRuleType.ToString(), context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<AdvancedPlatformMetricsRuleData> response = default;
@@ -511,7 +511,7 @@ namespace Azure.ResourceManager.Storage
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _advancedPlatformMetricsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, advancedPlatformMetricsRuleType.ToString(), context);
+                using HttpMessage message = _advancedPlatformMetricsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, advancedPlatformMetricsRuleType.ToString(), context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<AdvancedPlatformMetricsRuleData> response = default;

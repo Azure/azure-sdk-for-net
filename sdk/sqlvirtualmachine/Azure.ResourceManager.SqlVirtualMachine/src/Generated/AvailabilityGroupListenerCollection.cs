@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _availabilityGroupListenersRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, availabilityGroupListenerName, AvailabilityGroupListenerData.ToRequestContent(data), context);
+                using HttpMessage message = _availabilityGroupListenersRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, availabilityGroupListenerName, AvailabilityGroupListenerData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 SqlVirtualMachineArmOperation<AvailabilityGroupListenerResource> operation = new SqlVirtualMachineArmOperation<AvailabilityGroupListenerResource>(
                     new AvailabilityGroupListenerResourceOperationSource(Client),
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _availabilityGroupListenersRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, availabilityGroupListenerName, AvailabilityGroupListenerData.ToRequestContent(data), context);
+                using HttpMessage message = _availabilityGroupListenersRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, availabilityGroupListenerName, AvailabilityGroupListenerData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 SqlVirtualMachineArmOperation<AvailabilityGroupListenerResource> operation = new SqlVirtualMachineArmOperation<AvailabilityGroupListenerResource>(
                     new AvailabilityGroupListenerResourceOperationSource(Client),
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _availabilityGroupListenersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, availabilityGroupListenerName, expand, context);
+                using HttpMessage message = _availabilityGroupListenersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, availabilityGroupListenerName, expand, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<AvailabilityGroupListenerData> response = Response.FromValue(AvailabilityGroupListenerData.FromResponse(result), result);
                 if (response.Value == null)
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _availabilityGroupListenersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, availabilityGroupListenerName, expand, context);
+                using HttpMessage message = _availabilityGroupListenersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, availabilityGroupListenerName, expand, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<AvailabilityGroupListenerData> response = Response.FromValue(AvailabilityGroupListenerData.FromResponse(result), result);
                 if (response.Value == null)
@@ -372,7 +372,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _availabilityGroupListenersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, availabilityGroupListenerName, expand, context);
+                using HttpMessage message = _availabilityGroupListenersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, availabilityGroupListenerName, expand, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<AvailabilityGroupListenerData> response = default;
@@ -430,7 +430,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _availabilityGroupListenersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, availabilityGroupListenerName, expand, context);
+                using HttpMessage message = _availabilityGroupListenersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, availabilityGroupListenerName, expand, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<AvailabilityGroupListenerData> response = default;
@@ -488,7 +488,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _availabilityGroupListenersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, availabilityGroupListenerName, expand, context);
+                using HttpMessage message = _availabilityGroupListenersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, availabilityGroupListenerName, expand, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<AvailabilityGroupListenerData> response = default;
@@ -550,7 +550,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _availabilityGroupListenersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, availabilityGroupListenerName, expand, context);
+                using HttpMessage message = _availabilityGroupListenersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, availabilityGroupListenerName, expand, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<AvailabilityGroupListenerData> response = default;

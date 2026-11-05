@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.StorageActions.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = StorageTasksRestClient.CreatePreviewActionsRequest(Guid.Parse(Id.SubscriptionId), location, StorageTaskPreviewAction.ToRequestContent(storageTaskPreviewAction), context);
+                using HttpMessage message = StorageTasksRestClient.CreatePreviewActionsRequest(Guid.Parse(Id.SubscriptionId), location, StorageTaskPreviewAction.ToRequestContent(storageTaskPreviewAction), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<StorageTaskPreviewAction> response = Response.FromValue(StorageTaskPreviewAction.FromResponse(result), result);
                 if (response.Value == null)
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.StorageActions.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = StorageTasksRestClient.CreatePreviewActionsRequest(Guid.Parse(Id.SubscriptionId), location, StorageTaskPreviewAction.ToRequestContent(storageTaskPreviewAction), context);
+                using HttpMessage message = StorageTasksRestClient.CreatePreviewActionsRequest(Guid.Parse(Id.SubscriptionId), location, StorageTaskPreviewAction.ToRequestContent(storageTaskPreviewAction), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<StorageTaskPreviewAction> response = Response.FromValue(StorageTaskPreviewAction.FromResponse(result), result);
                 if (response.Value == null)

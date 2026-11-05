@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.StandbyPool
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _standbyContainerGroupPoolRuntimeViewsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _standbyContainerGroupPoolRuntimeViewsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<StandbyContainerGroupPoolRuntimeViewData> response = Response.FromValue(StandbyContainerGroupPoolRuntimeViewData.FromResponse(result), result);
                 if (response.Value == null)
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.StandbyPool
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _standbyContainerGroupPoolRuntimeViewsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _standbyContainerGroupPoolRuntimeViewsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<StandbyContainerGroupPoolRuntimeViewData> response = Response.FromValue(StandbyContainerGroupPoolRuntimeViewData.FromResponse(result), result);
                 if (response.Value == null)

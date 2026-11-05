@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.StorageCache.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = StorageCacheClientRestClient.CreateCheckAmlFSSubnetsRequest(Id.SubscriptionId, AmlFileSystemSubnetContent.ToRequestContent(content), context);
+                using HttpMessage message = StorageCacheClientRestClient.CreateCheckAmlFSSubnetsRequest(Id.SubscriptionId, AmlFileSystemSubnetContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 return response;
             }
@@ -257,7 +257,7 @@ namespace Azure.ResourceManager.StorageCache.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = StorageCacheClientRestClient.CreateCheckAmlFSSubnetsRequest(Id.SubscriptionId, AmlFileSystemSubnetContent.ToRequestContent(content), context);
+                using HttpMessage message = StorageCacheClientRestClient.CreateCheckAmlFSSubnetsRequest(Id.SubscriptionId, AmlFileSystemSubnetContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 return response;
             }
@@ -297,7 +297,7 @@ namespace Azure.ResourceManager.StorageCache.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = StorageCacheClientRestClient.CreateGetRequiredAmlFSSubnetsSizeRequest(Id.SubscriptionId, RequiredAmlFileSystemSubnetsSizeContent.ToRequestContent(content), context);
+                using HttpMessage message = StorageCacheClientRestClient.CreateGetRequiredAmlFSSubnetsSizeRequest(Id.SubscriptionId, RequiredAmlFileSystemSubnetsSizeContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<RequiredAmlFileSystemSubnetsSize> response = Response.FromValue(RequiredAmlFileSystemSubnetsSize.FromResponse(result), result);
                 if (response.Value == null)
@@ -342,7 +342,7 @@ namespace Azure.ResourceManager.StorageCache.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = StorageCacheClientRestClient.CreateGetRequiredAmlFSSubnetsSizeRequest(Id.SubscriptionId, RequiredAmlFileSystemSubnetsSizeContent.ToRequestContent(content), context);
+                using HttpMessage message = StorageCacheClientRestClient.CreateGetRequiredAmlFSSubnetsSizeRequest(Id.SubscriptionId, RequiredAmlFileSystemSubnetsSizeContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<RequiredAmlFileSystemSubnetsSize> response = Response.FromValue(RequiredAmlFileSystemSubnetsSize.FromResponse(result), result);
                 if (response.Value == null)
@@ -504,7 +504,7 @@ namespace Azure.ResourceManager.StorageCache.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = AscOperationsRestClient.CreateGetStorageCacheAscOperationRequest(Id.SubscriptionId, location, operationId, context);
+                using HttpMessage message = AscOperationsRestClient.CreateGetStorageCacheAscOperationRequest(Id.SubscriptionId, location, operationId, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<StorageCacheAscOperationInfo> response = Response.FromValue(StorageCacheAscOperationInfo.FromResponse(result), result);
                 if (response.Value == null)
@@ -554,7 +554,7 @@ namespace Azure.ResourceManager.StorageCache.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = AscOperationsRestClient.CreateGetStorageCacheAscOperationRequest(Id.SubscriptionId, location, operationId, context);
+                using HttpMessage message = AscOperationsRestClient.CreateGetStorageCacheAscOperationRequest(Id.SubscriptionId, location, operationId, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<StorageCacheAscOperationInfo> response = Response.FromValue(StorageCacheAscOperationInfo.FromResponse(result), result);
                 if (response.Value == null)

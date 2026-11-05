@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.StorageCache
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _cachesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, cacheName, StorageCacheData.ToRequestContent(data), context);
+                using HttpMessage message = _cachesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, cacheName, StorageCacheData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 StorageCacheArmOperation<StorageCacheResource> operation = new StorageCacheArmOperation<StorageCacheResource>(
                     new StorageCacheResourceOperationSource(Client),
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.StorageCache
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _cachesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, cacheName, StorageCacheData.ToRequestContent(data), context);
+                using HttpMessage message = _cachesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, cacheName, StorageCacheData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 StorageCacheArmOperation<StorageCacheResource> operation = new StorageCacheArmOperation<StorageCacheResource>(
                     new StorageCacheResourceOperationSource(Client),
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.StorageCache
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _cachesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, cacheName, context);
+                using HttpMessage message = _cachesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, cacheName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<StorageCacheData> response = Response.FromValue(StorageCacheData.FromResponse(result), result);
                 if (response.Value == null)
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.StorageCache
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _cachesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, cacheName, context);
+                using HttpMessage message = _cachesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, cacheName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<StorageCacheData> response = Response.FromValue(StorageCacheData.FromResponse(result), result);
                 if (response.Value == null)
@@ -357,7 +357,7 @@ namespace Azure.ResourceManager.StorageCache
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _cachesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, cacheName, context);
+                using HttpMessage message = _cachesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, cacheName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<StorageCacheData> response = default;
@@ -414,7 +414,7 @@ namespace Azure.ResourceManager.StorageCache
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _cachesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, cacheName, context);
+                using HttpMessage message = _cachesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, cacheName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<StorageCacheData> response = default;
@@ -471,7 +471,7 @@ namespace Azure.ResourceManager.StorageCache
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _cachesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, cacheName, context);
+                using HttpMessage message = _cachesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, cacheName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<StorageCacheData> response = default;
@@ -532,7 +532,7 @@ namespace Azure.ResourceManager.StorageCache
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _cachesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, cacheName, context);
+                using HttpMessage message = _cachesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, cacheName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<StorageCacheData> response = default;

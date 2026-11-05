@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Sphere
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _productsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, productName, SphereProductData.ToRequestContent(data), context);
+                using HttpMessage message = _productsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, productName, SphereProductData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 SphereArmOperation<SphereProductResource> operation = new SphereArmOperation<SphereProductResource>(
                     new SphereProductResourceOperationSource(Client),
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Sphere
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _productsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, productName, SphereProductData.ToRequestContent(data), context);
+                using HttpMessage message = _productsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, productName, SphereProductData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 SphereArmOperation<SphereProductResource> operation = new SphereArmOperation<SphereProductResource>(
                     new SphereProductResourceOperationSource(Client),
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.Sphere
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _productsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, productName, context);
+                using HttpMessage message = _productsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, productName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<SphereProductData> response = Response.FromValue(SphereProductData.FromResponse(result), result);
                 if (response.Value == null)
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.Sphere
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _productsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, productName, context);
+                using HttpMessage message = _productsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, productName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<SphereProductData> response = Response.FromValue(SphereProductData.FromResponse(result), result);
                 if (response.Value == null)
@@ -369,7 +369,7 @@ namespace Azure.ResourceManager.Sphere
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _productsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, productName, context);
+                using HttpMessage message = _productsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, productName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<SphereProductData> response = default;
@@ -426,7 +426,7 @@ namespace Azure.ResourceManager.Sphere
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _productsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, productName, context);
+                using HttpMessage message = _productsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, productName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<SphereProductData> response = default;
@@ -483,7 +483,7 @@ namespace Azure.ResourceManager.Sphere
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _productsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, productName, context);
+                using HttpMessage message = _productsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, productName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<SphereProductData> response = default;
@@ -544,7 +544,7 @@ namespace Azure.ResourceManager.Sphere
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _productsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, productName, context);
+                using HttpMessage message = _productsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, productName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<SphereProductData> response = default;
