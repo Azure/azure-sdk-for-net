@@ -134,22 +134,25 @@ namespace SignalRServiceExtension.Tests
             var hubContext = await hubContextStore.GetAsync("hub") as ServiceHubContext;
 
             using var timeout = new CancellationTokenSource(TimeSpan.FromSeconds(30));
-            await hubContext.ClientManager.UserExistsAsync("a");
-            var initialEndpoints = await initialEndpointObserved.Task.WaitAsync(timeout.Token);
+            await hubContext.ClientManager.UserExistsAsync("a", timeout.Token);
+            Assert.True(initialEndpointObserved.Task.IsCompleted, "The initial endpoint was not observed.");
+            var initialEndpoints = await initialEndpointObserved.Task;
             Assert.Single(initialEndpoints);
             Assert.Equal(initialEndpoint.Endpoint, initialEndpoints[0].Endpoint);
 
             configuration[Constants.AzureSignalRConnectionStringName] = connectionStrings[1];
             configuration.Reload();
 
+            // The new endpoint is appended only after its first connection attempt finishes,
+            // which can take longer than a fixed delay for these fake endpoints.
             while (!endpointsTransitionObserved.Task.IsCompleted && !timeout.IsCancellationRequested)
             {
-                await hubContext.ClientManager.UserExistsAsync("a").WaitAsync(timeout.Token);
+                await hubContext.ClientManager.UserExistsAsync("a", timeout.Token);
                 await Task.WhenAny(endpointsTransitionObserved.Task, Task.Delay(TimeSpan.FromMilliseconds(50), timeout.Token));
             }
 
             Assert.True(endpointsTransitionObserved.Task.IsCompleted, $"Observed endpoint sets: {string.Join(" | ", observedEndpointSets.Keys)}");
-            var updatedEndpoints = await endpointsTransitionObserved.Task.WaitAsync(timeout.Token);
+            var updatedEndpoints = await endpointsTransitionObserved.Task;
             Assert.Equal(2, updatedEndpoints.Length);
             Assert.Contains(updatedEndpoints, endpoint => endpoint.Endpoint == initialEndpoint.Endpoint);
             Assert.Contains(updatedEndpoints, endpoint => endpoint.Endpoint == updatedEndpoint.Endpoint);
