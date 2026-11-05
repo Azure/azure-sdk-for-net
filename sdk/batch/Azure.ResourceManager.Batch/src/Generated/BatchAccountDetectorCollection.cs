@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Batch
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _batchAccountRestClient.CreateGetDetectorRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, detectorId, context);
+                using HttpMessage message = _batchAccountRestClient.CreateGetDetectorRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, detectorId, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<BatchAccountDetectorData> response = Response.FromValue(BatchAccountDetectorData.FromResponse(result), result);
                 if (response.Value == null)
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.Batch
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _batchAccountRestClient.CreateGetDetectorRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, detectorId, context);
+                using HttpMessage message = _batchAccountRestClient.CreateGetDetectorRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, detectorId, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<BatchAccountDetectorData> response = Response.FromValue(BatchAccountDetectorData.FromResponse(result), result);
                 if (response.Value == null)
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.Batch
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _batchAccountRestClient.CreateGetDetectorRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, detectorId, context);
+                using HttpMessage message = _batchAccountRestClient.CreateGetDetectorRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, detectorId, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<BatchAccountDetectorData> response = default;
@@ -309,7 +309,7 @@ namespace Azure.ResourceManager.Batch
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _batchAccountRestClient.CreateGetDetectorRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, detectorId, context);
+                using HttpMessage message = _batchAccountRestClient.CreateGetDetectorRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, detectorId, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<BatchAccountDetectorData> response = default;
@@ -366,7 +366,7 @@ namespace Azure.ResourceManager.Batch
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _batchAccountRestClient.CreateGetDetectorRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, detectorId, context);
+                using HttpMessage message = _batchAccountRestClient.CreateGetDetectorRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, detectorId, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<BatchAccountDetectorData> response = default;
@@ -427,7 +427,7 @@ namespace Azure.ResourceManager.Batch
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _batchAccountRestClient.CreateGetDetectorRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, detectorId, context);
+                using HttpMessage message = _batchAccountRestClient.CreateGetDetectorRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, detectorId, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<BatchAccountDetectorData> response = default;

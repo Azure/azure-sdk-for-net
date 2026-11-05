@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Hci.Vm
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _marketplaceGalleryImagesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, marketplaceGalleryImageName, HciVmMarketplaceGalleryImageData.ToRequestContent(data), context);
+                using HttpMessage message = _marketplaceGalleryImagesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, marketplaceGalleryImageName, HciVmMarketplaceGalleryImageData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 VmArmOperation<HciVmMarketplaceGalleryImageResource> operation = new VmArmOperation<HciVmMarketplaceGalleryImageResource>(
                     new HciVmMarketplaceGalleryImageResourceOperationSource(Client),
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Hci.Vm
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _marketplaceGalleryImagesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, marketplaceGalleryImageName, HciVmMarketplaceGalleryImageData.ToRequestContent(data), context);
+                using HttpMessage message = _marketplaceGalleryImagesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, marketplaceGalleryImageName, HciVmMarketplaceGalleryImageData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 VmArmOperation<HciVmMarketplaceGalleryImageResource> operation = new VmArmOperation<HciVmMarketplaceGalleryImageResource>(
                     new HciVmMarketplaceGalleryImageResourceOperationSource(Client),
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.Hci.Vm
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _marketplaceGalleryImagesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, marketplaceGalleryImageName, context);
+                using HttpMessage message = _marketplaceGalleryImagesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, marketplaceGalleryImageName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<HciVmMarketplaceGalleryImageData> response = Response.FromValue(HciVmMarketplaceGalleryImageData.FromResponse(result), result);
                 if (response.Value == null)
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.Hci.Vm
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _marketplaceGalleryImagesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, marketplaceGalleryImageName, context);
+                using HttpMessage message = _marketplaceGalleryImagesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, marketplaceGalleryImageName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<HciVmMarketplaceGalleryImageData> response = Response.FromValue(HciVmMarketplaceGalleryImageData.FromResponse(result), result);
                 if (response.Value == null)
@@ -357,7 +357,7 @@ namespace Azure.ResourceManager.Hci.Vm
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _marketplaceGalleryImagesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, marketplaceGalleryImageName, context);
+                using HttpMessage message = _marketplaceGalleryImagesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, marketplaceGalleryImageName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<HciVmMarketplaceGalleryImageData> response = default;
@@ -414,7 +414,7 @@ namespace Azure.ResourceManager.Hci.Vm
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _marketplaceGalleryImagesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, marketplaceGalleryImageName, context);
+                using HttpMessage message = _marketplaceGalleryImagesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, marketplaceGalleryImageName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<HciVmMarketplaceGalleryImageData> response = default;
@@ -471,7 +471,7 @@ namespace Azure.ResourceManager.Hci.Vm
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _marketplaceGalleryImagesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, marketplaceGalleryImageName, context);
+                using HttpMessage message = _marketplaceGalleryImagesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, marketplaceGalleryImageName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<HciVmMarketplaceGalleryImageData> response = default;
@@ -532,7 +532,7 @@ namespace Azure.ResourceManager.Hci.Vm
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _marketplaceGalleryImagesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, marketplaceGalleryImageName, context);
+                using HttpMessage message = _marketplaceGalleryImagesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, marketplaceGalleryImageName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<HciVmMarketplaceGalleryImageData> response = default;

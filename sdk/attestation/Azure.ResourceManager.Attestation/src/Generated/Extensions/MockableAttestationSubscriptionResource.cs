@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.Attestation.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = AttestationProvidersRestClient.CreateGetDefaultAttestationProviderByLocationRequest(Id.SubscriptionId, location, context);
+                using HttpMessage message = AttestationProvidersRestClient.CreateGetDefaultAttestationProviderByLocationRequest(Id.SubscriptionId, location, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<AttestationProviderData> response = Response.FromValue(AttestationProviderData.FromResponse(result), result);
                 if (response.Value == null)
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.Attestation.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = AttestationProvidersRestClient.CreateGetDefaultAttestationProviderByLocationRequest(Id.SubscriptionId, location, context);
+                using HttpMessage message = AttestationProvidersRestClient.CreateGetDefaultAttestationProviderByLocationRequest(Id.SubscriptionId, location, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<AttestationProviderData> response = Response.FromValue(AttestationProviderData.FromResponse(result), result);
                 if (response.Value == null)

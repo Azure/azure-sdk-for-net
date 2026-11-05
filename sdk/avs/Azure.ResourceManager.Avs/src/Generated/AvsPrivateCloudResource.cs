@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Avs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateCloudsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _privateCloudsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<AvsPrivateCloudData> response = Response.FromValue(AvsPrivateCloudData.FromResponse(result), result);
                 if (response.Value == null)
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.Avs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateCloudsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _privateCloudsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<AvsPrivateCloudData> response = Response.FromValue(AvsPrivateCloudData.FromResponse(result), result);
                 if (response.Value == null)
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.Avs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateCloudsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, AvsPrivateCloudPatch.ToRequestContent(patch), context);
+                using HttpMessage message = _privateCloudsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, AvsPrivateCloudPatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 AvsArmOperation<AvsPrivateCloudResource> operation = new AvsArmOperation<AvsPrivateCloudResource>(
                     new AvsPrivateCloudResourceOperationSource(Client),
@@ -285,7 +285,7 @@ namespace Azure.ResourceManager.Avs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateCloudsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, AvsPrivateCloudPatch.ToRequestContent(patch), context);
+                using HttpMessage message = _privateCloudsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, AvsPrivateCloudPatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 AvsArmOperation<AvsPrivateCloudResource> operation = new AvsArmOperation<AvsPrivateCloudResource>(
                     new AvsPrivateCloudResourceOperationSource(Client),
@@ -340,7 +340,7 @@ namespace Azure.ResourceManager.Avs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateCloudsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _privateCloudsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 AvsArmOperation operation = new AvsArmOperation(_privateCloudsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -389,7 +389,7 @@ namespace Azure.ResourceManager.Avs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateCloudsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _privateCloudsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 AvsArmOperation operation = new AvsArmOperation(_privateCloudsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -437,7 +437,7 @@ namespace Azure.ResourceManager.Avs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateCloudsRestClient.CreateGetVcfLicenseRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _privateCloudsRestClient.CreateGetVcfLicenseRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<VcfLicense> response = Response.FromValue(VcfLicense.FromResponse(result), result);
                 if (response.Value == null)
@@ -485,7 +485,7 @@ namespace Azure.ResourceManager.Avs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateCloudsRestClient.CreateGetVcfLicenseRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _privateCloudsRestClient.CreateGetVcfLicenseRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<VcfLicense> response = Response.FromValue(VcfLicense.FromResponse(result), result);
                 if (response.Value == null)
@@ -533,7 +533,7 @@ namespace Azure.ResourceManager.Avs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateCloudsRestClient.CreateGetAdminCredentialsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _privateCloudsRestClient.CreateGetAdminCredentialsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<AdminCredentials> response = Response.FromValue(AdminCredentials.FromResponse(result), result);
                 if (response.Value == null)
@@ -581,7 +581,7 @@ namespace Azure.ResourceManager.Avs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateCloudsRestClient.CreateGetAdminCredentialsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _privateCloudsRestClient.CreateGetAdminCredentialsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<AdminCredentials> response = Response.FromValue(AdminCredentials.FromResponse(result), result);
                 if (response.Value == null)
@@ -630,7 +630,7 @@ namespace Azure.ResourceManager.Avs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateCloudsRestClient.CreateRotateNsxtPasswordRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _privateCloudsRestClient.CreateRotateNsxtPasswordRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 AvsArmOperation operation = new AvsArmOperation(_privateCloudsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -679,7 +679,7 @@ namespace Azure.ResourceManager.Avs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateCloudsRestClient.CreateRotateNsxtPasswordRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _privateCloudsRestClient.CreateRotateNsxtPasswordRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 AvsArmOperation operation = new AvsArmOperation(_privateCloudsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -728,7 +728,7 @@ namespace Azure.ResourceManager.Avs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateCloudsRestClient.CreateRotateVCenterPasswordRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _privateCloudsRestClient.CreateRotateVCenterPasswordRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 AvsArmOperation operation = new AvsArmOperation(_privateCloudsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -777,7 +777,7 @@ namespace Azure.ResourceManager.Avs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateCloudsRestClient.CreateRotateVCenterPasswordRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _privateCloudsRestClient.CreateRotateVCenterPasswordRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 AvsArmOperation operation = new AvsArmOperation(_privateCloudsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -816,7 +816,7 @@ namespace Azure.ResourceManager.Avs
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _privateCloudsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _privateCloudsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<AvsPrivateCloudData> response = Response.FromValue(AvsPrivateCloudData.FromResponse(result), result);
                     return Response.FromValue(new AvsPrivateCloudResource(Client, response.Value), response.GetRawResponse());
@@ -864,7 +864,7 @@ namespace Azure.ResourceManager.Avs
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _privateCloudsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _privateCloudsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<AvsPrivateCloudData> response = Response.FromValue(AvsPrivateCloudData.FromResponse(result), result);
                     return Response.FromValue(new AvsPrivateCloudResource(Client, response.Value), response.GetRawResponse());
@@ -910,7 +910,7 @@ namespace Azure.ResourceManager.Avs
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _privateCloudsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _privateCloudsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<AvsPrivateCloudData> response = Response.FromValue(AvsPrivateCloudData.FromResponse(result), result);
                     return Response.FromValue(new AvsPrivateCloudResource(Client, response.Value), response.GetRawResponse());
@@ -952,7 +952,7 @@ namespace Azure.ResourceManager.Avs
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _privateCloudsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _privateCloudsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<AvsPrivateCloudData> response = Response.FromValue(AvsPrivateCloudData.FromResponse(result), result);
                     return Response.FromValue(new AvsPrivateCloudResource(Client, response.Value), response.GetRawResponse());
@@ -994,7 +994,7 @@ namespace Azure.ResourceManager.Avs
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _privateCloudsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _privateCloudsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<AvsPrivateCloudData> response = Response.FromValue(AvsPrivateCloudData.FromResponse(result), result);
                     return Response.FromValue(new AvsPrivateCloudResource(Client, response.Value), response.GetRawResponse());
@@ -1040,7 +1040,7 @@ namespace Azure.ResourceManager.Avs
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _privateCloudsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _privateCloudsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<AvsPrivateCloudData> response = Response.FromValue(AvsPrivateCloudData.FromResponse(result), result);
                     return Response.FromValue(new AvsPrivateCloudResource(Client, response.Value), response.GetRawResponse());

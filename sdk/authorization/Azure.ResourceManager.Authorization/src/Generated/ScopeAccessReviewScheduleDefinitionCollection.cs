@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Authorization
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _scopeAccessReviewScheduleDefinitionsRestClient.CreateCreateOrUpdateByIdRequest(Id.ToString(), scheduleDefinitionId, AccessReviewScheduleDefinitionProperties.ToRequestContent(properties), context);
+                using HttpMessage message = _scopeAccessReviewScheduleDefinitionsRestClient.CreateCreateOrUpdateByIdRequest(Id.ToString(), scheduleDefinitionId, AccessReviewScheduleDefinitionProperties.ToRequestContent(properties), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<AccessReviewScheduleDefinitionData> response = Response.FromValue(AccessReviewScheduleDefinitionData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.Authorization
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _scopeAccessReviewScheduleDefinitionsRestClient.CreateCreateOrUpdateByIdRequest(Id.ToString(), scheduleDefinitionId, AccessReviewScheduleDefinitionProperties.ToRequestContent(properties), context);
+                using HttpMessage message = _scopeAccessReviewScheduleDefinitionsRestClient.CreateCreateOrUpdateByIdRequest(Id.ToString(), scheduleDefinitionId, AccessReviewScheduleDefinitionProperties.ToRequestContent(properties), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<AccessReviewScheduleDefinitionData> response = Response.FromValue(AccessReviewScheduleDefinitionData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.Authorization
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _scopeAccessReviewScheduleDefinitionsRestClient.CreateGetByIdRequest(Id.ToString(), scheduleDefinitionId, context);
+                using HttpMessage message = _scopeAccessReviewScheduleDefinitionsRestClient.CreateGetByIdRequest(Id.ToString(), scheduleDefinitionId, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<AccessReviewScheduleDefinitionData> response = Response.FromValue(AccessReviewScheduleDefinitionData.FromResponse(result), result);
                 if (response.Value == null)
@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.Authorization
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _scopeAccessReviewScheduleDefinitionsRestClient.CreateGetByIdRequest(Id.ToString(), scheduleDefinitionId, context);
+                using HttpMessage message = _scopeAccessReviewScheduleDefinitionsRestClient.CreateGetByIdRequest(Id.ToString(), scheduleDefinitionId, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<AccessReviewScheduleDefinitionData> response = Response.FromValue(AccessReviewScheduleDefinitionData.FromResponse(result), result);
                 if (response.Value == null)
@@ -342,7 +342,7 @@ namespace Azure.ResourceManager.Authorization
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _scopeAccessReviewScheduleDefinitionsRestClient.CreateGetByIdRequest(Id.ToString(), scheduleDefinitionId, context);
+                using HttpMessage message = _scopeAccessReviewScheduleDefinitionsRestClient.CreateGetByIdRequest(Id.ToString(), scheduleDefinitionId, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<AccessReviewScheduleDefinitionData> response = default;
@@ -399,7 +399,7 @@ namespace Azure.ResourceManager.Authorization
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _scopeAccessReviewScheduleDefinitionsRestClient.CreateGetByIdRequest(Id.ToString(), scheduleDefinitionId, context);
+                using HttpMessage message = _scopeAccessReviewScheduleDefinitionsRestClient.CreateGetByIdRequest(Id.ToString(), scheduleDefinitionId, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<AccessReviewScheduleDefinitionData> response = default;
@@ -456,7 +456,7 @@ namespace Azure.ResourceManager.Authorization
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _scopeAccessReviewScheduleDefinitionsRestClient.CreateGetByIdRequest(Id.ToString(), scheduleDefinitionId, context);
+                using HttpMessage message = _scopeAccessReviewScheduleDefinitionsRestClient.CreateGetByIdRequest(Id.ToString(), scheduleDefinitionId, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<AccessReviewScheduleDefinitionData> response = default;
@@ -517,7 +517,7 @@ namespace Azure.ResourceManager.Authorization
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _scopeAccessReviewScheduleDefinitionsRestClient.CreateGetByIdRequest(Id.ToString(), scheduleDefinitionId, context);
+                using HttpMessage message = _scopeAccessReviewScheduleDefinitionsRestClient.CreateGetByIdRequest(Id.ToString(), scheduleDefinitionId, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<AccessReviewScheduleDefinitionData> response = default;

@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.LargeInstance
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _azureLargeStorageInstanceRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, azureLargeStorageInstanceName, LargeStorageInstanceData.ToRequestContent(data), context);
+                using HttpMessage message = _azureLargeStorageInstanceRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, azureLargeStorageInstanceName, LargeStorageInstanceData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<LargeStorageInstanceData> response = Response.FromValue(LargeStorageInstanceData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.LargeInstance
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _azureLargeStorageInstanceRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, azureLargeStorageInstanceName, LargeStorageInstanceData.ToRequestContent(data), context);
+                using HttpMessage message = _azureLargeStorageInstanceRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, azureLargeStorageInstanceName, LargeStorageInstanceData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<LargeStorageInstanceData> response = Response.FromValue(LargeStorageInstanceData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.LargeInstance
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _azureLargeStorageInstanceRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, azureLargeStorageInstanceName, context);
+                using HttpMessage message = _azureLargeStorageInstanceRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, azureLargeStorageInstanceName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<LargeStorageInstanceData> response = Response.FromValue(LargeStorageInstanceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.LargeInstance
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _azureLargeStorageInstanceRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, azureLargeStorageInstanceName, context);
+                using HttpMessage message = _azureLargeStorageInstanceRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, azureLargeStorageInstanceName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<LargeStorageInstanceData> response = Response.FromValue(LargeStorageInstanceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -359,7 +359,7 @@ namespace Azure.ResourceManager.LargeInstance
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _azureLargeStorageInstanceRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, azureLargeStorageInstanceName, context);
+                using HttpMessage message = _azureLargeStorageInstanceRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, azureLargeStorageInstanceName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<LargeStorageInstanceData> response = default;
@@ -416,7 +416,7 @@ namespace Azure.ResourceManager.LargeInstance
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _azureLargeStorageInstanceRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, azureLargeStorageInstanceName, context);
+                using HttpMessage message = _azureLargeStorageInstanceRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, azureLargeStorageInstanceName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<LargeStorageInstanceData> response = default;
@@ -473,7 +473,7 @@ namespace Azure.ResourceManager.LargeInstance
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _azureLargeStorageInstanceRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, azureLargeStorageInstanceName, context);
+                using HttpMessage message = _azureLargeStorageInstanceRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, azureLargeStorageInstanceName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<LargeStorageInstanceData> response = default;
@@ -534,7 +534,7 @@ namespace Azure.ResourceManager.LargeInstance
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _azureLargeStorageInstanceRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, azureLargeStorageInstanceName, context);
+                using HttpMessage message = _azureLargeStorageInstanceRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, azureLargeStorageInstanceName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<LargeStorageInstanceData> response = default;

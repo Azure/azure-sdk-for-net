@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.ResilienceManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _goalAssignmentsRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _goalAssignmentsRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<GoalAssignmentData> response = Response.FromValue(GoalAssignmentData.FromResponse(result), result);
                 if (response.Value == null)
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.ResilienceManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _goalAssignmentsRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _goalAssignmentsRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<GoalAssignmentData> response = Response.FromValue(GoalAssignmentData.FromResponse(result), result);
                 if (response.Value == null)
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.ResilienceManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _goalAssignmentsRestClient.CreateUpdateRequest(Id.Parent.Name, Id.Name, GoalAssignmentData.ToRequestContent(data), context);
+                using HttpMessage message = _goalAssignmentsRestClient.CreateUpdateRequest(Id.Parent.Name, Id.Name, GoalAssignmentData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ResilienceManagementArmOperation operation = new ResilienceManagementArmOperation(_goalAssignmentsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -276,7 +276,7 @@ namespace Azure.ResourceManager.ResilienceManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _goalAssignmentsRestClient.CreateUpdateRequest(Id.Parent.Name, Id.Name, GoalAssignmentData.ToRequestContent(data), context);
+                using HttpMessage message = _goalAssignmentsRestClient.CreateUpdateRequest(Id.Parent.Name, Id.Name, GoalAssignmentData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ResilienceManagementArmOperation operation = new ResilienceManagementArmOperation(_goalAssignmentsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -325,7 +325,7 @@ namespace Azure.ResourceManager.ResilienceManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _goalAssignmentsRestClient.CreateDeleteRequest(Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _goalAssignmentsRestClient.CreateDeleteRequest(Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ResilienceManagementArmOperation operation = new ResilienceManagementArmOperation(_goalAssignmentsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -374,7 +374,7 @@ namespace Azure.ResourceManager.ResilienceManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _goalAssignmentsRestClient.CreateDeleteRequest(Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _goalAssignmentsRestClient.CreateDeleteRequest(Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ResilienceManagementArmOperation operation = new ResilienceManagementArmOperation(_goalAssignmentsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -427,7 +427,7 @@ namespace Azure.ResourceManager.ResilienceManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _goalAssignmentsRestClient.CreateRecommendCapacityRequest(Id.Parent.Name, Id.Name, RecommendCapacityContent.ToRequestContent(content), context);
+                using HttpMessage message = _goalAssignmentsRestClient.CreateRecommendCapacityRequest(Id.Parent.Name, Id.Name, RecommendCapacityContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ResilienceManagementArmOperation operation = new ResilienceManagementArmOperation(_goalAssignmentsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -480,7 +480,7 @@ namespace Azure.ResourceManager.ResilienceManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _goalAssignmentsRestClient.CreateRecommendCapacityRequest(Id.Parent.Name, Id.Name, RecommendCapacityContent.ToRequestContent(content), context);
+                using HttpMessage message = _goalAssignmentsRestClient.CreateRecommendCapacityRequest(Id.Parent.Name, Id.Name, RecommendCapacityContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ResilienceManagementArmOperation operation = new ResilienceManagementArmOperation(_goalAssignmentsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -529,7 +529,7 @@ namespace Azure.ResourceManager.ResilienceManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _goalAssignmentsRestClient.CreateRefreshGoalResourcesRequest(Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _goalAssignmentsRestClient.CreateRefreshGoalResourcesRequest(Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ResilienceManagementArmOperation operation = new ResilienceManagementArmOperation(_goalAssignmentsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -578,7 +578,7 @@ namespace Azure.ResourceManager.ResilienceManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _goalAssignmentsRestClient.CreateRefreshGoalResourcesRequest(Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _goalAssignmentsRestClient.CreateRefreshGoalResourcesRequest(Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ResilienceManagementArmOperation operation = new ResilienceManagementArmOperation(_goalAssignmentsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -631,7 +631,7 @@ namespace Azure.ResourceManager.ResilienceManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _goalAssignmentsRestClient.CreateUpdateGoalResourcesRequest(Id.Parent.Name, Id.Name, UpdateGoalResourceContent.ToRequestContent(content), context);
+                using HttpMessage message = _goalAssignmentsRestClient.CreateUpdateGoalResourcesRequest(Id.Parent.Name, Id.Name, UpdateGoalResourceContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ResilienceManagementArmOperation operation = new ResilienceManagementArmOperation(_goalAssignmentsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -684,7 +684,7 @@ namespace Azure.ResourceManager.ResilienceManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _goalAssignmentsRestClient.CreateUpdateGoalResourcesRequest(Id.Parent.Name, Id.Name, UpdateGoalResourceContent.ToRequestContent(content), context);
+                using HttpMessage message = _goalAssignmentsRestClient.CreateUpdateGoalResourcesRequest(Id.Parent.Name, Id.Name, UpdateGoalResourceContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ResilienceManagementArmOperation operation = new ResilienceManagementArmOperation(_goalAssignmentsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)

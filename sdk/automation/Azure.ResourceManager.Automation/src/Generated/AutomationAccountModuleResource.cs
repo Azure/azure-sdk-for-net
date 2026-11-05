@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Automation
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _moduleRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _moduleRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<AutomationModuleData> response = Response.FromValue(AutomationModuleData.FromResponse(result), result);
                 if (response.Value == null)
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.Automation
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _moduleRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _moduleRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<AutomationModuleData> response = Response.FromValue(AutomationModuleData.FromResponse(result), result);
                 if (response.Value == null)
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.Automation
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _moduleRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, AutomationAccountModulePatch.ToRequestContent(patch), context);
+                using HttpMessage message = _moduleRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, AutomationAccountModulePatch.ToRequestContent(patch), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<AutomationModuleData> response = Response.FromValue(AutomationModuleData.FromResponse(result), result);
                 if (response.Value == null)
@@ -291,7 +291,7 @@ namespace Azure.ResourceManager.Automation
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _moduleRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, AutomationAccountModulePatch.ToRequestContent(patch), context);
+                using HttpMessage message = _moduleRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, AutomationAccountModulePatch.ToRequestContent(patch), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<AutomationModuleData> response = Response.FromValue(AutomationModuleData.FromResponse(result), result);
                 if (response.Value == null)
@@ -340,7 +340,7 @@ namespace Azure.ResourceManager.Automation
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _moduleRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _moduleRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
@@ -391,7 +391,7 @@ namespace Azure.ResourceManager.Automation
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _moduleRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _moduleRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
@@ -446,7 +446,7 @@ namespace Azure.ResourceManager.Automation
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _activityRestClient.CreateGetActivityRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, activityName, context);
+                using HttpMessage message = _activityRestClient.CreateGetActivityRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, activityName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<AutomationActivity> response = Response.FromValue(AutomationActivity.FromResponse(result), result);
                 if (response.Value == null)
@@ -499,7 +499,7 @@ namespace Azure.ResourceManager.Automation
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _activityRestClient.CreateGetActivityRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, activityName, context);
+                using HttpMessage message = _activityRestClient.CreateGetActivityRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, activityName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<AutomationActivity> response = Response.FromValue(AutomationActivity.FromResponse(result), result);
                 if (response.Value == null)
@@ -796,7 +796,7 @@ namespace Azure.ResourceManager.Automation
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _moduleRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                    using HttpMessage message = _moduleRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<AutomationModuleData> response = Response.FromValue(AutomationModuleData.FromResponse(result), result);
                     return Response.FromValue(new AutomationAccountModuleResource(Client, response.Value), response.GetRawResponse());
@@ -844,7 +844,7 @@ namespace Azure.ResourceManager.Automation
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _moduleRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                    using HttpMessage message = _moduleRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<AutomationModuleData> response = Response.FromValue(AutomationModuleData.FromResponse(result), result);
                     return Response.FromValue(new AutomationAccountModuleResource(Client, response.Value), response.GetRawResponse());
@@ -890,7 +890,7 @@ namespace Azure.ResourceManager.Automation
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _moduleRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                    using HttpMessage message = _moduleRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<AutomationModuleData> response = Response.FromValue(AutomationModuleData.FromResponse(result), result);
                     return Response.FromValue(new AutomationAccountModuleResource(Client, response.Value), response.GetRawResponse());
@@ -932,7 +932,7 @@ namespace Azure.ResourceManager.Automation
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _moduleRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                    using HttpMessage message = _moduleRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<AutomationModuleData> response = Response.FromValue(AutomationModuleData.FromResponse(result), result);
                     return Response.FromValue(new AutomationAccountModuleResource(Client, response.Value), response.GetRawResponse());
@@ -974,7 +974,7 @@ namespace Azure.ResourceManager.Automation
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _moduleRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                    using HttpMessage message = _moduleRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<AutomationModuleData> response = Response.FromValue(AutomationModuleData.FromResponse(result), result);
                     return Response.FromValue(new AutomationAccountModuleResource(Client, response.Value), response.GetRawResponse());
@@ -1020,7 +1020,7 @@ namespace Azure.ResourceManager.Automation
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _moduleRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                    using HttpMessage message = _moduleRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<AutomationModuleData> response = Response.FromValue(AutomationModuleData.FromResponse(result), result);
                     return Response.FromValue(new AutomationAccountModuleResource(Client, response.Value), response.GetRawResponse());

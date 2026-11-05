@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Authorization
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _alertIncidentsRestClient.CreateGetRequest(Id.Parent.ToString(), Id.Name, alertIncidentId, context);
+                using HttpMessage message = _alertIncidentsRestClient.CreateGetRequest(Id.Parent.ToString(), Id.Name, alertIncidentId, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<RoleManagementAlertIncidentData> response = Response.FromValue(RoleManagementAlertIncidentData.FromResponse(result), result);
                 if (response.Value == null)
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Authorization
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _alertIncidentsRestClient.CreateGetRequest(Id.Parent.ToString(), Id.Name, alertIncidentId, context);
+                using HttpMessage message = _alertIncidentsRestClient.CreateGetRequest(Id.Parent.ToString(), Id.Name, alertIncidentId, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<RoleManagementAlertIncidentData> response = Response.FromValue(RoleManagementAlertIncidentData.FromResponse(result), result);
                 if (response.Value == null)
@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.Authorization
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _alertIncidentsRestClient.CreateGetRequest(Id.Parent.ToString(), Id.Name, alertIncidentId, context);
+                using HttpMessage message = _alertIncidentsRestClient.CreateGetRequest(Id.Parent.ToString(), Id.Name, alertIncidentId, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<RoleManagementAlertIncidentData> response = default;
@@ -298,7 +298,7 @@ namespace Azure.ResourceManager.Authorization
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _alertIncidentsRestClient.CreateGetRequest(Id.Parent.ToString(), Id.Name, alertIncidentId, context);
+                using HttpMessage message = _alertIncidentsRestClient.CreateGetRequest(Id.Parent.ToString(), Id.Name, alertIncidentId, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<RoleManagementAlertIncidentData> response = default;
@@ -355,7 +355,7 @@ namespace Azure.ResourceManager.Authorization
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _alertIncidentsRestClient.CreateGetRequest(Id.Parent.ToString(), Id.Name, alertIncidentId, context);
+                using HttpMessage message = _alertIncidentsRestClient.CreateGetRequest(Id.Parent.ToString(), Id.Name, alertIncidentId, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<RoleManagementAlertIncidentData> response = default;
@@ -416,7 +416,7 @@ namespace Azure.ResourceManager.Authorization
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _alertIncidentsRestClient.CreateGetRequest(Id.Parent.ToString(), Id.Name, alertIncidentId, context);
+                using HttpMessage message = _alertIncidentsRestClient.CreateGetRequest(Id.Parent.ToString(), Id.Name, alertIncidentId, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<RoleManagementAlertIncidentData> response = default;

@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.ScVmm
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _guestAgentsRestClient.CreateCreateRequest(Id.Parent.Parent.ToString(), ScVmmGuestAgentData.ToRequestContent(data), context);
+                using HttpMessage message = _guestAgentsRestClient.CreateCreateRequest(Id.Parent.Parent.ToString(), ScVmmGuestAgentData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ScVmmArmOperation<ScVmmGuestAgentResource> operation = new ScVmmArmOperation<ScVmmGuestAgentResource>(
                     new ScVmmGuestAgentResourceOperationSource(Client),
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.ScVmm
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _guestAgentsRestClient.CreateCreateRequest(Id.Parent.Parent.ToString(), ScVmmGuestAgentData.ToRequestContent(data), context);
+                using HttpMessage message = _guestAgentsRestClient.CreateCreateRequest(Id.Parent.Parent.ToString(), ScVmmGuestAgentData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ScVmmArmOperation<ScVmmGuestAgentResource> operation = new ScVmmArmOperation<ScVmmGuestAgentResource>(
                     new ScVmmGuestAgentResourceOperationSource(Client),
@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.ScVmm
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _guestAgentsRestClient.CreateGetRequest(Id.Parent.Parent.ToString(), context);
+                using HttpMessage message = _guestAgentsRestClient.CreateGetRequest(Id.Parent.Parent.ToString(), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ScVmmGuestAgentData> response = Response.FromValue(ScVmmGuestAgentData.FromResponse(result), result);
                 if (response.Value == null)
@@ -286,7 +286,7 @@ namespace Azure.ResourceManager.ScVmm
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _guestAgentsRestClient.CreateGetRequest(Id.Parent.Parent.ToString(), context);
+                using HttpMessage message = _guestAgentsRestClient.CreateGetRequest(Id.Parent.Parent.ToString(), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ScVmmGuestAgentData> response = Response.FromValue(ScVmmGuestAgentData.FromResponse(result), result);
                 if (response.Value == null)
@@ -335,7 +335,7 @@ namespace Azure.ResourceManager.ScVmm
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _guestAgentsRestClient.CreateDeleteRequest(Id.Parent.Parent.ToString(), context);
+                using HttpMessage message = _guestAgentsRestClient.CreateDeleteRequest(Id.Parent.Parent.ToString(), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
@@ -386,7 +386,7 @@ namespace Azure.ResourceManager.ScVmm
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _guestAgentsRestClient.CreateDeleteRequest(Id.Parent.Parent.ToString(), context);
+                using HttpMessage message = _guestAgentsRestClient.CreateDeleteRequest(Id.Parent.Parent.ToString(), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());

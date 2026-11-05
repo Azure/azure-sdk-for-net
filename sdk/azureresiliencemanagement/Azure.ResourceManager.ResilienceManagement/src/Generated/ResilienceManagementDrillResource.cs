@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.ResilienceManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _drillsRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _drillsRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ResilienceManagementDrillData> response = Response.FromValue(ResilienceManagementDrillData.FromResponse(result), result);
                 if (response.Value == null)
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.ResilienceManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _drillsRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _drillsRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ResilienceManagementDrillData> response = Response.FromValue(ResilienceManagementDrillData.FromResponse(result), result);
                 if (response.Value == null)
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.ResilienceManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _drillsRestClient.CreateUpdateRequest(Id.Parent.Name, Id.Name, ResilienceManagementDrillPatch.ToRequestContent(patch), context);
+                using HttpMessage message = _drillsRestClient.CreateUpdateRequest(Id.Parent.Name, Id.Name, ResilienceManagementDrillPatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ResilienceManagementArmOperation operation = new ResilienceManagementArmOperation(_drillsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -276,7 +276,7 @@ namespace Azure.ResourceManager.ResilienceManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _drillsRestClient.CreateUpdateRequest(Id.Parent.Name, Id.Name, ResilienceManagementDrillPatch.ToRequestContent(patch), context);
+                using HttpMessage message = _drillsRestClient.CreateUpdateRequest(Id.Parent.Name, Id.Name, ResilienceManagementDrillPatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ResilienceManagementArmOperation operation = new ResilienceManagementArmOperation(_drillsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -325,7 +325,7 @@ namespace Azure.ResourceManager.ResilienceManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _drillsRestClient.CreateDeleteRequest(Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _drillsRestClient.CreateDeleteRequest(Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ResilienceManagementArmOperation operation = new ResilienceManagementArmOperation(_drillsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -374,7 +374,7 @@ namespace Azure.ResourceManager.ResilienceManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _drillsRestClient.CreateDeleteRequest(Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _drillsRestClient.CreateDeleteRequest(Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ResilienceManagementArmOperation operation = new ResilienceManagementArmOperation(_drillsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -430,7 +430,7 @@ namespace Azure.ResourceManager.ResilienceManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _drillsRestClient.CreateAddOrUpdateResourcesRequest(Id.Parent.Name, Id.Name, operationId, AddOrUpdateResourcesContent.ToRequestContent(content), context);
+                using HttpMessage message = _drillsRestClient.CreateAddOrUpdateResourcesRequest(Id.Parent.Name, Id.Name, operationId, AddOrUpdateResourcesContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ResilienceManagementArmOperation operation = new ResilienceManagementArmOperation(_drillsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -486,7 +486,7 @@ namespace Azure.ResourceManager.ResilienceManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _drillsRestClient.CreateAddOrUpdateResourcesRequest(Id.Parent.Name, Id.Name, operationId, AddOrUpdateResourcesContent.ToRequestContent(content), context);
+                using HttpMessage message = _drillsRestClient.CreateAddOrUpdateResourcesRequest(Id.Parent.Name, Id.Name, operationId, AddOrUpdateResourcesContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ResilienceManagementArmOperation operation = new ResilienceManagementArmOperation(_drillsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -542,7 +542,7 @@ namespace Azure.ResourceManager.ResilienceManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _drillsRestClient.CreateEndRequest(Id.Parent.Name, Id.Name, operationId, DrillEndContent.ToRequestContent(content), context);
+                using HttpMessage message = _drillsRestClient.CreateEndRequest(Id.Parent.Name, Id.Name, operationId, DrillEndContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ResilienceManagementArmOperation operation = new ResilienceManagementArmOperation(_drillsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -598,7 +598,7 @@ namespace Azure.ResourceManager.ResilienceManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _drillsRestClient.CreateEndRequest(Id.Parent.Name, Id.Name, operationId, DrillEndContent.ToRequestContent(content), context);
+                using HttpMessage message = _drillsRestClient.CreateEndRequest(Id.Parent.Name, Id.Name, operationId, DrillEndContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ResilienceManagementArmOperation operation = new ResilienceManagementArmOperation(_drillsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -652,7 +652,7 @@ namespace Azure.ResourceManager.ResilienceManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _drillsRestClient.CreateResyncReadinessCheckRequest(Id.Parent.Name, Id.Name, operationId, context);
+                using HttpMessage message = _drillsRestClient.CreateResyncReadinessCheckRequest(Id.Parent.Name, Id.Name, operationId, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ResilienceManagementArmOperation operation = new ResilienceManagementArmOperation(_drillsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -706,7 +706,7 @@ namespace Azure.ResourceManager.ResilienceManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _drillsRestClient.CreateResyncReadinessCheckRequest(Id.Parent.Name, Id.Name, operationId, context);
+                using HttpMessage message = _drillsRestClient.CreateResyncReadinessCheckRequest(Id.Parent.Name, Id.Name, operationId, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ResilienceManagementArmOperation operation = new ResilienceManagementArmOperation(_drillsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -762,7 +762,7 @@ namespace Azure.ResourceManager.ResilienceManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _drillsRestClient.CreateStartRequest(Id.Parent.Name, Id.Name, operationId, DrillStartContent.ToRequestContent(content), context);
+                using HttpMessage message = _drillsRestClient.CreateStartRequest(Id.Parent.Name, Id.Name, operationId, DrillStartContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ResilienceManagementArmOperation operation = new ResilienceManagementArmOperation(_drillsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -818,7 +818,7 @@ namespace Azure.ResourceManager.ResilienceManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _drillsRestClient.CreateStartRequest(Id.Parent.Name, Id.Name, operationId, DrillStartContent.ToRequestContent(content), context);
+                using HttpMessage message = _drillsRestClient.CreateStartRequest(Id.Parent.Name, Id.Name, operationId, DrillStartContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ResilienceManagementArmOperation operation = new ResilienceManagementArmOperation(_drillsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -874,7 +874,7 @@ namespace Azure.ResourceManager.ResilienceManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _drillsRestClient.CreateValidateForExecutionRequest(Id.Parent.Name, Id.Name, operationId, ValidateForExecutionContent.ToRequestContent(content), context);
+                using HttpMessage message = _drillsRestClient.CreateValidateForExecutionRequest(Id.Parent.Name, Id.Name, operationId, ValidateForExecutionContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ResilienceManagementArmOperation operation = new ResilienceManagementArmOperation(_drillsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -930,7 +930,7 @@ namespace Azure.ResourceManager.ResilienceManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _drillsRestClient.CreateValidateForExecutionRequest(Id.Parent.Name, Id.Name, operationId, ValidateForExecutionContent.ToRequestContent(content), context);
+                using HttpMessage message = _drillsRestClient.CreateValidateForExecutionRequest(Id.Parent.Name, Id.Name, operationId, ValidateForExecutionContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ResilienceManagementArmOperation operation = new ResilienceManagementArmOperation(_drillsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)

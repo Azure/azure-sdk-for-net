@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Authorization
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _alertIncidentsRestClient.CreateGetRequest(Id.Parent.Parent.ToString(), Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _alertIncidentsRestClient.CreateGetRequest(Id.Parent.Parent.ToString(), Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<RoleManagementAlertIncidentData> response = Response.FromValue(RoleManagementAlertIncidentData.FromResponse(result), result);
                 if (response.Value == null)
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Authorization
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _alertIncidentsRestClient.CreateGetRequest(Id.Parent.Parent.ToString(), Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _alertIncidentsRestClient.CreateGetRequest(Id.Parent.Parent.ToString(), Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<RoleManagementAlertIncidentData> response = Response.FromValue(RoleManagementAlertIncidentData.FromResponse(result), result);
                 if (response.Value == null)
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.Authorization
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _alertIncidentsRestClient.CreateRemediateRequest(Id.Parent.Parent.ToString(), Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _alertIncidentsRestClient.CreateRemediateRequest(Id.Parent.Parent.ToString(), Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 return response;
             }
@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.Authorization
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _alertIncidentsRestClient.CreateRemediateRequest(Id.Parent.Parent.ToString(), Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _alertIncidentsRestClient.CreateRemediateRequest(Id.Parent.Parent.ToString(), Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 return response;
             }

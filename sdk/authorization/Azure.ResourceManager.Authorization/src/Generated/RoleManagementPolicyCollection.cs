@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Authorization
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _roleManagementPoliciesRestClient.CreateGetRequest(Id.ToString(), roleManagementPolicyName, context);
+                using HttpMessage message = _roleManagementPoliciesRestClient.CreateGetRequest(Id.ToString(), roleManagementPolicyName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<RoleManagementPolicyData> response = Response.FromValue(RoleManagementPolicyData.FromResponse(result), result);
                 if (response.Value == null)
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Authorization
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _roleManagementPoliciesRestClient.CreateGetRequest(Id.ToString(), roleManagementPolicyName, context);
+                using HttpMessage message = _roleManagementPoliciesRestClient.CreateGetRequest(Id.ToString(), roleManagementPolicyName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<RoleManagementPolicyData> response = Response.FromValue(RoleManagementPolicyData.FromResponse(result), result);
                 if (response.Value == null)
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.Authorization
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _roleManagementPoliciesRestClient.CreateGetRequest(Id.ToString(), roleManagementPolicyName, context);
+                using HttpMessage message = _roleManagementPoliciesRestClient.CreateGetRequest(Id.ToString(), roleManagementPolicyName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<RoleManagementPolicyData> response = default;
@@ -286,7 +286,7 @@ namespace Azure.ResourceManager.Authorization
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _roleManagementPoliciesRestClient.CreateGetRequest(Id.ToString(), roleManagementPolicyName, context);
+                using HttpMessage message = _roleManagementPoliciesRestClient.CreateGetRequest(Id.ToString(), roleManagementPolicyName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<RoleManagementPolicyData> response = default;
@@ -343,7 +343,7 @@ namespace Azure.ResourceManager.Authorization
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _roleManagementPoliciesRestClient.CreateGetRequest(Id.ToString(), roleManagementPolicyName, context);
+                using HttpMessage message = _roleManagementPoliciesRestClient.CreateGetRequest(Id.ToString(), roleManagementPolicyName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<RoleManagementPolicyData> response = default;
@@ -404,7 +404,7 @@ namespace Azure.ResourceManager.Authorization
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _roleManagementPoliciesRestClient.CreateGetRequest(Id.ToString(), roleManagementPolicyName, context);
+                using HttpMessage message = _roleManagementPoliciesRestClient.CreateGetRequest(Id.ToString(), roleManagementPolicyName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<RoleManagementPolicyData> response = default;

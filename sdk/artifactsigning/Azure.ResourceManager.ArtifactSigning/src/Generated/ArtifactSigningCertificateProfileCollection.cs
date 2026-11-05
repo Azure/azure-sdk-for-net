@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.ArtifactSigning
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _certificateProfilesRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, profileName, ArtifactSigningCertificateProfileData.ToRequestContent(data), context);
+                using HttpMessage message = _certificateProfilesRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, profileName, ArtifactSigningCertificateProfileData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ArtifactSigningArmOperation<ArtifactSigningCertificateProfileResource> operation = new ArtifactSigningArmOperation<ArtifactSigningCertificateProfileResource>(
                     new ArtifactSigningCertificateProfileResourceOperationSource(Client),
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.ArtifactSigning
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _certificateProfilesRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, profileName, ArtifactSigningCertificateProfileData.ToRequestContent(data), context);
+                using HttpMessage message = _certificateProfilesRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, profileName, ArtifactSigningCertificateProfileData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ArtifactSigningArmOperation<ArtifactSigningCertificateProfileResource> operation = new ArtifactSigningArmOperation<ArtifactSigningCertificateProfileResource>(
                     new ArtifactSigningCertificateProfileResourceOperationSource(Client),
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.ArtifactSigning
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _certificateProfilesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, profileName, context);
+                using HttpMessage message = _certificateProfilesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, profileName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ArtifactSigningCertificateProfileData> response = Response.FromValue(ArtifactSigningCertificateProfileData.FromResponse(result), result);
                 if (response.Value == null)
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.ArtifactSigning
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _certificateProfilesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, profileName, context);
+                using HttpMessage message = _certificateProfilesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, profileName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ArtifactSigningCertificateProfileData> response = Response.FromValue(ArtifactSigningCertificateProfileData.FromResponse(result), result);
                 if (response.Value == null)
@@ -369,7 +369,7 @@ namespace Azure.ResourceManager.ArtifactSigning
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _certificateProfilesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, profileName, context);
+                using HttpMessage message = _certificateProfilesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, profileName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ArtifactSigningCertificateProfileData> response = default;
@@ -426,7 +426,7 @@ namespace Azure.ResourceManager.ArtifactSigning
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _certificateProfilesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, profileName, context);
+                using HttpMessage message = _certificateProfilesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, profileName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ArtifactSigningCertificateProfileData> response = default;
@@ -483,7 +483,7 @@ namespace Azure.ResourceManager.ArtifactSigning
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _certificateProfilesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, profileName, context);
+                using HttpMessage message = _certificateProfilesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, profileName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ArtifactSigningCertificateProfileData> response = default;
@@ -544,7 +544,7 @@ namespace Azure.ResourceManager.ArtifactSigning
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _certificateProfilesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, profileName, context);
+                using HttpMessage message = _certificateProfilesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, profileName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ArtifactSigningCertificateProfileData> response = default;

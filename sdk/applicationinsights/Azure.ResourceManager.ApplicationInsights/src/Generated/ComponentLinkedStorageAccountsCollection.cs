@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.ApplicationInsights
     /// <summary>
     /// A class representing a collection of <see cref="ComponentLinkedStorageAccountsResource"/> and their operations.
     /// Each <see cref="ComponentLinkedStorageAccountsResource"/> in the collection will belong to the same instance of <see cref="ApplicationInsightsComponentResource"/>.
-    /// To get a <see cref="ComponentLinkedStorageAccountsCollection"/> instance call the GetComponentLinkedStorageAccounts method from an instance of <see cref="ApplicationInsightsComponentResource"/>.
+    /// To get a <see cref="ComponentLinkedStorageAccountsCollection"/> instance call the GetAllComponentLinkedStorageAccounts method from an instance of <see cref="ApplicationInsightsComponentResource"/>.
     /// </summary>
     public partial class ComponentLinkedStorageAccountsCollection : ArmCollection
     {
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.ApplicationInsights
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _componentLinkedStorageAccountsRestClient.CreateCreateAndUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, storageType.ToString(), ComponentLinkedStorageAccountsData.ToRequestContent(data), context);
+                using HttpMessage message = _componentLinkedStorageAccountsRestClient.CreateCreateAndUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, storageType.ToString(), ComponentLinkedStorageAccountsData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ComponentLinkedStorageAccountsData> response = Response.FromValue(ComponentLinkedStorageAccountsData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.ApplicationInsights
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _componentLinkedStorageAccountsRestClient.CreateCreateAndUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, storageType.ToString(), ComponentLinkedStorageAccountsData.ToRequestContent(data), context);
+                using HttpMessage message = _componentLinkedStorageAccountsRestClient.CreateCreateAndUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, storageType.ToString(), ComponentLinkedStorageAccountsData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ComponentLinkedStorageAccountsData> response = Response.FromValue(ComponentLinkedStorageAccountsData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.ApplicationInsights
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _componentLinkedStorageAccountsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, storageType.ToString(), context);
+                using HttpMessage message = _componentLinkedStorageAccountsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, storageType.ToString(), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ComponentLinkedStorageAccountsData> response = Response.FromValue(ComponentLinkedStorageAccountsData.FromResponse(result), result);
                 if (response.Value == null)
@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.ApplicationInsights
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _componentLinkedStorageAccountsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, storageType.ToString(), context);
+                using HttpMessage message = _componentLinkedStorageAccountsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, storageType.ToString(), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ComponentLinkedStorageAccountsData> response = Response.FromValue(ComponentLinkedStorageAccountsData.FromResponse(result), result);
                 if (response.Value == null)
@@ -278,7 +278,7 @@ namespace Azure.ResourceManager.ApplicationInsights
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _componentLinkedStorageAccountsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, storageType.ToString(), context);
+                using HttpMessage message = _componentLinkedStorageAccountsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, storageType.ToString(), context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ComponentLinkedStorageAccountsData> response = default;
@@ -331,7 +331,7 @@ namespace Azure.ResourceManager.ApplicationInsights
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _componentLinkedStorageAccountsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, storageType.ToString(), context);
+                using HttpMessage message = _componentLinkedStorageAccountsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, storageType.ToString(), context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ComponentLinkedStorageAccountsData> response = default;
@@ -384,7 +384,7 @@ namespace Azure.ResourceManager.ApplicationInsights
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _componentLinkedStorageAccountsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, storageType.ToString(), context);
+                using HttpMessage message = _componentLinkedStorageAccountsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, storageType.ToString(), context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ComponentLinkedStorageAccountsData> response = default;
@@ -441,7 +441,7 @@ namespace Azure.ResourceManager.ApplicationInsights
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _componentLinkedStorageAccountsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, storageType.ToString(), context);
+                using HttpMessage message = _componentLinkedStorageAccountsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, storageType.ToString(), context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ComponentLinkedStorageAccountsData> response = default;

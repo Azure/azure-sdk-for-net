@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.AppNetwork
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _appLinksRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, appLinkName, AppLinkData.ToRequestContent(data), context);
+                using HttpMessage message = _appLinksRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, appLinkName, AppLinkData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 AppNetworkArmOperation<AppLinkResource> operation = new AppNetworkArmOperation<AppLinkResource>(
                     new AppLinkResourceOperationSource(Client),
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.AppNetwork
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _appLinksRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, appLinkName, AppLinkData.ToRequestContent(data), context);
+                using HttpMessage message = _appLinksRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, appLinkName, AppLinkData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 AppNetworkArmOperation<AppLinkResource> operation = new AppNetworkArmOperation<AppLinkResource>(
                     new AppLinkResourceOperationSource(Client),
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.AppNetwork
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _appLinksRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, appLinkName, context);
+                using HttpMessage message = _appLinksRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, appLinkName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<AppLinkData> response = Response.FromValue(AppLinkData.FromResponse(result), result);
                 if (response.Value == null)
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.AppNetwork
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _appLinksRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, appLinkName, context);
+                using HttpMessage message = _appLinksRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, appLinkName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<AppLinkData> response = Response.FromValue(AppLinkData.FromResponse(result), result);
                 if (response.Value == null)
@@ -357,7 +357,7 @@ namespace Azure.ResourceManager.AppNetwork
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _appLinksRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, appLinkName, context);
+                using HttpMessage message = _appLinksRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, appLinkName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<AppLinkData> response = default;
@@ -414,7 +414,7 @@ namespace Azure.ResourceManager.AppNetwork
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _appLinksRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, appLinkName, context);
+                using HttpMessage message = _appLinksRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, appLinkName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<AppLinkData> response = default;
@@ -471,7 +471,7 @@ namespace Azure.ResourceManager.AppNetwork
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _appLinksRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, appLinkName, context);
+                using HttpMessage message = _appLinksRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, appLinkName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<AppLinkData> response = default;
@@ -532,7 +532,7 @@ namespace Azure.ResourceManager.AppNetwork
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _appLinksRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, appLinkName, context);
+                using HttpMessage message = _appLinksRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, appLinkName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<AppLinkData> response = default;
