@@ -79,10 +79,10 @@ namespace Azure.ResourceManager.HorizonDB.Models
                 writer.WritePropertyName("desiredState"u8);
                 writer.WriteStringValue(DesiredState.Value.ToString());
             }
-            if (Optional.IsDefined(AutoUpgradeExtension))
+            if (Optional.IsDefined(IsAutoUpgradeExtensionEnabled))
             {
                 writer.WritePropertyName("autoUpgradeExtension"u8);
-                writer.WriteBooleanValue(AutoUpgradeExtension.Value);
+                writer.WriteBooleanValue(IsAutoUpgradeExtensionEnabled.Value);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
                 return null;
             }
             ChangeDataCaptureDesiredState? desiredState = default;
-            bool? autoUpgradeExtension = default;
+            bool? isAutoUpgradeExtensionEnabled = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
                     {
                         continue;
                     }
-                    autoUpgradeExtension = prop.Value.GetBoolean();
+                    isAutoUpgradeExtensionEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (options.Format != "W")
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ChangeDataCaptureCapabilityPropertiesForPatchUpdate(desiredState, autoUpgradeExtension, additionalBinaryDataProperties);
+            return new ChangeDataCaptureCapabilityPropertiesForPatchUpdate(desiredState, isAutoUpgradeExtensionEnabled, additionalBinaryDataProperties);
         }
     }
 }

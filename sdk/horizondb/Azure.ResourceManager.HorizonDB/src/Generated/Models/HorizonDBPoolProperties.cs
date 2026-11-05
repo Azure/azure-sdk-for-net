@@ -21,17 +21,14 @@ namespace Azure.ResourceManager.HorizonDB.Models
         /// <param name="computeModel"> The required compute model for the HorizonDB pool. </param>
         /// <param name="nodeCount"> The required number of nodes to allocate and assign to the pool. Allowed values are 1 through 16. To deallocate runtime compute without changing the configured node count, stop the pool. </param>
         /// <param name="highAvailabilityMode"> The high-availability mode. Disabled is required when nodeCount is 1. AnyZone or ZoneRedundant is required when nodeCount is 2 through 16. </param>
-        /// <param name="parameterGroup"> The required parameter group associated with the pool. When creating a new pool in this API version, the caller must supply the corresponding default parameter group; customer-created parameter groups are not accepted during creation. For an existing pool, PUT or PATCH can associate either the corresponding default parameter group or a customer-created parameter group. The create-visible shape intentionally supports both resource ID forms so a future API version can allow customer-created parameter groups during creation without a breaking schema change. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="computeModel"/> or <paramref name="parameterGroup"/> is null. </exception>
-        public HorizonDBPoolProperties(PoolComputeModel computeModel, int nodeCount, PoolHighAvailabilityMode highAvailabilityMode, PoolParameterGroupReference parameterGroup)
+        /// <exception cref="ArgumentNullException"> <paramref name="computeModel"/> is null. </exception>
+        public HorizonDBPoolProperties(PoolComputeModel computeModel, int nodeCount, PoolHighAvailabilityMode highAvailabilityMode)
         {
             Argument.AssertNotNull(computeModel, nameof(computeModel));
-            Argument.AssertNotNull(parameterGroup, nameof(parameterGroup));
 
             ComputeModel = computeModel;
             NodeCount = nodeCount;
             HighAvailability = new PoolHighAvailability(highAvailabilityMode);
-            ParameterGroup = parameterGroup;
         }
 
         /// <summary> Initializes a new instance of <see cref="HorizonDBPoolProperties"/>. </summary>
@@ -39,7 +36,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
         /// <param name="computeModel"> The required compute model for the HorizonDB pool. </param>
         /// <param name="nodeCount"> The required number of nodes to allocate and assign to the pool. Allowed values are 1 through 16. To deallocate runtime compute without changing the configured node count, stop the pool. </param>
         /// <param name="highAvailability"> The required high-availability configuration for the pool. mode must be Disabled when nodeCount is 1, and must be AnyZone or ZoneRedundant when nodeCount is 2 through 16. </param>
-        /// <param name="parameterGroup"> The required parameter group associated with the pool. When creating a new pool in this API version, the caller must supply the corresponding default parameter group; customer-created parameter groups are not accepted during creation. For an existing pool, PUT or PATCH can associate either the corresponding default parameter group or a customer-created parameter group. The create-visible shape intentionally supports both resource ID forms so a future API version can allow customer-created parameter groups during creation without a breaking schema change. </param>
+        /// <param name="parameterGroup"> The parameter group associated with the pool. When omitted during creation, the service applies the default parameter group compatible with the parent cluster's PostgreSQL version. When supplied during creation in this API version, it must reference the corresponding default parameter group; customer-created parameter groups are not accepted during creation. For an existing pool, PUT or PATCH can associate either the corresponding default parameter group or a customer-created parameter group. The create-visible shape intentionally supports both resource ID forms so a future API version can allow customer-created parameter groups during creation without a breaking schema change. </param>
         /// <param name="scheduledMaintenance"> The scheduled maintenance configuration for the pool. The properties available depend on the selected maintenance management type. </param>
         /// <param name="provisioningState"> The provisioning state of the pool. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
@@ -67,7 +64,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
         /// <summary> The required high-availability configuration for the pool. mode must be Disabled when nodeCount is 1, and must be AnyZone or ZoneRedundant when nodeCount is 2 through 16. </summary>
         internal PoolHighAvailability HighAvailability { get; set; }
 
-        /// <summary> The required parameter group associated with the pool. When creating a new pool in this API version, the caller must supply the corresponding default parameter group; customer-created parameter groups are not accepted during creation. For an existing pool, PUT or PATCH can associate either the corresponding default parameter group or a customer-created parameter group. The create-visible shape intentionally supports both resource ID forms so a future API version can allow customer-created parameter groups during creation without a breaking schema change. </summary>
+        /// <summary> The parameter group associated with the pool. When omitted during creation, the service applies the default parameter group compatible with the parent cluster's PostgreSQL version. When supplied during creation in this API version, it must reference the corresponding default parameter group; customer-created parameter groups are not accepted during creation. For an existing pool, PUT or PATCH can associate either the corresponding default parameter group or a customer-created parameter group. The create-visible shape intentionally supports both resource ID forms so a future API version can allow customer-created parameter groups during creation without a breaking schema change. </summary>
         public PoolParameterGroupReference ParameterGroup { get; set; }
 
         /// <summary> The scheduled maintenance configuration for the pool. The properties available depend on the selected maintenance management type. </summary>

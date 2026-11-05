@@ -62,14 +62,14 @@ namespace Azure.ResourceManager.HorizonDB.Mocking
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="CapabilityResource"/>. </description>
+        /// <description> <see cref="HorizonDBCapabilityResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <returns> Returns a <see cref="CapabilityResource"/> object. </returns>
-        public virtual CapabilityResource GetCapability()
+        /// <returns> Returns a <see cref="HorizonDBCapabilityResource"/> object. </returns>
+        public virtual HorizonDBCapabilityResource GetHorizonDBCapability()
         {
-            return new CapabilityResource(Client, Id.AppendProviderResource("Microsoft.HorizonDb", "locations", "default"));
+            return new HorizonDBCapabilityResource(Client, Id.AppendProviderResource("Microsoft.HorizonDb", "locations", "default"));
         }
 
         /// <summary> Gets a collection of DefaultParameterGroups in the <see cref="SubscriptionResource"/>. </summary>

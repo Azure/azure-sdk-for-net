@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
 
         /// <summary> Initializes a new instance of <see cref="PasswordAuthenticationProperties"/>. </summary>
         /// <param name="state"> The state of PostgreSQL username-and-password authentication. </param>
-        /// <param name="administratorLogin"> The PostgreSQL administrator login name. This value is not returned in responses. After it is set, renaming is not supported. Setting the login requires password authentication state to be Enabled in the same request. </param>
+        /// <param name="administratorLogin"> The PostgreSQL administrator login name. This value is returned in responses after it is set. After it is set, renaming is not supported. Setting the login requires password authentication state to be Enabled in the same request. </param>
         /// <param name="administratorLoginPassword"> The PostgreSQL administrator password. Setting the password requires password authentication state to be Enabled in the same request. </param>
         /// <param name="provisioningState"> The provisioning state of the PostgreSQL username-and-password authentication method. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
         /// <summary> The state of PostgreSQL username-and-password authentication. </summary>
         public HorizonDBAuthenticationState State { get; set; }
 
-        /// <summary> The PostgreSQL administrator login name. This value is not returned in responses. After it is set, renaming is not supported. Setting the login requires password authentication state to be Enabled in the same request. </summary>
+        /// <summary> The PostgreSQL administrator login name. This value is returned in responses after it is set. After it is set, renaming is not supported. Setting the login requires password authentication state to be Enabled in the same request. </summary>
         public string AdministratorLogin { get; set; }
 
         /// <summary> The PostgreSQL administrator password. Setting the password requires password authentication state to be Enabled in the same request. </summary>

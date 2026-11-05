@@ -90,8 +90,11 @@ namespace Azure.ResourceManager.HorizonDB.Models
             writer.WriteNumberValue(NodeCount);
             writer.WritePropertyName("highAvailability"u8);
             writer.WriteObjectValue(HighAvailability, options);
-            writer.WritePropertyName("parameterGroup"u8);
-            writer.WriteObjectValue(ParameterGroup, options);
+            if (Optional.IsDefined(ParameterGroup))
+            {
+                writer.WritePropertyName("parameterGroup"u8);
+                writer.WriteObjectValue(ParameterGroup, options);
+            }
             if (Optional.IsDefined(ScheduledMaintenance))
             {
                 writer.WritePropertyName("scheduledMaintenance"u8);
@@ -180,6 +183,10 @@ namespace Azure.ResourceManager.HorizonDB.Models
                 }
                 if (prop.NameEquals("parameterGroup"u8))
                 {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     parameterGroup = PoolParameterGroupReference.DeserializePoolParameterGroupReference(prop.Value, options);
                     continue;
                 }

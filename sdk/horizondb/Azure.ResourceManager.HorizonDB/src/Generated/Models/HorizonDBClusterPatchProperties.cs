@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
         /// <param name="dataEncryption"> The data encryption configuration to update for the cluster. Omitted properties preserve their current values. Updates can modify settings within the existing encryption type, but switching between SystemManaged and AzureKeyVault after cluster creation is not supported. </param>
         /// <param name="aiModelManagement"> Specifies whether AI Model Management is enabled for the cluster. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal HorizonDBClusterPatchProperties(NetworkForPatchUpdate network, BackupPropertiesForPatchUpdate backup, HorizonDBClusterDataEncryptionForPatchUpdate dataEncryption, AiModelManagementStatus? aiModelManagement, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HorizonDBClusterPatchProperties(NetworkForPatchUpdate network, BackupPropertiesForPatchUpdate backup, HorizonDBClusterDataEncryptionPatch dataEncryption, AiModelManagementStatus? aiModelManagement, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Network = network;
             Backup = backup;
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
         internal BackupPropertiesForPatchUpdate Backup { get; set; }
 
         /// <summary> The data encryption configuration to update for the cluster. Omitted properties preserve their current values. Updates can modify settings within the existing encryption type, but switching between SystemManaged and AzureKeyVault after cluster creation is not supported. </summary>
-        public HorizonDBClusterDataEncryptionForPatchUpdate DataEncryption { get; set; }
+        public HorizonDBClusterDataEncryptionPatch DataEncryption { get; set; }
 
         /// <summary> Specifies whether AI Model Management is enabled for the cluster. </summary>
         public AiModelManagementStatus? AiModelManagement { get; set; }

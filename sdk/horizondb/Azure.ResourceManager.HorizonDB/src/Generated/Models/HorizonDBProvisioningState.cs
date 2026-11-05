@@ -25,6 +25,8 @@ namespace Azure.ResourceManager.HorizonDB.Models
         private const string InProgressValue = "InProgress";
         /// <summary> The HorizonDB resource is still provisioning. </summary>
         private const string ProvisioningValue = "Provisioning";
+        /// <summary> The resource is being updated. </summary>
+        private const string UpdatingValue = "Updating";
 
         /// <summary> Initializes a new instance of <see cref="HorizonDBProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -50,6 +52,9 @@ namespace Azure.ResourceManager.HorizonDB.Models
 
         /// <summary> The HorizonDB resource is still provisioning. </summary>
         public static HorizonDBProvisioningState Provisioning { get; } = new HorizonDBProvisioningState(ProvisioningValue);
+
+        /// <summary> The resource is being updated. </summary>
+        public static HorizonDBProvisioningState Updating { get; } = new HorizonDBProvisioningState(UpdatingValue);
 
         /// <summary> Determines if two <see cref="HorizonDBProvisioningState"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

@@ -97,12 +97,12 @@ namespace Azure.ResourceManager.HorizonDB.Models
             if (options.Format != "W")
             {
                 writer.WritePropertyName("startTimeUtc"u8);
-                writer.WriteStringValue(StartTimeUtc, "O");
+                writer.WriteStringValue(StartsOn, "O");
             }
             if (options.Format != "W")
             {
                 writer.WritePropertyName("endTimeUtc"u8);
-                writer.WriteStringValue(EndTimeUtc, "O");
+                writer.WriteStringValue(EndsOn, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(EstimatedDowntime))
             {
@@ -112,27 +112,27 @@ namespace Azure.ResourceManager.HorizonDB.Models
             if (options.Format != "W")
             {
                 writer.WritePropertyName("deferrable"u8);
-                writer.WriteBooleanValue(Deferrable);
+                writer.WriteBooleanValue(IsDeferrable);
             }
-            if (options.Format != "W" && Optional.IsDefined(DeferralDeadlineUtc))
+            if (options.Format != "W" && Optional.IsDefined(DeferralDeadlineOn))
             {
                 writer.WritePropertyName("deferralDeadlineUtc"u8);
-                writer.WriteStringValue(DeferralDeadlineUtc.Value, "O");
+                writer.WriteStringValue(DeferralDeadlineOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(RescheduledFromUtc))
+            if (options.Format != "W" && Optional.IsDefined(RescheduledFromOn))
             {
                 writer.WritePropertyName("rescheduledFromUtc"u8);
-                writer.WriteStringValue(RescheduledFromUtc.Value, "O");
+                writer.WriteStringValue(RescheduledFromOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(LastUpdatedTimeUtc))
+            if (options.Format != "W" && Optional.IsDefined(LastUpdatedOn))
             {
                 writer.WritePropertyName("lastUpdatedTimeUtc"u8);
-                writer.WriteStringValue(LastUpdatedTimeUtc.Value, "O");
+                writer.WriteStringValue(LastUpdatedOn.Value, "O");
             }
             if (options.Format != "W")
             {
                 writer.WritePropertyName("originalStartTimeUtc"u8);
-                writer.WriteStringValue(OriginalStartTimeUtc, "O");
+                writer.WriteStringValue(OriginalStartsOn, "O");
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -180,14 +180,14 @@ namespace Azure.ResourceManager.HorizonDB.Models
             MaintenanceType maintenanceType = default;
             string description = default;
             MaintenanceEventStatus status = default;
-            DateTimeOffset startTimeUtc = default;
-            DateTimeOffset endTimeUtc = default;
+            DateTimeOffset startsOn = default;
+            DateTimeOffset endsOn = default;
             TimeSpan? estimatedDowntime = default;
-            bool deferrable = default;
-            DateTimeOffset? deferralDeadlineUtc = default;
-            DateTimeOffset? rescheduledFromUtc = default;
-            DateTimeOffset? lastUpdatedTimeUtc = default;
-            DateTimeOffset originalStartTimeUtc = default;
+            bool isDeferrable = default;
+            DateTimeOffset? deferralDeadlineOn = default;
+            DateTimeOffset? rescheduledFromOn = default;
+            DateTimeOffset? lastUpdatedOn = default;
+            DateTimeOffset originalStartsOn = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -213,12 +213,12 @@ namespace Azure.ResourceManager.HorizonDB.Models
                 }
                 if (prop.NameEquals("startTimeUtc"u8))
                 {
-                    startTimeUtc = prop.Value.GetDateTimeOffset("O");
+                    startsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("endTimeUtc"u8))
                 {
-                    endTimeUtc = prop.Value.GetDateTimeOffset("O");
+                    endsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("estimatedDowntime"u8))
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
                 }
                 if (prop.NameEquals("deferrable"u8))
                 {
-                    deferrable = prop.Value.GetBoolean();
+                    isDeferrable = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("deferralDeadlineUtc"u8))
@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
                     {
                         continue;
                     }
-                    deferralDeadlineUtc = prop.Value.GetDateTimeOffset("O");
+                    deferralDeadlineOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("rescheduledFromUtc"u8))
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
                     {
                         continue;
                     }
-                    rescheduledFromUtc = prop.Value.GetDateTimeOffset("O");
+                    rescheduledFromOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("lastUpdatedTimeUtc"u8))
@@ -259,12 +259,12 @@ namespace Azure.ResourceManager.HorizonDB.Models
                     {
                         continue;
                     }
-                    lastUpdatedTimeUtc = prop.Value.GetDateTimeOffset("O");
+                    lastUpdatedOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("originalStartTimeUtc"u8))
                 {
-                    originalStartTimeUtc = prop.Value.GetDateTimeOffset("O");
+                    originalStartsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (options.Format != "W")
@@ -277,14 +277,14 @@ namespace Azure.ResourceManager.HorizonDB.Models
                 maintenanceType,
                 description,
                 status,
-                startTimeUtc,
-                endTimeUtc,
+                startsOn,
+                endsOn,
                 estimatedDowntime,
-                deferrable,
-                deferralDeadlineUtc,
-                rescheduledFromUtc,
-                lastUpdatedTimeUtc,
-                originalStartTimeUtc,
+                isDeferrable,
+                deferralDeadlineOn,
+                rescheduledFromOn,
+                lastUpdatedOn,
+                originalStartsOn,
                 additionalBinaryDataProperties);
         }
     }

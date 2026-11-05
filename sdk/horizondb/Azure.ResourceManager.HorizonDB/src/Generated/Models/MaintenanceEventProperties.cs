@@ -26,29 +26,29 @@ namespace Azure.ResourceManager.HorizonDB.Models
         /// <param name="maintenanceType"> The maintenance type. </param>
         /// <param name="description"> The human-readable description of the maintenance event. </param>
         /// <param name="status"> The customer-facing status of the maintenance event. </param>
-        /// <param name="startTimeUtc"> The scheduled start time of the maintenance event in UTC. </param>
-        /// <param name="endTimeUtc"> The scheduled end time of the maintenance event in UTC. </param>
+        /// <param name="startsOn"> The scheduled start time of the maintenance event in UTC. </param>
+        /// <param name="endsOn"> The scheduled end time of the maintenance event in UTC. </param>
         /// <param name="estimatedDowntime"> The estimated downtime as an ISO 8601 duration string, for example, 'PT60S' for 60 seconds. </param>
-        /// <param name="deferrable"> Indicates whether the customer can reschedule this maintenance event. </param>
-        /// <param name="deferralDeadlineUtc"> The latest date and time to which this maintenance event can be postponed, in UTC. This property is present only when deferrable is true. </param>
-        /// <param name="rescheduledFromUtc"> The scheduled start time before the most recent reschedule, in UTC. This property is absent if the event has never been rescheduled. </param>
-        /// <param name="lastUpdatedTimeUtc"> The time when this maintenance event record was last updated, in UTC. </param>
-        /// <param name="originalStartTimeUtc"> The initially scheduled start time before any reschedule, in UTC. This value equals startTimeUtc when the event has never been rescheduled. </param>
+        /// <param name="isDeferrable"> Indicates whether the customer can reschedule this maintenance event. </param>
+        /// <param name="deferralDeadlineOn"> The latest date and time to which this maintenance event can be postponed, in UTC. This property is present only when deferrable is true. </param>
+        /// <param name="rescheduledFromOn"> The scheduled start time before the most recent reschedule, in UTC. This property is absent if the event has never been rescheduled. </param>
+        /// <param name="lastUpdatedOn"> The time when this maintenance event record was last updated, in UTC. </param>
+        /// <param name="originalStartsOn"> The initially scheduled start time before any reschedule, in UTC. This value equals startTimeUtc when the event has never been rescheduled. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MaintenanceEventProperties(string maintenanceEventId, MaintenanceType maintenanceType, string description, MaintenanceEventStatus status, DateTimeOffset startTimeUtc, DateTimeOffset endTimeUtc, TimeSpan? estimatedDowntime, bool deferrable, DateTimeOffset? deferralDeadlineUtc, DateTimeOffset? rescheduledFromUtc, DateTimeOffset? lastUpdatedTimeUtc, DateTimeOffset originalStartTimeUtc, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MaintenanceEventProperties(string maintenanceEventId, MaintenanceType maintenanceType, string description, MaintenanceEventStatus status, DateTimeOffset startsOn, DateTimeOffset endsOn, TimeSpan? estimatedDowntime, bool isDeferrable, DateTimeOffset? deferralDeadlineOn, DateTimeOffset? rescheduledFromOn, DateTimeOffset? lastUpdatedOn, DateTimeOffset originalStartsOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             MaintenanceEventId = maintenanceEventId;
             MaintenanceType = maintenanceType;
             Description = description;
             Status = status;
-            StartTimeUtc = startTimeUtc;
-            EndTimeUtc = endTimeUtc;
+            StartsOn = startsOn;
+            EndsOn = endsOn;
             EstimatedDowntime = estimatedDowntime;
-            Deferrable = deferrable;
-            DeferralDeadlineUtc = deferralDeadlineUtc;
-            RescheduledFromUtc = rescheduledFromUtc;
-            LastUpdatedTimeUtc = lastUpdatedTimeUtc;
-            OriginalStartTimeUtc = originalStartTimeUtc;
+            IsDeferrable = isDeferrable;
+            DeferralDeadlineOn = deferralDeadlineOn;
+            RescheduledFromOn = rescheduledFromOn;
+            LastUpdatedOn = lastUpdatedOn;
+            OriginalStartsOn = originalStartsOn;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -65,27 +65,27 @@ namespace Azure.ResourceManager.HorizonDB.Models
         public MaintenanceEventStatus Status { get; }
 
         /// <summary> The scheduled start time of the maintenance event in UTC. </summary>
-        public DateTimeOffset StartTimeUtc { get; }
+        public DateTimeOffset StartsOn { get; }
 
         /// <summary> The scheduled end time of the maintenance event in UTC. </summary>
-        public DateTimeOffset EndTimeUtc { get; }
+        public DateTimeOffset EndsOn { get; }
 
         /// <summary> The estimated downtime as an ISO 8601 duration string, for example, 'PT60S' for 60 seconds. </summary>
         public TimeSpan? EstimatedDowntime { get; }
 
         /// <summary> Indicates whether the customer can reschedule this maintenance event. </summary>
-        public bool Deferrable { get; }
+        public bool IsDeferrable { get; }
 
         /// <summary> The latest date and time to which this maintenance event can be postponed, in UTC. This property is present only when deferrable is true. </summary>
-        public DateTimeOffset? DeferralDeadlineUtc { get; }
+        public DateTimeOffset? DeferralDeadlineOn { get; }
 
         /// <summary> The scheduled start time before the most recent reschedule, in UTC. This property is absent if the event has never been rescheduled. </summary>
-        public DateTimeOffset? RescheduledFromUtc { get; }
+        public DateTimeOffset? RescheduledFromOn { get; }
 
         /// <summary> The time when this maintenance event record was last updated, in UTC. </summary>
-        public DateTimeOffset? LastUpdatedTimeUtc { get; }
+        public DateTimeOffset? LastUpdatedOn { get; }
 
         /// <summary> The initially scheduled start time before any reschedule, in UTC. This value equals startTimeUtc when the event has never been rescheduled. </summary>
-        public DateTimeOffset OriginalStartTimeUtc { get; }
+        public DateTimeOffset OriginalStartsOn { get; }
     }
 }

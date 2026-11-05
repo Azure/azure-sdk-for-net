@@ -74,14 +74,14 @@ namespace Azure.ResourceManager.HorizonDB
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="objectId"> The Microsoft Entra object identifier of the principal mapped to the PostgreSQL role, represented as an RFC 4122 GUID. </param>
-        /// <param name="resource"> Resource create parameters. </param>
+        /// <param name="content"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="objectId"/> or <paramref name="resource"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="objectId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="objectId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<ArmOperation<MicrosoftEntraAdministratorResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string objectId, MicrosoftEntraAdministratorAdd resource, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<MicrosoftEntraAdministratorResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string objectId, MicrosoftEntraAdministratorContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(objectId, nameof(objectId));
-            Argument.AssertNotNull(resource, nameof(resource));
+            Argument.AssertNotNull(content, nameof(content));
 
             using DiagnosticScope scope = _microsoftEntraAdministratorsClientDiagnostics.CreateScope("MicrosoftEntraAdministratorCollection.CreateOrUpdate");
             scope.Start();
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.HorizonDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _microsoftEntraAdministratorsRestClient.CreateCreateOrReplaceRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, objectId, MicrosoftEntraAdministratorAdd.ToRequestContent(resource), context);
+                HttpMessage message = _microsoftEntraAdministratorsRestClient.CreateCreateOrReplaceRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, objectId, MicrosoftEntraAdministratorContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 HorizonDBArmOperation<MicrosoftEntraAdministratorResource> operation = new HorizonDBArmOperation<MicrosoftEntraAdministratorResource>(
                     new MicrosoftEntraAdministratorResourceOperationSource(Client),
@@ -132,14 +132,14 @@ namespace Azure.ResourceManager.HorizonDB
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="objectId"> The Microsoft Entra object identifier of the principal mapped to the PostgreSQL role, represented as an RFC 4122 GUID. </param>
-        /// <param name="resource"> Resource create parameters. </param>
+        /// <param name="content"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="objectId"/> or <paramref name="resource"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="objectId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="objectId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ArmOperation<MicrosoftEntraAdministratorResource> CreateOrUpdate(WaitUntil waitUntil, string objectId, MicrosoftEntraAdministratorAdd resource, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<MicrosoftEntraAdministratorResource> CreateOrUpdate(WaitUntil waitUntil, string objectId, MicrosoftEntraAdministratorContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(objectId, nameof(objectId));
-            Argument.AssertNotNull(resource, nameof(resource));
+            Argument.AssertNotNull(content, nameof(content));
 
             using DiagnosticScope scope = _microsoftEntraAdministratorsClientDiagnostics.CreateScope("MicrosoftEntraAdministratorCollection.CreateOrUpdate");
             scope.Start();
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.HorizonDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _microsoftEntraAdministratorsRestClient.CreateCreateOrReplaceRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, objectId, MicrosoftEntraAdministratorAdd.ToRequestContent(resource), context);
+                HttpMessage message = _microsoftEntraAdministratorsRestClient.CreateCreateOrReplaceRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, objectId, MicrosoftEntraAdministratorContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 HorizonDBArmOperation<MicrosoftEntraAdministratorResource> operation = new HorizonDBArmOperation<MicrosoftEntraAdministratorResource>(
                     new MicrosoftEntraAdministratorResourceOperationSource(Client),

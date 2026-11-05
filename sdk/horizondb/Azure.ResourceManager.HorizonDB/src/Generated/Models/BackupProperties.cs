@@ -17,32 +17,32 @@ namespace Azure.ResourceManager.HorizonDB.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="BackupProperties"/>. </summary>
-        /// <param name="geoRedundancy"> The geo-redundancy state. Geo-redundant backup is not supported when dataEncryption.type is AzureKeyVault. </param>
+        /// <param name="geoRedundancy"> The geo-redundancy state. When creationMode is PointInTimeRestore, the service ignores the requested value during cluster creation and configures the new cluster with the same geo-redundancy setting as the source cluster, for both same-location and cross-location restores. The response reports the inherited setting. Geo-redundant backup is not supported when dataEncryption.type is AzureKeyVault. </param>
         public BackupProperties(GeoRedundancyState geoRedundancy)
         {
             GeoRedundancy = geoRedundancy;
         }
 
         /// <summary> Initializes a new instance of <see cref="BackupProperties"/>. </summary>
-        /// <param name="geoRedundancy"> The geo-redundancy state. Geo-redundant backup is not supported when dataEncryption.type is AzureKeyVault. </param>
+        /// <param name="geoRedundancy"> The geo-redundancy state. When creationMode is PointInTimeRestore, the service ignores the requested value during cluster creation and configures the new cluster with the same geo-redundancy setting as the source cluster, for both same-location and cross-location restores. The response reports the inherited setting. Geo-redundant backup is not supported when dataEncryption.type is AzureKeyVault. </param>
         /// <param name="retentionDays"> The number of days that automatic backups are retained. The service defaults to 7 days when this property is omitted. </param>
-        /// <param name="earliestRestorePointUtc"> The earliest point in time, in UTC, to which the cluster can currently be restored. </param>
+        /// <param name="earliestRestorePointOn"> The earliest point in time, in UTC, to which the cluster can currently be restored. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BackupProperties(GeoRedundancyState geoRedundancy, int? retentionDays, DateTimeOffset? earliestRestorePointUtc, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BackupProperties(GeoRedundancyState geoRedundancy, int? retentionDays, DateTimeOffset? earliestRestorePointOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             GeoRedundancy = geoRedundancy;
             RetentionDays = retentionDays;
-            EarliestRestorePointUtc = earliestRestorePointUtc;
+            EarliestRestorePointOn = earliestRestorePointOn;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> The geo-redundancy state. Geo-redundant backup is not supported when dataEncryption.type is AzureKeyVault. </summary>
+        /// <summary> The geo-redundancy state. When creationMode is PointInTimeRestore, the service ignores the requested value during cluster creation and configures the new cluster with the same geo-redundancy setting as the source cluster, for both same-location and cross-location restores. The response reports the inherited setting. Geo-redundant backup is not supported when dataEncryption.type is AzureKeyVault. </summary>
         public GeoRedundancyState GeoRedundancy { get; set; }
 
         /// <summary> The number of days that automatic backups are retained. The service defaults to 7 days when this property is omitted. </summary>
         public int? RetentionDays { get; set; }
 
         /// <summary> The earliest point in time, in UTC, to which the cluster can currently be restored. </summary>
-        public DateTimeOffset? EarliestRestorePointUtc { get; }
+        public DateTimeOffset? EarliestRestorePointOn { get; }
     }
 }

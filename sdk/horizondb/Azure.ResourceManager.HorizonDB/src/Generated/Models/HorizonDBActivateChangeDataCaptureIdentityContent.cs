@@ -30,12 +30,12 @@ namespace Azure.ResourceManager.HorizonDB.Models
 
         /// <summary> Initializes a new instance of <see cref="HorizonDBActivateChangeDataCaptureIdentityContent"/>. </summary>
         /// <param name="identityAssignmentResourceId"> The resource ID of an inactive, successfully validated identity assignment under the destination receiving the action. </param>
-        /// <param name="drainExistingSessions"> Whether existing destination sessions should drain before the identity cutover. The default is false. </param>
+        /// <param name="shouldDrainExistingSessions"> Whether existing destination sessions should drain before the identity cutover. The default is false. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal HorizonDBActivateChangeDataCaptureIdentityContent(ResourceIdentifier identityAssignmentResourceId, bool? drainExistingSessions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HorizonDBActivateChangeDataCaptureIdentityContent(ResourceIdentifier identityAssignmentResourceId, bool? shouldDrainExistingSessions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             IdentityAssignmentResourceId = identityAssignmentResourceId;
-            DrainExistingSessions = drainExistingSessions;
+            ShouldDrainExistingSessions = shouldDrainExistingSessions;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -43,6 +43,6 @@ namespace Azure.ResourceManager.HorizonDB.Models
         public ResourceIdentifier IdentityAssignmentResourceId { get; }
 
         /// <summary> Whether existing destination sessions should drain before the identity cutover. The default is false. </summary>
-        public bool? DrainExistingSessions { get; set; }
+        public bool? ShouldDrainExistingSessions { get; set; }
     }
 }

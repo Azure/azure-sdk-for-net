@@ -92,10 +92,10 @@ namespace Azure.ResourceManager.HorizonDB.Models
             }
             writer.WritePropertyName("identityAssignmentResourceId"u8);
             writer.WriteStringValue(IdentityAssignmentResourceId);
-            if (Optional.IsDefined(DrainExistingSessions))
+            if (Optional.IsDefined(ShouldDrainExistingSessions))
             {
                 writer.WritePropertyName("drainExistingSessions"u8);
-                writer.WriteBooleanValue(DrainExistingSessions.Value);
+                writer.WriteBooleanValue(ShouldDrainExistingSessions.Value);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
                 return null;
             }
             ResourceIdentifier identityAssignmentResourceId = default;
-            bool? drainExistingSessions = default;
+            bool? shouldDrainExistingSessions = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
                     {
                         continue;
                     }
-                    drainExistingSessions = prop.Value.GetBoolean();
+                    shouldDrainExistingSessions = prop.Value.GetBoolean();
                     continue;
                 }
                 if (options.Format != "W")
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new HorizonDBActivateChangeDataCaptureIdentityContent(identityAssignmentResourceId, drainExistingSessions, additionalBinaryDataProperties);
+            return new HorizonDBActivateChangeDataCaptureIdentityContent(identityAssignmentResourceId, shouldDrainExistingSessions, additionalBinaryDataProperties);
         }
     }
 }

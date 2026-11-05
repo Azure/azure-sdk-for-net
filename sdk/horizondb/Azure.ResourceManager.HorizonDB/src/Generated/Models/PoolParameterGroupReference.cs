@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="PoolParameterGroupReference"/>. </summary>
-        /// <param name="parameterGroupResourceId"> The Azure resource ID of the associated parameter group. Initial pool creation in this API version requires the corresponding Microsoft.HorizonDb/locations/parameterGroups resource. For an existing pool, PUT can specify either the corresponding default group or a customer-created Microsoft.HorizonDb/parameterGroups resource. </param>
+        /// <param name="parameterGroupResourceId"> The Azure resource ID of the associated parameter group. When the parameter group is supplied during initial pool creation in this API version, the ID must identify the corresponding Microsoft.HorizonDb/locations/parameterGroups resource. For an existing pool, PUT can specify either the corresponding default group or a customer-created Microsoft.HorizonDb/parameterGroups resource. </param>
         /// <param name="applyMethod"> Determines when dynamic parameter changes from the associated parameter group become effective. Static parameter changes always require a customer-initiated pool Restart, regardless of this value. Stop followed by Start and scheduled maintenance do not apply pending parameter changes. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameterGroupResourceId"/> is null. </exception>
         public PoolParameterGroupReference(ResourceIdentifier parameterGroupResourceId, ParameterApplyMethod applyMethod)
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="PoolParameterGroupReference"/>. </summary>
-        /// <param name="parameterGroupResourceId"> The Azure resource ID of the associated parameter group. Initial pool creation in this API version requires the corresponding Microsoft.HorizonDb/locations/parameterGroups resource. For an existing pool, PUT can specify either the corresponding default group or a customer-created Microsoft.HorizonDb/parameterGroups resource. </param>
+        /// <param name="parameterGroupResourceId"> The Azure resource ID of the associated parameter group. When the parameter group is supplied during initial pool creation in this API version, the ID must identify the corresponding Microsoft.HorizonDb/locations/parameterGroups resource. For an existing pool, PUT can specify either the corresponding default group or a customer-created Microsoft.HorizonDb/parameterGroups resource. </param>
         /// <param name="applyMethod"> Determines when dynamic parameter changes from the associated parameter group become effective. Static parameter changes always require a customer-initiated pool Restart, regardless of this value. Stop followed by Start and scheduled maintenance do not apply pending parameter changes. </param>
         /// <param name="syncStatus"> The synchronization status between the pool and its parameter group. PendingReboot changes remain pending across Stop, Start, and scheduled maintenance and become effective only after a customer-initiated Restart. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> The Azure resource ID of the associated parameter group. Initial pool creation in this API version requires the corresponding Microsoft.HorizonDb/locations/parameterGroups resource. For an existing pool, PUT can specify either the corresponding default group or a customer-created Microsoft.HorizonDb/parameterGroups resource. </summary>
+        /// <summary> The Azure resource ID of the associated parameter group. When the parameter group is supplied during initial pool creation in this API version, the ID must identify the corresponding Microsoft.HorizonDb/locations/parameterGroups resource. For an existing pool, PUT can specify either the corresponding default group or a customer-created Microsoft.HorizonDb/parameterGroups resource. </summary>
         public ResourceIdentifier ParameterGroupResourceId { get; set; }
 
         /// <summary> Determines when dynamic parameter changes from the associated parameter group become effective. Static parameter changes always require a customer-initiated pool Restart, regardless of this value. Stop followed by Start and scheduled maintenance do not apply pending parameter changes. </summary>

@@ -24,13 +24,13 @@ namespace Azure.ResourceManager.HorizonDB.Models
         /// <summary> Initializes a new instance of <see cref="LogCaptureConfigurationPatch"/>. </summary>
         /// <param name="properties"> The log capture properties to update. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal LogCaptureConfigurationPatch(LogCaptureConfigurationPropertiesForPatchUpdate properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal LogCaptureConfigurationPatch(LogCaptureConfigurationPatchProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Properties = properties;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The log capture properties to update. </summary>
-        public LogCaptureConfigurationPropertiesForPatchUpdate Properties { get; set; }
+        public LogCaptureConfigurationPatchProperties Properties { get; set; }
     }
 }

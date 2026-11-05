@@ -98,25 +98,25 @@ namespace Azure.ResourceManager.HorizonDB.Models
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (Optional.IsDefined(PlannedStartTimeUtc))
+            if (Optional.IsDefined(PlannedStartsOn))
             {
                 writer.WritePropertyName("plannedStartTimeUtc"u8);
-                writer.WriteStringValue(PlannedStartTimeUtc.Value, "O");
+                writer.WriteStringValue(PlannedStartsOn.Value, "O");
             }
-            if (Optional.IsDefined(PlannedEndTimeUtc))
+            if (Optional.IsDefined(PlannedEndsOn))
             {
                 writer.WritePropertyName("plannedEndTimeUtc"u8);
-                writer.WriteStringValue(PlannedEndTimeUtc.Value, "O");
+                writer.WriteStringValue(PlannedEndsOn.Value, "O");
             }
-            if (Optional.IsDefined(AppliedNow))
+            if (Optional.IsDefined(IsAppliedNow))
             {
                 writer.WritePropertyName("appliedNow"u8);
-                writer.WriteBooleanValue(AppliedNow.Value);
+                writer.WriteBooleanValue(IsAppliedNow.Value);
             }
-            if (Optional.IsDefined(LastUpdatedTimeUtc))
+            if (Optional.IsDefined(LastUpdatedOn))
             {
                 writer.WritePropertyName("lastUpdatedTimeUtc"u8);
-                writer.WriteStringValue(LastUpdatedTimeUtc.Value, "O");
+                writer.WriteStringValue(LastUpdatedOn.Value, "O");
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -163,10 +163,10 @@ namespace Azure.ResourceManager.HorizonDB.Models
             string maintenanceEventId = default;
             ResourceIdentifier poolResourceId = default;
             MaintenanceEventStatus? status = default;
-            DateTimeOffset? plannedStartTimeUtc = default;
-            DateTimeOffset? plannedEndTimeUtc = default;
-            bool? appliedNow = default;
-            DateTimeOffset? lastUpdatedTimeUtc = default;
+            DateTimeOffset? plannedStartsOn = default;
+            DateTimeOffset? plannedEndsOn = default;
+            bool? isAppliedNow = default;
+            DateTimeOffset? lastUpdatedOn = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
                     {
                         continue;
                     }
-                    plannedStartTimeUtc = prop.Value.GetDateTimeOffset("O");
+                    plannedStartsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("plannedEndTimeUtc"u8))
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
                     {
                         continue;
                     }
-                    plannedEndTimeUtc = prop.Value.GetDateTimeOffset("O");
+                    plannedEndsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("appliedNow"u8))
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
                     {
                         continue;
                     }
-                    appliedNow = prop.Value.GetBoolean();
+                    isAppliedNow = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("lastUpdatedTimeUtc"u8))
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
                     {
                         continue;
                     }
-                    lastUpdatedTimeUtc = prop.Value.GetDateTimeOffset("O");
+                    lastUpdatedOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (options.Format != "W")
@@ -238,10 +238,10 @@ namespace Azure.ResourceManager.HorizonDB.Models
                 maintenanceEventId,
                 poolResourceId,
                 status,
-                plannedStartTimeUtc,
-                plannedEndTimeUtc,
-                appliedNow,
-                lastUpdatedTimeUtc,
+                plannedStartsOn,
+                plannedEndsOn,
+                isAppliedNow,
+                lastUpdatedOn,
                 additionalBinaryDataProperties);
         }
     }

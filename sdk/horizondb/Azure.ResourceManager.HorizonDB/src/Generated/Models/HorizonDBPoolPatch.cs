@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.HorizonDB;
 
 namespace Azure.ResourceManager.HorizonDB.Models
 {
@@ -20,22 +19,16 @@ namespace Azure.ResourceManager.HorizonDB.Models
         /// <summary> Initializes a new instance of <see cref="HorizonDBPoolPatch"/>. </summary>
         public HorizonDBPoolPatch()
         {
-            Tags = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="HorizonDBPoolPatch"/>. </summary>
-        /// <param name="tags"> Resource tags. </param>
         /// <param name="properties"> The properties that can be updated for a HorizonDB pool. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal HorizonDBPoolPatch(IDictionary<string, string> tags, PoolPropertiesForPatchUpdate properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HorizonDBPoolPatch(PoolPropertiesForPatchUpdate properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Tags = tags;
             Properties = properties;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
-
-        /// <summary> Resource tags. </summary>
-        public IDictionary<string, string> Tags { get; }
 
         /// <summary> The properties that can be updated for a HorizonDB pool. </summary>
         public PoolPropertiesForPatchUpdate Properties { get; set; }

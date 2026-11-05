@@ -18,21 +18,21 @@ namespace Azure.ResourceManager.HorizonDB.Models
 
         /// <summary> Initializes a new instance of <see cref="LogFileDownloadUri"/>. </summary>
         /// <param name="downloadUri"> A short-lived signed URL from which the original log file can be downloaded. </param>
-        /// <param name="expiresAtUtc"> The date and time when the signed download URL expires, in UTC. </param>
-        internal LogFileDownloadUri(Uri downloadUri, DateTimeOffset expiresAtUtc)
+        /// <param name="expiresOn"> The date and time when the signed download URL expires, in UTC. </param>
+        internal LogFileDownloadUri(Uri downloadUri, DateTimeOffset expiresOn)
         {
             DownloadUri = downloadUri;
-            ExpiresAtUtc = expiresAtUtc;
+            ExpiresOn = expiresOn;
         }
 
         /// <summary> Initializes a new instance of <see cref="LogFileDownloadUri"/>. </summary>
         /// <param name="downloadUri"> A short-lived signed URL from which the original log file can be downloaded. </param>
-        /// <param name="expiresAtUtc"> The date and time when the signed download URL expires, in UTC. </param>
+        /// <param name="expiresOn"> The date and time when the signed download URL expires, in UTC. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal LogFileDownloadUri(Uri downloadUri, DateTimeOffset expiresAtUtc, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal LogFileDownloadUri(Uri downloadUri, DateTimeOffset expiresOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DownloadUri = downloadUri;
-            ExpiresAtUtc = expiresAtUtc;
+            ExpiresOn = expiresOn;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -40,6 +40,6 @@ namespace Azure.ResourceManager.HorizonDB.Models
         public Uri DownloadUri { get; }
 
         /// <summary> The date and time when the signed download URL expires, in UTC. </summary>
-        public DateTimeOffset ExpiresAtUtc { get; }
+        public DateTimeOffset ExpiresOn { get; }
     }
 }

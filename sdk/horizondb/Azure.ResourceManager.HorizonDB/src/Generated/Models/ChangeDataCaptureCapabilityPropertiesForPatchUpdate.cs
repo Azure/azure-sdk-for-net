@@ -23,12 +23,12 @@ namespace Azure.ResourceManager.HorizonDB.Models
 
         /// <summary> Initializes a new instance of <see cref="ChangeDataCaptureCapabilityPropertiesForPatchUpdate"/>. </summary>
         /// <param name="desiredState"> The requested capability state. </param>
-        /// <param name="autoUpgradeExtension"> Whether HorizonDB may automatically upgrade the service-owned change data capture extension within the supported compatibility policy. </param>
+        /// <param name="isAutoUpgradeExtensionEnabled"> Whether HorizonDB may automatically upgrade the service-owned change data capture extension within the supported compatibility policy. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ChangeDataCaptureCapabilityPropertiesForPatchUpdate(ChangeDataCaptureDesiredState? desiredState, bool? autoUpgradeExtension, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ChangeDataCaptureCapabilityPropertiesForPatchUpdate(ChangeDataCaptureDesiredState? desiredState, bool? isAutoUpgradeExtensionEnabled, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DesiredState = desiredState;
-            AutoUpgradeExtension = autoUpgradeExtension;
+            IsAutoUpgradeExtensionEnabled = isAutoUpgradeExtensionEnabled;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -36,6 +36,6 @@ namespace Azure.ResourceManager.HorizonDB.Models
         public ChangeDataCaptureDesiredState? DesiredState { get; set; }
 
         /// <summary> Whether HorizonDB may automatically upgrade the service-owned change data capture extension within the supported compatibility policy. </summary>
-        public bool? AutoUpgradeExtension { get; set; }
+        public bool? IsAutoUpgradeExtensionEnabled { get; set; }
     }
 }

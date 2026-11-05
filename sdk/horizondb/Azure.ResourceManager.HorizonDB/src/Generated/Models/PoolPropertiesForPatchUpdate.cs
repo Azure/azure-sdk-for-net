@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
         /// <param name="parameterGroup"> The corresponding default or a customer-created parameter group to associate with the existing pool. Customers can switch in either direction between these group types. Omission preserves the current association. </param>
         /// <param name="scheduledMaintenance"> The scheduled maintenance configuration to update for the pool. When supplied, the complete configuration for the selected maintenance management type is required. Omission preserves the current configuration. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PoolPropertiesForPatchUpdate(PoolComputeModelForPatchUpdate computeModel, int? nodeCount, PoolHighAvailabilityPatch highAvailability, PoolParameterGroupReferenceForPatchUpdate parameterGroup, ScheduledMaintenancePropertiesForPatchUpdate scheduledMaintenance, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PoolPropertiesForPatchUpdate(PoolComputeModelForPatchUpdate computeModel, int? nodeCount, PoolHighAvailabilityPatch highAvailability, PoolParameterGroupReferencePatch parameterGroup, ScheduledMaintenancePropertiesForPatchUpdate scheduledMaintenance, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ComputeModel = computeModel;
             NodeCount = nodeCount;
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
         internal PoolHighAvailabilityPatch HighAvailability { get; set; }
 
         /// <summary> The corresponding default or a customer-created parameter group to associate with the existing pool. Customers can switch in either direction between these group types. Omission preserves the current association. </summary>
-        public PoolParameterGroupReferenceForPatchUpdate ParameterGroup { get; set; }
+        public PoolParameterGroupReferencePatch ParameterGroup { get; set; }
 
         /// <summary> The scheduled maintenance configuration to update for the pool. When supplied, the complete configuration for the selected maintenance management type is required. Omission preserves the current configuration. </summary>
         internal ScheduledMaintenancePropertiesForPatchUpdate ScheduledMaintenance { get; set; }

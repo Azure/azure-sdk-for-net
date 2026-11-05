@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
@@ -15,8 +14,6 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.HorizonDB.Models;
-using Azure.ResourceManager.Resources;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.HorizonDB
 {
@@ -737,278 +734,6 @@ namespace Azure.ResourceManager.HorizonDB
             }
         }
 
-        /// <summary> Add a tag to the current resource. </summary>
-        /// <param name="key"> The key for the tag. </param>
-        /// <param name="value"> The value for the tag. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
-        public virtual async Task<Response<HorizonDBPoolResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(key, nameof(key));
-            Argument.AssertNotNull(value, nameof(value));
-
-            using DiagnosticScope scope = _horizonDBPoolsClientDiagnostics.CreateScope("HorizonDBPoolResource.AddTag");
-            scope.Start();
-            try
-            {
-                if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
-                {
-                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
-                    originalTags.Value.Data.TagValues[key] = value;
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
-                    RequestContext context = new RequestContext
-                    {
-                        CancellationToken = cancellationToken
-                    };
-                    HttpMessage message = _horizonDBPoolsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
-                    Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                    Response<HorizonDBPoolData> response = Response.FromValue(HorizonDBPoolData.FromResponse(result), result);
-                    return Response.FromValue(new HorizonDBPoolResource(Client, response.Value), response.GetRawResponse());
-                }
-                else
-                {
-                    HorizonDBPoolData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    HorizonDBPoolPatch patch = new HorizonDBPoolPatch();
-                    foreach (KeyValuePair<string, string> tag in current.Tags)
-                    {
-                        patch.Tags.Add(tag);
-                    }
-                    patch.Tags[key] = value;
-                    ArmOperation<HorizonDBPoolResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(result.Value, result.GetRawResponse());
-                }
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Add a tag to the current resource. </summary>
-        /// <param name="key"> The key for the tag. </param>
-        /// <param name="value"> The value for the tag. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
-        public virtual Response<HorizonDBPoolResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(key, nameof(key));
-            Argument.AssertNotNull(value, nameof(value));
-
-            using DiagnosticScope scope = _horizonDBPoolsClientDiagnostics.CreateScope("HorizonDBPoolResource.AddTag");
-            scope.Start();
-            try
-            {
-                if (CanUseTagResource(cancellationToken))
-                {
-                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
-                    originalTags.Value.Data.TagValues[key] = value;
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
-                    RequestContext context = new RequestContext
-                    {
-                        CancellationToken = cancellationToken
-                    };
-                    HttpMessage message = _horizonDBPoolsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
-                    Response result = Pipeline.ProcessMessage(message, context);
-                    Response<HorizonDBPoolData> response = Response.FromValue(HorizonDBPoolData.FromResponse(result), result);
-                    return Response.FromValue(new HorizonDBPoolResource(Client, response.Value), response.GetRawResponse());
-                }
-                else
-                {
-                    HorizonDBPoolData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    HorizonDBPoolPatch patch = new HorizonDBPoolPatch();
-                    foreach (KeyValuePair<string, string> tag in current.Tags)
-                    {
-                        patch.Tags.Add(tag);
-                    }
-                    patch.Tags[key] = value;
-                    ArmOperation<HorizonDBPoolResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
-                    return Response.FromValue(result.Value, result.GetRawResponse());
-                }
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Replace the tags on the resource with the given set. </summary>
-        /// <param name="tags"> The tags to set on the resource. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
-        public virtual async Task<Response<HorizonDBPoolResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(tags, nameof(tags));
-
-            using DiagnosticScope scope = _horizonDBPoolsClientDiagnostics.CreateScope("HorizonDBPoolResource.SetTags");
-            scope.Start();
-            try
-            {
-                if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
-                {
-                    TagResourceData tagData = new TagResourceData(new Tag());
-                    tagData.TagValues.ReplaceWith(tags);
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, tagData, cancellationToken).ConfigureAwait(false);
-                    RequestContext context = new RequestContext
-                    {
-                        CancellationToken = cancellationToken
-                    };
-                    HttpMessage message = _horizonDBPoolsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
-                    Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                    Response<HorizonDBPoolData> response = Response.FromValue(HorizonDBPoolData.FromResponse(result), result);
-                    return Response.FromValue(new HorizonDBPoolResource(Client, response.Value), response.GetRawResponse());
-                }
-                else
-                {
-                    HorizonDBPoolData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    HorizonDBPoolPatch patch = new HorizonDBPoolPatch();
-                    patch.Tags.ReplaceWith(tags);
-                    ArmOperation<HorizonDBPoolResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(result.Value, result.GetRawResponse());
-                }
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Replace the tags on the resource with the given set. </summary>
-        /// <param name="tags"> The tags to set on the resource. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
-        public virtual Response<HorizonDBPoolResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(tags, nameof(tags));
-
-            using DiagnosticScope scope = _horizonDBPoolsClientDiagnostics.CreateScope("HorizonDBPoolResource.SetTags");
-            scope.Start();
-            try
-            {
-                if (CanUseTagResource(cancellationToken))
-                {
-                    TagResourceData tagData = new TagResourceData(new Tag());
-                    tagData.TagValues.ReplaceWith(tags);
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, tagData, cancellationToken);
-                    RequestContext context = new RequestContext
-                    {
-                        CancellationToken = cancellationToken
-                    };
-                    HttpMessage message = _horizonDBPoolsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
-                    Response result = Pipeline.ProcessMessage(message, context);
-                    Response<HorizonDBPoolData> response = Response.FromValue(HorizonDBPoolData.FromResponse(result), result);
-                    return Response.FromValue(new HorizonDBPoolResource(Client, response.Value), response.GetRawResponse());
-                }
-                else
-                {
-                    HorizonDBPoolData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    HorizonDBPoolPatch patch = new HorizonDBPoolPatch();
-                    patch.Tags.ReplaceWith(tags);
-                    ArmOperation<HorizonDBPoolResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
-                    return Response.FromValue(result.Value, result.GetRawResponse());
-                }
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Removes a tag by key from the resource. </summary>
-        /// <param name="key"> The key for the tag. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        public virtual async Task<Response<HorizonDBPoolResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(key, nameof(key));
-
-            using DiagnosticScope scope = _horizonDBPoolsClientDiagnostics.CreateScope("HorizonDBPoolResource.RemoveTag");
-            scope.Start();
-            try
-            {
-                if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
-                {
-                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
-                    originalTags.Value.Data.TagValues.Remove(key);
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
-                    RequestContext context = new RequestContext
-                    {
-                        CancellationToken = cancellationToken
-                    };
-                    HttpMessage message = _horizonDBPoolsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
-                    Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                    Response<HorizonDBPoolData> response = Response.FromValue(HorizonDBPoolData.FromResponse(result), result);
-                    return Response.FromValue(new HorizonDBPoolResource(Client, response.Value), response.GetRawResponse());
-                }
-                else
-                {
-                    HorizonDBPoolData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    HorizonDBPoolPatch patch = new HorizonDBPoolPatch();
-                    foreach (KeyValuePair<string, string> tag in current.Tags)
-                    {
-                        patch.Tags.Add(tag);
-                    }
-                    patch.Tags.Remove(key);
-                    ArmOperation<HorizonDBPoolResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(result.Value, result.GetRawResponse());
-                }
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Removes a tag by key from the resource. </summary>
-        /// <param name="key"> The key for the tag. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        public virtual Response<HorizonDBPoolResource> RemoveTag(string key, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(key, nameof(key));
-
-            using DiagnosticScope scope = _horizonDBPoolsClientDiagnostics.CreateScope("HorizonDBPoolResource.RemoveTag");
-            scope.Start();
-            try
-            {
-                if (CanUseTagResource(cancellationToken))
-                {
-                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
-                    originalTags.Value.Data.TagValues.Remove(key);
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
-                    RequestContext context = new RequestContext
-                    {
-                        CancellationToken = cancellationToken
-                    };
-                    HttpMessage message = _horizonDBPoolsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
-                    Response result = Pipeline.ProcessMessage(message, context);
-                    Response<HorizonDBPoolData> response = Response.FromValue(HorizonDBPoolData.FromResponse(result), result);
-                    return Response.FromValue(new HorizonDBPoolResource(Client, response.Value), response.GetRawResponse());
-                }
-                else
-                {
-                    HorizonDBPoolData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    HorizonDBPoolPatch patch = new HorizonDBPoolPatch();
-                    foreach (KeyValuePair<string, string> tag in current.Tags)
-                    {
-                        patch.Tags.Add(tag);
-                    }
-                    patch.Tags.Remove(key);
-                    ArmOperation<HorizonDBPoolResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
-                    return Response.FromValue(result.Value, result.GetRawResponse());
-                }
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
         /// <summary> Gets a collection of FirewallRules in the <see cref="HorizonDBPoolResource"/>. </summary>
         /// <returns> An object representing collection of FirewallRules and their operations over a FirewallRuleResource. </returns>
         public virtual FirewallRuleCollection GetFirewallRules()
@@ -1017,7 +742,7 @@ namespace Azure.ResourceManager.HorizonDB
         }
 
         /// <summary> Gets information about a HorizonDB pool firewall rule. </summary>
-        /// <param name="firewallRuleName"> The name of the HorizonDB pool firewall rule. </param>
+        /// <param name="firewallRuleName"> The name of the HorizonDB pool firewall rule. The name must be 1 through 80 characters, contain only ASCII letters, digits, underscores, periods, and hyphens, start with a letter or digit, and end with a letter, digit, or underscore. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="firewallRuleName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="firewallRuleName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -1030,7 +755,7 @@ namespace Azure.ResourceManager.HorizonDB
         }
 
         /// <summary> Gets information about a HorizonDB pool firewall rule. </summary>
-        /// <param name="firewallRuleName"> The name of the HorizonDB pool firewall rule. </param>
+        /// <param name="firewallRuleName"> The name of the HorizonDB pool firewall rule. The name must be 1 through 80 characters, contain only ASCII letters, digits, underscores, periods, and hyphens, start with a letter or digit, and end with a letter, digit, or underscore. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="firewallRuleName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="firewallRuleName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -1075,11 +800,11 @@ namespace Azure.ResourceManager.HorizonDB
             return GetMaintenanceEvents().Get(maintenanceEventId, cancellationToken);
         }
 
-        /// <summary> Gets a collection of Nodes in the <see cref="HorizonDBPoolResource"/>. </summary>
-        /// <returns> An object representing collection of Nodes and their operations over a NodeResource. </returns>
-        public virtual NodeCollection GetNodes()
+        /// <summary> Gets a collection of HorizonDBNodes in the <see cref="HorizonDBPoolResource"/>. </summary>
+        /// <returns> An object representing collection of HorizonDBNodes and their operations over a HorizonDBNodeResource. </returns>
+        public virtual HorizonDBNodeCollection GetHorizonDBNodes()
         {
-            return GetCachedClient(client => new NodeCollection(client, Id));
+            return GetCachedClient(client => new HorizonDBNodeCollection(client, Id));
         }
 
         /// <summary> Gets a node allocated to a HorizonDB pool. </summary>
@@ -1088,11 +813,11 @@ namespace Azure.ResourceManager.HorizonDB
         /// <exception cref="ArgumentNullException"> <paramref name="nodeName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="nodeName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<NodeResource>> GetNodeAsync(string nodeName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<HorizonDBNodeResource>> GetHorizonDBNodeAsync(string nodeName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(nodeName, nameof(nodeName));
 
-            return await GetNodes().GetAsync(nodeName, cancellationToken).ConfigureAwait(false);
+            return await GetHorizonDBNodes().GetAsync(nodeName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Gets a node allocated to a HorizonDB pool. </summary>
@@ -1101,11 +826,11 @@ namespace Azure.ResourceManager.HorizonDB
         /// <exception cref="ArgumentNullException"> <paramref name="nodeName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="nodeName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<NodeResource> GetNode(string nodeName, CancellationToken cancellationToken = default)
+        public virtual Response<HorizonDBNodeResource> GetHorizonDBNode(string nodeName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(nodeName, nameof(nodeName));
 
-            return GetNodes().Get(nodeName, cancellationToken);
+            return GetHorizonDBNodes().Get(nodeName, cancellationToken);
         }
     }
 }

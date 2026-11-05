@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
             PoolComputeModelForPatchUpdate computeModel = default;
             int? nodeCount = default;
             PoolHighAvailabilityPatch highAvailability = default;
-            PoolParameterGroupReferenceForPatchUpdate parameterGroup = default;
+            PoolParameterGroupReferencePatch parameterGroup = default;
             ScheduledMaintenancePropertiesForPatchUpdate scheduledMaintenance = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
                     {
                         continue;
                     }
-                    parameterGroup = PoolParameterGroupReferenceForPatchUpdate.DeserializePoolParameterGroupReferenceForPatchUpdate(prop.Value, options);
+                    parameterGroup = PoolParameterGroupReferencePatch.DeserializePoolParameterGroupReferencePatch(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("scheduledMaintenance"u8))

@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
 
         /// <summary> Initializes a new instance of <see cref="NodeListResult"/>. </summary>
         /// <param name="value"> The Node items on this page. </param>
-        internal NodeListResult(IEnumerable<NodeData> value)
+        internal NodeListResult(IEnumerable<HorizonDBNodeData> value)
         {
             Value = value.ToList();
         }
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
         /// <param name="value"> The Node items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NodeListResult(IList<NodeData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal NodeListResult(IList<HorizonDBNodeData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
         }
 
         /// <summary> The Node items on this page. </summary>
-        public IList<NodeData> Value { get; }
+        public IList<HorizonDBNodeData> Value { get; }
 
         /// <summary> The link to the next page of items. </summary>
         public Uri NextLink { get; }

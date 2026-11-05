@@ -85,10 +85,10 @@ namespace Azure.ResourceManager.HorizonDB.Models
                 writer.WritePropertyName("creationMode"u8);
                 writer.WriteStringValue(CreationMode.Value.ToString());
             }
-            if (Optional.IsDefined(PointInTimeUtc))
+            if (Optional.IsDefined(PointInTimeOn))
             {
                 writer.WritePropertyName("pointInTimeUtc"u8);
-                writer.WriteStringValue(PointInTimeUtc.Value, "O");
+                writer.WriteStringValue(PointInTimeOn.Value, "O");
             }
             if (Optional.IsDefined(CreationSourceClusterResourceId))
             {
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
             }
             PostgreSqlVersion? postgreSqlVersion = default;
             ClusterCreateMode? creationMode = default;
-            DateTimeOffset? pointInTimeUtc = default;
+            DateTimeOffset? pointInTimeOn = default;
             ResourceIdentifier creationSourceClusterResourceId = default;
             string creationSourceClusterLocation = default;
             Network network = default;
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
                     {
                         continue;
                     }
-                    pointInTimeUtc = prop.Value.GetDateTimeOffset("O");
+                    pointInTimeOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("creationSourceClusterResourceId"u8))
@@ -292,7 +292,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
             return new HorizonDBClusterProperties(
                 postgreSqlVersion,
                 creationMode,
-                pointInTimeUtc,
+                pointInTimeOn,
                 creationSourceClusterResourceId,
                 creationSourceClusterLocation,
                 network,

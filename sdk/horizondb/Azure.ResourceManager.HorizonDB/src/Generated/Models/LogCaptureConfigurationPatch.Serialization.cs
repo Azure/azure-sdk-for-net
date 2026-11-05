@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
             {
                 return null;
             }
-            LogCaptureConfigurationPropertiesForPatchUpdate properties = default;
+            LogCaptureConfigurationPatchProperties properties = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
                     {
                         continue;
                     }
-                    properties = LogCaptureConfigurationPropertiesForPatchUpdate.DeserializeLogCaptureConfigurationPropertiesForPatchUpdate(prop.Value, options);
+                    properties = LogCaptureConfigurationPatchProperties.DeserializeLogCaptureConfigurationPatchProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

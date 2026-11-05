@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
         /// <param name="desiredState"> The requested capability state. </param>
         /// <param name="effectiveState"> The current effective capability state. </param>
         /// <param name="provisioningState"> The provisioning state of the latest capability mutation. </param>
-        /// <param name="autoUpgradeExtension"> Whether HorizonDB may automatically upgrade the service-owned change data capture extension within the supported compatibility policy. </param>
+        /// <param name="isAutoUpgradeExtensionEnabled"> Whether HorizonDB may automatically upgrade the service-owned change data capture extension within the supported compatibility policy. </param>
         /// <param name="replicationArchitecture"> The implementation architecture currently used for change capture. </param>
         /// <param name="extension"> The installed change data capture extension and its current lifecycle state. </param>
         /// <param name="prerequisites"> The current readiness of change data capture engine and read-write endpoint prerequisites. </param>
@@ -35,12 +35,12 @@ namespace Azure.ResourceManager.HorizonDB.Models
         /// <param name="configurationCount"> The number of change data capture configurations under this cluster. </param>
         /// <param name="status"> Customer-safe health information for the capability. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ChangeDataCaptureCapabilityProperties(ChangeDataCaptureDesiredState desiredState, ChangeDataCaptureEffectiveState effectiveState, HorizonDBProvisioningState? provisioningState, bool? autoUpgradeExtension, ChangeDataCaptureReplicationArchitecture replicationArchitecture, ChangeDataCaptureExtensionStatus extension, ChangeDataCapturePrerequisiteStatus prerequisites, int destinationCount, int configurationCount, ChangeDataCaptureStatus status, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ChangeDataCaptureCapabilityProperties(ChangeDataCaptureDesiredState desiredState, ChangeDataCaptureEffectiveState effectiveState, HorizonDBProvisioningState? provisioningState, bool? isAutoUpgradeExtensionEnabled, ChangeDataCaptureReplicationArchitecture replicationArchitecture, ChangeDataCaptureExtensionStatus extension, ChangeDataCapturePrerequisiteStatus prerequisites, int destinationCount, int configurationCount, ChangeDataCaptureStatus status, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DesiredState = desiredState;
             EffectiveState = effectiveState;
             ProvisioningState = provisioningState;
-            AutoUpgradeExtension = autoUpgradeExtension;
+            IsAutoUpgradeExtensionEnabled = isAutoUpgradeExtensionEnabled;
             ReplicationArchitecture = replicationArchitecture;
             Extension = extension;
             Prerequisites = prerequisites;
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
         public HorizonDBProvisioningState? ProvisioningState { get; }
 
         /// <summary> Whether HorizonDB may automatically upgrade the service-owned change data capture extension within the supported compatibility policy. </summary>
-        public bool? AutoUpgradeExtension { get; set; }
+        public bool? IsAutoUpgradeExtensionEnabled { get; set; }
 
         /// <summary> The implementation architecture currently used for change capture. </summary>
         public ChangeDataCaptureReplicationArchitecture ReplicationArchitecture { get; }

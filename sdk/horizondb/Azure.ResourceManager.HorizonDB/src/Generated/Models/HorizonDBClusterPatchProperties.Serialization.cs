@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
             }
             NetworkForPatchUpdate network = default;
             BackupPropertiesForPatchUpdate backup = default;
-            HorizonDBClusterDataEncryptionForPatchUpdate dataEncryption = default;
+            HorizonDBClusterDataEncryptionPatch dataEncryption = default;
             AiModelManagementStatus? aiModelManagement = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
                     {
                         continue;
                     }
-                    dataEncryption = HorizonDBClusterDataEncryptionForPatchUpdate.DeserializeHorizonDBClusterDataEncryptionForPatchUpdate(prop.Value, options);
+                    dataEncryption = HorizonDBClusterDataEncryptionPatch.DeserializeHorizonDBClusterDataEncryptionPatch(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("aiModelManagement"u8))

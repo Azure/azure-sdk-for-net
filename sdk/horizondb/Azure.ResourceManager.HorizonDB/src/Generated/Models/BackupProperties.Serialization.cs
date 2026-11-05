@@ -86,10 +86,10 @@ namespace Azure.ResourceManager.HorizonDB.Models
                 writer.WritePropertyName("retentionDays"u8);
                 writer.WriteNumberValue(RetentionDays.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(EarliestRestorePointUtc))
+            if (options.Format != "W" && Optional.IsDefined(EarliestRestorePointOn))
             {
                 writer.WritePropertyName("earliestRestorePointUtc"u8);
-                writer.WriteStringValue(EarliestRestorePointUtc.Value, "O");
+                writer.WriteStringValue(EarliestRestorePointOn.Value, "O");
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
             }
             GeoRedundancyState geoRedundancy = default;
             int? retentionDays = default;
-            DateTimeOffset? earliestRestorePointUtc = default;
+            DateTimeOffset? earliestRestorePointOn = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
                     {
                         continue;
                     }
-                    earliestRestorePointUtc = prop.Value.GetDateTimeOffset("O");
+                    earliestRestorePointOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (options.Format != "W")
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new BackupProperties(geoRedundancy, retentionDays, earliestRestorePointUtc, additionalBinaryDataProperties);
+            return new BackupProperties(geoRedundancy, retentionDays, earliestRestorePointOn, additionalBinaryDataProperties);
         }
     }
 }

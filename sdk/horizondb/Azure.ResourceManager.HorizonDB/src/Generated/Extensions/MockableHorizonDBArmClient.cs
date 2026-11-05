@@ -26,13 +26,13 @@ namespace Azure.ResourceManager.HorizonDB.Mocking
         {
         }
 
-        /// <summary> Gets an object representing a <see cref="CapabilityResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="HorizonDBCapabilityResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="CapabilityResource"/> object. </returns>
-        public virtual CapabilityResource GetCapabilityResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="HorizonDBCapabilityResource"/> object. </returns>
+        public virtual HorizonDBCapabilityResource GetHorizonDBCapabilityResource(ResourceIdentifier id)
         {
-            CapabilityResource.ValidateResourceId(id);
-            return new CapabilityResource(Client, id);
+            HorizonDBCapabilityResource.ValidateResourceId(id);
+            return new HorizonDBCapabilityResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="HorizonDBClusterResource"/> along with the instance operations that can be performed on it but with no data. </summary>
@@ -161,13 +161,13 @@ namespace Azure.ResourceManager.HorizonDB.Mocking
             return new ChangeDataCaptureConfigurationResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="EndpointResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="HorizonDBEndpointResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="EndpointResource"/> object. </returns>
-        public virtual EndpointResource GetEndpointResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="HorizonDBEndpointResource"/> object. </returns>
+        public virtual HorizonDBEndpointResource GetHorizonDBEndpointResource(ResourceIdentifier id)
         {
-            EndpointResource.ValidateResourceId(id);
-            return new EndpointResource(Client, id);
+            HorizonDBEndpointResource.ValidateResourceId(id);
+            return new HorizonDBEndpointResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="MaintenanceEventResource"/> along with the instance operations that can be performed on it but with no data. </summary>
@@ -179,13 +179,13 @@ namespace Azure.ResourceManager.HorizonDB.Mocking
             return new MaintenanceEventResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="NodeResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="HorizonDBNodeResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="NodeResource"/> object. </returns>
-        public virtual NodeResource GetNodeResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="HorizonDBNodeResource"/> object. </returns>
+        public virtual HorizonDBNodeResource GetHorizonDBNodeResource(ResourceIdentifier id)
         {
-            NodeResource.ValidateResourceId(id);
-            return new NodeResource(Client, id);
+            HorizonDBNodeResource.ValidateResourceId(id);
+            return new HorizonDBNodeResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="LogCaptureConfigurationResource"/> along with the instance operations that can be performed on it but with no data. </summary>

@@ -432,14 +432,14 @@ namespace Azure.ResourceManager.HorizonDB
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="Authentication"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<Authentication> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="HorizonDBAuthentication"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<HorizonDBAuthentication> GetAllAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new AuthenticationAsyncCollectionResultOfT(
+            return new HorizonDBAuthenticationAsyncCollectionResultOfT(
                 _authenticationsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -470,14 +470,14 @@ namespace Azure.ResourceManager.HorizonDB
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="Authentication"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<Authentication> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="HorizonDBAuthentication"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<HorizonDBAuthentication> GetAll(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new AuthenticationCollectionResultOfT(
+            return new HorizonDBAuthenticationCollectionResultOfT(
                 _authenticationsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -1087,11 +1087,11 @@ namespace Azure.ResourceManager.HorizonDB
             return GetChangeDataCaptureConfigurations().Get(configurationName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of Endpoints in the <see cref="HorizonDBClusterResource"/>. </summary>
-        /// <returns> An object representing collection of Endpoints and their operations over a EndpointResource. </returns>
-        public virtual EndpointCollection GetEndpoints()
+        /// <summary> Gets a collection of HorizonDBEndpoints in the <see cref="HorizonDBClusterResource"/>. </summary>
+        /// <returns> An object representing collection of HorizonDBEndpoints and their operations over a HorizonDBEndpointResource. </returns>
+        public virtual HorizonDBEndpointCollection GetHorizonDBEndpoints()
         {
-            return GetCachedClient(client => new EndpointCollection(client, Id));
+            return GetCachedClient(client => new HorizonDBEndpointCollection(client, Id));
         }
 
         /// <summary> Gets information about a service-generated HorizonDB Cluster- or Pool-scoped Endpoint. </summary>
@@ -1100,11 +1100,11 @@ namespace Azure.ResourceManager.HorizonDB
         /// <exception cref="ArgumentNullException"> <paramref name="endpointName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="endpointName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<EndpointResource>> GetEndpointAsync(string endpointName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<HorizonDBEndpointResource>> GetHorizonDBEndpointAsync(string endpointName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(endpointName, nameof(endpointName));
 
-            return await GetEndpoints().GetAsync(endpointName, cancellationToken).ConfigureAwait(false);
+            return await GetHorizonDBEndpoints().GetAsync(endpointName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Gets information about a service-generated HorizonDB Cluster- or Pool-scoped Endpoint. </summary>
@@ -1113,11 +1113,11 @@ namespace Azure.ResourceManager.HorizonDB
         /// <exception cref="ArgumentNullException"> <paramref name="endpointName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="endpointName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<EndpointResource> GetEndpoint(string endpointName, CancellationToken cancellationToken = default)
+        public virtual Response<HorizonDBEndpointResource> GetHorizonDBEndpoint(string endpointName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(endpointName, nameof(endpointName));
 
-            return GetEndpoints().Get(endpointName, cancellationToken);
+            return GetHorizonDBEndpoints().Get(endpointName, cancellationToken);
         }
 
         /// <summary> Gets a collection of LogCaptureConfigurations in the <see cref="HorizonDBClusterResource"/>. </summary>

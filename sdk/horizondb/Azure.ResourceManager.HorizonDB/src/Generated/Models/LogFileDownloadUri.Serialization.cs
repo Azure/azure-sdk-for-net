@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
             writer.WritePropertyName("downloadUri"u8);
             writer.WriteStringValue(DownloadUri.AbsoluteUri);
             writer.WritePropertyName("expiresAtUtc"u8);
-            writer.WriteStringValue(ExpiresAtUtc, "O");
+            writer.WriteStringValue(ExpiresOn, "O");
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
                 return null;
             }
             Uri downloadUri = default;
-            DateTimeOffset expiresAtUtc = default;
+            DateTimeOffset expiresOn = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
                 }
                 if (prop.NameEquals("expiresAtUtc"u8))
                 {
-                    expiresAtUtc = prop.Value.GetDateTimeOffset("O");
+                    expiresOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (options.Format != "W")
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new LogFileDownloadUri(downloadUri, expiresAtUtc, additionalBinaryDataProperties);
+            return new LogFileDownloadUri(downloadUri, expiresOn, additionalBinaryDataProperties);
         }
     }
 }

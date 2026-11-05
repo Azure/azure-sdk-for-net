@@ -91,10 +91,10 @@ namespace Azure.ResourceManager.HorizonDB.Models
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Optional.IsDefined(AutoUpgradeExtension))
+            if (Optional.IsDefined(IsAutoUpgradeExtensionEnabled))
             {
                 writer.WritePropertyName("autoUpgradeExtension"u8);
-                writer.WriteBooleanValue(AutoUpgradeExtension.Value);
+                writer.WriteBooleanValue(IsAutoUpgradeExtensionEnabled.Value);
             }
             if (options.Format != "W")
             {
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
             ChangeDataCaptureDesiredState desiredState = default;
             ChangeDataCaptureEffectiveState effectiveState = default;
             HorizonDBProvisioningState? provisioningState = default;
-            bool? autoUpgradeExtension = default;
+            bool? isAutoUpgradeExtensionEnabled = default;
             ChangeDataCaptureReplicationArchitecture replicationArchitecture = default;
             ChangeDataCaptureExtensionStatus extension = default;
             ChangeDataCapturePrerequisiteStatus prerequisites = default;
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
                     {
                         continue;
                     }
-                    autoUpgradeExtension = prop.Value.GetBoolean();
+                    isAutoUpgradeExtensionEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("replicationArchitecture"u8))
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
                 desiredState,
                 effectiveState,
                 provisioningState,
-                autoUpgradeExtension,
+                isAutoUpgradeExtensionEnabled,
                 replicationArchitecture,
                 extension,
                 prerequisites,
