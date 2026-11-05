@@ -5475,7 +5475,8 @@ namespace Azure.Storage.Files.DataLake
                     $"{nameof(Uri)}: {Uri}\n" +
                     $"{nameof(options.TimeToExpire)}: {options.TimeToExpire}\n" +
                     $"{nameof(options.SetExpiryRelativeTo)}: {options.SetExpiryRelativeTo}\n" +
-                    $"{nameof(options.ExpiresOn)}: {options.ExpiresOn}");
+                    $"{nameof(options.ExpiresOn)}: {options.ExpiresOn}\n" +
+                    $"{nameof(options.LeaseId)}: {options.LeaseId}");
 
                 DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(DataLakeFileClient)}.{nameof(ScheduleDeletion)}");
 
@@ -5519,6 +5520,7 @@ namespace Azure.Storage.Files.DataLake
                         response = await BlobPathRestClient.SetExpiryAsync(
                             expiryOptions: blobExpiryOptions,
                             expiresOn: expiresOn,
+                            leaseId: options.LeaseId,
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
                     }
@@ -5527,6 +5529,7 @@ namespace Azure.Storage.Files.DataLake
                         response = BlobPathRestClient.SetExpiry(
                             expiryOptions: blobExpiryOptions,
                             expiresOn: expiresOn,
+                            leaseId: options.LeaseId,
                             cancellationToken: cancellationToken);
                     }
 

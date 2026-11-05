@@ -1,4 +1,4 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -6065,6 +6065,82 @@ namespace Azure.Storage.Files.DataLake.Tests
 
             // Assert
             Assert.AreEqual(default(DateTimeOffset), propertiesResponse.Value.ExpiresOn);
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2019_12_12)]
+        public async Task ScheduleDeletionAsync_LeaseId()
+        {
+            // Arrange
+            DataLakeServiceClient oauthService = GetServiceClient_OAuth();
+            await using DisposingFileSystem test = await GetNewFileSystem(oauthService);
+            DataLakeFileClient file = await test.FileSystem.CreateFileAsync(GetNewFileName());
+
+            string leaseId = Recording.Random.NewGuid().ToString();
+            DataLakeLeaseClient leaseClient = InstrumentClient(file.GetDataLakeLeaseClient(leaseId));
+            await leaseClient.AcquireAsync(DataLakeLeaseClient.InfiniteLeaseDuration);
+
+            DateTimeOffset expiresOn = new DateTimeOffset(2100, 1, 1, 0, 0, 0, 0, TimeSpan.Zero);
+            DataLakeFileScheduleDeletionOptions options = new DataLakeFileScheduleDeletionOptions(expiresOn)
+            {
+                LeaseId = leaseId
+            };
+
+            // Act
+            Response<PathInfo> expiryResponse = await file.ScheduleDeletionAsync(options);
+            Response<PathProperties> propertiesResponse = await file.GetPropertiesAsync();
+
+            // Assert
+            Assert.IsNotNull(expiryResponse.Value.ETag);
+            Assert.IsNotNull(expiryResponse.Value.LastModified);
+            Assert.AreEqual(expiresOn, propertiesResponse.Value.ExpiresOn);
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2019_12_12)]
+        public async Task ScheduleDeletionAsync_LeaseIdMissing()
+        {
+            // Arrange
+            DataLakeServiceClient oauthService = GetServiceClient_OAuth();
+            await using DisposingFileSystem test = await GetNewFileSystem(oauthService);
+            DataLakeFileClient file = await test.FileSystem.CreateFileAsync(GetNewFileName());
+
+            string leaseId = Recording.Random.NewGuid().ToString();
+            DataLakeLeaseClient leaseClient = InstrumentClient(file.GetDataLakeLeaseClient(leaseId));
+            await leaseClient.AcquireAsync(DataLakeLeaseClient.InfiniteLeaseDuration);
+
+            DataLakeFileScheduleDeletionOptions options = new DataLakeFileScheduleDeletionOptions(
+                new DateTimeOffset(2100, 1, 1, 0, 0, 0, 0, TimeSpan.Zero));
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                file.ScheduleDeletionAsync(options),
+                e => Assert.AreEqual(Blobs.Models.BlobErrorCode.LeaseIdMissing.ToString(), e.ErrorCode));
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2019_12_12)]
+        public async Task ScheduleDeletionAsync_LeaseIdMismatch()
+        {
+            // Arrange
+            DataLakeServiceClient oauthService = GetServiceClient_OAuth();
+            await using DisposingFileSystem test = await GetNewFileSystem(oauthService);
+            DataLakeFileClient file = await test.FileSystem.CreateFileAsync(GetNewFileName());
+
+            string leaseId = Recording.Random.NewGuid().ToString();
+            DataLakeLeaseClient leaseClient = InstrumentClient(file.GetDataLakeLeaseClient(leaseId));
+            await leaseClient.AcquireAsync(DataLakeLeaseClient.InfiniteLeaseDuration);
+
+            DataLakeFileScheduleDeletionOptions options = new DataLakeFileScheduleDeletionOptions(
+                new DateTimeOffset(2100, 1, 1, 0, 0, 0, 0, TimeSpan.Zero))
+            {
+                LeaseId = Recording.Random.NewGuid().ToString()
+            };
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                file.ScheduleDeletionAsync(options),
+                e => Assert.AreEqual(Blobs.Models.BlobErrorCode.LeaseIdMismatchWithBlobOperation.ToString(), e.ErrorCode));
         }
 
         [RecordedTest]

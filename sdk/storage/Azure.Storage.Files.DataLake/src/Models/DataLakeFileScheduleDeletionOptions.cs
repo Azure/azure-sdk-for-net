@@ -30,6 +30,13 @@ namespace Azure.Storage.Files.DataLake.Models
         public DateTimeOffset? ExpiresOn { get; private set; }
 
         /// <summary>
+        /// Optional.  If specified, the operation only succeeds if the file's
+        /// lease is active and matches this ID.  Required if the file has an
+        /// active lease.
+        /// </summary>
+        public string LeaseId { get; set; }
+
+        /// <summary>
         /// Constructor.  Sets the <see cref="DateTimeOffset"/> when the file will
         /// be deleted.
         /// </summary>
