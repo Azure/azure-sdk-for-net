@@ -9,6 +9,7 @@ on:
       - '.github/workflows/shared/copilot-cli-version-probe-guard.md'
       - '.github/workflows/mgmt-review*'
       - '.github/skills/analyze-ci-failures/**'
+      - '.github/skills/code-review/**'
       - '.github/aw/actions-lock.json'
 
 permissions:

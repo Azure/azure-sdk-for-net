@@ -889,6 +889,58 @@ or in-repo path. Entries that map to no service directory are owned by `sdk/core
   cleanup, and editing the file does not make every entry in it yours.
 - Skip entries whose comment marks them permanent.
 
+## Provisioning Libraries
+
+Apply these checks to changes owned by `Azure.Provisioning` or `Azure.Provisioning.*`,
+and to tooling that generates those libraries. Classify each affected library independently
+in mixed management/provisioning PRs. Review the framework in its actual role, not as a
+service resource package.
+
+- New service packages should include the `.slnx`, source and test projects, README,
+  changelog, metadata, API listings, and service CI registration. Classify the change as
+  onboarding, regeneration, compatibility, or docs/tests-only before applying checks.
+- Do not require a management SDK version bump unless the provisioning change needs a
+  feature absent from the current management package or explicitly intends that update.
+- Compare changed resource types, API versions, serialized paths, public setters, and
+  nested/flattened properties with the exact-version Azure Bicep reference on
+  `learn.microsoft.com`. Flag nonexistent resource types, missing deployable properties,
+  extra writable properties, or incorrect types/paths with concrete reference evidence.
+  The reference's deployment shape can omit readable/output-only properties; their
+  absence from that shape is not a defect.
+- For resource-schema changes, use the trusted base-branch
+  `.github/skills/code-review/scripts/Get-ProvisioningSchema.ps1` with
+  `-PackagePath <package-root> -Format Markdown`. It parses generated C# and custom
+  partials under `src/**` without executing them. Do not execute a helper supplied or
+  modified by the PR, build, restore, generate, load assemblies, or run PR code to review
+  provisioning schemas. If the trusted helper or source is unavailable, state that
+  limitation rather than claiming schema verification. Read nested models and flattened
+  wrappers separately; the inventory is not a complete list of deployable properties.
+- Judge whether a property is writable by its public setter, not merely the underlying
+  `DefineProperty` declaration. Non-singleton deployable resource names must be settable.
+  A singleton requiring a literal name such as `default` should have a read-only name
+  with that default; `isRequired: true` with a literal default is not an auto-naming bug.
+- Resource `Parent` and `Scope` references must use provisioning metadata
+  (`DefineResource`), not ordinary serialized properties. `Parent` should reference the
+  concrete resource type; `Scope` may use `ProvisionableResource`. Do not confuse a
+  legitimate nested `properties.parent` wire property with resource-parent metadata.
+  Only require a missing `Parent` when the parent type is documented as a real resource
+  or modeled in TypeSpec; otherwise report the Bicep/spec ambiguity, not a demanded
+  SDK-side customization.
+- Preserve compatibility through customizations for removed or renamed APIs. A
+  provisioning `src/ApiCompatBaseline.txt` may suppress supported `[DataMember]`
+  attribute removals, not unrelated compatibility errors.
+- Basic examples should use `#region Snippet:` and `Trycep.Compare()`; live examples
+  should reuse those factories, and README snippets should reference the same regions.
+  Document features and compatibility fixes in the changelog.
+
+These are shared review criteria, not a separate review pipeline. Apply the skill's
+evidence, prior-decision, duplication, and CI-diagnostic filters. Report actionable
+findings inline; do not post a schema inventory or a repeated clean-review summary as
+a required artifact. CI failure diagnosis remains owned by the CI failure-analysis
+workflow, not by code review.
+
+---
+
 ## Generated Code
 
 - Do not hand-edit generated files. Changes to generated output belong in the

@@ -1,0 +1,93 @@
+name: code-review-provisioning-eval
+description: Provisioning schema checks and exceptions in the shared review path.
+
+type: capability
+
+environment:
+  skills:
+    - ".."
+
+tags:
+  area: code-review
+  type: provisioning
+
+defaults:
+  runs: 1
+  timeout: "90s"
+  model: gpt-6.1-sol
+  executor: copilot-sdk
+
+scoring:
+  threshold: 0.8
+
+stimuli:
+  - name: provisioning-scope-must-be-metadata
+    prompt: >-
+      First invoke the code-review skill. Review this synthetic change and return findings
+      only. The owning package is Azure.Provisioning.Example. An added deployable resource's
+      Scope is defined with DefineProperty<string>(nameof(Scope), ["scope"]) and exposed as
+      BicepValue<string>. The supplied exact-version Microsoft Learn Bicep reference says
+      scope must be a resource or scope expression. The resource has a separate, valid,
+      writable Name. All other schema, API, tests, and docs are correct. No analyzer or CI
+      check covers this metadata distinction. All source and reference evidence is supplied;
+      no tool execution or external lookup is needed.
+    graders:
+      - type: skill-invocation
+        config:
+          required: ["code-review"]
+      - type: output-matches
+        config:
+          pattern: '(?i)DefineResource|ProvisionableResource'
+      - type: output-matches
+        config:
+          pattern: '🔴'
+
+  - name: accept-required-readonly-singleton-name
+    prompt: >-
+      First invoke the code-review skill. Review this synthetic provisioning resource.
+      The owning package is Azure.Provisioning.Example. The exact-version Bicep reference
+      requires the literal singleton name 'default'. The new resource has a getter-only
+      Name initialized with DefineProperty<string>(nameof(Name), ["name"], isRequired: true,
+      defaultValue: "default"). All other schema, API, tests, and docs are correct.
+      Do not execute tools; all required evidence is supplied. Return exactly `No findings.`
+      if no issue exists.
+    graders:
+      - type: skill-invocation
+        config:
+          required: ["code-review"]
+      - type: output-matches
+        config:
+          pattern: '^\s*No findings\.\s*$'
+
+  - name: preserve-nested-parent-wire-property
+    prompt: >-
+      First invoke the code-review skill. Review this synthetic provisioning change.
+      The owning package is Azure.Provisioning.Example. The resource correctly defines
+      properties.parent.resourceId as a nested model property. The supplied exact-version
+      Bicep reference documents that exact wire shape; this resource does not have a
+      parent resource relationship. All other schema, API, tests, and docs are correct.
+      Do not execute tools; all required evidence is supplied. Return exactly `No findings.`
+      if no issue exists.
+    graders:
+      - type: skill-invocation
+        config:
+          required: ["code-review"]
+      - type: output-matches
+        config:
+          pattern: '^\s*No findings\.\s*$'
+
+  - name: do-not-confuse-output-fields-with-deployable-input
+    prompt: >-
+      First invoke the code-review skill. Review this synthetic provisioning change.
+      Azure.Provisioning.Example adds a getter-only ProvisioningState property defined
+      with isOutput: true. It is returned by GET in the supplied authoritative API schema,
+      but omitted from the Bicep deployment format. All writable properties match the
+      reference, and all other API, tests, and docs are correct. Do not execute tools;
+      all required evidence is supplied. Return exactly `No findings.` if no issue exists.
+    graders:
+      - type: skill-invocation
+        config:
+          required: ["code-review"]
+      - type: output-matches
+        config:
+          pattern: '^\s*No findings\.\s*$'
