@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.StorageMover
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _jobRunsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, jobRunName, context);
+                using HttpMessage message = _jobRunsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, jobRunName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<JobRunData> response = Response.FromValue(JobRunData.FromResponse(result), result);
                 if (response.Value == null)
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.StorageMover
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _jobRunsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, jobRunName, context);
+                using HttpMessage message = _jobRunsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, jobRunName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<JobRunData> response = Response.FromValue(JobRunData.FromResponse(result), result);
                 if (response.Value == null)
@@ -257,7 +257,7 @@ namespace Azure.ResourceManager.StorageMover
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _jobRunsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, jobRunName, context);
+                using HttpMessage message = _jobRunsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, jobRunName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<JobRunData> response = default;
@@ -314,7 +314,7 @@ namespace Azure.ResourceManager.StorageMover
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _jobRunsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, jobRunName, context);
+                using HttpMessage message = _jobRunsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, jobRunName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<JobRunData> response = default;
@@ -371,7 +371,7 @@ namespace Azure.ResourceManager.StorageMover
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _jobRunsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, jobRunName, context);
+                using HttpMessage message = _jobRunsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, jobRunName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<JobRunData> response = default;
@@ -432,7 +432,7 @@ namespace Azure.ResourceManager.StorageMover
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _jobRunsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, jobRunName, context);
+                using HttpMessage message = _jobRunsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, jobRunName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<JobRunData> response = default;

@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.Subscription
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _billingAccountPoliciesResponsesRestClient.CreateGetPolicyRequest(Id.Parent.Name, context);
+                using HttpMessage message = _billingAccountPoliciesResponsesRestClient.CreateGetPolicyRequest(Id.Parent.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<BillingAccountPolicyData> response = Response.FromValue(BillingAccountPolicyData.FromResponse(result), result);
                 if (response.Value == null)
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.Subscription
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _billingAccountPoliciesResponsesRestClient.CreateGetPolicyRequest(Id.Parent.Name, context);
+                using HttpMessage message = _billingAccountPoliciesResponsesRestClient.CreateGetPolicyRequest(Id.Parent.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<BillingAccountPolicyData> response = Response.FromValue(BillingAccountPolicyData.FromResponse(result), result);
                 if (response.Value == null)

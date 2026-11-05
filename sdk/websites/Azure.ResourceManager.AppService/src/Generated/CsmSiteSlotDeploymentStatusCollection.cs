@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _csmDeploymentStatusOperationGroupRestClient.CreateGetSlotSiteDeploymentStatusSlotRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, deploymentStatusId, context);
+                using HttpMessage message = _csmDeploymentStatusOperationGroupRestClient.CreateGetSlotSiteDeploymentStatusSlotRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, deploymentStatusId, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 AppServiceArmOperation<CsmSiteSlotDeploymentStatusResource> operation = new AppServiceArmOperation<CsmSiteSlotDeploymentStatusResource>(
                     new CsmSiteSlotDeploymentStatusResourceOperationSource(Client),
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _csmDeploymentStatusOperationGroupRestClient.CreateGetSlotSiteDeploymentStatusSlotRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, deploymentStatusId, context);
+                using HttpMessage message = _csmDeploymentStatusOperationGroupRestClient.CreateGetSlotSiteDeploymentStatusSlotRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, deploymentStatusId, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 AppServiceArmOperation<CsmSiteSlotDeploymentStatusResource> operation = new AppServiceArmOperation<CsmSiteSlotDeploymentStatusResource>(
                     new CsmSiteSlotDeploymentStatusResourceOperationSource(Client),
@@ -269,7 +269,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _csmDeploymentStatusOperationGroupRestClient.CreateGetSlotSiteDeploymentStatusSlotRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, deploymentStatusId, context);
+                using HttpMessage message = _csmDeploymentStatusOperationGroupRestClient.CreateGetSlotSiteDeploymentStatusSlotRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, deploymentStatusId, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<CsmDeploymentStatusData> response = default;
@@ -326,7 +326,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _csmDeploymentStatusOperationGroupRestClient.CreateGetSlotSiteDeploymentStatusSlotRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, deploymentStatusId, context);
+                using HttpMessage message = _csmDeploymentStatusOperationGroupRestClient.CreateGetSlotSiteDeploymentStatusSlotRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, deploymentStatusId, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<CsmDeploymentStatusData> response = default;
@@ -383,7 +383,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _csmDeploymentStatusOperationGroupRestClient.CreateGetSlotSiteDeploymentStatusSlotRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, deploymentStatusId, context);
+                using HttpMessage message = _csmDeploymentStatusOperationGroupRestClient.CreateGetSlotSiteDeploymentStatusSlotRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, deploymentStatusId, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<CsmDeploymentStatusData> response = default;
@@ -444,7 +444,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _csmDeploymentStatusOperationGroupRestClient.CreateGetSlotSiteDeploymentStatusSlotRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, deploymentStatusId, context);
+                using HttpMessage message = _csmDeploymentStatusOperationGroupRestClient.CreateGetSlotSiteDeploymentStatusSlotRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, deploymentStatusId, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<CsmDeploymentStatusData> response = default;

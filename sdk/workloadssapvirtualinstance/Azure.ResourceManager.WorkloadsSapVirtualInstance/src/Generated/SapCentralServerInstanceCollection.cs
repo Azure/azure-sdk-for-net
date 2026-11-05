@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sapCentralServerInstancesRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, centralInstanceName, SapCentralServerInstanceData.ToRequestContent(data), context);
+                using HttpMessage message = _sapCentralServerInstancesRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, centralInstanceName, SapCentralServerInstanceData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 WorkloadsSapVirtualInstanceArmOperation<SapCentralServerInstanceResource> operation = new WorkloadsSapVirtualInstanceArmOperation<SapCentralServerInstanceResource>(
                     new SapCentralServerInstanceResourceOperationSource(Client),
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sapCentralServerInstancesRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, centralInstanceName, SapCentralServerInstanceData.ToRequestContent(data), context);
+                using HttpMessage message = _sapCentralServerInstancesRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, centralInstanceName, SapCentralServerInstanceData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 WorkloadsSapVirtualInstanceArmOperation<SapCentralServerInstanceResource> operation = new WorkloadsSapVirtualInstanceArmOperation<SapCentralServerInstanceResource>(
                     new SapCentralServerInstanceResourceOperationSource(Client),
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sapCentralServerInstancesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, centralInstanceName, context);
+                using HttpMessage message = _sapCentralServerInstancesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, centralInstanceName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<SapCentralServerInstanceData> response = Response.FromValue(SapCentralServerInstanceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sapCentralServerInstancesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, centralInstanceName, context);
+                using HttpMessage message = _sapCentralServerInstancesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, centralInstanceName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<SapCentralServerInstanceData> response = Response.FromValue(SapCentralServerInstanceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -369,7 +369,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sapCentralServerInstancesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, centralInstanceName, context);
+                using HttpMessage message = _sapCentralServerInstancesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, centralInstanceName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<SapCentralServerInstanceData> response = default;
@@ -426,7 +426,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sapCentralServerInstancesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, centralInstanceName, context);
+                using HttpMessage message = _sapCentralServerInstancesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, centralInstanceName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<SapCentralServerInstanceData> response = default;
@@ -483,7 +483,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sapCentralServerInstancesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, centralInstanceName, context);
+                using HttpMessage message = _sapCentralServerInstancesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, centralInstanceName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<SapCentralServerInstanceData> response = default;
@@ -544,7 +544,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sapCentralServerInstancesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, centralInstanceName, context);
+                using HttpMessage message = _sapCentralServerInstancesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, centralInstanceName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<SapCentralServerInstanceData> response = default;

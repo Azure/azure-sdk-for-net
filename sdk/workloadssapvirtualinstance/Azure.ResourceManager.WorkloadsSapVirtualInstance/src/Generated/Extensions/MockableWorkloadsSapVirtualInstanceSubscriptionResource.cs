@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = SapVirtualInstancesRestClient.CreateGetSizingRecommendationsSapVirtualInstanceRequest(Guid.Parse(Id.SubscriptionId), location, SapSizingRecommendationContent.ToRequestContent(content), context);
+                using HttpMessage message = SapVirtualInstancesRestClient.CreateGetSizingRecommendationsSapVirtualInstanceRequest(Guid.Parse(Id.SubscriptionId), location, SapSizingRecommendationContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<SapSizingRecommendationResult> response = Response.FromValue(SapSizingRecommendationResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = SapVirtualInstancesRestClient.CreateGetSizingRecommendationsSapVirtualInstanceRequest(Guid.Parse(Id.SubscriptionId), location, SapSizingRecommendationContent.ToRequestContent(content), context);
+                using HttpMessage message = SapVirtualInstancesRestClient.CreateGetSizingRecommendationsSapVirtualInstanceRequest(Guid.Parse(Id.SubscriptionId), location, SapSizingRecommendationContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<SapSizingRecommendationResult> response = Response.FromValue(SapSizingRecommendationResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = SapVirtualInstancesRestClient.CreateGetSapSupportedSkuSapVirtualInstanceRequest(Guid.Parse(Id.SubscriptionId), location, SapSupportedSkusContent.ToRequestContent(content), context);
+                using HttpMessage message = SapVirtualInstancesRestClient.CreateGetSapSupportedSkuSapVirtualInstanceRequest(Guid.Parse(Id.SubscriptionId), location, SapSupportedSkusContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<SapSupportedResourceSkusResult> response = Response.FromValue(SapSupportedResourceSkusResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = SapVirtualInstancesRestClient.CreateGetSapSupportedSkuSapVirtualInstanceRequest(Guid.Parse(Id.SubscriptionId), location, SapSupportedSkusContent.ToRequestContent(content), context);
+                using HttpMessage message = SapVirtualInstancesRestClient.CreateGetSapSupportedSkuSapVirtualInstanceRequest(Guid.Parse(Id.SubscriptionId), location, SapSupportedSkusContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<SapSupportedResourceSkusResult> response = Response.FromValue(SapSupportedResourceSkusResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -331,7 +331,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = SapVirtualInstancesRestClient.CreateGetDiskConfigurationsSapVirtualInstanceRequest(Guid.Parse(Id.SubscriptionId), location, SapDiskConfigurationsContent.ToRequestContent(content), context);
+                using HttpMessage message = SapVirtualInstancesRestClient.CreateGetDiskConfigurationsSapVirtualInstanceRequest(Guid.Parse(Id.SubscriptionId), location, SapDiskConfigurationsContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<SapDiskConfigurationsResult> response = Response.FromValue(SapDiskConfigurationsResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -380,7 +380,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = SapVirtualInstancesRestClient.CreateGetDiskConfigurationsSapVirtualInstanceRequest(Guid.Parse(Id.SubscriptionId), location, SapDiskConfigurationsContent.ToRequestContent(content), context);
+                using HttpMessage message = SapVirtualInstancesRestClient.CreateGetDiskConfigurationsSapVirtualInstanceRequest(Guid.Parse(Id.SubscriptionId), location, SapDiskConfigurationsContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<SapDiskConfigurationsResult> response = Response.FromValue(SapDiskConfigurationsResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -429,7 +429,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = SapVirtualInstancesRestClient.CreateGetAvailabilityZoneDetailsSapVirtualInstanceRequest(Guid.Parse(Id.SubscriptionId), location, SapAvailabilityZoneDetailsContent.ToRequestContent(content), context);
+                using HttpMessage message = SapVirtualInstancesRestClient.CreateGetAvailabilityZoneDetailsSapVirtualInstanceRequest(Guid.Parse(Id.SubscriptionId), location, SapAvailabilityZoneDetailsContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<SapAvailabilityZoneDetailsResult> response = Response.FromValue(SapAvailabilityZoneDetailsResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -478,7 +478,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = SapVirtualInstancesRestClient.CreateGetAvailabilityZoneDetailsSapVirtualInstanceRequest(Guid.Parse(Id.SubscriptionId), location, SapAvailabilityZoneDetailsContent.ToRequestContent(content), context);
+                using HttpMessage message = SapVirtualInstancesRestClient.CreateGetAvailabilityZoneDetailsSapVirtualInstanceRequest(Guid.Parse(Id.SubscriptionId), location, SapAvailabilityZoneDetailsContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<SapAvailabilityZoneDetailsResult> response = Response.FromValue(SapAvailabilityZoneDetailsResult.FromResponse(result), result);
                 if (response.Value == null)

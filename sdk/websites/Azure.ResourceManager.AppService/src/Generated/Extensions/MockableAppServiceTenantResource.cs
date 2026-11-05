@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.AppService.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = WebClientRestClient.CreateValidateMoveRequest(resourceGroupName, subscriptionId, CsmMoveResourceEnvelope.ToRequestContent(moveResourceEnvelope), context);
+                using HttpMessage message = WebClientRestClient.CreateValidateMoveRequest(resourceGroupName, subscriptionId, CsmMoveResourceEnvelope.ToRequestContent(moveResourceEnvelope), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 return response;
             }
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.AppService.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = WebClientRestClient.CreateValidateMoveRequest(resourceGroupName, subscriptionId, CsmMoveResourceEnvelope.ToRequestContent(moveResourceEnvelope), context);
+                using HttpMessage message = WebClientRestClient.CreateValidateMoveRequest(resourceGroupName, subscriptionId, CsmMoveResourceEnvelope.ToRequestContent(moveResourceEnvelope), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 return response;
             }
@@ -268,7 +268,7 @@ namespace Azure.ResourceManager.AppService.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = WebClientRestClient.CreateMoveRequest(resourceGroupName, subscriptionId, CsmMoveResourceEnvelope.ToRequestContent(moveResourceEnvelope), context);
+                using HttpMessage message = WebClientRestClient.CreateMoveRequest(resourceGroupName, subscriptionId, CsmMoveResourceEnvelope.ToRequestContent(moveResourceEnvelope), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 return response;
             }
@@ -315,7 +315,7 @@ namespace Azure.ResourceManager.AppService.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = WebClientRestClient.CreateMoveRequest(resourceGroupName, subscriptionId, CsmMoveResourceEnvelope.ToRequestContent(moveResourceEnvelope), context);
+                using HttpMessage message = WebClientRestClient.CreateMoveRequest(resourceGroupName, subscriptionId, CsmMoveResourceEnvelope.ToRequestContent(moveResourceEnvelope), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 return response;
             }

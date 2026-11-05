@@ -687,7 +687,7 @@ namespace Azure.ResourceManager.AppService.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = WebClientRestClient.CreateGetAppServiceDeploymentLocationsRequest(Guid.Parse(Id.SubscriptionId), context);
+                using HttpMessage message = WebClientRestClient.CreateGetAppServiceDeploymentLocationsRequest(Guid.Parse(Id.SubscriptionId), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<AppServiceDeploymentLocations> response = Response.FromValue(AppServiceDeploymentLocations.FromResponse(result), result);
                 if (response.Value == null)
@@ -731,7 +731,7 @@ namespace Azure.ResourceManager.AppService.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = WebClientRestClient.CreateGetAppServiceDeploymentLocationsRequest(Guid.Parse(Id.SubscriptionId), context);
+                using HttpMessage message = WebClientRestClient.CreateGetAppServiceDeploymentLocationsRequest(Guid.Parse(Id.SubscriptionId), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<AppServiceDeploymentLocations> response = Response.FromValue(AppServiceDeploymentLocations.FromResponse(result), result);
                 if (response.Value == null)
@@ -907,7 +907,7 @@ namespace Azure.ResourceManager.AppService.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = WebClientRestClient.CreateCheckAppServiceNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), AppServiceNameAvailabilityContent.ToRequestContent(content), context);
+                using HttpMessage message = WebClientRestClient.CreateCheckAppServiceNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), AppServiceNameAvailabilityContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<AppServiceNameAvailabilityResult> response = Response.FromValue(AppServiceNameAvailabilityResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -955,7 +955,7 @@ namespace Azure.ResourceManager.AppService.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = WebClientRestClient.CreateCheckAppServiceNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), AppServiceNameAvailabilityContent.ToRequestContent(content), context);
+                using HttpMessage message = WebClientRestClient.CreateCheckAppServiceNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), AppServiceNameAvailabilityContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<AppServiceNameAvailabilityResult> response = Response.FromValue(AppServiceNameAvailabilityResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -1197,7 +1197,7 @@ namespace Azure.ResourceManager.AppService.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = WebClientRestClient.CreateGetSkusRequest(Guid.Parse(Id.SubscriptionId), context);
+                using HttpMessage message = WebClientRestClient.CreateGetSkusRequest(Guid.Parse(Id.SubscriptionId), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<AppServiceSkuResult> response = Response.FromValue(AppServiceSkuResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -1241,7 +1241,7 @@ namespace Azure.ResourceManager.AppService.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = WebClientRestClient.CreateGetSkusRequest(Guid.Parse(Id.SubscriptionId), context);
+                using HttpMessage message = WebClientRestClient.CreateGetSkusRequest(Guid.Parse(Id.SubscriptionId), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<AppServiceSkuResult> response = Response.FromValue(AppServiceSkuResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -1289,7 +1289,7 @@ namespace Azure.ResourceManager.AppService.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = WebClientRestClient.CreateVerifyHostingEnvironmentVnetRequest(Guid.Parse(Id.SubscriptionId), AppServiceVirtualNetworkValidationContent.ToRequestContent(content), context);
+                using HttpMessage message = WebClientRestClient.CreateVerifyHostingEnvironmentVnetRequest(Guid.Parse(Id.SubscriptionId), AppServiceVirtualNetworkValidationContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<VirtualNetworkValidationFailureDetails> response = Response.FromValue(VirtualNetworkValidationFailureDetails.FromResponse(result), result);
                 if (response.Value == null)
@@ -1337,7 +1337,7 @@ namespace Azure.ResourceManager.AppService.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = WebClientRestClient.CreateVerifyHostingEnvironmentVnetRequest(Guid.Parse(Id.SubscriptionId), AppServiceVirtualNetworkValidationContent.ToRequestContent(content), context);
+                using HttpMessage message = WebClientRestClient.CreateVerifyHostingEnvironmentVnetRequest(Guid.Parse(Id.SubscriptionId), AppServiceVirtualNetworkValidationContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<VirtualNetworkValidationFailureDetails> response = Response.FromValue(VirtualNetworkValidationFailureDetails.FromResponse(result), result);
                 if (response.Value == null)
@@ -1387,7 +1387,7 @@ namespace Azure.ResourceManager.AppService.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = StaticSitesAsyncOperationsRestClient.CreateGetOperationStatusRequest(Guid.Parse(Id.SubscriptionId), location, operationId, context);
+                using HttpMessage message = StaticSitesAsyncOperationsRestClient.CreateGetOperationStatusRequest(Guid.Parse(Id.SubscriptionId), location, operationId, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<StaticSitesOperationStatus> response = Response.FromValue(StaticSitesOperationStatus.FromResponse(result), result);
                 if (response.Value == null)
@@ -1437,7 +1437,7 @@ namespace Azure.ResourceManager.AppService.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = StaticSitesAsyncOperationsRestClient.CreateGetOperationStatusRequest(Guid.Parse(Id.SubscriptionId), location, operationId, context);
+                using HttpMessage message = StaticSitesAsyncOperationsRestClient.CreateGetOperationStatusRequest(Guid.Parse(Id.SubscriptionId), location, operationId, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<StaticSitesOperationStatus> response = Response.FromValue(StaticSitesOperationStatus.FromResponse(result), result);
                 if (response.Value == null)
@@ -1488,7 +1488,7 @@ namespace Azure.ResourceManager.AppService.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = StaticSitesAsyncOperationsRestClient.CreateGetOperationResultRequest(Guid.Parse(Id.SubscriptionId), location, operationId, context);
+                using HttpMessage message = StaticSitesAsyncOperationsRestClient.CreateGetOperationResultRequest(Guid.Parse(Id.SubscriptionId), location, operationId, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 AppServiceArmOperation operation = new AppServiceArmOperation(StaticSitesAsyncOperationsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -1539,7 +1539,7 @@ namespace Azure.ResourceManager.AppService.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = StaticSitesAsyncOperationsRestClient.CreateGetOperationResultRequest(Guid.Parse(Id.SubscriptionId), location, operationId, context);
+                using HttpMessage message = StaticSitesAsyncOperationsRestClient.CreateGetOperationResultRequest(Guid.Parse(Id.SubscriptionId), location, operationId, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 AppServiceArmOperation operation = new AppServiceArmOperation(StaticSitesAsyncOperationsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -1589,7 +1589,7 @@ namespace Azure.ResourceManager.AppService.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = GlobalOperationGroupRestClient.CreateGetSubscriptionOperationWithAsyncResponseRequest(location, operationId, Guid.Parse(Id.SubscriptionId), context);
+                using HttpMessage message = GlobalOperationGroupRestClient.CreateGetSubscriptionOperationWithAsyncResponseRequest(location, operationId, Guid.Parse(Id.SubscriptionId), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 return response;
             }
@@ -1634,7 +1634,7 @@ namespace Azure.ResourceManager.AppService.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = GlobalOperationGroupRestClient.CreateGetSubscriptionOperationWithAsyncResponseRequest(location, operationId, Guid.Parse(Id.SubscriptionId), context);
+                using HttpMessage message = GlobalOperationGroupRestClient.CreateGetSubscriptionOperationWithAsyncResponseRequest(location, operationId, Guid.Parse(Id.SubscriptionId), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 return response;
             }
@@ -1803,7 +1803,7 @@ namespace Azure.ResourceManager.AppService.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = RecommendationsOperationGroupRestClient.CreateResetAllRecommendationFiltersRequest(Guid.Parse(Id.SubscriptionId), context);
+                using HttpMessage message = RecommendationsOperationGroupRestClient.CreateResetAllRecommendationFiltersRequest(Guid.Parse(Id.SubscriptionId), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 return response;
             }
@@ -1842,7 +1842,7 @@ namespace Azure.ResourceManager.AppService.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = RecommendationsOperationGroupRestClient.CreateResetAllRecommendationFiltersRequest(Guid.Parse(Id.SubscriptionId), context);
+                using HttpMessage message = RecommendationsOperationGroupRestClient.CreateResetAllRecommendationFiltersRequest(Guid.Parse(Id.SubscriptionId), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 return response;
             }
@@ -1886,7 +1886,7 @@ namespace Azure.ResourceManager.AppService.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = RecommendationsOperationGroupRestClient.CreateDisableAppServiceRecommendationRequest(Guid.Parse(Id.SubscriptionId), name, context);
+                using HttpMessage message = RecommendationsOperationGroupRestClient.CreateDisableAppServiceRecommendationRequest(Guid.Parse(Id.SubscriptionId), name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 return response;
             }
@@ -1930,7 +1930,7 @@ namespace Azure.ResourceManager.AppService.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = RecommendationsOperationGroupRestClient.CreateDisableAppServiceRecommendationRequest(Guid.Parse(Id.SubscriptionId), name, context);
+                using HttpMessage message = RecommendationsOperationGroupRestClient.CreateDisableAppServiceRecommendationRequest(Guid.Parse(Id.SubscriptionId), name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 return response;
             }

@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _solutionTemplatesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _solutionTemplatesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<EdgeSolutionTemplateData> response = Response.FromValue(EdgeSolutionTemplateData.FromResponse(result), result);
                 if (response.Value == null)
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _solutionTemplatesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _solutionTemplatesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<EdgeSolutionTemplateData> response = Response.FromValue(EdgeSolutionTemplateData.FromResponse(result), result);
                 if (response.Value == null)
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _solutionTemplatesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, EdgeSolutionTemplatePatch.ToRequestContent(patch), context);
+                using HttpMessage message = _solutionTemplatesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, EdgeSolutionTemplatePatch.ToRequestContent(patch), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<EdgeSolutionTemplateData> response = Response.FromValue(EdgeSolutionTemplateData.FromResponse(result), result);
                 if (response.Value == null)
@@ -277,7 +277,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _solutionTemplatesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, EdgeSolutionTemplatePatch.ToRequestContent(patch), context);
+                using HttpMessage message = _solutionTemplatesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, EdgeSolutionTemplatePatch.ToRequestContent(patch), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<EdgeSolutionTemplateData> response = Response.FromValue(EdgeSolutionTemplateData.FromResponse(result), result);
                 if (response.Value == null)
@@ -326,7 +326,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _solutionTemplatesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _solutionTemplatesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 WorkloadOrchestrationArmOperation operation = new WorkloadOrchestrationArmOperation(_solutionTemplatesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -375,7 +375,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _solutionTemplatesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _solutionTemplatesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 WorkloadOrchestrationArmOperation operation = new WorkloadOrchestrationArmOperation(_solutionTemplatesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -428,7 +428,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _solutionTemplatesRestClient.CreateCreateVersionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, EdgeSolutionTemplateVersionWithUpdateType.ToRequestContent(body), context);
+                using HttpMessage message = _solutionTemplatesRestClient.CreateCreateVersionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, EdgeSolutionTemplateVersionWithUpdateType.ToRequestContent(body), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 WorkloadOrchestrationArmOperation<EdgeSolutionTemplateVersionResource> operation = new WorkloadOrchestrationArmOperation<EdgeSolutionTemplateVersionResource>(
                     new EdgeSolutionTemplateVersionResourceOperationSource(Client),
@@ -487,7 +487,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _solutionTemplatesRestClient.CreateCreateVersionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, EdgeSolutionTemplateVersionWithUpdateType.ToRequestContent(body), context);
+                using HttpMessage message = _solutionTemplatesRestClient.CreateCreateVersionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, EdgeSolutionTemplateVersionWithUpdateType.ToRequestContent(body), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 WorkloadOrchestrationArmOperation<EdgeSolutionTemplateVersionResource> operation = new WorkloadOrchestrationArmOperation<EdgeSolutionTemplateVersionResource>(
                     new EdgeSolutionTemplateVersionResourceOperationSource(Client),
@@ -546,7 +546,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _solutionTemplatesRestClient.CreateRemoveVersionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, EdgeVersionContent.ToRequestContent(content), context);
+                using HttpMessage message = _solutionTemplatesRestClient.CreateRemoveVersionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, EdgeVersionContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 WorkloadOrchestrationArmOperation operation = new WorkloadOrchestrationArmOperation(_solutionTemplatesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -599,7 +599,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _solutionTemplatesRestClient.CreateRemoveVersionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, EdgeVersionContent.ToRequestContent(content), context);
+                using HttpMessage message = _solutionTemplatesRestClient.CreateRemoveVersionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, EdgeVersionContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 WorkloadOrchestrationArmOperation operation = new WorkloadOrchestrationArmOperation(_solutionTemplatesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -638,7 +638,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _solutionTemplatesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _solutionTemplatesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<EdgeSolutionTemplateData> response = Response.FromValue(EdgeSolutionTemplateData.FromResponse(result), result);
                     return Response.FromValue(new EdgeSolutionTemplateResource(Client, response.Value), response.GetRawResponse());
@@ -686,7 +686,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _solutionTemplatesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _solutionTemplatesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<EdgeSolutionTemplateData> response = Response.FromValue(EdgeSolutionTemplateData.FromResponse(result), result);
                     return Response.FromValue(new EdgeSolutionTemplateResource(Client, response.Value), response.GetRawResponse());
@@ -732,7 +732,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _solutionTemplatesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _solutionTemplatesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<EdgeSolutionTemplateData> response = Response.FromValue(EdgeSolutionTemplateData.FromResponse(result), result);
                     return Response.FromValue(new EdgeSolutionTemplateResource(Client, response.Value), response.GetRawResponse());
@@ -774,7 +774,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _solutionTemplatesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _solutionTemplatesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<EdgeSolutionTemplateData> response = Response.FromValue(EdgeSolutionTemplateData.FromResponse(result), result);
                     return Response.FromValue(new EdgeSolutionTemplateResource(Client, response.Value), response.GetRawResponse());
@@ -816,7 +816,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _solutionTemplatesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _solutionTemplatesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<EdgeSolutionTemplateData> response = Response.FromValue(EdgeSolutionTemplateData.FromResponse(result), result);
                     return Response.FromValue(new EdgeSolutionTemplateResource(Client, response.Value), response.GetRawResponse());
@@ -862,7 +862,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _solutionTemplatesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _solutionTemplatesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<EdgeSolutionTemplateData> response = Response.FromValue(EdgeSolutionTemplateData.FromResponse(result), result);
                     return Response.FromValue(new EdgeSolutionTemplateResource(Client, response.Value), response.GetRawResponse());

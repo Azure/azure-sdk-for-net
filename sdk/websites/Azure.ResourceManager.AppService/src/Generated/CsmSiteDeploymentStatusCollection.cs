@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _csmDeploymentStatusesRestClient.CreateGetProductionSiteDeploymentStatusRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, deploymentStatusId, context);
+                using HttpMessage message = _csmDeploymentStatusesRestClient.CreateGetProductionSiteDeploymentStatusRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, deploymentStatusId, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 AppServiceArmOperation<CsmSiteDeploymentStatusResource> operation = new AppServiceArmOperation<CsmSiteDeploymentStatusResource>(
                     new CsmSiteDeploymentStatusResourceOperationSource(Client),
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _csmDeploymentStatusesRestClient.CreateGetProductionSiteDeploymentStatusRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, deploymentStatusId, context);
+                using HttpMessage message = _csmDeploymentStatusesRestClient.CreateGetProductionSiteDeploymentStatusRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, deploymentStatusId, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 AppServiceArmOperation<CsmSiteDeploymentStatusResource> operation = new AppServiceArmOperation<CsmSiteDeploymentStatusResource>(
                     new CsmSiteDeploymentStatusResourceOperationSource(Client),
@@ -267,7 +267,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _csmDeploymentStatusesRestClient.CreateGetProductionSiteDeploymentStatusRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, deploymentStatusId, context);
+                using HttpMessage message = _csmDeploymentStatusesRestClient.CreateGetProductionSiteDeploymentStatusRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, deploymentStatusId, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<CsmDeploymentStatusData> response = default;
@@ -324,7 +324,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _csmDeploymentStatusesRestClient.CreateGetProductionSiteDeploymentStatusRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, deploymentStatusId, context);
+                using HttpMessage message = _csmDeploymentStatusesRestClient.CreateGetProductionSiteDeploymentStatusRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, deploymentStatusId, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<CsmDeploymentStatusData> response = default;
@@ -381,7 +381,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _csmDeploymentStatusesRestClient.CreateGetProductionSiteDeploymentStatusRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, deploymentStatusId, context);
+                using HttpMessage message = _csmDeploymentStatusesRestClient.CreateGetProductionSiteDeploymentStatusRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, deploymentStatusId, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<CsmDeploymentStatusData> response = default;
@@ -442,7 +442,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _csmDeploymentStatusesRestClient.CreateGetProductionSiteDeploymentStatusRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, deploymentStatusId, context);
+                using HttpMessage message = _csmDeploymentStatusesRestClient.CreateGetProductionSiteDeploymentStatusRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, deploymentStatusId, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<CsmDeploymentStatusData> response = default;

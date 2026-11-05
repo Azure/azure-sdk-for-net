@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateEndpointConnectionSlotOperationGroupRestClient.CreateGetPrivateEndpointConnectionSlotRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _privateEndpointConnectionSlotOperationGroupRestClient.CreateGetPrivateEndpointConnectionSlotRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<RemotePrivateEndpointConnectionARMResourceData> response = Response.FromValue(RemotePrivateEndpointConnectionARMResourceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateEndpointConnectionSlotOperationGroupRestClient.CreateGetPrivateEndpointConnectionSlotRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _privateEndpointConnectionSlotOperationGroupRestClient.CreateGetPrivateEndpointConnectionSlotRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<RemotePrivateEndpointConnectionARMResourceData> response = Response.FromValue(RemotePrivateEndpointConnectionARMResourceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateEndpointConnectionSlotOperationGroupRestClient.CreateApproveOrRejectPrivateEndpointConnectionSlotRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, RemotePrivateEndpointConnectionARMResourceData.ToRequestContent(data), context);
+                using HttpMessage message = _privateEndpointConnectionSlotOperationGroupRestClient.CreateApproveOrRejectPrivateEndpointConnectionSlotRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, RemotePrivateEndpointConnectionARMResourceData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 AppServiceArmOperation<SiteSlotPrivateEndpointConnectionResource> operation = new AppServiceArmOperation<SiteSlotPrivateEndpointConnectionResource>(
                     new SiteSlotPrivateEndpointConnectionResourceOperationSource(Client),
@@ -284,7 +284,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateEndpointConnectionSlotOperationGroupRestClient.CreateApproveOrRejectPrivateEndpointConnectionSlotRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, RemotePrivateEndpointConnectionARMResourceData.ToRequestContent(data), context);
+                using HttpMessage message = _privateEndpointConnectionSlotOperationGroupRestClient.CreateApproveOrRejectPrivateEndpointConnectionSlotRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, RemotePrivateEndpointConnectionARMResourceData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 AppServiceArmOperation<SiteSlotPrivateEndpointConnectionResource> operation = new AppServiceArmOperation<SiteSlotPrivateEndpointConnectionResource>(
                     new SiteSlotPrivateEndpointConnectionResourceOperationSource(Client),

@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.StorageSync.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = StorageSyncServicesOperationGroupRestClient.CreateCheckStorageSyncNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), locationName, StorageSyncNameAvailabilityContent.ToRequestContent(content), context);
+                using HttpMessage message = StorageSyncServicesOperationGroupRestClient.CreateCheckStorageSyncNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), locationName, StorageSyncNameAvailabilityContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<StorageSyncNameAvailabilityResult> response = Response.FromValue(StorageSyncNameAvailabilityResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.StorageSync.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = StorageSyncServicesOperationGroupRestClient.CreateCheckStorageSyncNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), locationName, StorageSyncNameAvailabilityContent.ToRequestContent(content), context);
+                using HttpMessage message = StorageSyncServicesOperationGroupRestClient.CreateCheckStorageSyncNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), locationName, StorageSyncNameAvailabilityContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<StorageSyncNameAvailabilityResult> response = Response.FromValue(StorageSyncNameAvailabilityResult.FromResponse(result), result);
                 if (response.Value == null)

@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sourceControlsRestClient.CreateGetSourceControlRequest(Id.Name, context);
+                using HttpMessage message = _sourceControlsRestClient.CreateGetSourceControlRequest(Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<AppServiceSourceControlData> response = Response.FromValue(AppServiceSourceControlData.FromResponse(result), result);
                 if (response.Value == null)
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sourceControlsRestClient.CreateGetSourceControlRequest(Id.Name, context);
+                using HttpMessage message = _sourceControlsRestClient.CreateGetSourceControlRequest(Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<AppServiceSourceControlData> response = Response.FromValue(AppServiceSourceControlData.FromResponse(result), result);
                 if (response.Value == null)
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sourceControlsRestClient.CreateUpdateSourceControlRequest(Id.Name, AppServiceSourceControlData.ToRequestContent(data), context);
+                using HttpMessage message = _sourceControlsRestClient.CreateUpdateSourceControlRequest(Id.Name, AppServiceSourceControlData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<AppServiceSourceControlData> response = Response.FromValue(AppServiceSourceControlData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -278,7 +278,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sourceControlsRestClient.CreateUpdateSourceControlRequest(Id.Name, AppServiceSourceControlData.ToRequestContent(data), context);
+                using HttpMessage message = _sourceControlsRestClient.CreateUpdateSourceControlRequest(Id.Name, AppServiceSourceControlData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<AppServiceSourceControlData> response = Response.FromValue(AppServiceSourceControlData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;

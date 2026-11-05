@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _usersRestClient.CreateUpdatePublishingUserRequest(PublishingUserData.ToRequestContent(data), context);
+                using HttpMessage message = _usersRestClient.CreateUpdatePublishingUserRequest(PublishingUserData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<PublishingUserData> response = Response.FromValue(PublishingUserData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _usersRestClient.CreateUpdatePublishingUserRequest(PublishingUserData.ToRequestContent(data), context);
+                using HttpMessage message = _usersRestClient.CreateUpdatePublishingUserRequest(PublishingUserData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<PublishingUserData> response = Response.FromValue(PublishingUserData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _usersRestClient.CreateGetPublishingUserRequest(context);
+                using HttpMessage message = _usersRestClient.CreateGetPublishingUserRequest(context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<PublishingUserData> response = Response.FromValue(PublishingUserData.FromResponse(result), result);
                 if (response.Value == null)
@@ -280,7 +280,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _usersRestClient.CreateGetPublishingUserRequest(context);
+                using HttpMessage message = _usersRestClient.CreateGetPublishingUserRequest(context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<PublishingUserData> response = Response.FromValue(PublishingUserData.FromResponse(result), result);
                 if (response.Value == null)
