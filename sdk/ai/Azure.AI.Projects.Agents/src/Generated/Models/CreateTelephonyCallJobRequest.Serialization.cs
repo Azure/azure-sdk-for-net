@@ -11,66 +11,66 @@ using System.Text.Json;
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> A request to create one durable direct outbound call job. </summary>
-    public partial class CreateTelephonyCallJobContent : IJsonModel<CreateTelephonyCallJobContent>
+    public partial class CreateTelephonyCallJobRequest : IJsonModel<CreateTelephonyCallJobRequest>
     {
-        /// <summary> Initializes a new instance of <see cref="CreateTelephonyCallJobContent"/> for deserialization. </summary>
-        internal CreateTelephonyCallJobContent()
+        /// <summary> Initializes a new instance of <see cref="CreateTelephonyCallJobRequest"/> for deserialization. </summary>
+        internal CreateTelephonyCallJobRequest()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual CreateTelephonyCallJobContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual CreateTelephonyCallJobRequest PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CreateTelephonyCallJobContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CreateTelephonyCallJobRequest>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeCreateTelephonyCallJobContent(document.RootElement, options);
+                        return DeserializeCreateTelephonyCallJobRequest(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CreateTelephonyCallJobContent)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CreateTelephonyCallJobRequest)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CreateTelephonyCallJobContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CreateTelephonyCallJobRequest>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureAIProjectsAgentsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(CreateTelephonyCallJobContent)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CreateTelephonyCallJobRequest)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<CreateTelephonyCallJobContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<CreateTelephonyCallJobRequest>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        CreateTelephonyCallJobContent IPersistableModel<CreateTelephonyCallJobContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        CreateTelephonyCallJobRequest IPersistableModel<CreateTelephonyCallJobRequest>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<CreateTelephonyCallJobContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<CreateTelephonyCallJobRequest>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="createTelephonyCallJobContent"> The <see cref="CreateTelephonyCallJobContent"/> to serialize into <see cref="BinaryContent"/>. </param>
-        public static implicit operator BinaryContent(CreateTelephonyCallJobContent createTelephonyCallJobContent)
+        /// <param name="createTelephonyCallJobRequest"> The <see cref="CreateTelephonyCallJobRequest"/> to serialize into <see cref="BinaryContent"/>. </param>
+        public static implicit operator BinaryContent(CreateTelephonyCallJobRequest createTelephonyCallJobRequest)
         {
-            if (createTelephonyCallJobContent == null)
+            if (createTelephonyCallJobRequest == null)
             {
                 return null;
             }
-            return BinaryContent.Create(createTelephonyCallJobContent, ModelSerializationExtensions.WireOptions);
+            return BinaryContent.Create(createTelephonyCallJobRequest, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<CreateTelephonyCallJobContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<CreateTelephonyCallJobRequest>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -81,10 +81,10 @@ namespace Azure.AI.Projects.Agents
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CreateTelephonyCallJobContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CreateTelephonyCallJobRequest>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CreateTelephonyCallJobContent)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(CreateTelephonyCallJobRequest)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("destination"u8);
             writer.WriteObjectValue(Destination, options);
@@ -149,24 +149,24 @@ namespace Azure.AI.Projects.Agents
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        CreateTelephonyCallJobContent IJsonModel<CreateTelephonyCallJobContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        CreateTelephonyCallJobRequest IJsonModel<CreateTelephonyCallJobRequest>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual CreateTelephonyCallJobContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual CreateTelephonyCallJobRequest JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CreateTelephonyCallJobContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CreateTelephonyCallJobRequest>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CreateTelephonyCallJobContent)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(CreateTelephonyCallJobRequest)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeCreateTelephonyCallJobContent(document.RootElement, options);
+            return DeserializeCreateTelephonyCallJobRequest(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static CreateTelephonyCallJobContent DeserializeCreateTelephonyCallJobContent(JsonElement element, ModelReaderWriterOptions options)
+        internal static CreateTelephonyCallJobRequest DeserializeCreateTelephonyCallJobRequest(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -246,7 +246,7 @@ namespace Azure.AI.Projects.Agents
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new CreateTelephonyCallJobContent(
+            return new CreateTelephonyCallJobRequest(
                 destination,
                 connectionName,
                 source,

@@ -9,56 +9,57 @@ using System.Text.Json;
 
 namespace Azure.AI.Projects.Agents
 {
-    internal partial class UnknownCreateTelephonyBindingContent : CreateTelephonyBindingContent, IJsonModel<CreateTelephonyBindingContent>
+    /// <summary> The request to create a Twilio binding. </summary>
+    public partial class CreateTwilioTelephonyBindingRequest : CreateTelephonyBindingRequest, IJsonModel<CreateTwilioTelephonyBindingRequest>
     {
-        /// <summary> Initializes a new instance of <see cref="UnknownCreateTelephonyBindingContent"/> for deserialization. </summary>
-        internal UnknownCreateTelephonyBindingContent()
+        /// <summary> Initializes a new instance of <see cref="CreateTwilioTelephonyBindingRequest"/> for deserialization. </summary>
+        internal CreateTwilioTelephonyBindingRequest()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override CreateTelephonyBindingContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override CreateTelephonyBindingRequest PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CreateTelephonyBindingContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CreateTwilioTelephonyBindingRequest>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeCreateTelephonyBindingContent(document.RootElement, options);
+                        return DeserializeCreateTwilioTelephonyBindingRequest(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CreateTelephonyBindingContent)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CreateTwilioTelephonyBindingRequest)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CreateTelephonyBindingContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CreateTwilioTelephonyBindingRequest>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureAIProjectsAgentsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(CreateTelephonyBindingContent)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CreateTwilioTelephonyBindingRequest)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<CreateTelephonyBindingContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<CreateTwilioTelephonyBindingRequest>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        CreateTelephonyBindingContent IPersistableModel<CreateTelephonyBindingContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        CreateTwilioTelephonyBindingRequest IPersistableModel<CreateTwilioTelephonyBindingRequest>.Create(BinaryData data, ModelReaderWriterOptions options) => (CreateTwilioTelephonyBindingRequest)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<CreateTelephonyBindingContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<CreateTwilioTelephonyBindingRequest>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<CreateTelephonyBindingContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<CreateTwilioTelephonyBindingRequest>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -69,34 +70,36 @@ namespace Azure.AI.Projects.Agents
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CreateTelephonyBindingContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CreateTwilioTelephonyBindingRequest>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CreateTelephonyBindingContent)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(CreateTwilioTelephonyBindingRequest)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
+            writer.WritePropertyName("phone_number"u8);
+            writer.WriteStringValue(PhoneNumber);
         }
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        CreateTelephonyBindingContent IJsonModel<CreateTelephonyBindingContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        CreateTwilioTelephonyBindingRequest IJsonModel<CreateTwilioTelephonyBindingRequest>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (CreateTwilioTelephonyBindingRequest)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override CreateTelephonyBindingContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override CreateTelephonyBindingRequest JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CreateTelephonyBindingContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CreateTwilioTelephonyBindingRequest>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CreateTelephonyBindingContent)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(CreateTwilioTelephonyBindingRequest)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeCreateTelephonyBindingContent(document.RootElement, options);
+            return DeserializeCreateTwilioTelephonyBindingRequest(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static UnknownCreateTelephonyBindingContent DeserializeUnknownCreateTelephonyBindingContent(JsonElement element, ModelReaderWriterOptions options)
+        internal static CreateTwilioTelephonyBindingRequest DeserializeCreateTwilioTelephonyBindingRequest(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -106,6 +109,7 @@ namespace Azure.AI.Projects.Agents
             string connectionName = default;
             string label = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            string phoneNumber = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("provider"u8))
@@ -123,12 +127,17 @@ namespace Azure.AI.Projects.Agents
                     label = prop.Value.GetString();
                     continue;
                 }
+                if (prop.NameEquals("phone_number"u8))
+                {
+                    phoneNumber = prop.Value.GetString();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new UnknownCreateTelephonyBindingContent(provider, connectionName, label, additionalBinaryDataProperties);
+            return new CreateTwilioTelephonyBindingRequest(provider, connectionName, label, additionalBinaryDataProperties, phoneNumber);
         }
     }
 }

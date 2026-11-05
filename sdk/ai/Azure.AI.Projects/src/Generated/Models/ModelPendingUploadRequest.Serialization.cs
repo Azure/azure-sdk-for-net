@@ -11,61 +11,61 @@ using System.Text.Json;
 namespace Azure.AI.Projects
 {
     /// <summary> Represents a request for a pending upload of a model version. </summary>
-    public partial class ModelPendingUploadContent : IJsonModel<ModelPendingUploadContent>
+    public partial class ModelPendingUploadRequest : IJsonModel<ModelPendingUploadRequest>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ModelPendingUploadContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual ModelPendingUploadRequest PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ModelPendingUploadContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ModelPendingUploadRequest>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeModelPendingUploadContent(document.RootElement, options);
+                        return DeserializeModelPendingUploadRequest(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ModelPendingUploadContent)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ModelPendingUploadRequest)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ModelPendingUploadContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ModelPendingUploadRequest>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureAIProjectsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ModelPendingUploadContent)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ModelPendingUploadRequest)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ModelPendingUploadContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<ModelPendingUploadRequest>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ModelPendingUploadContent IPersistableModel<ModelPendingUploadContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        ModelPendingUploadRequest IPersistableModel<ModelPendingUploadRequest>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ModelPendingUploadContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ModelPendingUploadRequest>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="modelPendingUploadContent"> The <see cref="ModelPendingUploadContent"/> to serialize into <see cref="BinaryContent"/>. </param>
-        public static implicit operator BinaryContent(ModelPendingUploadContent modelPendingUploadContent)
+        /// <param name="modelPendingUploadRequest"> The <see cref="ModelPendingUploadRequest"/> to serialize into <see cref="BinaryContent"/>. </param>
+        public static implicit operator BinaryContent(ModelPendingUploadRequest modelPendingUploadRequest)
         {
-            if (modelPendingUploadContent == null)
+            if (modelPendingUploadRequest == null)
             {
                 return null;
             }
-            return BinaryContent.Create(modelPendingUploadContent, ModelSerializationExtensions.WireOptions);
+            return BinaryContent.Create(modelPendingUploadRequest, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ModelPendingUploadContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ModelPendingUploadRequest>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -76,10 +76,10 @@ namespace Azure.AI.Projects
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ModelPendingUploadContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ModelPendingUploadRequest>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ModelPendingUploadContent)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ModelPendingUploadRequest)} does not support writing '{format}' format.");
             }
             if (Optional.IsDefined(PendingUploadId))
             {
@@ -112,24 +112,24 @@ namespace Azure.AI.Projects
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ModelPendingUploadContent IJsonModel<ModelPendingUploadContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        ModelPendingUploadRequest IJsonModel<ModelPendingUploadRequest>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ModelPendingUploadContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual ModelPendingUploadRequest JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ModelPendingUploadContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ModelPendingUploadRequest>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ModelPendingUploadContent)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ModelPendingUploadRequest)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeModelPendingUploadContent(document.RootElement, options);
+            return DeserializeModelPendingUploadRequest(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ModelPendingUploadContent DeserializeModelPendingUploadContent(JsonElement element, ModelReaderWriterOptions options)
+        internal static ModelPendingUploadRequest DeserializeModelPendingUploadRequest(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -161,7 +161,7 @@ namespace Azure.AI.Projects
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ModelPendingUploadContent(pendingUploadId, connectionName, pendingUploadType, additionalBinaryDataProperties);
+            return new ModelPendingUploadRequest(pendingUploadId, connectionName, pendingUploadType, additionalBinaryDataProperties);
         }
     }
 }

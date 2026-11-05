@@ -11,17 +11,17 @@ namespace Azure.AI.Projects.Agents
 {
     /// <summary> A request to create one durable direct outbound call job. </summary>
     [Experimental("AAIP001")]
-    public partial class CreateTelephonyCallJobContent
+    public partial class CreateTelephonyCallJobRequest
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="CreateTelephonyCallJobContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="CreateTelephonyCallJobRequest"/>. </summary>
         /// <param name="destination"> The phone destination to call. </param>
         /// <param name="connectionName"> The Foundry connection name in the current project used to originate the call. Its category selects Twilio or Azure Communication Services / Teams Phone extensibility. No inbound telephony binding is required. </param>
         /// <param name="source"> The caller identity used to originate the call. For a Twilio connection, provide an authorized E.164 phone number. For an Azure Communication Services / Teams Phone extensibility connection, provide the Teams Resource Account object ID. The identity type is inferred from the connection category; originating does not change inbound routing. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="destination"/>, <paramref name="connectionName"/> or <paramref name="source"/> is null. </exception>
-        public CreateTelephonyCallJobContent(TelephonyOutboundDestination destination, string connectionName, string source)
+        public CreateTelephonyCallJobRequest(TelephonyOutboundDestination destination, string connectionName, string source)
         {
             Argument.AssertNotNull(destination, nameof(destination));
             Argument.AssertNotNull(connectionName, nameof(connectionName));
@@ -33,7 +33,7 @@ namespace Azure.AI.Projects.Agents
             StructuredInputs = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="CreateTelephonyCallJobContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="CreateTelephonyCallJobRequest"/>. </summary>
         /// <param name="destination"> The phone destination to call. </param>
         /// <param name="connectionName"> The Foundry connection name in the current project used to originate the call. Its category selects Twilio or Azure Communication Services / Teams Phone extensibility. No inbound telephony binding is required. </param>
         /// <param name="source"> The caller identity used to originate the call. For a Twilio connection, provide an authorized E.164 phone number. For an Azure Communication Services / Teams Phone extensibility connection, provide the Teams Resource Account object ID. The identity type is inferred from the connection category; originating does not change inbound routing. </param>
@@ -42,7 +42,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="schedule"> The optional execution window. </param>
         /// <param name="retryPolicy"> The provider-attempt retry policy. Omit it for one attempt with no retry delay. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CreateTelephonyCallJobContent(TelephonyOutboundDestination destination, string connectionName, string source, string purpose, IDictionary<string, BinaryData> structuredInputs, TelephonyCallJobSchedule schedule, TelephonyOutboundRetryPolicy retryPolicy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CreateTelephonyCallJobRequest(TelephonyOutboundDestination destination, string connectionName, string source, string purpose, IDictionary<string, BinaryData> structuredInputs, TelephonyCallJobSchedule schedule, TelephonyOutboundRetryPolicy retryPolicy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Destination = destination;
             ConnectionName = connectionName;
