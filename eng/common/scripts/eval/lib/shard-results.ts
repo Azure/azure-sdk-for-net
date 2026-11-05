@@ -31,14 +31,13 @@ export function expectedShardsFromMatrix(value) {
 }
 
 // The artifact list cannot reveal a newer retry that lost its agent before publishing.
-export function latestShardAttempts(timeline, matrix, evalStageName = "Eval") {
+export function latestShardAttempts(timeline, matrix) {
     expectedShardsFromMatrix(matrix);
-    if (!/^[A-Za-z_][A-Za-z0-9_]*$/.test(evalStageName)) throw new Error("Invalid eval stage identity.");
     if (!Array.isArray(timeline?.records)) throw new Error("The current build timeline is required.");
     const attempts = {};
     for (const [key, entry] of Object.entries(matrix)) {
         if (!validShard(key)) throw new Error("Invalid matrix leg identity.");
-        const jobs = timeline.records.filter(record => record?.type === "Job" && record.identifier === `${evalStageName}.RunShard.${key}`);
+        const jobs = timeline.records.filter(record => record?.type === "Job" && record.identifier === `Eval.RunShard.${key}`);
         for (const record of jobs) {
             if (!Number.isSafeInteger(record.attempt) || record.attempt < 1) throw new Error("Invalid timeline attempt.");
             const current = { attempt: record.attempt, complete: record.state === "completed" &&
@@ -67,7 +66,7 @@ export async function readShardAttempts(env, { fetchImpl = fetch, wait = delay }
             response = await fetchImpl(url, { headers: { authorization: `Bearer ${env.SYSTEM_ACCESSTOKEN}` },
                 redirect: "error", signal: AbortSignal.timeout(30_000) });
             if (!response.ok) throw new Error("Timeline could not be read.");
-            return latestShardAttempts(await response.json(), matrix, env.EVAL_STAGE_NAME ?? "Eval");
+            return latestShardAttempts(await response.json(), matrix);
         } catch (error) {
             if ((response && ![408, 429, 500, 502, 503, 504].includes(response.status)) || attempt === 2) throw error;
         } finally { await response?.body?.cancel().catch(() => {}); }
@@ -178,15 +177,12 @@ export function stageShardResults({ resultsRoot, outputDirectory, shardName, att
     return metadata;
 }
 
-export function selectSummaryResults({ resultsRoot, selectedRoot, expectedShards, jobAttempts, artifactPrefix = "" }) {
+export function selectSummaryResults({ resultsRoot, selectedRoot, expectedShards, jobAttempts }) {
     if (!Array.isArray(expectedShards) || expectedShards.some((name) => !validShard(name)) ||
         new Set(expectedShards).size !== expectedShards.length) {
         throw new Error("Expected shards must be unique, valid shard names from Prepare.");
     }
-    if (typeof artifactPrefix !== "string" || (artifactPrefix !== "" && !validShard(artifactPrefix))) {
-        throw new Error("Invalid artifact prefix.");
-    }
-    const resultPrefix = `eval-result-${artifactPrefix}`;
+    const resultPrefix = "eval-result-";
     emptyDirectory(selectedRoot);
     const expected = new Set(expectedShards);
     const timeline = jobAttempts?.schemaVersion === 1 && jobAttempts.valid === true ? jobAttempts.attempts : null;

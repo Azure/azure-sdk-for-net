@@ -22,8 +22,6 @@ Repo-local adapters can customize it without copying that infrastructure:
 
 | Parameter | Contract |
 | --- | --- |
-| `matrixStageName` | Stage containing `generate_eval_matrix`; defaults to `Prepare`. The eval stage must depend on it. |
-| `artifactPrefix` | Optional literal prefix, e.g. `forced-`. Common adds no separator: `eval-result-forced-<shard>-<attempt>` / `eval-debug-forced-<shard>-<attempt>` / `eval-summary-forced-<attempt>`. Available only on the shard and summary job templates; their prefixes must match. The stage template uses unprefixed defaults. |
 | `preEvalTemplate` / `postEvalTemplate` | Existing parameter-free setup/teardown step templates. |
 | `evalInvokeTemplate` | Existing invocation template accepting `vallyRoot`, `UseAzSdkAuthentication` and `threshold`. |
 | `vallyArguments` | Optional array of supplementary Vally option/value pairs. Strings are required except that trial/worker counts also accept numbers. Available through the stage, shard job and common invoke template. Defaults to `[]`. |
@@ -79,25 +77,17 @@ YAML. Other repos configure their own authorized connection in YAML.
 Do not replace authentication, result collection or retry/completeness checks.
 Supplementary reports must not rewrite JUnit thresholds or raw results.
 
-For multiple tracks in one build, use an artifact prefix and configure
-the common summary's `matrixStageName`, `evalStageName` and `artifactPrefix`
-to match the shard job. Each Summary downloads only result-file patterns matching
-its prefix; an empty prefix retains the build-wide `eval-result-*` download.
-Each Summary stage must depend on both its Prepare and
-Eval stages. Timeline attempts are checked against that exact Eval stage, and
-only that track's latest verified attempts are selected. Prefixed tracks
-support artifact-only summaries: dashboard bundles/publication are rejected
-because the archive identity currently represents one build-wide Summary.
-Prefixes and shard names must start with an ASCII letter, digit or underscore,
-contain only ASCII letters, digits, underscores or hyphens, and be at most 200
-characters; prefixes may also be empty. Include any desired separator
-in the prefix: `forced-` and `forced` are used exactly as supplied. Existing shard
-names, including names with hyphens, remain supported.
+The shared job templates use the `Prepare` matrix and `Eval` timeline stage, with
+one build-wide Summary depending on both stages. Result/debug artifacts are named
+`eval-result-<shard>-<attempt>` / `eval-debug-<shard>-<attempt>`; the summary artifact
+is `eval-summary-<attempt>`. Summary downloads `eval-result-*` result data and selects
+only the latest verified attempt for each expected shard.
+Shard names must start with an ASCII letter, digit or underscore, contain only
+ASCII letters, digits, underscores or hyphens, and be at most 200 characters.
 
-The caller must ensure final artifact names are unique across all tracks in the
-build, including unprefixed tracks. Different prefixes alone do not guarantee this:
-`forced-` + `area-foo` and `forced-area-` + `foo` produce the same name.
-Common does not perform cross-track collision detection.
+Benchmarks select one mode per build through repo-owned pipeline parameters,
+aligned `evalGlobs` and `vallyArguments`. Run separate builds to compare modes;
+multiple independently published tracks within one build are not supported.
 
 ## Complete build results and direct Blob publishing
 
@@ -136,11 +126,11 @@ explicit bootstrap, without changing dependency checks or the frozen lock.
 
 | Control | Current use |
 | --- | --- |
-| `publishDashboardResults` | The only checkbox; defaults to `true` in the three tools entrypoints. Set `false` to disable both upload and Azure Storage egress |
+| `publishDashboardResults` | The only checkbox; defaults to `true` in the three standard tools entrypoints and the author benchmark. Set `false` to disable both upload and Azure Storage egress |
 | `EvalStorageAccountName` | Pipeline-owner configuration. Upload is skipped when absent; set it to `evaltestsummary` for this dashboard |
 | `EvalDashboardRefreshUrl` | Pipeline-owner configuration: `https://azsdk-eval-bue6a7dwanatgpb3.westus3-01.azurewebsites.net/api/refresh` |
 | `EvalDashboardResource` | Pipeline-owner configuration: `api://258998df-81ec-460c-bdd7-56a9bdde1e48` (resource URI, not a `/.default` scope) |
-| `createDashboardBundle` | Shared-template artifact-only mode; enabled for all three tools entrypoints |
+| `createDashboardBundle` | Shared-template artifact-only mode; enabled for the three standard tools entrypoints and the author benchmark |
 
 The pipeline owner must set **`EvalStorageAccountName=evaltestsummary`** and the two
 dashboard variables above in each onboarded DevOps pipeline, with **queue-time

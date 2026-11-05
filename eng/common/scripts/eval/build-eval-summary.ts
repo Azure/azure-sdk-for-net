@@ -379,8 +379,7 @@ async function main(argv) {
       }
     }
     selection = selectSummaryResults({ resultsRoot: options.resultsRoot,
-      selectedRoot: options.selectedRoot, expectedShards, jobAttempts,
-      artifactPrefix: process.env.EVAL_ARTIFACT_PREFIX ?? "" });
+      selectedRoot: options.selectedRoot, expectedShards, jobAttempts });
     if (!matrixValid) {
       selection.status.push({ shard: "Prepare", attempt: null, complete: false,
         reason: "The expected shard matrix is unavailable or invalid; check the Prepare stage." });
