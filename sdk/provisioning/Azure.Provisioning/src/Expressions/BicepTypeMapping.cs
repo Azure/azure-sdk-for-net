@@ -154,6 +154,9 @@ internal static class BicepTypeMapping
 
     private static BicepExpression ToBicep(ResponseError value)
     {
+        // ResponseError only exposes Code and Message publicly, while Target, InnerError,
+        // and Details are internal but included in its supported wire representation.
+        // Serialize through Azure.Core so the native Bicep object preserves the complete error.
         BinaryData json = ModelReaderWriter.Write(value, ModelReaderWriterOptions.Json, AzureCoreContext.Default);
         using JsonDocument document = JsonDocument.Parse(json.ToMemory());
         return ToBicep(document.RootElement);
@@ -173,6 +176,8 @@ internal static class BicepTypeMapping
             JsonValueKind.True => BicepSyntax.Value(true),
             JsonValueKind.False => BicepSyntax.Value(false),
             JsonValueKind.Null => BicepSyntax.Null(),
+            // Parsed JSON covers every value kind above. Undefined cannot occur in a JsonDocument;
+            // keep the fallback to fail explicitly if System.Text.Json adds another value kind.
             _ => throw new InvalidOperationException($"Cannot convert JSON value kind {value.ValueKind} to a Bicep expression.")
         };
 
