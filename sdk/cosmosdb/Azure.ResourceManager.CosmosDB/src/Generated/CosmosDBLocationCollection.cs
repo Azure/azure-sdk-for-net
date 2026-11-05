@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.CosmosDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _locationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), location, context);
+                using HttpMessage message = _locationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), location, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<CosmosDBLocationData> response = Response.FromValue(CosmosDBLocationData.FromResponse(result), result);
                 if (response.Value == null)
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.CosmosDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _locationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), location, context);
+                using HttpMessage message = _locationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), location, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<CosmosDBLocationData> response = Response.FromValue(CosmosDBLocationData.FromResponse(result), result);
                 if (response.Value == null)
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.CosmosDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _locationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), location, context);
+                using HttpMessage message = _locationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), location, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<CosmosDBLocationData> response = default;
@@ -283,7 +283,7 @@ namespace Azure.ResourceManager.CosmosDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _locationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), location, context);
+                using HttpMessage message = _locationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), location, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<CosmosDBLocationData> response = default;
@@ -336,7 +336,7 @@ namespace Azure.ResourceManager.CosmosDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _locationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), location, context);
+                using HttpMessage message = _locationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), location, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<CosmosDBLocationData> response = default;
@@ -393,7 +393,7 @@ namespace Azure.ResourceManager.CosmosDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _locationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), location, context);
+                using HttpMessage message = _locationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), location, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<CosmosDBLocationData> response = default;

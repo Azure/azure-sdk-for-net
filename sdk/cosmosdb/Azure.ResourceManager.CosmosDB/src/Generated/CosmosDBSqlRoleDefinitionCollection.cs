@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.CosmosDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sqlResourcesRestClient.CreateCreateUpdateSqlRoleDefinitionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, roleDefinitionId, CosmosDBSqlRoleDefinitionCreateOrUpdateContent.ToRequestContent(content), context);
+                using HttpMessage message = _sqlResourcesRestClient.CreateCreateUpdateSqlRoleDefinitionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, roleDefinitionId, CosmosDBSqlRoleDefinitionCreateOrUpdateContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 CosmosDBArmOperation<CosmosDBSqlRoleDefinitionResource> operation = new CosmosDBArmOperation<CosmosDBSqlRoleDefinitionResource>(
                     new CosmosDBSqlRoleDefinitionResourceOperationSource(Client),
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.CosmosDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sqlResourcesRestClient.CreateCreateUpdateSqlRoleDefinitionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, roleDefinitionId, CosmosDBSqlRoleDefinitionCreateOrUpdateContent.ToRequestContent(content), context);
+                using HttpMessage message = _sqlResourcesRestClient.CreateCreateUpdateSqlRoleDefinitionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, roleDefinitionId, CosmosDBSqlRoleDefinitionCreateOrUpdateContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 CosmosDBArmOperation<CosmosDBSqlRoleDefinitionResource> operation = new CosmosDBArmOperation<CosmosDBSqlRoleDefinitionResource>(
                     new CosmosDBSqlRoleDefinitionResourceOperationSource(Client),
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.CosmosDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sqlResourcesRestClient.CreateGetSqlRoleDefinitionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, roleDefinitionId, context);
+                using HttpMessage message = _sqlResourcesRestClient.CreateGetSqlRoleDefinitionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, roleDefinitionId, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<CosmosDBSqlRoleDefinitionData> response = Response.FromValue(CosmosDBSqlRoleDefinitionData.FromResponse(result), result);
                 if (response.Value == null)
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.CosmosDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sqlResourcesRestClient.CreateGetSqlRoleDefinitionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, roleDefinitionId, context);
+                using HttpMessage message = _sqlResourcesRestClient.CreateGetSqlRoleDefinitionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, roleDefinitionId, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<CosmosDBSqlRoleDefinitionData> response = Response.FromValue(CosmosDBSqlRoleDefinitionData.FromResponse(result), result);
                 if (response.Value == null)
@@ -370,7 +370,7 @@ namespace Azure.ResourceManager.CosmosDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sqlResourcesRestClient.CreateGetSqlRoleDefinitionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, roleDefinitionId, context);
+                using HttpMessage message = _sqlResourcesRestClient.CreateGetSqlRoleDefinitionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, roleDefinitionId, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<CosmosDBSqlRoleDefinitionData> response = default;
@@ -427,7 +427,7 @@ namespace Azure.ResourceManager.CosmosDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sqlResourcesRestClient.CreateGetSqlRoleDefinitionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, roleDefinitionId, context);
+                using HttpMessage message = _sqlResourcesRestClient.CreateGetSqlRoleDefinitionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, roleDefinitionId, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<CosmosDBSqlRoleDefinitionData> response = default;
@@ -484,7 +484,7 @@ namespace Azure.ResourceManager.CosmosDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sqlResourcesRestClient.CreateGetSqlRoleDefinitionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, roleDefinitionId, context);
+                using HttpMessage message = _sqlResourcesRestClient.CreateGetSqlRoleDefinitionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, roleDefinitionId, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<CosmosDBSqlRoleDefinitionData> response = default;
@@ -545,7 +545,7 @@ namespace Azure.ResourceManager.CosmosDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sqlResourcesRestClient.CreateGetSqlRoleDefinitionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, roleDefinitionId, context);
+                using HttpMessage message = _sqlResourcesRestClient.CreateGetSqlRoleDefinitionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, roleDefinitionId, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<CosmosDBSqlRoleDefinitionData> response = default;

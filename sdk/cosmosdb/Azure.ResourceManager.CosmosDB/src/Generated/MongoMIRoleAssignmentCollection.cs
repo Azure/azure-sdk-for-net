@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.CosmosDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _mongoMIResourcesRestClient.CreateCreateUpdateMongoMIRoleAssignmentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, roleAssignmentId, MongoMIRoleAssignmentData.ToRequestContent(data), context);
+                using HttpMessage message = _mongoMIResourcesRestClient.CreateCreateUpdateMongoMIRoleAssignmentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, roleAssignmentId, MongoMIRoleAssignmentData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 CosmosDBArmOperation<MongoMIRoleAssignmentResource> operation = new CosmosDBArmOperation<MongoMIRoleAssignmentResource>(
                     new MongoMIRoleAssignmentResourceOperationSource(Client),
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.CosmosDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _mongoMIResourcesRestClient.CreateCreateUpdateMongoMIRoleAssignmentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, roleAssignmentId, MongoMIRoleAssignmentData.ToRequestContent(data), context);
+                using HttpMessage message = _mongoMIResourcesRestClient.CreateCreateUpdateMongoMIRoleAssignmentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, roleAssignmentId, MongoMIRoleAssignmentData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 CosmosDBArmOperation<MongoMIRoleAssignmentResource> operation = new CosmosDBArmOperation<MongoMIRoleAssignmentResource>(
                     new MongoMIRoleAssignmentResourceOperationSource(Client),
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.CosmosDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _mongoMIResourcesRestClient.CreateGetMongoMIRoleAssignmentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, roleAssignmentId, context);
+                using HttpMessage message = _mongoMIResourcesRestClient.CreateGetMongoMIRoleAssignmentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, roleAssignmentId, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<MongoMIRoleAssignmentData> response = Response.FromValue(MongoMIRoleAssignmentData.FromResponse(result), result);
                 if (response.Value == null)
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.CosmosDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _mongoMIResourcesRestClient.CreateGetMongoMIRoleAssignmentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, roleAssignmentId, context);
+                using HttpMessage message = _mongoMIResourcesRestClient.CreateGetMongoMIRoleAssignmentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, roleAssignmentId, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<MongoMIRoleAssignmentData> response = Response.FromValue(MongoMIRoleAssignmentData.FromResponse(result), result);
                 if (response.Value == null)
@@ -369,7 +369,7 @@ namespace Azure.ResourceManager.CosmosDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _mongoMIResourcesRestClient.CreateGetMongoMIRoleAssignmentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, roleAssignmentId, context);
+                using HttpMessage message = _mongoMIResourcesRestClient.CreateGetMongoMIRoleAssignmentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, roleAssignmentId, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<MongoMIRoleAssignmentData> response = default;
@@ -426,7 +426,7 @@ namespace Azure.ResourceManager.CosmosDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _mongoMIResourcesRestClient.CreateGetMongoMIRoleAssignmentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, roleAssignmentId, context);
+                using HttpMessage message = _mongoMIResourcesRestClient.CreateGetMongoMIRoleAssignmentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, roleAssignmentId, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<MongoMIRoleAssignmentData> response = default;
@@ -483,7 +483,7 @@ namespace Azure.ResourceManager.CosmosDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _mongoMIResourcesRestClient.CreateGetMongoMIRoleAssignmentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, roleAssignmentId, context);
+                using HttpMessage message = _mongoMIResourcesRestClient.CreateGetMongoMIRoleAssignmentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, roleAssignmentId, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<MongoMIRoleAssignmentData> response = default;
@@ -544,7 +544,7 @@ namespace Azure.ResourceManager.CosmosDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _mongoMIResourcesRestClient.CreateGetMongoMIRoleAssignmentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, roleAssignmentId, context);
+                using HttpMessage message = _mongoMIResourcesRestClient.CreateGetMongoMIRoleAssignmentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, roleAssignmentId, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<MongoMIRoleAssignmentData> response = default;

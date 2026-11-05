@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.DatabaseWatcher
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _healthValidationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, healthValidationName, context);
+                using HttpMessage message = _healthValidationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, healthValidationName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<DatabaseWatcherHealthValidationData> response = Response.FromValue(DatabaseWatcherHealthValidationData.FromResponse(result), result);
                 if (response.Value == null)
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.DatabaseWatcher
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _healthValidationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, healthValidationName, context);
+                using HttpMessage message = _healthValidationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, healthValidationName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<DatabaseWatcherHealthValidationData> response = Response.FromValue(DatabaseWatcherHealthValidationData.FromResponse(result), result);
                 if (response.Value == null)
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.DatabaseWatcher
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _healthValidationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, healthValidationName, context);
+                using HttpMessage message = _healthValidationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, healthValidationName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<DatabaseWatcherHealthValidationData> response = default;
@@ -310,7 +310,7 @@ namespace Azure.ResourceManager.DatabaseWatcher
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _healthValidationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, healthValidationName, context);
+                using HttpMessage message = _healthValidationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, healthValidationName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<DatabaseWatcherHealthValidationData> response = default;
@@ -367,7 +367,7 @@ namespace Azure.ResourceManager.DatabaseWatcher
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _healthValidationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, healthValidationName, context);
+                using HttpMessage message = _healthValidationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, healthValidationName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<DatabaseWatcherHealthValidationData> response = default;
@@ -428,7 +428,7 @@ namespace Azure.ResourceManager.DatabaseWatcher
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _healthValidationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, healthValidationName, context);
+                using HttpMessage message = _healthValidationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, healthValidationName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<DatabaseWatcherHealthValidationData> response = default;

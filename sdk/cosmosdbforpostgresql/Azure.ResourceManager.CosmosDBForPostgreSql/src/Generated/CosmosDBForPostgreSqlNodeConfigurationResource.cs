@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _cosmosDBForPostgreSqlNodeConfigurationsRestClient.CreateGetNodeRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _cosmosDBForPostgreSqlNodeConfigurationsRestClient.CreateGetNodeRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<CosmosDBForPostgreSqlServerConfigurationData> response = Response.FromValue(CosmosDBForPostgreSqlServerConfigurationData.FromResponse(result), result);
                 if (response.Value == null)
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _cosmosDBForPostgreSqlNodeConfigurationsRestClient.CreateGetNodeRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _cosmosDBForPostgreSqlNodeConfigurationsRestClient.CreateGetNodeRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<CosmosDBForPostgreSqlServerConfigurationData> response = Response.FromValue(CosmosDBForPostgreSqlServerConfigurationData.FromResponse(result), result);
                 if (response.Value == null)
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _cosmosDBForPostgreSqlNodeConfigurationsRestClient.CreateUpdateOnNodeRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, CosmosDBForPostgreSqlServerConfigurationData.ToRequestContent(data), context);
+                using HttpMessage message = _cosmosDBForPostgreSqlNodeConfigurationsRestClient.CreateUpdateOnNodeRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, CosmosDBForPostgreSqlServerConfigurationData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 CosmosDBForPostgreSqlArmOperation<CosmosDBForPostgreSqlNodeConfigurationResource> operation = new CosmosDBForPostgreSqlArmOperation<CosmosDBForPostgreSqlNodeConfigurationResource>(
                     new CosmosDBForPostgreSqlNodeConfigurationResourceOperationSource(Client),
@@ -283,7 +283,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _cosmosDBForPostgreSqlNodeConfigurationsRestClient.CreateUpdateOnNodeRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, CosmosDBForPostgreSqlServerConfigurationData.ToRequestContent(data), context);
+                using HttpMessage message = _cosmosDBForPostgreSqlNodeConfigurationsRestClient.CreateUpdateOnNodeRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, CosmosDBForPostgreSqlServerConfigurationData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 CosmosDBForPostgreSqlArmOperation<CosmosDBForPostgreSqlNodeConfigurationResource> operation = new CosmosDBForPostgreSqlArmOperation<CosmosDBForPostgreSqlNodeConfigurationResource>(
                     new CosmosDBForPostgreSqlNodeConfigurationResourceOperationSource(Client),

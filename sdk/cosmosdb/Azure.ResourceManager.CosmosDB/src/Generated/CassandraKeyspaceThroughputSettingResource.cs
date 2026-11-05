@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.CosmosDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _cassandraResourcesRestClient.CreateUpdateCassandraKeyspaceThroughputRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, ThroughputSettingsUpdateData.ToRequestContent(data), context);
+                using HttpMessage message = _cassandraResourcesRestClient.CreateUpdateCassandraKeyspaceThroughputRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, ThroughputSettingsUpdateData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 CosmosDBArmOperation<CassandraKeyspaceThroughputSettingResource> operation = new CosmosDBArmOperation<CassandraKeyspaceThroughputSettingResource>(
                     new CassandraKeyspaceThroughputSettingResourceOperationSource(Client),
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.CosmosDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _cassandraResourcesRestClient.CreateUpdateCassandraKeyspaceThroughputRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, ThroughputSettingsUpdateData.ToRequestContent(data), context);
+                using HttpMessage message = _cassandraResourcesRestClient.CreateUpdateCassandraKeyspaceThroughputRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, ThroughputSettingsUpdateData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 CosmosDBArmOperation<CassandraKeyspaceThroughputSettingResource> operation = new CosmosDBArmOperation<CassandraKeyspaceThroughputSettingResource>(
                     new CassandraKeyspaceThroughputSettingResourceOperationSource(Client),
@@ -242,7 +242,7 @@ namespace Azure.ResourceManager.CosmosDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _cassandraResourcesRestClient.CreateGetCassandraKeyspaceThroughputRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, context);
+                using HttpMessage message = _cassandraResourcesRestClient.CreateGetCassandraKeyspaceThroughputRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ThroughputSettingData> response = Response.FromValue(ThroughputSettingData.FromResponse(result), result);
                 if (response.Value == null)
@@ -290,7 +290,7 @@ namespace Azure.ResourceManager.CosmosDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _cassandraResourcesRestClient.CreateGetCassandraKeyspaceThroughputRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, context);
+                using HttpMessage message = _cassandraResourcesRestClient.CreateGetCassandraKeyspaceThroughputRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ThroughputSettingData> response = Response.FromValue(ThroughputSettingData.FromResponse(result), result);
                 if (response.Value == null)
@@ -339,7 +339,7 @@ namespace Azure.ResourceManager.CosmosDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _cassandraResourcesRestClient.CreateMigrateCassandraKeyspaceToAutoscaleRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, context);
+                using HttpMessage message = _cassandraResourcesRestClient.CreateMigrateCassandraKeyspaceToAutoscaleRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 CosmosDBArmOperation<CassandraKeyspaceThroughputSettingResource> operation = new CosmosDBArmOperation<CassandraKeyspaceThroughputSettingResource>(
                     new CassandraKeyspaceThroughputSettingResourceOperationSource(Client),
@@ -394,7 +394,7 @@ namespace Azure.ResourceManager.CosmosDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _cassandraResourcesRestClient.CreateMigrateCassandraKeyspaceToAutoscaleRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, context);
+                using HttpMessage message = _cassandraResourcesRestClient.CreateMigrateCassandraKeyspaceToAutoscaleRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 CosmosDBArmOperation<CassandraKeyspaceThroughputSettingResource> operation = new CosmosDBArmOperation<CassandraKeyspaceThroughputSettingResource>(
                     new CassandraKeyspaceThroughputSettingResourceOperationSource(Client),
@@ -449,7 +449,7 @@ namespace Azure.ResourceManager.CosmosDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _cassandraResourcesRestClient.CreateMigrateCassandraKeyspaceToManualThroughputRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, context);
+                using HttpMessage message = _cassandraResourcesRestClient.CreateMigrateCassandraKeyspaceToManualThroughputRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 CosmosDBArmOperation<CassandraKeyspaceThroughputSettingResource> operation = new CosmosDBArmOperation<CassandraKeyspaceThroughputSettingResource>(
                     new CassandraKeyspaceThroughputSettingResourceOperationSource(Client),
@@ -504,7 +504,7 @@ namespace Azure.ResourceManager.CosmosDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _cassandraResourcesRestClient.CreateMigrateCassandraKeyspaceToManualThroughputRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, context);
+                using HttpMessage message = _cassandraResourcesRestClient.CreateMigrateCassandraKeyspaceToManualThroughputRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 CosmosDBArmOperation<CassandraKeyspaceThroughputSettingResource> operation = new CosmosDBArmOperation<CassandraKeyspaceThroughputSettingResource>(
                     new CassandraKeyspaceThroughputSettingResourceOperationSource(Client),

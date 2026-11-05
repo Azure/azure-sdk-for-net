@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.ContainerService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _managedClusterUpgradeProfilesRestClient.CreateGetUpgradeProfileRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, context);
+                using HttpMessage message = _managedClusterUpgradeProfilesRestClient.CreateGetUpgradeProfileRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ManagedClusterUpgradeProfileData> response = Response.FromValue(ManagedClusterUpgradeProfileData.FromResponse(result), result);
                 if (response.Value == null)
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.ContainerService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _managedClusterUpgradeProfilesRestClient.CreateGetUpgradeProfileRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, context);
+                using HttpMessage message = _managedClusterUpgradeProfilesRestClient.CreateGetUpgradeProfileRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ManagedClusterUpgradeProfileData> response = Response.FromValue(ManagedClusterUpgradeProfileData.FromResponse(result), result);
                 if (response.Value == null)

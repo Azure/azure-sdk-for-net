@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = RegistriesRestClient.CreateCheckContainerRegistryNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), ContainerRegistryNameAvailabilityContent.ToRequestContent(content), context);
+                using HttpMessage message = RegistriesRestClient.CreateCheckContainerRegistryNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), ContainerRegistryNameAvailabilityContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ContainerRegistryNameAvailableResult> response = Response.FromValue(ContainerRegistryNameAvailableResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = RegistriesRestClient.CreateCheckContainerRegistryNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), ContainerRegistryNameAvailabilityContent.ToRequestContent(content), context);
+                using HttpMessage message = RegistriesRestClient.CreateCheckContainerRegistryNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), ContainerRegistryNameAvailabilityContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ContainerRegistryNameAvailableResult> response = Response.FromValue(ContainerRegistryNameAvailableResult.FromResponse(result), result);
                 if (response.Value == null)

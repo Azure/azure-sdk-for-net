@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _storageClassRestClient.CreateCreateOrUpdateRequest(Id.ToString(), storageClassName, ConnectedClusterStorageClassData.ToRequestContent(data), context);
+                using HttpMessage message = _storageClassRestClient.CreateCreateOrUpdateRequest(Id.ToString(), storageClassName, ConnectedClusterStorageClassData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ContainerOrchestratorRuntimeArmOperation<ConnectedClusterStorageClassResource> operation = new ContainerOrchestratorRuntimeArmOperation<ConnectedClusterStorageClassResource>(
                     new ConnectedClusterStorageClassResourceOperationSource(Client),
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _storageClassRestClient.CreateCreateOrUpdateRequest(Id.ToString(), storageClassName, ConnectedClusterStorageClassData.ToRequestContent(data), context);
+                using HttpMessage message = _storageClassRestClient.CreateCreateOrUpdateRequest(Id.ToString(), storageClassName, ConnectedClusterStorageClassData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ContainerOrchestratorRuntimeArmOperation<ConnectedClusterStorageClassResource> operation = new ContainerOrchestratorRuntimeArmOperation<ConnectedClusterStorageClassResource>(
                     new ConnectedClusterStorageClassResourceOperationSource(Client),
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _storageClassRestClient.CreateGetRequest(Id.ToString(), storageClassName, context);
+                using HttpMessage message = _storageClassRestClient.CreateGetRequest(Id.ToString(), storageClassName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ConnectedClusterStorageClassData> response = Response.FromValue(ConnectedClusterStorageClassData.FromResponse(result), result);
                 if (response.Value == null)
@@ -240,7 +240,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _storageClassRestClient.CreateGetRequest(Id.ToString(), storageClassName, context);
+                using HttpMessage message = _storageClassRestClient.CreateGetRequest(Id.ToString(), storageClassName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ConnectedClusterStorageClassData> response = Response.FromValue(ConnectedClusterStorageClassData.FromResponse(result), result);
                 if (response.Value == null)
@@ -345,7 +345,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _storageClassRestClient.CreateGetRequest(Id.ToString(), storageClassName, context);
+                using HttpMessage message = _storageClassRestClient.CreateGetRequest(Id.ToString(), storageClassName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ConnectedClusterStorageClassData> response = default;
@@ -402,7 +402,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _storageClassRestClient.CreateGetRequest(Id.ToString(), storageClassName, context);
+                using HttpMessage message = _storageClassRestClient.CreateGetRequest(Id.ToString(), storageClassName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ConnectedClusterStorageClassData> response = default;
@@ -459,7 +459,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _storageClassRestClient.CreateGetRequest(Id.ToString(), storageClassName, context);
+                using HttpMessage message = _storageClassRestClient.CreateGetRequest(Id.ToString(), storageClassName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ConnectedClusterStorageClassData> response = default;
@@ -520,7 +520,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _storageClassRestClient.CreateGetRequest(Id.ToString(), storageClassName, context);
+                using HttpMessage message = _storageClassRestClient.CreateGetRequest(Id.ToString(), storageClassName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ConnectedClusterStorageClassData> response = default;

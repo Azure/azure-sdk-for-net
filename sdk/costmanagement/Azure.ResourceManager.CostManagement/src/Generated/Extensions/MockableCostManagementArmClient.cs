@@ -558,7 +558,7 @@ namespace Azure.ResourceManager.CostManagement.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = ScheduledActionsRestClient.CreateCheckCostManagementNameAvailabilityByScopeScheduledActionRequest(scope.ToString(), CostManagementNameAvailabilityContent.ToRequestContent(content), context);
+                using HttpMessage message = ScheduledActionsRestClient.CreateCheckCostManagementNameAvailabilityByScopeScheduledActionRequest(scope.ToString(), CostManagementNameAvailabilityContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<CostManagementNameAvailabilityResult> response = Response.FromValue(CostManagementNameAvailabilityResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -608,7 +608,7 @@ namespace Azure.ResourceManager.CostManagement.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = ScheduledActionsRestClient.CreateCheckCostManagementNameAvailabilityByScopeScheduledActionRequest(scope.ToString(), CostManagementNameAvailabilityContent.ToRequestContent(content), context);
+                using HttpMessage message = ScheduledActionsRestClient.CreateCheckCostManagementNameAvailabilityByScopeScheduledActionRequest(scope.ToString(), CostManagementNameAvailabilityContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<CostManagementNameAvailabilityResult> response = Response.FromValue(CostManagementNameAvailabilityResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -660,7 +660,7 @@ namespace Azure.ResourceManager.CostManagement.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = GenerateCostDetailsReportRestClient.CreateGetOperationResultsRequest(scope.ToString(), operationId, context);
+                using HttpMessage message = GenerateCostDetailsReportRestClient.CreateGetOperationResultsRequest(scope.ToString(), operationId, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 CostManagementArmOperation<CostDetailsOperationResults> operation = new CostManagementArmOperation<CostDetailsOperationResults>(
                     new CostDetailsOperationResultsOperationSource(),
@@ -718,7 +718,7 @@ namespace Azure.ResourceManager.CostManagement.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = GenerateCostDetailsReportRestClient.CreateGetOperationResultsRequest(scope.ToString(), operationId, context);
+                using HttpMessage message = GenerateCostDetailsReportRestClient.CreateGetOperationResultsRequest(scope.ToString(), operationId, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 CostManagementArmOperation<CostDetailsOperationResults> operation = new CostManagementArmOperation<CostDetailsOperationResults>(
                     new CostDetailsOperationResultsOperationSource(),
@@ -775,7 +775,7 @@ namespace Azure.ResourceManager.CostManagement.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = GenerateCostDetailsReportRestClient.CreateCreateOperationRequest(scope.ToString(), GenerateCostDetailsReportContent.ToRequestContent(content), context);
+                using HttpMessage message = GenerateCostDetailsReportRestClient.CreateCreateOperationRequest(scope.ToString(), GenerateCostDetailsReportContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 CostManagementArmOperation<CostDetailsOperationResults> operation = new CostManagementArmOperation<CostDetailsOperationResults>(
                     new CostDetailsOperationResultsOperationSource(),
@@ -832,7 +832,7 @@ namespace Azure.ResourceManager.CostManagement.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = GenerateCostDetailsReportRestClient.CreateCreateOperationRequest(scope.ToString(), GenerateCostDetailsReportContent.ToRequestContent(content), context);
+                using HttpMessage message = GenerateCostDetailsReportRestClient.CreateCreateOperationRequest(scope.ToString(), GenerateCostDetailsReportContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 CostManagementArmOperation<CostDetailsOperationResults> operation = new CostManagementArmOperation<CostDetailsOperationResults>(
                     new CostDetailsOperationResultsOperationSource(),
@@ -888,7 +888,7 @@ namespace Azure.ResourceManager.CostManagement.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = CostAllocationRulesRestClient.CreateCheckNameAvailabilityRequest(scope.Name, CostAllocationRuleCheckNameAvailabilityRequest.ToRequestContent(content), context);
+                using HttpMessage message = CostAllocationRulesRestClient.CreateCheckNameAvailabilityRequest(scope.Name, CostAllocationRuleCheckNameAvailabilityRequest.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<CostAllocationRuleCheckNameAvailabilityResult> response = Response.FromValue(CostAllocationRuleCheckNameAvailabilityResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -938,7 +938,7 @@ namespace Azure.ResourceManager.CostManagement.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = CostAllocationRulesRestClient.CreateCheckNameAvailabilityRequest(scope.Name, CostAllocationRuleCheckNameAvailabilityRequest.ToRequestContent(content), context);
+                using HttpMessage message = CostAllocationRulesRestClient.CreateCheckNameAvailabilityRequest(scope.Name, CostAllocationRuleCheckNameAvailabilityRequest.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<CostAllocationRuleCheckNameAvailabilityResult> response = Response.FromValue(CostAllocationRuleCheckNameAvailabilityResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -1397,7 +1397,7 @@ namespace Azure.ResourceManager.CostManagement.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = GenerateBenefitUtilizationSummariesReportRestClient.CreateGenerateBenefitUtilizationSummariesReportBillingAccountScopeRequest(scope.Name, BenefitUtilizationSummariesContent.ToRequestContent(content), context);
+                using HttpMessage message = GenerateBenefitUtilizationSummariesReportRestClient.CreateGenerateBenefitUtilizationSummariesReportBillingAccountScopeRequest(scope.Name, BenefitUtilizationSummariesContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 CostManagementArmOperation<BenefitUtilizationSummariesOperationStatus> operation = new CostManagementArmOperation<BenefitUtilizationSummariesOperationStatus>(
                     new BenefitUtilizationSummariesOperationStatusOperationSource(),
@@ -1454,7 +1454,7 @@ namespace Azure.ResourceManager.CostManagement.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = GenerateBenefitUtilizationSummariesReportRestClient.CreateGenerateBenefitUtilizationSummariesReportBillingAccountScopeRequest(scope.Name, BenefitUtilizationSummariesContent.ToRequestContent(content), context);
+                using HttpMessage message = GenerateBenefitUtilizationSummariesReportRestClient.CreateGenerateBenefitUtilizationSummariesReportBillingAccountScopeRequest(scope.Name, BenefitUtilizationSummariesContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 CostManagementArmOperation<BenefitUtilizationSummariesOperationStatus> operation = new CostManagementArmOperation<BenefitUtilizationSummariesOperationStatus>(
                     new BenefitUtilizationSummariesOperationStatusOperationSource(),
@@ -1511,7 +1511,7 @@ namespace Azure.ResourceManager.CostManagement.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = GenerateBenefitUtilizationSummariesReportRestClient.CreateGenerateBenefitUtilizationSummariesReportBillingProfileScopeRequest(scope.Parent.Name, scope.Name, BenefitUtilizationSummariesContent.ToRequestContent(content), context);
+                using HttpMessage message = GenerateBenefitUtilizationSummariesReportRestClient.CreateGenerateBenefitUtilizationSummariesReportBillingProfileScopeRequest(scope.Parent.Name, scope.Name, BenefitUtilizationSummariesContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 CostManagementArmOperation<BenefitUtilizationSummariesOperationStatus> operation = new CostManagementArmOperation<BenefitUtilizationSummariesOperationStatus>(
                     new BenefitUtilizationSummariesOperationStatusOperationSource(),
@@ -1568,7 +1568,7 @@ namespace Azure.ResourceManager.CostManagement.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = GenerateBenefitUtilizationSummariesReportRestClient.CreateGenerateBenefitUtilizationSummariesReportBillingProfileScopeRequest(scope.Parent.Name, scope.Name, BenefitUtilizationSummariesContent.ToRequestContent(content), context);
+                using HttpMessage message = GenerateBenefitUtilizationSummariesReportRestClient.CreateGenerateBenefitUtilizationSummariesReportBillingProfileScopeRequest(scope.Parent.Name, scope.Name, BenefitUtilizationSummariesContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 CostManagementArmOperation<BenefitUtilizationSummariesOperationStatus> operation = new CostManagementArmOperation<BenefitUtilizationSummariesOperationStatus>(
                     new BenefitUtilizationSummariesOperationStatusOperationSource(),
@@ -1625,7 +1625,7 @@ namespace Azure.ResourceManager.CostManagement.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = GenerateBenefitUtilizationSummariesReportRestClient.CreateGenerateBenefitUtilizationSummariesReportReservationOrderScopeRequest(scope.Name, BenefitUtilizationSummariesContent.ToRequestContent(content), context);
+                using HttpMessage message = GenerateBenefitUtilizationSummariesReportRestClient.CreateGenerateBenefitUtilizationSummariesReportReservationOrderScopeRequest(scope.Name, BenefitUtilizationSummariesContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 CostManagementArmOperation<BenefitUtilizationSummariesOperationStatus> operation = new CostManagementArmOperation<BenefitUtilizationSummariesOperationStatus>(
                     new BenefitUtilizationSummariesOperationStatusOperationSource(),
@@ -1682,7 +1682,7 @@ namespace Azure.ResourceManager.CostManagement.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = GenerateBenefitUtilizationSummariesReportRestClient.CreateGenerateBenefitUtilizationSummariesReportReservationOrderScopeRequest(scope.Name, BenefitUtilizationSummariesContent.ToRequestContent(content), context);
+                using HttpMessage message = GenerateBenefitUtilizationSummariesReportRestClient.CreateGenerateBenefitUtilizationSummariesReportReservationOrderScopeRequest(scope.Name, BenefitUtilizationSummariesContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 CostManagementArmOperation<BenefitUtilizationSummariesOperationStatus> operation = new CostManagementArmOperation<BenefitUtilizationSummariesOperationStatus>(
                     new BenefitUtilizationSummariesOperationStatusOperationSource(),
@@ -1739,7 +1739,7 @@ namespace Azure.ResourceManager.CostManagement.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = GenerateBenefitUtilizationSummariesReportRestClient.CreateGenerateBenefitUtilizationSummariesReportReservationScopeRequest(scope.Parent.Name, scope.Name, BenefitUtilizationSummariesContent.ToRequestContent(content), context);
+                using HttpMessage message = GenerateBenefitUtilizationSummariesReportRestClient.CreateGenerateBenefitUtilizationSummariesReportReservationScopeRequest(scope.Parent.Name, scope.Name, BenefitUtilizationSummariesContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 CostManagementArmOperation<BenefitUtilizationSummariesOperationStatus> operation = new CostManagementArmOperation<BenefitUtilizationSummariesOperationStatus>(
                     new BenefitUtilizationSummariesOperationStatusOperationSource(),
@@ -1796,7 +1796,7 @@ namespace Azure.ResourceManager.CostManagement.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = GenerateBenefitUtilizationSummariesReportRestClient.CreateGenerateBenefitUtilizationSummariesReportReservationScopeRequest(scope.Parent.Name, scope.Name, BenefitUtilizationSummariesContent.ToRequestContent(content), context);
+                using HttpMessage message = GenerateBenefitUtilizationSummariesReportRestClient.CreateGenerateBenefitUtilizationSummariesReportReservationScopeRequest(scope.Parent.Name, scope.Name, BenefitUtilizationSummariesContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 CostManagementArmOperation<BenefitUtilizationSummariesOperationStatus> operation = new CostManagementArmOperation<BenefitUtilizationSummariesOperationStatus>(
                     new BenefitUtilizationSummariesOperationStatusOperationSource(),
@@ -1853,7 +1853,7 @@ namespace Azure.ResourceManager.CostManagement.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = GenerateBenefitUtilizationSummariesReportRestClient.CreateGenerateBenefitUtilizationSummariesReportSavingsPlanOrderScopeRequest(scope.Name, BenefitUtilizationSummariesContent.ToRequestContent(content), context);
+                using HttpMessage message = GenerateBenefitUtilizationSummariesReportRestClient.CreateGenerateBenefitUtilizationSummariesReportSavingsPlanOrderScopeRequest(scope.Name, BenefitUtilizationSummariesContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 CostManagementArmOperation<BenefitUtilizationSummariesOperationStatus> operation = new CostManagementArmOperation<BenefitUtilizationSummariesOperationStatus>(
                     new BenefitUtilizationSummariesOperationStatusOperationSource(),
@@ -1910,7 +1910,7 @@ namespace Azure.ResourceManager.CostManagement.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = GenerateBenefitUtilizationSummariesReportRestClient.CreateGenerateBenefitUtilizationSummariesReportSavingsPlanOrderScopeRequest(scope.Name, BenefitUtilizationSummariesContent.ToRequestContent(content), context);
+                using HttpMessage message = GenerateBenefitUtilizationSummariesReportRestClient.CreateGenerateBenefitUtilizationSummariesReportSavingsPlanOrderScopeRequest(scope.Name, BenefitUtilizationSummariesContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 CostManagementArmOperation<BenefitUtilizationSummariesOperationStatus> operation = new CostManagementArmOperation<BenefitUtilizationSummariesOperationStatus>(
                     new BenefitUtilizationSummariesOperationStatusOperationSource(),
@@ -1967,7 +1967,7 @@ namespace Azure.ResourceManager.CostManagement.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = GenerateBenefitUtilizationSummariesReportRestClient.CreateGenerateBenefitUtilizationSummariesReportAsyncSavingsPlanScopeRequest(scope.Parent.Name, scope.Name, BenefitUtilizationSummariesContent.ToRequestContent(content), context);
+                using HttpMessage message = GenerateBenefitUtilizationSummariesReportRestClient.CreateGenerateBenefitUtilizationSummariesReportAsyncSavingsPlanScopeRequest(scope.Parent.Name, scope.Name, BenefitUtilizationSummariesContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 CostManagementArmOperation<BenefitUtilizationSummariesOperationStatus> operation = new CostManagementArmOperation<BenefitUtilizationSummariesOperationStatus>(
                     new BenefitUtilizationSummariesOperationStatusOperationSource(),
@@ -2024,7 +2024,7 @@ namespace Azure.ResourceManager.CostManagement.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = GenerateBenefitUtilizationSummariesReportRestClient.CreateGenerateBenefitUtilizationSummariesReportAsyncSavingsPlanScopeRequest(scope.Parent.Name, scope.Name, BenefitUtilizationSummariesContent.ToRequestContent(content), context);
+                using HttpMessage message = GenerateBenefitUtilizationSummariesReportRestClient.CreateGenerateBenefitUtilizationSummariesReportAsyncSavingsPlanScopeRequest(scope.Parent.Name, scope.Name, BenefitUtilizationSummariesContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 CostManagementArmOperation<BenefitUtilizationSummariesOperationStatus> operation = new CostManagementArmOperation<BenefitUtilizationSummariesOperationStatus>(
                     new BenefitUtilizationSummariesOperationStatusOperationSource(),
@@ -2081,7 +2081,7 @@ namespace Azure.ResourceManager.CostManagement.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = GenerateDetailedCostReportRestClient.CreateCreateOperationRequest(scope.ToString(), GenerateDetailedCostReportContent.ToRequestContent(content), context);
+                using HttpMessage message = GenerateDetailedCostReportRestClient.CreateCreateOperationRequest(scope.ToString(), GenerateDetailedCostReportContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 CostManagementArmOperation<GenerateDetailedCostReportOperationResultResource> operation = new CostManagementArmOperation<GenerateDetailedCostReportOperationResultResource>(
                     new GenerateDetailedCostReportOperationResultResourceOperationSource(Client),
@@ -2138,7 +2138,7 @@ namespace Azure.ResourceManager.CostManagement.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = GenerateDetailedCostReportRestClient.CreateCreateOperationRequest(scope.ToString(), GenerateDetailedCostReportContent.ToRequestContent(content), context);
+                using HttpMessage message = GenerateDetailedCostReportRestClient.CreateCreateOperationRequest(scope.ToString(), GenerateDetailedCostReportContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 CostManagementArmOperation<GenerateDetailedCostReportOperationResultResource> operation = new CostManagementArmOperation<GenerateDetailedCostReportOperationResultResource>(
                     new GenerateDetailedCostReportOperationResultResourceOperationSource(Client),
@@ -2195,7 +2195,7 @@ namespace Azure.ResourceManager.CostManagement.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = ForecastRestClient.CreateUsageForecastRequest(scope.ToString(), ForecastDefinition.ToRequestContent(forecastDefinition), filter, context);
+                using HttpMessage message = ForecastRestClient.CreateUsageForecastRequest(scope.ToString(), ForecastDefinition.ToRequestContent(forecastDefinition), filter, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ForecastResult> response = Response.FromValue(ForecastResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -2246,7 +2246,7 @@ namespace Azure.ResourceManager.CostManagement.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = ForecastRestClient.CreateUsageForecastRequest(scope.ToString(), ForecastDefinition.ToRequestContent(forecastDefinition), filter, context);
+                using HttpMessage message = ForecastRestClient.CreateUsageForecastRequest(scope.ToString(), ForecastDefinition.ToRequestContent(forecastDefinition), filter, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ForecastResult> response = Response.FromValue(ForecastResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -2384,7 +2384,7 @@ namespace Azure.ResourceManager.CostManagement.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = QueryRestClient.CreateUsageQueryRequest(scope.ToString(), QueryDefinition.ToRequestContent(queryDefinition), context);
+                using HttpMessage message = QueryRestClient.CreateUsageQueryRequest(scope.ToString(), QueryDefinition.ToRequestContent(queryDefinition), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<QueryResult> response = Response.FromValue(QueryResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -2434,7 +2434,7 @@ namespace Azure.ResourceManager.CostManagement.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = QueryRestClient.CreateUsageQueryRequest(scope.ToString(), QueryDefinition.ToRequestContent(queryDefinition), context);
+                using HttpMessage message = QueryRestClient.CreateUsageQueryRequest(scope.ToString(), QueryDefinition.ToRequestContent(queryDefinition), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<QueryResult> response = Response.FromValue(QueryResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -2488,7 +2488,7 @@ namespace Azure.ResourceManager.CostManagement.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = GenerateReservationDetailsReportRestClient.CreateByBillingAccountIdGenerateReservationDetailsReportRequest(scope.Name, startDate, endDate, context);
+                using HttpMessage message = GenerateReservationDetailsReportRestClient.CreateByBillingAccountIdGenerateReservationDetailsReportRequest(scope.Name, startDate, endDate, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 CostManagementArmOperation<OperationStatus> operation = new CostManagementArmOperation<OperationStatus>(
                     new OperationStatusOperationSource(),
@@ -2548,7 +2548,7 @@ namespace Azure.ResourceManager.CostManagement.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = GenerateReservationDetailsReportRestClient.CreateByBillingAccountIdGenerateReservationDetailsReportRequest(scope.Name, startDate, endDate, context);
+                using HttpMessage message = GenerateReservationDetailsReportRestClient.CreateByBillingAccountIdGenerateReservationDetailsReportRequest(scope.Name, startDate, endDate, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 CostManagementArmOperation<OperationStatus> operation = new CostManagementArmOperation<OperationStatus>(
                     new OperationStatusOperationSource(),
@@ -2608,7 +2608,7 @@ namespace Azure.ResourceManager.CostManagement.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = GenerateReservationDetailsReportRestClient.CreateByBillingProfileIdGenerateReservationDetailsReportRequest(scope.Parent.Name, scope.Name, startDate, endDate, context);
+                using HttpMessage message = GenerateReservationDetailsReportRestClient.CreateByBillingProfileIdGenerateReservationDetailsReportRequest(scope.Parent.Name, scope.Name, startDate, endDate, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 CostManagementArmOperation<OperationStatus> operation = new CostManagementArmOperation<OperationStatus>(
                     new OperationStatusOperationSource(),
@@ -2668,7 +2668,7 @@ namespace Azure.ResourceManager.CostManagement.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = GenerateReservationDetailsReportRestClient.CreateByBillingProfileIdGenerateReservationDetailsReportRequest(scope.Parent.Name, scope.Name, startDate, endDate, context);
+                using HttpMessage message = GenerateReservationDetailsReportRestClient.CreateByBillingProfileIdGenerateReservationDetailsReportRequest(scope.Parent.Name, scope.Name, startDate, endDate, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 CostManagementArmOperation<OperationStatus> operation = new CostManagementArmOperation<OperationStatus>(
                     new OperationStatusOperationSource(),
@@ -2723,7 +2723,7 @@ namespace Azure.ResourceManager.CostManagement.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = PriceSheetRestClient.CreateDownloadPriceSheetRequest(scope.Parent.Parent.Name, scope.Parent.Name, scope.Name, context);
+                using HttpMessage message = PriceSheetRestClient.CreateDownloadPriceSheetRequest(scope.Parent.Parent.Name, scope.Parent.Name, scope.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 CostManagementArmOperation<DownloadURL> operation = new CostManagementArmOperation<DownloadURL>(
                     new DownloadURLOperationSource(),
@@ -2778,7 +2778,7 @@ namespace Azure.ResourceManager.CostManagement.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = PriceSheetRestClient.CreateDownloadPriceSheetRequest(scope.Parent.Parent.Name, scope.Parent.Name, scope.Name, context);
+                using HttpMessage message = PriceSheetRestClient.CreateDownloadPriceSheetRequest(scope.Parent.Parent.Name, scope.Parent.Name, scope.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 CostManagementArmOperation<DownloadURL> operation = new CostManagementArmOperation<DownloadURL>(
                     new DownloadURLOperationSource(),
@@ -2835,7 +2835,7 @@ namespace Azure.ResourceManager.CostManagement.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = PriceSheetRestClient.CreateDownloadByBillingProfilePriceSheetRequest(scope.Parent.Name, scope.Name, context);
+                using HttpMessage message = PriceSheetRestClient.CreateDownloadByBillingProfilePriceSheetRequest(scope.Parent.Name, scope.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 CostManagementArmOperation<PriceSheetDownloadProperties> operation = new CostManagementArmOperation<PriceSheetDownloadProperties>(
                     new PriceSheetDownloadPropertiesOperationSource(),
@@ -2892,7 +2892,7 @@ namespace Azure.ResourceManager.CostManagement.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = PriceSheetRestClient.CreateDownloadByBillingProfilePriceSheetRequest(scope.Parent.Name, scope.Name, context);
+                using HttpMessage message = PriceSheetRestClient.CreateDownloadByBillingProfilePriceSheetRequest(scope.Parent.Name, scope.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 CostManagementArmOperation<PriceSheetDownloadProperties> operation = new CostManagementArmOperation<PriceSheetDownloadProperties>(
                     new PriceSheetDownloadPropertiesOperationSource(),
@@ -2954,7 +2954,7 @@ namespace Azure.ResourceManager.CostManagement.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = PriceSheetRestClient.CreateDownloadByBillingAccountRequest(scope.Parent.Name, scope.Name, context);
+                using HttpMessage message = PriceSheetRestClient.CreateDownloadByBillingAccountRequest(scope.Parent.Name, scope.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 CostManagementArmOperation<OperationStatus> operation = new CostManagementArmOperation<OperationStatus>(
                     new OperationStatusOperationSource(),
@@ -3016,7 +3016,7 @@ namespace Azure.ResourceManager.CostManagement.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = PriceSheetRestClient.CreateDownloadByBillingAccountRequest(scope.Parent.Name, scope.Name, context);
+                using HttpMessage message = PriceSheetRestClient.CreateDownloadByBillingAccountRequest(scope.Parent.Name, scope.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 CostManagementArmOperation<OperationStatus> operation = new CostManagementArmOperation<OperationStatus>(
                     new OperationStatusOperationSource(),

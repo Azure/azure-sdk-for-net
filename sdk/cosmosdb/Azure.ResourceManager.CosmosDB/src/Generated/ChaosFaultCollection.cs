@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.CosmosDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _chaosFaultRestClient.CreateEnableDisableRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, chaosFault, ChaosFaultData.ToRequestContent(data), context);
+                using HttpMessage message = _chaosFaultRestClient.CreateEnableDisableRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, chaosFault, ChaosFaultData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 CosmosDBArmOperation<ChaosFaultResource> operation = new CosmosDBArmOperation<ChaosFaultResource>(
                     new ChaosFaultResourceOperationSource(Client),
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.CosmosDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _chaosFaultRestClient.CreateEnableDisableRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, chaosFault, ChaosFaultData.ToRequestContent(data), context);
+                using HttpMessage message = _chaosFaultRestClient.CreateEnableDisableRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, chaosFault, ChaosFaultData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 CosmosDBArmOperation<ChaosFaultResource> operation = new CosmosDBArmOperation<ChaosFaultResource>(
                     new ChaosFaultResourceOperationSource(Client),
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.CosmosDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _chaosFaultRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, chaosFault, context);
+                using HttpMessage message = _chaosFaultRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, chaosFault, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ChaosFaultData> response = Response.FromValue(ChaosFaultData.FromResponse(result), result);
                 if (response.Value == null)
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.CosmosDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _chaosFaultRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, chaosFault, context);
+                using HttpMessage message = _chaosFaultRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, chaosFault, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ChaosFaultData> response = Response.FromValue(ChaosFaultData.FromResponse(result), result);
                 if (response.Value == null)
@@ -369,7 +369,7 @@ namespace Azure.ResourceManager.CosmosDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _chaosFaultRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, chaosFault, context);
+                using HttpMessage message = _chaosFaultRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, chaosFault, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ChaosFaultData> response = default;
@@ -426,7 +426,7 @@ namespace Azure.ResourceManager.CosmosDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _chaosFaultRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, chaosFault, context);
+                using HttpMessage message = _chaosFaultRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, chaosFault, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ChaosFaultData> response = default;
@@ -483,7 +483,7 @@ namespace Azure.ResourceManager.CosmosDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _chaosFaultRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, chaosFault, context);
+                using HttpMessage message = _chaosFaultRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, chaosFault, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ChaosFaultData> response = default;
@@ -544,7 +544,7 @@ namespace Azure.ResourceManager.CosmosDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _chaosFaultRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, chaosFault, context);
+                using HttpMessage message = _chaosFaultRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, chaosFault, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ChaosFaultData> response = default;
