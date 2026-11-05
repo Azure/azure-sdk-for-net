@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _userAssignedIdentitiesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _userAssignedIdentitiesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<UserAssignedIdentityData> response = Response.FromValue(UserAssignedIdentityData.FromResponse(result), result);
                 if (response.Value == null)
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _userAssignedIdentitiesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _userAssignedIdentitiesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<UserAssignedIdentityData> response = Response.FromValue(UserAssignedIdentityData.FromResponse(result), result);
                 if (response.Value == null)
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _userAssignedIdentitiesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, UserAssignedIdentityPatch.ToRequestContent(patch), context);
+                using HttpMessage message = _userAssignedIdentitiesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, UserAssignedIdentityPatch.ToRequestContent(patch), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<UserAssignedIdentityData> response = Response.FromValue(UserAssignedIdentityData.FromResponse(result), result);
                 if (response.Value == null)
@@ -277,7 +277,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _userAssignedIdentitiesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, UserAssignedIdentityPatch.ToRequestContent(patch), context);
+                using HttpMessage message = _userAssignedIdentitiesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, UserAssignedIdentityPatch.ToRequestContent(patch), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<UserAssignedIdentityData> response = Response.FromValue(UserAssignedIdentityData.FromResponse(result), result);
                 if (response.Value == null)
@@ -326,7 +326,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _userAssignedIdentitiesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _userAssignedIdentitiesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
@@ -377,7 +377,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _userAssignedIdentitiesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _userAssignedIdentitiesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
@@ -418,7 +418,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _userAssignedIdentitiesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _userAssignedIdentitiesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<UserAssignedIdentityData> response = Response.FromValue(UserAssignedIdentityData.FromResponse(result), result);
                     return Response.FromValue(new UserAssignedIdentityResource(Client, response.Value), response.GetRawResponse());
@@ -466,7 +466,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _userAssignedIdentitiesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _userAssignedIdentitiesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<UserAssignedIdentityData> response = Response.FromValue(UserAssignedIdentityData.FromResponse(result), result);
                     return Response.FromValue(new UserAssignedIdentityResource(Client, response.Value), response.GetRawResponse());
@@ -512,7 +512,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _userAssignedIdentitiesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _userAssignedIdentitiesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<UserAssignedIdentityData> response = Response.FromValue(UserAssignedIdentityData.FromResponse(result), result);
                     return Response.FromValue(new UserAssignedIdentityResource(Client, response.Value), response.GetRawResponse());
@@ -554,7 +554,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _userAssignedIdentitiesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _userAssignedIdentitiesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<UserAssignedIdentityData> response = Response.FromValue(UserAssignedIdentityData.FromResponse(result), result);
                     return Response.FromValue(new UserAssignedIdentityResource(Client, response.Value), response.GetRawResponse());
@@ -596,7 +596,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _userAssignedIdentitiesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _userAssignedIdentitiesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<UserAssignedIdentityData> response = Response.FromValue(UserAssignedIdentityData.FromResponse(result), result);
                     return Response.FromValue(new UserAssignedIdentityResource(Client, response.Value), response.GetRawResponse());
@@ -642,7 +642,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _userAssignedIdentitiesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _userAssignedIdentitiesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<UserAssignedIdentityData> response = Response.FromValue(UserAssignedIdentityData.FromResponse(result), result);
                     return Response.FromValue(new UserAssignedIdentityResource(Client, response.Value), response.GetRawResponse());

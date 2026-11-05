@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Marketplace.Reviews.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = RatingAndReviewsOperationsRestClient.CreateCheckUserHasReviewRequest(uniqueProductId, context);
+                using HttpMessage message = RatingAndReviewsOperationsRestClient.CreateCheckUserHasReviewRequest(uniqueProductId, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<UserHasReview> response = Response.FromValue(UserHasReview.FromResponse(result), result);
                 if (response.Value == null)
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Marketplace.Reviews.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = RatingAndReviewsOperationsRestClient.CreateCheckUserHasReviewRequest(uniqueProductId, context);
+                using HttpMessage message = RatingAndReviewsOperationsRestClient.CreateCheckUserHasReviewRequest(uniqueProductId, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<UserHasReview> response = Response.FromValue(UserHasReview.FromResponse(result), result);
                 if (response.Value == null)

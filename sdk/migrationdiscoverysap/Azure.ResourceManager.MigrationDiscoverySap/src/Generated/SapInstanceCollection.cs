@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.MigrationDiscoverySap
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sapInstancesRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, sapInstanceName, SapInstanceData.ToRequestContent(data), context);
+                using HttpMessage message = _sapInstancesRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, sapInstanceName, SapInstanceData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 MigrationDiscoverySapArmOperation<SapInstanceResource> operation = new MigrationDiscoverySapArmOperation<SapInstanceResource>(
                     new SapInstanceResourceOperationSource(Client),
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.MigrationDiscoverySap
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sapInstancesRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, sapInstanceName, SapInstanceData.ToRequestContent(data), context);
+                using HttpMessage message = _sapInstancesRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, sapInstanceName, SapInstanceData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 MigrationDiscoverySapArmOperation<SapInstanceResource> operation = new MigrationDiscoverySapArmOperation<SapInstanceResource>(
                     new SapInstanceResourceOperationSource(Client),
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.MigrationDiscoverySap
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sapInstancesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, sapInstanceName, context);
+                using HttpMessage message = _sapInstancesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, sapInstanceName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<SapInstanceData> response = Response.FromValue(SapInstanceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.MigrationDiscoverySap
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sapInstancesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, sapInstanceName, context);
+                using HttpMessage message = _sapInstancesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, sapInstanceName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<SapInstanceData> response = Response.FromValue(SapInstanceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -369,7 +369,7 @@ namespace Azure.ResourceManager.MigrationDiscoverySap
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sapInstancesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, sapInstanceName, context);
+                using HttpMessage message = _sapInstancesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, sapInstanceName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<SapInstanceData> response = default;
@@ -426,7 +426,7 @@ namespace Azure.ResourceManager.MigrationDiscoverySap
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sapInstancesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, sapInstanceName, context);
+                using HttpMessage message = _sapInstancesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, sapInstanceName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<SapInstanceData> response = default;
@@ -483,7 +483,7 @@ namespace Azure.ResourceManager.MigrationDiscoverySap
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sapInstancesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, sapInstanceName, context);
+                using HttpMessage message = _sapInstancesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, sapInstanceName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<SapInstanceData> response = default;
@@ -544,7 +544,7 @@ namespace Azure.ResourceManager.MigrationDiscoverySap
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sapInstancesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, sapInstanceName, context);
+                using HttpMessage message = _sapInstancesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, sapInstanceName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<SapInstanceData> response = default;

@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.ManufacturingPlatform
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _manufacturingDataServicesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, mdsResourceName, ManufacturingDataServiceData.ToRequestContent(data), context);
+                using HttpMessage message = _manufacturingDataServicesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, mdsResourceName, ManufacturingDataServiceData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ManufacturingPlatformArmOperation<ManufacturingDataServiceResource> operation = new ManufacturingPlatformArmOperation<ManufacturingDataServiceResource>(
                     new ManufacturingDataServiceResourceOperationSource(Client),
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.ManufacturingPlatform
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _manufacturingDataServicesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, mdsResourceName, ManufacturingDataServiceData.ToRequestContent(data), context);
+                using HttpMessage message = _manufacturingDataServicesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, mdsResourceName, ManufacturingDataServiceData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ManufacturingPlatformArmOperation<ManufacturingDataServiceResource> operation = new ManufacturingPlatformArmOperation<ManufacturingDataServiceResource>(
                     new ManufacturingDataServiceResourceOperationSource(Client),
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.ManufacturingPlatform
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _manufacturingDataServicesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, mdsResourceName, context);
+                using HttpMessage message = _manufacturingDataServicesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, mdsResourceName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ManufacturingDataServiceData> response = Response.FromValue(ManufacturingDataServiceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.ManufacturingPlatform
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _manufacturingDataServicesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, mdsResourceName, context);
+                using HttpMessage message = _manufacturingDataServicesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, mdsResourceName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ManufacturingDataServiceData> response = Response.FromValue(ManufacturingDataServiceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -357,7 +357,7 @@ namespace Azure.ResourceManager.ManufacturingPlatform
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _manufacturingDataServicesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, mdsResourceName, context);
+                using HttpMessage message = _manufacturingDataServicesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, mdsResourceName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ManufacturingDataServiceData> response = default;
@@ -414,7 +414,7 @@ namespace Azure.ResourceManager.ManufacturingPlatform
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _manufacturingDataServicesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, mdsResourceName, context);
+                using HttpMessage message = _manufacturingDataServicesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, mdsResourceName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ManufacturingDataServiceData> response = default;
@@ -471,7 +471,7 @@ namespace Azure.ResourceManager.ManufacturingPlatform
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _manufacturingDataServicesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, mdsResourceName, context);
+                using HttpMessage message = _manufacturingDataServicesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, mdsResourceName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ManufacturingDataServiceData> response = default;
@@ -532,7 +532,7 @@ namespace Azure.ResourceManager.ManufacturingPlatform
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _manufacturingDataServicesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, mdsResourceName, context);
+                using HttpMessage message = _manufacturingDataServicesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, mdsResourceName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ManufacturingDataServiceData> response = default;

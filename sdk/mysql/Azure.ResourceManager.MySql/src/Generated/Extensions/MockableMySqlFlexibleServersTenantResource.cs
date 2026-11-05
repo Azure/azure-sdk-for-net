@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = GetPrivateDnsZoneSuffixRestClient.CreateExecuteGetPrivateDnsZoneSuffixRequest(context);
+                using HttpMessage message = GetPrivateDnsZoneSuffixRestClient.CreateExecuteGetPrivateDnsZoneSuffixRequest(context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<MySqlFlexibleServerPrivateDnsZoneSuffixResponse> response = Response.FromValue(MySqlFlexibleServerPrivateDnsZoneSuffixResponse.FromResponse(result), result);
                 if (response.Value == null)
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = GetPrivateDnsZoneSuffixRestClient.CreateExecuteGetPrivateDnsZoneSuffixRequest(context);
+                using HttpMessage message = GetPrivateDnsZoneSuffixRestClient.CreateExecuteGetPrivateDnsZoneSuffixRequest(context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<MySqlFlexibleServerPrivateDnsZoneSuffixResponse> response = Response.FromValue(MySqlFlexibleServerPrivateDnsZoneSuffixResponse.FromResponse(result), result);
                 if (response.Value == null)
