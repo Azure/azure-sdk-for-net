@@ -18,24 +18,24 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="AccessPolicyAssignmentProperties"/>. </summary>
-        public AccessPolicyAssignmentProperties()
+        /// <param name="accessPolicyName"> Name of access policy under specific access policy assignment. Only "default" policy is supported for now. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="accessPolicyName"/> is null. </exception>
+        public AccessPolicyAssignmentProperties(string accessPolicyName)
         {
+            Argument.AssertNotNull(accessPolicyName, nameof(accessPolicyName));
 
+            AccessPolicyName = accessPolicyName;
         }
 
         /// <summary> Initializes a new instance of <see cref="AccessPolicyAssignmentProperties"/>. </summary>
         /// <param name="provisioningState"> Current provisioning status of the access policy assignment. </param>
-        /// <param name="accessPolicyName"> <b>Deprecated.</b> This property always returns "default". Use `accessString` to configure custom Redis ACL permissions instead. </param>
-        /// <param name="accessString"> The Redis ACL permissions string applied to this assignment, for example `+@read ~cache:<i>`. Defaults to `+@all ~</i>` if not specified. </param>
-        /// <param name="provisioningError"> Provisioning error details when the access string failed to apply (e.g., invalid ACL syntax). Null when provisioning succeeded. </param>
+        /// <param name="accessPolicyName"> Name of access policy under specific access policy assignment. Only "default" policy is supported for now. </param>
         /// <param name="user"> The user associated with the access policy. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AccessPolicyAssignmentProperties(RedisEnterpriseProvisioningStatus? provisioningState, string accessPolicyName, string accessString, AccessPolicyAssignmentProvisioningError provisioningError, AccessPolicyAssignmentPropertiesUser user, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AccessPolicyAssignmentProperties(RedisEnterpriseProvisioningStatus? provisioningState, string accessPolicyName, AccessPolicyAssignmentPropertiesUser user, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             AccessPolicyName = accessPolicyName;
-            AccessString = accessString;
-            ProvisioningError = provisioningError;
             User = user;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -44,17 +44,9 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         [WirePath("provisioningState")]
         public RedisEnterpriseProvisioningStatus? ProvisioningState { get; }
 
-        /// <summary> <b>Deprecated.</b> This property always returns "default". Use `accessString` to configure custom Redis ACL permissions instead. </summary>
+        /// <summary> Name of access policy under specific access policy assignment. Only "default" policy is supported for now. </summary>
         [WirePath("accessPolicyName")]
         public string AccessPolicyName { get; set; }
-
-        /// <summary> The Redis ACL permissions string applied to this assignment, for example `+@read ~cache:<i>`. Defaults to `+@all ~</i>` if not specified. </summary>
-        [WirePath("accessString")]
-        public string AccessString { get; set; }
-
-        /// <summary> Provisioning error details when the access string failed to apply (e.g., invalid ACL syntax). Null when provisioning succeeded. </summary>
-        [WirePath("provisioningError")]
-        public AccessPolicyAssignmentProvisioningError ProvisioningError { get; }
 
         /// <summary> The user associated with the access policy. </summary>
         [WirePath("user")]
