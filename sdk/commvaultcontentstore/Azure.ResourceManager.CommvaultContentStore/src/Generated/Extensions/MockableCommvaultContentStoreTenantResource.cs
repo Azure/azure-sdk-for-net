@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = ProtectedItemsOperationGroupRestClient.CreateCountByProtectionGroupsRequest(CountProtectedItemsContent.ToRequestContent(content), context);
+                using HttpMessage message = ProtectedItemsOperationGroupRestClient.CreateCountByProtectionGroupsRequest(CountProtectedItemsContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<CountProtectedItemsResult> response = Response.FromValue(CountProtectedItemsResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = ProtectedItemsOperationGroupRestClient.CreateCountByProtectionGroupsRequest(CountProtectedItemsContent.ToRequestContent(content), context);
+                using HttpMessage message = ProtectedItemsOperationGroupRestClient.CreateCountByProtectionGroupsRequest(CountProtectedItemsContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<CountProtectedItemsResult> response = Response.FromValue(CountProtectedItemsResult.FromResponse(result), result);
                 if (response.Value == null)

@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Compute.Recommender
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _skuMixPlacementScoresRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, context);
+                using HttpMessage message = _skuMixPlacementScoresRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ComputeSkuMixPlacementData> response = Response.FromValue(ComputeSkuMixPlacementData.FromResponse(result), result);
                 if (response.Value == null)
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.Compute.Recommender
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _skuMixPlacementScoresRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, context);
+                using HttpMessage message = _skuMixPlacementScoresRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ComputeSkuMixPlacementData> response = Response.FromValue(ComputeSkuMixPlacementData.FromResponse(result), result);
                 if (response.Value == null)
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.Compute.Recommender
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _skuMixPlacementScoresRestClient.CreateGenerateRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, ComputeSkuMixPlacementGenerateContent.ToRequestContent(content), context);
+                using HttpMessage message = _skuMixPlacementScoresRestClient.CreateGenerateRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, ComputeSkuMixPlacementGenerateContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ComputeSkuMixPlacementGenerateResult> response = Response.FromValue(ComputeSkuMixPlacementGenerateResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -275,7 +275,7 @@ namespace Azure.ResourceManager.Compute.Recommender
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _skuMixPlacementScoresRestClient.CreateGenerateRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, ComputeSkuMixPlacementGenerateContent.ToRequestContent(content), context);
+                using HttpMessage message = _skuMixPlacementScoresRestClient.CreateGenerateRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, ComputeSkuMixPlacementGenerateContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ComputeSkuMixPlacementGenerateResult> response = Response.FromValue(ComputeSkuMixPlacementGenerateResult.FromResponse(result), result);
                 if (response.Value == null)

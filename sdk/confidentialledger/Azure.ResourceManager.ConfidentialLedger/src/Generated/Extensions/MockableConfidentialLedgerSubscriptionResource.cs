@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = ConfidentialLedgerClientRestClient.CreateCheckConfidentialLedgerNameAvailabilityRequest(Id.SubscriptionId, ConfidentialLedgerNameAvailabilityContent.ToRequestContent(content), context);
+                using HttpMessage message = ConfidentialLedgerClientRestClient.CreateCheckConfidentialLedgerNameAvailabilityRequest(Id.SubscriptionId, ConfidentialLedgerNameAvailabilityContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ConfidentialLedgerNameAvailabilityResult> response = Response.FromValue(ConfidentialLedgerNameAvailabilityResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = ConfidentialLedgerClientRestClient.CreateCheckConfidentialLedgerNameAvailabilityRequest(Id.SubscriptionId, ConfidentialLedgerNameAvailabilityContent.ToRequestContent(content), context);
+                using HttpMessage message = ConfidentialLedgerClientRestClient.CreateCheckConfidentialLedgerNameAvailabilityRequest(Id.SubscriptionId, ConfidentialLedgerNameAvailabilityContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ConfidentialLedgerNameAvailabilityResult> response = Response.FromValue(ConfidentialLedgerNameAvailabilityResult.FromResponse(result), result);
                 if (response.Value == null)

@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualMachineRunCommandsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, runCommandName, VirtualMachineRunCommandData.ToRequestContent(data), context);
+                using HttpMessage message = _virtualMachineRunCommandsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, runCommandName, VirtualMachineRunCommandData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ComputeArmOperation<VirtualMachineRunCommandResource> operation = new ComputeArmOperation<VirtualMachineRunCommandResource>(
                     new VirtualMachineRunCommandResourceOperationSource(Client),
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualMachineRunCommandsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, runCommandName, VirtualMachineRunCommandData.ToRequestContent(data), context);
+                using HttpMessage message = _virtualMachineRunCommandsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, runCommandName, VirtualMachineRunCommandData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ComputeArmOperation<VirtualMachineRunCommandResource> operation = new ComputeArmOperation<VirtualMachineRunCommandResource>(
                     new VirtualMachineRunCommandResourceOperationSource(Client),
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualMachineRunCommandsRestClient.CreateGetByVirtualMachineRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, runCommandName, expand, context);
+                using HttpMessage message = _virtualMachineRunCommandsRestClient.CreateGetByVirtualMachineRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, runCommandName, expand, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<VirtualMachineRunCommandData> response = Response.FromValue(VirtualMachineRunCommandData.FromResponse(result), result);
                 if (response.Value == null)
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualMachineRunCommandsRestClient.CreateGetByVirtualMachineRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, runCommandName, expand, context);
+                using HttpMessage message = _virtualMachineRunCommandsRestClient.CreateGetByVirtualMachineRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, runCommandName, expand, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<VirtualMachineRunCommandData> response = Response.FromValue(VirtualMachineRunCommandData.FromResponse(result), result);
                 if (response.Value == null)
@@ -376,7 +376,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualMachineRunCommandsRestClient.CreateGetByVirtualMachineRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, runCommandName, expand, context);
+                using HttpMessage message = _virtualMachineRunCommandsRestClient.CreateGetByVirtualMachineRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, runCommandName, expand, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<VirtualMachineRunCommandData> response = default;
@@ -434,7 +434,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualMachineRunCommandsRestClient.CreateGetByVirtualMachineRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, runCommandName, expand, context);
+                using HttpMessage message = _virtualMachineRunCommandsRestClient.CreateGetByVirtualMachineRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, runCommandName, expand, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<VirtualMachineRunCommandData> response = default;
@@ -492,7 +492,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualMachineRunCommandsRestClient.CreateGetByVirtualMachineRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, runCommandName, expand, context);
+                using HttpMessage message = _virtualMachineRunCommandsRestClient.CreateGetByVirtualMachineRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, runCommandName, expand, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<VirtualMachineRunCommandData> response = default;
@@ -554,7 +554,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualMachineRunCommandsRestClient.CreateGetByVirtualMachineRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, runCommandName, expand, context);
+                using HttpMessage message = _virtualMachineRunCommandsRestClient.CreateGetByVirtualMachineRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, runCommandName, expand, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<VirtualMachineRunCommandData> response = default;

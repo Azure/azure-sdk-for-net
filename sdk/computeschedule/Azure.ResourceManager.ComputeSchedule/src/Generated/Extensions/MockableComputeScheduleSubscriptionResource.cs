@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = ScheduledActionsRestClient.CreateSubmitVirtualMachineDeallocateRequest(Guid.Parse(Id.SubscriptionId), locationparameter, SubmitDeallocateContent.ToRequestContent(content), context);
+                using HttpMessage message = ScheduledActionsRestClient.CreateSubmitVirtualMachineDeallocateRequest(Guid.Parse(Id.SubscriptionId), locationparameter, SubmitDeallocateContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<DeallocateResourceOperationResult> response = Response.FromValue(DeallocateResourceOperationResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = ScheduledActionsRestClient.CreateSubmitVirtualMachineDeallocateRequest(Guid.Parse(Id.SubscriptionId), locationparameter, SubmitDeallocateContent.ToRequestContent(content), context);
+                using HttpMessage message = ScheduledActionsRestClient.CreateSubmitVirtualMachineDeallocateRequest(Guid.Parse(Id.SubscriptionId), locationparameter, SubmitDeallocateContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<DeallocateResourceOperationResult> response = Response.FromValue(DeallocateResourceOperationResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = ScheduledActionsRestClient.CreateSubmitVirtualMachineHibernateRequest(Guid.Parse(Id.SubscriptionId), locationparameter, SubmitHibernateContent.ToRequestContent(content), context);
+                using HttpMessage message = ScheduledActionsRestClient.CreateSubmitVirtualMachineHibernateRequest(Guid.Parse(Id.SubscriptionId), locationparameter, SubmitHibernateContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<HibernateResourceOperationResult> response = Response.FromValue(HibernateResourceOperationResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = ScheduledActionsRestClient.CreateSubmitVirtualMachineHibernateRequest(Guid.Parse(Id.SubscriptionId), locationparameter, SubmitHibernateContent.ToRequestContent(content), context);
+                using HttpMessage message = ScheduledActionsRestClient.CreateSubmitVirtualMachineHibernateRequest(Guid.Parse(Id.SubscriptionId), locationparameter, SubmitHibernateContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<HibernateResourceOperationResult> response = Response.FromValue(HibernateResourceOperationResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -331,7 +331,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = ScheduledActionsRestClient.CreateSubmitVirtualMachineStartRequest(Guid.Parse(Id.SubscriptionId), locationparameter, SubmitStartContent.ToRequestContent(content), context);
+                using HttpMessage message = ScheduledActionsRestClient.CreateSubmitVirtualMachineStartRequest(Guid.Parse(Id.SubscriptionId), locationparameter, SubmitStartContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<StartResourceOperationResult> response = Response.FromValue(StartResourceOperationResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -380,7 +380,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = ScheduledActionsRestClient.CreateSubmitVirtualMachineStartRequest(Guid.Parse(Id.SubscriptionId), locationparameter, SubmitStartContent.ToRequestContent(content), context);
+                using HttpMessage message = ScheduledActionsRestClient.CreateSubmitVirtualMachineStartRequest(Guid.Parse(Id.SubscriptionId), locationparameter, SubmitStartContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<StartResourceOperationResult> response = Response.FromValue(StartResourceOperationResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -429,7 +429,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = ScheduledActionsRestClient.CreateExecuteVirtualMachineDeallocateRequest(Guid.Parse(Id.SubscriptionId), locationparameter, ExecuteDeallocateContent.ToRequestContent(content), context);
+                using HttpMessage message = ScheduledActionsRestClient.CreateExecuteVirtualMachineDeallocateRequest(Guid.Parse(Id.SubscriptionId), locationparameter, ExecuteDeallocateContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<DeallocateResourceOperationResult> response = Response.FromValue(DeallocateResourceOperationResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -478,7 +478,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = ScheduledActionsRestClient.CreateExecuteVirtualMachineDeallocateRequest(Guid.Parse(Id.SubscriptionId), locationparameter, ExecuteDeallocateContent.ToRequestContent(content), context);
+                using HttpMessage message = ScheduledActionsRestClient.CreateExecuteVirtualMachineDeallocateRequest(Guid.Parse(Id.SubscriptionId), locationparameter, ExecuteDeallocateContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<DeallocateResourceOperationResult> response = Response.FromValue(DeallocateResourceOperationResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -527,7 +527,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = ScheduledActionsRestClient.CreateExecuteVirtualMachineHibernateRequest(Guid.Parse(Id.SubscriptionId), locationparameter, ExecuteHibernateContent.ToRequestContent(content), context);
+                using HttpMessage message = ScheduledActionsRestClient.CreateExecuteVirtualMachineHibernateRequest(Guid.Parse(Id.SubscriptionId), locationparameter, ExecuteHibernateContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<HibernateResourceOperationResult> response = Response.FromValue(HibernateResourceOperationResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -576,7 +576,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = ScheduledActionsRestClient.CreateExecuteVirtualMachineHibernateRequest(Guid.Parse(Id.SubscriptionId), locationparameter, ExecuteHibernateContent.ToRequestContent(content), context);
+                using HttpMessage message = ScheduledActionsRestClient.CreateExecuteVirtualMachineHibernateRequest(Guid.Parse(Id.SubscriptionId), locationparameter, ExecuteHibernateContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<HibernateResourceOperationResult> response = Response.FromValue(HibernateResourceOperationResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -625,7 +625,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = ScheduledActionsRestClient.CreateExecuteVirtualMachineStartRequest(Guid.Parse(Id.SubscriptionId), locationparameter, ExecuteStartContent.ToRequestContent(content), context);
+                using HttpMessage message = ScheduledActionsRestClient.CreateExecuteVirtualMachineStartRequest(Guid.Parse(Id.SubscriptionId), locationparameter, ExecuteStartContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<StartResourceOperationResult> response = Response.FromValue(StartResourceOperationResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -674,7 +674,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = ScheduledActionsRestClient.CreateExecuteVirtualMachineStartRequest(Guid.Parse(Id.SubscriptionId), locationparameter, ExecuteStartContent.ToRequestContent(content), context);
+                using HttpMessage message = ScheduledActionsRestClient.CreateExecuteVirtualMachineStartRequest(Guid.Parse(Id.SubscriptionId), locationparameter, ExecuteStartContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<StartResourceOperationResult> response = Response.FromValue(StartResourceOperationResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -723,7 +723,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = ScheduledActionsRestClient.CreateExecuteVirtualMachineCreateFlexOperationRequest(Guid.Parse(Id.SubscriptionId), locationparameter, ExecuteCreateFlexContent.ToRequestContent(content), context);
+                using HttpMessage message = ScheduledActionsRestClient.CreateExecuteVirtualMachineCreateFlexOperationRequest(Guid.Parse(Id.SubscriptionId), locationparameter, ExecuteCreateFlexContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ScheduledActionCreateFlexResult> response = Response.FromValue(ScheduledActionCreateFlexResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -772,7 +772,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = ScheduledActionsRestClient.CreateExecuteVirtualMachineCreateFlexOperationRequest(Guid.Parse(Id.SubscriptionId), locationparameter, ExecuteCreateFlexContent.ToRequestContent(content), context);
+                using HttpMessage message = ScheduledActionsRestClient.CreateExecuteVirtualMachineCreateFlexOperationRequest(Guid.Parse(Id.SubscriptionId), locationparameter, ExecuteCreateFlexContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ScheduledActionCreateFlexResult> response = Response.FromValue(ScheduledActionCreateFlexResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -821,7 +821,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = ScheduledActionsRestClient.CreateExecuteVirtualMachineCreateOperationRequest(Guid.Parse(Id.SubscriptionId), locationparameter, ExecuteCreateContent.ToRequestContent(content), context);
+                using HttpMessage message = ScheduledActionsRestClient.CreateExecuteVirtualMachineCreateOperationRequest(Guid.Parse(Id.SubscriptionId), locationparameter, ExecuteCreateContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<CreateResourceOperationResult> response = Response.FromValue(CreateResourceOperationResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -870,7 +870,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = ScheduledActionsRestClient.CreateExecuteVirtualMachineCreateOperationRequest(Guid.Parse(Id.SubscriptionId), locationparameter, ExecuteCreateContent.ToRequestContent(content), context);
+                using HttpMessage message = ScheduledActionsRestClient.CreateExecuteVirtualMachineCreateOperationRequest(Guid.Parse(Id.SubscriptionId), locationparameter, ExecuteCreateContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<CreateResourceOperationResult> response = Response.FromValue(CreateResourceOperationResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -919,7 +919,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = ScheduledActionsRestClient.CreateExecuteVirtualMachineDeleteOperationRequest(Guid.Parse(Id.SubscriptionId), locationparameter, ExecuteDeleteContent.ToRequestContent(content), context);
+                using HttpMessage message = ScheduledActionsRestClient.CreateExecuteVirtualMachineDeleteOperationRequest(Guid.Parse(Id.SubscriptionId), locationparameter, ExecuteDeleteContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<DeleteResourceOperationResult> response = Response.FromValue(DeleteResourceOperationResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -968,7 +968,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = ScheduledActionsRestClient.CreateExecuteVirtualMachineDeleteOperationRequest(Guid.Parse(Id.SubscriptionId), locationparameter, ExecuteDeleteContent.ToRequestContent(content), context);
+                using HttpMessage message = ScheduledActionsRestClient.CreateExecuteVirtualMachineDeleteOperationRequest(Guid.Parse(Id.SubscriptionId), locationparameter, ExecuteDeleteContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<DeleteResourceOperationResult> response = Response.FromValue(DeleteResourceOperationResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -1017,7 +1017,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = ScheduledActionsRestClient.CreateGetVirtualMachineOperationStatusRequest(Guid.Parse(Id.SubscriptionId), locationparameter, GetOperationStatusContent.ToRequestContent(content), context);
+                using HttpMessage message = ScheduledActionsRestClient.CreateGetVirtualMachineOperationStatusRequest(Guid.Parse(Id.SubscriptionId), locationparameter, GetOperationStatusContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<GetOperationStatusResult> response = Response.FromValue(GetOperationStatusResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -1066,7 +1066,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = ScheduledActionsRestClient.CreateGetVirtualMachineOperationStatusRequest(Guid.Parse(Id.SubscriptionId), locationparameter, GetOperationStatusContent.ToRequestContent(content), context);
+                using HttpMessage message = ScheduledActionsRestClient.CreateGetVirtualMachineOperationStatusRequest(Guid.Parse(Id.SubscriptionId), locationparameter, GetOperationStatusContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<GetOperationStatusResult> response = Response.FromValue(GetOperationStatusResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -1115,7 +1115,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = ScheduledActionsRestClient.CreateCancelVirtualMachineOperationsRequest(Guid.Parse(Id.SubscriptionId), locationparameter, CancelOperationsContent.ToRequestContent(content), context);
+                using HttpMessage message = ScheduledActionsRestClient.CreateCancelVirtualMachineOperationsRequest(Guid.Parse(Id.SubscriptionId), locationparameter, CancelOperationsContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<CancelOperationsResult> response = Response.FromValue(CancelOperationsResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -1164,7 +1164,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = ScheduledActionsRestClient.CreateCancelVirtualMachineOperationsRequest(Guid.Parse(Id.SubscriptionId), locationparameter, CancelOperationsContent.ToRequestContent(content), context);
+                using HttpMessage message = ScheduledActionsRestClient.CreateCancelVirtualMachineOperationsRequest(Guid.Parse(Id.SubscriptionId), locationparameter, CancelOperationsContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<CancelOperationsResult> response = Response.FromValue(CancelOperationsResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -1213,7 +1213,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = ScheduledActionsRestClient.CreateGetVirtualMachineOperationErrorsRequest(Guid.Parse(Id.SubscriptionId), locationparameter, GetOperationErrorsContent.ToRequestContent(content), context);
+                using HttpMessage message = ScheduledActionsRestClient.CreateGetVirtualMachineOperationErrorsRequest(Guid.Parse(Id.SubscriptionId), locationparameter, GetOperationErrorsContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<GetOperationErrorsResult> response = Response.FromValue(GetOperationErrorsResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -1262,7 +1262,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = ScheduledActionsRestClient.CreateGetVirtualMachineOperationErrorsRequest(Guid.Parse(Id.SubscriptionId), locationparameter, GetOperationErrorsContent.ToRequestContent(content), context);
+                using HttpMessage message = ScheduledActionsRestClient.CreateGetVirtualMachineOperationErrorsRequest(Guid.Parse(Id.SubscriptionId), locationparameter, GetOperationErrorsContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<GetOperationErrorsResult> response = Response.FromValue(GetOperationErrorsResult.FromResponse(result), result);
                 if (response.Value == null)

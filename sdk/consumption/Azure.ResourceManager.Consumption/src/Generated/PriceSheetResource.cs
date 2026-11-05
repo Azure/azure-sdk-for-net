@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Consumption
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _priceSheetRestClient.CreateGetPriceSheetRequest(Id.SubscriptionId, Id.Parent.Name, expand, skiptoken, top, context);
+                using HttpMessage message = _priceSheetRestClient.CreateGetPriceSheetRequest(Id.SubscriptionId, Id.Parent.Name, expand, skiptoken, top, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<PriceSheetResultData> response = Response.FromValue(PriceSheetResultData.FromResponse(result), result);
                 if (response.Value == null)
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.Consumption
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _priceSheetRestClient.CreateGetPriceSheetRequest(Id.SubscriptionId, Id.Parent.Name, expand, skiptoken, top, context);
+                using HttpMessage message = _priceSheetRestClient.CreateGetPriceSheetRequest(Id.SubscriptionId, Id.Parent.Name, expand, skiptoken, top, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<PriceSheetResultData> response = Response.FromValue(PriceSheetResultData.FromResponse(result), result);
                 if (response.Value == null)

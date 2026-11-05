@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _interconnectBlocksRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, interconnectBlockName, InterconnectBlockData.ToRequestContent(data), context);
+                using HttpMessage message = _interconnectBlocksRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, interconnectBlockName, InterconnectBlockData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ComputeArmOperation<InterconnectBlockResource> operation = new ComputeArmOperation<InterconnectBlockResource>(
                     new InterconnectBlockResourceOperationSource(Client),
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _interconnectBlocksRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, interconnectBlockName, InterconnectBlockData.ToRequestContent(data), context);
+                using HttpMessage message = _interconnectBlocksRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, interconnectBlockName, InterconnectBlockData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ComputeArmOperation<InterconnectBlockResource> operation = new ComputeArmOperation<InterconnectBlockResource>(
                     new InterconnectBlockResourceOperationSource(Client),
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _interconnectBlocksRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, interconnectBlockName, expand?.ToString(), context);
+                using HttpMessage message = _interconnectBlocksRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, interconnectBlockName, expand?.ToString(), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<InterconnectBlockData> response = Response.FromValue(InterconnectBlockData.FromResponse(result), result);
                 if (response.Value == null)
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _interconnectBlocksRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, interconnectBlockName, expand?.ToString(), context);
+                using HttpMessage message = _interconnectBlocksRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, interconnectBlockName, expand?.ToString(), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<InterconnectBlockData> response = Response.FromValue(InterconnectBlockData.FromResponse(result), result);
                 if (response.Value == null)
@@ -361,7 +361,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _interconnectBlocksRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, interconnectBlockName, expand?.ToString(), context);
+                using HttpMessage message = _interconnectBlocksRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, interconnectBlockName, expand?.ToString(), context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<InterconnectBlockData> response = default;
@@ -419,7 +419,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _interconnectBlocksRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, interconnectBlockName, expand?.ToString(), context);
+                using HttpMessage message = _interconnectBlocksRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, interconnectBlockName, expand?.ToString(), context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<InterconnectBlockData> response = default;
@@ -477,7 +477,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _interconnectBlocksRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, interconnectBlockName, expand?.ToString(), context);
+                using HttpMessage message = _interconnectBlocksRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, interconnectBlockName, expand?.ToString(), context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<InterconnectBlockData> response = default;
@@ -539,7 +539,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _interconnectBlocksRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, interconnectBlockName, expand?.ToString(), context);
+                using HttpMessage message = _interconnectBlocksRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, interconnectBlockName, expand?.ToString(), context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<InterconnectBlockData> response = default;

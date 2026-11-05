@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _dedicatedHostsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, hostName, DedicatedHostData.ToRequestContent(data), context);
+                using HttpMessage message = _dedicatedHostsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, hostName, DedicatedHostData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ComputeArmOperation<DedicatedHostResource> operation = new ComputeArmOperation<DedicatedHostResource>(
                     new DedicatedHostResourceOperationSource(Client),
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _dedicatedHostsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, hostName, DedicatedHostData.ToRequestContent(data), context);
+                using HttpMessage message = _dedicatedHostsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, hostName, DedicatedHostData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ComputeArmOperation<DedicatedHostResource> operation = new ComputeArmOperation<DedicatedHostResource>(
                     new DedicatedHostResourceOperationSource(Client),
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _dedicatedHostsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, hostName, expand?.ToSerialString(), context);
+                using HttpMessage message = _dedicatedHostsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, hostName, expand?.ToSerialString(), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<DedicatedHostData> response = Response.FromValue(DedicatedHostData.FromResponse(result), result);
                 if (response.Value == null)
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _dedicatedHostsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, hostName, expand?.ToSerialString(), context);
+                using HttpMessage message = _dedicatedHostsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, hostName, expand?.ToSerialString(), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<DedicatedHostData> response = Response.FromValue(DedicatedHostData.FromResponse(result), result);
                 if (response.Value == null)
@@ -373,7 +373,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _dedicatedHostsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, hostName, expand?.ToSerialString(), context);
+                using HttpMessage message = _dedicatedHostsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, hostName, expand?.ToSerialString(), context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<DedicatedHostData> response = default;
@@ -431,7 +431,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _dedicatedHostsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, hostName, expand?.ToSerialString(), context);
+                using HttpMessage message = _dedicatedHostsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, hostName, expand?.ToSerialString(), context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<DedicatedHostData> response = default;
@@ -489,7 +489,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _dedicatedHostsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, hostName, expand?.ToSerialString(), context);
+                using HttpMessage message = _dedicatedHostsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, hostName, expand?.ToSerialString(), context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<DedicatedHostData> response = default;
@@ -551,7 +551,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _dedicatedHostsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, hostName, expand?.ToSerialString(), context);
+                using HttpMessage message = _dedicatedHostsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, hostName, expand?.ToSerialString(), context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<DedicatedHostData> response = default;

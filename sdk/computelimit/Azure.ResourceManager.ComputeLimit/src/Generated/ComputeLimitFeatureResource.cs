@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.ComputeLimit
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _featuresRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _featuresRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ComputeLimitFeatureData> response = Response.FromValue(ComputeLimitFeatureData.FromResponse(result), result);
                 if (response.Value == null)
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.ComputeLimit
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _featuresRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _featuresRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ComputeLimitFeatureData> response = Response.FromValue(ComputeLimitFeatureData.FromResponse(result), result);
                 if (response.Value == null)
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.ComputeLimit
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _featuresRestClient.CreateDisableRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _featuresRestClient.CreateDisableRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ComputeLimitArmOperation<OperationStatusResult> operation = new ComputeLimitArmOperation<OperationStatusResult>(
                     new OperationStatusResultOperationSource(),
@@ -277,7 +277,7 @@ namespace Azure.ResourceManager.ComputeLimit
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _featuresRestClient.CreateDisableRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _featuresRestClient.CreateDisableRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ComputeLimitArmOperation<OperationStatusResult> operation = new ComputeLimitArmOperation<OperationStatusResult>(
                     new OperationStatusResultOperationSource(),
@@ -333,7 +333,7 @@ namespace Azure.ResourceManager.ComputeLimit
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _featuresRestClient.CreateEnableRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, ComputeLimitFeatureEnableContent.ToRequestContent(content), context);
+                using HttpMessage message = _featuresRestClient.CreateEnableRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, ComputeLimitFeatureEnableContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ComputeLimitArmOperation<OperationStatusResult> operation = new ComputeLimitArmOperation<OperationStatusResult>(
                     new OperationStatusResultOperationSource(),
@@ -389,7 +389,7 @@ namespace Azure.ResourceManager.ComputeLimit
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _featuresRestClient.CreateEnableRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, ComputeLimitFeatureEnableContent.ToRequestContent(content), context);
+                using HttpMessage message = _featuresRestClient.CreateEnableRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, ComputeLimitFeatureEnableContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ComputeLimitArmOperation<OperationStatusResult> operation = new ComputeLimitArmOperation<OperationStatusResult>(
                     new OperationStatusResultOperationSource(),

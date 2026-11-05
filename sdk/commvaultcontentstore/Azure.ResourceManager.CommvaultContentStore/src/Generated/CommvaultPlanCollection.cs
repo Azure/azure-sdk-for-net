@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.CommvaultContentStore
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _plansRestClient.CreateCreateOrupdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, planName, CommvaultPlanData.ToRequestContent(data), context);
+                using HttpMessage message = _plansRestClient.CreateCreateOrupdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, planName, CommvaultPlanData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 CommvaultContentStoreArmOperation<CommvaultPlanResource> operation = new CommvaultContentStoreArmOperation<CommvaultPlanResource>(
                     new CommvaultPlanResourceOperationSource(Client),
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.CommvaultContentStore
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _plansRestClient.CreateCreateOrupdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, planName, CommvaultPlanData.ToRequestContent(data), context);
+                using HttpMessage message = _plansRestClient.CreateCreateOrupdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, planName, CommvaultPlanData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 CommvaultContentStoreArmOperation<CommvaultPlanResource> operation = new CommvaultContentStoreArmOperation<CommvaultPlanResource>(
                     new CommvaultPlanResourceOperationSource(Client),
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.CommvaultContentStore
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _plansRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, planName, context);
+                using HttpMessage message = _plansRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, planName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<CommvaultPlanData> response = Response.FromValue(CommvaultPlanData.FromResponse(result), result);
                 if (response.Value == null)
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.CommvaultContentStore
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _plansRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, planName, context);
+                using HttpMessage message = _plansRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, planName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<CommvaultPlanData> response = Response.FromValue(CommvaultPlanData.FromResponse(result), result);
                 if (response.Value == null)
@@ -369,7 +369,7 @@ namespace Azure.ResourceManager.CommvaultContentStore
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _plansRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, planName, context);
+                using HttpMessage message = _plansRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, planName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<CommvaultPlanData> response = default;
@@ -426,7 +426,7 @@ namespace Azure.ResourceManager.CommvaultContentStore
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _plansRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, planName, context);
+                using HttpMessage message = _plansRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, planName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<CommvaultPlanData> response = default;
@@ -483,7 +483,7 @@ namespace Azure.ResourceManager.CommvaultContentStore
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _plansRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, planName, context);
+                using HttpMessage message = _plansRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, planName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<CommvaultPlanData> response = default;
@@ -544,7 +544,7 @@ namespace Azure.ResourceManager.CommvaultContentStore
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _plansRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, planName, context);
+                using HttpMessage message = _plansRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, planName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<CommvaultPlanData> response = default;

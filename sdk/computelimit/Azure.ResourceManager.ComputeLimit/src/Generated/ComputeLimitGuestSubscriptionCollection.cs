@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.ComputeLimit
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _guestSubscriptionsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), _location, guestSubscriptionId, ComputeLimitGuestSubscriptionData.ToRequestContent(data), context);
+                using HttpMessage message = _guestSubscriptionsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), _location, guestSubscriptionId, ComputeLimitGuestSubscriptionData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ComputeLimitGuestSubscriptionData> response = Response.FromValue(ComputeLimitGuestSubscriptionData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.ComputeLimit
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _guestSubscriptionsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), _location, guestSubscriptionId, ComputeLimitGuestSubscriptionData.ToRequestContent(data), context);
+                using HttpMessage message = _guestSubscriptionsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), _location, guestSubscriptionId, ComputeLimitGuestSubscriptionData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ComputeLimitGuestSubscriptionData> response = Response.FromValue(ComputeLimitGuestSubscriptionData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.ComputeLimit
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _guestSubscriptionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, guestSubscriptionId, context);
+                using HttpMessage message = _guestSubscriptionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, guestSubscriptionId, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ComputeLimitGuestSubscriptionData> response = Response.FromValue(ComputeLimitGuestSubscriptionData.FromResponse(result), result);
                 if (response.Value == null)
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.ComputeLimit
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _guestSubscriptionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, guestSubscriptionId, context);
+                using HttpMessage message = _guestSubscriptionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, guestSubscriptionId, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ComputeLimitGuestSubscriptionData> response = Response.FromValue(ComputeLimitGuestSubscriptionData.FromResponse(result), result);
                 if (response.Value == null)
@@ -356,7 +356,7 @@ namespace Azure.ResourceManager.ComputeLimit
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _guestSubscriptionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, guestSubscriptionId, context);
+                using HttpMessage message = _guestSubscriptionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, guestSubscriptionId, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ComputeLimitGuestSubscriptionData> response = default;
@@ -413,7 +413,7 @@ namespace Azure.ResourceManager.ComputeLimit
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _guestSubscriptionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, guestSubscriptionId, context);
+                using HttpMessage message = _guestSubscriptionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, guestSubscriptionId, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ComputeLimitGuestSubscriptionData> response = default;
@@ -470,7 +470,7 @@ namespace Azure.ResourceManager.ComputeLimit
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _guestSubscriptionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, guestSubscriptionId, context);
+                using HttpMessage message = _guestSubscriptionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, guestSubscriptionId, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ComputeLimitGuestSubscriptionData> response = default;
@@ -531,7 +531,7 @@ namespace Azure.ResourceManager.ComputeLimit
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _guestSubscriptionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, guestSubscriptionId, context);
+                using HttpMessage message = _guestSubscriptionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, guestSubscriptionId, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ComputeLimitGuestSubscriptionData> response = default;

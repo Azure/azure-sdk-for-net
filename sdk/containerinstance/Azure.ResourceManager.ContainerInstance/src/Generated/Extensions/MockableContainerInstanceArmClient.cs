@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.ContainerInstance.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = SubnetServiceAssociationLinkRestClient.CreateDeleteSubnetServiceAssociationLinkRequest(Guid.Parse(scope.SubscriptionId), scope.ResourceGroupName, scope.Parent.Name, scope.Name, context);
+                using HttpMessage message = SubnetServiceAssociationLinkRestClient.CreateDeleteSubnetServiceAssociationLinkRequest(Guid.Parse(scope.SubscriptionId), scope.ResourceGroupName, scope.Parent.Name, scope.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ContainerInstanceArmOperation operation = new ContainerInstanceArmOperation(SubnetServiceAssociationLinkClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.ContainerInstance.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = SubnetServiceAssociationLinkRestClient.CreateDeleteSubnetServiceAssociationLinkRequest(Guid.Parse(scope.SubscriptionId), scope.ResourceGroupName, scope.Parent.Name, scope.Name, context);
+                using HttpMessage message = SubnetServiceAssociationLinkRestClient.CreateDeleteSubnetServiceAssociationLinkRequest(Guid.Parse(scope.SubscriptionId), scope.ResourceGroupName, scope.Parent.Name, scope.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ContainerInstanceArmOperation operation = new ContainerInstanceArmOperation(SubnetServiceAssociationLinkClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)

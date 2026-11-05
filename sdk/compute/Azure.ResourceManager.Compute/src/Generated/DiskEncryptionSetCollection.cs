@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _diskEncryptionSetsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, diskEncryptionSetName, DiskEncryptionSetData.ToRequestContent(data), context);
+                using HttpMessage message = _diskEncryptionSetsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, diskEncryptionSetName, DiskEncryptionSetData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ComputeArmOperation<DiskEncryptionSetResource> operation = new ComputeArmOperation<DiskEncryptionSetResource>(
                     new DiskEncryptionSetResourceOperationSource(Client),
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _diskEncryptionSetsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, diskEncryptionSetName, DiskEncryptionSetData.ToRequestContent(data), context);
+                using HttpMessage message = _diskEncryptionSetsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, diskEncryptionSetName, DiskEncryptionSetData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ComputeArmOperation<DiskEncryptionSetResource> operation = new ComputeArmOperation<DiskEncryptionSetResource>(
                     new DiskEncryptionSetResourceOperationSource(Client),
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _diskEncryptionSetsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, diskEncryptionSetName, context);
+                using HttpMessage message = _diskEncryptionSetsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, diskEncryptionSetName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<DiskEncryptionSetData> response = Response.FromValue(DiskEncryptionSetData.FromResponse(result), result);
                 if (response.Value == null)
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _diskEncryptionSetsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, diskEncryptionSetName, context);
+                using HttpMessage message = _diskEncryptionSetsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, diskEncryptionSetName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<DiskEncryptionSetData> response = Response.FromValue(DiskEncryptionSetData.FromResponse(result), result);
                 if (response.Value == null)
@@ -357,7 +357,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _diskEncryptionSetsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, diskEncryptionSetName, context);
+                using HttpMessage message = _diskEncryptionSetsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, diskEncryptionSetName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<DiskEncryptionSetData> response = default;
@@ -414,7 +414,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _diskEncryptionSetsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, diskEncryptionSetName, context);
+                using HttpMessage message = _diskEncryptionSetsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, diskEncryptionSetName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<DiskEncryptionSetData> response = default;
@@ -471,7 +471,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _diskEncryptionSetsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, diskEncryptionSetName, context);
+                using HttpMessage message = _diskEncryptionSetsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, diskEncryptionSetName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<DiskEncryptionSetData> response = default;
@@ -532,7 +532,7 @@ namespace Azure.ResourceManager.Compute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _diskEncryptionSetsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, diskEncryptionSetName, context);
+                using HttpMessage message = _diskEncryptionSetsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, diskEncryptionSetName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<DiskEncryptionSetData> response = default;

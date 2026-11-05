@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.CommvaultContentStore
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _cloudAccountsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _cloudAccountsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<CloudAccountData> response = Response.FromValue(CloudAccountData.FromResponse(result), result);
                 if (response.Value == null)
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.CommvaultContentStore
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _cloudAccountsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _cloudAccountsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<CloudAccountData> response = Response.FromValue(CloudAccountData.FromResponse(result), result);
                 if (response.Value == null)
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.CommvaultContentStore
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _cloudAccountsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, CloudAccountPatch.ToRequestContent(patch), context);
+                using HttpMessage message = _cloudAccountsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, CloudAccountPatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 CommvaultContentStoreArmOperation<CloudAccountResource> operation = new CommvaultContentStoreArmOperation<CloudAccountResource>(
                     new CloudAccountResourceOperationSource(Client),
@@ -285,7 +285,7 @@ namespace Azure.ResourceManager.CommvaultContentStore
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _cloudAccountsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, CloudAccountPatch.ToRequestContent(patch), context);
+                using HttpMessage message = _cloudAccountsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, CloudAccountPatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 CommvaultContentStoreArmOperation<CloudAccountResource> operation = new CommvaultContentStoreArmOperation<CloudAccountResource>(
                     new CloudAccountResourceOperationSource(Client),
@@ -340,7 +340,7 @@ namespace Azure.ResourceManager.CommvaultContentStore
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _cloudAccountsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _cloudAccountsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 CommvaultContentStoreArmOperation operation = new CommvaultContentStoreArmOperation(_cloudAccountsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -389,7 +389,7 @@ namespace Azure.ResourceManager.CommvaultContentStore
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _cloudAccountsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _cloudAccountsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 CommvaultContentStoreArmOperation operation = new CommvaultContentStoreArmOperation(_cloudAccountsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -437,7 +437,7 @@ namespace Azure.ResourceManager.CommvaultContentStore
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _cloudAccountsRestClient.CreateLatestLinkedSaaSRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _cloudAccountsRestClient.CreateLatestLinkedSaaSRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<LatestLinkedSaaSResult> response = Response.FromValue(LatestLinkedSaaSResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -485,7 +485,7 @@ namespace Azure.ResourceManager.CommvaultContentStore
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _cloudAccountsRestClient.CreateLatestLinkedSaaSRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _cloudAccountsRestClient.CreateLatestLinkedSaaSRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<LatestLinkedSaaSResult> response = Response.FromValue(LatestLinkedSaaSResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -538,7 +538,7 @@ namespace Azure.ResourceManager.CommvaultContentStore
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _cloudAccountsRestClient.CreateLinkSaaSRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, CommvaultSaaSDetails.ToRequestContent(details), context);
+                using HttpMessage message = _cloudAccountsRestClient.CreateLinkSaaSRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, CommvaultSaaSDetails.ToRequestContent(details), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 CommvaultContentStoreArmOperation<CloudAccountResource> operation = new CommvaultContentStoreArmOperation<CloudAccountResource>(
                     new CloudAccountResourceOperationSource(Client),
@@ -597,7 +597,7 @@ namespace Azure.ResourceManager.CommvaultContentStore
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _cloudAccountsRestClient.CreateLinkSaaSRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, CommvaultSaaSDetails.ToRequestContent(details), context);
+                using HttpMessage message = _cloudAccountsRestClient.CreateLinkSaaSRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, CommvaultSaaSDetails.ToRequestContent(details), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 CommvaultContentStoreArmOperation<CloudAccountResource> operation = new CommvaultContentStoreArmOperation<CloudAccountResource>(
                     new CloudAccountResourceOperationSource(Client),
@@ -642,7 +642,7 @@ namespace Azure.ResourceManager.CommvaultContentStore
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _cloudAccountsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _cloudAccountsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<CloudAccountData> response = Response.FromValue(CloudAccountData.FromResponse(result), result);
                     return Response.FromValue(new CloudAccountResource(Client, response.Value), response.GetRawResponse());
@@ -690,7 +690,7 @@ namespace Azure.ResourceManager.CommvaultContentStore
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _cloudAccountsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _cloudAccountsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<CloudAccountData> response = Response.FromValue(CloudAccountData.FromResponse(result), result);
                     return Response.FromValue(new CloudAccountResource(Client, response.Value), response.GetRawResponse());
@@ -736,7 +736,7 @@ namespace Azure.ResourceManager.CommvaultContentStore
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _cloudAccountsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _cloudAccountsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<CloudAccountData> response = Response.FromValue(CloudAccountData.FromResponse(result), result);
                     return Response.FromValue(new CloudAccountResource(Client, response.Value), response.GetRawResponse());
@@ -778,7 +778,7 @@ namespace Azure.ResourceManager.CommvaultContentStore
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _cloudAccountsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _cloudAccountsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<CloudAccountData> response = Response.FromValue(CloudAccountData.FromResponse(result), result);
                     return Response.FromValue(new CloudAccountResource(Client, response.Value), response.GetRawResponse());
@@ -820,7 +820,7 @@ namespace Azure.ResourceManager.CommvaultContentStore
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _cloudAccountsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _cloudAccountsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<CloudAccountData> response = Response.FromValue(CloudAccountData.FromResponse(result), result);
                     return Response.FromValue(new CloudAccountResource(Client, response.Value), response.GetRawResponse());
@@ -866,7 +866,7 @@ namespace Azure.ResourceManager.CommvaultContentStore
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _cloudAccountsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _cloudAccountsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<CloudAccountData> response = Response.FromValue(CloudAccountData.FromResponse(result), result);
                     return Response.FromValue(new CloudAccountResource(Client, response.Value), response.GetRawResponse());

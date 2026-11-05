@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.AppContainers
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _managedEnvironmentDiagnosticsRestClient.CreateGetDetectorRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, detectorName, context);
+                using HttpMessage message = _managedEnvironmentDiagnosticsRestClient.CreateGetDetectorRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, detectorName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ContainerAppDiagnosticData> response = Response.FromValue(ContainerAppDiagnosticData.FromResponse(result), result);
                 if (response.Value == null)
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.AppContainers
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _managedEnvironmentDiagnosticsRestClient.CreateGetDetectorRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, detectorName, context);
+                using HttpMessage message = _managedEnvironmentDiagnosticsRestClient.CreateGetDetectorRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, detectorName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ContainerAppDiagnosticData> response = Response.FromValue(ContainerAppDiagnosticData.FromResponse(result), result);
                 if (response.Value == null)
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.AppContainers
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _managedEnvironmentDiagnosticsRestClient.CreateGetDetectorRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, detectorName, context);
+                using HttpMessage message = _managedEnvironmentDiagnosticsRestClient.CreateGetDetectorRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, detectorName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ContainerAppDiagnosticData> response = default;
@@ -310,7 +310,7 @@ namespace Azure.ResourceManager.AppContainers
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _managedEnvironmentDiagnosticsRestClient.CreateGetDetectorRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, detectorName, context);
+                using HttpMessage message = _managedEnvironmentDiagnosticsRestClient.CreateGetDetectorRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, detectorName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ContainerAppDiagnosticData> response = default;
@@ -367,7 +367,7 @@ namespace Azure.ResourceManager.AppContainers
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _managedEnvironmentDiagnosticsRestClient.CreateGetDetectorRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, detectorName, context);
+                using HttpMessage message = _managedEnvironmentDiagnosticsRestClient.CreateGetDetectorRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, detectorName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ContainerAppDiagnosticData> response = default;
@@ -428,7 +428,7 @@ namespace Azure.ResourceManager.AppContainers
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _managedEnvironmentDiagnosticsRestClient.CreateGetDetectorRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, detectorName, context);
+                using HttpMessage message = _managedEnvironmentDiagnosticsRestClient.CreateGetDetectorRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, detectorName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ContainerAppDiagnosticData> response = default;
