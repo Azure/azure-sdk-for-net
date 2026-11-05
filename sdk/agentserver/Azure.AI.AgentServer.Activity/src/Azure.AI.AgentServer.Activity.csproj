@@ -5,7 +5,7 @@
     <RequiredTargetFrameworks>$(RequiredRunnableTargetFrameworks)</RequiredTargetFrameworks>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <RootNamespace>Azure.AI.AgentServer.Activity</RootNamespace>
-    <Version>1.0.0-beta.1</Version>
+    <Version>1.0.0-beta.2</Version>
     <Description>An SDK for building ASP.NET Core servers that implement the Azure AI activity protocol, including the Microsoft 365 Agents SDK bridge, session resolution, error-source classification, and distributed tracing.</Description>
     <PackageTags>Microsoft Azure AI Agent Server Activity Protocol Handler</PackageTags>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
