@@ -20,7 +20,7 @@ namespace Azure.Provisioning.Sql
         private BicepValue<string> _name;
         private SystemData _systemData;
         private ManagedLedgerDigestUploadsProperties _properties;
-        private ResourceReference<ManagedDatabase> _parent;
+        private ProvisioningResourceReference<ManagedDatabase> _parent;
 
         /// <summary> Creates a new ManagedLedgerDigestUpload. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -132,7 +132,7 @@ namespace Azure.Provisioning.Sql
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _properties = DefineModelProperty<ManagedLedgerDigestUploadsProperties>(nameof(Properties), new string[] { "properties" });
-            _parent = DefineResource<ManagedDatabase>(nameof(Parent), new string[] { "parent" });
+            _parent = new ProvisioningResourceReference<ManagedDatabase>(DefineProperty<string>(nameof(Parent), new string[] { "parent" }));
             DefineAdditionalProperties();
         }
 
