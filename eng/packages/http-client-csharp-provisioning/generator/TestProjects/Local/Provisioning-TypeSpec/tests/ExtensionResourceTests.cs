@@ -14,12 +14,12 @@ public class ExtensionResourceTests
     [Test]
     public void ReadOnlyExtensionPreservesScope()
     {
-        Assert.That(typeof(ReadOnlyExtension).GetProperty("Scope")?.PropertyType,
+        Assert.That(typeof(ExternalChildResourceExternalResourceReadOnlyExtension).GetProperty("Scope")?.PropertyType,
             Is.EqualTo(typeof(ProvisionableResource)));
-        Assert.That(typeof(ReadOnlyExtension).GetConstructors(), Is.Empty,
+        Assert.That(typeof(ExternalChildResourceExternalResourceReadOnlyExtension).GetConstructors(), Is.Empty,
             "An existing-only resource must not become publicly deployable.");
-        Assert.That(ReadOnlyExtension.FromExisting("existing").IsExistingResource, Is.True);
-        Assert.That(ReadOnlyExtension.FromExisting("existing").ProvisionableProperties["Scope"].IsRequired, Is.False);
+        Assert.That(ExternalChildResourceExternalResourceReadOnlyExtension.FromExisting("existing").IsExistingResource, Is.True);
+        Assert.That(ExternalChildResourceExternalResourceReadOnlyExtension.FromExisting("existing").ProvisionableProperties["Scope"].IsRequired, Is.False);
     }
 
     [Test]
@@ -61,7 +61,7 @@ public class ExtensionResourceTests
             {
                 Infrastructure infra = new();
                 ExistingBillingProfile billing = new();
-                ReadOnlyExtension grant = ReadOnlyExtension.FromExisting("grant");
+                ExternalChildResourceExternalResourceReadOnlyExtension grant = ExternalChildResourceExternalResourceReadOnlyExtension.FromExisting("grant");
                 grant.Scope = billing;
                 ExternalChildResourceExternalResourceExtensionAssignment lab = new("lab") { Name = "lab", Scope = billing };
                 ExternalChildResourceExternalResourceExtensionChild student = new("student") { Name = "student", Parent = lab };

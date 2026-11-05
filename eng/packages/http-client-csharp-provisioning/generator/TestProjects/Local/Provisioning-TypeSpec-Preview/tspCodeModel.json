@@ -7879,7 +7879,7 @@
                   "scopeResourceType": "Microsoft.Billing/billingAccounts/billingProfiles"
                 },
                 "singletonResourceName": "default",
-                "resourceName": "ReadOnlyExtension",
+                "resourceName": "ExternalChildResourceExternalResourceReadOnlyExtension",
                 "resourceNameIsExplicit": false,
                 "nameConstraints": {
                   "pattern": "^[a-zA-Z0-9-]{3,24}$"
@@ -7970,7 +7970,7 @@
                   "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
                   "scopeResourceType": "Microsoft.Resources/resourceGroups"
                 },
-                "resourceName": "ResourceGroupAssignment",
+                "resourceName": "ResourceGroupMultiScopeAssignment",
                 "resourceNameIsExplicit": false,
                 "nameConstraints": {
                   "pattern": "^[a-zA-Z0-9-]{3,24}$"
@@ -8800,7 +8800,7 @@
               },
               {
                 "resourceModelId": "ProvisioningTypeSpec.ReadOnlyExtension",
-                "resourceName": "ReadOnlyExtension",
+                "resourceName": "ExternalChildResourceExternalResourceReadOnlyExtension",
                 "resourceType": "ProvisioningTypeSpec/readOnlyExtensions",
                 "singletonResourceName": "default",
                 "nameConstraints": {

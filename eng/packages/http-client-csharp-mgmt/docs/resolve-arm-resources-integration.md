@@ -31,8 +31,8 @@ The migration is being done incrementally:
 
 - Created `resolve-arm-resources-converter.ts` that wraps `resolveArmResources` and converts `Provider` format to our `ArmProviderSchema` format
 - Integrated comprehensive test validation in `resource-detection.test.ts` and `non-resource-methods.test.ts`
-- All 27 tests pass, validating the converter produces identical results to the existing implementation
-- The converter maintains full compatibility with existing code while using the standardized API internally
+- Tests cover legacy naming separately and verify that converted resource names match the ARM library's output
+- The converter adapts the standardized API to our schema without reproducing legacy resource-name derivation
 
 The converter passes TCGC's `apiVersion` through to the ARM resolver when it is
 a string. For namespace-to-version dictionaries, it resolves the exact
@@ -45,10 +45,11 @@ Special strings such as `all` are also passed through unchanged; the current
 ARM resolver rejects `all` when it is not a declared service version.
 Its `nameResolver` uses TCGC's `getLibraryName`
 for model, operation, and operation-group names so that scoped `@clientName`
-customizations apply to resource metadata. Shared extension models retain their
-path-specific default stems unless an occurrence has an explicit override.
-Other complete resource names are left to the ARM library, preserving explicit
-names and composed names for extension resources.
+customizations apply to resource metadata. The converter preserves the complete
+resource name returned by the ARM library, including composed extension-resource
+names. Interface-derived resource names and `resource-name` client-option
+overrides remain specific to legacy resource detection; they are not applied
+after ARM resource resolution.
 
 ### Step 2: Add Feature Flag (✅ Complete)
 

@@ -15,7 +15,7 @@ using Azure.Provisioning.Resources;
 namespace Azure.Provisioning.ProvisioningTypeSpec.Preview
 {
     /// <summary> An existing-only assignment at an external resource scope. </summary>
-    public partial class ReadOnlyExtension : ProvisionableResource
+    public partial class ExternalChildResourceExternalResourceReadOnlyExtension : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;
         private BicepValue<string> _name;
@@ -23,10 +23,10 @@ namespace Azure.Provisioning.ProvisioningTypeSpec.Preview
         private ExtensionAssignmentProperties _properties;
         private ProvisioningResourceReference<ProvisionableResource> _scope;
 
-        /// <summary> Creates a new ReadOnlyExtension. </summary>
+        /// <summary> Creates a new ExternalChildResourceExternalResourceReadOnlyExtension. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
         /// <param name="resourceVersion"> The resource API version. </param>
-        internal ReadOnlyExtension(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "ProvisioningTypeSpec/readOnlyExtensions", resourceVersion ?? "2024-03-01-preview")
+        internal ExternalChildResourceExternalResourceReadOnlyExtension(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "ProvisioningTypeSpec/readOnlyExtensions", resourceVersion ?? "2024-03-01-preview")
         {
         }
 
@@ -94,7 +94,7 @@ namespace Azure.Provisioning.ProvisioningTypeSpec.Preview
             }
         }
 
-        /// <summary> Define all the provisionable properties for ReadOnlyExtension. </summary>
+        /// <summary> Define all the provisionable properties for ExternalChildResourceExternalResourceReadOnlyExtension. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
@@ -106,17 +106,17 @@ namespace Azure.Provisioning.ProvisioningTypeSpec.Preview
             DefineAdditionalProperties();
         }
 
-        /// <summary> Creates a reference to an existing ReadOnlyExtension. </summary>
+        /// <summary> Creates a reference to an existing ExternalChildResourceExternalResourceReadOnlyExtension. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
         /// <param name="resourceVersion"> The resource API version. </param>
-        public static ReadOnlyExtension FromExisting(string bicepIdentifier, string resourceVersion = null)
+        public static ExternalChildResourceExternalResourceReadOnlyExtension FromExisting(string bicepIdentifier, string resourceVersion = null)
         {
-            ReadOnlyExtension result = new ReadOnlyExtension(bicepIdentifier, resourceVersion);
+            ExternalChildResourceExternalResourceReadOnlyExtension result = new ExternalChildResourceExternalResourceReadOnlyExtension(bicepIdentifier, resourceVersion);
             result.IsExistingResource = true;
             return result;
         }
 
-        /// <summary> Define additional provisionable properties for ReadOnlyExtension that are not part of the generated code. </summary>
+        /// <summary> Define additional provisionable properties for ExternalChildResourceExternalResourceReadOnlyExtension that are not part of the generated code. </summary>
         partial void DefineAdditionalProperties();
 
         /// <summary> Get the requirements for naming this resource. </summary>

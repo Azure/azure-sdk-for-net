@@ -3,6 +3,10 @@
 
 import { describe, expect, it } from "vitest";
 import { createModel } from "@typespec/http-client-csharp";
+import type { CSharpEmitterContext } from "../src/code-model-types.js";
+import type { Program } from "@typespec/compiler";
+import { getLibraryName } from "@azure-tools/typespec-client-generator-core";
+import { resolveArmResources as resolveArmResourcesFromLibrary } from "@azure-tools/typespec-azure-resource-manager";
 import { buildArmProviderSchema } from "../src/resource-detection.js";
 import { resolveArmResources } from "../src/resolve-arm-resources-converter.js";
 import {
@@ -15,6 +19,33 @@ import {
   createEmitterTestHost,
   typeSpecCompile
 } from "./test-util.js";
+
+function expectResolvedNamesMatchLibrary(
+  program: Program,
+  sdkContext: CSharpEmitterContext
+) {
+  const provider = resolveArmResourcesFromLibrary(program, {
+    nameResolver: ({ kind, type }) =>
+      kind === "resource" || type === undefined
+        ? undefined
+        : getLibraryName(sdkContext, type)
+  });
+  const schema = resolveArmResources(program, sdkContext);
+  expect(schema.resources).toHaveLength(provider.resources?.length ?? 0);
+  for (const resource of schema.resources) {
+    const expected = provider.resources?.find(
+      (resolved) =>
+        resolved.resourceInstancePath ===
+        resource.metadata.resourceIdPattern?.path
+    );
+    expect(expected).toBeDefined();
+    expect(resource.metadata.resourceName).toBe(expected!.resourceName);
+    expect(
+      convertResourceMetadataToArguments(resource.metadata).resourceName
+    ).toBe(expected!.resourceName);
+  }
+  return schema;
+}
 
 describe("resource-name provenance", () => {
   it.each(
@@ -65,7 +96,7 @@ interface Widgets {
       const [root] = createModel(sdkContext);
       for (const schema of [
         buildArmProviderSchema(sdkContext, root),
-        resolveArmResources(program, sdkContext)
+        expectResolvedNamesMatchLibrary(program, sdkContext)
       ]) {
         expect(schema.resources).toHaveLength(1);
         const expected = {
@@ -107,16 +138,16 @@ interface Widgets {
         createEmitterContext(program)
       );
       const [root] = createModel(sdkContext);
-      for (const schema of [
-        buildArmProviderSchema(sdkContext, root),
-        resolveArmResources(program, sdkContext)
-      ]) {
-        expect(schema.resources).toHaveLength(1);
-        expect(schema.resources[0].metadata).toMatchObject({
-          resourceName: "CustomWidget",
-          resourceNameIsExplicit: true
-        });
-      }
+      const legacy = buildArmProviderSchema(sdkContext, root);
+      expect(legacy.resources).toHaveLength(1);
+      expect(legacy.resources[0].metadata).toMatchObject({
+        resourceName: "CustomWidget",
+        resourceNameIsExplicit: true
+      });
+      const resolved = expectResolvedNamesMatchLibrary(program, sdkContext);
+      expect(resolved.resources[0].metadata.resourceName).toBe(
+        "ResourceGroupCustomWidget"
+      );
     }
   );
 
@@ -169,25 +200,22 @@ ${decorators.replaceAll("@@clientOption", '#suppress "@azure-tools/typespec-clie
       createEmitterContext(program)
     );
     const [root] = createModel(sdkContext);
-    for (const schema of [
-      buildArmProviderSchema(sdkContext, root),
-      resolveArmResources(program, sdkContext)
-    ]) {
-      expect(schema.resources).toHaveLength(1);
-      const metadata = schema.resources[0].metadata;
-      expect(metadata.resourceName).toBe(name);
-      expect(metadata.resourceNameIsExplicit).toBe(explicit);
-      expect(convertResourceMetadataToArguments(metadata)).toMatchObject({
-        resourceName: name,
-        resourceNameIsExplicit: explicit
-      });
-      expect(
-        convertArmProviderSchemaToArguments(schema).resources[0]
-      ).toMatchObject({
-        resourceName: name,
-        resourceNameIsExplicit: explicit
-      });
-    }
+    const schema = buildArmProviderSchema(sdkContext, root);
+    expect(schema.resources).toHaveLength(1);
+    const metadata = schema.resources[0].metadata;
+    expect(metadata.resourceName).toBe(name);
+    expect(metadata.resourceNameIsExplicit).toBe(explicit);
+    expect(convertResourceMetadataToArguments(metadata)).toMatchObject({
+      resourceName: name,
+      resourceNameIsExplicit: explicit
+    });
+    expect(
+      convertArmProviderSchemaToArguments(schema).resources[0]
+    ).toMatchObject({
+      resourceName: name,
+      resourceNameIsExplicit: explicit
+    });
+    expectResolvedNamesMatchLibrary(program, sdkContext);
   });
 
   it.each([
@@ -223,28 +251,25 @@ interface SubscriptionWidgets {
         createEmitterContext(program)
       );
       const [root] = createModel(sdkContext);
-      for (const schema of [
-        buildArmProviderSchema(sdkContext, root),
-        resolveArmResources(program, sdkContext)
-      ]) {
-        expect(schema.resources).toHaveLength(2);
-        const resource = schema.resources.find(
-          (r) => r.metadata.scope.kind === "ResourceGroup"
-        )!;
-        if (scope === "csharp") {
-          expect(resource.metadata.resourceName).toBe(expected);
-        } else {
-          expect(resource.metadata.resourceName).not.toContain("Custom");
-        }
-        expect(resource.metadata.resourceNameIsExplicit).toBe(
-          scope === "csharp"
-        );
-        expect(
-          schema.resources.find(
-            (r) => r.metadata.scope.kind === "Subscription"
-          )!.metadata.resourceNameIsExplicit
-        ).toBe(false);
+      const schema = buildArmProviderSchema(sdkContext, root);
+      expect(schema.resources).toHaveLength(2);
+      const resource = schema.resources.find(
+        (r) => r.metadata.scope.kind === "ResourceGroup"
+      )!;
+      if (scope === "csharp") {
+        expect(resource.metadata.resourceName).toBe(expected);
+      } else {
+        expect(resource.metadata.resourceName).not.toContain("Custom");
       }
+      expect(resource.metadata.resourceNameIsExplicit).toBe(scope === "csharp");
+      expect(
+        schema.resources.find((r) => r.metadata.scope.kind === "Subscription")!
+          .metadata.resourceNameIsExplicit
+      ).toBe(false);
+      const resolved = expectResolvedNamesMatchLibrary(program, sdkContext);
+      expect(
+        resolved.resources.map((r) => r.metadata.resourceName).sort()
+      ).toEqual(["ResourceGroupWidget", "SubscriptionWidget"]);
     }
   );
 
@@ -293,25 +318,23 @@ ${decorator}
         createEmitterContext(program)
       );
       const [root] = createModel(sdkContext);
-      for (const schema of [
-        buildArmProviderSchema(sdkContext, root),
-        resolveArmResources(program, sdkContext)
-      ]) {
-        expect(schema.resources).toHaveLength(2);
-        expect(
-          schema.resources.map((r) => r.metadata.resourceName).sort()
-        ).toEqual([name, "SubscriptionWidget"].sort());
-        expect(
-          schema.resources.find(
-            (r) => r.metadata.scope.kind === "ResourceGroup"
-          )!.metadata.resourceNameIsExplicit
-        ).toBe(explicit);
-        expect(
-          schema.resources.find(
-            (r) => r.metadata.scope.kind === "Subscription"
-          )!.metadata.resourceNameIsExplicit
-        ).toBe(false);
-      }
+      const schema = buildArmProviderSchema(sdkContext, root);
+      expect(schema.resources).toHaveLength(2);
+      expect(
+        schema.resources.map((r) => r.metadata.resourceName).sort()
+      ).toEqual([name, "SubscriptionWidget"].sort());
+      expect(
+        schema.resources.find((r) => r.metadata.scope.kind === "ResourceGroup")!
+          .metadata.resourceNameIsExplicit
+      ).toBe(explicit);
+      expect(
+        schema.resources.find((r) => r.metadata.scope.kind === "Subscription")!
+          .metadata.resourceNameIsExplicit
+      ).toBe(false);
+      const resolved = expectResolvedNamesMatchLibrary(program, sdkContext);
+      expect(
+        resolved.resources.map((r) => r.metadata.resourceName).sort()
+      ).toEqual(["ResourceGroupCustomWidget", "SubscriptionCustomWidget"]);
     }
   );
 });

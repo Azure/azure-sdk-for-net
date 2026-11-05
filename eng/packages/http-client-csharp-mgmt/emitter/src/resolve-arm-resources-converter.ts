@@ -58,8 +58,6 @@ import {
   resolveResourceApiVersions,
   extractRbacRoles,
   extractNameConstraintOverrides,
-  extractResourceNameOverride,
-  detectDynamicTypeSegments,
   isResourceIdPatternPrefixMatch
 } from "./resource-metadata.js";
 import type { CSharpEmitterContext } from "./code-model-types.js";
@@ -74,7 +72,6 @@ import {
 } from "@azure-tools/typespec-client-generator-core";
 import { getAllSdkClients } from "./sdk-client-utils.js";
 import {
-  extensionResourceOperationName,
   isResourceCollectionAction,
   getExplicitResourceName
 } from "./sdk-context-options.js";
@@ -83,7 +80,6 @@ import {
   buildScopeInfoFromPath
 } from "./resource-detection.js";
 import { $lib } from "./lib/lib.js";
-import pluralize from "pluralize";
 
 interface ServiceVersionMap {
   [namespace: string]: string | ServiceVersionMap;
@@ -189,7 +185,6 @@ export function resolveArmResources(
 
   // Convert resources
   const resources: ArmResourceSchema[] = [];
-  const resourceNameOverrides = new Map<string, Map<string, string>>();
   const processedResources = new Set<string>();
   const schemaToResolvedResource = new Map<
     ArmResourceSchema,
@@ -255,11 +250,7 @@ export function resolveArmResources(
         sdkContext,
         resolvedResource,
         methodMap,
-        resourceModelIds,
-        resourceNameOverrides,
-        provider.resources.filter(
-          (resource) => resource.type === resolvedResource.type
-        ).length > 1
+        resourceModelIds
       );
 
       const resource = {
@@ -301,8 +292,7 @@ export function resolveArmResources(
     resources,
     {
       serviceMethods: methodMap,
-      diagnosticReporter: reportWarning,
-      resourceNameOverrides
+      diagnosticReporter: reportWarning
     }
   );
 
@@ -417,9 +407,7 @@ function convertResolvedResourceToMetadata(
   sdkContext: CSharpEmitterContext,
   resolvedResource: ResolvedResource,
   methodMap: Map<string, SdkMethod<SdkHttpOperation>>,
-  resourceModelIds?: Set<string>,
-  resourceNameOverrides?: Map<string, Map<string, string>>,
-  hasMultiplePaths = false
+  resourceModelIds?: Set<string>
 ): ResourceMetadata {
   const methods: ResourceMethod[] = [];
   let resourceIdPattern = "";
@@ -551,75 +539,10 @@ function convertResolvedResourceToMetadata(
   // Build resource type string
   const resourceType = formatResourceType(resolvedResource.resourceType);
 
-  // Use the explicit ResourceName if provided via the OverrideResourceName template parameter.
-  // The spec should always define unique resource names for extension resources targeting
-  // different parent types — the emitter should not auto-generate disambiguated names.
-  const modelNameOverride = hasMultiplePaths
-    ? undefined
-    : getClientNameOverride(sdkContext, resolvedResource.type, "csharp") !==
-        undefined
-      ? getLibraryName(sdkContext, resolvedResource.type, "csharp")
-      : undefined;
-  let resourceName = modelNameOverride ?? resolvedResource.resourceName;
-  let resourceNameIsExplicit = modelNameOverride !== undefined;
-  const readOperation =
-    resolvedResource.operations.lifecycle?.read?.[0]?.operation;
-  const rawInterface = readOperation?.interface;
-  const interfaceNameOverride = rawInterface
-    ? getClientNameOverride(sdkContext, rawInterface, "csharp") !== undefined
-      ? getLibraryName(sdkContext, rawInterface, "csharp")
-      : undefined
-    : undefined;
-  // Shared extension models use operation-group stems, not model client names.
-  const interfaceName =
-    hasMultiplePaths &&
-    rawInterface &&
-    readOperation?.decorators.some(
-      (decorator) =>
-        decorator.definition?.name === extensionResourceOperationName
-    )
-      ? getLibraryName(sdkContext, rawInterface, "csharp")
-      : interfaceNameOverride;
-  if (hasMultiplePaths && interfaceName !== undefined) {
-    resourceName = pluralize.singular(interfaceName);
-    resourceNameIsExplicit = interfaceNameOverride !== undefined;
-  }
-  const explicitName = getExplicitResourceNameFromOperations(resolvedResource);
-  if (explicitName) {
-    resourceName = explicitName;
-    resourceNameIsExplicit = true;
-  }
-  const readMethodId = readOperation
-    ? getMethodIdFromOperation(sdkContext, readOperation, methodMap)
-    : undefined;
-  const clientOptionOverride = extractResourceNameOverride(
-    readMethodId ? methodMap.get(readMethodId) : undefined,
-    program
-  );
-  if (clientOptionOverride !== undefined) {
-    const path = new RequestPath(resourceIdPattern);
-    const isExpandable = detectDynamicTypeSegments(path).length > 0;
-    if (typeof clientOptionOverride === "string") {
-      if (isExpandable) {
-        $lib.reportDiagnostic(program, {
-          code: "resource-name-string-on-expandable",
-          format: { value: clientOptionOverride, path: path.path },
-          target: NoTarget
-        });
-      } else {
-        resourceName = clientOptionOverride;
-        resourceNameIsExplicit = true;
-      }
-    } else if (isExpandable) {
-      resourceNameOverrides?.set(path.path, clientOptionOverride);
-    } else {
-      $lib.reportDiagnostic(program, {
-        code: "resource-name-map-on-non-expandable",
-        format: { path: path.path },
-        target: NoTarget
-      });
-    }
-  }
+  const resourceNameIsExplicit =
+    getClientNameOverride(sdkContext, resolvedResource.type, "csharp") !==
+      undefined ||
+    getExplicitResourceNameFromOperations(resolvedResource) !== undefined;
 
   // Extract name constraints from the resource model's "name" property
   const nameProperty = resolvedResource.type.properties.get("name");
@@ -674,7 +597,7 @@ function convertResolvedResourceToMetadata(
     singletonResourceName: new RequestPath(
       resolvedResource.resourceInstancePath
     ).singletonName,
-    resourceName: resourceName,
+    resourceName: resolvedResource.resourceName,
     resourceNameIsExplicit,
     nameConstraints: finalNameConstraints,
     apiVersions,
