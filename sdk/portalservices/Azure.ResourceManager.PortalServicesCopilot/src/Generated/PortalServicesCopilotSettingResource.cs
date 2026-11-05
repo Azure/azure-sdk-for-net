@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.PortalServicesCopilot
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _copilotSettingsRestClient.CreateCreateOrUpdateRequest(PortalServicesCopilotSettingData.ToRequestContent(data), context);
+                using HttpMessage message = _copilotSettingsRestClient.CreateCreateOrUpdateRequest(PortalServicesCopilotSettingData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<PortalServicesCopilotSettingData> response = Response.FromValue(PortalServicesCopilotSettingData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.PortalServicesCopilot
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _copilotSettingsRestClient.CreateCreateOrUpdateRequest(PortalServicesCopilotSettingData.ToRequestContent(data), context);
+                using HttpMessage message = _copilotSettingsRestClient.CreateCreateOrUpdateRequest(PortalServicesCopilotSettingData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<PortalServicesCopilotSettingData> response = Response.FromValue(PortalServicesCopilotSettingData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.PortalServicesCopilot
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _copilotSettingsRestClient.CreateGetRequest(context);
+                using HttpMessage message = _copilotSettingsRestClient.CreateGetRequest(context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<PortalServicesCopilotSettingData> response = Response.FromValue(PortalServicesCopilotSettingData.FromResponse(result), result);
                 if (response.Value == null)
@@ -281,7 +281,7 @@ namespace Azure.ResourceManager.PortalServicesCopilot
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _copilotSettingsRestClient.CreateGetRequest(context);
+                using HttpMessage message = _copilotSettingsRestClient.CreateGetRequest(context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<PortalServicesCopilotSettingData> response = Response.FromValue(PortalServicesCopilotSettingData.FromResponse(result), result);
                 if (response.Value == null)
@@ -333,7 +333,7 @@ namespace Azure.ResourceManager.PortalServicesCopilot
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _copilotSettingsRestClient.CreateUpdateRequest(PortalServicesCopilotSettingPatch.ToRequestContent(patch), context);
+                using HttpMessage message = _copilotSettingsRestClient.CreateUpdateRequest(PortalServicesCopilotSettingPatch.ToRequestContent(patch), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<PortalServicesCopilotSettingData> response = Response.FromValue(PortalServicesCopilotSettingData.FromResponse(result), result);
                 if (response.Value == null)
@@ -385,7 +385,7 @@ namespace Azure.ResourceManager.PortalServicesCopilot
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _copilotSettingsRestClient.CreateUpdateRequest(PortalServicesCopilotSettingPatch.ToRequestContent(patch), context);
+                using HttpMessage message = _copilotSettingsRestClient.CreateUpdateRequest(PortalServicesCopilotSettingPatch.ToRequestContent(patch), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<PortalServicesCopilotSettingData> response = Response.FromValue(PortalServicesCopilotSettingData.FromResponse(result), result);
                 if (response.Value == null)
@@ -434,7 +434,7 @@ namespace Azure.ResourceManager.PortalServicesCopilot
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _copilotSettingsRestClient.CreateDeleteRequest(context);
+                using HttpMessage message = _copilotSettingsRestClient.CreateDeleteRequest(context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
@@ -485,7 +485,7 @@ namespace Azure.ResourceManager.PortalServicesCopilot
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _copilotSettingsRestClient.CreateDeleteRequest(context);
+                using HttpMessage message = _copilotSettingsRestClient.CreateDeleteRequest(context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());

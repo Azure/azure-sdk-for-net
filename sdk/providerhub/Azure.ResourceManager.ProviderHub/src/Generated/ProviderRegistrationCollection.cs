@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.ProviderHub
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _providerRegistrationsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), providerNamespace, ProviderRegistrationData.ToRequestContent(data), context);
+                using HttpMessage message = _providerRegistrationsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), providerNamespace, ProviderRegistrationData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ProviderHubArmOperation<ProviderRegistrationResource> operation = new ProviderHubArmOperation<ProviderRegistrationResource>(
                     new ProviderRegistrationResourceOperationSource(Client),
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.ProviderHub
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _providerRegistrationsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), providerNamespace, ProviderRegistrationData.ToRequestContent(data), context);
+                using HttpMessage message = _providerRegistrationsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), providerNamespace, ProviderRegistrationData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ProviderHubArmOperation<ProviderRegistrationResource> operation = new ProviderHubArmOperation<ProviderRegistrationResource>(
                     new ProviderRegistrationResourceOperationSource(Client),
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.ProviderHub
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _providerRegistrationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), providerNamespace, context);
+                using HttpMessage message = _providerRegistrationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), providerNamespace, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ProviderRegistrationData> response = Response.FromValue(ProviderRegistrationData.FromResponse(result), result);
                 if (response.Value == null)
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.ProviderHub
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _providerRegistrationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), providerNamespace, context);
+                using HttpMessage message = _providerRegistrationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), providerNamespace, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ProviderRegistrationData> response = Response.FromValue(ProviderRegistrationData.FromResponse(result), result);
                 if (response.Value == null)
@@ -358,7 +358,7 @@ namespace Azure.ResourceManager.ProviderHub
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _providerRegistrationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), providerNamespace, context);
+                using HttpMessage message = _providerRegistrationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), providerNamespace, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ProviderRegistrationData> response = default;
@@ -415,7 +415,7 @@ namespace Azure.ResourceManager.ProviderHub
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _providerRegistrationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), providerNamespace, context);
+                using HttpMessage message = _providerRegistrationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), providerNamespace, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ProviderRegistrationData> response = default;
@@ -472,7 +472,7 @@ namespace Azure.ResourceManager.ProviderHub
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _providerRegistrationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), providerNamespace, context);
+                using HttpMessage message = _providerRegistrationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), providerNamespace, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ProviderRegistrationData> response = default;
@@ -533,7 +533,7 @@ namespace Azure.ResourceManager.ProviderHub
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _providerRegistrationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), providerNamespace, context);
+                using HttpMessage message = _providerRegistrationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), providerNamespace, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ProviderRegistrationData> response = default;

@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Playwright
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _playwrightWorkspacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _playwrightWorkspacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<PlaywrightWorkspaceData> response = Response.FromValue(PlaywrightWorkspaceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.Playwright
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _playwrightWorkspacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _playwrightWorkspacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<PlaywrightWorkspaceData> response = Response.FromValue(PlaywrightWorkspaceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.Playwright
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _playwrightWorkspacesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, PlaywrightWorkspacePatch.ToRequestContent(patch), context);
+                using HttpMessage message = _playwrightWorkspacesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, PlaywrightWorkspacePatch.ToRequestContent(patch), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<PlaywrightWorkspaceData> response = Response.FromValue(PlaywrightWorkspaceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -284,7 +284,7 @@ namespace Azure.ResourceManager.Playwright
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _playwrightWorkspacesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, PlaywrightWorkspacePatch.ToRequestContent(patch), context);
+                using HttpMessage message = _playwrightWorkspacesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, PlaywrightWorkspacePatch.ToRequestContent(patch), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<PlaywrightWorkspaceData> response = Response.FromValue(PlaywrightWorkspaceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -333,7 +333,7 @@ namespace Azure.ResourceManager.Playwright
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _playwrightWorkspacesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _playwrightWorkspacesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 PlaywrightArmOperation operation = new PlaywrightArmOperation(_playwrightWorkspacesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -382,7 +382,7 @@ namespace Azure.ResourceManager.Playwright
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _playwrightWorkspacesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _playwrightWorkspacesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 PlaywrightArmOperation operation = new PlaywrightArmOperation(_playwrightWorkspacesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -421,7 +421,7 @@ namespace Azure.ResourceManager.Playwright
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _playwrightWorkspacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _playwrightWorkspacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<PlaywrightWorkspaceData> response = Response.FromValue(PlaywrightWorkspaceData.FromResponse(result), result);
                     return Response.FromValue(new PlaywrightWorkspaceResource(Client, response.Value), response.GetRawResponse());
@@ -469,7 +469,7 @@ namespace Azure.ResourceManager.Playwright
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _playwrightWorkspacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _playwrightWorkspacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<PlaywrightWorkspaceData> response = Response.FromValue(PlaywrightWorkspaceData.FromResponse(result), result);
                     return Response.FromValue(new PlaywrightWorkspaceResource(Client, response.Value), response.GetRawResponse());
@@ -515,7 +515,7 @@ namespace Azure.ResourceManager.Playwright
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _playwrightWorkspacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _playwrightWorkspacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<PlaywrightWorkspaceData> response = Response.FromValue(PlaywrightWorkspaceData.FromResponse(result), result);
                     return Response.FromValue(new PlaywrightWorkspaceResource(Client, response.Value), response.GetRawResponse());
@@ -557,7 +557,7 @@ namespace Azure.ResourceManager.Playwright
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _playwrightWorkspacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _playwrightWorkspacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<PlaywrightWorkspaceData> response = Response.FromValue(PlaywrightWorkspaceData.FromResponse(result), result);
                     return Response.FromValue(new PlaywrightWorkspaceResource(Client, response.Value), response.GetRawResponse());
@@ -599,7 +599,7 @@ namespace Azure.ResourceManager.Playwright
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _playwrightWorkspacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _playwrightWorkspacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<PlaywrightWorkspaceData> response = Response.FromValue(PlaywrightWorkspaceData.FromResponse(result), result);
                     return Response.FromValue(new PlaywrightWorkspaceResource(Client, response.Value), response.GetRawResponse());
@@ -645,7 +645,7 @@ namespace Azure.ResourceManager.Playwright
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _playwrightWorkspacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _playwrightWorkspacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<PlaywrightWorkspaceData> response = Response.FromValue(PlaywrightWorkspaceData.FromResponse(result), result);
                     return Response.FromValue(new PlaywrightWorkspaceResource(Client, response.Value), response.GetRawResponse());

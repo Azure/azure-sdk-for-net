@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.PolicyInsights
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _attestationsRestClient.CreateGetAtResourceRequest(Id.Parent.ToString(), Id.Name, context);
+                using HttpMessage message = _attestationsRestClient.CreateGetAtResourceRequest(Id.Parent.ToString(), Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<PolicyAttestationData> response = Response.FromValue(PolicyAttestationData.FromResponse(result), result);
                 if (response.Value == null)
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.PolicyInsights
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _attestationsRestClient.CreateGetAtResourceRequest(Id.Parent.ToString(), Id.Name, context);
+                using HttpMessage message = _attestationsRestClient.CreateGetAtResourceRequest(Id.Parent.ToString(), Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<PolicyAttestationData> response = Response.FromValue(PolicyAttestationData.FromResponse(result), result);
                 if (response.Value == null)
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.PolicyInsights
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _attestationsRestClient.CreateDeleteAtResourceRequest(Id.Parent.ToString(), Id.Name, context);
+                using HttpMessage message = _attestationsRestClient.CreateDeleteAtResourceRequest(Id.Parent.ToString(), Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
@@ -269,7 +269,7 @@ namespace Azure.ResourceManager.PolicyInsights
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _attestationsRestClient.CreateDeleteAtResourceRequest(Id.Parent.ToString(), Id.Name, context);
+                using HttpMessage message = _attestationsRestClient.CreateDeleteAtResourceRequest(Id.Parent.ToString(), Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
@@ -324,7 +324,7 @@ namespace Azure.ResourceManager.PolicyInsights
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _attestationsRestClient.CreateCreateOrUpdateAtResourceRequest(Id.Parent.ToString(), Id.Name, PolicyAttestationData.ToRequestContent(data), context);
+                using HttpMessage message = _attestationsRestClient.CreateCreateOrUpdateAtResourceRequest(Id.Parent.ToString(), Id.Name, PolicyAttestationData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 PolicyInsightsArmOperation<PolicyAttestationResource> operation = new PolicyInsightsArmOperation<PolicyAttestationResource>(
                     new PolicyAttestationResourceOperationSource(Client),
@@ -383,7 +383,7 @@ namespace Azure.ResourceManager.PolicyInsights
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _attestationsRestClient.CreateCreateOrUpdateAtResourceRequest(Id.Parent.ToString(), Id.Name, PolicyAttestationData.ToRequestContent(data), context);
+                using HttpMessage message = _attestationsRestClient.CreateCreateOrUpdateAtResourceRequest(Id.Parent.ToString(), Id.Name, PolicyAttestationData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 PolicyInsightsArmOperation<PolicyAttestationResource> operation = new PolicyInsightsArmOperation<PolicyAttestationResource>(
                     new PolicyAttestationResourceOperationSource(Client),

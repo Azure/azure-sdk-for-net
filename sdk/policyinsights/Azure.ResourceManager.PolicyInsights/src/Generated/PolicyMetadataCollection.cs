@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.PolicyInsights
     /// <summary>
     /// A class representing a collection of <see cref="PolicyMetadataResource"/> and their operations.
     /// Each <see cref="PolicyMetadataResource"/> in the collection will belong to the same instance of <see cref="TenantResource"/>.
-    /// To get a <see cref="PolicyMetadataCollection"/> instance call the GetPolicyMetadatas method from an instance of <see cref="TenantResource"/>.
+    /// To get a <see cref="PolicyMetadataCollection"/> instance call the GetAllPolicyMetadata method from an instance of <see cref="TenantResource"/>.
     /// </summary>
     public partial class PolicyMetadataCollection : ArmCollection
     {
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.PolicyInsights
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _policyMetadataRestClient.CreateGetResourceRequest(resourceName, context);
+                using HttpMessage message = _policyMetadataRestClient.CreateGetResourceRequest(resourceName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<PolicyMetadataData> response = Response.FromValue(PolicyMetadataData.FromResponse(result), result);
                 if (response.Value == null)
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.PolicyInsights
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _policyMetadataRestClient.CreateGetResourceRequest(resourceName, context);
+                using HttpMessage message = _policyMetadataRestClient.CreateGetResourceRequest(resourceName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<PolicyMetadataData> response = Response.FromValue(PolicyMetadataData.FromResponse(result), result);
                 if (response.Value == null)
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.PolicyInsights
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _policyMetadataRestClient.CreateGetResourceRequest(resourceName, context);
+                using HttpMessage message = _policyMetadataRestClient.CreateGetResourceRequest(resourceName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<PolicyMetadataData> response = default;
@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.PolicyInsights
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _policyMetadataRestClient.CreateGetResourceRequest(resourceName, context);
+                using HttpMessage message = _policyMetadataRestClient.CreateGetResourceRequest(resourceName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<PolicyMetadataData> response = default;
@@ -298,7 +298,7 @@ namespace Azure.ResourceManager.PolicyInsights
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _policyMetadataRestClient.CreateGetResourceRequest(resourceName, context);
+                using HttpMessage message = _policyMetadataRestClient.CreateGetResourceRequest(resourceName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<PolicyMetadataData> response = default;
@@ -359,7 +359,7 @@ namespace Azure.ResourceManager.PolicyInsights
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _policyMetadataRestClient.CreateGetResourceRequest(resourceName, context);
+                using HttpMessage message = _policyMetadataRestClient.CreateGetResourceRequest(resourceName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<PolicyMetadataData> response = default;

@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.Purview
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _accountsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _accountsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<PurviewAccountData> response = Response.FromValue(PurviewAccountData.FromResponse(result), result);
                 if (response.Value == null)
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.Purview
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _accountsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _accountsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<PurviewAccountData> response = Response.FromValue(PurviewAccountData.FromResponse(result), result);
                 if (response.Value == null)
@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.Purview
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _accountsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, PurviewAccountPatch.ToRequestContent(patch), context);
+                using HttpMessage message = _accountsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, PurviewAccountPatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 PurviewArmOperation<PurviewAccountResource> operation = new PurviewArmOperation<PurviewAccountResource>(
                     new PurviewAccountResourceOperationSource(Client),
@@ -300,7 +300,7 @@ namespace Azure.ResourceManager.Purview
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _accountsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, PurviewAccountPatch.ToRequestContent(patch), context);
+                using HttpMessage message = _accountsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, PurviewAccountPatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 PurviewArmOperation<PurviewAccountResource> operation = new PurviewArmOperation<PurviewAccountResource>(
                     new PurviewAccountResourceOperationSource(Client),
@@ -355,7 +355,7 @@ namespace Azure.ResourceManager.Purview
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _accountsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _accountsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 PurviewArmOperation operation = new PurviewArmOperation(_accountsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -404,7 +404,7 @@ namespace Azure.ResourceManager.Purview
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _accountsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _accountsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 PurviewArmOperation operation = new PurviewArmOperation(_accountsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -456,7 +456,7 @@ namespace Azure.ResourceManager.Purview
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _featuresRestClient.CreateAccountGetFeatureRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, PurviewBatchFeatureContent.ToRequestContent(content), context);
+                using HttpMessage message = _featuresRestClient.CreateAccountGetFeatureRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, PurviewBatchFeatureContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<PurviewBatchFeatureStatus> response = Response.FromValue(PurviewBatchFeatureStatus.FromResponse(result), result);
                 if (response.Value == null)
@@ -508,7 +508,7 @@ namespace Azure.ResourceManager.Purview
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _featuresRestClient.CreateAccountGetFeatureRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, PurviewBatchFeatureContent.ToRequestContent(content), context);
+                using HttpMessage message = _featuresRestClient.CreateAccountGetFeatureRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, PurviewBatchFeatureContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<PurviewBatchFeatureStatus> response = Response.FromValue(PurviewBatchFeatureStatus.FromResponse(result), result);
                 if (response.Value == null)
@@ -560,7 +560,7 @@ namespace Azure.ResourceManager.Purview
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _accountsRestClient.CreateAddRootCollectionAdminRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, CollectionAdminUpdateContent.ToRequestContent(content), context);
+                using HttpMessage message = _accountsRestClient.CreateAddRootCollectionAdminRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, CollectionAdminUpdateContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 return response;
             }
@@ -607,7 +607,7 @@ namespace Azure.ResourceManager.Purview
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _accountsRestClient.CreateAddRootCollectionAdminRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, CollectionAdminUpdateContent.ToRequestContent(content), context);
+                using HttpMessage message = _accountsRestClient.CreateAddRootCollectionAdminRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, CollectionAdminUpdateContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 return response;
             }
@@ -726,7 +726,7 @@ namespace Azure.ResourceManager.Purview
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _accountsRestClient.CreateGetKeysRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _accountsRestClient.CreateGetKeysRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<PurviewAccountAccessKey> response = Response.FromValue(PurviewAccountAccessKey.FromResponse(result), result);
                 if (response.Value == null)
@@ -774,7 +774,7 @@ namespace Azure.ResourceManager.Purview
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _accountsRestClient.CreateGetKeysRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _accountsRestClient.CreateGetKeysRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<PurviewAccountAccessKey> response = Response.FromValue(PurviewAccountAccessKey.FromResponse(result), result);
                 if (response.Value == null)
@@ -826,7 +826,7 @@ namespace Azure.ResourceManager.Purview
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _ingestionPrivateEndpointConnectionsRestClient.CreateUpdateStatusIngestionPrivateEndpointConnectionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, PrivateEndpointConnectionStatusUpdateContent.ToRequestContent(content), context);
+                using HttpMessage message = _ingestionPrivateEndpointConnectionsRestClient.CreateUpdateStatusIngestionPrivateEndpointConnectionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, PrivateEndpointConnectionStatusUpdateContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<PrivateEndpointConnectionStatusUpdateResult> response = Response.FromValue(PrivateEndpointConnectionStatusUpdateResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -878,7 +878,7 @@ namespace Azure.ResourceManager.Purview
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _ingestionPrivateEndpointConnectionsRestClient.CreateUpdateStatusIngestionPrivateEndpointConnectionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, PrivateEndpointConnectionStatusUpdateContent.ToRequestContent(content), context);
+                using HttpMessage message = _ingestionPrivateEndpointConnectionsRestClient.CreateUpdateStatusIngestionPrivateEndpointConnectionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, PrivateEndpointConnectionStatusUpdateContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<PrivateEndpointConnectionStatusUpdateResult> response = Response.FromValue(PrivateEndpointConnectionStatusUpdateResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -917,7 +917,7 @@ namespace Azure.ResourceManager.Purview
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _accountsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _accountsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<PurviewAccountData> response = Response.FromValue(PurviewAccountData.FromResponse(result), result);
                     return Response.FromValue(new PurviewAccountResource(Client, response.Value), response.GetRawResponse());
@@ -965,7 +965,7 @@ namespace Azure.ResourceManager.Purview
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _accountsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _accountsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<PurviewAccountData> response = Response.FromValue(PurviewAccountData.FromResponse(result), result);
                     return Response.FromValue(new PurviewAccountResource(Client, response.Value), response.GetRawResponse());
@@ -1011,7 +1011,7 @@ namespace Azure.ResourceManager.Purview
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _accountsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _accountsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<PurviewAccountData> response = Response.FromValue(PurviewAccountData.FromResponse(result), result);
                     return Response.FromValue(new PurviewAccountResource(Client, response.Value), response.GetRawResponse());
@@ -1053,7 +1053,7 @@ namespace Azure.ResourceManager.Purview
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _accountsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _accountsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<PurviewAccountData> response = Response.FromValue(PurviewAccountData.FromResponse(result), result);
                     return Response.FromValue(new PurviewAccountResource(Client, response.Value), response.GetRawResponse());
@@ -1095,7 +1095,7 @@ namespace Azure.ResourceManager.Purview
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _accountsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _accountsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<PurviewAccountData> response = Response.FromValue(PurviewAccountData.FromResponse(result), result);
                     return Response.FromValue(new PurviewAccountResource(Client, response.Value), response.GetRawResponse());
@@ -1141,7 +1141,7 @@ namespace Azure.ResourceManager.Purview
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _accountsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _accountsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<PurviewAccountData> response = Response.FromValue(PurviewAccountData.FromResponse(result), result);
                     return Response.FromValue(new PurviewAccountResource(Client, response.Value), response.GetRawResponse());

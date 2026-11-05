@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.Quantum.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = WorkspacesRestClient.CreateCheckWorkspaceNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), location, WorkspaceNameAvailabilityContent.ToRequestContent(content), context);
+                using HttpMessage message = WorkspacesRestClient.CreateCheckWorkspaceNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), location, WorkspaceNameAvailabilityContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<WorkspaceNameAvailabilityResult> response = Response.FromValue(WorkspaceNameAvailabilityResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.Quantum.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = WorkspacesRestClient.CreateCheckWorkspaceNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), location, WorkspaceNameAvailabilityContent.ToRequestContent(content), context);
+                using HttpMessage message = WorkspacesRestClient.CreateCheckWorkspaceNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), location, WorkspaceNameAvailabilityContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<WorkspaceNameAvailabilityResult> response = Response.FromValue(WorkspaceNameAvailabilityResult.FromResponse(result), result);
                 if (response.Value == null)

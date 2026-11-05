@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.PowerBIDedicated
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _capacitiesRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, dedicatedCapacityName, DedicatedCapacityData.ToRequestContent(data), context);
+                using HttpMessage message = _capacitiesRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, dedicatedCapacityName, DedicatedCapacityData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 PowerBIDedicatedArmOperation<DedicatedCapacityResource> operation = new PowerBIDedicatedArmOperation<DedicatedCapacityResource>(
                     new DedicatedCapacityResourceOperationSource(Client),
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.PowerBIDedicated
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _capacitiesRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, dedicatedCapacityName, DedicatedCapacityData.ToRequestContent(data), context);
+                using HttpMessage message = _capacitiesRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, dedicatedCapacityName, DedicatedCapacityData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 PowerBIDedicatedArmOperation<DedicatedCapacityResource> operation = new PowerBIDedicatedArmOperation<DedicatedCapacityResource>(
                     new DedicatedCapacityResourceOperationSource(Client),
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.PowerBIDedicated
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _capacitiesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, dedicatedCapacityName, context);
+                using HttpMessage message = _capacitiesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, dedicatedCapacityName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<DedicatedCapacityData> response = Response.FromValue(DedicatedCapacityData.FromResponse(result), result);
                 if (response.Value == null)
@@ -259,7 +259,7 @@ namespace Azure.ResourceManager.PowerBIDedicated
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _capacitiesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, dedicatedCapacityName, context);
+                using HttpMessage message = _capacitiesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, dedicatedCapacityName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<DedicatedCapacityData> response = Response.FromValue(DedicatedCapacityData.FromResponse(result), result);
                 if (response.Value == null)
@@ -364,7 +364,7 @@ namespace Azure.ResourceManager.PowerBIDedicated
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _capacitiesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, dedicatedCapacityName, context);
+                using HttpMessage message = _capacitiesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, dedicatedCapacityName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<DedicatedCapacityData> response = default;
@@ -421,7 +421,7 @@ namespace Azure.ResourceManager.PowerBIDedicated
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _capacitiesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, dedicatedCapacityName, context);
+                using HttpMessage message = _capacitiesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, dedicatedCapacityName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<DedicatedCapacityData> response = default;
@@ -478,7 +478,7 @@ namespace Azure.ResourceManager.PowerBIDedicated
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _capacitiesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, dedicatedCapacityName, context);
+                using HttpMessage message = _capacitiesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, dedicatedCapacityName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<DedicatedCapacityData> response = default;
@@ -539,7 +539,7 @@ namespace Azure.ResourceManager.PowerBIDedicated
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _capacitiesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, dedicatedCapacityName, context);
+                using HttpMessage message = _capacitiesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, dedicatedCapacityName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<DedicatedCapacityData> response = default;

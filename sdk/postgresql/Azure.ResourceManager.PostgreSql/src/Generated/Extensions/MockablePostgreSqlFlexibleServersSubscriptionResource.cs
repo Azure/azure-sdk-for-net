@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = NameAvailabilityRestClient.CreateCheckPostgreSqlFlexibleServerNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), PostgreSqlFlexibleServerNameAvailabilityContent.ToRequestContent(content), context);
+                using HttpMessage message = NameAvailabilityRestClient.CreateCheckPostgreSqlFlexibleServerNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), PostgreSqlFlexibleServerNameAvailabilityContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<PostgreSqlFlexibleServerNameAvailabilityResult> response = Response.FromValue(PostgreSqlFlexibleServerNameAvailabilityResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -258,7 +258,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = NameAvailabilityRestClient.CreateCheckPostgreSqlFlexibleServerNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), PostgreSqlFlexibleServerNameAvailabilityContent.ToRequestContent(content), context);
+                using HttpMessage message = NameAvailabilityRestClient.CreateCheckPostgreSqlFlexibleServerNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), PostgreSqlFlexibleServerNameAvailabilityContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<PostgreSqlFlexibleServerNameAvailabilityResult> response = Response.FromValue(PostgreSqlFlexibleServerNameAvailabilityResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -307,7 +307,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = NameAvailabilityRestClient.CreateCheckPostgreSqlFlexibleServerNameAvailabilityWithLocationRequest(Guid.Parse(Id.SubscriptionId), locationName, PostgreSqlFlexibleServerNameAvailabilityContent.ToRequestContent(content), context);
+                using HttpMessage message = NameAvailabilityRestClient.CreateCheckPostgreSqlFlexibleServerNameAvailabilityWithLocationRequest(Guid.Parse(Id.SubscriptionId), locationName, PostgreSqlFlexibleServerNameAvailabilityContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<PostgreSqlFlexibleServerNameAvailabilityResult> response = Response.FromValue(PostgreSqlFlexibleServerNameAvailabilityResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -356,7 +356,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = NameAvailabilityRestClient.CreateCheckPostgreSqlFlexibleServerNameAvailabilityWithLocationRequest(Guid.Parse(Id.SubscriptionId), locationName, PostgreSqlFlexibleServerNameAvailabilityContent.ToRequestContent(content), context);
+                using HttpMessage message = NameAvailabilityRestClient.CreateCheckPostgreSqlFlexibleServerNameAvailabilityWithLocationRequest(Guid.Parse(Id.SubscriptionId), locationName, PostgreSqlFlexibleServerNameAvailabilityContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<PostgreSqlFlexibleServerNameAvailabilityResult> response = Response.FromValue(PostgreSqlFlexibleServerNameAvailabilityResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -463,7 +463,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = VirtualNetworkSubnetUsageRestClient.CreateExecuteVirtualNetworkSubnetUsageRequest(Guid.Parse(Id.SubscriptionId), locationName, PostgreSqlFlexibleServerVirtualNetworkSubnetUsageParameter.ToRequestContent(postgreSqlFlexibleServerVirtualNetworkSubnetUsageParameter), context);
+                using HttpMessage message = VirtualNetworkSubnetUsageRestClient.CreateExecuteVirtualNetworkSubnetUsageRequest(Guid.Parse(Id.SubscriptionId), locationName, PostgreSqlFlexibleServerVirtualNetworkSubnetUsageParameter.ToRequestContent(postgreSqlFlexibleServerVirtualNetworkSubnetUsageParameter), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<PostgreSqlFlexibleServerVirtualNetworkSubnetUsageResult> response = Response.FromValue(PostgreSqlFlexibleServerVirtualNetworkSubnetUsageResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -512,7 +512,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = VirtualNetworkSubnetUsageRestClient.CreateExecuteVirtualNetworkSubnetUsageRequest(Guid.Parse(Id.SubscriptionId), locationName, PostgreSqlFlexibleServerVirtualNetworkSubnetUsageParameter.ToRequestContent(postgreSqlFlexibleServerVirtualNetworkSubnetUsageParameter), context);
+                using HttpMessage message = VirtualNetworkSubnetUsageRestClient.CreateExecuteVirtualNetworkSubnetUsageRequest(Guid.Parse(Id.SubscriptionId), locationName, PostgreSqlFlexibleServerVirtualNetworkSubnetUsageParameter.ToRequestContent(postgreSqlFlexibleServerVirtualNetworkSubnetUsageParameter), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<PostgreSqlFlexibleServerVirtualNetworkSubnetUsageResult> response = Response.FromValue(PostgreSqlFlexibleServerVirtualNetworkSubnetUsageResult.FromResponse(result), result);
                 if (response.Value == null)
