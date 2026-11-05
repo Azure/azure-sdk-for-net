@@ -149,6 +149,22 @@ public class VoiceAgentContractCompatibilityTests
         });
     }
 
+    [TestCase(1)]
+    [TestCase(20)]
+    [TestCase(300)]
+    public void TransferRingTimeoutRoundTripsAsDurationInWireSeconds(int seconds)
+    {
+        VoiceAgentTransferRouting routing = new(VoiceAgentTransferStrategy.Sequential)
+        {
+            RingTimeoutSeconds = TimeSpan.FromSeconds(seconds)
+        };
+        BinaryData data = ModelReaderWriter.Write(routing, new("W"));
+        using JsonDocument document = JsonDocument.Parse(data);
+        Assert.That(document.RootElement.GetProperty("ring_timeout_seconds").GetDouble(), Is.EqualTo(seconds));
+        VoiceAgentTransferRouting restored = ModelReaderWriter.Read<VoiceAgentTransferRouting>(data);
+        Assert.That(restored.RingTimeoutSeconds, Is.EqualTo(TimeSpan.FromSeconds(seconds)));
+    }
+
     [TestCase(null)]
     [TestCase(30)]
     public void SystemToolTimeoutUsesSecondsWithoutInventingServiceDefaults(int? timeoutSeconds)

@@ -3,6 +3,7 @@
 ## 3.0.0-beta.7 (Unreleased)
 
 ### Features Added
+- Added trace-driven skill optimization, skill candidate results, and evaluation context models.
 - Added experimental Live voice agent definitions, native client/server event models, and `BetaVoiceAgentsLiveConversations` for stored Live history and recordings.
 - Added typed `VoiceAgentLiveSessionResource` snapshots, `VoiceAgentLiveDelegation` configuration, and `VoiceAgentLiveDelegationItem` metadata, including `foundry_managed_agent` ownership with the pinned agent name and resolved version.
 - Added typed Realtime/Live definition dispatch and stored Live history pagination.
@@ -15,6 +16,8 @@
 - Added the public `FoundryOpenAIError` data model for typed campaign failure details while keeping exception-formatting helpers internal.
 
 ### Breaking Changes
+- `VoiceAgentTransferRouting.RingTimeoutSeconds` now uses `TimeSpan?` instead of `int?`; JSON continues to use seconds.
+- Agent optimization jobs and their list filters now use `AgentOptimizationJobStatus`, including the terminal `Skipped` state, instead of `AgentsJobStatus`.
 - Realtime voice definitions now emit the required `sub_protocol` discriminator with the value `realtime`.
 - `VoiceAgentSubagentConfig` is now an abstract base class. Use `VoiceAgentDelegateSubagentConfig` for referenced agents or `VoiceAgentInlineSubagentConfig` for inline handoff graphs.
 - Telephony binding creation now accepts `TelephonyBinding` provider-specific models instead of the removed create-content models. Binding status fields and the binding-list status filter were removed.
@@ -31,7 +34,7 @@
 - Fixed telephony call-history pagination to stop on terminal pages and use the correct cursor when paging backward.
 
 ### Other Changes
-- Regenerated from `feature/foundry-release` at [`b8f88e51044d37f43e39c58ebf4928da54f5b447`](https://github.com/Azure/azure-rest-api-specs/tree/b8f88e51044d37f43e39c58ebf4928da54f5b447), using OpenAI TypeSpec 1.34.1.
+- Regenerated from `feature/foundry-release` at [`768c3a412129295692b60788fa76fc27b6d484ff`](https://github.com/Azure/azure-rest-api-specs/tree/768c3a412129295692b60788fa76fc27b6d484ff), using OpenAI TypeSpec 1.34.1.
 
 ## 3.0.0-beta.6 (2026-10-30)
 

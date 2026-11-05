@@ -17,7 +17,7 @@
 ### Other Changes
 
 - Agent Insights no longer requires the `AgentInsights=V1Preview` feature header.
-- Regenerated from `feature/foundry-release` at [`b8f88e51044d37f43e39c58ebf4928da54f5b447`](https://github.com/Azure/azure-rest-api-specs/tree/b8f88e51044d37f43e39c58ebf4928da54f5b447).
+- Regenerated from `feature/foundry-release` at [`768c3a412129295692b60788fa76fc27b6d484ff`](https://github.com/Azure/azure-rest-api-specs/tree/768c3a412129295692b60788fa76fc27b6d484ff).
 
 ## 3.0.0-beta.6 (2026-10-30)
 
