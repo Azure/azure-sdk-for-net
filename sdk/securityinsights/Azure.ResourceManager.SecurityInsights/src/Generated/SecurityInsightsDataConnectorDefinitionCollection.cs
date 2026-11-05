@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.SecurityInsights
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _dataConnectorDefinitionsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, dataConnectorDefinitionName, SecurityInsightsDataConnectorDefinitionData.ToRequestContent(data), context);
+                using HttpMessage message = _dataConnectorDefinitionsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, dataConnectorDefinitionName, SecurityInsightsDataConnectorDefinitionData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<SecurityInsightsDataConnectorDefinitionData> response = Response.FromValue(SecurityInsightsDataConnectorDefinitionData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.SecurityInsights
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _dataConnectorDefinitionsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, dataConnectorDefinitionName, SecurityInsightsDataConnectorDefinitionData.ToRequestContent(data), context);
+                using HttpMessage message = _dataConnectorDefinitionsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, dataConnectorDefinitionName, SecurityInsightsDataConnectorDefinitionData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<SecurityInsightsDataConnectorDefinitionData> response = Response.FromValue(SecurityInsightsDataConnectorDefinitionData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.SecurityInsights
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _dataConnectorDefinitionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, dataConnectorDefinitionName, context);
+                using HttpMessage message = _dataConnectorDefinitionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, dataConnectorDefinitionName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<SecurityInsightsDataConnectorDefinitionData> response = Response.FromValue(SecurityInsightsDataConnectorDefinitionData.FromResponse(result), result);
                 if (response.Value == null)
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.SecurityInsights
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _dataConnectorDefinitionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, dataConnectorDefinitionName, context);
+                using HttpMessage message = _dataConnectorDefinitionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, dataConnectorDefinitionName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<SecurityInsightsDataConnectorDefinitionData> response = Response.FromValue(SecurityInsightsDataConnectorDefinitionData.FromResponse(result), result);
                 if (response.Value == null)
@@ -363,7 +363,7 @@ namespace Azure.ResourceManager.SecurityInsights
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _dataConnectorDefinitionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, dataConnectorDefinitionName, context);
+                using HttpMessage message = _dataConnectorDefinitionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, dataConnectorDefinitionName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<SecurityInsightsDataConnectorDefinitionData> response = default;
@@ -420,7 +420,7 @@ namespace Azure.ResourceManager.SecurityInsights
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _dataConnectorDefinitionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, dataConnectorDefinitionName, context);
+                using HttpMessage message = _dataConnectorDefinitionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, dataConnectorDefinitionName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<SecurityInsightsDataConnectorDefinitionData> response = default;
@@ -477,7 +477,7 @@ namespace Azure.ResourceManager.SecurityInsights
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _dataConnectorDefinitionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, dataConnectorDefinitionName, context);
+                using HttpMessage message = _dataConnectorDefinitionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, dataConnectorDefinitionName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<SecurityInsightsDataConnectorDefinitionData> response = default;
@@ -538,7 +538,7 @@ namespace Azure.ResourceManager.SecurityInsights
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _dataConnectorDefinitionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, dataConnectorDefinitionName, context);
+                using HttpMessage message = _dataConnectorDefinitionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, dataConnectorDefinitionName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<SecurityInsightsDataConnectorDefinitionData> response = default;

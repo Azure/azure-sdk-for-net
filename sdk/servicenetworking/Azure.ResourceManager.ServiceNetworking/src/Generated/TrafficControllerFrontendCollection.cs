@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.ServiceNetworking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _frontendsInterfaceRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, frontendName, TrafficControllerFrontendData.ToRequestContent(data), context);
+                using HttpMessage message = _frontendsInterfaceRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, frontendName, TrafficControllerFrontendData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ServiceNetworkingArmOperation<TrafficControllerFrontendResource> operation = new ServiceNetworkingArmOperation<TrafficControllerFrontendResource>(
                     new TrafficControllerFrontendResourceOperationSource(Client),
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.ServiceNetworking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _frontendsInterfaceRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, frontendName, TrafficControllerFrontendData.ToRequestContent(data), context);
+                using HttpMessage message = _frontendsInterfaceRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, frontendName, TrafficControllerFrontendData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ServiceNetworkingArmOperation<TrafficControllerFrontendResource> operation = new ServiceNetworkingArmOperation<TrafficControllerFrontendResource>(
                     new TrafficControllerFrontendResourceOperationSource(Client),
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.ServiceNetworking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _frontendsInterfaceRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, frontendName, context);
+                using HttpMessage message = _frontendsInterfaceRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, frontendName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<TrafficControllerFrontendData> response = Response.FromValue(TrafficControllerFrontendData.FromResponse(result), result);
                 if (response.Value == null)
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.ServiceNetworking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _frontendsInterfaceRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, frontendName, context);
+                using HttpMessage message = _frontendsInterfaceRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, frontendName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<TrafficControllerFrontendData> response = Response.FromValue(TrafficControllerFrontendData.FromResponse(result), result);
                 if (response.Value == null)
@@ -369,7 +369,7 @@ namespace Azure.ResourceManager.ServiceNetworking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _frontendsInterfaceRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, frontendName, context);
+                using HttpMessage message = _frontendsInterfaceRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, frontendName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<TrafficControllerFrontendData> response = default;
@@ -426,7 +426,7 @@ namespace Azure.ResourceManager.ServiceNetworking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _frontendsInterfaceRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, frontendName, context);
+                using HttpMessage message = _frontendsInterfaceRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, frontendName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<TrafficControllerFrontendData> response = default;
@@ -483,7 +483,7 @@ namespace Azure.ResourceManager.ServiceNetworking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _frontendsInterfaceRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, frontendName, context);
+                using HttpMessage message = _frontendsInterfaceRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, frontendName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<TrafficControllerFrontendData> response = default;
@@ -544,7 +544,7 @@ namespace Azure.ResourceManager.ServiceNetworking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _frontendsInterfaceRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, frontendName, context);
+                using HttpMessage message = _frontendsInterfaceRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, frontendName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<TrafficControllerFrontendData> response = default;

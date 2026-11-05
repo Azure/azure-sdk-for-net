@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.SecurityInsights
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _threatIntelligenceIndicatorRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Name, context);
+                using HttpMessage message = _threatIntelligenceIndicatorRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<SecurityInsightsThreatIntelligenceIndicatorBaseData> response = Response.FromValue(SecurityInsightsThreatIntelligenceIndicatorBaseData.FromResponse(result), result);
                 if (response.Value == null)
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.SecurityInsights
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _threatIntelligenceIndicatorRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Name, context);
+                using HttpMessage message = _threatIntelligenceIndicatorRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<SecurityInsightsThreatIntelligenceIndicatorBaseData> response = Response.FromValue(SecurityInsightsThreatIntelligenceIndicatorBaseData.FromResponse(result), result);
                 if (response.Value == null)
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.SecurityInsights
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _threatIntelligenceIndicatorRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Name, context);
+                using HttpMessage message = _threatIntelligenceIndicatorRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
@@ -272,7 +272,7 @@ namespace Azure.ResourceManager.SecurityInsights
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _threatIntelligenceIndicatorRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Name, context);
+                using HttpMessage message = _threatIntelligenceIndicatorRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
@@ -326,7 +326,7 @@ namespace Azure.ResourceManager.SecurityInsights
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _threatIntelligenceIndicatorRestClient.CreateAppendTagsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Name, ThreatIntelligenceAppendTags.ToRequestContent(threatIntelligenceAppendTags), context);
+                using HttpMessage message = _threatIntelligenceIndicatorRestClient.CreateAppendTagsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Name, ThreatIntelligenceAppendTags.ToRequestContent(threatIntelligenceAppendTags), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 return response;
             }
@@ -373,7 +373,7 @@ namespace Azure.ResourceManager.SecurityInsights
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _threatIntelligenceIndicatorRestClient.CreateAppendTagsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Name, ThreatIntelligenceAppendTags.ToRequestContent(threatIntelligenceAppendTags), context);
+                using HttpMessage message = _threatIntelligenceIndicatorRestClient.CreateAppendTagsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Name, ThreatIntelligenceAppendTags.ToRequestContent(threatIntelligenceAppendTags), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 return response;
             }
@@ -420,7 +420,7 @@ namespace Azure.ResourceManager.SecurityInsights
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _threatIntelligenceIndicatorRestClient.CreateReplaceTagsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Name, SecurityInsightsThreatIntelligenceIndicatorData.ToRequestContent(data), context);
+                using HttpMessage message = _threatIntelligenceIndicatorRestClient.CreateReplaceTagsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Name, SecurityInsightsThreatIntelligenceIndicatorData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<SecurityInsightsThreatIntelligenceIndicatorBaseData> response = Response.FromValue(SecurityInsightsThreatIntelligenceIndicatorBaseData.FromResponse(result), result);
                 if (response.Value == null)
@@ -472,7 +472,7 @@ namespace Azure.ResourceManager.SecurityInsights
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _threatIntelligenceIndicatorRestClient.CreateReplaceTagsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Name, SecurityInsightsThreatIntelligenceIndicatorData.ToRequestContent(data), context);
+                using HttpMessage message = _threatIntelligenceIndicatorRestClient.CreateReplaceTagsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Name, SecurityInsightsThreatIntelligenceIndicatorData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<SecurityInsightsThreatIntelligenceIndicatorBaseData> response = Response.FromValue(SecurityInsightsThreatIntelligenceIndicatorBaseData.FromResponse(result), result);
                 if (response.Value == null)
@@ -525,7 +525,7 @@ namespace Azure.ResourceManager.SecurityInsights
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _threatIntelligenceIndicatorRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Name, SecurityInsightsThreatIntelligenceIndicatorData.ToRequestContent(data), context);
+                using HttpMessage message = _threatIntelligenceIndicatorRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Name, SecurityInsightsThreatIntelligenceIndicatorData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<SecurityInsightsThreatIntelligenceIndicatorBaseData> response = Response.FromValue(SecurityInsightsThreatIntelligenceIndicatorBaseData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -581,7 +581,7 @@ namespace Azure.ResourceManager.SecurityInsights
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _threatIntelligenceIndicatorRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Name, SecurityInsightsThreatIntelligenceIndicatorData.ToRequestContent(data), context);
+                using HttpMessage message = _threatIntelligenceIndicatorRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Name, SecurityInsightsThreatIntelligenceIndicatorData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<SecurityInsightsThreatIntelligenceIndicatorBaseData> response = Response.FromValue(SecurityInsightsThreatIntelligenceIndicatorBaseData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;

@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _applicationTypeVersionsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _applicationTypeVersionsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ServiceFabricManagedApplicationTypeVersionData> response = Response.FromValue(ServiceFabricManagedApplicationTypeVersionData.FromResponse(result), result);
                 if (response.Value == null)
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _applicationTypeVersionsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _applicationTypeVersionsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ServiceFabricManagedApplicationTypeVersionData> response = Response.FromValue(ServiceFabricManagedApplicationTypeVersionData.FromResponse(result), result);
                 if (response.Value == null)
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _applicationTypeVersionsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ServiceFabricManagedApplicationTypeVersionPatch.ToRequestContent(patch), context);
+                using HttpMessage message = _applicationTypeVersionsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ServiceFabricManagedApplicationTypeVersionPatch.ToRequestContent(patch), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ServiceFabricManagedApplicationTypeVersionData> response = Response.FromValue(ServiceFabricManagedApplicationTypeVersionData.FromResponse(result), result);
                 if (response.Value == null)
@@ -280,7 +280,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _applicationTypeVersionsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ServiceFabricManagedApplicationTypeVersionPatch.ToRequestContent(patch), context);
+                using HttpMessage message = _applicationTypeVersionsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ServiceFabricManagedApplicationTypeVersionPatch.ToRequestContent(patch), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ServiceFabricManagedApplicationTypeVersionData> response = Response.FromValue(ServiceFabricManagedApplicationTypeVersionData.FromResponse(result), result);
                 if (response.Value == null)
@@ -329,7 +329,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _applicationTypeVersionsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _applicationTypeVersionsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ServiceFabricManagedClustersArmOperation operation = new ServiceFabricManagedClustersArmOperation(_applicationTypeVersionsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -378,7 +378,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _applicationTypeVersionsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _applicationTypeVersionsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ServiceFabricManagedClustersArmOperation operation = new ServiceFabricManagedClustersArmOperation(_applicationTypeVersionsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -417,7 +417,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _applicationTypeVersionsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                    using HttpMessage message = _applicationTypeVersionsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<ServiceFabricManagedApplicationTypeVersionData> response = Response.FromValue(ServiceFabricManagedApplicationTypeVersionData.FromResponse(result), result);
                     return Response.FromValue(new ServiceFabricManagedApplicationTypeVersionResource(Client, response.Value), response.GetRawResponse());
@@ -465,7 +465,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _applicationTypeVersionsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                    using HttpMessage message = _applicationTypeVersionsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<ServiceFabricManagedApplicationTypeVersionData> response = Response.FromValue(ServiceFabricManagedApplicationTypeVersionData.FromResponse(result), result);
                     return Response.FromValue(new ServiceFabricManagedApplicationTypeVersionResource(Client, response.Value), response.GetRawResponse());
@@ -511,7 +511,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _applicationTypeVersionsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                    using HttpMessage message = _applicationTypeVersionsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<ServiceFabricManagedApplicationTypeVersionData> response = Response.FromValue(ServiceFabricManagedApplicationTypeVersionData.FromResponse(result), result);
                     return Response.FromValue(new ServiceFabricManagedApplicationTypeVersionResource(Client, response.Value), response.GetRawResponse());
@@ -553,7 +553,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _applicationTypeVersionsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                    using HttpMessage message = _applicationTypeVersionsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<ServiceFabricManagedApplicationTypeVersionData> response = Response.FromValue(ServiceFabricManagedApplicationTypeVersionData.FromResponse(result), result);
                     return Response.FromValue(new ServiceFabricManagedApplicationTypeVersionResource(Client, response.Value), response.GetRawResponse());
@@ -595,7 +595,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _applicationTypeVersionsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                    using HttpMessage message = _applicationTypeVersionsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<ServiceFabricManagedApplicationTypeVersionData> response = Response.FromValue(ServiceFabricManagedApplicationTypeVersionData.FromResponse(result), result);
                     return Response.FromValue(new ServiceFabricManagedApplicationTypeVersionResource(Client, response.Value), response.GetRawResponse());
@@ -641,7 +641,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _applicationTypeVersionsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                    using HttpMessage message = _applicationTypeVersionsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<ServiceFabricManagedApplicationTypeVersionData> response = Response.FromValue(ServiceFabricManagedApplicationTypeVersionData.FromResponse(result), result);
                     return Response.FromValue(new ServiceFabricManagedApplicationTypeVersionResource(Client, response.Value), response.GetRawResponse());

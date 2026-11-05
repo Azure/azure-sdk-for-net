@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.SecurityInsights
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _automationRulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _automationRulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<SecurityInsightsAutomationRuleData> response = Response.FromValue(SecurityInsightsAutomationRuleData.FromResponse(result), result);
                 if (response.Value == null)
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.SecurityInsights
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _automationRulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _automationRulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<SecurityInsightsAutomationRuleData> response = Response.FromValue(SecurityInsightsAutomationRuleData.FromResponse(result), result);
                 if (response.Value == null)
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.SecurityInsights
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _automationRulesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, SecurityInsightsAutomationRuleData.ToRequestContent(data), context);
+                using HttpMessage message = _automationRulesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, SecurityInsightsAutomationRuleData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<SecurityInsightsAutomationRuleData> response = Response.FromValue(SecurityInsightsAutomationRuleData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -274,7 +274,7 @@ namespace Azure.ResourceManager.SecurityInsights
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _automationRulesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, SecurityInsightsAutomationRuleData.ToRequestContent(data), context);
+                using HttpMessage message = _automationRulesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, SecurityInsightsAutomationRuleData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<SecurityInsightsAutomationRuleData> response = Response.FromValue(SecurityInsightsAutomationRuleData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;

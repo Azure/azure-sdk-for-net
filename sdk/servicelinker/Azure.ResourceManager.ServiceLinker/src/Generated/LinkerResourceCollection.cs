@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.ServiceLinker
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _linkerResourcesRestClient.CreateCreateOrUpdateRequest(Id.ToString(), linkerName, LinkerResourceData.ToRequestContent(data), context);
+                using HttpMessage message = _linkerResourcesRestClient.CreateCreateOrUpdateRequest(Id.ToString(), linkerName, LinkerResourceData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ServiceLinkerArmOperation<LinkerResource> operation = new ServiceLinkerArmOperation<LinkerResource>(
                     new LinkerResourceOperationSource(Client),
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.ServiceLinker
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _linkerResourcesRestClient.CreateCreateOrUpdateRequest(Id.ToString(), linkerName, LinkerResourceData.ToRequestContent(data), context);
+                using HttpMessage message = _linkerResourcesRestClient.CreateCreateOrUpdateRequest(Id.ToString(), linkerName, LinkerResourceData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ServiceLinkerArmOperation<LinkerResource> operation = new ServiceLinkerArmOperation<LinkerResource>(
                     new LinkerResourceOperationSource(Client),
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.ServiceLinker
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _linkerResourcesRestClient.CreateGetRequest(Id.ToString(), linkerName, context);
+                using HttpMessage message = _linkerResourcesRestClient.CreateGetRequest(Id.ToString(), linkerName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<LinkerResourceData> response = Response.FromValue(LinkerResourceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -240,7 +240,7 @@ namespace Azure.ResourceManager.ServiceLinker
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _linkerResourcesRestClient.CreateGetRequest(Id.ToString(), linkerName, context);
+                using HttpMessage message = _linkerResourcesRestClient.CreateGetRequest(Id.ToString(), linkerName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<LinkerResourceData> response = Response.FromValue(LinkerResourceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -345,7 +345,7 @@ namespace Azure.ResourceManager.ServiceLinker
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _linkerResourcesRestClient.CreateGetRequest(Id.ToString(), linkerName, context);
+                using HttpMessage message = _linkerResourcesRestClient.CreateGetRequest(Id.ToString(), linkerName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<LinkerResourceData> response = default;
@@ -402,7 +402,7 @@ namespace Azure.ResourceManager.ServiceLinker
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _linkerResourcesRestClient.CreateGetRequest(Id.ToString(), linkerName, context);
+                using HttpMessage message = _linkerResourcesRestClient.CreateGetRequest(Id.ToString(), linkerName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<LinkerResourceData> response = default;
@@ -459,7 +459,7 @@ namespace Azure.ResourceManager.ServiceLinker
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _linkerResourcesRestClient.CreateGetRequest(Id.ToString(), linkerName, context);
+                using HttpMessage message = _linkerResourcesRestClient.CreateGetRequest(Id.ToString(), linkerName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<LinkerResourceData> response = default;
@@ -520,7 +520,7 @@ namespace Azure.ResourceManager.ServiceLinker
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _linkerResourcesRestClient.CreateGetRequest(Id.ToString(), linkerName, context);
+                using HttpMessage message = _linkerResourcesRestClient.CreateGetRequest(Id.ToString(), linkerName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<LinkerResourceData> response = default;

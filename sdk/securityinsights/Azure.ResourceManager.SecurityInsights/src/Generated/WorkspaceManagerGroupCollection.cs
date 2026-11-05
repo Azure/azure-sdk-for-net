@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.SecurityInsights
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workspaceManagerGroupsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, workspaceManagerGroupName, WorkspaceManagerGroupData.ToRequestContent(data), context);
+                using HttpMessage message = _workspaceManagerGroupsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, workspaceManagerGroupName, WorkspaceManagerGroupData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<WorkspaceManagerGroupData> response = Response.FromValue(WorkspaceManagerGroupData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.SecurityInsights
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workspaceManagerGroupsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, workspaceManagerGroupName, WorkspaceManagerGroupData.ToRequestContent(data), context);
+                using HttpMessage message = _workspaceManagerGroupsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, workspaceManagerGroupName, WorkspaceManagerGroupData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<WorkspaceManagerGroupData> response = Response.FromValue(WorkspaceManagerGroupData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.SecurityInsights
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workspaceManagerGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, workspaceManagerGroupName, context);
+                using HttpMessage message = _workspaceManagerGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, workspaceManagerGroupName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<WorkspaceManagerGroupData> response = Response.FromValue(WorkspaceManagerGroupData.FromResponse(result), result);
                 if (response.Value == null)
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.SecurityInsights
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workspaceManagerGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, workspaceManagerGroupName, context);
+                using HttpMessage message = _workspaceManagerGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, workspaceManagerGroupName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<WorkspaceManagerGroupData> response = Response.FromValue(WorkspaceManagerGroupData.FromResponse(result), result);
                 if (response.Value == null)
@@ -375,7 +375,7 @@ namespace Azure.ResourceManager.SecurityInsights
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workspaceManagerGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, workspaceManagerGroupName, context);
+                using HttpMessage message = _workspaceManagerGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, workspaceManagerGroupName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<WorkspaceManagerGroupData> response = default;
@@ -432,7 +432,7 @@ namespace Azure.ResourceManager.SecurityInsights
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workspaceManagerGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, workspaceManagerGroupName, context);
+                using HttpMessage message = _workspaceManagerGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, workspaceManagerGroupName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<WorkspaceManagerGroupData> response = default;
@@ -489,7 +489,7 @@ namespace Azure.ResourceManager.SecurityInsights
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workspaceManagerGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, workspaceManagerGroupName, context);
+                using HttpMessage message = _workspaceManagerGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, workspaceManagerGroupName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<WorkspaceManagerGroupData> response = default;
@@ -550,7 +550,7 @@ namespace Azure.ResourceManager.SecurityInsights
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workspaceManagerGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, workspaceManagerGroupName, context);
+                using HttpMessage message = _workspaceManagerGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, workspaceManagerGroupName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<WorkspaceManagerGroupData> response = default;

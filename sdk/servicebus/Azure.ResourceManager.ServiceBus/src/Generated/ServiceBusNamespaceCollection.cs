@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.ServiceBus
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _namespacesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, namespaceName, ServiceBusNamespaceData.ToRequestContent(data), context);
+                using HttpMessage message = _namespacesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, namespaceName, ServiceBusNamespaceData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ServiceBusArmOperation<ServiceBusNamespaceResource> operation = new ServiceBusArmOperation<ServiceBusNamespaceResource>(
                     new ServiceBusNamespaceResourceOperationSource(Client),
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.ServiceBus
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _namespacesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, namespaceName, ServiceBusNamespaceData.ToRequestContent(data), context);
+                using HttpMessage message = _namespacesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, namespaceName, ServiceBusNamespaceData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ServiceBusArmOperation<ServiceBusNamespaceResource> operation = new ServiceBusArmOperation<ServiceBusNamespaceResource>(
                     new ServiceBusNamespaceResourceOperationSource(Client),
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.ServiceBus
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _namespacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, namespaceName, context);
+                using HttpMessage message = _namespacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, namespaceName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ServiceBusNamespaceData> response = Response.FromValue(ServiceBusNamespaceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -259,7 +259,7 @@ namespace Azure.ResourceManager.ServiceBus
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _namespacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, namespaceName, context);
+                using HttpMessage message = _namespacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, namespaceName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ServiceBusNamespaceData> response = Response.FromValue(ServiceBusNamespaceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -364,7 +364,7 @@ namespace Azure.ResourceManager.ServiceBus
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _namespacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, namespaceName, context);
+                using HttpMessage message = _namespacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, namespaceName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ServiceBusNamespaceData> response = default;
@@ -421,7 +421,7 @@ namespace Azure.ResourceManager.ServiceBus
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _namespacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, namespaceName, context);
+                using HttpMessage message = _namespacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, namespaceName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ServiceBusNamespaceData> response = default;
@@ -478,7 +478,7 @@ namespace Azure.ResourceManager.ServiceBus
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _namespacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, namespaceName, context);
+                using HttpMessage message = _namespacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, namespaceName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ServiceBusNamespaceData> response = default;
@@ -539,7 +539,7 @@ namespace Azure.ResourceManager.ServiceBus
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _namespacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, namespaceName, context);
+                using HttpMessage message = _namespacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, namespaceName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ServiceBusNamespaceData> response = default;

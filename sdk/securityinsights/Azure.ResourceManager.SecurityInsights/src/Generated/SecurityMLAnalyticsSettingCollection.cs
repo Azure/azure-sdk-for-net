@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.SecurityInsights
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _securityMLAnalyticsSettingsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, settingsResourceName, SecurityMLAnalyticsSettingData.ToRequestContent(data), context);
+                using HttpMessage message = _securityMLAnalyticsSettingsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, settingsResourceName, SecurityMLAnalyticsSettingData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<SecurityMLAnalyticsSettingData> response = Response.FromValue(SecurityMLAnalyticsSettingData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.SecurityInsights
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _securityMLAnalyticsSettingsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, settingsResourceName, SecurityMLAnalyticsSettingData.ToRequestContent(data), context);
+                using HttpMessage message = _securityMLAnalyticsSettingsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, settingsResourceName, SecurityMLAnalyticsSettingData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<SecurityMLAnalyticsSettingData> response = Response.FromValue(SecurityMLAnalyticsSettingData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.SecurityInsights
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _securityMLAnalyticsSettingsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, settingsResourceName, context);
+                using HttpMessage message = _securityMLAnalyticsSettingsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, settingsResourceName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<SecurityMLAnalyticsSettingData> response = Response.FromValue(SecurityMLAnalyticsSettingData.FromResponse(result), result);
                 if (response.Value == null)
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.SecurityInsights
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _securityMLAnalyticsSettingsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, settingsResourceName, context);
+                using HttpMessage message = _securityMLAnalyticsSettingsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, settingsResourceName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<SecurityMLAnalyticsSettingData> response = Response.FromValue(SecurityMLAnalyticsSettingData.FromResponse(result), result);
                 if (response.Value == null)
@@ -363,7 +363,7 @@ namespace Azure.ResourceManager.SecurityInsights
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _securityMLAnalyticsSettingsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, settingsResourceName, context);
+                using HttpMessage message = _securityMLAnalyticsSettingsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, settingsResourceName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<SecurityMLAnalyticsSettingData> response = default;
@@ -420,7 +420,7 @@ namespace Azure.ResourceManager.SecurityInsights
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _securityMLAnalyticsSettingsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, settingsResourceName, context);
+                using HttpMessage message = _securityMLAnalyticsSettingsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, settingsResourceName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<SecurityMLAnalyticsSettingData> response = default;
@@ -477,7 +477,7 @@ namespace Azure.ResourceManager.SecurityInsights
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _securityMLAnalyticsSettingsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, settingsResourceName, context);
+                using HttpMessage message = _securityMLAnalyticsSettingsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, settingsResourceName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<SecurityMLAnalyticsSettingData> response = default;
@@ -538,7 +538,7 @@ namespace Azure.ResourceManager.SecurityInsights
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _securityMLAnalyticsSettingsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, settingsResourceName, context);
+                using HttpMessage message = _securityMLAnalyticsSettingsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, settingsResourceName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<SecurityMLAnalyticsSettingData> response = default;

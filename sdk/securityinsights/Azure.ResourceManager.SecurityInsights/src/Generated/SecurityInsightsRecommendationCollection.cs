@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.SecurityInsights
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _getRestClient.CreateSingleRecommendationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, recommendationId, context);
+                using HttpMessage message = _getRestClient.CreateSingleRecommendationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, recommendationId, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<SecurityInsightsRecommendationData> response = Response.FromValue(SecurityInsightsRecommendationData.FromResponse(result), result);
                 if (response.Value == null)
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.SecurityInsights
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _getRestClient.CreateSingleRecommendationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, recommendationId, context);
+                using HttpMessage message = _getRestClient.CreateSingleRecommendationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, recommendationId, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<SecurityInsightsRecommendationData> response = Response.FromValue(SecurityInsightsRecommendationData.FromResponse(result), result);
                 if (response.Value == null)
@@ -257,7 +257,7 @@ namespace Azure.ResourceManager.SecurityInsights
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _getRestClient.CreateSingleRecommendationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, recommendationId, context);
+                using HttpMessage message = _getRestClient.CreateSingleRecommendationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, recommendationId, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<SecurityInsightsRecommendationData> response = default;
@@ -314,7 +314,7 @@ namespace Azure.ResourceManager.SecurityInsights
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _getRestClient.CreateSingleRecommendationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, recommendationId, context);
+                using HttpMessage message = _getRestClient.CreateSingleRecommendationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, recommendationId, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<SecurityInsightsRecommendationData> response = default;
@@ -371,7 +371,7 @@ namespace Azure.ResourceManager.SecurityInsights
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _getRestClient.CreateSingleRecommendationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, recommendationId, context);
+                using HttpMessage message = _getRestClient.CreateSingleRecommendationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, recommendationId, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<SecurityInsightsRecommendationData> response = default;
@@ -432,7 +432,7 @@ namespace Azure.ResourceManager.SecurityInsights
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _getRestClient.CreateSingleRecommendationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, recommendationId, context);
+                using HttpMessage message = _getRestClient.CreateSingleRecommendationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, recommendationId, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<SecurityInsightsRecommendationData> response = default;

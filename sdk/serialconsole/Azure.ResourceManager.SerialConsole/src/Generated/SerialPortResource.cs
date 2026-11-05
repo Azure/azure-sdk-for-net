@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.SerialConsole
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serialPortsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.ResourceType.Type, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _serialPortsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.ResourceType.Type, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<SerialPortData> response = Response.FromValue(SerialPortData.FromResponse(result), result);
                 if (response.Value == null)
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.SerialConsole
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serialPortsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.ResourceType.Type, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _serialPortsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.ResourceType.Type, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<SerialPortData> response = Response.FromValue(SerialPortData.FromResponse(result), result);
                 if (response.Value == null)
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.SerialConsole
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serialPortsRestClient.CreateConnectRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.ResourceType.Type, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _serialPortsRestClient.CreateConnectRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.ResourceType.Type, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<SerialPortConnectionInfo> response = Response.FromValue(SerialPortConnectionInfo.FromResponse(result), result);
                 if (response.Value == null)
@@ -270,7 +270,7 @@ namespace Azure.ResourceManager.SerialConsole
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serialPortsRestClient.CreateConnectRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.ResourceType.Type, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _serialPortsRestClient.CreateConnectRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.ResourceType.Type, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<SerialPortConnectionInfo> response = Response.FromValue(SerialPortConnectionInfo.FromResponse(result), result);
                 if (response.Value == null)

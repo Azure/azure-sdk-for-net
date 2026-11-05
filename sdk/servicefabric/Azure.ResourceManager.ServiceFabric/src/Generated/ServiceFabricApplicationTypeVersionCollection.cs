@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.ServiceFabric
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _applicationTypeVersionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, version, ServiceFabricApplicationTypeVersionData.ToRequestContent(data), context);
+                using HttpMessage message = _applicationTypeVersionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, version, ServiceFabricApplicationTypeVersionData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ServiceFabricArmOperation<ServiceFabricApplicationTypeVersionResource> operation = new ServiceFabricArmOperation<ServiceFabricApplicationTypeVersionResource>(
                     new ServiceFabricApplicationTypeVersionResourceOperationSource(Client),
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.ServiceFabric
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _applicationTypeVersionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, version, ServiceFabricApplicationTypeVersionData.ToRequestContent(data), context);
+                using HttpMessage message = _applicationTypeVersionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, version, ServiceFabricApplicationTypeVersionData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ServiceFabricArmOperation<ServiceFabricApplicationTypeVersionResource> operation = new ServiceFabricArmOperation<ServiceFabricApplicationTypeVersionResource>(
                     new ServiceFabricApplicationTypeVersionResourceOperationSource(Client),
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.ServiceFabric
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _applicationTypeVersionsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, version, context);
+                using HttpMessage message = _applicationTypeVersionsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, version, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ServiceFabricApplicationTypeVersionData> response = Response.FromValue(ServiceFabricApplicationTypeVersionData.FromResponse(result), result);
                 if (response.Value == null)
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.ServiceFabric
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _applicationTypeVersionsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, version, context);
+                using HttpMessage message = _applicationTypeVersionsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, version, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ServiceFabricApplicationTypeVersionData> response = Response.FromValue(ServiceFabricApplicationTypeVersionData.FromResponse(result), result);
                 if (response.Value == null)
@@ -371,7 +371,7 @@ namespace Azure.ResourceManager.ServiceFabric
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _applicationTypeVersionsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, version, context);
+                using HttpMessage message = _applicationTypeVersionsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, version, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ServiceFabricApplicationTypeVersionData> response = default;
@@ -428,7 +428,7 @@ namespace Azure.ResourceManager.ServiceFabric
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _applicationTypeVersionsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, version, context);
+                using HttpMessage message = _applicationTypeVersionsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, version, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ServiceFabricApplicationTypeVersionData> response = default;
@@ -485,7 +485,7 @@ namespace Azure.ResourceManager.ServiceFabric
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _applicationTypeVersionsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, version, context);
+                using HttpMessage message = _applicationTypeVersionsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, version, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ServiceFabricApplicationTypeVersionData> response = default;
@@ -546,7 +546,7 @@ namespace Azure.ResourceManager.ServiceFabric
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _applicationTypeVersionsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, version, context);
+                using HttpMessage message = _applicationTypeVersionsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, version, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ServiceFabricApplicationTypeVersionData> response = default;

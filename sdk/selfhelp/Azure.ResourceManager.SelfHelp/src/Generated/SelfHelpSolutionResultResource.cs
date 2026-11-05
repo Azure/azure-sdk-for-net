@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.SelfHelp
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _solutionSelfHelpRestClient.CreateGetSelfHelpSolutionByIdRequest(Id.Name, context);
+                using HttpMessage message = _solutionSelfHelpRestClient.CreateGetSelfHelpSolutionByIdRequest(Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<SelfHelpSolutionResultData> response = Response.FromValue(SelfHelpSolutionResultData.FromResponse(result), result);
                 if (response.Value == null)
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.SelfHelp
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _solutionSelfHelpRestClient.CreateGetSelfHelpSolutionByIdRequest(Id.Name, context);
+                using HttpMessage message = _solutionSelfHelpRestClient.CreateGetSelfHelpSolutionByIdRequest(Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<SelfHelpSolutionResultData> response = Response.FromValue(SelfHelpSolutionResultData.FromResponse(result), result);
                 if (response.Value == null)

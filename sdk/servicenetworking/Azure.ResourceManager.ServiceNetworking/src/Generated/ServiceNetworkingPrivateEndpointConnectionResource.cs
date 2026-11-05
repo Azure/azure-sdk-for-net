@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.ServiceNetworking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateEndpointConnectionsInterfaceRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _privateEndpointConnectionsInterfaceRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ServiceNetworkingPrivateEndpointConnectionData> response = Response.FromValue(ServiceNetworkingPrivateEndpointConnectionData.FromResponse(result), result);
                 if (response.Value == null)
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.ServiceNetworking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateEndpointConnectionsInterfaceRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _privateEndpointConnectionsInterfaceRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ServiceNetworkingPrivateEndpointConnectionData> response = Response.FromValue(ServiceNetworkingPrivateEndpointConnectionData.FromResponse(result), result);
                 if (response.Value == null)
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.ServiceNetworking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateEndpointConnectionsInterfaceRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _privateEndpointConnectionsInterfaceRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ServiceNetworkingArmOperation operation = new ServiceNetworkingArmOperation(_privateEndpointConnectionsInterfaceClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -269,7 +269,7 @@ namespace Azure.ResourceManager.ServiceNetworking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateEndpointConnectionsInterfaceRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _privateEndpointConnectionsInterfaceRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ServiceNetworkingArmOperation operation = new ServiceNetworkingArmOperation(_privateEndpointConnectionsInterfaceClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.ServiceNetworking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateEndpointConnectionsInterfaceRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ServiceNetworkingPrivateEndpointConnectionData.ToRequestContent(data), context);
+                using HttpMessage message = _privateEndpointConnectionsInterfaceRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ServiceNetworkingPrivateEndpointConnectionData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ServiceNetworkingArmOperation<ServiceNetworkingPrivateEndpointConnectionResource> operation = new ServiceNetworkingArmOperation<ServiceNetworkingPrivateEndpointConnectionResource>(
                     new ServiceNetworkingPrivateEndpointConnectionResourceOperationSource(Client),
@@ -381,7 +381,7 @@ namespace Azure.ResourceManager.ServiceNetworking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateEndpointConnectionsInterfaceRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ServiceNetworkingPrivateEndpointConnectionData.ToRequestContent(data), context);
+                using HttpMessage message = _privateEndpointConnectionsInterfaceRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ServiceNetworkingPrivateEndpointConnectionData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ServiceNetworkingArmOperation<ServiceNetworkingPrivateEndpointConnectionResource> operation = new ServiceNetworkingArmOperation<ServiceNetworkingPrivateEndpointConnectionResource>(
                     new ServiceNetworkingPrivateEndpointConnectionResourceOperationSource(Client),

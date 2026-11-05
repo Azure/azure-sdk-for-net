@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.ServiceBus
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _migrationConfigsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _migrationConfigsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<MigrationConfigurationData> response = Response.FromValue(MigrationConfigurationData.FromResponse(result), result);
                 if (response.Value == null)
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.ServiceBus
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _migrationConfigsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _migrationConfigsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<MigrationConfigurationData> response = Response.FromValue(MigrationConfigurationData.FromResponse(result), result);
                 if (response.Value == null)
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.ServiceBus
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _migrationConfigsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _migrationConfigsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
@@ -272,7 +272,7 @@ namespace Azure.ResourceManager.ServiceBus
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _migrationConfigsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _migrationConfigsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.ServiceBus
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _migrationConfigsRestClient.CreateCompleteMigrationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _migrationConfigsRestClient.CreateCompleteMigrationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 return response;
             }
@@ -365,7 +365,7 @@ namespace Azure.ResourceManager.ServiceBus
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _migrationConfigsRestClient.CreateCompleteMigrationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _migrationConfigsRestClient.CreateCompleteMigrationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 return response;
             }
@@ -408,7 +408,7 @@ namespace Azure.ResourceManager.ServiceBus
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _migrationConfigsRestClient.CreateRevertRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _migrationConfigsRestClient.CreateRevertRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 return response;
             }
@@ -451,7 +451,7 @@ namespace Azure.ResourceManager.ServiceBus
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _migrationConfigsRestClient.CreateRevertRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _migrationConfigsRestClient.CreateRevertRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 return response;
             }
@@ -499,7 +499,7 @@ namespace Azure.ResourceManager.ServiceBus
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _migrationConfigsRestClient.CreateCreateAndStartMigrationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, MigrationConfigurationData.ToRequestContent(data), context);
+                using HttpMessage message = _migrationConfigsRestClient.CreateCreateAndStartMigrationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, MigrationConfigurationData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ServiceBusArmOperation<MigrationConfigurationResource> operation = new ServiceBusArmOperation<MigrationConfigurationResource>(
                     new MigrationConfigurationResourceOperationSource(Client),
@@ -558,7 +558,7 @@ namespace Azure.ResourceManager.ServiceBus
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _migrationConfigsRestClient.CreateCreateAndStartMigrationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, MigrationConfigurationData.ToRequestContent(data), context);
+                using HttpMessage message = _migrationConfigsRestClient.CreateCreateAndStartMigrationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, MigrationConfigurationData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ServiceBusArmOperation<MigrationConfigurationResource> operation = new ServiceBusArmOperation<MigrationConfigurationResource>(
                     new MigrationConfigurationResourceOperationSource(Client),

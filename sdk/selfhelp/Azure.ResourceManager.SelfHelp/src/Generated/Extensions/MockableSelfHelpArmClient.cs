@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.SelfHelp.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = CheckNameAvailabilityRestClient.CreateCheckSelfHelpNameAvailabilityRequest(scope.ToString(), SelfHelpNameAvailabilityContent.ToRequestContent(content), context);
+                using HttpMessage message = CheckNameAvailabilityRestClient.CreateCheckSelfHelpNameAvailabilityRequest(scope.ToString(), SelfHelpNameAvailabilityContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<SelfHelpNameAvailabilityResult> response = Response.FromValue(SelfHelpNameAvailabilityResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -310,7 +310,7 @@ namespace Azure.ResourceManager.SelfHelp.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = CheckNameAvailabilityRestClient.CreateCheckSelfHelpNameAvailabilityRequest(scope.ToString(), SelfHelpNameAvailabilityContent.ToRequestContent(content), context);
+                using HttpMessage message = CheckNameAvailabilityRestClient.CreateCheckSelfHelpNameAvailabilityRequest(scope.ToString(), SelfHelpNameAvailabilityContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<SelfHelpNameAvailabilityResult> response = Response.FromValue(SelfHelpNameAvailabilityResult.FromResponse(result), result);
                 if (response.Value == null)
