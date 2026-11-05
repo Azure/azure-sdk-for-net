@@ -7,6 +7,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <IsTestProject>true</IsTestProject>
+    <IsGeneratorLibrary>true</IsGeneratorLibrary>
     <IsPackable>false</IsPackable>
     <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
   </PropertyGroup>
@@ -15,11 +16,21 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.NET.Test.Sdk" />
+    <PackageReference Include="Microsoft.TypeSpec.Generator.ClientModel" />
+    <PackageReference Include="Microsoft.TypeSpec.Generator.Input" />
+    <PackageReference Include="Moq" />
     <PackageReference Include="NUnit" />
     <PackageReference Include="NUnit3TestAdapter" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="TestData\" />
+    <None Update="TestHelpers\Configuration.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <!-- TestData files are expected-output baselines, not code to compile. Exclude them from
+         compilation; the tests read them from the source tree via Helpers.GetExpectedFromFile. -->
+    <Compile Remove="**\TestData\**\*.cs" />
   </ItemGroup>
 
 </Project>
