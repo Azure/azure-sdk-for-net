@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.Fabric.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = FabricCapacitiesRestClient.CreateCheckFabricCapacityNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), location, FabricNameAvailabilityContent.ToRequestContent(content), context);
+                using HttpMessage message = FabricCapacitiesRestClient.CreateCheckFabricCapacityNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), location, FabricNameAvailabilityContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<FabricNameAvailabilityResult> response = Response.FromValue(FabricNameAvailabilityResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.Fabric.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = FabricCapacitiesRestClient.CreateCheckFabricCapacityNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), location, FabricNameAvailabilityContent.ToRequestContent(content), context);
+                using HttpMessage message = FabricCapacitiesRestClient.CreateCheckFabricCapacityNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), location, FabricNameAvailabilityContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<FabricNameAvailabilityResult> response = Response.FromValue(FabricNameAvailabilityResult.FromResponse(result), result);
                 if (response.Value == null)

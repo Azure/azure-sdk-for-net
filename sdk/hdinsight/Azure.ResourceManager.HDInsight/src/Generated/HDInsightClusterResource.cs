@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.HDInsight
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _hdInsightClusterRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _hdInsightClusterRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<HDInsightClusterData> response = Response.FromValue(HDInsightClusterData.FromResponse(result), result);
                 if (response.Value == null)
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.HDInsight
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _hdInsightClusterRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _hdInsightClusterRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<HDInsightClusterData> response = Response.FromValue(HDInsightClusterData.FromResponse(result), result);
                 if (response.Value == null)
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.HDInsight
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _hdInsightClusterRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, HDInsightClusterPatch.ToRequestContent(patch), context);
+                using HttpMessage message = _hdInsightClusterRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, HDInsightClusterPatch.ToRequestContent(patch), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<HDInsightClusterData> response = Response.FromValue(HDInsightClusterData.FromResponse(result), result);
                 if (response.Value == null)
@@ -297,7 +297,7 @@ namespace Azure.ResourceManager.HDInsight
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _hdInsightClusterRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, HDInsightClusterPatch.ToRequestContent(patch), context);
+                using HttpMessage message = _hdInsightClusterRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, HDInsightClusterPatch.ToRequestContent(patch), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<HDInsightClusterData> response = Response.FromValue(HDInsightClusterData.FromResponse(result), result);
                 if (response.Value == null)
@@ -346,7 +346,7 @@ namespace Azure.ResourceManager.HDInsight
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _hdInsightClusterRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _hdInsightClusterRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 HDInsightArmOperation operation = new HDInsightArmOperation(_hdInsightClusterClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -395,7 +395,7 @@ namespace Azure.ResourceManager.HDInsight
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _hdInsightClusterRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _hdInsightClusterRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 HDInsightArmOperation operation = new HDInsightArmOperation(_hdInsightClusterClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -448,7 +448,7 @@ namespace Azure.ResourceManager.HDInsight
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _hdInsightClusterRestClient.CreateExecuteScriptActionsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ExecuteScriptActionContent.ToRequestContent(content), context);
+                using HttpMessage message = _hdInsightClusterRestClient.CreateExecuteScriptActionsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ExecuteScriptActionContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 HDInsightArmOperation operation = new HDInsightArmOperation(_hdInsightClusterClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -501,7 +501,7 @@ namespace Azure.ResourceManager.HDInsight
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _hdInsightClusterRestClient.CreateExecuteScriptActionsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ExecuteScriptActionContent.ToRequestContent(content), context);
+                using HttpMessage message = _hdInsightClusterRestClient.CreateExecuteScriptActionsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ExecuteScriptActionContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 HDInsightArmOperation operation = new HDInsightArmOperation(_hdInsightClusterClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -554,7 +554,7 @@ namespace Azure.ResourceManager.HDInsight
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _hdInsightClusterRestClient.CreateGetAsyncOperationStatusRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, operationId, context);
+                using HttpMessage message = _hdInsightClusterRestClient.CreateGetAsyncOperationStatusRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, operationId, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<HDInsightAsyncOperationResult> response = Response.FromValue(HDInsightAsyncOperationResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -607,7 +607,7 @@ namespace Azure.ResourceManager.HDInsight
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _hdInsightClusterRestClient.CreateGetAsyncOperationStatusRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, operationId, context);
+                using HttpMessage message = _hdInsightClusterRestClient.CreateGetAsyncOperationStatusRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, operationId, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<HDInsightAsyncOperationResult> response = Response.FromValue(HDInsightAsyncOperationResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -655,7 +655,7 @@ namespace Azure.ResourceManager.HDInsight
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _hdInsightClusterRestClient.CreateGetGatewaySettingsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _hdInsightClusterRestClient.CreateGetGatewaySettingsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<HDInsightClusterGatewaySettings> response = Response.FromValue(HDInsightClusterGatewaySettings.FromResponse(result), result);
                 if (response.Value == null)
@@ -703,7 +703,7 @@ namespace Azure.ResourceManager.HDInsight
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _hdInsightClusterRestClient.CreateGetGatewaySettingsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _hdInsightClusterRestClient.CreateGetGatewaySettingsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<HDInsightClusterGatewaySettings> response = Response.FromValue(HDInsightClusterGatewaySettings.FromResponse(result), result);
                 if (response.Value == null)
@@ -757,7 +757,7 @@ namespace Azure.ResourceManager.HDInsight
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _hdInsightClusterRestClient.CreateResizeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, roleName.ToString(), HDInsightClusterResizeContent.ToRequestContent(content), context);
+                using HttpMessage message = _hdInsightClusterRestClient.CreateResizeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, roleName.ToString(), HDInsightClusterResizeContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 HDInsightArmOperation operation = new HDInsightArmOperation(_hdInsightClusterClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -811,7 +811,7 @@ namespace Azure.ResourceManager.HDInsight
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _hdInsightClusterRestClient.CreateResizeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, roleName.ToString(), HDInsightClusterResizeContent.ToRequestContent(content), context);
+                using HttpMessage message = _hdInsightClusterRestClient.CreateResizeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, roleName.ToString(), HDInsightClusterResizeContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 HDInsightArmOperation operation = new HDInsightArmOperation(_hdInsightClusterClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -864,7 +864,7 @@ namespace Azure.ResourceManager.HDInsight
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _hdInsightClusterRestClient.CreateRotateDiskEncryptionKeyRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, HDInsightClusterDiskEncryptionContent.ToRequestContent(content), context);
+                using HttpMessage message = _hdInsightClusterRestClient.CreateRotateDiskEncryptionKeyRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, HDInsightClusterDiskEncryptionContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 HDInsightArmOperation operation = new HDInsightArmOperation(_hdInsightClusterClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -917,7 +917,7 @@ namespace Azure.ResourceManager.HDInsight
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _hdInsightClusterRestClient.CreateRotateDiskEncryptionKeyRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, HDInsightClusterDiskEncryptionContent.ToRequestContent(content), context);
+                using HttpMessage message = _hdInsightClusterRestClient.CreateRotateDiskEncryptionKeyRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, HDInsightClusterDiskEncryptionContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 HDInsightArmOperation operation = new HDInsightArmOperation(_hdInsightClusterClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -971,7 +971,7 @@ namespace Azure.ResourceManager.HDInsight
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _hdInsightClusterRestClient.CreateUpdateAutoScaleConfigurationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, roleName.ToString(), HDInsightAutoScaleConfigurationUpdateContent.ToRequestContent(content), context);
+                using HttpMessage message = _hdInsightClusterRestClient.CreateUpdateAutoScaleConfigurationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, roleName.ToString(), HDInsightAutoScaleConfigurationUpdateContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 HDInsightArmOperation operation = new HDInsightArmOperation(_hdInsightClusterClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -1025,7 +1025,7 @@ namespace Azure.ResourceManager.HDInsight
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _hdInsightClusterRestClient.CreateUpdateAutoScaleConfigurationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, roleName.ToString(), HDInsightAutoScaleConfigurationUpdateContent.ToRequestContent(content), context);
+                using HttpMessage message = _hdInsightClusterRestClient.CreateUpdateAutoScaleConfigurationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, roleName.ToString(), HDInsightAutoScaleConfigurationUpdateContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 HDInsightArmOperation operation = new HDInsightArmOperation(_hdInsightClusterClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -1078,7 +1078,7 @@ namespace Azure.ResourceManager.HDInsight
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _hdInsightClusterRestClient.CreateUpdateGatewaySettingsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, HDInsightClusterUpdateGatewaySettingsContent.ToRequestContent(content), context);
+                using HttpMessage message = _hdInsightClusterRestClient.CreateUpdateGatewaySettingsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, HDInsightClusterUpdateGatewaySettingsContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 HDInsightArmOperation operation = new HDInsightArmOperation(_hdInsightClusterClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -1131,7 +1131,7 @@ namespace Azure.ResourceManager.HDInsight
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _hdInsightClusterRestClient.CreateUpdateGatewaySettingsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, HDInsightClusterUpdateGatewaySettingsContent.ToRequestContent(content), context);
+                using HttpMessage message = _hdInsightClusterRestClient.CreateUpdateGatewaySettingsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, HDInsightClusterUpdateGatewaySettingsContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 HDInsightArmOperation operation = new HDInsightArmOperation(_hdInsightClusterClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -1184,7 +1184,7 @@ namespace Azure.ResourceManager.HDInsight
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _hdInsightClusterRestClient.CreateUpdateIdentityCertificateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, HDInsightClusterUpdateIdentityCertificateContent.ToRequestContent(content), context);
+                using HttpMessage message = _hdInsightClusterRestClient.CreateUpdateIdentityCertificateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, HDInsightClusterUpdateIdentityCertificateContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 HDInsightArmOperation operation = new HDInsightArmOperation(_hdInsightClusterClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -1237,7 +1237,7 @@ namespace Azure.ResourceManager.HDInsight
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _hdInsightClusterRestClient.CreateUpdateIdentityCertificateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, HDInsightClusterUpdateIdentityCertificateContent.ToRequestContent(content), context);
+                using HttpMessage message = _hdInsightClusterRestClient.CreateUpdateIdentityCertificateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, HDInsightClusterUpdateIdentityCertificateContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 HDInsightArmOperation operation = new HDInsightArmOperation(_hdInsightClusterClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -1285,7 +1285,7 @@ namespace Azure.ResourceManager.HDInsight
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _configurationsRestClient.CreateGetConfigurationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _configurationsRestClient.CreateGetConfigurationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<HDInsightClusterConfigurations> response = Response.FromValue(HDInsightClusterConfigurations.FromResponse(result), result);
                 if (response.Value == null)
@@ -1333,7 +1333,7 @@ namespace Azure.ResourceManager.HDInsight
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _configurationsRestClient.CreateGetConfigurationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _configurationsRestClient.CreateGetConfigurationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<HDInsightClusterConfigurations> response = Response.FromValue(HDInsightClusterConfigurations.FromResponse(result), result);
                 if (response.Value == null)
@@ -1389,7 +1389,7 @@ namespace Azure.ResourceManager.HDInsight
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _configurationsRestClient.CreateUpdateConfigurationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configurationName, BinaryContentHelper.FromDictionary(clusterConfiguration), context);
+                using HttpMessage message = _configurationsRestClient.CreateUpdateConfigurationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configurationName, BinaryContentHelper.FromDictionary(clusterConfiguration), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 HDInsightArmOperation operation = new HDInsightArmOperation(_configurationsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -1445,7 +1445,7 @@ namespace Azure.ResourceManager.HDInsight
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _configurationsRestClient.CreateUpdateConfigurationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configurationName, BinaryContentHelper.FromDictionary(clusterConfiguration), context);
+                using HttpMessage message = _configurationsRestClient.CreateUpdateConfigurationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configurationName, BinaryContentHelper.FromDictionary(clusterConfiguration), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 HDInsightArmOperation operation = new HDInsightArmOperation(_configurationsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -1501,7 +1501,7 @@ namespace Azure.ResourceManager.HDInsight
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _extensionsRestClient.CreateCreateExtensionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, extensionName, HDInsightClusterCreateExtensionContent.ToRequestContent(content), context);
+                using HttpMessage message = _extensionsRestClient.CreateCreateExtensionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, extensionName, HDInsightClusterCreateExtensionContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 HDInsightArmOperation operation = new HDInsightArmOperation(_extensionsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -1557,7 +1557,7 @@ namespace Azure.ResourceManager.HDInsight
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _extensionsRestClient.CreateCreateExtensionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, extensionName, HDInsightClusterCreateExtensionContent.ToRequestContent(content), context);
+                using HttpMessage message = _extensionsRestClient.CreateCreateExtensionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, extensionName, HDInsightClusterCreateExtensionContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 HDInsightArmOperation operation = new HDInsightArmOperation(_extensionsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -1611,7 +1611,7 @@ namespace Azure.ResourceManager.HDInsight
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _extensionsRestClient.CreateDeleteExtensionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, extensionName, context);
+                using HttpMessage message = _extensionsRestClient.CreateDeleteExtensionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, extensionName, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 HDInsightArmOperation operation = new HDInsightArmOperation(_extensionsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -1665,7 +1665,7 @@ namespace Azure.ResourceManager.HDInsight
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _extensionsRestClient.CreateDeleteExtensionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, extensionName, context);
+                using HttpMessage message = _extensionsRestClient.CreateDeleteExtensionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, extensionName, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 HDInsightArmOperation operation = new HDInsightArmOperation(_extensionsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -1714,7 +1714,7 @@ namespace Azure.ResourceManager.HDInsight
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _extensionsRestClient.CreateDisableAzureMonitorExtensionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _extensionsRestClient.CreateDisableAzureMonitorExtensionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 HDInsightArmOperation operation = new HDInsightArmOperation(_extensionsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -1763,7 +1763,7 @@ namespace Azure.ResourceManager.HDInsight
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _extensionsRestClient.CreateDisableAzureMonitorExtensionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _extensionsRestClient.CreateDisableAzureMonitorExtensionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 HDInsightArmOperation operation = new HDInsightArmOperation(_extensionsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -1812,7 +1812,7 @@ namespace Azure.ResourceManager.HDInsight
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _extensionsRestClient.CreateDisableAzureMonitorAgentExtensionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _extensionsRestClient.CreateDisableAzureMonitorAgentExtensionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 HDInsightArmOperation operation = new HDInsightArmOperation(_extensionsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -1861,7 +1861,7 @@ namespace Azure.ResourceManager.HDInsight
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _extensionsRestClient.CreateDisableAzureMonitorAgentExtensionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _extensionsRestClient.CreateDisableAzureMonitorAgentExtensionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 HDInsightArmOperation operation = new HDInsightArmOperation(_extensionsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -1910,7 +1910,7 @@ namespace Azure.ResourceManager.HDInsight
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _extensionsRestClient.CreateDisableClusterMonitoringExtensionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _extensionsRestClient.CreateDisableClusterMonitoringExtensionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 HDInsightArmOperation operation = new HDInsightArmOperation(_extensionsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -1959,7 +1959,7 @@ namespace Azure.ResourceManager.HDInsight
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _extensionsRestClient.CreateDisableClusterMonitoringExtensionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _extensionsRestClient.CreateDisableClusterMonitoringExtensionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 HDInsightArmOperation operation = new HDInsightArmOperation(_extensionsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -2012,7 +2012,7 @@ namespace Azure.ResourceManager.HDInsight
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _extensionsRestClient.CreateEnableAzureMonitorExtensionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, HDInsightAzureMonitorExtensionEnableContent.ToRequestContent(content), context);
+                using HttpMessage message = _extensionsRestClient.CreateEnableAzureMonitorExtensionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, HDInsightAzureMonitorExtensionEnableContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 HDInsightArmOperation operation = new HDInsightArmOperation(_extensionsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -2065,7 +2065,7 @@ namespace Azure.ResourceManager.HDInsight
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _extensionsRestClient.CreateEnableAzureMonitorExtensionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, HDInsightAzureMonitorExtensionEnableContent.ToRequestContent(content), context);
+                using HttpMessage message = _extensionsRestClient.CreateEnableAzureMonitorExtensionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, HDInsightAzureMonitorExtensionEnableContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 HDInsightArmOperation operation = new HDInsightArmOperation(_extensionsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -2118,7 +2118,7 @@ namespace Azure.ResourceManager.HDInsight
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _extensionsRestClient.CreateEnableAzureMonitorAgentExtensionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, HDInsightAzureMonitorExtensionEnableContent.ToRequestContent(content), context);
+                using HttpMessage message = _extensionsRestClient.CreateEnableAzureMonitorAgentExtensionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, HDInsightAzureMonitorExtensionEnableContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 HDInsightArmOperation operation = new HDInsightArmOperation(_extensionsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -2171,7 +2171,7 @@ namespace Azure.ResourceManager.HDInsight
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _extensionsRestClient.CreateEnableAzureMonitorAgentExtensionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, HDInsightAzureMonitorExtensionEnableContent.ToRequestContent(content), context);
+                using HttpMessage message = _extensionsRestClient.CreateEnableAzureMonitorAgentExtensionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, HDInsightAzureMonitorExtensionEnableContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 HDInsightArmOperation operation = new HDInsightArmOperation(_extensionsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -2224,7 +2224,7 @@ namespace Azure.ResourceManager.HDInsight
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _extensionsRestClient.CreateEnableClusterMonitoringExtensionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, HDInsightClusterEnableClusterMonitoringContent.ToRequestContent(content), context);
+                using HttpMessage message = _extensionsRestClient.CreateEnableClusterMonitoringExtensionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, HDInsightClusterEnableClusterMonitoringContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 HDInsightArmOperation operation = new HDInsightArmOperation(_extensionsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -2277,7 +2277,7 @@ namespace Azure.ResourceManager.HDInsight
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _extensionsRestClient.CreateEnableClusterMonitoringExtensionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, HDInsightClusterEnableClusterMonitoringContent.ToRequestContent(content), context);
+                using HttpMessage message = _extensionsRestClient.CreateEnableClusterMonitoringExtensionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, HDInsightClusterEnableClusterMonitoringContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 HDInsightArmOperation operation = new HDInsightArmOperation(_extensionsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -2330,7 +2330,7 @@ namespace Azure.ResourceManager.HDInsight
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _extensionsRestClient.CreateGetExtensionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, extensionName, context);
+                using HttpMessage message = _extensionsRestClient.CreateGetExtensionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, extensionName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<HDInsightClusterExtensionStatus> response = Response.FromValue(HDInsightClusterExtensionStatus.FromResponse(result), result);
                 if (response.Value == null)
@@ -2383,7 +2383,7 @@ namespace Azure.ResourceManager.HDInsight
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _extensionsRestClient.CreateGetExtensionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, extensionName, context);
+                using HttpMessage message = _extensionsRestClient.CreateGetExtensionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, extensionName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<HDInsightClusterExtensionStatus> response = Response.FromValue(HDInsightClusterExtensionStatus.FromResponse(result), result);
                 if (response.Value == null)
@@ -2438,7 +2438,7 @@ namespace Azure.ResourceManager.HDInsight
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _extensionsRestClient.CreateGetExtensionAsyncOperationStatusRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, extensionName, operationId, context);
+                using HttpMessage message = _extensionsRestClient.CreateGetExtensionAsyncOperationStatusRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, extensionName, operationId, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<HDInsightAsyncOperationResult> response = Response.FromValue(HDInsightAsyncOperationResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -2493,7 +2493,7 @@ namespace Azure.ResourceManager.HDInsight
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _extensionsRestClient.CreateGetExtensionAsyncOperationStatusRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, extensionName, operationId, context);
+                using HttpMessage message = _extensionsRestClient.CreateGetExtensionAsyncOperationStatusRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, extensionName, operationId, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<HDInsightAsyncOperationResult> response = Response.FromValue(HDInsightAsyncOperationResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -2541,7 +2541,7 @@ namespace Azure.ResourceManager.HDInsight
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _extensionsRestClient.CreateGetAzureMonitorAgentStatusExtensionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _extensionsRestClient.CreateGetAzureMonitorAgentStatusExtensionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<HDInsightAzureMonitorExtensionStatus> response = Response.FromValue(HDInsightAzureMonitorExtensionStatus.FromResponse(result), result);
                 if (response.Value == null)
@@ -2589,7 +2589,7 @@ namespace Azure.ResourceManager.HDInsight
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _extensionsRestClient.CreateGetAzureMonitorAgentStatusExtensionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _extensionsRestClient.CreateGetAzureMonitorAgentStatusExtensionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<HDInsightAzureMonitorExtensionStatus> response = Response.FromValue(HDInsightAzureMonitorExtensionStatus.FromResponse(result), result);
                 if (response.Value == null)
@@ -2637,7 +2637,7 @@ namespace Azure.ResourceManager.HDInsight
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _extensionsRestClient.CreateGetAzureMonitorExtensionStatusRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _extensionsRestClient.CreateGetAzureMonitorExtensionStatusRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<HDInsightAzureMonitorExtensionStatus> response = Response.FromValue(HDInsightAzureMonitorExtensionStatus.FromResponse(result), result);
                 if (response.Value == null)
@@ -2685,7 +2685,7 @@ namespace Azure.ResourceManager.HDInsight
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _extensionsRestClient.CreateGetAzureMonitorExtensionStatusRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _extensionsRestClient.CreateGetAzureMonitorExtensionStatusRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<HDInsightAzureMonitorExtensionStatus> response = Response.FromValue(HDInsightAzureMonitorExtensionStatus.FromResponse(result), result);
                 if (response.Value == null)
@@ -2733,7 +2733,7 @@ namespace Azure.ResourceManager.HDInsight
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _extensionsRestClient.CreateGetClusterMonitoringExtensionStatusRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _extensionsRestClient.CreateGetClusterMonitoringExtensionStatusRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<HDInsightClusterExtensionStatus> response = Response.FromValue(HDInsightClusterExtensionStatus.FromResponse(result), result);
                 if (response.Value == null)
@@ -2781,7 +2781,7 @@ namespace Azure.ResourceManager.HDInsight
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _extensionsRestClient.CreateGetClusterMonitoringExtensionStatusRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _extensionsRestClient.CreateGetClusterMonitoringExtensionStatusRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<HDInsightClusterExtensionStatus> response = Response.FromValue(HDInsightClusterExtensionStatus.FromResponse(result), result);
                 if (response.Value == null)
@@ -2834,7 +2834,7 @@ namespace Azure.ResourceManager.HDInsight
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _scriptActionsRestClient.CreateDeleteScriptActionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, scriptName, context);
+                using HttpMessage message = _scriptActionsRestClient.CreateDeleteScriptActionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, scriptName, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 return response;
             }
@@ -2882,7 +2882,7 @@ namespace Azure.ResourceManager.HDInsight
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _scriptActionsRestClient.CreateDeleteScriptActionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, scriptName, context);
+                using HttpMessage message = _scriptActionsRestClient.CreateDeleteScriptActionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, scriptName, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 return response;
             }
@@ -2930,7 +2930,7 @@ namespace Azure.ResourceManager.HDInsight
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _scriptActionsRestClient.CreateGetScriptActionExecutionAsyncOperationStatusRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, operationId, context);
+                using HttpMessage message = _scriptActionsRestClient.CreateGetScriptActionExecutionAsyncOperationStatusRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, operationId, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<HDInsightAsyncOperationResult> response = Response.FromValue(HDInsightAsyncOperationResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -2983,7 +2983,7 @@ namespace Azure.ResourceManager.HDInsight
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _scriptActionsRestClient.CreateGetScriptActionExecutionAsyncOperationStatusRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, operationId, context);
+                using HttpMessage message = _scriptActionsRestClient.CreateGetScriptActionExecutionAsyncOperationStatusRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, operationId, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<HDInsightAsyncOperationResult> response = Response.FromValue(HDInsightAsyncOperationResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -3036,7 +3036,7 @@ namespace Azure.ResourceManager.HDInsight
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _scriptActionsRestClient.CreateGetScriptActionExecutionDetailRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, scriptExecutionId, context);
+                using HttpMessage message = _scriptActionsRestClient.CreateGetScriptActionExecutionDetailRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, scriptExecutionId, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<RuntimeScriptActionDetail> response = Response.FromValue(RuntimeScriptActionDetail.FromResponse(result), result);
                 if (response.Value == null)
@@ -3089,7 +3089,7 @@ namespace Azure.ResourceManager.HDInsight
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _scriptActionsRestClient.CreateGetScriptActionExecutionDetailRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, scriptExecutionId, context);
+                using HttpMessage message = _scriptActionsRestClient.CreateGetScriptActionExecutionDetailRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, scriptExecutionId, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<RuntimeScriptActionDetail> response = Response.FromValue(RuntimeScriptActionDetail.FromResponse(result), result);
                 if (response.Value == null)
@@ -3294,7 +3294,7 @@ namespace Azure.ResourceManager.HDInsight
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _scriptExecutionHistoryRestClient.CreatePromoteScriptExecutionHistoryRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, scriptExecutionId, context);
+                using HttpMessage message = _scriptExecutionHistoryRestClient.CreatePromoteScriptExecutionHistoryRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, scriptExecutionId, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 return response;
             }
@@ -3342,7 +3342,7 @@ namespace Azure.ResourceManager.HDInsight
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _scriptExecutionHistoryRestClient.CreatePromoteScriptExecutionHistoryRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, scriptExecutionId, context);
+                using HttpMessage message = _scriptExecutionHistoryRestClient.CreatePromoteScriptExecutionHistoryRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, scriptExecutionId, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 return response;
             }
@@ -3390,7 +3390,7 @@ namespace Azure.ResourceManager.HDInsight
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualMachinesRestClient.CreateGetVirtualMachineAsyncOperationStatusRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, operationId, context);
+                using HttpMessage message = _virtualMachinesRestClient.CreateGetVirtualMachineAsyncOperationStatusRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, operationId, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<HDInsightAsyncOperationResult> response = Response.FromValue(HDInsightAsyncOperationResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -3443,7 +3443,7 @@ namespace Azure.ResourceManager.HDInsight
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualMachinesRestClient.CreateGetVirtualMachineAsyncOperationStatusRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, operationId, context);
+                using HttpMessage message = _virtualMachinesRestClient.CreateGetVirtualMachineAsyncOperationStatusRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, operationId, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<HDInsightAsyncOperationResult> response = Response.FromValue(HDInsightAsyncOperationResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -3572,7 +3572,7 @@ namespace Azure.ResourceManager.HDInsight
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualMachinesRestClient.CreateRestartVirtualMachineHostsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, BinaryContentHelper.FromEnumerable(content), context);
+                using HttpMessage message = _virtualMachinesRestClient.CreateRestartVirtualMachineHostsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, BinaryContentHelper.FromEnumerable(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 HDInsightArmOperation operation = new HDInsightArmOperation(_virtualMachinesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -3625,7 +3625,7 @@ namespace Azure.ResourceManager.HDInsight
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualMachinesRestClient.CreateRestartVirtualMachineHostsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, BinaryContentHelper.FromEnumerable(content), context);
+                using HttpMessage message = _virtualMachinesRestClient.CreateRestartVirtualMachineHostsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, BinaryContentHelper.FromEnumerable(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 HDInsightArmOperation operation = new HDInsightArmOperation(_virtualMachinesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)

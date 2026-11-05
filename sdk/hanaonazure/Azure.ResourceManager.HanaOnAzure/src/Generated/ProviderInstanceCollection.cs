@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.HanaOnAzure
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _providerInstancesRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, providerInstanceName, ProviderInstanceData.ToRequestContent(data), context);
+                using HttpMessage message = _providerInstancesRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, providerInstanceName, ProviderInstanceData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 HanaOnAzureArmOperation<ProviderInstanceResource> operation = new HanaOnAzureArmOperation<ProviderInstanceResource>(
                     new ProviderInstanceResourceOperationSource(Client),
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.HanaOnAzure
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _providerInstancesRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, providerInstanceName, ProviderInstanceData.ToRequestContent(data), context);
+                using HttpMessage message = _providerInstancesRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, providerInstanceName, ProviderInstanceData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 HanaOnAzureArmOperation<ProviderInstanceResource> operation = new HanaOnAzureArmOperation<ProviderInstanceResource>(
                     new ProviderInstanceResourceOperationSource(Client),
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.HanaOnAzure
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _providerInstancesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, providerInstanceName, context);
+                using HttpMessage message = _providerInstancesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, providerInstanceName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ProviderInstanceData> response = Response.FromValue(ProviderInstanceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.HanaOnAzure
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _providerInstancesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, providerInstanceName, context);
+                using HttpMessage message = _providerInstancesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, providerInstanceName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ProviderInstanceData> response = Response.FromValue(ProviderInstanceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -369,7 +369,7 @@ namespace Azure.ResourceManager.HanaOnAzure
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _providerInstancesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, providerInstanceName, context);
+                using HttpMessage message = _providerInstancesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, providerInstanceName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ProviderInstanceData> response = default;
@@ -426,7 +426,7 @@ namespace Azure.ResourceManager.HanaOnAzure
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _providerInstancesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, providerInstanceName, context);
+                using HttpMessage message = _providerInstancesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, providerInstanceName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ProviderInstanceData> response = default;
@@ -483,7 +483,7 @@ namespace Azure.ResourceManager.HanaOnAzure
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _providerInstancesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, providerInstanceName, context);
+                using HttpMessage message = _providerInstancesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, providerInstanceName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ProviderInstanceData> response = default;
@@ -544,7 +544,7 @@ namespace Azure.ResourceManager.HanaOnAzure
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _providerInstancesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, providerInstanceName, context);
+                using HttpMessage message = _providerInstancesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, providerInstanceName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ProviderInstanceData> response = default;

@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.ExtendedLocations
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _resourceSyncRulesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, childResourceName, ResourceSyncRuleData.ToRequestContent(data), context);
+                using HttpMessage message = _resourceSyncRulesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, childResourceName, ResourceSyncRuleData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ExtendedLocationsArmOperation<ResourceSyncRuleResource> operation = new ExtendedLocationsArmOperation<ResourceSyncRuleResource>(
                     new ResourceSyncRuleResourceOperationSource(Client),
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.ExtendedLocations
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _resourceSyncRulesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, childResourceName, ResourceSyncRuleData.ToRequestContent(data), context);
+                using HttpMessage message = _resourceSyncRulesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, childResourceName, ResourceSyncRuleData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ExtendedLocationsArmOperation<ResourceSyncRuleResource> operation = new ExtendedLocationsArmOperation<ResourceSyncRuleResource>(
                     new ResourceSyncRuleResourceOperationSource(Client),
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.ExtendedLocations
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _resourceSyncRulesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, childResourceName, context);
+                using HttpMessage message = _resourceSyncRulesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, childResourceName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ResourceSyncRuleData> response = Response.FromValue(ResourceSyncRuleData.FromResponse(result), result);
                 if (response.Value == null)
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.ExtendedLocations
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _resourceSyncRulesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, childResourceName, context);
+                using HttpMessage message = _resourceSyncRulesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, childResourceName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ResourceSyncRuleData> response = Response.FromValue(ResourceSyncRuleData.FromResponse(result), result);
                 if (response.Value == null)
@@ -369,7 +369,7 @@ namespace Azure.ResourceManager.ExtendedLocations
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _resourceSyncRulesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, childResourceName, context);
+                using HttpMessage message = _resourceSyncRulesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, childResourceName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ResourceSyncRuleData> response = default;
@@ -426,7 +426,7 @@ namespace Azure.ResourceManager.ExtendedLocations
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _resourceSyncRulesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, childResourceName, context);
+                using HttpMessage message = _resourceSyncRulesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, childResourceName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ResourceSyncRuleData> response = default;
@@ -483,7 +483,7 @@ namespace Azure.ResourceManager.ExtendedLocations
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _resourceSyncRulesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, childResourceName, context);
+                using HttpMessage message = _resourceSyncRulesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, childResourceName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ResourceSyncRuleData> response = default;
@@ -544,7 +544,7 @@ namespace Azure.ResourceManager.ExtendedLocations
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _resourceSyncRulesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, childResourceName, context);
+                using HttpMessage message = _resourceSyncRulesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, childResourceName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ResourceSyncRuleData> response = default;
