@@ -336,7 +336,7 @@ extends:
         jobs:
         - deployment: DeployPlayground
           environment: none
-          timeoutInMinutes: 120
+          timeoutInMinutes: 90
           templateContext:
             type: releaseJob
             isProduction: true
