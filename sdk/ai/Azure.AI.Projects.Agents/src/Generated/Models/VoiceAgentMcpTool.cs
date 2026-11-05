@@ -20,7 +20,7 @@ namespace Azure.AI.Projects.Agents
         /// <summary> Initializes a new instance of <see cref="VoiceAgentMcpTool"/>. </summary>
         /// <param name="serverLabel"> A label for this MCP server, used to identify it in tool calls. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="serverLabel"/> is null. </exception>
-        public VoiceAgentMcpTool(string serverLabel) : base("mcp")
+        public VoiceAgentMcpTool(string serverLabel) : base(VoiceAgentToolType.Mcp)
         {
             Argument.AssertNotNull(serverLabel, nameof(serverLabel));
 
@@ -52,7 +52,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="projectConnectionId"> The connection ID in the project for the MCP server. The connection stores authentication and other connection details needed to connect to the MCP server. </param>
         /// <param name="toolConfigs"> Deprecated. This property is deprecated and will be removed in a future version. </param>
         /// <param name="responseScheduling"> When the MCP invocation creates a follow-up response. Defaults to `when_idle`. </param>
-        internal VoiceAgentMcpTool(string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string serverLabel, Uri serverUrl, string authorization, string serverDescription, IDictionary<string, string> headers, McpToolFilter allowedTools, IList<CallableToolAllowedCaller> allowedCallers, BinaryData requireApprovalInternal, bool? deferLoading, string projectConnectionId, IDictionary<string, ToolConfig> toolConfigs, VoiceAgentToolResponseScheduling? responseScheduling) : base(@type, additionalBinaryDataProperties)
+        internal VoiceAgentMcpTool(VoiceAgentToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string serverLabel, Uri serverUrl, string authorization, string serverDescription, IDictionary<string, string> headers, McpToolFilter allowedTools, IList<CallableToolAllowedCaller> allowedCallers, BinaryData requireApprovalInternal, bool? deferLoading, string projectConnectionId, IDictionary<string, ToolConfig> toolConfigs, VoiceAgentToolResponseScheduling? responseScheduling) : base(@type, additionalBinaryDataProperties)
         {
             ServerLabel = serverLabel;
             ServerUrl = serverUrl;

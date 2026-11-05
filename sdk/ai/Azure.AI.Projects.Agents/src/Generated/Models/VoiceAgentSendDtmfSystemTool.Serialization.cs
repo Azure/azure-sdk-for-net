@@ -98,7 +98,7 @@ namespace Azure.AI.Projects.Agents
             {
                 return null;
             }
-            string @type = "send_dtmf";
+            VoiceAgentToolType @type = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             VoiceAgentSystemToolName name = default;
             string description = default;
@@ -107,7 +107,7 @@ namespace Azure.AI.Projects.Agents
             {
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = prop.Value.GetString();
+                    @type = new VoiceAgentToolType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("name"u8))

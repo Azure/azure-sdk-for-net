@@ -10,67 +10,67 @@ using System.Text.Json;
 
 namespace Azure.AI.Projects
 {
-    /// <summary> Fields accepted when creating an Agent Insights monitor for an agent. </summary>
-    public partial class AgentInsightMonitorCreate : IJsonModel<AgentInsightMonitorCreate>
+    /// <summary> The CreateRequest. </summary>
+    internal partial class CreateRequest : IJsonModel<CreateRequest>
     {
-        /// <summary> Initializes a new instance of <see cref="AgentInsightMonitorCreate"/> for deserialization. </summary>
-        internal AgentInsightMonitorCreate()
+        /// <summary> Initializes a new instance of <see cref="CreateRequest"/> for deserialization. </summary>
+        internal CreateRequest()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual AgentInsightMonitorCreate PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual CreateRequest PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AgentInsightMonitorCreate>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CreateRequest>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeAgentInsightMonitorCreate(document.RootElement, options);
+                        return DeserializeCreateRequest(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AgentInsightMonitorCreate)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CreateRequest)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AgentInsightMonitorCreate>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CreateRequest>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureAIProjectsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(AgentInsightMonitorCreate)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CreateRequest)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<AgentInsightMonitorCreate>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<CreateRequest>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AgentInsightMonitorCreate IPersistableModel<AgentInsightMonitorCreate>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        CreateRequest IPersistableModel<CreateRequest>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<AgentInsightMonitorCreate>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<CreateRequest>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="agentInsightMonitorCreate"> The <see cref="AgentInsightMonitorCreate"/> to serialize into <see cref="BinaryContent"/>. </param>
-        public static implicit operator BinaryContent(AgentInsightMonitorCreate agentInsightMonitorCreate)
+        /// <param name="createRequest"> The <see cref="CreateRequest"/> to serialize into <see cref="BinaryContent"/>. </param>
+        public static implicit operator BinaryContent(CreateRequest createRequest)
         {
-            if (agentInsightMonitorCreate == null)
+            if (createRequest == null)
             {
                 return null;
             }
-            return BinaryContent.Create(agentInsightMonitorCreate, ModelSerializationExtensions.WireOptions);
+            return BinaryContent.Create(createRequest, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<AgentInsightMonitorCreate>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<CreateRequest>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -81,10 +81,10 @@ namespace Azure.AI.Projects
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AgentInsightMonitorCreate>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CreateRequest>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AgentInsightMonitorCreate)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(CreateRequest)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("agent_name"u8);
             writer.WriteStringValue(AgentName);
@@ -100,6 +100,11 @@ namespace Azure.AI.Projects
             }
             writer.WritePropertyName("model_deployment_name"u8);
             writer.WriteStringValue(ModelDeploymentName);
+            if (Optional.IsDefined(Priorities))
+            {
+                writer.WritePropertyName("priorities"u8);
+                writer.WriteObjectValue(Priorities, options);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -119,24 +124,24 @@ namespace Azure.AI.Projects
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AgentInsightMonitorCreate IJsonModel<AgentInsightMonitorCreate>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        CreateRequest IJsonModel<CreateRequest>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual AgentInsightMonitorCreate JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual CreateRequest JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AgentInsightMonitorCreate>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CreateRequest>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AgentInsightMonitorCreate)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(CreateRequest)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeAgentInsightMonitorCreate(document.RootElement, options);
+            return DeserializeCreateRequest(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static AgentInsightMonitorCreate DeserializeAgentInsightMonitorCreate(JsonElement element, ModelReaderWriterOptions options)
+        internal static CreateRequest DeserializeCreateRequest(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -146,6 +151,7 @@ namespace Azure.AI.Projects
             bool? enabled = default;
             double? runIntervalHours = default;
             string modelDeploymentName = default;
+            AgentInsightPriorities priorities = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -177,12 +183,27 @@ namespace Azure.AI.Projects
                     modelDeploymentName = prop.Value.GetString();
                     continue;
                 }
+                if (prop.NameEquals("priorities"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    priorities = AgentInsightPriorities.DeserializeAgentInsightPriorities(prop.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new AgentInsightMonitorCreate(agentName, enabled, runIntervalHours, modelDeploymentName, additionalBinaryDataProperties);
+            return new CreateRequest(
+                agentName,
+                enabled,
+                runIntervalHours,
+                modelDeploymentName,
+                priorities,
+                additionalBinaryDataProperties);
         }
     }
 }

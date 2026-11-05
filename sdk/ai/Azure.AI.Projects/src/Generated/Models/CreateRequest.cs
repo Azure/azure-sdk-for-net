@@ -4,42 +4,38 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects
 {
-    /// <summary> Fields accepted when creating an Agent Insights monitor for an agent. </summary>
-    [Experimental("AAIP001")]
-    public partial class AgentInsightMonitorCreate
+    /// <summary> The CreateRequest. </summary>
+    internal partial class CreateRequest
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AgentInsightMonitorCreate"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="CreateRequest"/>. </summary>
         /// <param name="agentName"> The agent this monitor should analyze. </param>
         /// <param name="modelDeploymentName"> The model deployment to use for analyzing traces. Accepts either the deployment name alone or with the connection name as '{connectionName}/modelDeploymentName'. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> or <paramref name="modelDeploymentName"/> is null. </exception>
-        public AgentInsightMonitorCreate(string agentName, string modelDeploymentName)
+        internal CreateRequest(string agentName, string modelDeploymentName)
         {
-            Argument.AssertNotNull(agentName, nameof(agentName));
-            Argument.AssertNotNull(modelDeploymentName, nameof(modelDeploymentName));
-
             AgentName = agentName;
             ModelDeploymentName = modelDeploymentName;
         }
 
-        /// <summary> Initializes a new instance of <see cref="AgentInsightMonitorCreate"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="CreateRequest"/>. </summary>
         /// <param name="agentName"> The agent this monitor should analyze. </param>
         /// <param name="enabled"> Whether scheduled insight generation should be armed. Defaults to false. </param>
         /// <param name="runIntervalHours"> Interval between scheduled insight runs, in hours. Defaults to 6. </param>
         /// <param name="modelDeploymentName"> The model deployment to use for analyzing traces. Accepts either the deployment name alone or with the connection name as '{connectionName}/modelDeploymentName'. </param>
+        /// <param name="priorities"> Analysis priorities for the monitor. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AgentInsightMonitorCreate(string agentName, bool? enabled, double? runIntervalHours, string modelDeploymentName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CreateRequest(string agentName, bool? enabled, double? runIntervalHours, string modelDeploymentName, AgentInsightPriorities priorities, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AgentName = agentName;
             Enabled = enabled;
             RunIntervalHours = runIntervalHours;
             ModelDeploymentName = modelDeploymentName;
+            Priorities = priorities;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -47,12 +43,15 @@ namespace Azure.AI.Projects
         public string AgentName { get; }
 
         /// <summary> Whether scheduled insight generation should be armed. Defaults to false. </summary>
-        public bool? Enabled { get; set; }
+        public bool? Enabled { get; }
 
         /// <summary> Interval between scheduled insight runs, in hours. Defaults to 6. </summary>
-        public double? RunIntervalHours { get; set; }
+        public double? RunIntervalHours { get; }
 
         /// <summary> The model deployment to use for analyzing traces. Accepts either the deployment name alone or with the connection name as '{connectionName}/modelDeploymentName'. </summary>
         public string ModelDeploymentName { get; }
+
+        /// <summary> Analysis priorities for the monitor. </summary>
+        public AgentInsightPriorities Priorities { get; }
     }
 }

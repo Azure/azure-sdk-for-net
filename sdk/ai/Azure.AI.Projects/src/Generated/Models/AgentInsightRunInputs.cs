@@ -4,32 +4,30 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects
 {
-    /// <summary> Inputs used when creating an agent insight run. </summary>
-    [Experimental("AAIP001")]
-    public partial class AgentInsightRunCreate
+    /// <summary> Inputs recorded for an Agent Insights run. </summary>
+    public partial class AgentInsightRunInputs
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AgentInsightRunCreate"/>. </summary>
-        public AgentInsightRunCreate()
+        /// <summary> Initializes a new instance of <see cref="AgentInsightRunInputs"/>. </summary>
+        internal AgentInsightRunInputs()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="AgentInsightRunCreate"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AgentInsightRunInputs"/>. </summary>
         /// <param name="lookbackHours"> Optional finite positive number of hours of trace history to analyze, up to 2,160. Defaults to 168. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AgentInsightRunCreate(double? lookbackHours, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AgentInsightRunInputs(double? lookbackHours, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             LookbackHours = lookbackHours;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Optional finite positive number of hours of trace history to analyze, up to 2,160. Defaults to 168. </summary>
-        public double? LookbackHours { get; set; }
+        public double? LookbackHours { get; }
     }
 }

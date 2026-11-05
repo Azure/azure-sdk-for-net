@@ -15,7 +15,7 @@ namespace Azure.AI.Projects.Agents
         /// <summary> Initializes a new instance of <see cref="VoiceAgentTemplateGreetingConfig"/>. </summary>
         /// <param name="text"> The Handlebars text template spoken at session start. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="text"/> is null. </exception>
-        public VoiceAgentTemplateGreetingConfig(string text) : base("template")
+        public VoiceAgentTemplateGreetingConfig(string text) : base(VoiceAgentGreetingMode.Template)
         {
             Argument.AssertNotNull(text, nameof(text));
 
@@ -26,7 +26,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="type"> The greeting mode. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="text"> The Handlebars text template spoken at session start. </param>
-        internal VoiceAgentTemplateGreetingConfig(string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string text) : base(@type, additionalBinaryDataProperties)
+        internal VoiceAgentTemplateGreetingConfig(VoiceAgentGreetingMode @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string text) : base(@type, additionalBinaryDataProperties)
         {
             Text = text;
         }

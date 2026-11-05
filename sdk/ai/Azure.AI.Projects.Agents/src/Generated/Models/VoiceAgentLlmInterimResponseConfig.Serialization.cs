@@ -113,7 +113,7 @@ namespace Azure.AI.Projects.Agents
             {
                 return null;
             }
-            string @type = "llm_interim_response";
+            VoiceAgentInterimResponseType @type = default;
             IList<VoiceAgentInterimResponseTrigger> triggers = default;
             TimeSpan? latencyThresholdMs = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -124,7 +124,7 @@ namespace Azure.AI.Projects.Agents
             {
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = prop.Value.GetString();
+                    @type = new VoiceAgentInterimResponseType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("triggers"u8))

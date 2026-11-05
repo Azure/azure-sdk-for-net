@@ -71,9 +71,9 @@ namespace Azure.AI.Projects.Agents
                 throw new FormatException($"The model {nameof(VoiceRecordingChannelLayout)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("left"u8);
-            writer.WriteStringValue(Left);
+            writer.WriteStringValue(Left.ToString());
             writer.WritePropertyName("right"u8);
-            writer.WriteStringValue(Right);
+            writer.WriteStringValue(Right.ToString());
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -116,19 +116,19 @@ namespace Azure.AI.Projects.Agents
             {
                 return null;
             }
-            string left = default;
-            string right = default;
+            VoiceAudioRole left = default;
+            VoiceAudioRole right = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("left"u8))
                 {
-                    left = prop.Value.GetString();
+                    left = new VoiceAudioRole(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("right"u8))
                 {
-                    right = prop.Value.GetString();
+                    right = new VoiceAudioRole(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
