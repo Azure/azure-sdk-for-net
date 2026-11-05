@@ -1275,7 +1275,7 @@ namespace Azure.Provisioning.RecoveryServicesBackup
     public partial class RecoveryPointProperties : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public RecoveryPointProperties() { }
-        public Azure.Provisioning.BicepValue<System.DateTimeOffset> ExpireOn { get { throw null; } }
+        public Azure.Provisioning.BicepValue<System.DateTimeOffset> ExpiresOn { get { throw null; } }
         public Azure.Provisioning.BicepValue<bool> IsSoftDeleted { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> RuleName { get { throw null; } }
         protected override void DefineProvisionableProperties() { }

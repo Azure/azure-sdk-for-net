@@ -295,7 +295,7 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<IssueContractData, ApiIssueResource>(new ApiIssueGetByServiceAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<IssueContractData, ApiIssueResource>(new IssueContractDataAsync0CollectionResultOfT(
                 _apiIssueRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -338,7 +338,7 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<IssueContractData, ApiIssueResource>(new ApiIssueGetByServiceCollectionResultOfT(
+            return new PageableWrapper<IssueContractData, ApiIssueResource>(new IssueContractData0CollectionResultOfT(
                 _apiIssueRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

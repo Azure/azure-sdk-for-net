@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         {
             get
             {
-                return Properties is null ? default : Properties.ConfigurationChangeOn;
+                return Properties is null ? default : Properties.ConfigurationChangedOn;
             }
             set
             {
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 {
                     Properties = new TenantConfigurationSyncStateContractProperties();
                 }
-                Properties.ConfigurationChangeOn = value;
+                Properties.ConfigurationChangedOn = value;
             }
         }
 

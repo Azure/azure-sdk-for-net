@@ -1,14 +1,25 @@
 # Release History
 
-## 1.16.0-beta.1 (Unreleased)
+## 1.17.0 (2026-11-04)
 
 ### Features Added
 
-### Breaking Changes
+- Added `ClientPipeline.Send` and `SendAsync` overloads accepting a `CancellationToken` to override cancellation for a send while preserving applied request options.
 
 ### Bugs Fixed
 
-### Other Changes
+- Fixed invalid JSON when `JsonPatch` replaces string-like values inside stored JSON objects or arrays.
+
+## 1.16.0 (2026-09-16)
+
+### Features Added
+
+- `AsyncStreamingResult` and `AsyncStreamingResult<T>` are now generally available and no longer require suppressing the `SCME0005` experimental diagnostic.
+- Added automatic reconnection for eligible non-buffered server-sent event responses after abrupt connection loss, honoring server-provided retry intervals and `Last-Event-ID` when available.
+
+### Breaking Changes
+
+- Renamed the experimental `AsyncStreamingClientResult` and `AsyncStreamingClientResult<T>` types to `AsyncStreamingResult` and `AsyncStreamingResult<T>`, respectively.
 
 ## 1.15.0 (2026-08-04)
 

@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         {
             get
             {
-                return Properties is null ? default : Properties.WebTestKind;
+                return Properties is null ? (WebTestKind?)default : Properties.WebTestKind;
             }
             set
             {

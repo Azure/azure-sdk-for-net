@@ -273,7 +273,7 @@ namespace Azure.ResourceManager.Monitor
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DataCollectionRuleAssociationData, DataCollectionRuleAssociationResource>(new DataCollectionRuleAssociationsGetByResourceAsyncCollectionResultOfT(_dataCollectionRuleAssociationsRestClient, Id.ToString(), context, "DataCollectionRuleAssociationCollection.GetAll"), data => new DataCollectionRuleAssociationResource(Client, data));
+            return new AsyncPageableWrapper<DataCollectionRuleAssociationData, DataCollectionRuleAssociationResource>(new DataCollectionRuleAssociationDataAsync0CollectionResultOfT(_dataCollectionRuleAssociationsRestClient, Id.ToString(), context, "DataCollectionRuleAssociationCollection.GetAll"), data => new DataCollectionRuleAssociationResource(Client, data));
         }
 
         /// <summary>
@@ -301,7 +301,7 @@ namespace Azure.ResourceManager.Monitor
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DataCollectionRuleAssociationData, DataCollectionRuleAssociationResource>(new DataCollectionRuleAssociationsGetByResourceCollectionResultOfT(_dataCollectionRuleAssociationsRestClient, Id.ToString(), context, "DataCollectionRuleAssociationCollection.GetAll"), data => new DataCollectionRuleAssociationResource(Client, data));
+            return new PageableWrapper<DataCollectionRuleAssociationData, DataCollectionRuleAssociationResource>(new DataCollectionRuleAssociationData0CollectionResultOfT(_dataCollectionRuleAssociationsRestClient, Id.ToString(), context, "DataCollectionRuleAssociationCollection.GetAll"), data => new DataCollectionRuleAssociationResource(Client, data));
         }
 
         /// <summary>

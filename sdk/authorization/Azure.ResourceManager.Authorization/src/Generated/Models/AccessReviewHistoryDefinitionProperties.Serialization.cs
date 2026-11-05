@@ -90,40 +90,75 @@ namespace Azure.ResourceManager.Authorization.Models
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (options.Format != "W" && Optional.IsDefined(ReviewHistoryPeriodStartOn))
+            if (options.Format != "W" && Optional.IsDefined(ReviewHistoryPeriodStartsOn, _reviewHistoryPeriodStartsOnIsDefined))
             {
-                writer.WritePropertyName("reviewHistoryPeriodStartDateTime"u8);
-                writer.WriteStringValue(ReviewHistoryPeriodStartOn.Value, "O");
+                if (ReviewHistoryPeriodStartsOn != null)
+                {
+                    writer.WritePropertyName("reviewHistoryPeriodStartDateTime"u8);
+                    writer.WriteStringValue(ReviewHistoryPeriodStartsOn.Value, "O");
+                }
+                else
+                {
+                    writer.WriteNull("reviewHistoryPeriodStartDateTime"u8);
+                }
             }
-            if (options.Format != "W" && Optional.IsDefined(ReviewHistoryPeriodEndOn))
+            if (options.Format != "W" && Optional.IsDefined(ReviewHistoryPeriodEndsOn, _reviewHistoryPeriodEndsOnIsDefined))
             {
-                writer.WritePropertyName("reviewHistoryPeriodEndDateTime"u8);
-                writer.WriteStringValue(ReviewHistoryPeriodEndOn.Value, "O");
+                if (ReviewHistoryPeriodEndsOn != null)
+                {
+                    writer.WritePropertyName("reviewHistoryPeriodEndDateTime"u8);
+                    writer.WriteStringValue(ReviewHistoryPeriodEndsOn.Value, "O");
+                }
+                else
+                {
+                    writer.WriteNull("reviewHistoryPeriodEndDateTime"u8);
+                }
             }
             if (Optional.IsCollectionDefined(Decisions))
             {
-                writer.WritePropertyName("decisions"u8);
-                writer.WriteStartArray();
-                foreach (AccessReviewResult item in Decisions)
+                if (Decisions != null)
                 {
-                    writer.WriteStringValue(item.ToString());
+                    writer.WritePropertyName("decisions"u8);
+                    writer.WriteStartArray();
+                    foreach (AccessReviewResult item in Decisions)
+                    {
+                        writer.WriteStringValue(item.ToString());
+                    }
+                    writer.WriteEndArray();
                 }
-                writer.WriteEndArray();
+                else
+                {
+                    writer.WriteNull("decisions"u8);
+                }
             }
             if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
+            if (options.Format != "W" && Optional.IsDefined(CreatedOn, _createdOnIsDefined))
             {
-                writer.WritePropertyName("createdDateTime"u8);
-                writer.WriteStringValue(CreatedOn.Value, "O");
+                if (CreatedOn != null)
+                {
+                    writer.WritePropertyName("createdDateTime"u8);
+                    writer.WriteStringValue(CreatedOn.Value, "O");
+                }
+                else
+                {
+                    writer.WriteNull("createdDateTime"u8);
+                }
             }
-            if (options.Format != "W" && Optional.IsDefined(CreatedBy))
+            if (options.Format != "W" && Optional.IsDefined(CreatedBy, _createdByIsDefined))
             {
-                writer.WritePropertyName("createdBy"u8);
-                writer.WriteObjectValue(CreatedBy, options);
+                if (CreatedBy != null)
+                {
+                    writer.WritePropertyName("createdBy"u8);
+                    writer.WriteObjectValue(CreatedBy, options);
+                }
+                else
+                {
+                    writer.WriteNull("createdBy"u8);
+                }
             }
             if (Optional.IsCollectionDefined(Scopes))
             {
@@ -135,10 +170,17 @@ namespace Azure.ResourceManager.Authorization.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Settings))
+            if (Optional.IsDefined(Settings, _settingsIsDefined))
             {
-                writer.WritePropertyName("settings"u8);
-                writer.WriteObjectValue(Settings, options);
+                if (Settings != null)
+                {
+                    writer.WritePropertyName("settings"u8);
+                    writer.WriteObjectValue(Settings, options);
+                }
+                else
+                {
+                    writer.WriteNull("settings"u8);
+                }
             }
             if (Optional.IsCollectionDefined(Instances))
             {
@@ -193,13 +235,18 @@ namespace Azure.ResourceManager.Authorization.Models
                 return null;
             }
             string displayName = default;
-            DateTimeOffset? reviewHistoryPeriodStartOn = default;
-            DateTimeOffset? reviewHistoryPeriodEndOn = default;
-            IList<AccessReviewResult> decisions = default;
+            bool reviewHistoryPeriodStartsOnIsDefined = false;
+            DateTimeOffset? reviewHistoryPeriodStartsOn = default;
+            bool reviewHistoryPeriodEndsOnIsDefined = false;
+            DateTimeOffset? reviewHistoryPeriodEndsOn = default;
+            IList<AccessReviewResult> decisions = new ChangeTrackingList<AccessReviewResult>();
             AccessReviewHistoryDefinitionStatus? status = default;
+            bool createdOnIsDefined = false;
             DateTimeOffset? createdOn = default;
+            bool createdByIsDefined = false;
             AccessReviewActorIdentity createdBy = default;
             IList<AccessReviewScope> scopes = default;
+            bool settingsIsDefined = false;
             AccessReviewHistoryScheduleSettings settings = default;
             IList<AccessReviewHistoryInstance> instances = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -212,28 +259,31 @@ namespace Azure.ResourceManager.Authorization.Models
                 }
                 if (prop.NameEquals("reviewHistoryPeriodStartDateTime"u8))
                 {
+                    reviewHistoryPeriodStartsOnIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        reviewHistoryPeriodStartOn = null;
+                        reviewHistoryPeriodStartsOn = null;
                         continue;
                     }
-                    reviewHistoryPeriodStartOn = prop.Value.GetDateTimeOffset("O");
+                    reviewHistoryPeriodStartsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("reviewHistoryPeriodEndDateTime"u8))
                 {
+                    reviewHistoryPeriodEndsOnIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        reviewHistoryPeriodEndOn = null;
+                        reviewHistoryPeriodEndsOn = null;
                         continue;
                     }
-                    reviewHistoryPeriodEndOn = prop.Value.GetDateTimeOffset("O");
+                    reviewHistoryPeriodEndsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("decisions"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
+                        decisions = null;
                         continue;
                     }
                     List<AccessReviewResult> array = new List<AccessReviewResult>();
@@ -255,6 +305,7 @@ namespace Azure.ResourceManager.Authorization.Models
                 }
                 if (prop.NameEquals("createdDateTime"u8))
                 {
+                    createdOnIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         createdOn = null;
@@ -265,6 +316,7 @@ namespace Azure.ResourceManager.Authorization.Models
                 }
                 if (prop.NameEquals("createdBy"u8))
                 {
+                    createdByIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         createdBy = null;
@@ -289,6 +341,7 @@ namespace Azure.ResourceManager.Authorization.Models
                 }
                 if (prop.NameEquals("settings"u8))
                 {
+                    settingsIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         settings = null;
@@ -313,21 +366,28 @@ namespace Azure.ResourceManager.Authorization.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new AccessReviewHistoryDefinitionProperties(
                 displayName,
-                reviewHistoryPeriodStartOn,
-                reviewHistoryPeriodEndOn,
-                decisions ?? new ChangeTrackingList<AccessReviewResult>(),
+                reviewHistoryPeriodStartsOn,
+                reviewHistoryPeriodEndsOn,
+                decisions,
                 status,
                 createdOn,
                 createdBy,
                 scopes ?? new ChangeTrackingList<AccessReviewScope>(),
                 settings,
                 instances ?? new ChangeTrackingList<AccessReviewHistoryInstance>(),
-                additionalBinaryDataProperties);
+                additionalBinaryDataProperties)
+            {
+                _reviewHistoryPeriodStartsOnIsDefined = reviewHistoryPeriodStartsOnIsDefined,
+                _reviewHistoryPeriodEndsOnIsDefined = reviewHistoryPeriodEndsOnIsDefined,
+                _createdOnIsDefined = createdOnIsDefined,
+                _createdByIsDefined = createdByIsDefined,
+                _settingsIsDefined = settingsIsDefined
+            };
         }
     }
 }

@@ -48,8 +48,8 @@ public class BasicDnsTests
                     TtlInSeconds = 3600,
                     ARecords =
                     {
-                        new DnsARecordInfo() { Ipv4Address = IPAddress.Parse("203.0.113.1") },
-                        new DnsARecordInfo() { Ipv4Address = IPAddress.Parse("203.0.113.2") }
+                        new DnsARecordInfo() { IPv4Address = IPAddress.Parse("203.0.113.1") },
+                        new DnsARecordInfo() { IPv4Address = IPAddress.Parse("203.0.113.2") }
                     }
                 };
                 infra.Add(aRecord);
@@ -119,7 +119,7 @@ public class BasicDnsTests
                 };
                 infra.Add(cnameRecord);
 
-                DnsARecord dnsRecordA = new("dnsRecordA")
+                DnsARecord dnsRecordA = new("dnsRecordA", DnsARecord.ResourceVersions.V2018_05_01)
                 {
                     Parent = zone,
                     Name = "privatev4",
@@ -128,11 +128,11 @@ public class BasicDnsTests
                     [
                         new DnsARecordInfo()
                         {
-                            Ipv4Address = IPAddress.Parse("127.0.0.1")
+                            IPv4Address = IPAddress.Parse("127.0.0.1")
                         },
                         new DnsARecordInfo()
                         {
-                            Ipv4Address = IPAddress.Parse("192.168.0.1")
+                            IPv4Address = IPAddress.Parse("192.168.0.1")
                         }
                     ],
                 };
@@ -145,8 +145,8 @@ public class BasicDnsTests
                     TtlInSeconds = 3600,
                     AaaaRecords =
                     {
-                        new DnsAaaaRecordInfo() { Ipv6Address = IPAddress.Parse("0000:0000:0000:0000:0000:0000:0000:0001") },
-                        new DnsAaaaRecordInfo() { Ipv6Address = IPAddress.Parse("FD00::45:AA:1") }
+                        new DnsAaaaRecordInfo() { IPv6Address = IPAddress.Parse("0000:0000:0000:0000:0000:0000:0000:0001") },
+                        new DnsAaaaRecordInfo() { IPv6Address = IPAddress.Parse("FD00::45:AA:1") }
                     }
                 };
                 infra.Add(aaaaRecord);

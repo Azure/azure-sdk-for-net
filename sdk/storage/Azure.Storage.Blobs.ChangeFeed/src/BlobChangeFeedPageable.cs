@@ -4,6 +4,8 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core.Pipeline;
+using Azure.Storage.Blobs;
+using Azure.Storage.ChangeFeed.Common;
 
 namespace Azure.Storage.Blobs.ChangeFeed
 {
@@ -12,32 +14,26 @@ namespace Azure.Storage.Blobs.ChangeFeed
     /// </summary>
     internal class BlobChangeFeedPageable : Pageable<BlobChangeFeedEvent>
     {
-        private readonly ChangeFeedFactory _changeFeedFactory;
+        private readonly BlobChangeFeedClient _client;
+        private readonly long? _maxTransferSize;
+        private readonly bool _includeNonFinalizedEvents;
         private readonly DateTimeOffset? _startTime;
         private readonly DateTimeOffset? _endTime;
         private readonly string _continuation;
 
         internal BlobChangeFeedPageable(
-            BlobServiceClient blobServiceClient,
+            BlobChangeFeedClient client,
             long? maxTransferSize,
+            bool includeNonFinalizedEvents,
             DateTimeOffset? startTime = default,
-            DateTimeOffset? endTime = default)
+            DateTimeOffset? endTime = default,
+            string continuation = default)
         {
-            _changeFeedFactory = new ChangeFeedFactory(
-                blobServiceClient,
-                maxTransferSize);
+            _client = client;
+            _maxTransferSize = maxTransferSize;
+            _includeNonFinalizedEvents = includeNonFinalizedEvents;
             _startTime = startTime;
             _endTime = endTime;
-        }
-
-        internal BlobChangeFeedPageable(
-            BlobServiceClient blobServiceClient,
-            long? maxTransferSize,
-            string continuation)
-        {
-            _changeFeedFactory = new ChangeFeedFactory(
-                blobServiceClient,
-                maxTransferSize);
             _continuation = continuation;
         }
 
@@ -54,14 +50,22 @@ namespace Azure.Storage.Blobs.ChangeFeed
         /// <returns>
         /// <see cref="IEnumerable{Page}"/>.
         /// </returns>
-        public override IEnumerable<Page<BlobChangeFeedEvent>> AsPages(string continuationToken = null, int? pageSizeHint = null)
+        public override IEnumerable<Page<BlobChangeFeedEvent>> AsPages(
+            string continuationToken = null,
+            int? pageSizeHint = null)
         {
             if (continuationToken != null)
-            {
-                throw new ArgumentException($"Continuation not supported.  Use BlobChangeFeedClient.GetChanges(string) instead");
-            }
+                throw new ArgumentException($"{nameof(continuationToken)} not supported. Use BlobChangeFeedClient.GetChanges(string) instead.");
 
-            ChangeFeed changeFeed = _changeFeedFactory.BuildChangeFeed(
+            (BlobContainerClient containerClient, ChangeFeedConfiguration<BlobChangeFeedEvent> config) = _client.ResolveContainer();
+
+            ChangeFeedFactoryBase<BlobChangeFeedEvent> factory = new ChangeFeedFactoryBase<BlobChangeFeedEvent>(
+                containerClient,
+                _maxTransferSize,
+                config,
+                _includeNonFinalizedEvents);
+
+            ChangeFeedBase<BlobChangeFeedEvent> changeFeed = factory.BuildChangeFeed(
                 _startTime,
                 _endTime,
                 _continuation,
@@ -73,7 +77,8 @@ namespace Azure.Storage.Blobs.ChangeFeed
             {
                 yield return changeFeed.GetPage(
                     async: false,
-                    pageSize: pageSizeHint ?? Constants.ChangeFeed.DefaultPageSize).EnsureCompleted();
+                    pageSize: pageSizeHint ?? Constants.ChangeFeed.DefaultPageSize)
+                    .EnsureCompleted();
             }
         }
     }

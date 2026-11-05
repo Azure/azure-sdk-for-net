@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Authorization
         {
             get
             {
-                return Properties is null ? default : Properties.PrincipalId;
+                return Properties is null ? (Guid?)default : Properties.PrincipalId;
             }
         }
 

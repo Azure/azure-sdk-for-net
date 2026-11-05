@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.Sql
         {
             get
             {
-                return Properties is null ? default : Properties.State;
+                return Properties is null ? (BlobAuditingPolicyState?)default : Properties.State;
             }
             set
             {

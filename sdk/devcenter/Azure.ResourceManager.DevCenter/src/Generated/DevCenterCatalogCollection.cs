@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.DevCenter
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DevCenterCatalogData, DevCenterCatalogResource>(new CatalogsGetByDevCenterAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<DevCenterCatalogData, DevCenterCatalogResource>(new DevCenterCatalogDataAsyncCollectionResultOfT(
                 _catalogsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -330,7 +330,7 @@ namespace Azure.ResourceManager.DevCenter
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DevCenterCatalogData, DevCenterCatalogResource>(new CatalogsGetByDevCenterCollectionResultOfT(
+            return new PageableWrapper<DevCenterCatalogData, DevCenterCatalogResource>(new DevCenterCatalogDataCollectionResultOfT(
                 _catalogsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

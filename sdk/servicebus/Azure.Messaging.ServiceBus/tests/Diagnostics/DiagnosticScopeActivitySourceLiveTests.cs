@@ -322,9 +322,9 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                 await processor.StartProcessingAsync();
                 await tcs.Task;
                 await processor.StopProcessingAsync();
+                Assert.IsFalse(listener.Activities.Any(activity => activity.OperationName == DiagnosticProperty.ReceiveActivityName));
                 for (int i = 0; i < messageCt; i++)
                 {
-                    listener.AssertAndRemoveActivity(DiagnosticProperty.ReceiveActivityName);
                     var processActivity = listener.AssertAndRemoveActivity(DiagnosticProperty.ProcessMessageActivityName);
                     AssertCommonTags(processActivity, processor.EntityPath, processor.FullyQualifiedNamespace, MessagingDiagnosticOperation.Process, 1);
                 }
@@ -383,9 +383,9 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                 await processor.StartProcessingAsync();
                 await tcs.Task;
                 await processor.StopProcessingAsync();
+                Assert.IsFalse(listener.Activities.Any(activity => activity.OperationName == DiagnosticProperty.ReceiveActivityName));
                 for (int i = 0; i < messageCt; i++)
                 {
-                    listener.AssertAndRemoveActivity(DiagnosticProperty.ReceiveActivityName);
                     var processActivity = listener.AssertAndRemoveActivity(DiagnosticProperty.ProcessSessionMessageActivityName);
                     AssertCommonTags(processActivity, processor.EntityPath, processor.FullyQualifiedNamespace, MessagingDiagnosticOperation.Process, 1);
                 }

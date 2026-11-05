@@ -21,7 +21,7 @@ namespace Azure.Provisioning.ProvisioningTypeSpec
         private SystemData _systemData;
         private ItemProperties _properties;
         private BicepDictionary<string> _tags;
-        private ResourceReference<ConfigurationStore> _parent;
+        private ProvisioningResourceReference<ConfigurationStore> _parent;
 
         /// <summary> Creates a new Item. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -187,7 +187,7 @@ namespace Azure.Provisioning.ProvisioningTypeSpec
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _properties = DefineModelProperty<ItemProperties>(nameof(Properties), new string[] { "properties" });
             _tags = DefineDictionaryProperty<string>(nameof(Tags), new string[] { "tags" });
-            _parent = DefineResource<ConfigurationStore>(nameof(Parent), new string[] { "parent" }, isRequired: true);
+            _parent = new ProvisioningResourceReference<ConfigurationStore>(DefineProperty<string>(nameof(Parent), new string[] { "parent" }));
             DefineAdditionalProperties();
         }
 
@@ -214,8 +214,8 @@ namespace Azure.Provisioning.ProvisioningTypeSpec
         {
             /// <summary> API version "2024-05-01". </summary>
             public static readonly string V2024_05_01 = "2024-05-01";
-            /// <summary> API version "2024-04-01". </summary>
-            public static readonly string V2024_04_01 = "2024-04-01";
+            /// <summary> API version "2024-01-01". </summary>
+            public static readonly string V2024_01_01 = "2024-01-01";
         }
     }
 }

@@ -55,7 +55,7 @@ public class ModelsTest : ProjectsClientTestBase
         };
         modelVersionObj.Tags["test"] = "test value";
         // Create
-        CreateAsyncResponse createResponse = await projectClient.Models.CreateModelVersionRequestAsync(
+        CreateAsyncResult createResponse = await projectClient.Models.CreateModelVersionRequestAsync(
             name: $"{MODEL_NAME}1",
             version: MODEL_VERSION,
             modelVersion: modelVersionObj);

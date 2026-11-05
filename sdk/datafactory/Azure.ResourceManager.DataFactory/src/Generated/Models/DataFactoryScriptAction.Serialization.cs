@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 if (prop.NameEquals("roles"u8))
                 {
-                    roles = BinaryData.FromString(prop.Value.GetRawText());
+                    roles = prop.Value.GetUtf8Bytes();
                     continue;
                 }
                 if (prop.NameEquals("parameters"u8))
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new DataFactoryScriptAction(name, uri, roles, parameters, additionalBinaryDataProperties);

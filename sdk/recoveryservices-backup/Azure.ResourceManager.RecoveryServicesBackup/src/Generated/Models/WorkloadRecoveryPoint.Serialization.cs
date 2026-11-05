@@ -143,14 +143,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 {
                     case "AzureWorkloadPointInTimeRecoveryPoint":
                         return WorkloadPointInTimeRecoveryPoint.DeserializeWorkloadPointInTimeRecoveryPoint(element, options);
-                    case "AzureWorkloadSAPHanaPointInTimeRecoveryPoint":
-                        return WorkloadSapHanaPointInTimeRecoveryPoint.DeserializeWorkloadSapHanaPointInTimeRecoveryPoint(element, options);
-                    case "AzureWorkloadSAPHanaRecoveryPoint":
-                        return WorkloadSapHanaRecoveryPoint.DeserializeWorkloadSapHanaRecoveryPoint(element, options);
                     case "AzureWorkloadSAPAsePointInTimeRecoveryPoint":
                         return WorkloadSapAsePointInTimeRecoveryPoint.DeserializeWorkloadSapAsePointInTimeRecoveryPoint(element, options);
                     case "AzureWorkloadSAPAseRecoveryPoint":
                         return WorkloadSapAseRecoveryPoint.DeserializeWorkloadSapAseRecoveryPoint(element, options);
+                    case "AzureWorkloadSAPHanaPointInTimeRecoveryPoint":
+                        return WorkloadSapHanaPointInTimeRecoveryPoint.DeserializeWorkloadSapHanaPointInTimeRecoveryPoint(element, options);
+                    case "AzureWorkloadSAPHanaRecoveryPoint":
+                        return WorkloadSapHanaRecoveryPoint.DeserializeWorkloadSapHanaRecoveryPoint(element, options);
                     case "AzureWorkloadSQLPointInTimeRecoveryPoint":
                         return WorkloadSqlPointInTimeRecoveryPoint.DeserializeWorkloadSqlPointInTimeRecoveryPoint(element, options);
                     case "AzureWorkloadSQLRecoveryPoint":

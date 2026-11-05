@@ -114,7 +114,7 @@ namespace Azure.Storage.Blobs.Models
                 throw new FormatException($"The model {nameof(BlockList)} does not support writing '{format}' format.");
             }
 
-            if (Optional.IsCollectionDefined(CommittedBlocks))
+            if (CommittedBlocks != null && Optional.IsCollectionDefined(CommittedBlocks))
             {
                 writer.WriteStartElement("CommittedBlocks");
                 foreach (BlobBlock item in CommittedBlocks)
@@ -125,7 +125,7 @@ namespace Azure.Storage.Blobs.Models
                 }
                 writer.WriteEndElement();
             }
-            if (Optional.IsCollectionDefined(UncommittedBlocks))
+            if (UncommittedBlocks != null && Optional.IsCollectionDefined(UncommittedBlocks))
             {
                 writer.WriteStartElement("UncommittedBlocks");
                 foreach (BlobBlock item in UncommittedBlocks)

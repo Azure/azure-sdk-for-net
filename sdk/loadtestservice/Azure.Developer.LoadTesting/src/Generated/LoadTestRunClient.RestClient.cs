@@ -330,7 +330,7 @@ namespace Azure.Developer.LoadTesting
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Post;
+            request.Method = RequestMethod.Get;
             if ("application/json" != null)
             {
                 request.Headers.SetValue("Content-Type", "application/json");

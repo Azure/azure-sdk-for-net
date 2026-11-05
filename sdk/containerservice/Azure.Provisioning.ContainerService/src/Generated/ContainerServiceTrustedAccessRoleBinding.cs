@@ -20,12 +20,12 @@ namespace Azure.Provisioning.ContainerService
         private BicepValue<string> _name;
         private SystemData _systemData;
         private TrustedAccessRoleBindingProperties _properties;
-        private ResourceReference<ContainerServiceManagedCluster> _parent;
+        private ProvisioningResourceReference<ContainerServiceManagedCluster> _parent;
 
         /// <summary> Creates a new ContainerServiceTrustedAccessRoleBinding. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
         /// <param name="resourceVersion"> The resource API version. </param>
-        public ContainerServiceTrustedAccessRoleBinding(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.ContainerService/managedClusters/trustedAccessRoleBindings", resourceVersion ?? "2026-01-01")
+        public ContainerServiceTrustedAccessRoleBinding(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.ContainerService/managedClusters/trustedAccessRoleBindings", resourceVersion ?? "2026-07-01")
         {
         }
 
@@ -149,7 +149,7 @@ namespace Azure.Provisioning.ContainerService
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _properties = DefineModelProperty<TrustedAccessRoleBindingProperties>(nameof(Properties), new string[] { "properties" }, isRequired: true);
-            _parent = DefineResource<ContainerServiceManagedCluster>(nameof(Parent), new string[] { "parent" }, isRequired: true);
+            _parent = new ProvisioningResourceReference<ContainerServiceManagedCluster>(DefineProperty<string>(nameof(Parent), new string[] { "parent" }));
             DefineAdditionalProperties();
         }
 
@@ -174,6 +174,18 @@ namespace Azure.Provisioning.ContainerService
         /// <summary></summary>
         public static partial class ResourceVersions
         {
+            /// <summary> API version "2026-07-01". </summary>
+            public static readonly string V2026_07_01 = "2026-07-01";
+            /// <summary> API version "2026-06-01". </summary>
+            public static readonly string V2026_06_01 = "2026-06-01";
+            /// <summary> API version "2026-05-01". </summary>
+            public static readonly string V2026_05_01 = "2026-05-01";
+            /// <summary> API version "2026-04-01". </summary>
+            public static readonly string V2026_04_01 = "2026-04-01";
+            /// <summary> API version "2026-03-01". </summary>
+            public static readonly string V2026_03_01 = "2026-03-01";
+            /// <summary> API version "2026-02-01". </summary>
+            public static readonly string V2026_02_01 = "2026-02-01";
             /// <summary> API version "2026-01-01". </summary>
             public static readonly string V2026_01_01 = "2026-01-01";
             /// <summary> API version "2025-10-01". </summary>

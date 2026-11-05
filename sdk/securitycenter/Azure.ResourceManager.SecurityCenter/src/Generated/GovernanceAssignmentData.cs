@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             get
             {
-                return Properties is null ? default : Properties.RemediationDueOn;
+                return Properties is null ? (DateTimeOffset?)default : Properties.RemediationDueOn;
             }
             set
             {

@@ -12,6 +12,7 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 
 namespace Azure.AI.AgentServer.Core.Storage;
 
@@ -479,7 +480,7 @@ internal sealed class LocalStateStoreBackend
         {
             throw new FoundryStoragePreconditionException(
                 $"ETag precondition failed for state store item '{key}'.",
-                current?.Etag);
+                current is null ? default : new ETag(current.Etag));
         }
     }
 
@@ -534,7 +535,7 @@ internal sealed class LocalStateStoreBackend
             item.Key,
             ToBinaryValue(item.Value),
             item.Tags ?? new Dictionary<string, string>(),
-            item.Etag,
+            new ETag(item.Etag),
             item.CreatedAt,
             item.UpdatedAt);
 
@@ -542,7 +543,7 @@ internal sealed class LocalStateStoreBackend
         => AzureAIAgentServerCoreStorageModelFactory.StateStoreItemRef(
             item.Id,
             item.Key,
-            item.Etag,
+            new ETag(item.Etag),
             item.CreatedAt,
             item.UpdatedAt);
 
@@ -551,7 +552,7 @@ internal sealed class LocalStateStoreBackend
             item.Id,
             item.Key,
             item.Tags ?? new Dictionary<string, string>(),
-            item.Etag,
+            new ETag(item.Etag),
             item.CreatedAt,
             item.UpdatedAt);
 

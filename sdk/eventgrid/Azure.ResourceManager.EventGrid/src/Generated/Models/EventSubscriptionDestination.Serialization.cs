@@ -11,7 +11,7 @@ namespace Azure.ResourceManager.EventGrid.Models
 {
     /// <summary>
     /// Information about the destination for an event subscription.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="WebHookEventSubscriptionDestination"/>, <see cref="EventHubEventSubscriptionDestination"/>, <see cref="StorageQueueEventSubscriptionDestination"/>, <see cref="HybridConnectionEventSubscriptionDestination"/>, <see cref="ServiceBusQueueEventSubscriptionDestination"/>, <see cref="ServiceBusTopicEventSubscriptionDestination"/>, <see cref="AzureFunctionEventSubscriptionDestination"/>, <see cref="PartnerEventSubscriptionDestination"/>, <see cref="MonitorAlertEventSubscriptionDestination"/>, and <see cref="NamespaceTopicEventSubscriptionDestination"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AzureFunctionEventSubscriptionDestination"/>, <see cref="EventHubEventSubscriptionDestination"/>, <see cref="HybridConnectionEventSubscriptionDestination"/>, <see cref="MonitorAlertEventSubscriptionDestination"/>, <see cref="NamespaceTopicEventSubscriptionDestination"/>, <see cref="PartnerEventSubscriptionDestination"/>, <see cref="ServiceBusQueueEventSubscriptionDestination"/>, <see cref="ServiceBusTopicEventSubscriptionDestination"/>, <see cref="StorageQueueEventSubscriptionDestination"/>, and <see cref="WebHookEventSubscriptionDestination"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownEventSubscriptionDestination))]
     public abstract partial class EventSubscriptionDestination : IJsonModel<EventSubscriptionDestination>

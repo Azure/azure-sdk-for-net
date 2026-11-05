@@ -65,6 +65,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities.Models
                 default);
         }
 
+        /// <summary> Object for defining the allowed identifiers of external identities. Introduced in 2025-01-31-preview. </summary>
         /// <param name="value"> Wildcard-based expression for matching incoming subject claims. </param>
         /// <param name="languageVersion"> Specifies the version of the flexible fic language used in the expression. </param>
         /// <returns> A new <see cref="Models.FederatedIdentityClaimsMatchingExpression"/> instance for mocking. </returns>
@@ -101,7 +102,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities.Models
                     principalId,
                     clientId,
                     isolationScope,
-                    new AssignmentRestrictions((assignmentRestrictionsProviders ?? new ChangeTrackingList<string>()).ToList(), default),
+                    assignmentRestrictionsProviders is null ? default : new AssignmentRestrictions((assignmentRestrictionsProviders ?? new ChangeTrackingList<string>()).ToList(), default),
                     default),
                 default);
         }
@@ -134,25 +135,25 @@ namespace Azure.ResourceManager.ManagedServiceIdentities.Models
                     principalId,
                     clientId,
                     isolationScope,
-                    new AssignmentRestrictions((assignmentRestrictionsProviders ?? new ChangeTrackingList<string>()).ToList(), default),
+                    assignmentRestrictionsProviders is null ? default : new AssignmentRestrictions((assignmentRestrictionsProviders ?? new ChangeTrackingList<string>()).ToList(), default),
                     default),
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="ManagedServiceIdentities.UserAssignedIdentityData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
+        /// <summary> Describes an identity resource. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="tenantId"> The id of the tenant which the identity belongs to. </param>
         /// <param name="principalId"> The id of the service principal object associated with the created identity. </param>
         /// <param name="clientId"> The id of the app associated with the identity. This is a random generated UUID by MSI. </param>
         /// <param name="isolationScope"> Enum to configure regional restrictions on identity assignment, as necessary. </param>
         /// <returns> A new <see cref="ManagedServiceIdentities.UserAssignedIdentityData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static UserAssignedIdentityData UserAssignedIdentityData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, Guid? tenantId = default, Guid? principalId = default, Guid? clientId = default, IsolationScope? isolationScope = default)
+        public static UserAssignedIdentityData UserAssignedIdentityData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, Guid? tenantId, Guid? principalId, Guid? clientId, IsolationScope? isolationScope)
         {
             return new UserAssignedIdentityData(
                 id,
@@ -171,20 +172,20 @@ namespace Azure.ResourceManager.ManagedServiceIdentities.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.UserAssignedIdentityPatch"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
+        /// <summary> Describes an identity resource. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="tenantId"> The id of the tenant which the identity belongs to. </param>
         /// <param name="principalId"> The id of the service principal object associated with the created identity. </param>
         /// <param name="clientId"> The id of the app associated with the identity. This is a random generated UUID by MSI. </param>
         /// <param name="isolationScope"> Enum to configure regional restrictions on identity assignment, as necessary. </param>
         /// <returns> A new <see cref="Models.UserAssignedIdentityPatch"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static UserAssignedIdentityPatch UserAssignedIdentityPatch(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, Guid? tenantId = default, Guid? principalId = default, Guid? clientId = default, IsolationScope? isolationScope = default)
+        public static UserAssignedIdentityPatch UserAssignedIdentityPatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, Guid? tenantId, Guid? principalId, Guid? clientId, IsolationScope? isolationScope)
         {
             return new UserAssignedIdentityPatch(
                 id,
@@ -203,17 +204,17 @@ namespace Azure.ResourceManager.ManagedServiceIdentities.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="ManagedServiceIdentities.FederatedIdentityCredentialData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
+        /// <summary> Describes a federated identity credential. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="issuerUri"> The URL of the issuer to be trusted. </param>
         /// <param name="subject"> The identifier of the external identity. </param>
         /// <param name="audiences"> The list of audiences that can appear in the issued token. </param>
         /// <returns> A new <see cref="ManagedServiceIdentities.FederatedIdentityCredentialData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static FederatedIdentityCredentialData FederatedIdentityCredentialData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, Uri issuerUri = default, string subject = default, IEnumerable<string> audiences = default)
+        public static FederatedIdentityCredentialData FederatedIdentityCredentialData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Uri issuerUri, string subject, IEnumerable<string> audiences)
         {
             return new FederatedIdentityCredentialData(
                 id,
@@ -224,13 +225,13 @@ namespace Azure.ResourceManager.ManagedServiceIdentities.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="ManagedServiceIdentities.UserAssignedIdentityData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
+        /// <summary> Describes an identity resource. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="tenantId"> The id of the tenant which the identity belongs to. </param>
         /// <param name="principalId"> The id of the service principal object associated with the created identity. </param>
         /// <param name="clientId"> The id of the app associated with the identity. This is a random generated UUID by MSI. </param>
@@ -255,13 +256,13 @@ namespace Azure.ResourceManager.ManagedServiceIdentities.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.UserAssignedIdentityPatch"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
+        /// <summary> Describes an identity resource. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="tenantId"> The id of the tenant which the identity belongs to. </param>
         /// <param name="principalId"> The id of the service principal object associated with the created identity. </param>
         /// <param name="clientId"> The id of the app associated with the identity. This is a random generated UUID by MSI. </param>

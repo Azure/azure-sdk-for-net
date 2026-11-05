@@ -435,7 +435,7 @@ namespace Azure.ResourceManager.Authorization
             {
                 CancellationToken = cancellationToken
             };
-            return new ScopeAccessReviewHistoryDefinitionInstancesGetAllAsyncCollectionResultOfT(_scopeAccessReviewHistoryDefinitionInstancesRestClient, Id.Parent.ToString(), Id.Name, context, "ScopeAccessReviewHistoryDefinitionResource.GetAll");
+            return new AccessReviewHistoryInstanceAsync0CollectionResultOfT(_scopeAccessReviewHistoryDefinitionInstancesRestClient, Id.Parent.ToString(), Id.Name, context, "ScopeAccessReviewHistoryDefinitionResource.GetAll");
         }
 
         /// <summary>
@@ -467,7 +467,7 @@ namespace Azure.ResourceManager.Authorization
             {
                 CancellationToken = cancellationToken
             };
-            return new ScopeAccessReviewHistoryDefinitionInstancesGetAllCollectionResultOfT(_scopeAccessReviewHistoryDefinitionInstancesRestClient, Id.Parent.ToString(), Id.Name, context, "ScopeAccessReviewHistoryDefinitionResource.GetAll");
+            return new AccessReviewHistoryInstance0CollectionResultOfT(_scopeAccessReviewHistoryDefinitionInstancesRestClient, Id.Parent.ToString(), Id.Name, context, "ScopeAccessReviewHistoryDefinitionResource.GetAll");
         }
 
         /// <summary>

@@ -7,12 +7,24 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> Linked service for Asana. </summary>
     public partial class AsanaLinkedService : DataFactoryLinkedServiceProperties
     {
+        /// <summary> Initializes a new instance of <see cref="AsanaLinkedService"/>. </summary>
+        /// <param name="apiToken"> The api token for the Asana source. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="apiToken"/> is null. </exception>
+        public AsanaLinkedService(DataFactorySecret apiToken) : base("Asana")
+        {
+            Argument.AssertNotNull(apiToken, nameof(apiToken));
+
+            TypeProperties = new AsanaLinkedServiceTypeProperties(apiToken);
+        }
+
         /// <summary> Initializes a new instance of <see cref="AsanaLinkedService"/>. </summary>
         /// <param name="linkedServiceType"> Type of linked service. </param>
         /// <param name="linkedServiceVersion"> Version of the linked service. </param>

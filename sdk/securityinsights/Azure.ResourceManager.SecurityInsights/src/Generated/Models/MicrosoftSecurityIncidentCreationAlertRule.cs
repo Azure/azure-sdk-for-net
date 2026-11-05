@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         {
             get
             {
-                return Properties is null ? default : Properties.ProductFilter;
+                return Properties is null ? (MicrosoftSecurityProductName?)default : Properties.ProductFilter;
             }
             set
             {
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         {
             get
             {
-                return Properties is null ? default : Properties.IsEnabled;
+                return Properties is null ? (bool?)default : Properties.IsEnabled;
             }
             set
             {

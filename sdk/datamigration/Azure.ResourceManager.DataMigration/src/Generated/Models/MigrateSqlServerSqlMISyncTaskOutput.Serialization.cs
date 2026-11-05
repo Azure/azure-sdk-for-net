@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataMigration.Models
 {
     /// <summary>
     /// Output for task that migrates SQL Server databases to Azure SQL Database Managed Instance using Log Replay Service.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="MigrateSqlServerSqlMISyncTaskOutputMigrationLevel"/>, <see cref="MigrateSqlServerSqlMISyncTaskOutputDatabaseLevel"/>, and <see cref="MigrateSqlServerSqlMISyncTaskOutputError"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="MigrateSqlServerSqlMISyncTaskOutputDatabaseLevel"/>, <see cref="MigrateSqlServerSqlMISyncTaskOutputError"/>, and <see cref="MigrateSqlServerSqlMISyncTaskOutputMigrationLevel"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownMigrateSqlServerSqlMISyncTaskOutput))]
     public abstract partial class MigrateSqlServerSqlMISyncTaskOutput : IJsonModel<MigrateSqlServerSqlMISyncTaskOutput>
@@ -130,12 +130,12 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "MigrationLevelOutput":
-                        return MigrateSqlServerSqlMISyncTaskOutputMigrationLevel.DeserializeMigrateSqlServerSqlMISyncTaskOutputMigrationLevel(element, options);
                     case "DatabaseLevelOutput":
                         return MigrateSqlServerSqlMISyncTaskOutputDatabaseLevel.DeserializeMigrateSqlServerSqlMISyncTaskOutputDatabaseLevel(element, options);
                     case "ErrorOutput":
                         return MigrateSqlServerSqlMISyncTaskOutputError.DeserializeMigrateSqlServerSqlMISyncTaskOutputError(element, options);
+                    case "MigrationLevelOutput":
+                        return MigrateSqlServerSqlMISyncTaskOutputMigrationLevel.DeserializeMigrateSqlServerSqlMISyncTaskOutputMigrationLevel(element, options);
                 }
             }
             return UnknownMigrateSqlServerSqlMISyncTaskOutput.DeserializeUnknownMigrateSqlServerSqlMISyncTaskOutput(element, options);

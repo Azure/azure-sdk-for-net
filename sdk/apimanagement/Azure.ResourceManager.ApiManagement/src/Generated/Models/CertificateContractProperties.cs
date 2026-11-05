@@ -20,29 +20,29 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <summary> Initializes a new instance of <see cref="CertificateContractProperties"/>. </summary>
         /// <param name="subject"> Subject attribute of the certificate. </param>
         /// <param name="thumbprint"> Thumbprint of the certificate. </param>
-        /// <param name="expireOn"> Expiration date of the certificate. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard. </param>
+        /// <param name="expiresOn"> Expiration date of the certificate. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subject"/> or <paramref name="thumbprint"/> is null. </exception>
-        public CertificateContractProperties(string subject, string thumbprint, DateTimeOffset expireOn)
+        public CertificateContractProperties(string subject, string thumbprint, DateTimeOffset expiresOn)
         {
             Argument.AssertNotNull(subject, nameof(subject));
             Argument.AssertNotNull(thumbprint, nameof(thumbprint));
 
             Subject = subject;
             Thumbprint = thumbprint;
-            ExpireOn = expireOn;
+            ExpiresOn = expiresOn;
         }
 
         /// <summary> Initializes a new instance of <see cref="CertificateContractProperties"/>. </summary>
         /// <param name="subject"> Subject attribute of the certificate. </param>
         /// <param name="thumbprint"> Thumbprint of the certificate. </param>
-        /// <param name="expireOn"> Expiration date of the certificate. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard. </param>
+        /// <param name="expiresOn"> Expiration date of the certificate. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard. </param>
         /// <param name="keyVaultDetails"> KeyVault location details of the certificate. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CertificateContractProperties(string subject, string thumbprint, DateTimeOffset expireOn, KeyVaultContractProperties keyVaultDetails, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CertificateContractProperties(string subject, string thumbprint, DateTimeOffset expiresOn, KeyVaultContractProperties keyVaultDetails, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Subject = subject;
             Thumbprint = thumbprint;
-            ExpireOn = expireOn;
+            ExpiresOn = expiresOn;
             KeyVaultDetails = keyVaultDetails;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         /// <summary> Expiration date of the certificate. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard. </summary>
         [WirePath("expirationDate")]
-        public DateTimeOffset ExpireOn { get; set; }
+        public DateTimeOffset ExpiresOn { get; set; }
 
         /// <summary> KeyVault location details of the certificate. </summary>
         [WirePath("keyVault")]

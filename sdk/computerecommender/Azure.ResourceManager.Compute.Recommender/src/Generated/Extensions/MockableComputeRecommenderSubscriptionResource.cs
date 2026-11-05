@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Compute.Recommender.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-05-preview. </description>
+        /// <description> 2026-09-05-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Compute.Recommender.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-05-preview. </description>
+        /// <description> 2026-09-05-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>

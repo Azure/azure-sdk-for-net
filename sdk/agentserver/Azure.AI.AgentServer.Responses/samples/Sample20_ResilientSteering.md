@@ -10,7 +10,7 @@ Differences from Sample 19:
 
 - `SteerableConversations = true` — each new turn supersedes the prior one; the
   prior turn's handler observes its cancellation token set with **no** cause flag
-  (steering pressure — neither `ClientCancelled` nor `IsShutdownRequested` is set).
+  (steering pressure — neither `IsClientCancelled` nor `IsShutdownRequested` is set).
 - A single message item per turn (no phases). Recovery within a turn does not try
   to checkpoint partial token output — the resumption response is **empty** and
   the recovered attempt re-streams from scratch. This is the realistic case for
@@ -23,7 +23,7 @@ Differences from Sample 19:
 
 When the cancellation token is signaled, inspect the context to find the cause:
 
-| `ClientCancelled` | `IsShutdownRequested` | Meaning | Handler action |
+| `IsClientCancelled` | `IsShutdownRequested` | Meaning | Handler action |
 |-------------------|-----------------------|---------|----------------|
 | `true` | — | Client cancelled | Return without terminal (`cancelled`). |
 | — | `true` | Graceful shutdown | `await context.ExitForRecoveryAsync()` — re-run next lifetime. |
@@ -102,7 +102,7 @@ public class ResilientSteeringHandler : ResponseHandler
         {
             if (cancellationToken.IsCancellationRequested)
             {
-                if (context.ClientCancelled)
+                if (context.IsClientCancelled)
                 {
                     yield break; // client cancelled — no terminal
                 }
@@ -150,6 +150,21 @@ AgentHost.CreateBuilder()
     .Run();
 ```
 
+## Steering without crash re-invocation
+
+Steering can run without `ResilientBackground` or a separate Core task opt-in.
+The Core task runtime still persists queued turns and performs mark-failed recovery
+for an interrupted background response, but does **not** re-invoke its handler.
+The resilient configuration above remains appropriate when an interrupted
+handler must resume. To enable steering only:
+
+```C# Snippet:Responses_Sample20_SteeringOnly_StartServer
+AgentHost.CreateBuilder()
+    .AddResponses<ResilientSteeringHandler>(o => o.SteerableConversations = true)
+    .Build()
+    .Run();
+```
+
 ## Try it
 
 ```bash
@@ -166,6 +181,8 @@ curl -X POST http://localhost:8088/responses \
 
 ## Recovery behavior
 
+With both options enabled, as in the main configuration above:
+
 - On steering, the superseded turn's handler ends cleanly (`completed` with
   partial content) so it is valid context for the superseding turn, which sees
   `IsSteeredTurn = true`.
@@ -180,4 +197,5 @@ curl -X POST http://localhost:8088/responses \
 > active steerable chain enqueues (`queued`) then drains as a steered re-entry
 > (`IsSteeredTurn`) — is exercised end-to-end against the real Core-composed
 > engine by
-> `ResilienceSampleParityEndToEndTests.Sample20_ResilientSteering_EnqueuesThenDrainsSteeredTurn`.
+> `ResilienceSampleParityEndToEndTests.Sample20_Steering_EnqueuesThenDrainsSteeredTurn`
+> covers both resilient and steering-only configurations.

@@ -104,20 +104,20 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="purpose"> The purpose of the file. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual Response<InternalFileListResponse> InternalListFiles(PersistentAgentFilePurpose? purpose = default, CancellationToken cancellationToken = default)
+        internal virtual Response<InternalFileListResult> InternalListFiles(PersistentAgentFilePurpose? purpose = default, CancellationToken cancellationToken = default)
         {
             Response result = InternalListFiles(purpose?.ToString(), cancellationToken.ToRequestContext());
-            return Response.FromValue((InternalFileListResponse)result, result);
+            return Response.FromValue((InternalFileListResult)result, result);
         }
 
         /// <summary> Gets a list of previously uploaded files. </summary>
         /// <param name="purpose"> The purpose of the file. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual async Task<Response<InternalFileListResponse>> InternalListFilesAsync(PersistentAgentFilePurpose? purpose = default, CancellationToken cancellationToken = default)
+        internal virtual async Task<Response<InternalFileListResult>> InternalListFilesAsync(PersistentAgentFilePurpose? purpose = default, CancellationToken cancellationToken = default)
         {
             Response result = await InternalListFilesAsync(purpose?.ToString(), cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((InternalFileListResponse)result, result);
+            return Response.FromValue((InternalFileListResult)result, result);
         }
 
         /// <summary>

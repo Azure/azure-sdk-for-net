@@ -42,6 +42,25 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         [WirePath("properties")]
         internal MultiFlattenProperties Properties { get; set; }
 
+        /// <summary> Required property that will be customized via [CodeGenMember] to change its position. </summary>
+        [CodeGenMember("Channel")]
+        [WirePath("properties.channel")]
+        public FlattenChannel? Channel
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Channel;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new MultiFlattenProperties();
+                }
+                Properties.Channel = value;
+            }
+        }
+
         /// <summary> Additional property after inner to verify it is not skipped. </summary>
         [WirePath("properties.disabled")]
         public bool? Disabled
@@ -75,25 +94,6 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                     Properties = new MultiFlattenProperties();
                 }
                 Properties.InnerSelectionType = value;
-            }
-        }
-
-        /// <summary> Required property that will be customized via [CodeGenMember] to change its position. </summary>
-        [CodeGenMember("Channel")]
-        [WirePath("properties.channel")]
-        public FlattenChannel? Channel
-        {
-            get
-            {
-                return Properties is null ? default : Properties.Channel;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new MultiFlattenProperties();
-                }
-                Properties.Channel = value;
             }
         }
     }

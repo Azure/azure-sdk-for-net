@@ -160,10 +160,10 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ListIndexersResult(value, odataNextLink, additionalBinaryDataProperties);
+            return new ListIndexersResult(value ?? new ChangeTrackingList<SearchIndexer>(), odataNextLink, additionalBinaryDataProperties);
         }
     }
 }

@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
             Assert.That(configurationStore.Data.Tags.Count == 2, Is.True);
         }
 
-        [TestCase(true)]
+        [TestCase(true, Ignore = "Re-record tags after the SetTags request change; see #63311.")]
         [TestCase(false)]
         public async Task RemoveTagTest(bool useTagResource)
         {

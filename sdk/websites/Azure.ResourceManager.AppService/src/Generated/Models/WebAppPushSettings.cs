@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.AppService.Models
         {
             get
             {
-                return Properties is null ? default : Properties.IsPushEnabled;
+                return Properties is null ? (bool?)default : Properties.IsPushEnabled;
             }
             set
             {

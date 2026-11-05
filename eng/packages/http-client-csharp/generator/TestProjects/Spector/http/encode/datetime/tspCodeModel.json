@@ -179,6 +179,7 @@
       "$id": "21",
       "kind": "model",
       "name": "DefaultDatetimeProperty",
+      "apiVersions": [],
       "namespace": "Encode.Datetime",
       "crossLanguageDefinitionId": "Encode.Datetime.DefaultDatetimeProperty",
       "usage": "Input,Output,Json",
@@ -194,6 +195,7 @@
           "$id": "22",
           "kind": "property",
           "name": "value",
+          "apiVersions": [],
           "serializedName": "value",
           "type": {
             "$id": "23",
@@ -230,6 +232,7 @@
       "$id": "25",
       "kind": "model",
       "name": "Rfc3339DatetimeProperty",
+      "apiVersions": [],
       "namespace": "Encode.Datetime",
       "crossLanguageDefinitionId": "Encode.Datetime.Rfc3339DatetimeProperty",
       "usage": "Input,Output,Json",
@@ -245,6 +248,7 @@
           "$id": "26",
           "kind": "property",
           "name": "value",
+          "apiVersions": [],
           "serializedName": "value",
           "type": {
             "$id": "27",
@@ -281,6 +285,7 @@
       "$id": "29",
       "kind": "model",
       "name": "Rfc7231DatetimeProperty",
+      "apiVersions": [],
       "namespace": "Encode.Datetime",
       "crossLanguageDefinitionId": "Encode.Datetime.Rfc7231DatetimeProperty",
       "usage": "Input,Output,Json",
@@ -296,6 +301,7 @@
           "$id": "30",
           "kind": "property",
           "name": "value",
+          "apiVersions": [],
           "serializedName": "value",
           "type": {
             "$id": "31",
@@ -332,6 +338,7 @@
       "$id": "33",
       "kind": "model",
       "name": "UnixTimestampDatetimeProperty",
+      "apiVersions": [],
       "namespace": "Encode.Datetime",
       "crossLanguageDefinitionId": "Encode.Datetime.UnixTimestampDatetimeProperty",
       "usage": "Input,Output,Json",
@@ -347,6 +354,7 @@
           "$id": "34",
           "kind": "property",
           "name": "value",
+          "apiVersions": [],
           "serializedName": "value",
           "type": {
             "$id": "35",
@@ -383,6 +391,7 @@
       "$id": "37",
       "kind": "model",
       "name": "UnixTimestampArrayDatetimeProperty",
+      "apiVersions": [],
       "namespace": "Encode.Datetime",
       "crossLanguageDefinitionId": "Encode.Datetime.UnixTimestampArrayDatetimeProperty",
       "usage": "Input,Output,Json",
@@ -398,6 +407,7 @@
           "$id": "38",
           "kind": "property",
           "name": "value",
+          "apiVersions": [],
           "serializedName": "value",
           "type": {
             "$id": "39",
@@ -518,7 +528,6 @@
                 "$id": "50",
                 "name": "default",
                 "isExactName": false,
-                "resourceName": "Query",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -625,7 +634,6 @@
                 "$id": "58",
                 "name": "rfc3339",
                 "isExactName": false,
-                "resourceName": "Query",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -732,7 +740,6 @@
                 "$id": "66",
                 "name": "rfc7231",
                 "isExactName": false,
-                "resourceName": "Query",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -839,7 +846,6 @@
                 "$id": "74",
                 "name": "unixTimestamp",
                 "isExactName": false,
-                "resourceName": "Query",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -946,7 +952,6 @@
                 "$id": "82",
                 "name": "unixTimestampArray",
                 "isExactName": false,
-                "resourceName": "Query",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -1080,7 +1085,6 @@
                 "$id": "90",
                 "name": "default",
                 "isExactName": false,
-                "resourceName": "Property",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -1270,7 +1274,6 @@
                 "$id": "98",
                 "name": "rfc3339",
                 "isExactName": false,
-                "resourceName": "Property",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -1460,7 +1463,6 @@
                 "$id": "106",
                 "name": "rfc7231",
                 "isExactName": false,
-                "resourceName": "Property",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -1650,7 +1652,6 @@
                 "$id": "114",
                 "name": "unixTimestamp",
                 "isExactName": false,
-                "resourceName": "Property",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -1840,7 +1841,6 @@
                 "$id": "122",
                 "name": "unixTimestampArray",
                 "isExactName": false,
-                "resourceName": "Property",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -2080,7 +2080,6 @@
                 "$id": "134",
                 "name": "default",
                 "isExactName": false,
-                "resourceName": "Header",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -2187,7 +2186,6 @@
                 "$id": "142",
                 "name": "rfc3339",
                 "isExactName": false,
-                "resourceName": "Header",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -2294,7 +2292,6 @@
                 "$id": "150",
                 "name": "rfc7231",
                 "isExactName": false,
-                "resourceName": "Header",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -2401,7 +2398,6 @@
                 "$id": "158",
                 "name": "unixTimestamp",
                 "isExactName": false,
-                "resourceName": "Header",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -2508,7 +2504,6 @@
                 "$id": "166",
                 "name": "unixTimestampArray",
                 "isExactName": false,
-                "resourceName": "Header",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -2643,7 +2638,6 @@
                 "$id": "174",
                 "name": "default",
                 "isExactName": false,
-                "resourceName": "ResponseHeader",
                 "accessibility": "public",
                 "parameters": [],
                 "responses": [
@@ -2704,7 +2698,6 @@
                 "$id": "178",
                 "name": "rfc3339",
                 "isExactName": false,
-                "resourceName": "ResponseHeader",
                 "accessibility": "public",
                 "parameters": [],
                 "responses": [
@@ -2765,7 +2758,6 @@
                 "$id": "182",
                 "name": "rfc7231",
                 "isExactName": false,
-                "resourceName": "ResponseHeader",
                 "accessibility": "public",
                 "parameters": [],
                 "responses": [
@@ -2826,7 +2818,6 @@
                 "$id": "186",
                 "name": "unixTimestamp",
                 "isExactName": false,
-                "resourceName": "ResponseHeader",
                 "accessibility": "public",
                 "parameters": [],
                 "responses": [

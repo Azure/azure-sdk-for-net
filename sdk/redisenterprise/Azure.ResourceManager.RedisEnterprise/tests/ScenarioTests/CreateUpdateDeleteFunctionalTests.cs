@@ -1,7 +1,9 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Linq;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.RedisEnterprise.Models;
 using Azure.ResourceManager.Resources;
@@ -9,6 +11,7 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.RedisEnterprise.Tests
 {
+    [NonParallelizable]
     public class CreateUpdateDeleteFunctionalTests : RedisEnterpriseManagementTestBase
     {
         public CreateUpdateDeleteFunctionalTests(bool isAsync)
@@ -111,8 +114,9 @@ namespace Azure.ResourceManager.RedisEnterprise.Tests
             Assert.IsFalse(falseResult);
         }
 
-        [Test]
-        public async Task CreateUpdateDeleteTest2()
+        // Preserve the recording name while making the method's coverage explicit.
+        [TestCase(TestName = "CreateUpdateDeleteTest2")]
+        public async Task CreateUpdateDeleteWithMaintenanceWindowsAndKeyspaceNotifications()
         {
             await SetCollectionsAsync();
 
@@ -125,7 +129,22 @@ namespace Azure.ResourceManager.RedisEnterprise.Tests
             {
                 MinimumTlsVersion = RedisEnterpriseTlsVersion.Tls1_2,
                 HighAvailability = RedisEnterpriseHighAvailability.Disabled,
-                PublicNetworkAccess = RedisEnterprisePublicNetworkAccess.Enabled
+                PublicNetworkAccess = RedisEnterprisePublicNetworkAccess.Enabled,
+                MaintenanceWindows =
+                {
+                    new RedisEnterpriseMaintenanceWindow(RedisEnterpriseMaintenanceWindowType.Weekly, System.TimeSpan.FromHours(6), 3)
+                    {
+                        ScheduleDayOfWeek = RedisEnterpriseMaintenanceDayOfWeek.Monday
+                    },
+                    new RedisEnterpriseMaintenanceWindow(RedisEnterpriseMaintenanceWindowType.Weekly, System.TimeSpan.FromHours(6), 3)
+                    {
+                        ScheduleDayOfWeek = RedisEnterpriseMaintenanceDayOfWeek.Tuesday
+                    },
+                    new RedisEnterpriseMaintenanceWindow(RedisEnterpriseMaintenanceWindowType.Weekly, System.TimeSpan.FromHours(6), 3)
+                    {
+                        ScheduleDayOfWeek = RedisEnterpriseMaintenanceDayOfWeek.Wednesday
+                    }
+                }
             };
 
             var clusterResponse = (await Collection.CreateOrUpdateAsync(WaitUntil.Completed, redisEnterpriseCacheName, data)).Value;
@@ -133,12 +152,25 @@ namespace Azure.ResourceManager.RedisEnterprise.Tests
             Assert.AreEqual(redisEnterpriseCacheName, clusterResponse.Data.Name);
             Assert.AreEqual(RedisEnterpriseSkuName.BalancedB1, clusterResponse.Data.Sku.Name);
             Assert.AreEqual(RedisEnterpriseHighAvailability.Disabled, clusterResponse.Data.HighAvailability);
+            Assert.AreEqual(3, clusterResponse.Data.MaintenanceWindows.Count);
+            Assert.That(
+                clusterResponse.Data.MaintenanceWindows.Select(window => window.ScheduleDayOfWeek),
+                Is.EquivalentTo(new[]
+                {
+                    RedisEnterpriseMaintenanceDayOfWeek.Monday,
+                    RedisEnterpriseMaintenanceDayOfWeek.Tuesday,
+                    RedisEnterpriseMaintenanceDayOfWeek.Wednesday
+                }));
 
             clusterResponse = await Collection.GetAsync(redisEnterpriseCacheName);
             Assert.AreEqual(DefaultLocation, clusterResponse.Data.Location);
             Assert.AreEqual(redisEnterpriseCacheName, clusterResponse.Data.Name);
             Assert.AreEqual(RedisEnterpriseSkuName.BalancedB1, clusterResponse.Data.Sku.Name);
             Assert.AreEqual(RedisEnterpriseHighAvailability.Disabled, clusterResponse.Data.HighAvailability);
+            Assert.AreEqual(3, clusterResponse.Data.MaintenanceWindows.Count);
+            Assert.That(
+                clusterResponse.Data.MaintenanceWindows.Select(window => window.StartHourUtc),
+                Is.All.EqualTo(3));
 
             var databaseCollection = clusterResponse.GetRedisEnterpriseDatabases();
             string databaseName = "default";
@@ -147,6 +179,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Tests
                 ClientProtocol = RedisEnterpriseClientProtocol.Encrypted,
                 ClusteringPolicy = RedisEnterpriseClusteringPolicy.OssCluster,
                 EvictionPolicy = RedisEnterpriseEvictionPolicy.NoEviction,
+                NotifyKeyspaceEvents = "KEA",
             };
 
             var databaseResponse = (await databaseCollection.CreateOrUpdateAsync(WaitUntil.Completed, databaseName, databaseData)).Value;
@@ -154,27 +187,65 @@ namespace Azure.ResourceManager.RedisEnterprise.Tests
             Assert.AreEqual(RedisEnterpriseClientProtocol.Encrypted, databaseResponse.Data.ClientProtocol);
             Assert.AreEqual(RedisEnterpriseClusteringPolicy.OssCluster, databaseResponse.Data.ClusteringPolicy);
             Assert.AreEqual(RedisEnterpriseEvictionPolicy.NoEviction, databaseResponse.Data.EvictionPolicy);
+            Assert.AreEqual("KEA", databaseResponse.Data.NotifyKeyspaceEvents);
 
             databaseResponse = await databaseCollection.GetAsync(databaseName);
             Assert.AreEqual(databaseName, databaseResponse.Data.Name);
             Assert.AreEqual(RedisEnterpriseClientProtocol.Encrypted, databaseResponse.Data.ClientProtocol);
             Assert.AreEqual(RedisEnterpriseClusteringPolicy.OssCluster, databaseResponse.Data.ClusteringPolicy);
             Assert.AreEqual(RedisEnterpriseEvictionPolicy.NoEviction, databaseResponse.Data.EvictionPolicy);
+            Assert.AreEqual("KEA", databaseResponse.Data.NotifyKeyspaceEvents);
+
+            databaseData.NotifyKeyspaceEvents = "KEm";
+            databaseResponse = (await databaseCollection.CreateOrUpdateAsync(WaitUntil.Completed, databaseName, databaseData)).Value;
+            Assert.AreEqual("KEm", databaseResponse.Data.NotifyKeyspaceEvents);
+
+            databaseResponse = await databaseResponse.GetAsync();
+            Assert.AreEqual("KEm", databaseResponse.Data.NotifyKeyspaceEvents);
 
             // Disabling high availability
             data.HighAvailability = RedisEnterpriseHighAvailability.Enabled;
+            data.MaintenanceWindows.Clear();
+            data.MaintenanceWindows.Add(
+                new RedisEnterpriseMaintenanceWindow(RedisEnterpriseMaintenanceWindowType.Weekly, System.TimeSpan.FromHours(6), 12)
+                {
+                    ScheduleDayOfWeek = RedisEnterpriseMaintenanceDayOfWeek.Friday
+                });
+            data.MaintenanceWindows.Add(
+                new RedisEnterpriseMaintenanceWindow(RedisEnterpriseMaintenanceWindowType.Weekly, System.TimeSpan.FromHours(6), 12)
+                {
+                    ScheduleDayOfWeek = RedisEnterpriseMaintenanceDayOfWeek.Saturday
+                });
+            data.MaintenanceWindows.Add(
+                new RedisEnterpriseMaintenanceWindow(RedisEnterpriseMaintenanceWindowType.Weekly, System.TimeSpan.FromHours(6), 12)
+                {
+                    ScheduleDayOfWeek = RedisEnterpriseMaintenanceDayOfWeek.Sunday
+                });
 
             clusterResponse = (await Collection.CreateOrUpdateAsync(WaitUntil.Completed, redisEnterpriseCacheName, data)).Value;
             Assert.AreEqual(DefaultLocation, clusterResponse.Data.Location);
             Assert.AreEqual(redisEnterpriseCacheName, clusterResponse.Data.Name);
             Assert.AreEqual(RedisEnterpriseSkuName.BalancedB1, clusterResponse.Data.Sku.Name);
             Assert.AreEqual(RedisEnterpriseHighAvailability.Enabled, clusterResponse.Data.HighAvailability);
+            Assert.AreEqual(3, clusterResponse.Data.MaintenanceWindows.Count);
+            Assert.That(
+                clusterResponse.Data.MaintenanceWindows.Select(window => window.ScheduleDayOfWeek),
+                Is.EquivalentTo(new[]
+                {
+                    RedisEnterpriseMaintenanceDayOfWeek.Friday,
+                    RedisEnterpriseMaintenanceDayOfWeek.Saturday,
+                    RedisEnterpriseMaintenanceDayOfWeek.Sunday
+                }));
 
             clusterResponse = await Collection.GetAsync(redisEnterpriseCacheName);
             Assert.AreEqual(DefaultLocation, clusterResponse.Data.Location);
             Assert.AreEqual(redisEnterpriseCacheName, clusterResponse.Data.Name);
             Assert.AreEqual(RedisEnterpriseSkuName.BalancedB1, clusterResponse.Data.Sku.Name);
             Assert.AreEqual(RedisEnterpriseHighAvailability.Enabled, clusterResponse.Data.HighAvailability);
+            Assert.AreEqual(3, clusterResponse.Data.MaintenanceWindows.Count);
+            Assert.That(
+                clusterResponse.Data.MaintenanceWindows.Select(window => window.StartHourUtc),
+                Is.All.EqualTo(12));
 
             await databaseResponse.DeleteAsync(WaitUntil.Completed);
             var falseResult = (await databaseCollection.ExistsAsync(databaseName)).Value;

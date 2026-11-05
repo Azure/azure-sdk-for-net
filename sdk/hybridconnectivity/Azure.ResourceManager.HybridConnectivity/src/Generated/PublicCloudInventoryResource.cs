@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.HybridConnectivity
         {
             TryGetApiVersion(ResourceType, out string publicCloudInventoryApiVersion);
             _inventoryClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HybridConnectivity", ResourceType.Namespace, Diagnostics);
-            _inventoryRestClient = new Inventory(_inventoryClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, publicCloudInventoryApiVersion ?? "2024-12-01");
+            _inventoryRestClient = new Inventory(_inventoryClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, publicCloudInventoryApiVersion ?? "2027-01-01");
             ValidateResourceId(id);
         }
 
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-12-01. </description>
+        /// <description> 2027-01-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-12-01. </description>
+        /// <description> 2027-01-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>

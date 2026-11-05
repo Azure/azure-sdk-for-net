@@ -11,7 +11,6 @@ using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Dns.Models;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Dns
 {
@@ -108,7 +107,7 @@ namespace Azure.ResourceManager.Dns
         }
 
         /// <summary> A list of references to virtual networks that register hostnames in this DNS zone. This is a only when ZoneType is Private. </summary>
-        public IList<WritableSubResource> RegistrationVirtualNetworks
+        public IList<DnsSubResourceInfo> RegistrationVirtualNetworkReferences
         {
             get
             {
@@ -116,12 +115,12 @@ namespace Azure.ResourceManager.Dns
                 {
                     Properties = new ZoneProperties();
                 }
-                return Properties.RegistrationVirtualNetworks;
+                return Properties.RegistrationVirtualNetworkReferences;
             }
         }
 
         /// <summary> A list of references to virtual networks that resolve records in this DNS zone. This is a only when ZoneType is Private. </summary>
-        public IList<WritableSubResource> ResolutionVirtualNetworks
+        public IList<DnsSubResourceInfo> ResolutionVirtualNetworkReferences
         {
             get
             {
@@ -129,7 +128,7 @@ namespace Azure.ResourceManager.Dns
                 {
                     Properties = new ZoneProperties();
                 }
-                return Properties.ResolutionVirtualNetworks;
+                return Properties.ResolutionVirtualNetworkReferences;
             }
         }
 

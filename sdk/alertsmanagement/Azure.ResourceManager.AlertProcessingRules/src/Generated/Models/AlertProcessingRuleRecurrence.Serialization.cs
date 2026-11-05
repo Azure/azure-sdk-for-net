@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.AlertProcessingRules.Models
 {
     /// <summary>
     /// Recurrence object.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="DailyRecurrence"/>, <see cref="AlertProcessingRuleWeeklyRecurrence"/>, and <see cref="AlertProcessingRuleMonthlyRecurrence"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AlertProcessingRuleMonthlyRecurrence"/>, <see cref="AlertProcessingRuleWeeklyRecurrence"/>, and <see cref="DailyRecurrence"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownAlertProcessingRuleRecurrence))]
     public abstract partial class AlertProcessingRuleRecurrence : IJsonModel<AlertProcessingRuleRecurrence>
@@ -135,12 +135,12 @@ namespace Azure.ResourceManager.AlertProcessingRules.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "Daily":
-                        return DailyRecurrence.DeserializeDailyRecurrence(element, options);
-                    case "Weekly":
-                        return AlertProcessingRuleWeeklyRecurrence.DeserializeAlertProcessingRuleWeeklyRecurrence(element, options);
                     case "Monthly":
                         return AlertProcessingRuleMonthlyRecurrence.DeserializeAlertProcessingRuleMonthlyRecurrence(element, options);
+                    case "Weekly":
+                        return AlertProcessingRuleWeeklyRecurrence.DeserializeAlertProcessingRuleWeeklyRecurrence(element, options);
+                    case "Daily":
+                        return DailyRecurrence.DeserializeDailyRecurrence(element, options);
                 }
             }
             return UnknownAlertProcessingRuleRecurrence.DeserializeUnknownAlertProcessingRuleRecurrence(element, options);

@@ -28,7 +28,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         private BicepValue<DateTimeOffset> _lastUpdatedOn;
         private BicepList<MsixPackageApplications> _packageApplications;
         private BicepValue<string> _certificateName;
-        private BicepValue<DateTimeOffset> _certificateExpireOn;
+        private BicepValue<DateTimeOffset> _certificateExpiresOn;
         private BicepValue<PackageTimestamped> _isPackageTimestamped;
 
         /// <summary> Creates a new AppAttachPackageInfoProperties. </summary>
@@ -246,18 +246,18 @@ namespace Azure.Provisioning.DesktopVirtualization
             }
         }
 
-        /// <summary> Gets or sets the CertificateExpireOn. </summary>
-        public BicepValue<DateTimeOffset> CertificateExpireOn
+        /// <summary> Gets or sets the CertificateExpiresOn. </summary>
+        public BicepValue<DateTimeOffset> CertificateExpiresOn
         {
             get
             {
                 Initialize();
-                return _certificateExpireOn;
+                return _certificateExpiresOn;
             }
             set
             {
                 Initialize();
-                _certificateExpireOn.Assign(value);
+                _certificateExpiresOn.Assign(value);
             }
         }
 
@@ -294,7 +294,7 @@ namespace Azure.Provisioning.DesktopVirtualization
             _lastUpdatedOn = DefineProperty<DateTimeOffset>(nameof(LastUpdatedOn), new string[] { "lastUpdated" }, format: "O");
             _packageApplications = DefineListProperty<MsixPackageApplications>(nameof(PackageApplications), new string[] { "packageApplications" });
             _certificateName = DefineProperty<string>(nameof(CertificateName), new string[] { "certificateName" });
-            _certificateExpireOn = DefineProperty<DateTimeOffset>(nameof(CertificateExpireOn), new string[] { "certificateExpiry" }, format: "O");
+            _certificateExpiresOn = DefineProperty<DateTimeOffset>(nameof(CertificateExpiresOn), new string[] { "certificateExpiry" }, format: "O");
             _isPackageTimestamped = DefineProperty<PackageTimestamped>(nameof(IsPackageTimestamped), new string[] { "isPackageTimestamped" });
             DefineAdditionalProperties();
         }

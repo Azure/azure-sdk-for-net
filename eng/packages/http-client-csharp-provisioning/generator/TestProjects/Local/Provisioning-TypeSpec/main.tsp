@@ -9,6 +9,7 @@ import "./resourceModelAsProperty.tsp";
 import "./extensionResource.tsp";
 import "./singletonResource.tsp";
 import "./readOnlyResource.tsp";
+import "./versioning.tsp";
 
 using TypeSpec.Versioning;
 using Azure.ClientGenerator.Core;
@@ -27,8 +28,8 @@ namespace ProvisioningTypeSpec {
 
   /** The available API versions. */
   enum Versions {
-    v2024_01_01_preview: "2024-01-01-preview",
-    v2024_04_01: "2024-04-01",
+    v2024_01_01: "2024-01-01",
+    v2024_03_01_preview: "2024-03-01-preview",
     v2024_05_01: "2024-05-01",
   }
 

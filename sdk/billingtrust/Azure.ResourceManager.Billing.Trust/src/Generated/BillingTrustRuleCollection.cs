@@ -305,7 +305,7 @@ namespace Azure.ResourceManager.Billing.Trust
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<BillingTrustRuleData, BillingTrustRuleResource>(new RulesGetAllAsyncCollectionResultOfT(_rulesRestClient, Id.Parent.ToString(), context, "BillingTrustRuleCollection.GetAll"), data => new BillingTrustRuleResource(Client, data));
+            return new AsyncPageableWrapper<BillingTrustRuleData, BillingTrustRuleResource>(new BillingTrustRuleDataAsyncCollectionResultOfT(_rulesRestClient, Id.Parent.ToString(), context, "BillingTrustRuleCollection.GetAll"), data => new BillingTrustRuleResource(Client, data));
         }
 
         /// <summary>
@@ -333,7 +333,7 @@ namespace Azure.ResourceManager.Billing.Trust
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<BillingTrustRuleData, BillingTrustRuleResource>(new RulesGetAllCollectionResultOfT(_rulesRestClient, Id.Parent.ToString(), context, "BillingTrustRuleCollection.GetAll"), data => new BillingTrustRuleResource(Client, data));
+            return new PageableWrapper<BillingTrustRuleData, BillingTrustRuleResource>(new BillingTrustRuleDataCollectionResultOfT(_rulesRestClient, Id.Parent.ToString(), context, "BillingTrustRuleCollection.GetAll"), data => new BillingTrustRuleResource(Client, data));
         }
 
         /// <summary>

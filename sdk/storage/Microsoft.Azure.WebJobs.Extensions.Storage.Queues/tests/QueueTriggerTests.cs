@@ -119,7 +119,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
             ParameterBindingData result = await RunTriggerAsync<ParameterBindingData>(typeof(BindToParameterBindingData),
                 (s) => BindToParameterBindingData.TaskSource = s);
 
-            var messageData = result.Content.ToObjectFromJson<Dictionary<string,object>>();
+            var messageData = result.Content.ToObjectFromJson<Dictionary<string, object>>();
 
             // Assert
             Assert.True(messageData.TryGetValue("MessageText", out var text));
@@ -191,6 +191,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
         }
 
         [Test]
+        [Ignore("Concurrent SslStream reads during queue listener shutdown, see: https://github.com/Azure/azure-sdk-for-net/issues/63930")]
         public async Task QueueTrigger_IfBoundToBinaryDataAndMessageIsEmpty_Binds()
         {
             byte[] expectedContent = new byte[0];

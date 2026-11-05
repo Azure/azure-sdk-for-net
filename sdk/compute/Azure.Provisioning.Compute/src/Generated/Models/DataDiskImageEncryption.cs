@@ -12,11 +12,27 @@ namespace Azure.Provisioning.Compute
     /// <summary> Contains encryption settings for a data disk image. </summary>
     public partial class DataDiskImageEncryption : DiskImageEncryption
     {
+        private DataDiskImageSecurityProfile _securityProfile;
         private BicepValue<int> _lun;
 
         /// <summary> Creates a new DataDiskImageEncryption. </summary>
         public DataDiskImageEncryption()
         {
+        }
+
+        /// <summary> Gets or sets the SecurityProfile. </summary>
+        public DataDiskImageSecurityProfile SecurityProfile
+        {
+            get
+            {
+                Initialize();
+                return _securityProfile;
+            }
+            set
+            {
+                Initialize();
+                AssignOrReplace(ref _securityProfile, value);
+            }
         }
 
         /// <summary> Gets or sets the Lun. </summary>
@@ -38,6 +54,7 @@ namespace Azure.Provisioning.Compute
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
+            _securityProfile = DefineModelProperty<DataDiskImageSecurityProfile>(nameof(SecurityProfile), new string[] { "securityProfile" });
             _lun = DefineProperty<int>(nameof(Lun), new string[] { "lun" }, isRequired: true);
             DefineAdditionalProperties();
         }

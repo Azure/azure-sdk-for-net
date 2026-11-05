@@ -93,6 +93,107 @@ namespace Azure.Storage.Internal.Avro.Tests
             }
         }
 
+        /// <summary>
+        /// Verifies that <see cref="AvroReader.Initalize"/> rejects a stream whose first four
+        /// bytes are not the Avro magic sequence <c>O b j \1</c>. Without this guard, corrupt
+        /// or non-Avro data would be silently parsed as if it were a valid file.
+        /// </summary>
+        [Test]
+        public void Initialize_BadMagicBytes_Throws()
+        {
+            // Definitely not "Obj\1".
+            using MemoryStream stream = new MemoryStream(new byte[] { 0x00, 0x00, 0x00, 0x00, 0x42, 0x42, 0x42, 0x42 });
+            AvroReader reader = new AvroReader(stream);
+
+            ArgumentException ex = Assert.ThrowsAsync<ArgumentException>(
+                async () => await reader.Initalize(async: true));
+            StringAssert.Contains("not an Avro file", ex.Message);
+        }
+
+        /// <summary>
+        /// Verifies that <see cref="AvroReader.Initalize"/> rejects an Avro file whose metadata
+        /// declares a codec other than <c>null</c>. Only uncompressed Avro is supported; if this
+        /// guard regresses, compressed bytes would be parsed as if they were record payloads.
+        /// </summary>
+        [Test]
+        public void Initialize_UnsupportedCodec_Throws()
+        {
+            using MemoryStream stream = new MemoryStream();
+            // Magic bytes: "Obj\1".
+            stream.Write(new byte[] { 0x4F, 0x62, 0x6A, 0x01 }, 0, 4);
+
+            // Metadata map: {avro.codec: "deflate"}, terminator. Map encoding is a series of
+            // (count, items...) blocks ended by a zero count. Strings/bytes are zigzag-long
+            // length-prefixed; small positive integers n encode as a single byte (n << 1).
+            stream.WriteByte(0x02);                        // block of 1 entry (zigzag-encoded 1)
+            WriteAvroString(stream, "avro.codec");
+            WriteAvroString(stream, "deflate");
+            stream.WriteByte(0x00);                        // terminator (zero entries)
+
+            // Sync marker would follow here in a complete file, but the codec check fires before
+            // it is read, so we don't need to provide one.
+
+            stream.Position = 0;
+            AvroReader reader = new AvroReader(stream);
+
+            ArgumentException ex = Assert.ThrowsAsync<ArgumentException>(
+                async () => await reader.Initalize(async: true));
+            StringAssert.Contains("Codecs are not supported", ex.Message);
+        }
+
+        [TestCase(true)]
+        [TestCase(false)]
+        public async Task Resume_BlockOffsetRemainsAbsolute(bool seekable)
+        {
+            string filePath = $"{Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)}{Path.DirectorySeparatorChar}Resources{Path.DirectorySeparatorChar}test_null_5.avro";
+            byte[] avro = File.ReadAllBytes(filePath);
+            long blockOffset;
+            long nextBlockOffset;
+
+            using (AvroReader initialReader = new AvroReader(new MemoryStream(avro)))
+            {
+                await initialReader.Initalize(async: true);
+                blockOffset = initialReader.BlockOffset;
+                Assert.AreEqual(1234L, await initialReader.Next(async: true));
+                nextBlockOffset = initialReader.BlockOffset;
+            }
+
+            Stream dataStream;
+            if (seekable)
+            {
+                dataStream = new MemoryStream(avro) { Position = blockOffset };
+            }
+            else
+            {
+                byte[] partialAvro = new byte[avro.Length - (int)blockOffset];
+                Buffer.BlockCopy(avro, (int)blockOffset, partialAvro, 0, partialAvro.Length);
+                dataStream = new NonSeekableMemoryStream(partialAvro);
+            }
+
+            using AvroReader resumedReader = new AvroReader(
+                dataStream,
+                new MemoryStream(avro),
+                blockOffset,
+                indexWithinCurrentBlock: 0);
+
+            await resumedReader.Initalize(async: true);
+            Assert.AreEqual(1234L, await resumedReader.Next(async: true));
+            Assert.AreEqual(nextBlockOffset, resumedReader.BlockOffset);
+        }
+
+        /// <summary>
+        /// Writes an Avro-encoded string: zigzag long length prefix followed by UTF-8 bytes.
+        /// Only handles values whose length fits in a single zigzag byte (≤ 63 bytes), which is
+        /// sufficient for all current callers.
+        /// </summary>
+        private static void WriteAvroString(MemoryStream stream, string value)
+        {
+            byte[] bytes = Encoding.UTF8.GetBytes(value);
+            if (bytes.Length > 63)
+                throw new InvalidOperationException("Test helper only handles strings up to 63 bytes.");
+            stream.WriteByte((byte)(bytes.Length << 1));
+            stream.Write(bytes, 0, bytes.Length);
+        }
         [Test]
         public void ReadFixedBytesAsync_NegativeLength_ThrowsInvalidDataException()
         {

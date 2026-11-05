@@ -13,7 +13,7 @@ namespace Azure.AI.VoiceLive
 {
     /// <summary>
     /// Base for any response item; discriminated by `type`.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="MessageItem"/>, <see cref="FunctionCallItem"/>, and <see cref="FunctionCallOutputItem"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="FunctionCallItem"/>, <see cref="FunctionCallOutputItem"/>, and <see cref="MessageItem"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownConversationRequestItem))]
     public abstract partial class ConversationRequestItem : IJsonModel<ConversationRequestItem>
@@ -134,14 +134,14 @@ namespace Azure.AI.VoiceLive
             {
                 switch (discriminator.GetString())
                 {
-                    case "message":
-                        return MessageItem.DeserializeMessageItem(element, options);
                     case "function_call":
                         return FunctionCallItem.DeserializeFunctionCallItem(element, options);
                     case "function_call_output":
                         return FunctionCallOutputItem.DeserializeFunctionCallOutputItem(element, options);
                     case "mcp_approval_response":
                         return MCPApprovalResponseRequestItem.DeserializeMCPApprovalResponseRequestItem(element, options);
+                    case "message":
+                        return MessageItem.DeserializeMessageItem(element, options);
                 }
             }
             return UnknownConversationRequestItem.DeserializeUnknownConversationRequestItem(element, options);

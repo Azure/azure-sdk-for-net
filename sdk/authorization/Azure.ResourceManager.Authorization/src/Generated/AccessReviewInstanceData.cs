@@ -53,11 +53,11 @@ namespace Azure.ResourceManager.Authorization
 
         /// <summary> The DateTime when the review instance is scheduled to be start. </summary>
         [WirePath("properties.startDateTime")]
-        public DateTimeOffset? StartOn
+        public DateTimeOffset? StartsOn
         {
             get
             {
-                return Properties is null ? default : Properties.StartOn;
+                return Properties is null ? default : Properties.StartsOn;
             }
             set
             {
@@ -65,17 +65,17 @@ namespace Azure.ResourceManager.Authorization
                 {
                     Properties = new AccessReviewInstanceProperties();
                 }
-                Properties.StartOn = value;
+                Properties.StartsOn = value;
             }
         }
 
         /// <summary> The DateTime when the review instance is scheduled to end. </summary>
         [WirePath("properties.endDateTime")]
-        public DateTimeOffset? EndOn
+        public DateTimeOffset? EndsOn
         {
             get
             {
-                return Properties is null ? default : Properties.EndOn;
+                return Properties is null ? default : Properties.EndsOn;
             }
             set
             {
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Authorization
                 {
                     Properties = new AccessReviewInstanceProperties();
                 }
-                Properties.EndOn = value;
+                Properties.EndsOn = value;
             }
         }
 

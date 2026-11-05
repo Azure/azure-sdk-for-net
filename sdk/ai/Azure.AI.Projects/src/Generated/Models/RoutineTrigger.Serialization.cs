@@ -10,7 +10,7 @@ namespace Azure.AI.Projects
 {
     /// <summary>
     /// Base model for a routine trigger.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ScheduleRoutineTrigger"/>, <see cref="TimerRoutineTrigger"/>, <see cref="GitHubIssueRoutineTrigger"/>, and <see cref="CustomRoutineTrigger"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="CustomRoutineTrigger"/>, <see cref="GitHubIssueRoutineTrigger"/>, <see cref="ScheduleRoutineTrigger"/>, and <see cref="TimerRoutineTrigger"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownRoutineTrigger))]
     public abstract partial class RoutineTrigger : IJsonModel<RoutineTrigger>
@@ -126,14 +126,14 @@ namespace Azure.AI.Projects
             {
                 switch (discriminator.GetString())
                 {
+                    case "custom":
+                        return CustomRoutineTrigger.DeserializeCustomRoutineTrigger(element, options);
+                    case "github_issue":
+                        return GitHubIssueRoutineTrigger.DeserializeGitHubIssueRoutineTrigger(element, options);
                     case "schedule":
                         return ScheduleRoutineTrigger.DeserializeScheduleRoutineTrigger(element, options);
                     case "timer":
                         return TimerRoutineTrigger.DeserializeTimerRoutineTrigger(element, options);
-                    case "github_issue":
-                        return GitHubIssueRoutineTrigger.DeserializeGitHubIssueRoutineTrigger(element, options);
-                    case "custom":
-                        return CustomRoutineTrigger.DeserializeCustomRoutineTrigger(element, options);
                 }
             }
             return UnknownRoutineTrigger.DeserializeUnknownRoutineTrigger(element, options);

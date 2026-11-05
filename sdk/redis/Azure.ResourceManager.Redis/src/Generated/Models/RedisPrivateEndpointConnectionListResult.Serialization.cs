@@ -167,10 +167,10 @@ namespace Azure.ResourceManager.Redis.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new RedisPrivateEndpointConnectionListResult(value, nextLink, additionalBinaryDataProperties);
+            return new RedisPrivateEndpointConnectionListResult(value ?? new ChangeTrackingList<RedisPrivateEndpointConnectionData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

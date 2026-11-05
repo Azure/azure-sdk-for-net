@@ -12,7 +12,7 @@ namespace Azure.AI.Agents.Persistent
 {
     /// <summary>
     /// An abstract representation of a required action for an agent thread run to continue.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="SubmitToolOutputsAction"/> and <see cref="SubmitToolApprovalAction"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="SubmitToolApprovalAction"/> and <see cref="SubmitToolOutputsAction"/>.
     /// </summary>
     public abstract partial class RequiredAction
     {

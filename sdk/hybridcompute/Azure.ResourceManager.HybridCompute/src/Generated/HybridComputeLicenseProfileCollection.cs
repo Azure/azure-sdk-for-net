@@ -277,7 +277,7 @@ namespace Azure.ResourceManager.HybridCompute
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<HybridComputeLicenseProfileData, HybridComputeLicenseProfileResource>(new LicenseProfilesGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<HybridComputeLicenseProfileData, HybridComputeLicenseProfileResource>(new HybridComputeLicenseProfileDataAsyncCollectionResultOfT(
                 _licenseProfilesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -311,7 +311,7 @@ namespace Azure.ResourceManager.HybridCompute
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<HybridComputeLicenseProfileData, HybridComputeLicenseProfileResource>(new LicenseProfilesGetAllCollectionResultOfT(
+            return new PageableWrapper<HybridComputeLicenseProfileData, HybridComputeLicenseProfileResource>(new HybridComputeLicenseProfileDataCollectionResultOfT(
                 _licenseProfilesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

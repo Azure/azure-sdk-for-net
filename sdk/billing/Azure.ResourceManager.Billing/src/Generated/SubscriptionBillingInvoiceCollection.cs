@@ -174,8 +174,8 @@ namespace Azure.ResourceManager.Billing
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="periodStartDate"> The start date of the billing period for which the invoice is generated. The date is in MM-DD-YYYY format. </param>
-        /// <param name="periodEndDate"> The end date of the billing period for which the invoice is generated. The date is in MM-DD-YYYY format. </param>
+        /// <param name="periodStartsOn"> The start date of the billing period for which the invoice is generated. The date is in MM-DD-YYYY format. </param>
+        /// <param name="periodEndsOn"> The end date of the billing period for which the invoice is generated. The date is in MM-DD-YYYY format. </param>
         /// <param name="filter"> The filter query option allows clients to filter a collection of resources that are addressed by a request URL. </param>
         /// <param name="orderBy"> The orderby query option allows clients to request resources in a particular order. </param>
         /// <param name="maxCount"> The top query option requests the number of items in the queried collection to be included in the result. The maximum supported value for top is 50. </param>
@@ -184,17 +184,17 @@ namespace Azure.ResourceManager.Billing
         /// <param name="search"> The search query option allows clients to request items within a collection matching a free-text search expression. search is only supported for string fields. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="SubscriptionBillingInvoiceResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SubscriptionBillingInvoiceResource> GetAllAsync(DateTimeOffset? periodStartDate = default, DateTimeOffset? periodEndDate = default, string filter = default, string orderBy = default, long? maxCount = default, long? skip = default, bool? count = default, string search = default, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<SubscriptionBillingInvoiceResource> GetAllAsync(DateTimeOffset? periodStartsOn = default, DateTimeOffset? periodEndsOn = default, string filter = default, string orderBy = default, long? maxCount = default, long? skip = default, bool? count = default, string search = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<BillingInvoiceData, SubscriptionBillingInvoiceResource>(new InvoicesGetByBillingSubscriptionAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<BillingInvoiceData, SubscriptionBillingInvoiceResource>(new BillingInvoiceDataAsync1CollectionResultOfT(
                 _invoicesRestClient,
                 _subscriptionId,
-                periodStartDate,
-                periodEndDate,
+                periodStartsOn,
+                periodEndsOn,
                 filter,
                 orderBy,
                 maxCount,
@@ -222,8 +222,8 @@ namespace Azure.ResourceManager.Billing
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="periodStartDate"> The start date of the billing period for which the invoice is generated. The date is in MM-DD-YYYY format. </param>
-        /// <param name="periodEndDate"> The end date of the billing period for which the invoice is generated. The date is in MM-DD-YYYY format. </param>
+        /// <param name="periodStartsOn"> The start date of the billing period for which the invoice is generated. The date is in MM-DD-YYYY format. </param>
+        /// <param name="periodEndsOn"> The end date of the billing period for which the invoice is generated. The date is in MM-DD-YYYY format. </param>
         /// <param name="filter"> The filter query option allows clients to filter a collection of resources that are addressed by a request URL. </param>
         /// <param name="orderBy"> The orderby query option allows clients to request resources in a particular order. </param>
         /// <param name="maxCount"> The top query option requests the number of items in the queried collection to be included in the result. The maximum supported value for top is 50. </param>
@@ -232,17 +232,17 @@ namespace Azure.ResourceManager.Billing
         /// <param name="search"> The search query option allows clients to request items within a collection matching a free-text search expression. search is only supported for string fields. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="SubscriptionBillingInvoiceResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SubscriptionBillingInvoiceResource> GetAll(DateTimeOffset? periodStartDate = default, DateTimeOffset? periodEndDate = default, string filter = default, string orderBy = default, long? maxCount = default, long? skip = default, bool? count = default, string search = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<SubscriptionBillingInvoiceResource> GetAll(DateTimeOffset? periodStartsOn = default, DateTimeOffset? periodEndsOn = default, string filter = default, string orderBy = default, long? maxCount = default, long? skip = default, bool? count = default, string search = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<BillingInvoiceData, SubscriptionBillingInvoiceResource>(new InvoicesGetByBillingSubscriptionCollectionResultOfT(
+            return new PageableWrapper<BillingInvoiceData, SubscriptionBillingInvoiceResource>(new BillingInvoiceData1CollectionResultOfT(
                 _invoicesRestClient,
                 _subscriptionId,
-                periodStartDate,
-                periodEndDate,
+                periodStartsOn,
+                periodEndsOn,
                 filter,
                 orderBy,
                 maxCount,

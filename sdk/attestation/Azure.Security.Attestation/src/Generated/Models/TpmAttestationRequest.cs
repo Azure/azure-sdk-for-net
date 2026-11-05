@@ -5,21 +5,47 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Security.Attestation
 {
     /// <summary> Attestation request for Trusted Platform Module (TPM) attestation. </summary>
     public partial class TpmAttestationRequest
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
         /// <summary> Initializes a new instance of <see cref="TpmAttestationRequest"/>. </summary>
         public TpmAttestationRequest()
         {
         }
 
         /// <summary> Initializes a new instance of <see cref="TpmAttestationRequest"/>. </summary>
-        /// <param name="internalData"> Protocol data containing artifacts for attestation. </param>
-        internal TpmAttestationRequest(string internalData)
+        /// <param name="data"> Protocol data containing artifacts for attestation. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal TpmAttestationRequest(BinaryData data, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            InternalData = internalData;
+            Data = data;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+
+        /// <summary>
+        /// Protocol data containing artifacts for attestation.
+        /// <para>
+        /// To assign a byte[] to this property use <see cref="BinaryData.FromBytes(byte[])"/>.
+        /// The byte[] will be serialized to a Base64 encoded string.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term> BinaryData.FromBytes(new byte[] { 1, 2, 3 }). </term>
+        /// <description> Creates a payload of "AQID". </description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        public BinaryData Data { get; set; }
     }
 }

@@ -314,7 +314,7 @@ namespace Azure.Analytics.PlanetaryComputer
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new TileMatrixSet(
@@ -327,7 +327,7 @@ namespace Azure.Analytics.PlanetaryComputer
                 crs,
                 wellKnownScaleSet,
                 boundingBox,
-                tileMatrices,
+                tileMatrices ?? new ChangeTrackingList<TileMatrix>(),
                 additionalBinaryDataProperties);
         }
     }

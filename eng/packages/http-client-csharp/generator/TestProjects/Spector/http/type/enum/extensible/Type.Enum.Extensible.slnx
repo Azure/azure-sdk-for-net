@@ -1,3 +1,4 @@
 <Solution>
   <Project Path="src/Type.Enum.Extensible.csproj" />
+  <Project Path="tests/Type.Enum.Extensible.Tests.csproj" />
 </Solution>

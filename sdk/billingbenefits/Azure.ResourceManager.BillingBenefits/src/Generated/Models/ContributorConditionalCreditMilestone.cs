@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.BillingBenefits.Models
         /// <param name="milestoneId"> Unique identifier for the milestone. </param>
         /// <param name="name"> Display name for the milestone. </param>
         /// <param name="status"> Current status of the milestone. </param>
-        /// <param name="endOn"> End date for this milestone. </param>
+        /// <param name="endsOn"> End date for this milestone. </param>
         /// <param name="spendTarget"> Spend target for this milestone. </param>
         /// <param name="award"> Award details for this milestone (only present for primary conditional credits). </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ContributorConditionalCreditMilestone(string milestoneId, string name, MilestoneStatus? status, DateTimeOffset? endOn, BillingBenefitsPrice spendTarget, Award award, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(milestoneId, name, status, endOn, spendTarget, award, additionalBinaryDataProperties)
+        internal ContributorConditionalCreditMilestone(string milestoneId, string name, MilestoneStatus? status, DateTimeOffset? endsOn, BillingBenefitsPrice spendTarget, Award award, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(milestoneId, name, status, endsOn, spendTarget, award, additionalBinaryDataProperties)
         {
         }
     }

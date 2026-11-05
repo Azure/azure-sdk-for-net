@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Initializes a new instance of <see cref="NetworkManagerConnectionListResult"/>. </summary>
         /// <param name="value"> The NetworkManagerConnection items on this page. </param>
-        internal NetworkManagerConnectionListResult(IEnumerable<SubscriptionNetworkManagerConnectionData> value)
+        internal NetworkManagerConnectionListResult(IEnumerable<NetworkManagerConnectionData> value)
         {
             Value = value.ToList();
         }
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="value"> The NetworkManagerConnection items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkManagerConnectionListResult(IList<SubscriptionNetworkManagerConnectionData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal NetworkManagerConnectionListResult(IList<NetworkManagerConnectionData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> The NetworkManagerConnection items on this page. </summary>
         [WirePath("value")]
-        public IList<SubscriptionNetworkManagerConnectionData> Value { get; }
+        public IList<NetworkManagerConnectionData> Value { get; }
 
         /// <summary> The link to the next page of items. </summary>
         [WirePath("nextLink")]

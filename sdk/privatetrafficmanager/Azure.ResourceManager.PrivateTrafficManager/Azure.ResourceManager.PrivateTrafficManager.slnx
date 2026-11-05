@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="src/Azure.ResourceManager.PrivateTrafficManager.csproj" />
+  <Project Path="tests/Azure.ResourceManager.PrivateTrafficManager.Tests.csproj" />
+</Solution>

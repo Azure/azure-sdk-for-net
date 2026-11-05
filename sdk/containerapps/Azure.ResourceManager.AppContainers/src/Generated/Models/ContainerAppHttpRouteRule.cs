@@ -11,7 +11,7 @@ using Azure.ResourceManager.AppContainers;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    /// <summary> Http Route rule. </summary>
+    /// <summary> A set of routing conditions and targets. </summary>
     public partial class ContainerAppHttpRouteRule
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

@@ -81,6 +81,11 @@ namespace Azure.ResourceManager.SecretsStoreExtension.Models
             }
             writer.WritePropertyName("keyvaultName"u8);
             writer.WriteStringValue(KeyvaultName);
+            if (Optional.IsDefined(CloudName))
+            {
+                writer.WritePropertyName("cloudName"u8);
+                writer.WriteStringValue(CloudName.Value.ToString());
+            }
             writer.WritePropertyName("clientId"u8);
             writer.WriteStringValue(ClientId);
             writer.WritePropertyName("tenantId"u8);
@@ -138,6 +143,7 @@ namespace Azure.ResourceManager.SecretsStoreExtension.Models
                 return null;
             }
             string keyvaultName = default;
+            AzureCloudName? cloudName = default;
             Guid clientId = default;
             Guid tenantId = default;
             string objects = default;
@@ -148,6 +154,15 @@ namespace Azure.ResourceManager.SecretsStoreExtension.Models
                 if (prop.NameEquals("keyvaultName"u8))
                 {
                     keyvaultName = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("cloudName"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    cloudName = new AzureCloudName(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("clientId"u8))
@@ -176,11 +191,12 @@ namespace Azure.ResourceManager.SecretsStoreExtension.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new KeyVaultSecretProviderClassProperties(
                 keyvaultName,
+                cloudName,
                 clientId,
                 tenantId,
                 objects,

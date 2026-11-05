@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary>
     /// The Azure Data Factory nested object which identifies data within different data stores, such as tables, files, folders, and documents.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AmazonS3Dataset"/>, <see cref="AvroDataset"/>, <see cref="ExcelDataset"/>, <see cref="ParquetDataset"/>, <see cref="DelimitedTextDataset"/>, <see cref="JsonDataset"/>, <see cref="XmlDataset"/>, <see cref="OrcDataset"/>, <see cref="BinaryDataset"/>, <see cref="IcebergDataset"/>, <see cref="AzureBlobDataset"/>, <see cref="AzureTableDataset"/>, <see cref="AzureSqlTableDataset"/>, <see cref="AzureSqlMITableDataset"/>, <see cref="AzureSqlDWTableDataset"/>, <see cref="CassandraTableDataset"/>, <see cref="CustomDataset"/>, <see cref="CosmosDBSqlApiCollectionDataset"/>, <see cref="DocumentDBCollectionDataset"/>, <see cref="DynamicsEntityDataset"/>, <see cref="DynamicsCrmEntityDataset"/>, <see cref="CommonDataServiceForAppsEntityDataset"/>, <see cref="AzureDataLakeStoreDataset"/>, <see cref="AzureBlobFSDataset"/>, <see cref="Office365Dataset"/>, <see cref="FileShareDataset"/>, <see cref="MongoDBCollectionDataset"/>, <see cref="MongoDBAtlasCollectionDataset"/>, <see cref="MongoDBV2CollectionDataset"/>, <see cref="CosmosDBMongoDBApiCollectionDataset"/>, <see cref="ODataResourceDataset"/>, <see cref="OracleTableDataset"/>, <see cref="AmazonRdsForOracleTableDataset"/>, <see cref="TeradataTableDataset"/>, <see cref="AzureMySqlTableDataset"/>, <see cref="AmazonRedshiftTableDataset"/>, <see cref="Db2TableDataset"/>, <see cref="RelationalTableDataset"/>, <see cref="InformixTableDataset"/>, <see cref="OdbcTableDataset"/>, <see cref="MySqlTableDataset"/>, <see cref="PostgreSqlTableDataset"/>, <see cref="PostgreSqlV2TableDataset"/>, <see cref="MicrosoftAccessTableDataset"/>, <see cref="SalesforceObjectDataset"/>, <see cref="SalesforceServiceCloudObjectDataset"/>, <see cref="SybaseTableDataset"/>, <see cref="SapBWCubeDataset"/>, <see cref="SapCloudForCustomerResourceDataset"/>, <see cref="SapEccResourceDataset"/>, <see cref="SapHanaTableDataset"/>, <see cref="SapOpenHubTableDataset"/>, <see cref="SqlServerTableDataset"/>, <see cref="AmazonRdsForSqlServerTableDataset"/>, <see cref="RestResourceDataset"/>, <see cref="SapTableResourceDataset"/>, <see cref="SapOdpResourceDataset"/>, <see cref="WebTableDataset"/>, <see cref="AzureSearchIndexDataset"/>, <see cref="DataFactoryHttpDataset"/>, <see cref="AmazonMwsObjectDataset"/>, <see cref="AzurePostgreSqlTableDataset"/>, <see cref="ConcurObjectDataset"/>, <see cref="CouchbaseTableDataset"/>, <see cref="DrillTableDataset"/>, <see cref="EloquaObjectDataset"/>, <see cref="GoogleBigQueryObjectDataset"/>, <see cref="GoogleBigQueryV2ObjectDataset"/>, <see cref="GreenplumTableDataset"/>, <see cref="HBaseObjectDataset"/>, <see cref="HiveObjectDataset"/>, <see cref="HubspotObjectDataset"/>, <see cref="ImpalaObjectDataset"/>, <see cref="JiraObjectDataset"/>, <see cref="MagentoObjectDataset"/>, <see cref="MariaDBTableDataset"/>, <see cref="AzureMariaDBTableDataset"/>, <see cref="MarketoObjectDataset"/>, <see cref="PaypalObjectDataset"/>, <see cref="PhoenixObjectDataset"/>, <see cref="PrestoObjectDataset"/>, <see cref="QuickBooksObjectDataset"/>, <see cref="ServiceNowObjectDataset"/>, <see cref="ShopifyObjectDataset"/>, <see cref="SparkObjectDataset"/>, <see cref="SquareObjectDataset"/>, <see cref="XeroObjectDataset"/>, <see cref="ZohoObjectDataset"/>, <see cref="NetezzaTableDataset"/>, <see cref="VerticaTableDataset"/>, <see cref="SalesforceMarketingCloudObjectDataset"/>, <see cref="ResponsysObjectDataset"/>, <see cref="DynamicsAXResourceDataset"/>, <see cref="OracleServiceCloudObjectDataset"/>, <see cref="AzureDataExplorerTableDataset"/>, <see cref="GoogleAdWordsObjectDataset"/>, <see cref="SnowflakeDataset"/>, <see cref="SnowflakeV2Dataset"/>, <see cref="SharePointOnlineListResourceDataset"/>, <see cref="AzureDatabricksDeltaLakeDataset"/>, <see cref="LakeHouseTableDataset"/>, <see cref="SalesforceV2ObjectDataset"/>, <see cref="SalesforceServiceCloudV2ObjectDataset"/>, <see cref="WarehouseTableDataset"/>, and <see cref="ServiceNowV2ObjectDataset"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AmazonMwsObjectDataset"/>, <see cref="AmazonRdsForOracleTableDataset"/>, <see cref="AmazonRdsForSqlServerTableDataset"/>, <see cref="AmazonRedshiftTableDataset"/>, <see cref="AmazonS3Dataset"/>, <see cref="AvroDataset"/>, <see cref="AzureBlobDataset"/>, <see cref="AzureBlobFSDataset"/>, <see cref="AzureDataExplorerTableDataset"/>, <see cref="AzureDataLakeStoreDataset"/>, <see cref="AzureDatabricksDeltaLakeDataset"/>, <see cref="AzureMariaDBTableDataset"/>, <see cref="AzureMySqlTableDataset"/>, <see cref="AzurePostgreSqlTableDataset"/>, <see cref="AzureSearchIndexDataset"/>, <see cref="AzureSqlDWTableDataset"/>, <see cref="AzureSqlMITableDataset"/>, <see cref="AzureSqlTableDataset"/>, <see cref="AzureTableDataset"/>, <see cref="BinaryDataset"/>, <see cref="CassandraTableDataset"/>, <see cref="CommonDataServiceForAppsEntityDataset"/>, <see cref="ConcurObjectDataset"/>, <see cref="CosmosDBMongoDBApiCollectionDataset"/>, <see cref="CosmosDBSqlApiCollectionDataset"/>, <see cref="CouchbaseTableDataset"/>, <see cref="CustomDataset"/>, <see cref="DataFactoryHttpDataset"/>, <see cref="Db2TableDataset"/>, <see cref="DelimitedTextDataset"/>, <see cref="DocumentDBCollectionDataset"/>, <see cref="DrillTableDataset"/>, <see cref="DynamicsAXResourceDataset"/>, <see cref="DynamicsCrmEntityDataset"/>, <see cref="DynamicsEntityDataset"/>, <see cref="EloquaObjectDataset"/>, <see cref="ExcelDataset"/>, <see cref="FileShareDataset"/>, <see cref="GoogleAdWordsObjectDataset"/>, <see cref="GoogleBigQueryObjectDataset"/>, <see cref="GoogleBigQueryV2ObjectDataset"/>, <see cref="GreenplumTableDataset"/>, <see cref="HBaseObjectDataset"/>, <see cref="HiveObjectDataset"/>, <see cref="HubspotObjectDataset"/>, <see cref="IcebergDataset"/>, <see cref="ImpalaObjectDataset"/>, <see cref="InformixTableDataset"/>, <see cref="JiraObjectDataset"/>, <see cref="JsonDataset"/>, <see cref="LakeHouseTableDataset"/>, <see cref="MagentoObjectDataset"/>, <see cref="MariaDBTableDataset"/>, <see cref="MarketoObjectDataset"/>, <see cref="MicrosoftAccessTableDataset"/>, <see cref="MongoDBAtlasCollectionDataset"/>, <see cref="MongoDBCollectionDataset"/>, <see cref="MongoDBV2CollectionDataset"/>, <see cref="MySqlTableDataset"/>, <see cref="NetezzaTableDataset"/>, <see cref="ODataResourceDataset"/>, <see cref="OdbcTableDataset"/>, <see cref="Office365Dataset"/>, <see cref="OracleServiceCloudObjectDataset"/>, <see cref="OracleTableDataset"/>, <see cref="OrcDataset"/>, <see cref="ParquetDataset"/>, <see cref="PaypalObjectDataset"/>, <see cref="PhoenixObjectDataset"/>, <see cref="PostgreSqlTableDataset"/>, <see cref="PostgreSqlV2TableDataset"/>, <see cref="PrestoObjectDataset"/>, <see cref="QuickBooksObjectDataset"/>, <see cref="RelationalTableDataset"/>, <see cref="ResponsysObjectDataset"/>, <see cref="RestResourceDataset"/>, <see cref="SalesforceMarketingCloudObjectDataset"/>, <see cref="SalesforceObjectDataset"/>, <see cref="SalesforceServiceCloudObjectDataset"/>, <see cref="SalesforceServiceCloudV2ObjectDataset"/>, <see cref="SalesforceV2ObjectDataset"/>, <see cref="SapBWCubeDataset"/>, <see cref="SapCloudForCustomerResourceDataset"/>, <see cref="SapEccResourceDataset"/>, <see cref="SapHanaTableDataset"/>, <see cref="SapOdpResourceDataset"/>, <see cref="SapOpenHubTableDataset"/>, <see cref="SapTableResourceDataset"/>, <see cref="ServiceNowObjectDataset"/>, <see cref="ServiceNowV2ObjectDataset"/>, <see cref="SharePointOnlineListResourceDataset"/>, <see cref="ShopifyObjectDataset"/>, <see cref="SnowflakeDataset"/>, <see cref="SnowflakeV2Dataset"/>, <see cref="SparkObjectDataset"/>, <see cref="SqlServerTableDataset"/>, <see cref="SquareObjectDataset"/>, <see cref="SybaseTableDataset"/>, <see cref="TeradataTableDataset"/>, <see cref="VerticaTableDataset"/>, <see cref="WarehouseTableDataset"/>, <see cref="WebTableDataset"/>, <see cref="XeroObjectDataset"/>, <see cref="XmlDataset"/>, and <see cref="ZohoObjectDataset"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownDataset))]
     public abstract partial class DataFactoryDatasetProperties : IJsonModel<DataFactoryDatasetProperties>
@@ -184,138 +184,84 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 switch (discriminator.GetString())
                 {
+                    case "AmazonMWSObject":
+                        return AmazonMwsObjectDataset.DeserializeAmazonMwsObjectDataset(element, options);
+                    case "AmazonRdsForOracleTable":
+                        return AmazonRdsForOracleTableDataset.DeserializeAmazonRdsForOracleTableDataset(element, options);
+                    case "AmazonRdsForSqlServerTable":
+                        return AmazonRdsForSqlServerTableDataset.DeserializeAmazonRdsForSqlServerTableDataset(element, options);
+                    case "AmazonRedshiftTable":
+                        return AmazonRedshiftTableDataset.DeserializeAmazonRedshiftTableDataset(element, options);
                     case "AmazonS3Object":
                         return AmazonS3Dataset.DeserializeAmazonS3Dataset(element, options);
                     case "Avro":
                         return AvroDataset.DeserializeAvroDataset(element, options);
-                    case "Excel":
-                        return ExcelDataset.DeserializeExcelDataset(element, options);
-                    case "Parquet":
-                        return ParquetDataset.DeserializeParquetDataset(element, options);
-                    case "DelimitedText":
-                        return DelimitedTextDataset.DeserializeDelimitedTextDataset(element, options);
-                    case "Json":
-                        return JsonDataset.DeserializeJsonDataset(element, options);
-                    case "Xml":
-                        return XmlDataset.DeserializeXmlDataset(element, options);
-                    case "Orc":
-                        return OrcDataset.DeserializeOrcDataset(element, options);
-                    case "Binary":
-                        return BinaryDataset.DeserializeBinaryDataset(element, options);
-                    case "Iceberg":
-                        return IcebergDataset.DeserializeIcebergDataset(element, options);
                     case "AzureBlob":
                         return AzureBlobDataset.DeserializeAzureBlobDataset(element, options);
-                    case "AzureTable":
-                        return AzureTableDataset.DeserializeAzureTableDataset(element, options);
-                    case "AzureSqlTable":
-                        return AzureSqlTableDataset.DeserializeAzureSqlTableDataset(element, options);
-                    case "AzureSqlMITable":
-                        return AzureSqlMITableDataset.DeserializeAzureSqlMITableDataset(element, options);
-                    case "AzureSqlDWTable":
-                        return AzureSqlDWTableDataset.DeserializeAzureSqlDWTableDataset(element, options);
-                    case "CassandraTable":
-                        return CassandraTableDataset.DeserializeCassandraTableDataset(element, options);
-                    case "CustomDataset":
-                        return CustomDataset.DeserializeCustomDataset(element, options);
-                    case "CosmosDbSqlApiCollection":
-                        return CosmosDBSqlApiCollectionDataset.DeserializeCosmosDBSqlApiCollectionDataset(element, options);
-                    case "DocumentDbCollection":
-                        return DocumentDBCollectionDataset.DeserializeDocumentDBCollectionDataset(element, options);
-                    case "DynamicsEntity":
-                        return DynamicsEntityDataset.DeserializeDynamicsEntityDataset(element, options);
-                    case "DynamicsCrmEntity":
-                        return DynamicsCrmEntityDataset.DeserializeDynamicsCrmEntityDataset(element, options);
-                    case "CommonDataServiceForAppsEntity":
-                        return CommonDataServiceForAppsEntityDataset.DeserializeCommonDataServiceForAppsEntityDataset(element, options);
-                    case "AzureDataLakeStoreFile":
-                        return AzureDataLakeStoreDataset.DeserializeAzureDataLakeStoreDataset(element, options);
                     case "AzureBlobFSFile":
                         return AzureBlobFSDataset.DeserializeAzureBlobFSDataset(element, options);
-                    case "Office365Table":
-                        return Office365Dataset.DeserializeOffice365Dataset(element, options);
-                    case "FileShare":
-                        return FileShareDataset.DeserializeFileShareDataset(element, options);
-                    case "MongoDbCollection":
-                        return MongoDBCollectionDataset.DeserializeMongoDBCollectionDataset(element, options);
-                    case "MongoDbAtlasCollection":
-                        return MongoDBAtlasCollectionDataset.DeserializeMongoDBAtlasCollectionDataset(element, options);
-                    case "MongoDbV2Collection":
-                        return MongoDBV2CollectionDataset.DeserializeMongoDBV2CollectionDataset(element, options);
-                    case "CosmosDbMongoDbApiCollection":
-                        return CosmosDBMongoDBApiCollectionDataset.DeserializeCosmosDBMongoDBApiCollectionDataset(element, options);
-                    case "ODataResource":
-                        return ODataResourceDataset.DeserializeODataResourceDataset(element, options);
-                    case "OracleTable":
-                        return OracleTableDataset.DeserializeOracleTableDataset(element, options);
-                    case "AmazonRdsForOracleTable":
-                        return AmazonRdsForOracleTableDataset.DeserializeAmazonRdsForOracleTableDataset(element, options);
-                    case "TeradataTable":
-                        return TeradataTableDataset.DeserializeTeradataTableDataset(element, options);
+                    case "AzureDataExplorerTable":
+                        return AzureDataExplorerTableDataset.DeserializeAzureDataExplorerTableDataset(element, options);
+                    case "AzureDataLakeStoreFile":
+                        return AzureDataLakeStoreDataset.DeserializeAzureDataLakeStoreDataset(element, options);
+                    case "AzureDatabricksDeltaLakeDataset":
+                        return AzureDatabricksDeltaLakeDataset.DeserializeAzureDatabricksDeltaLakeDataset(element, options);
+                    case "AzureMariaDBTable":
+                        return AzureMariaDBTableDataset.DeserializeAzureMariaDBTableDataset(element, options);
                     case "AzureMySqlTable":
                         return AzureMySqlTableDataset.DeserializeAzureMySqlTableDataset(element, options);
-                    case "AmazonRedshiftTable":
-                        return AmazonRedshiftTableDataset.DeserializeAmazonRedshiftTableDataset(element, options);
-                    case "Db2Table":
-                        return Db2TableDataset.DeserializeDb2TableDataset(element, options);
-                    case "RelationalTable":
-                        return RelationalTableDataset.DeserializeRelationalTableDataset(element, options);
-                    case "InformixTable":
-                        return InformixTableDataset.DeserializeInformixTableDataset(element, options);
-                    case "OdbcTable":
-                        return OdbcTableDataset.DeserializeOdbcTableDataset(element, options);
-                    case "MySqlTable":
-                        return MySqlTableDataset.DeserializeMySqlTableDataset(element, options);
-                    case "PostgreSqlTable":
-                        return PostgreSqlTableDataset.DeserializePostgreSqlTableDataset(element, options);
-                    case "PostgreSqlV2Table":
-                        return PostgreSqlV2TableDataset.DeserializePostgreSqlV2TableDataset(element, options);
-                    case "MicrosoftAccessTable":
-                        return MicrosoftAccessTableDataset.DeserializeMicrosoftAccessTableDataset(element, options);
-                    case "SalesforceObject":
-                        return SalesforceObjectDataset.DeserializeSalesforceObjectDataset(element, options);
-                    case "SalesforceServiceCloudObject":
-                        return SalesforceServiceCloudObjectDataset.DeserializeSalesforceServiceCloudObjectDataset(element, options);
-                    case "SybaseTable":
-                        return SybaseTableDataset.DeserializeSybaseTableDataset(element, options);
-                    case "SapBwCube":
-                        return SapBWCubeDataset.DeserializeSapBWCubeDataset(element, options);
-                    case "SapCloudForCustomerResource":
-                        return SapCloudForCustomerResourceDataset.DeserializeSapCloudForCustomerResourceDataset(element, options);
-                    case "SapEccResource":
-                        return SapEccResourceDataset.DeserializeSapEccResourceDataset(element, options);
-                    case "SapHanaTable":
-                        return SapHanaTableDataset.DeserializeSapHanaTableDataset(element, options);
-                    case "SapOpenHubTable":
-                        return SapOpenHubTableDataset.DeserializeSapOpenHubTableDataset(element, options);
-                    case "SqlServerTable":
-                        return SqlServerTableDataset.DeserializeSqlServerTableDataset(element, options);
-                    case "AmazonRdsForSqlServerTable":
-                        return AmazonRdsForSqlServerTableDataset.DeserializeAmazonRdsForSqlServerTableDataset(element, options);
-                    case "RestResource":
-                        return RestResourceDataset.DeserializeRestResourceDataset(element, options);
-                    case "SapTableResource":
-                        return SapTableResourceDataset.DeserializeSapTableResourceDataset(element, options);
-                    case "SapOdpResource":
-                        return SapOdpResourceDataset.DeserializeSapOdpResourceDataset(element, options);
-                    case "WebTable":
-                        return WebTableDataset.DeserializeWebTableDataset(element, options);
-                    case "AzureSearchIndex":
-                        return AzureSearchIndexDataset.DeserializeAzureSearchIndexDataset(element, options);
-                    case "HttpFile":
-                        return DataFactoryHttpDataset.DeserializeDataFactoryHttpDataset(element, options);
-                    case "AmazonMWSObject":
-                        return AmazonMwsObjectDataset.DeserializeAmazonMwsObjectDataset(element, options);
                     case "AzurePostgreSqlTable":
                         return AzurePostgreSqlTableDataset.DeserializeAzurePostgreSqlTableDataset(element, options);
+                    case "AzureSearchIndex":
+                        return AzureSearchIndexDataset.DeserializeAzureSearchIndexDataset(element, options);
+                    case "AzureSqlDWTable":
+                        return AzureSqlDWTableDataset.DeserializeAzureSqlDWTableDataset(element, options);
+                    case "AzureSqlMITable":
+                        return AzureSqlMITableDataset.DeserializeAzureSqlMITableDataset(element, options);
+                    case "AzureSqlTable":
+                        return AzureSqlTableDataset.DeserializeAzureSqlTableDataset(element, options);
+                    case "AzureTable":
+                        return AzureTableDataset.DeserializeAzureTableDataset(element, options);
+                    case "Binary":
+                        return BinaryDataset.DeserializeBinaryDataset(element, options);
+                    case "CassandraTable":
+                        return CassandraTableDataset.DeserializeCassandraTableDataset(element, options);
+                    case "CommonDataServiceForAppsEntity":
+                        return CommonDataServiceForAppsEntityDataset.DeserializeCommonDataServiceForAppsEntityDataset(element, options);
                     case "ConcurObject":
                         return ConcurObjectDataset.DeserializeConcurObjectDataset(element, options);
+                    case "CosmosDbMongoDbApiCollection":
+                        return CosmosDBMongoDBApiCollectionDataset.DeserializeCosmosDBMongoDBApiCollectionDataset(element, options);
+                    case "CosmosDbSqlApiCollection":
+                        return CosmosDBSqlApiCollectionDataset.DeserializeCosmosDBSqlApiCollectionDataset(element, options);
                     case "CouchbaseTable":
                         return CouchbaseTableDataset.DeserializeCouchbaseTableDataset(element, options);
+                    case "CustomDataset":
+                        return CustomDataset.DeserializeCustomDataset(element, options);
+                    case "HttpFile":
+                        return DataFactoryHttpDataset.DeserializeDataFactoryHttpDataset(element, options);
+                    case "Db2Table":
+                        return Db2TableDataset.DeserializeDb2TableDataset(element, options);
+                    case "DelimitedText":
+                        return DelimitedTextDataset.DeserializeDelimitedTextDataset(element, options);
+                    case "DocumentDbCollection":
+                        return DocumentDBCollectionDataset.DeserializeDocumentDBCollectionDataset(element, options);
                     case "DrillTable":
                         return DrillTableDataset.DeserializeDrillTableDataset(element, options);
+                    case "DynamicsAXResource":
+                        return DynamicsAXResourceDataset.DeserializeDynamicsAXResourceDataset(element, options);
+                    case "DynamicsCrmEntity":
+                        return DynamicsCrmEntityDataset.DeserializeDynamicsCrmEntityDataset(element, options);
+                    case "DynamicsEntity":
+                        return DynamicsEntityDataset.DeserializeDynamicsEntityDataset(element, options);
                     case "EloquaObject":
                         return EloquaObjectDataset.DeserializeEloquaObjectDataset(element, options);
+                    case "Excel":
+                        return ExcelDataset.DeserializeExcelDataset(element, options);
+                    case "FileShare":
+                        return FileShareDataset.DeserializeFileShareDataset(element, options);
+                    case "GoogleAdWordsObject":
+                        return GoogleAdWordsObjectDataset.DeserializeGoogleAdWordsObjectDataset(element, options);
                     case "GoogleBigQueryObject":
                         return GoogleBigQueryObjectDataset.DeserializeGoogleBigQueryObjectDataset(element, options);
                     case "GoogleBigQueryV2Object":
@@ -328,72 +274,126 @@ namespace Azure.ResourceManager.DataFactory.Models
                         return HiveObjectDataset.DeserializeHiveObjectDataset(element, options);
                     case "HubspotObject":
                         return HubspotObjectDataset.DeserializeHubspotObjectDataset(element, options);
+                    case "Iceberg":
+                        return IcebergDataset.DeserializeIcebergDataset(element, options);
                     case "ImpalaObject":
                         return ImpalaObjectDataset.DeserializeImpalaObjectDataset(element, options);
+                    case "InformixTable":
+                        return InformixTableDataset.DeserializeInformixTableDataset(element, options);
                     case "JiraObject":
                         return JiraObjectDataset.DeserializeJiraObjectDataset(element, options);
+                    case "Json":
+                        return JsonDataset.DeserializeJsonDataset(element, options);
+                    case "LakehouseTable":
+                        return LakeHouseTableDataset.DeserializeLakeHouseTableDataset(element, options);
                     case "MagentoObject":
                         return MagentoObjectDataset.DeserializeMagentoObjectDataset(element, options);
                     case "MariaDBTable":
                         return MariaDBTableDataset.DeserializeMariaDBTableDataset(element, options);
-                    case "AzureMariaDBTable":
-                        return AzureMariaDBTableDataset.DeserializeAzureMariaDBTableDataset(element, options);
                     case "MarketoObject":
                         return MarketoObjectDataset.DeserializeMarketoObjectDataset(element, options);
+                    case "MicrosoftAccessTable":
+                        return MicrosoftAccessTableDataset.DeserializeMicrosoftAccessTableDataset(element, options);
+                    case "MongoDbAtlasCollection":
+                        return MongoDBAtlasCollectionDataset.DeserializeMongoDBAtlasCollectionDataset(element, options);
+                    case "MongoDbCollection":
+                        return MongoDBCollectionDataset.DeserializeMongoDBCollectionDataset(element, options);
+                    case "MongoDbV2Collection":
+                        return MongoDBV2CollectionDataset.DeserializeMongoDBV2CollectionDataset(element, options);
+                    case "MySqlTable":
+                        return MySqlTableDataset.DeserializeMySqlTableDataset(element, options);
+                    case "NetezzaTable":
+                        return NetezzaTableDataset.DeserializeNetezzaTableDataset(element, options);
+                    case "ODataResource":
+                        return ODataResourceDataset.DeserializeODataResourceDataset(element, options);
+                    case "OdbcTable":
+                        return OdbcTableDataset.DeserializeOdbcTableDataset(element, options);
+                    case "Office365Table":
+                        return Office365Dataset.DeserializeOffice365Dataset(element, options);
+                    case "OracleServiceCloudObject":
+                        return OracleServiceCloudObjectDataset.DeserializeOracleServiceCloudObjectDataset(element, options);
+                    case "OracleTable":
+                        return OracleTableDataset.DeserializeOracleTableDataset(element, options);
+                    case "Orc":
+                        return OrcDataset.DeserializeOrcDataset(element, options);
+                    case "Parquet":
+                        return ParquetDataset.DeserializeParquetDataset(element, options);
                     case "PaypalObject":
                         return PaypalObjectDataset.DeserializePaypalObjectDataset(element, options);
                     case "PhoenixObject":
                         return PhoenixObjectDataset.DeserializePhoenixObjectDataset(element, options);
+                    case "PostgreSqlTable":
+                        return PostgreSqlTableDataset.DeserializePostgreSqlTableDataset(element, options);
+                    case "PostgreSqlV2Table":
+                        return PostgreSqlV2TableDataset.DeserializePostgreSqlV2TableDataset(element, options);
                     case "PrestoObject":
                         return PrestoObjectDataset.DeserializePrestoObjectDataset(element, options);
                     case "QuickBooksObject":
                         return QuickBooksObjectDataset.DeserializeQuickBooksObjectDataset(element, options);
-                    case "ServiceNowObject":
-                        return ServiceNowObjectDataset.DeserializeServiceNowObjectDataset(element, options);
-                    case "ShopifyObject":
-                        return ShopifyObjectDataset.DeserializeShopifyObjectDataset(element, options);
-                    case "SparkObject":
-                        return SparkObjectDataset.DeserializeSparkObjectDataset(element, options);
-                    case "SquareObject":
-                        return SquareObjectDataset.DeserializeSquareObjectDataset(element, options);
-                    case "XeroObject":
-                        return XeroObjectDataset.DeserializeXeroObjectDataset(element, options);
-                    case "ZohoObject":
-                        return ZohoObjectDataset.DeserializeZohoObjectDataset(element, options);
-                    case "NetezzaTable":
-                        return NetezzaTableDataset.DeserializeNetezzaTableDataset(element, options);
-                    case "VerticaTable":
-                        return VerticaTableDataset.DeserializeVerticaTableDataset(element, options);
-                    case "SalesforceMarketingCloudObject":
-                        return SalesforceMarketingCloudObjectDataset.DeserializeSalesforceMarketingCloudObjectDataset(element, options);
+                    case "RelationalTable":
+                        return RelationalTableDataset.DeserializeRelationalTableDataset(element, options);
                     case "ResponsysObject":
                         return ResponsysObjectDataset.DeserializeResponsysObjectDataset(element, options);
-                    case "DynamicsAXResource":
-                        return DynamicsAXResourceDataset.DeserializeDynamicsAXResourceDataset(element, options);
-                    case "OracleServiceCloudObject":
-                        return OracleServiceCloudObjectDataset.DeserializeOracleServiceCloudObjectDataset(element, options);
-                    case "AzureDataExplorerTable":
-                        return AzureDataExplorerTableDataset.DeserializeAzureDataExplorerTableDataset(element, options);
-                    case "GoogleAdWordsObject":
-                        return GoogleAdWordsObjectDataset.DeserializeGoogleAdWordsObjectDataset(element, options);
+                    case "RestResource":
+                        return RestResourceDataset.DeserializeRestResourceDataset(element, options);
+                    case "SalesforceMarketingCloudObject":
+                        return SalesforceMarketingCloudObjectDataset.DeserializeSalesforceMarketingCloudObjectDataset(element, options);
+                    case "SalesforceObject":
+                        return SalesforceObjectDataset.DeserializeSalesforceObjectDataset(element, options);
+                    case "SalesforceServiceCloudObject":
+                        return SalesforceServiceCloudObjectDataset.DeserializeSalesforceServiceCloudObjectDataset(element, options);
+                    case "SalesforceServiceCloudV2Object":
+                        return SalesforceServiceCloudV2ObjectDataset.DeserializeSalesforceServiceCloudV2ObjectDataset(element, options);
+                    case "SalesforceV2Object":
+                        return SalesforceV2ObjectDataset.DeserializeSalesforceV2ObjectDataset(element, options);
+                    case "SapBwCube":
+                        return SapBWCubeDataset.DeserializeSapBWCubeDataset(element, options);
+                    case "SapCloudForCustomerResource":
+                        return SapCloudForCustomerResourceDataset.DeserializeSapCloudForCustomerResourceDataset(element, options);
+                    case "SapEccResource":
+                        return SapEccResourceDataset.DeserializeSapEccResourceDataset(element, options);
+                    case "SapHanaTable":
+                        return SapHanaTableDataset.DeserializeSapHanaTableDataset(element, options);
+                    case "SapOdpResource":
+                        return SapOdpResourceDataset.DeserializeSapOdpResourceDataset(element, options);
+                    case "SapOpenHubTable":
+                        return SapOpenHubTableDataset.DeserializeSapOpenHubTableDataset(element, options);
+                    case "SapTableResource":
+                        return SapTableResourceDataset.DeserializeSapTableResourceDataset(element, options);
+                    case "ServiceNowObject":
+                        return ServiceNowObjectDataset.DeserializeServiceNowObjectDataset(element, options);
+                    case "ServiceNowV2Object":
+                        return ServiceNowV2ObjectDataset.DeserializeServiceNowV2ObjectDataset(element, options);
+                    case "SharePointOnlineListResource":
+                        return SharePointOnlineListResourceDataset.DeserializeSharePointOnlineListResourceDataset(element, options);
+                    case "ShopifyObject":
+                        return ShopifyObjectDataset.DeserializeShopifyObjectDataset(element, options);
                     case "SnowflakeTable":
                         return SnowflakeDataset.DeserializeSnowflakeDataset(element, options);
                     case "SnowflakeV2Table":
                         return SnowflakeV2Dataset.DeserializeSnowflakeV2Dataset(element, options);
-                    case "SharePointOnlineListResource":
-                        return SharePointOnlineListResourceDataset.DeserializeSharePointOnlineListResourceDataset(element, options);
-                    case "AzureDatabricksDeltaLakeDataset":
-                        return AzureDatabricksDeltaLakeDataset.DeserializeAzureDatabricksDeltaLakeDataset(element, options);
-                    case "LakehouseTable":
-                        return LakeHouseTableDataset.DeserializeLakeHouseTableDataset(element, options);
-                    case "SalesforceV2Object":
-                        return SalesforceV2ObjectDataset.DeserializeSalesforceV2ObjectDataset(element, options);
-                    case "SalesforceServiceCloudV2Object":
-                        return SalesforceServiceCloudV2ObjectDataset.DeserializeSalesforceServiceCloudV2ObjectDataset(element, options);
+                    case "SparkObject":
+                        return SparkObjectDataset.DeserializeSparkObjectDataset(element, options);
+                    case "SqlServerTable":
+                        return SqlServerTableDataset.DeserializeSqlServerTableDataset(element, options);
+                    case "SquareObject":
+                        return SquareObjectDataset.DeserializeSquareObjectDataset(element, options);
+                    case "SybaseTable":
+                        return SybaseTableDataset.DeserializeSybaseTableDataset(element, options);
+                    case "TeradataTable":
+                        return TeradataTableDataset.DeserializeTeradataTableDataset(element, options);
+                    case "VerticaTable":
+                        return VerticaTableDataset.DeserializeVerticaTableDataset(element, options);
                     case "WarehouseTable":
                         return WarehouseTableDataset.DeserializeWarehouseTableDataset(element, options);
-                    case "ServiceNowV2Object":
-                        return ServiceNowV2ObjectDataset.DeserializeServiceNowV2ObjectDataset(element, options);
+                    case "WebTable":
+                        return WebTableDataset.DeserializeWebTableDataset(element, options);
+                    case "XeroObject":
+                        return XeroObjectDataset.DeserializeXeroObjectDataset(element, options);
+                    case "Xml":
+                        return XmlDataset.DeserializeXmlDataset(element, options);
+                    case "ZohoObject":
+                        return ZohoObjectDataset.DeserializeZohoObjectDataset(element, options);
                 }
             }
             return UnknownDataset.DeserializeUnknownDataset(element, options);

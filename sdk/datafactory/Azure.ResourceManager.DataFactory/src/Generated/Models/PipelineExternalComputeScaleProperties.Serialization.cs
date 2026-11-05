@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     numberOfExternalNodes = prop.Value.GetInt32();
                     continue;
                 }
-                additionalProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                additionalProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
             }
             return new PipelineExternalComputeScaleProperties(timeToLive, numberOfPipelineNodes, numberOfExternalNodes, additionalProperties);
         }

@@ -167,10 +167,10 @@ namespace Azure.ResourceManager.Hci.Vm.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new NetworkInterfaceListResult(value, nextLink, additionalBinaryDataProperties);
+            return new NetworkInterfaceListResult(value ?? new ChangeTrackingList<HciVmNetworkInterfaceData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

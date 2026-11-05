@@ -3,6 +3,7 @@
 
 using System;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.RedisEnterprise.Models;
 using Azure.ResourceManager.Resources;
@@ -10,6 +11,7 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.RedisEnterprise.Tests.ScenarioTests
 {
+    [NonParallelizable]
     public class AuthenticationFuntionalTests : RedisEnterpriseManagementTestBase
     {
         public AuthenticationFuntionalTests(bool isAsync)
@@ -85,17 +87,30 @@ namespace Azure.ResourceManager.RedisEnterprise.Tests.ScenarioTests
             string accessPolicyAssignmentName = "accessPolicyAssignmentName1";
             AccessPolicyAssignmentData accessPolicyAssignmentData = new AccessPolicyAssignmentData()
             {
-                AccessPolicyName = "default",
+                AccessString = "+@read ~cache:*",
                 UserObjectId = new Guid("5eb3eb10-a8a2-4db7-8bb4-e377180f7427"),
             };
             var accessPolicyAssignment = (await accessPolicyAssignmentCollection.CreateOrUpdateAsync(WaitUntil.Completed, accessPolicyAssignmentName, accessPolicyAssignmentData)).Value;
             Assert.AreEqual("default", accessPolicyAssignment.Data.AccessPolicyName);
+            Assert.AreEqual("+@read ~cache:*", accessPolicyAssignment.Data.AccessString);
+            Assert.IsNull(accessPolicyAssignment.Data.ProvisioningError);
             Assert.AreEqual(new Guid("5eb3eb10-a8a2-4db7-8bb4-e377180f7427"), accessPolicyAssignment.Data.UserObjectId);
             Assert.AreEqual("accessPolicyAssignmentName1", accessPolicyAssignment.Data.Name);
+
+            accessPolicyAssignmentData.AccessString = "+get +mget ~cache:*";
+            accessPolicyAssignment = (await accessPolicyAssignmentCollection.CreateOrUpdateAsync(WaitUntil.Completed, accessPolicyAssignmentName, accessPolicyAssignmentData)).Value;
+            Assert.AreEqual("+get +mget ~cache:*", accessPolicyAssignment.Data.AccessString);
+            Assert.IsNull(accessPolicyAssignment.Data.ProvisioningError);
+
+            accessPolicyAssignment = await accessPolicyAssignment.GetAsync();
+            Assert.AreEqual("+get +mget ~cache:*", accessPolicyAssignment.Data.AccessString);
+            Assert.IsNull(accessPolicyAssignment.Data.ProvisioningError);
 
             // List access policy assignments
             var accessPolicyAssignmentList = await accessPolicyAssignmentCollection.GetAllAsync().ToEnumerableAsync();
             Assert.AreEqual(1, accessPolicyAssignmentList.Count);
+            Assert.AreEqual("+get +mget ~cache:*", accessPolicyAssignmentList[0].Data.AccessString);
+            Assert.IsNull(accessPolicyAssignmentList[0].Data.ProvisioningError);
 
             // Delete access policy assignment
             await accessPolicyAssignment.DeleteAsync(WaitUntil.Completed);

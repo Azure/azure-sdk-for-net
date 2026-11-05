@@ -44,14 +44,14 @@ namespace Azure.ResourceManager.Network
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        internal HttpMessage CreateGetAllServiceTagInformationRequest(Guid subscriptionId, string location, bool? noAddressPrefixes, string tagName, RequestContext context)
+        internal HttpMessage CreateGetAllServiceTagInformationRequest(Guid subscriptionId, AzureLocation location, bool? noAddressPrefixes, string tagName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/providers/Microsoft.Network/locations/", false);
-            uri.AppendPath(location, true);
+            uri.AppendPath(location.ToString(), true);
             uri.AppendPath("/serviceTagDetails", false);
             if (_apiVersion != null)
             {
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Network
             return message;
         }
 
-        internal HttpMessage CreateNextGetAllServiceTagInformationRequest(Uri nextPage, Guid subscriptionId, string location, bool? noAddressPrefixes, string tagName, RequestContext context)
+        internal HttpMessage CreateNextGetAllServiceTagInformationRequest(Uri nextPage, Guid subscriptionId, AzureLocation location, bool? noAddressPrefixes, string tagName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)

@@ -17,6 +17,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.ExtensionTypes.Models
     /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class ArmKubernetesConfigurationExtensionTypesModelFactory
     {
+        /// <summary> The Extension Type object. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -34,6 +35,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.ExtensionTypes.Models
                 default);
         }
 
+        /// <summary> The KubernetesConfigurationExtensionTypeProperties. </summary>
         /// <param name="isSystemExtension"> Is this Extension Type a system extension. </param>
         /// <param name="isManagedIdentityRequired"> Should an identity for this cluster resource be created. </param>
         /// <param name="description"> Description of the extension type. </param>
@@ -57,6 +59,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.ExtensionTypes.Models
                 default);
         }
 
+        /// <summary> Plan information only for the Marketplace Extension Type. </summary>
         /// <param name="publisherId"> Publisher ID of the Marketplace Extension Type. </param>
         /// <param name="planId"> Plan ID of the Marketplace Extension Type. </param>
         /// <param name="offerId"> Offer or Product ID of the Marketplace Extension Type. </param>
@@ -66,6 +69,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.ExtensionTypes.Models
             return new KubernetesConfigurationExtensionTypePlanInfo(publisherId, planId, offerId, default);
         }
 
+        /// <summary> Supported Kubernetes Scopes for this Extension Type. </summary>
         /// <param name="defaultScope"> The default scope of the extension type. This scope will be used if the user does not provide a scope while creating an extension. </param>
         /// <param name="clusterScopeSettings"> Extension scope settings. </param>
         /// <returns> A new <see cref="Models.KubernetesConfigurationExtensionTypeSupportedScopes"/> instance for mocking. </returns>
@@ -92,6 +96,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.ExtensionTypes.Models
                 default);
         }
 
+        /// <summary> The Extension Type Version object. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -109,6 +114,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.ExtensionTypes.Models
                 default);
         }
 
+        /// <summary> The KubernetesConfigurationExtensionTypeVersionForReleaseTrainProperties. </summary>
         /// <param name="version"> The version number for the extension type. </param>
         /// <param name="unsupportedKubernetesVersions"> The list of supported Kubernetes cluster versions for this extension type. </param>
         /// <param name="supportedClusterTypes"> A list of supported cluster types for this version of the Extension Type. </param>
@@ -120,6 +126,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.ExtensionTypes.Models
             return new KubernetesConfigurationExtensionTypeVersionForReleaseTrainProperties(version, unsupportedKubernetesVersions, (supportedClusterTypes ?? new ChangeTrackingList<string>()).ToList(), default);
         }
 
+        /// <summary> The list of supported Kubernetes cluster versions for this extension type. </summary>
         /// <param name="connectedCluster"></param>
         /// <param name="appliances"></param>
         /// <param name="provisionedCluster"></param>
@@ -135,6 +142,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.ExtensionTypes.Models
             return new KubernetesConfigurationExtensionTypeUnsupportedKubernetesVersions((connectedCluster ?? new ChangeTrackingList<KubernetesConfigurationExtensionTypeVersionUnsupportedKubernetesMatrixItem>()).ToList(), (appliances ?? new ChangeTrackingList<KubernetesConfigurationExtensionTypeVersionUnsupportedKubernetesMatrixItem>()).ToList(), (provisionedCluster ?? new ChangeTrackingList<KubernetesConfigurationExtensionTypeVersionUnsupportedKubernetesMatrixItem>()).ToList(), (managedCluster ?? new ChangeTrackingList<KubernetesConfigurationExtensionTypeVersionUnsupportedKubernetesMatrixItem>()).ToList(), default);
         }
 
+        /// <summary> The list of Kubernetes Distribution and Versions that are not supported by this version of this Extension Type. </summary>
         /// <param name="distributions"> The list of Kubernetes Cluster Distribution Names not supported. </param>
         /// <param name="unsupportedVersions"> The list of Kubernetes Versions not supported by the list of Kubernetes Cluster Distribution names in this object. </param>
         /// <returns> A new <see cref="Models.KubernetesConfigurationExtensionTypeVersionUnsupportedKubernetesMatrixItem"/> instance for mocking. </returns>

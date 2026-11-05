@@ -3149,7 +3149,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// Get geodata for a single IP address
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableSecurityInsightsArmClient.GetGeodataByIpAsync(ResourceIdentifier, EnrichmentType, EnrichmentIPAddressContent, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableSecurityInsightsArmClient.GetGeodataByIPAsync(ResourceIdentifier, EnrichmentType, EnrichmentIPAddressContent, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
@@ -3158,18 +3158,18 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="content"> IP address (v4 or v6) to be enriched. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        public static async Task<Response<EnrichmentIPGeodata>> GetGeodataByIpAsync(this ArmClient client, ResourceIdentifier scope, EnrichmentType enrichmentType, EnrichmentIPAddressContent content, CancellationToken cancellationToken = default)
+        public static async Task<Response<EnrichmentIPGeodata>> GetGeodataByIPAsync(this ArmClient client, ResourceIdentifier scope, EnrichmentType enrichmentType, EnrichmentIPAddressContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return await GetMockableSecurityInsightsArmClient(client).GetGeodataByIpAsync(scope, enrichmentType, content, cancellationToken).ConfigureAwait(false);
+            return await GetMockableSecurityInsightsArmClient(client).GetGeodataByIPAsync(scope, enrichmentType, content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Get geodata for a single IP address
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableSecurityInsightsArmClient.GetGeodataByIp(ResourceIdentifier, EnrichmentType, EnrichmentIPAddressContent, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableSecurityInsightsArmClient.GetGeodataByIP(ResourceIdentifier, EnrichmentType, EnrichmentIPAddressContent, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
@@ -3178,11 +3178,11 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="content"> IP address (v4 or v6) to be enriched. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        public static Response<EnrichmentIPGeodata> GetGeodataByIp(this ArmClient client, ResourceIdentifier scope, EnrichmentType enrichmentType, EnrichmentIPAddressContent content, CancellationToken cancellationToken = default)
+        public static Response<EnrichmentIPGeodata> GetGeodataByIP(this ArmClient client, ResourceIdentifier scope, EnrichmentType enrichmentType, EnrichmentIPAddressContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableSecurityInsightsArmClient(client).GetGeodataByIp(scope, enrichmentType, content, cancellationToken);
+            return GetMockableSecurityInsightsArmClient(client).GetGeodataByIP(scope, enrichmentType, content, cancellationToken);
         }
 
         /// <summary>

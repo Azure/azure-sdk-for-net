@@ -24,13 +24,13 @@ namespace Azure.ResourceManager.Authorization.Models
 
         /// <summary> Initializes a new instance of <see cref="RoleAssignmentScheduleRequestPropertiesScheduleInfoExpiration"/>. </summary>
         /// <param name="expirationType"> Type of the role assignment schedule expiration. </param>
-        /// <param name="endOn"> End DateTime of the role assignment schedule. </param>
+        /// <param name="endsOn"> End DateTime of the role assignment schedule. </param>
         /// <param name="duration"> Duration of the role assignment schedule in TimeSpan. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RoleAssignmentScheduleRequestPropertiesScheduleInfoExpiration(RoleManagementScheduleExpirationType? expirationType, DateTimeOffset? endOn, TimeSpan? duration, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RoleAssignmentScheduleRequestPropertiesScheduleInfoExpiration(RoleManagementScheduleExpirationType? expirationType, DateTimeOffset? endsOn, TimeSpan? duration, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ExpirationType = expirationType;
-            EndOn = endOn;
+            EndsOn = endsOn;
             Duration = duration;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Authorization.Models
 
         /// <summary> End DateTime of the role assignment schedule. </summary>
         [WirePath("endDateTime")]
-        public DateTimeOffset? EndOn { get; set; }
+        public DateTimeOffset? EndsOn { get; set; }
 
         /// <summary> Duration of the role assignment schedule in TimeSpan. </summary>
         [WirePath("duration")]

@@ -4,7 +4,7 @@ namespace Azure.Provisioning.DesktopVirtualization
     {
         internal ActiveSessionHostConfiguration() : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
-        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.DesktopVirtualization.HostPool Parent { get { throw null; } set { } }
         public Azure.Provisioning.DesktopVirtualization.ActiveSessionHostConfigurationProperties Properties { get { throw null; } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
@@ -57,7 +57,7 @@ namespace Azure.Provisioning.DesktopVirtualization
     public partial class AppAttachPackageInfoProperties : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public AppAttachPackageInfoProperties() { }
-        public Azure.Provisioning.BicepValue<System.DateTimeOffset> CertificateExpireOn { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<System.DateTimeOffset> CertificateExpiresOn { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> CertificateName { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> DisplayName { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> ImagePath { get { throw null; } set { } }
@@ -755,7 +755,7 @@ namespace Azure.Provisioning.DesktopVirtualization
     {
         public SessionHostConfiguration(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
-        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.DesktopVirtualization.HostPool Parent { get { throw null; } set { } }
         public Azure.Provisioning.DesktopVirtualization.SessionHostConfigurationProperties Properties { get { throw null; } set { } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
@@ -857,7 +857,7 @@ namespace Azure.Provisioning.DesktopVirtualization
     {
         public SessionHostManagement(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
-        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.DesktopVirtualization.HostPool Parent { get { throw null; } set { } }
         public Azure.Provisioning.DesktopVirtualization.SessionHostManagementProperties Properties { get { throw null; } set { } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }

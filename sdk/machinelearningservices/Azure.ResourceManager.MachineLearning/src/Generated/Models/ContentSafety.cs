@@ -12,7 +12,7 @@ using Azure.ResourceManager.MachineLearning;
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> The ContentSafety. </summary>
-    public partial class ContentSafety
+    internal partial class ContentSafety
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
@@ -25,19 +25,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ContentSafety"/>. </summary>
-        /// <param name="contentSafetyLevel"> Specifies the current safety level for content safety. </param>
         /// <param name="contentSafetyStatus"> [Required] Specifies the status of content safety. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ContentSafety(ContentSafetyLevel? contentSafetyLevel, ContentSafetyStatus contentSafetyStatus, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ContentSafety(ContentSafetyStatus contentSafetyStatus, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            ContentSafetyLevel = contentSafetyLevel;
             ContentSafetyStatus = contentSafetyStatus;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
-
-        /// <summary> Specifies the current safety level for content safety. </summary>
-        [WirePath("contentSafetyLevel")]
-        public ContentSafetyLevel? ContentSafetyLevel { get; set; }
 
         /// <summary> [Required] Specifies the status of content safety. </summary>
         [WirePath("contentSafetyStatus")]

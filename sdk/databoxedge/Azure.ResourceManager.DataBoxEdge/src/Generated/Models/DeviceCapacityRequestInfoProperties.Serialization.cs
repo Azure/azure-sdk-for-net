@@ -203,10 +203,10 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new DeviceCapacityRequestInfoProperties(vmPlacementQuery, vmPlacementResults ?? new ChangeTrackingList<VmPlacementRequestResult>(), additionalBinaryDataProperties);
+            return new DeviceCapacityRequestInfoProperties(vmPlacementQuery ?? new ChangeTrackingList<IList<string>>(), vmPlacementResults ?? new ChangeTrackingList<VmPlacementRequestResult>(), additionalBinaryDataProperties);
         }
     }
 }

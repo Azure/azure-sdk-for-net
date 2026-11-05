@@ -40,9 +40,8 @@ namespace Azure.ResourceManager.HDInsight
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal HDInsightClusterCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(HDInsightClusterResource.ResourceType, out string hdInsightClusterApiVersion);
             _hdInsightClusterClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HDInsight", HDInsightClusterResource.ResourceType.Namespace, Diagnostics);
-            _hdInsightClusterRestClient = new HDInsightCluster(_hdInsightClusterClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, hdInsightClusterApiVersion ?? "2025-01-15-preview");
+            _hdInsightClusterRestClient = new HDInsightCluster(_hdInsightClusterClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.HDInsight/clusters", out string hdInsightClusterApiVersionOverride) ? hdInsightClusterApiVersionOverride : "2025-01-15-preview");
             ValidateResourceId(id);
         }
 
@@ -295,7 +294,7 @@ namespace Azure.ResourceManager.HDInsight
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<HDInsightClusterData, HDInsightClusterResource>(new HDInsightClusterGetByResourceGroupAsyncCollectionResultOfT(_hdInsightClusterRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "HDInsightClusterCollection.GetAll"), data => new HDInsightClusterResource(Client, data));
+            return new AsyncPageableWrapper<HDInsightClusterData, HDInsightClusterResource>(new HDInsightClusterDataAsyncCollectionResultOfT(_hdInsightClusterRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "HDInsightClusterCollection.GetAll"), data => new HDInsightClusterResource(Client, data));
         }
 
         /// <summary>
@@ -323,7 +322,7 @@ namespace Azure.ResourceManager.HDInsight
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<HDInsightClusterData, HDInsightClusterResource>(new HDInsightClusterGetByResourceGroupCollectionResultOfT(_hdInsightClusterRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "HDInsightClusterCollection.GetAll"), data => new HDInsightClusterResource(Client, data));
+            return new PageableWrapper<HDInsightClusterData, HDInsightClusterResource>(new HDInsightClusterDataCollectionResultOfT(_hdInsightClusterRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "HDInsightClusterCollection.GetAll"), data => new HDInsightClusterResource(Client, data));
         }
 
         /// <summary>

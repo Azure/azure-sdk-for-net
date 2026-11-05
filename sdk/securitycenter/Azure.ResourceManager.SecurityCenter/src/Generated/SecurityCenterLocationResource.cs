@@ -324,7 +324,7 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 CancellationToken = cancellationToken
             };
-            return new ExternalSecuritySolutionsGetExternalSecuritySolutionsByHomeRegionAsyncCollectionResultOfT(_externalSecuritySolutionsRestClient, Guid.Parse(Id.SubscriptionId), Id.Name, context, "SecurityCenterLocationResource.GetExternalSecuritySolutionsByHomeRegion");
+            return new ExternalSecuritySolutionAsyncCollectionResultOfT(_externalSecuritySolutionsRestClient, Guid.Parse(Id.SubscriptionId), Id.Name, context, "SecurityCenterLocationResource.GetExternalSecuritySolutionsByHomeRegion");
         }
 
         /// <summary>
@@ -356,7 +356,7 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 CancellationToken = cancellationToken
             };
-            return new ExternalSecuritySolutionsGetExternalSecuritySolutionsByHomeRegionCollectionResultOfT(_externalSecuritySolutionsRestClient, Guid.Parse(Id.SubscriptionId), Id.Name, context, "SecurityCenterLocationResource.GetExternalSecuritySolutionsByHomeRegion");
+            return new ExternalSecuritySolutionCollectionResultOfT(_externalSecuritySolutionsRestClient, Guid.Parse(Id.SubscriptionId), Id.Name, context, "SecurityCenterLocationResource.GetExternalSecuritySolutionsByHomeRegion");
         }
 
         /// <summary>

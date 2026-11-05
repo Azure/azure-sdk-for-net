@@ -167,10 +167,10 @@ namespace Azure.ResourceManager.Maintenance.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new MaintenanceScheduledEventIdList(value, additionalBinaryDataProperties);
+            return new MaintenanceScheduledEventIdList(value ?? new ChangeTrackingList<string>(), additionalBinaryDataProperties);
         }
     }
 }

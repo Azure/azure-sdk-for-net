@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -248,6 +248,15 @@ namespace Azure.Storage.Blobs
         /// policies for authentication, retries, etc., that are applied to
         /// every request.
         /// </param>
+        /// <remarks>
+        /// Session authentication requires the storage account name, which is derived from
+        /// <paramref name="serviceUri"/> when possible. Set <see cref="Models.SessionOptions.AccountName"/>
+        /// when using a custom endpoint URL from which the account name cannot be derived.
+        /// If the account name cannot be determined, this constructor throws when
+        /// <see cref="Models.SessionOptions.SessionMode"/> was explicitly set to
+        /// <see cref="Models.SessionMode.Enabled"/>; otherwise session authentication is
+        /// disabled and bearer token authentication is used.
+        /// </remarks>
         public BlobServiceClient(Uri serviceUri, TokenCredential credential, BlobClientOptions options = default)
             : this(
                   serviceUri,
@@ -359,19 +368,35 @@ namespace Azure.Storage.Blobs
             HttpPipelinePolicy authentication,
             TokenCredential tokenCredential,
             BlobClientOptions options)
-            : this(serviceUri,
-                  new BlobClientConfiguration(
-                      pipeline: options.Build(authentication),
-                      tokenCredential: tokenCredential,
-                      clientDiagnostics: new ClientDiagnostics(options),
-                      version: options?.Version ?? BlobClientOptions.LatestVersion,
-                      customerProvidedKey: options?.CustomerProvidedKey,
-                      transferValidation: options.TransferValidation,
-                      encryptionScope: options?.EncryptionScope,
-                      trimBlobNameSlashes: options?.TrimBlobNameSlashes ?? false),
-                  authentication,
-                  options?._clientSideEncryptionOptions?.Clone())
         {
+            Argument.AssertNotNull(serviceUri, nameof(serviceUri));
+
+            if (tokenCredential != null)
+            {
+                SessionProvider sessionProvider = options.SessionOptions?.SessionProvider
+                    ?? new ContainerSessionProvider(serviceUri, tokenCredential, options);
+                authentication = new SessionAuthenticationPolicy(
+                    endpoint: serviceUri,
+                    fallbackAuthPolicy: authentication,
+                    sessionProvider: sessionProvider,
+                    sessionOptions: options.SessionOptions);
+            }
+
+            _uri = serviceUri;
+            _clientConfiguration = new BlobClientConfiguration(
+                pipeline: options.Build(authentication),
+                tokenCredential: tokenCredential,
+                clientDiagnostics: new ClientDiagnostics(options),
+                version: options?.Version ?? BlobClientOptions.LatestVersion,
+                customerProvidedKey: options?.CustomerProvidedKey,
+                transferValidation: options.TransferValidation,
+                encryptionScope: options?.EncryptionScope,
+                trimBlobNameSlashes: options?.TrimBlobNameSlashes ?? false);
+            _authenticationPolicy = authentication;
+            _clientSideEncryption = options?._clientSideEncryptionOptions?.Clone();
+            _serviceRestClient = BuildServiceRestClient(serviceUri);
+            BlobErrors.VerifyCpkAndEncryptionScopeNotBothSet(_clientConfiguration.CustomerProvidedKey, _clientConfiguration.EncryptionScope);
+            BlobErrors.VerifyHttpsCustomerProvidedKey(_uri, _clientConfiguration.CustomerProvidedKey);
         }
 
         /// <summary>
@@ -551,6 +576,48 @@ namespace Azure.Storage.Blobs
                     trimBlobNameSlashes: options.TrimBlobNameSlashes),
                 authentication,
                 clientSideEncryption: null);
+        }
+
+        /// <summary>
+        /// Creates a <see cref="SessionAuthenticationPolicy"/> wrapping the given bearer token policy.
+        /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        protected static HttpPipelinePolicy CreateSessionAuthenticationPolicy(
+            Uri endpoint,
+            HttpPipelinePolicy fallbackAuthPolicy,
+            SessionProvider sessionProvider,
+            SessionOptions sessionOptions)
+        {
+            return new SessionAuthenticationPolicy(
+                endpoint,
+                fallbackAuthPolicy,
+                sessionProvider,
+                sessionOptions);
+        }
+
+        /// <summary>
+        /// Creates a <see cref="SessionProvider"/> that mints sessions over the supplied
+        /// pipeline, so policies, transport, and retry settings configured by the caller
+        /// apply to Create Session requests.
+        /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        protected static SessionProvider CreateContainerSessionProvider(
+            Uri endpoint,
+            BlobClientOptions options,
+            HttpPipelinePolicy authentication,
+            HttpPipeline pipeline,
+            TokenCredential tokenCredential)
+        {
+            Uri serviceUri = ContainerSessionProvider.GetServiceEndpoint(endpoint);
+            return new ContainerSessionProvider(
+                () => CreateClient(
+                    serviceUri,
+                    options,
+                    authentication,
+                    pipeline,
+                    sharedKeyCredential: null,
+                    sasCredential: null,
+                    tokenCredential: tokenCredential));
         }
 
         private ServiceRestClient BuildServiceRestClient(Uri uri)
@@ -784,7 +851,7 @@ namespace Azure.Storage.Blobs
         /// single segment of blob containers in the storage account, starting
         /// from the specified <paramref name="continuationToken"/>.  Use an empty
         /// <paramref name="continuationToken"/> to start enumeration from the beginning
-        /// and the <see cref="ListContainersSegmentResponse.NextMarker"/> if it's not
+        /// and the <see cref="ListContainersSegmentResult.NextMarker"/> if it's not
         /// empty to make subsequent calls to <see cref="GetBlobContainersInternal"/>
         /// to continue enumerating the containers segment by segment.
         /// Containers are ordered lexicographically by name.
@@ -796,7 +863,7 @@ namespace Azure.Storage.Blobs
         /// <param name="continuationToken">
         /// An optional string value that identifies the segment of the list
         /// of blob containers to be returned with the next listing operation.  The
-        /// operation returns a non-empty <see cref="ListContainersSegmentResponse.NextMarker"/>
+        /// operation returns a non-empty <see cref="ListContainersSegmentResult.NextMarker"/>
         /// if the listing operation did not return all blob containers remaining
         /// to be listed with the current segment.  The NextMarker value can
         /// be used as the value for the <paramref name="continuationToken"/> parameter
@@ -833,7 +900,7 @@ namespace Azure.Storage.Blobs
         /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
         /// containing each failure instance.
         /// </remarks>
-        internal async Task<Response<ListContainersSegmentResponse>> GetBlobContainersInternal(
+        internal async Task<Response<ListContainersSegmentResult>> GetBlobContainersInternal(
             string continuationToken,
             BlobContainerTraits traits,
 #pragma warning disable CA1801 // Review unused parameters
@@ -858,7 +925,7 @@ namespace Azure.Storage.Blobs
                 try
                 {
                     scope.Start();
-                    Response<ListContainersSegmentResponse> response;
+                    Response<ListContainersSegmentResult> response;
 
                     if (async)
                     {
@@ -880,7 +947,7 @@ namespace Azure.Storage.Blobs
                             cancellationToken: cancellationToken);
                     }
 
-                    ListContainersSegmentResponse listContainersResponse = response.Value;
+                    ListContainersSegmentResult listContainersResponse = response.Value;
 
                     if ((traits & BlobContainerTraits.Metadata) != BlobContainerTraits.Metadata)
                     {
@@ -892,7 +959,7 @@ namespace Azure.Storage.Blobs
                             metadata: null))
                             .ToList();
 
-                        listContainersResponse = new ListContainersSegmentResponse(
+                        listContainersResponse = new ListContainersSegmentResult(
                             response.Value.ServiceEndpoint,
                             response.Value.Prefix,
                             response.Value.Marker,
@@ -1887,6 +1954,16 @@ namespace Azure.Storage.Blobs
         /// a failure occurs.
         /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
         /// containing each failure instance.
+        ///
+        /// When a container is deleted, a container with the same name can't be created
+        /// for at least 30 seconds.  The container might not be available for more than
+        /// 30 seconds if the service is still processing the request.  While the container
+        /// is being deleted, attempts to create a container of the same name fail with
+        /// status code 409 (Conflict).  The service indicates that the container is being
+        /// deleted.  Operations on blobs within the container, including reads and writes,
+        /// may continue to succeed for up to 30 seconds after the delete request is
+        /// accepted.  After this period, all operations on the container and its blobs
+        /// fail with status code 404 (Not Found).
         /// </remarks>
         [ForwardsClientCalls]
         public virtual Response DeleteBlobContainer(
@@ -1925,6 +2002,16 @@ namespace Azure.Storage.Blobs
         /// a failure occurs.
         /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
         /// containing each failure instance.
+        ///
+        /// When a container is deleted, a container with the same name can't be created
+        /// for at least 30 seconds.  The container might not be available for more than
+        /// 30 seconds if the service is still processing the request.  While the container
+        /// is being deleted, attempts to create a container of the same name fail with
+        /// status code 409 (Conflict).  The service indicates that the container is being
+        /// deleted.  Operations on blobs within the container, including reads and writes,
+        /// may continue to succeed for up to 30 seconds after the delete request is
+        /// accepted.  After this period, all operations on the container and its blobs
+        /// fail with status code 404 (Not Found).
         /// </remarks>
         [ForwardsClientCalls]
         public virtual async Task<Response> DeleteBlobContainerAsync(

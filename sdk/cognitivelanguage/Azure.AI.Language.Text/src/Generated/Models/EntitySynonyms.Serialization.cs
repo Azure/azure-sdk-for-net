@@ -151,10 +151,10 @@ namespace Azure.AI.Language.Text
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new EntitySynonyms(entityType, synonyms, additionalBinaryDataProperties);
+            return new EntitySynonyms(entityType, synonyms ?? new ChangeTrackingList<EntitySynonym>(), additionalBinaryDataProperties);
         }
     }
 }

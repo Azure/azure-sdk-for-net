@@ -17,7 +17,7 @@ using Azure.ResourceManager.ResilienceManagement.Models;
 
 namespace Azure.ResourceManager.ResilienceManagement
 {
-    /// <summary> Goal Resource a AzureResilienceProviderHub resource. </summary>
+    /// <summary> A goal resource in the Azure Resilience Management provider. </summary>
     public partial class GoalMembersData : ResourceData, IJsonModel<GoalMembersData>
     {
         /// <param name="data"> The data to parse. </param>
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.ResilienceManagement
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new GoalMembersData(

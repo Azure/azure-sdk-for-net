@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
 
         /// <summary> Initializes a new instance of <see cref="SecretArchiveSettings"/>. </summary>
         /// <param name="associatedIdentity"> The selection of the managed identity to use with this vault URI. The identity type must be either system assigned or user assigned. </param>
-        /// <param name="vaultUri"> The URI for the key vault used as the secret archive. </param>
+        /// <param name="vaultUri"> The URI of the secret archive endpoint. The URI must use the `https://` scheme. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal SecretArchiveSettings(ManagedServiceIdentitySelector associatedIdentity, Uri vaultUri, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <summary> The selection of the managed identity to use with this vault URI. The identity type must be either system assigned or user assigned. </summary>
         public ManagedServiceIdentitySelector AssociatedIdentity { get; set; }
 
-        /// <summary> The URI for the key vault used as the secret archive. </summary>
+        /// <summary> The URI of the secret archive endpoint. The URI must use the `https://` scheme. </summary>
         public Uri VaultUri { get; set; }
     }
 }

@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
-using Azure.Security.KeyVault.Secrets.Models;
 
 namespace Azure.Security.KeyVault.Secrets
 {
@@ -14,16 +13,6 @@ namespace Azure.Security.KeyVault.Secrets
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
     /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
-    [ModelReaderWriterBuildable(typeof(BackupSecretResult))]
-    [ModelReaderWriterBuildable(typeof(DeletedSecretBundle))]
-    [ModelReaderWriterBuildable(typeof(DeletedSecretItem))]
-    [ModelReaderWriterBuildable(typeof(DeletedSecretListResult))]
-    [ModelReaderWriterBuildable(typeof(SecretAttributesBundle))]
-    [ModelReaderWriterBuildable(typeof(SecretBundle))]
-    [ModelReaderWriterBuildable(typeof(SecretItem))]
-    [ModelReaderWriterBuildable(typeof(SecretListResult))]
-    [ModelReaderWriterBuildable(typeof(SecretRestoreParameters))]
-    [ModelReaderWriterBuildable(typeof(SecretSetParameters))]
     public partial class AzureSecurityKeyVaultSecretsContext : ModelReaderWriterContext
     {
     }

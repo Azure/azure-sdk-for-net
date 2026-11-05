@@ -28,6 +28,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 
         /// <summary> Initializes a new instance of <see cref="DataProtectionDeletedBackupVaultProperties"/>. </summary>
         /// <param name="monitoringSettings"> Monitoring Settings. </param>
+        /// <param name="costManagementSettings"> Cost Management Settings of the vault. </param>
         /// <param name="provisioningState"> Provisioning state of the BackupVault resource. </param>
         /// <param name="resourceMoveState"> Resource move state for backup vault. </param>
         /// <param name="resourceMoveDetails"> Resource move details for backup vault. </param>
@@ -44,9 +45,10 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <param name="originalBackupVaultResourcePath"> Resource path of the original backup vault. </param>
         /// <param name="resourceDeletionInfo"> Deletion info for the tracked resource (Backup Vault). </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DataProtectionDeletedBackupVaultProperties(MonitoringSettings monitoringSettings, DataProtectionBackupProvisioningState? provisioningState, BackupVaultResourceMoveState? resourceMoveState, BackupVaultResourceMoveDetails resourceMoveDetails, BackupVaultSecuritySettings securitySettings, IList<DataProtectionBackupStorageSetting> storageSettings, bool? isVaultProtectedByResourceGuard, BackupVaultFeatureSettings featureSettings, BackupVaultSecureScoreLevel? secureScore, BcdrSecurityLevel? bcdrSecurityLevel, IList<string> resourceGuardOperationRequests, IList<AzureLocation> replicatedRegions, string originalBackupVaultId, string originalBackupVaultName, string originalBackupVaultResourcePath, DataProtectionResourceDeletionInfo resourceDeletionInfo, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DataProtectionDeletedBackupVaultProperties(MonitoringSettings monitoringSettings, CostManagementSettings costManagementSettings, DataProtectionBackupProvisioningState? provisioningState, BackupVaultResourceMoveState? resourceMoveState, BackupVaultResourceMoveDetails resourceMoveDetails, BackupVaultSecuritySettings securitySettings, IList<DataProtectionBackupStorageSetting> storageSettings, bool? isVaultProtectedByResourceGuard, BackupVaultFeatureSettings featureSettings, BackupVaultSecureScoreLevel? secureScore, BcdrSecurityLevel? bcdrSecurityLevel, IList<string> resourceGuardOperationRequests, IList<AzureLocation> replicatedRegions, string originalBackupVaultId, string originalBackupVaultName, string originalBackupVaultResourcePath, DataProtectionResourceDeletionInfo resourceDeletionInfo, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             MonitoringSettings = monitoringSettings;
+            CostManagementSettings = costManagementSettings;
             ProvisioningState = provisioningState;
             ResourceMoveState = resourceMoveState;
             ResourceMoveDetails = resourceMoveDetails;
@@ -67,6 +69,9 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 
         /// <summary> Monitoring Settings. </summary>
         internal MonitoringSettings MonitoringSettings { get; }
+
+        /// <summary> Cost Management Settings of the vault. </summary>
+        internal CostManagementSettings CostManagementSettings { get; }
 
         /// <summary> Provisioning state of the BackupVault resource. </summary>
         public DataProtectionBackupProvisioningState? ProvisioningState { get; }
@@ -119,6 +124,15 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             get
             {
                 return MonitoringSettings is null ? default : MonitoringSettings.AlertSettingsForAllJobFailures;
+            }
+        }
+
+        /// <summary> Settings for granularity level. </summary>
+        public GranularityLevel? CostManagementGranularityLevel
+        {
+            get
+            {
+                return CostManagementSettings is null ? default : CostManagementSettings.GranularityLevel;
             }
         }
     }

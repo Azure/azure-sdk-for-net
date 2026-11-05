@@ -16,30 +16,32 @@ namespace Azure.ResourceManager.Automation.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private DateTimeOffset? _expiresOn;
+        private bool _expiresOnIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="ScheduleCreateOrUpdateProperties"/>. </summary>
-        /// <param name="startOn"> Gets or sets the start time of the schedule. </param>
+        /// <param name="startsOn"> Gets or sets the start time of the schedule. </param>
         /// <param name="frequency"> Gets or sets the frequency of the schedule. </param>
-        public ScheduleCreateOrUpdateProperties(DateTimeOffset startOn, AutomationScheduleFrequency frequency)
+        public ScheduleCreateOrUpdateProperties(DateTimeOffset startsOn, AutomationScheduleFrequency frequency)
         {
-            StartOn = startOn;
+            StartsOn = startsOn;
             Frequency = frequency;
         }
 
         /// <summary> Initializes a new instance of <see cref="ScheduleCreateOrUpdateProperties"/>. </summary>
         /// <param name="description"> Gets or sets the description of the schedule. </param>
-        /// <param name="startOn"> Gets or sets the start time of the schedule. </param>
-        /// <param name="expireOn"> Gets or sets the end time of the schedule. </param>
+        /// <param name="startsOn"> Gets or sets the start time of the schedule. </param>
+        /// <param name="expiresOn"> Gets or sets the end time of the schedule. </param>
         /// <param name="interval"> Gets or sets the interval of the schedule. </param>
         /// <param name="frequency"> Gets or sets the frequency of the schedule. </param>
         /// <param name="timeZone"> Gets or sets the time zone of the schedule. </param>
         /// <param name="advancedSchedule"> Gets or sets the AdvancedSchedule. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ScheduleCreateOrUpdateProperties(string description, DateTimeOffset startOn, DateTimeOffset? expireOn, BinaryData interval, AutomationScheduleFrequency frequency, string timeZone, AutomationAdvancedSchedule advancedSchedule, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ScheduleCreateOrUpdateProperties(string description, DateTimeOffset startsOn, DateTimeOffset? expiresOn, BinaryData interval, AutomationScheduleFrequency frequency, string timeZone, AutomationAdvancedSchedule advancedSchedule, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Description = description;
-            StartOn = startOn;
-            ExpireOn = expireOn;
+            StartsOn = startsOn;
+            _expiresOn = expiresOn;
             Interval = interval;
             Frequency = frequency;
             TimeZone = timeZone;
@@ -51,10 +53,21 @@ namespace Azure.ResourceManager.Automation.Models
         public string Description { get; set; }
 
         /// <summary> Gets or sets the start time of the schedule. </summary>
-        public DateTimeOffset StartOn { get; }
+        public DateTimeOffset StartsOn { get; }
 
         /// <summary> Gets or sets the end time of the schedule. </summary>
-        public DateTimeOffset? ExpireOn { get; set; }
+        public DateTimeOffset? ExpiresOn
+        {
+            get
+            {
+                return _expiresOn;
+            }
+            set
+            {
+                _expiresOn = value;
+                _expiresOnIsDefined = true;
+            }
+        }
 
         /// <summary>
         /// Gets or sets the interval of the schedule.

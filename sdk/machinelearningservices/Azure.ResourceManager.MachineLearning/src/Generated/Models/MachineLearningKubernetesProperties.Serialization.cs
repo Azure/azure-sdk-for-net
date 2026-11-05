@@ -74,20 +74,41 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 throw new FormatException($"The model {nameof(MachineLearningKubernetesProperties)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(RelayConnectionString))
+            if (Optional.IsDefined(RelayConnectionString, _relayConnectionStringIsDefined))
             {
-                writer.WritePropertyName("relayConnectionString"u8);
-                writer.WriteStringValue(RelayConnectionString);
+                if (RelayConnectionString != null)
+                {
+                    writer.WritePropertyName("relayConnectionString"u8);
+                    writer.WriteStringValue(RelayConnectionString);
+                }
+                else
+                {
+                    writer.WriteNull("relayConnectionString"u8);
+                }
             }
-            if (Optional.IsDefined(ServiceBusConnectionString))
+            if (Optional.IsDefined(ServiceBusConnectionString, _serviceBusConnectionStringIsDefined))
             {
-                writer.WritePropertyName("serviceBusConnectionString"u8);
-                writer.WriteStringValue(ServiceBusConnectionString);
+                if (ServiceBusConnectionString != null)
+                {
+                    writer.WritePropertyName("serviceBusConnectionString"u8);
+                    writer.WriteStringValue(ServiceBusConnectionString);
+                }
+                else
+                {
+                    writer.WriteNull("serviceBusConnectionString"u8);
+                }
             }
-            if (Optional.IsDefined(ExtensionPrincipalId))
+            if (Optional.IsDefined(ExtensionPrincipalId, _extensionPrincipalIdIsDefined))
             {
-                writer.WritePropertyName("extensionPrincipalId"u8);
-                writer.WriteStringValue(ExtensionPrincipalId);
+                if (ExtensionPrincipalId != null)
+                {
+                    writer.WritePropertyName("extensionPrincipalId"u8);
+                    writer.WriteStringValue(ExtensionPrincipalId);
+                }
+                else
+                {
+                    writer.WriteNull("extensionPrincipalId"u8);
+                }
             }
             if (Optional.IsDefined(ExtensionInstanceReleaseTrain))
             {
@@ -162,8 +183,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
+            bool relayConnectionStringIsDefined = false;
             string relayConnectionString = default;
+            bool serviceBusConnectionStringIsDefined = false;
             string serviceBusConnectionString = default;
+            bool extensionPrincipalIdIsDefined = false;
             string extensionPrincipalId = default;
             string extensionInstanceReleaseTrain = default;
             string vcName = default;
@@ -175,6 +199,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 if (prop.NameEquals("relayConnectionString"u8))
                 {
+                    relayConnectionStringIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         relayConnectionString = null;
@@ -185,6 +210,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("serviceBusConnectionString"u8))
                 {
+                    serviceBusConnectionStringIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         serviceBusConnectionString = null;
@@ -195,6 +221,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("extensionPrincipalId"u8))
                 {
+                    extensionPrincipalIdIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         extensionPrincipalId = null;
@@ -239,7 +266,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new MachineLearningKubernetesProperties(
@@ -251,7 +278,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 @namespace,
                 defaultInstanceType,
                 instanceTypes ?? new ChangeTrackingDictionary<string, MachineLearningInstanceTypeSchema>(),
-                additionalBinaryDataProperties);
+                additionalBinaryDataProperties)
+            {
+                _relayConnectionStringIsDefined = relayConnectionStringIsDefined,
+                _serviceBusConnectionStringIsDefined = serviceBusConnectionStringIsDefined,
+                _extensionPrincipalIdIsDefined = extensionPrincipalIdIsDefined
+            };
         }
     }
 }

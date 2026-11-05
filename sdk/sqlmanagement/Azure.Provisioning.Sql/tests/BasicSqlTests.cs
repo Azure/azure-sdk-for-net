@@ -9,6 +9,62 @@ namespace Azure.Provisioning.Sql.Tests;
 
 public class BasicSqlTests
 {
+    [Test]
+    public void CompatibilityResourcesAreUsable()
+    {
+#pragma warning disable CS0618 // Compatibility APIs are intentionally exercised.
+        Assert.DoesNotThrow(() =>
+        {
+            ManagedInstance managedInstance = new(nameof(managedInstance));
+            DistributedAvailabilityGroup group = new(nameof(group))
+            {
+                Parent = managedInstance,
+                Name = "group",
+                PrimaryAvailabilityGroupName = "primary",
+                ReplicationMode = DistributedAvailabilityGroupReplicationMode.Async,
+                SecondaryAvailabilityGroupName = "secondary",
+                SourceEndpoint = "source",
+                TargetDatabase = "database"
+            };
+
+            SqlServer server = new(nameof(server));
+            SqlServerCommunicationLink communicationLink = new(nameof(communicationLink))
+            {
+                Parent = server,
+                Name = "link",
+                PartnerServer = "partner"
+            };
+        });
+#pragma warning restore CS0618
+    }
+
+    [Test]
+    public void SensitivityLabelPropertiesAreWritable()
+    {
+        Assert.DoesNotThrow(() =>
+        {
+            ManagedDatabaseSensitivityLabel managedLabel = new(nameof(managedLabel))
+            {
+                LabelName = "label",
+                LabelId = "label-id",
+                InformationType = "information",
+                InformationTypeId = "information-id",
+                Rank = SensitivityLabelRank.High,
+                ClientClassificationSource = ClientClassificationSource.Native
+            };
+
+            SqlDatabaseSensitivityLabel sqlLabel = new(nameof(sqlLabel))
+            {
+                LabelName = "label",
+                LabelId = "label-id",
+                InformationType = "information",
+                InformationTypeId = "information-id",
+                Rank = SensitivityLabelRank.High,
+                ClientClassificationSource = ClientClassificationSource.Native
+            };
+        });
+    }
+
     internal static Trycep CreateSimpleSqlServerAndDatabaseTest()
     {
         return new Trycep().Define(
@@ -83,7 +139,7 @@ public class BasicSqlTests
             param location string = resourceGroup().location
 
             resource sql 'Microsoft.Sql/servers@2021-11-01' = {
-              name: take('sql-${uniqueString(resourceGroup().id)}', 63)
+              name: take('sql${uniqueString(resourceGroup().id)}', 24)
               location: location
               properties: {
                 administratorLogin: adminLogin

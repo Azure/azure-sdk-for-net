@@ -96,6 +96,19 @@ namespace Azure.ResourceManager.ServiceNetworking
             }
         }
 
+        /// <summary> Private Endpoint Connections List. </summary>
+        public IReadOnlyList<SubResource> PrivateEndpointConnections
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new TrafficControllerProperties();
+                }
+                return Properties.PrivateEndpointConnections;
+            }
+        }
+
         /// <summary> Security Policy Configuration. </summary>
         public SecurityPolicyConfigurations SecurityPolicyConfigurations
         {

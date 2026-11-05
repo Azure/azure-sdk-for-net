@@ -5,6 +5,7 @@ trigger:
   paths:
     include:
       - eng/packages/http-server-csharp-aspnet
+      - eng/pipelines/templates/archetype-typespec-emitter.yml
 pr:
   branches:
     include:
@@ -15,6 +16,7 @@ pr:
   paths:
     include:
       - eng/packages/http-server-csharp-aspnet
+      - eng/pipelines/templates/archetype-typespec-emitter.yml
 
 parameters:
   - name: UseTypeSpecNext
@@ -39,7 +41,7 @@ variables:
   - template: /eng/pipelines/templates/variables/globals.yml
 
 extends:
-  template: /eng/common/pipelines/templates/archetype-typespec-emitter.yml
+  template: /eng/pipelines/templates/archetype-typespec-emitter.yml
   parameters:
     InitializationSteps:
       - template: /eng/pipelines/templates/steps/install-dotnet.yml

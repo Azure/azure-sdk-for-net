@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.IotOperations.Models
 {
     /// <summary>
     /// AkriConnectorsRegistrySettings properties.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AkriConnectorsRegistryEndpointRef"/> and <see cref="AkriConnectorsContainerRegistry"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AkriConnectorsContainerRegistry"/> and <see cref="AkriConnectorsRegistryEndpointRef"/>.
     /// </summary>
     public abstract partial class AkriConnectorsRegistrySettings
     {
@@ -33,6 +33,11 @@ namespace Azure.ResourceManager.IotOperations.Models
         {
             RegistrySettingsType = registrySettingsType;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AkriConnectorsRegistrySettings"/>. </summary>
+        protected AkriConnectorsRegistrySettings() : this(default)
+        {
         }
 
         /// <summary> Gets or sets the RegistrySettingsType. </summary>

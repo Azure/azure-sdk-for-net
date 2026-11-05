@@ -35,6 +35,11 @@ namespace Azure.Search.Documents.Indexes.Models
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
+        /// <summary> Initializes a new instance of <see cref="SearchIndexerDataIdentity"/>. </summary>
+        public SearchIndexerDataIdentity() : this(default)
+        {
+        }
+
         /// <summary> A URI fragment specifying the type of identity. </summary>
         internal string OdataType { get; set; }
     }

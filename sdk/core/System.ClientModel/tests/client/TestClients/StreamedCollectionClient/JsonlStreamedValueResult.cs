@@ -9,10 +9,10 @@ namespace ClientModel.Tests.Collections;
 
 public static class JsonlStreamedValueResult
 {
-    public static AsyncStreamingClientResult<StreamedValue> Create(
+    public static AsyncStreamingResult<StreamedValue> Create(
         PipelineResponse response,
         CancellationToken cancellationToken = default)
-        => AsyncStreamingClientResult.CreateJsonLines(
+        => AsyncStreamingResult.CreateJsonLines(
             response,
             static data => StreamedValue.FromJson(data.ToArray()),
             cancellationToken);

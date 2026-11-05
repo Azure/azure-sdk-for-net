@@ -16,21 +16,26 @@ namespace Azure.ResourceManager.Network.Models
     public partial class ExpressRouteServiceProvider : NetworkTrackedResourceData
     {
         /// <summary> Initializes a new instance of <see cref="ExpressRouteServiceProvider"/>. </summary>
+        public ExpressRouteServiceProvider()
+        {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ExpressRouteServiceProvider"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
-        /// <param name="type"> Resource type. </param>
+        /// <param name="resourceType"> Resource type. </param>
         /// <param name="location"> Resource location. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> Properties of the express route service provider. </param>
-        internal ExpressRouteServiceProvider(ResourceIdentifier id, string name, string @type, AzureLocation? location, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, ExpressRouteServiceProviderPropertiesFormat properties) : base(id, name, @type, location, tags, additionalBinaryDataProperties)
+        internal ExpressRouteServiceProvider(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, ExpressRouteServiceProviderPropertiesFormat properties) : base(id, name, resourceType, location, tags, additionalBinaryDataProperties)
         {
             Properties = properties;
         }
 
         /// <summary> Properties of the express route service provider. </summary>
         [WirePath("properties")]
-        internal ExpressRouteServiceProviderPropertiesFormat Properties { get; }
+        internal ExpressRouteServiceProviderPropertiesFormat Properties { get; set; }
 
         /// <summary> A list of peering locations. </summary>
         [WirePath("properties.peeringLocations")]
@@ -38,7 +43,11 @@ namespace Azure.ResourceManager.Network.Models
         {
             get
             {
-                return Properties is null ? default : Properties.PeeringLocations;
+                if (Properties is null)
+                {
+                    Properties = new ExpressRouteServiceProviderPropertiesFormat();
+                }
+                return Properties.PeeringLocations;
             }
         }
 
@@ -48,7 +57,11 @@ namespace Azure.ResourceManager.Network.Models
         {
             get
             {
-                return Properties is null ? default : Properties.BandwidthsOffered;
+                if (Properties is null)
+                {
+                    Properties = new ExpressRouteServiceProviderPropertiesFormat();
+                }
+                return Properties.BandwidthsOffered;
             }
         }
 

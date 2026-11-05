@@ -185,10 +185,10 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new WebhookProperties(status, scope, actions, provisioningState, additionalBinaryDataProperties);
+            return new WebhookProperties(status, scope, actions ?? new ChangeTrackingList<ContainerRegistryWebhookAction>(), provisioningState, additionalBinaryDataProperties);
         }
     }
 }

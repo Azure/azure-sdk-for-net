@@ -133,6 +133,33 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             Assert.Empty(transmitter._fileBlobProvider!.GetBlobs());
         }
 
+        // Without suppression, HttpClient instrumentation records the drain's own POST as a dependency.
+        [Fact]
+        public void DrainUploadsWithInstrumentationSuppressed()
+        {
+            var suppressed = new List<bool>();
+            using var transmitter = CreateTransmitter(
+                _ =>
+                {
+                    lock (suppressed)
+                    {
+                        suppressed.Add(Sdk.SuppressInstrumentation);
+                    }
+
+                    return new MockResponse(200).SetContent("{\"itemsReceived\":1,\"itemsAccepted\":1,\"errors\":[]}");
+                },
+                out _);
+
+            SeedBlobs(transmitter, count: 1);
+            transmitter._transmitFromStorageHandler!.Drain();
+
+            SeedBlobs(transmitter, count: 1);
+            transmitter._transmitFromStorageHandler!.DrainAsync().Wait();
+
+            Assert.Equal(new[] { true, true }, suppressed);
+            Assert.False(Sdk.SuppressInstrumentation);
+        }
+
         [Fact]
         public void DrainIsolatesConstituentsWhenCoalescedBatchIsRejected()
         {
@@ -349,12 +376,17 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             Assert.False(started!.IsCompleted);
 
             // A second signal shutting down must not replace the running drain with a no-op that
-            // would let disposal proceed underneath it.
+            // would let disposal proceed underneath it. The composite is rebuilt each call so that
+            // storage partitions created by the later signal are included, so this asserts that the
+            // new composite still tracks the running work rather than that it is the same instance.
             transmitter.DrainStorage(0);
-            Assert.Same(started, transmitter.InFlightDrain);
+            var second = transmitter.InFlightDrain;
+            Assert.NotNull(second);
+            Assert.False(second!.IsCompleted);
 
             gate.Set();
             started.Wait(TimeSpan.FromSeconds(10));
+            second.Wait(TimeSpan.FromSeconds(10));
         }
 
         [Fact]

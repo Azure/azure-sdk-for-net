@@ -459,6 +459,34 @@ public class GetInputItemsProtocolTests : IDisposable
         Assert.That(texts[2], Is.EqualTo("Message from C"));
     }
 
+    [Test]
+    public async Task Post_WithPreviousResponseId_DefaultHistoryLimitReturnsMoreThan100Items()
+    {
+        var inputs = Enumerable.Range(0, 120)
+            .Select(i => new { role = "user", content = $"Message {i}" })
+            .ToArray();
+        var jsonA = JsonSerializer.Serialize(new { model = "test", input = inputs });
+        var postA = await _client.PostAsync("/responses",
+            new StringContent(jsonA, Encoding.UTF8, "application/json"));
+        var bodyA = await postA.Content.ReadAsStringAsync();
+        Assert.That(postA.StatusCode == HttpStatusCode.OK, Is.True, $"POST A failed: {bodyA}");
+        using var docA = JsonDocument.Parse(bodyA);
+        var responseIdA = docA.RootElement.GetProperty("id").GetString()!;
+
+        var jsonB = JsonSerializer.Serialize(new
+        {
+            model = "test",
+            input = "Next message",
+            previous_response_id = responseIdA,
+        });
+        var postB = await _client.PostAsync("/responses",
+            new StringContent(jsonB, Encoding.UTF8, "application/json"));
+        var bodyB = await postB.Content.ReadAsStringAsync();
+
+        Assert.That(postB.StatusCode == HttpStatusCode.OK, Is.True, $"POST B failed: {bodyB}");
+        Assert.That(await _handler.LastContext!.GetHistoryAsync(), Has.Count.EqualTo(120));
+    }
+
     /// <summary>
     /// Verifies that descending order returns current inline input first, then history items
     /// from previous_response_id — demonstrating both types are present and correctly ordered.

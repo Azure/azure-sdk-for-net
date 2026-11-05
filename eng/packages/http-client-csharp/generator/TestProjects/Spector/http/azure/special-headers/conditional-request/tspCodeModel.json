@@ -25,7 +25,6 @@
             "$id": "3",
             "name": "postIfMatch",
             "isExactName": false,
-            "resourceName": "ConditionalRequest",
             "doc": "Check when only If-Match in header is defined with eTag type.",
             "accessibility": "public",
             "parameters": [
@@ -134,7 +133,6 @@
             "$id": "11",
             "name": "postIfNoneMatch",
             "isExactName": false,
-            "resourceName": "ConditionalRequest",
             "doc": "Check when only If-None-Match in header is defined with eTag type.",
             "accessibility": "public",
             "parameters": [
@@ -243,7 +241,6 @@
             "$id": "19",
             "name": "postCustomIfMatch",
             "isExactName": false,
-            "resourceName": "ConditionalRequest",
             "doc": "Check when custom If-Match header name is used with eTag type for conditional requests.",
             "accessibility": "public",
             "parameters": [
@@ -352,7 +349,6 @@
             "$id": "27",
             "name": "postCustomIfNoneMatch",
             "isExactName": false,
-            "resourceName": "ConditionalRequest",
             "doc": "Check when custom If-None-Match header name is used with eTag type for conditional requests.",
             "accessibility": "public",
             "parameters": [

@@ -1,0 +1,4 @@
+﻿<Solution>
+  <Project Path="src/Azure.ResourceManager.StorageMover.csproj" />
+  <Project Path="tests/Azure.ResourceManager.StorageMover.Tests.csproj" />
+</Solution>

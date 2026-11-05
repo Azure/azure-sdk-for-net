@@ -8,6 +8,9 @@
       "$id": "1",
       "kind": "enum",
       "name": "Versions",
+      "apiVersions": [
+        "v1"
+      ],
       "crossLanguageDefinitionId": "Resiliency.ServiceDriven.Versions",
       "valueType": {
         "$id": "2",
@@ -67,7 +70,6 @@
             "$id": "6",
             "name": "fromNone",
             "isExactName": false,
-            "resourceName": "AddOptionalParam",
             "doc": "Test that currently accepts no parameters, will be updated in next spec to accept a new optional parameter as well",
             "accessibility": "public",
             "parameters": [],
@@ -112,7 +114,6 @@
             "$id": "8",
             "name": "fromOneRequired",
             "isExactName": false,
-            "resourceName": "AddOptionalParam",
             "doc": "Test that currently accepts one required parameter, will be updated in next spec to accept a new optional parameter as well",
             "accessibility": "public",
             "parameters": [
@@ -209,7 +210,6 @@
             "$id": "14",
             "name": "fromOneOptional",
             "isExactName": false,
-            "resourceName": "AddOptionalParam",
             "doc": "Test that currently accepts one optional parameter, will be updated in next spec to accept a new optional parameter as well",
             "accessibility": "public",
             "parameters": [

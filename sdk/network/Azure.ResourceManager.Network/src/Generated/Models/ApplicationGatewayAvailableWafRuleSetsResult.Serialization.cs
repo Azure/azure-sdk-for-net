@@ -15,7 +15,7 @@ using Azure.ResourceManager.Network;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Response for ApplicationGatewayAvailableWafRuleSets API service call. </summary>
-    public partial class ApplicationGatewayAvailableWafRuleSetsResult : IJsonModel<ApplicationGatewayAvailableWafRuleSetsResult>
+    internal partial class ApplicationGatewayAvailableWafRuleSetsResult : IJsonModel<ApplicationGatewayAvailableWafRuleSetsResult>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new ApplicationGatewayAvailableWafRuleSetsResult(value ?? new ChangeTrackingList<ApplicationGatewayFirewallRuleSet>(), additionalBinaryDataProperties);

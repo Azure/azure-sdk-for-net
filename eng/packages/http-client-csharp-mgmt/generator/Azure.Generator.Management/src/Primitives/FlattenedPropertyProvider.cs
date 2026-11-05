@@ -25,10 +25,11 @@ namespace Azure.Generator.Management.Primitives
         /// True when this flattened property's type was lifted to nullable because the
         /// wrapping parent (the internalized property, e.g. <c>properties?:</c>) may be
         /// absent at runtime. Applies to both value types (<c>Nullable&lt;T&gt;</c>) and
-        /// reference types (nullable annotation). The public property surface is
-        /// nullable, but the public constructor parameter is kept as the original
-        /// inner type to enforce that required leaves are provided. The model factory
-        /// parameter, however, is nullable (callers may omit it when mocking).
+        /// reference types (nullable annotation). Historical public value-type nullability
+        /// and constructor parameter types take precedence when a last contract exists;
+        /// the serialized inner property retains the current wire type. For new APIs,
+        /// constructor parameters keep the original inner type. Model factory parameters
+        /// are nullable so callers can omit an optional wrapper when mocking.
         /// </summary>
         public bool IsLiftedToNullable { get; }
 

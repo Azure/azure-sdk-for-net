@@ -19,14 +19,20 @@ internal sealed class BroadcastEventStream : AgentEventStream, IDestroyableStrea
     private readonly object _gate = new();
     private readonly SubscriberHub _hub = new();
     private readonly string _id;
+    private readonly System.Action _onDestroy;
     private StreamState _state = StreamState.Active;
     private string? _lastEventId;
 
-    public BroadcastEventStream(string id) => _id = id;
+    public BroadcastEventStream(string id, System.Action onDestroy)
+    {
+        _id = id;
+        _onDestroy = onDestroy;
+    }
 
     public override ValueTask EmitAsync(SseItem<string> item, bool close = false, CancellationToken cancellationToken = default)
     {
         cancellationToken.ThrowIfCancellationRequested();
+        bool remove = false;
         lock (_gate)
         {
             if (_state == StreamState.Destroyed)
@@ -45,7 +51,13 @@ internal sealed class BroadcastEventStream : AgentEventStream, IDestroyableStrea
             {
                 _state = StreamState.Closed;
                 _hub.CompleteAll();
+                remove = true;
             }
+        }
+
+        if (remove)
+        {
+            _onDestroy();
         }
 
         return default;
@@ -53,13 +65,20 @@ internal sealed class BroadcastEventStream : AgentEventStream, IDestroyableStrea
 
     public override ValueTask CloseAsync(CancellationToken cancellationToken = default)
     {
+        bool remove = false;
         lock (_gate)
         {
             if (_state == StreamState.Active)
             {
                 _state = StreamState.Closed;
                 _hub.CompleteAll();
+                remove = true;
             }
+        }
+
+        if (remove)
+        {
+            _onDestroy();
         }
 
         return default;
@@ -132,6 +151,6 @@ internal sealed class BroadcastEventStream : AgentEventStream, IDestroyableStrea
         }
     }
 
-    // The broadcast (no-replay) backing has no close-clock TTL, so it never auto-destroys on lookup.
+    // Closed broadcast streams are removed immediately because they retain no replay history.
     public bool TryAutoDestroyIfElapsed() => false;
 }

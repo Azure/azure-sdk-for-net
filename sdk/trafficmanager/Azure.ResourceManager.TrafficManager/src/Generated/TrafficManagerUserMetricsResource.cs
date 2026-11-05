@@ -18,9 +18,9 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.TrafficManager
 {
     /// <summary>
-    /// A class representing a TrafficManagerUserMetric along with the instance operations that can be performed on it.
+    /// A class representing a TrafficManagerUserMetrics along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="TrafficManagerUserMetricsResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SubscriptionResource"/> using the GetTrafficManagerUserMetric method.
+    /// Otherwise you can get one from its parent resource <see cref="SubscriptionResource"/> using the GetTrafficManagerUserMetrics method.
     /// </summary>
     public partial class TrafficManagerUserMetricsResource : ArmResource
     {
@@ -49,9 +49,9 @@ namespace Azure.ResourceManager.TrafficManager
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal TrafficManagerUserMetricsResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string trafficManagerUserMetricApiVersion);
+            TryGetApiVersion(ResourceType, out string trafficManagerUserMetricsApiVersion);
             _trafficManagerUserMetricsKeysClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.TrafficManager", ResourceType.Namespace, Diagnostics);
-            _trafficManagerUserMetricsKeysRestClient = new TrafficManagerUserMetricsKeys(_trafficManagerUserMetricsKeysClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, trafficManagerUserMetricApiVersion ?? "2024-04-01-preview");
+            _trafficManagerUserMetricsKeysRestClient = new TrafficManagerUserMetricsKeys(_trafficManagerUserMetricsKeysClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, trafficManagerUserMetricsApiVersion ?? "2026-09-01");
             ValidateResourceId(id);
         }
 
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.TrafficManager
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-04-01-preview. </description>
+        /// <description> 2026-09-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.TrafficManager
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-04-01-preview. </description>
+        /// <description> 2026-09-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.TrafficManager
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-04-01-preview. </description>
+        /// <description> 2026-09-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.TrafficManager
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-04-01-preview. </description>
+        /// <description> 2026-09-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>

@@ -8,6 +8,9 @@
       "$id": "1",
       "kind": "enum",
       "name": "Versions",
+      "apiVersions": [
+        "2022-12-01-preview"
+      ],
       "crossLanguageDefinitionId": "_Specs_.Azure.Core.Scalar.Versions",
       "valueType": {
         "$id": "2",
@@ -168,6 +171,9 @@
       "$id": "18",
       "kind": "model",
       "name": "AzureLocationModel",
+      "apiVersions": [
+        "2022-12-01-preview"
+      ],
       "namespace": "_Specs_.Azure.Core.Scalar",
       "crossLanguageDefinitionId": "_Specs_.Azure.Core.Scalar.AzureLocationModel",
       "usage": "Input,Output,Json",
@@ -183,6 +189,9 @@
           "$id": "19",
           "kind": "property",
           "name": "location",
+          "apiVersions": [
+            "2022-12-01-preview"
+          ],
           "serializedName": "location",
           "type": {
             "$id": "20",
@@ -284,7 +293,6 @@
                 "$id": "28",
                 "name": "get",
                 "isExactName": false,
-                "resourceName": "AzureLocationScalar",
                 "doc": "get azureLocation value",
                 "accessibility": "public",
                 "parameters": [
@@ -404,7 +412,6 @@
                 "$id": "34",
                 "name": "put",
                 "isExactName": false,
-                "resourceName": "AzureLocationScalar",
                 "doc": "put azureLocation value",
                 "accessibility": "public",
                 "parameters": [
@@ -566,7 +573,6 @@
                 "$id": "44",
                 "name": "post",
                 "isExactName": false,
-                "resourceName": "AzureLocationScalar",
                 "doc": "post a model which has azureLocation property",
                 "accessibility": "public",
                 "parameters": [
@@ -760,7 +766,6 @@
                 "$id": "52",
                 "name": "header",
                 "isExactName": false,
-                "resourceName": "AzureLocationScalar",
                 "doc": "azureLocation value header",
                 "accessibility": "public",
                 "parameters": [
@@ -871,7 +876,6 @@
                 "$id": "60",
                 "name": "query",
                 "isExactName": false,
-                "resourceName": "AzureLocationScalar",
                 "doc": "azureLocation value query",
                 "accessibility": "public",
                 "parameters": [

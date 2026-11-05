@@ -26,20 +26,20 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="BareMetalMachineKeySetPatchProperties"/>. </summary>
-        /// <param name="expireOn"> The date and time after which the users in this key set will be removed from the bare metal machines. </param>
+        /// <param name="expiresOn"> The date and time after which the users in this key set will be removed from the bare metal machines. </param>
         /// <param name="jumpHostsAllowed"> The list of IP addresses of jump hosts with management network access from which a login will be allowed for the users. </param>
         /// <param name="userList"> The unique list of permitted users. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BareMetalMachineKeySetPatchProperties(DateTimeOffset? expireOn, IList<IPAddress> jumpHostsAllowed, IList<KeySetUser> userList, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BareMetalMachineKeySetPatchProperties(DateTimeOffset? expiresOn, IList<IPAddress> jumpHostsAllowed, IList<KeySetUser> userList, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            ExpireOn = expireOn;
+            ExpiresOn = expiresOn;
             JumpHostsAllowed = jumpHostsAllowed;
             UserList = userList;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The date and time after which the users in this key set will be removed from the bare metal machines. </summary>
-        public DateTimeOffset? ExpireOn { get; set; }
+        public DateTimeOffset? ExpiresOn { get; set; }
 
         /// <summary> The list of IP addresses of jump hosts with management network access from which a login will be allowed for the users. </summary>
         public IList<IPAddress> JumpHostsAllowed { get; } = new ChangeTrackingList<IPAddress>();

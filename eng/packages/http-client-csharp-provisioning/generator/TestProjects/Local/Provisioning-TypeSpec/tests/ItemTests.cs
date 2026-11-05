@@ -12,6 +12,33 @@ namespace Azure.Provisioning.ProvisioningTypeSpec.Tests;
 public class ItemTests
 {
     [Test]
+    public async Task DeploymentScopedChildWithCompositeName()
+    {
+        await using Trycep test = new Trycep().Define(
+            ctx =>
+            {
+                Infrastructure infra = new();
+                Item item = new("item") { Name = "store/item" };
+                Item existing = Item.FromExisting("existing");
+                existing.Name = "store/existing";
+                infra.Add(item);
+                infra.Add(existing);
+                return infra;
+            });
+
+        test.Compare(
+            """
+            resource item 'ProvisioningTypeSpec/configurationStores/items@2024-05-01' = {
+              name: 'store/item'
+            }
+
+            resource existing 'ProvisioningTypeSpec/configurationStores/items@2024-05-01' existing = {
+              name: 'store/existing'
+            }
+            """);
+    }
+
+    [Test]
     public async Task InheritedAndCreateBodyProperties()
     {
         await using Trycep test = new Trycep().Define(
@@ -50,20 +77,20 @@ public class ItemTests
 
             resource item 'ProvisioningTypeSpec/configurationStores/items@2024-05-01' = {
               name: take('item-${uniqueString(resourceGroup().id)}', 24)
+              parent: store
               properties: {
-                value: 'value'
-                contentType: 'text/plain'
-                nullableValue: null
                 attributes: {
-                  enabled: true
                   displayName: 'item attributes'
+                  enabled: true
                   expires: '2026-07-29T09:30:00.0000000Z'
                 }
+                contentType: 'text/plain'
+                nullableValue: null
+                value: 'value'
               }
               tags: {
                 environment: 'test'
               }
-              parent: store
             }
             """);
     }

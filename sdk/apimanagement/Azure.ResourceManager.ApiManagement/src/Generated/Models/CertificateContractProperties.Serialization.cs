@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             writer.WritePropertyName("thumbprint"u8);
             writer.WriteStringValue(Thumbprint);
             writer.WritePropertyName("expirationDate"u8);
-            writer.WriteStringValue(ExpireOn, "O");
+            writer.WriteStringValue(ExpiresOn, "O");
             if (Optional.IsDefined(KeyVaultDetails))
             {
                 writer.WritePropertyName("keyVault"u8);
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             }
             string subject = default;
             string thumbprint = default;
-            DateTimeOffset expireOn = default;
+            DateTimeOffset expiresOn = default;
             KeyVaultContractProperties keyVaultDetails = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
                 if (prop.NameEquals("expirationDate"u8))
                 {
-                    expireOn = prop.Value.GetDateTimeOffset("O");
+                    expiresOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("keyVault"u8))
@@ -165,10 +165,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new CertificateContractProperties(subject, thumbprint, expireOn, keyVaultDetails, additionalBinaryDataProperties);
+            return new CertificateContractProperties(subject, thumbprint, expiresOn, keyVaultDetails, additionalBinaryDataProperties);
         }
     }
 }

@@ -17,7 +17,7 @@ namespace Azure.Provisioning.Batch
         private BicepValue<BatchApplicationPackageState> _state;
         private BicepValue<string> _format;
         private BicepValue<Uri> _storageUri;
-        private BicepValue<DateTimeOffset> _storageUriExpireOn;
+        private BicepValue<DateTimeOffset> _storageUriExpiresOn;
         private BicepValue<DateTimeOffset> _lastActivatedOn;
 
         /// <summary> Creates a new ApplicationPackageProperties. </summary>
@@ -55,13 +55,13 @@ namespace Azure.Provisioning.Batch
             }
         }
 
-        /// <summary> Gets the StorageUriExpireOn. </summary>
-        public BicepValue<DateTimeOffset> StorageUriExpireOn
+        /// <summary> Gets the StorageUriExpiresOn. </summary>
+        public BicepValue<DateTimeOffset> StorageUriExpiresOn
         {
             get
             {
                 Initialize();
-                return _storageUriExpireOn;
+                return _storageUriExpiresOn;
             }
         }
 
@@ -82,7 +82,7 @@ namespace Azure.Provisioning.Batch
             _state = DefineProperty<BatchApplicationPackageState>(nameof(State), new string[] { "state" }, isOutput: true);
             _format = DefineProperty<string>(nameof(Format), new string[] { "format" }, isOutput: true);
             _storageUri = DefineProperty<Uri>(nameof(StorageUri), new string[] { "storageUrl" }, isOutput: true);
-            _storageUriExpireOn = DefineProperty<DateTimeOffset>(nameof(StorageUriExpireOn), new string[] { "storageUrlExpiry" }, isOutput: true, format: "O");
+            _storageUriExpiresOn = DefineProperty<DateTimeOffset>(nameof(StorageUriExpiresOn), new string[] { "storageUrlExpiry" }, isOutput: true, format: "O");
             _lastActivatedOn = DefineProperty<DateTimeOffset>(nameof(LastActivatedOn), new string[] { "lastActivationTime" }, isOutput: true, format: "O");
             DefineAdditionalProperties();
         }

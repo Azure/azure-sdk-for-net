@@ -124,6 +124,28 @@ public class CancelAsyncTests : IDisposable
         Assert.That(execution.CancelRequested, Is.True);
     }
 
+    [Test]
+    public async Task InProgress_SignalsClientCancellationOnContext()
+    {
+        var execution = _tracker.Create("resp_cancel_sig", isBackground: true, isStreaming: false, store: true);
+        execution.Response = new Models.ResponseObject("resp_cancel_sig", "test") { Status = ResponseStatus.InProgress };
+        var context = new ResponseContext("resp_cancel_sig");
+        execution.Context = context;
+
+        Assert.That(context.IsClientCancelled, Is.False);
+
+        await _orchestrator.CancelAsync("resp_cancel_sig", PlatformContext.Empty);
+
+        Assert.Multiple(() =>
+        {
+            // An explicit client cancel surfaces the dedicated ClientCancellation signal so a handler
+            // can distinguish it from a shutdown or disconnect.
+            Assert.That(context.IsClientCancelled, Is.True);
+            Assert.That(context.ClientCancellation.IsCancellationRequested, Is.True);
+            Assert.That(context.IsShutdownRequested, Is.False);
+        });
+    }
+
     public void Dispose()
     {
         _tracker.Dispose();

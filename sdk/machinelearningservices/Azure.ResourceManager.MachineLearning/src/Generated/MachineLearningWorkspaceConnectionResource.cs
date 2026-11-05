@@ -26,8 +26,6 @@ namespace Azure.ResourceManager.MachineLearning
     {
         private readonly ClientDiagnostics _workspaceConnectionsClientDiagnostics;
         private readonly WorkspaceConnections _workspaceConnectionsRestClient;
-        private readonly ClientDiagnostics _connectionClientDiagnostics;
-        private readonly Connection _connectionRestClient;
         private readonly MachineLearningWorkspaceConnectionData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.MachineLearningServices/workspaces/connections";
@@ -53,9 +51,7 @@ namespace Azure.ResourceManager.MachineLearning
         {
             TryGetApiVersion(ResourceType, out string machineLearningWorkspaceConnectionApiVersion);
             _workspaceConnectionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MachineLearning", ResourceType.Namespace, Diagnostics);
-            _workspaceConnectionsRestClient = new WorkspaceConnections(_workspaceConnectionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, machineLearningWorkspaceConnectionApiVersion ?? "2026-03-15-preview");
-            _connectionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MachineLearning", ResourceType.Namespace, Diagnostics);
-            _connectionRestClient = new Connection(_connectionClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, machineLearningWorkspaceConnectionApiVersion ?? "2026-03-15-preview");
+            _workspaceConnectionsRestClient = new WorkspaceConnections(_workspaceConnectionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, machineLearningWorkspaceConnectionApiVersion ?? "2026-07-01");
             ValidateResourceId(id);
         }
 
@@ -109,7 +105,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-15-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -157,7 +153,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-15-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -205,7 +201,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-15-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -254,7 +250,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-15-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -303,7 +299,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-15-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -354,7 +350,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-15-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -393,84 +389,6 @@ namespace Azure.ResourceManager.MachineLearning
         }
 
         /// <summary>
-        /// Get available models under the Azure OpenAI connection.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/connections/{connectionName}/models. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> WorkspaceConnectionPropertiesV2BasicResources_GetModels. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-03-15-preview. </description>
-        /// </item>
-        /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="MachineLearningWorkspaceConnectionResource"/>. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="EndpointModelProperties"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<EndpointModelProperties> GetModelsAsync(CancellationToken cancellationToken = default)
-        {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new ConnectionGetModelsAsyncCollectionResultOfT(
-                _connectionRestClient,
-                Id.SubscriptionId,
-                Id.ResourceGroupName,
-                Id.Parent.Name,
-                Id.Name,
-                context,
-                "MachineLearningWorkspaceConnectionResource.GetModels");
-        }
-
-        /// <summary>
-        /// Get available models under the Azure OpenAI connection.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/connections/{connectionName}/models. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> WorkspaceConnectionPropertiesV2BasicResources_GetModels. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-03-15-preview. </description>
-        /// </item>
-        /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="MachineLearningWorkspaceConnectionResource"/>. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="EndpointModelProperties"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<EndpointModelProperties> GetModels(CancellationToken cancellationToken = default)
-        {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new ConnectionGetModelsCollectionResultOfT(
-                _connectionRestClient,
-                Id.SubscriptionId,
-                Id.ResourceGroupName,
-                Id.Parent.Name,
-                Id.Name,
-                context,
-                "MachineLearningWorkspaceConnectionResource.GetModels");
-        }
-
-        /// <summary>
         /// List all the secrets of a machine learning workspaces connections.
         /// <list type="bullet">
         /// <item>
@@ -483,7 +401,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-15-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -531,7 +449,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-15-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -564,205 +482,6 @@ namespace Azure.ResourceManager.MachineLearning
                 scope.Failed(e);
                 throw;
             }
-        }
-
-        /// <summary>
-        /// Test machine learning workspaces connections under the specified workspace.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/connections/{connectionName}/testconnection. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> WorkspaceConnectionPropertiesV2BasicResources_TestConnection. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-03-15-preview. </description>
-        /// </item>
-        /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="MachineLearningWorkspaceConnectionResource"/>. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="data"> Workspace Connection object. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation> TestConnectionAsync(WaitUntil waitUntil, MachineLearningWorkspaceConnectionData data = default, CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _workspaceConnectionsClientDiagnostics.CreateScope("MachineLearningWorkspaceConnectionResource.TestConnection");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _workspaceConnectionsRestClient.CreateTestConnectionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, MachineLearningWorkspaceConnectionData.ToRequestContent(data), context);
-                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                MachineLearningArmOperation operation = new MachineLearningArmOperation(_workspaceConnectionsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                {
-                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
-                }
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Test machine learning workspaces connections under the specified workspace.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/connections/{connectionName}/testconnection. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> WorkspaceConnectionPropertiesV2BasicResources_TestConnection. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-03-15-preview. </description>
-        /// </item>
-        /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="MachineLearningWorkspaceConnectionResource"/>. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="data"> Workspace Connection object. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation TestConnection(WaitUntil waitUntil, MachineLearningWorkspaceConnectionData data = default, CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _workspaceConnectionsClientDiagnostics.CreateScope("MachineLearningWorkspaceConnectionResource.TestConnection");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _workspaceConnectionsRestClient.CreateTestConnectionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, MachineLearningWorkspaceConnectionData.ToRequestContent(data), context);
-                Response response = Pipeline.ProcessMessage(message, context);
-                MachineLearningArmOperation operation = new MachineLearningArmOperation(_workspaceConnectionsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                {
-                    operation.WaitForCompletionResponse(cancellationToken);
-                }
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Gets a collection of MachineLearningWorkspaceConnectionDeployments in the <see cref="MachineLearningWorkspaceConnectionResource"/>. </summary>
-        /// <returns> An object representing collection of MachineLearningWorkspaceConnectionDeployments and their operations over a MachineLearningWorkspaceConnectionDeploymentResource. </returns>
-        public virtual MachineLearningWorkspaceConnectionDeploymentCollection GetMachineLearningWorkspaceConnectionDeployments()
-        {
-            return GetCachedClient(client => new MachineLearningWorkspaceConnectionDeploymentCollection(client, Id));
-        }
-
-        /// <summary> Get deployments under the Azure OpenAI connection by name. </summary>
-        /// <param name="deploymentName"> Name of the deployment resource. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="deploymentName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<MachineLearningWorkspaceConnectionDeploymentResource>> GetMachineLearningWorkspaceConnectionDeploymentAsync(string deploymentName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
-
-            return await GetMachineLearningWorkspaceConnectionDeployments().GetAsync(deploymentName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary> Get deployments under the Azure OpenAI connection by name. </summary>
-        /// <param name="deploymentName"> Name of the deployment resource. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="deploymentName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<MachineLearningWorkspaceConnectionDeploymentResource> GetMachineLearningWorkspaceConnectionDeployment(string deploymentName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
-
-            return GetMachineLearningWorkspaceConnectionDeployments().Get(deploymentName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of RaiBlocklists in the <see cref="MachineLearningWorkspaceConnectionResource"/>. </summary>
-        /// <returns> An object representing collection of RaiBlocklists and their operations over a RaiBlocklistResource. </returns>
-        public virtual RaiBlocklistCollection GetRaiBlocklists()
-        {
-            return GetCachedClient(client => new RaiBlocklistCollection(client, Id));
-        }
-
-        /// <summary> Gets the specified custom blocklist associated with the Azure OpenAI connection. </summary>
-        /// <param name="raiBlocklistName"> The name of the RaiBlocklist. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="raiBlocklistName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="raiBlocklistName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<RaiBlocklistResource>> GetRaiBlocklistAsync(string raiBlocklistName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(raiBlocklistName, nameof(raiBlocklistName));
-
-            return await GetRaiBlocklists().GetAsync(raiBlocklistName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary> Gets the specified custom blocklist associated with the Azure OpenAI connection. </summary>
-        /// <param name="raiBlocklistName"> The name of the RaiBlocklist. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="raiBlocklistName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="raiBlocklistName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<RaiBlocklistResource> GetRaiBlocklist(string raiBlocklistName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(raiBlocklistName, nameof(raiBlocklistName));
-
-            return GetRaiBlocklists().Get(raiBlocklistName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of ConnectionRaiPolicies in the <see cref="MachineLearningWorkspaceConnectionResource"/>. </summary>
-        /// <returns> An object representing collection of ConnectionRaiPolicies and their operations over a ConnectionRaiPolicyResource. </returns>
-        public virtual ConnectionRaiPolicyCollection GetConnectionRaiPolicies()
-        {
-            return GetCachedClient(client => new ConnectionRaiPolicyCollection(client, Id));
-        }
-
-        /// <summary> Gets the specified Content Filters associated with the Azure OpenAI connection. </summary>
-        /// <param name="raiPolicyName"> Name of the Rai Policy. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="raiPolicyName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="raiPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<ConnectionRaiPolicyResource>> GetConnectionRaiPolicyAsync(string raiPolicyName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(raiPolicyName, nameof(raiPolicyName));
-
-            return await GetConnectionRaiPolicies().GetAsync(raiPolicyName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary> Gets the specified Content Filters associated with the Azure OpenAI connection. </summary>
-        /// <param name="raiPolicyName"> Name of the Rai Policy. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="raiPolicyName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="raiPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<ConnectionRaiPolicyResource> GetConnectionRaiPolicy(string raiPolicyName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(raiPolicyName, nameof(raiPolicyName));
-
-            return GetConnectionRaiPolicies().Get(raiPolicyName, cancellationToken);
         }
     }
 }

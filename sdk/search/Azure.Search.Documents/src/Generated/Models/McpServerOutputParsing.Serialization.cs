@@ -14,7 +14,7 @@ namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary>
     /// Output parsing configuration for an MCP server tool.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="McpServerAutoOutputParsing"/>, <see cref="McpServerJsonOutputParsing"/>, <see cref="McpServerSplitOutputParsing"/>, and <see cref="McpServerNoneOutputParsing"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="McpServerAutoOutputParsing"/>, <see cref="McpServerJsonOutputParsing"/>, <see cref="McpServerNoneOutputParsing"/>, and <see cref="McpServerSplitOutputParsing"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownMcpServerOutputParsing))]
     public abstract partial class McpServerOutputParsing : IJsonModel<McpServerOutputParsing>
@@ -134,10 +134,10 @@ namespace Azure.Search.Documents.Indexes.Models
                         return McpServerAutoOutputParsing.DeserializeMcpServerAutoOutputParsing(element, options);
                     case "json":
                         return McpServerJsonOutputParsing.DeserializeMcpServerJsonOutputParsing(element, options);
-                    case "split":
-                        return McpServerSplitOutputParsing.DeserializeMcpServerSplitOutputParsing(element, options);
                     case "none":
                         return McpServerNoneOutputParsing.DeserializeMcpServerNoneOutputParsing(element, options);
+                    case "split":
+                        return McpServerSplitOutputParsing.DeserializeMcpServerSplitOutputParsing(element, options);
                 }
             }
             return UnknownMcpServerOutputParsing.DeserializeUnknownMcpServerOutputParsing(element, options);

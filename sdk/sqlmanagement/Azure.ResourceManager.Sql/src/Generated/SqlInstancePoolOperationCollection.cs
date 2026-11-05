@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Sql
         {
             TryGetApiVersion(SqlInstancePoolOperationResource.ResourceType, out string sqlInstancePoolOperationApiVersion);
             _instancePoolOperationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", SqlInstancePoolOperationResource.ResourceType.Namespace, Diagnostics);
-            _instancePoolOperationsRestClient = new InstancePoolOperations(_instancePoolOperationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, sqlInstancePoolOperationApiVersion ?? "2025-02-01-preview");
+            _instancePoolOperationsRestClient = new InstancePoolOperations(_instancePoolOperationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, sqlInstancePoolOperationApiVersion ?? "2025-08-01-preview");
             ValidateResourceId(id);
         }
 
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-02-01-preview. </description>
+        /// <description> 2025-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-02-01-preview. </description>
+        /// <description> 2025-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-02-01-preview. </description>
+        /// <description> 2025-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.Sql
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<SqlInstancePoolOperationData, SqlInstancePoolOperationResource>(new InstancePoolOperationsGetByInstancePoolAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<SqlInstancePoolOperationData, SqlInstancePoolOperationResource>(new SqlInstancePoolOperationDataAsyncCollectionResultOfT(
                 _instancePoolOperationsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-02-01-preview. </description>
+        /// <description> 2025-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.Sql
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<SqlInstancePoolOperationData, SqlInstancePoolOperationResource>(new InstancePoolOperationsGetByInstancePoolCollectionResultOfT(
+            return new PageableWrapper<SqlInstancePoolOperationData, SqlInstancePoolOperationResource>(new SqlInstancePoolOperationDataCollectionResultOfT(
                 _instancePoolOperationsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-02-01-preview. </description>
+        /// <description> 2025-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -278,7 +278,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-02-01-preview. </description>
+        /// <description> 2025-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -331,7 +331,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-02-01-preview. </description>
+        /// <description> 2025-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -388,7 +388,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-02-01-preview. </description>
+        /// <description> 2025-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>

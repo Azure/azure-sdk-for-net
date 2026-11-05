@@ -145,5 +145,15 @@ namespace Azure.Core.Tests.Identity.Samples.DocSnippets
                 new MyVaultCredentialResolver());
             #endregion
         }
+
+        public void EnvironmentVariableOverride()
+        {
+            #region Snippet:Azure_Core_Samples_AzureClient_EnvironmentVariableOverride
+            IConfiguration configuration = new ConfigurationBuilder()
+                .AddJsonFile("appsettings.json")
+                .AddEnvironmentVariables()
+                .Build();
+            #endregion
+        }
     }
 }

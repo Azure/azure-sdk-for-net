@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.SecurityInsights
 {
     /// <summary>
     /// Alert rule template.
-    /// Please note this is the base class. The derived classes available for instantiation are: <see cref="MLBehaviorAnalyticsAlertRuleTemplate"/>, <see cref="SecurityInsightsFusionAlertRuleTemplate"/>, <see cref="ThreatIntelligenceAlertRuleTemplate"/>, <see cref="MicrosoftSecurityIncidentCreationAlertRuleTemplate"/>, <see cref="ScheduledAlertRuleTemplate"/>, and <see cref="NrtAlertRuleTemplate"/>.
+    /// Please note this is the base class. The derived classes available for instantiation are: <see cref="MLBehaviorAnalyticsAlertRuleTemplate"/>, <see cref="MicrosoftSecurityIncidentCreationAlertRuleTemplate"/>, <see cref="NrtAlertRuleTemplate"/>, <see cref="ScheduledAlertRuleTemplate"/>, <see cref="SecurityInsightsFusionAlertRuleTemplate"/>, and <see cref="ThreatIntelligenceAlertRuleTemplate"/>.
     /// </summary>
     public partial class SecurityInsightsAlertRuleTemplateData : ResourceData, IJsonModel<SecurityInsightsAlertRuleTemplateData>
     {
@@ -136,16 +136,16 @@ namespace Azure.ResourceManager.SecurityInsights
                 {
                     case "MLBehaviorAnalytics":
                         return MLBehaviorAnalyticsAlertRuleTemplate.DeserializeMLBehaviorAnalyticsAlertRuleTemplate(element, options);
+                    case "MicrosoftSecurityIncidentCreation":
+                        return MicrosoftSecurityIncidentCreationAlertRuleTemplate.DeserializeMicrosoftSecurityIncidentCreationAlertRuleTemplate(element, options);
+                    case "NRT":
+                        return NrtAlertRuleTemplate.DeserializeNrtAlertRuleTemplate(element, options);
+                    case "Scheduled":
+                        return ScheduledAlertRuleTemplate.DeserializeScheduledAlertRuleTemplate(element, options);
                     case "Fusion":
                         return SecurityInsightsFusionAlertRuleTemplate.DeserializeSecurityInsightsFusionAlertRuleTemplate(element, options);
                     case "ThreatIntelligence":
                         return ThreatIntelligenceAlertRuleTemplate.DeserializeThreatIntelligenceAlertRuleTemplate(element, options);
-                    case "MicrosoftSecurityIncidentCreation":
-                        return MicrosoftSecurityIncidentCreationAlertRuleTemplate.DeserializeMicrosoftSecurityIncidentCreationAlertRuleTemplate(element, options);
-                    case "Scheduled":
-                        return ScheduledAlertRuleTemplate.DeserializeScheduledAlertRuleTemplate(element, options);
-                    case "NRT":
-                        return NrtAlertRuleTemplate.DeserializeNrtAlertRuleTemplate(element, options);
                 }
             }
             return UnknownSecurityInsightsAlertRuleTemplate.DeserializeUnknownSecurityInsightsAlertRuleTemplate(element, options);

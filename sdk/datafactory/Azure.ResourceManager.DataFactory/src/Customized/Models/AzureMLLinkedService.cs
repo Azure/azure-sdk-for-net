@@ -48,11 +48,5 @@ namespace Azure.ResourceManager.DataFactory.Models
                 TypeProperties.ServicePrincipalKey = value;
             }
         }
-
-        /// <summary> Initializes a new instance restored as workaround for issues #59298 and #59852. </summary>
-        public AzureMLLinkedService(DataFactoryElement<string> mlEndpoint, DataFactorySecret apiKey) : base("AzureML")
-        {
-            TypeProperties = new AzureMLLinkedServiceTypeProperties(mlEndpoint, apiKey);
-        }
     }
 }

@@ -102,9 +102,9 @@ namespace Azure.Generator.Provisioning.Providers
                     property.Update(modifiers: property.Modifiers | MethodSignatureModifiers.New);
                     if (property.IsDiscriminator && !baseProperty.IsDiscriminator)
                     {
-                        // Customization filtering compares source names only. A verbatim identifier
-                        // preserves the C# member name while preventing a non-discriminator base
-                        // property from suppressing the generated discriminator.
+                        // Keep the generated discriminator distinct from the inherited custom member.
+                        // If filtering suppresses it on the declaring model, derived models can re-emit
+                        // the internal discriminator needed to assign their fixed discriminator value.
                         property.Update(name: $"@{property.Name}");
                     }
                 }
@@ -261,7 +261,8 @@ namespace Azure.Generator.Provisioning.Providers
                     null,
                     initializer);
                 var discriminatorProperty = GetBaseProperties().Values
-                    .FirstOrDefault(property => property.IsDiscriminator);
+                    .FirstOrDefault(property => property.IsDiscriminator)
+                    ?? Properties.FirstOrDefault(property => property.IsDiscriminator);
                 MethodBodyStatement body = MethodBodyStatement.Empty;
                 if (discriminatorProperty != null)
                 {

@@ -286,7 +286,7 @@ namespace Azure.ResourceManager.Nginx
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<NginxDeploymentApiKeyData, NginxDeploymentApiKeyResource>(new NginxDeploymentApiKeyResponsesGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<NginxDeploymentApiKeyData, NginxDeploymentApiKeyResource>(new NginxDeploymentApiKeyDataAsyncCollectionResultOfT(
                 _nginxDeploymentApiKeyResponsesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -320,7 +320,7 @@ namespace Azure.ResourceManager.Nginx
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<NginxDeploymentApiKeyData, NginxDeploymentApiKeyResource>(new NginxDeploymentApiKeyResponsesGetAllCollectionResultOfT(
+            return new PageableWrapper<NginxDeploymentApiKeyData, NginxDeploymentApiKeyResource>(new NginxDeploymentApiKeyDataCollectionResultOfT(
                 _nginxDeploymentApiKeyResponsesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     ReadLimit(prop, ref limit);
                     continue;
                 }
-                additionalProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                additionalProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
             }
             return new MongoDBCursorMethodsProperties(project, sort, skip, limit, additionalProperties);
         }

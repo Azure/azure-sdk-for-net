@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.EventGrid
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<TopicTypeData, TopicTypeResource>(new TopicTypesGetAllAsyncCollectionResultOfT(_topicTypesRestClient, context, "TopicTypeCollection.GetAll"), data => new TopicTypeResource(Client, data));
+            return new AsyncPageableWrapper<TopicTypeData, TopicTypeResource>(new TopicTypeDataAsyncCollectionResultOfT(_topicTypesRestClient, context, "TopicTypeCollection.GetAll"), data => new TopicTypeResource(Client, data));
         }
 
         /// <summary>
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.EventGrid
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<TopicTypeData, TopicTypeResource>(new TopicTypesGetAllCollectionResultOfT(_topicTypesRestClient, context, "TopicTypeCollection.GetAll"), data => new TopicTypeResource(Client, data));
+            return new PageableWrapper<TopicTypeData, TopicTypeResource>(new TopicTypeDataCollectionResultOfT(_topicTypesRestClient, context, "TopicTypeCollection.GetAll"), data => new TopicTypeResource(Client, data));
         }
 
         /// <summary>

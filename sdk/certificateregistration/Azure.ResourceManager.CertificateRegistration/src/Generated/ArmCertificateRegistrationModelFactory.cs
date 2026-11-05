@@ -83,6 +83,7 @@ namespace Azure.ResourceManager.CertificateRegistration.Models
                 default);
         }
 
+        /// <summary> Key Vault container for a certificate that is purchased through Azure. </summary>
         /// <param name="keyVaultId"> Key Vault resource Id. </param>
         /// <param name="keyVaultSecretName"> Key Vault secret name. </param>
         /// <param name="provisioningState"> Status of the Key Vault secret. </param>
@@ -92,6 +93,7 @@ namespace Azure.ResourceManager.CertificateRegistration.Models
             return new AppServiceCertificateProperties(keyVaultId, keyVaultSecretName, provisioningState, default);
         }
 
+        /// <summary> SSL certificate details. </summary>
         /// <param name="version"> Certificate Version. </param>
         /// <param name="serialNumber"> Certificate Serial Number. </param>
         /// <param name="thumbprint"> Certificate Thumbprint. </param>
@@ -117,6 +119,7 @@ namespace Azure.ResourceManager.CertificateRegistration.Models
                 default);
         }
 
+        /// <summary> The CertificateOrderContact. </summary>
         /// <param name="email"></param>
         /// <param name="nameFirst"></param>
         /// <param name="nameLast"></param>
@@ -229,6 +232,7 @@ namespace Azure.ResourceManager.CertificateRegistration.Models
                 default);
         }
 
+        /// <summary> Identifies an object. </summary>
         /// <param name="name"> Name of the object. </param>
         /// <returns> A new <see cref="Models.AppServiceDomainNameIdentifier"/> instance for mocking. </returns>
         public static AppServiceDomainNameIdentifier AppServiceDomainNameIdentifier(string name = default)
@@ -236,6 +240,7 @@ namespace Azure.ResourceManager.CertificateRegistration.Models
             return new AppServiceDomainNameIdentifier(name, default);
         }
 
+        /// <summary> Site seal request. </summary>
         /// <param name="isLightTheme"> If &lt;code&gt;true&lt;/code&gt; use the light color theme for site seal; otherwise, use the default color theme. </param>
         /// <param name="locale"> Locale of site seal. </param>
         /// <returns> A new <see cref="Models.SiteSealContent"/> instance for mocking. </returns>
@@ -244,6 +249,7 @@ namespace Azure.ResourceManager.CertificateRegistration.Models
             return new SiteSealContent(isLightTheme, locale, default);
         }
 
+        /// <summary> Site seal. </summary>
         /// <param name="html"> HTML snippet. </param>
         /// <returns> A new <see cref="Models.SiteSeal"/> instance for mocking. </returns>
         public static SiteSeal SiteSeal(string html = default)
@@ -251,6 +257,7 @@ namespace Azure.ResourceManager.CertificateRegistration.Models
             return new SiteSeal(html, default);
         }
 
+        /// <summary> Certificate order action. </summary>
         /// <param name="actionType"> Action type. </param>
         /// <param name="createdOn"> Time at which the certificate action was performed. </param>
         /// <returns> A new <see cref="Models.CertificateOrderAction"/> instance for mocking. </returns>
@@ -259,6 +266,7 @@ namespace Azure.ResourceManager.CertificateRegistration.Models
             return new CertificateOrderAction(actionType, createdOn, default);
         }
 
+        /// <summary> SSL certificate email. </summary>
         /// <param name="emailId"> Email id. </param>
         /// <param name="sentOn"> Time stamp. </param>
         /// <returns> A new <see cref="Models.AppServiceCertificateEmail"/> instance for mocking. </returns>
@@ -344,6 +352,7 @@ namespace Azure.ResourceManager.CertificateRegistration.Models
                 default);
         }
 
+        /// <summary> Definition of Detector. </summary>
         /// <param name="id"> Id of detector. </param>
         /// <param name="name"> Name of detector. </param>
         /// <param name="description"> Short description of the detector and its purpose. </param>
@@ -372,6 +381,7 @@ namespace Azure.ResourceManager.CertificateRegistration.Models
                 default);
         }
 
+        /// <summary> Defines a unique Support Topic. </summary>
         /// <param name="id"> Support Topic Id. </param>
         /// <param name="pesId"> Unique resource Id. </param>
         /// <returns> A new <see cref="Models.DetectorSupportTopic"/> instance for mocking. </returns>
@@ -380,6 +390,7 @@ namespace Azure.ResourceManager.CertificateRegistration.Models
             return new DetectorSupportTopic(id, pesId, default);
         }
 
+        /// <summary> Set of data with rendering instructions. </summary>
         /// <param name="table"> Data in table form. </param>
         /// <param name="renderingProperties"> Properties that describe how the table should be rendered. </param>
         /// <returns> A new <see cref="Models.DiagnosticDataset"/> instance for mocking. </returns>
@@ -388,6 +399,7 @@ namespace Azure.ResourceManager.CertificateRegistration.Models
             return new DiagnosticDataset(table, renderingProperties, default);
         }
 
+        /// <summary> Data Table which defines columns and raw row values. </summary>
         /// <param name="tableName"> Name of the table. </param>
         /// <param name="columns"> List of columns with data types. </param>
         /// <param name="rows"> Raw row values. </param>
@@ -400,6 +412,7 @@ namespace Azure.ResourceManager.CertificateRegistration.Models
             return new DiagnosticDataTableObject(tableName, (columns ?? new ChangeTrackingList<DiagnosticDataTableColumn>()).ToList(), (rows ?? new ChangeTrackingList<IList<string>>()).ToList(), default);
         }
 
+        /// <summary> Column definition. </summary>
         /// <param name="columnName"> Name of the column. </param>
         /// <param name="dataType"> Data type which looks like 'String' or 'Int32'. </param>
         /// <param name="columnType"> Column Type. </param>
@@ -409,6 +422,7 @@ namespace Azure.ResourceManager.CertificateRegistration.Models
             return new DiagnosticDataTableColumn(columnName, dataType, columnType, default);
         }
 
+        /// <summary> Instructions for rendering the data. </summary>
         /// <param name="type"> Rendering Type. </param>
         /// <param name="title"> Title of data. </param>
         /// <param name="description"> Description of the data that will help it be interpreted. </param>
@@ -418,6 +432,7 @@ namespace Azure.ResourceManager.CertificateRegistration.Models
             return new DiagnosticDataRendering(@type, title, description, default);
         }
 
+        /// <summary> Identify the status of the most severe insight generated by the detector. </summary>
         /// <param name="message"> Descriptive message. </param>
         /// <param name="statusId"> Level of the most severe insight generated by the detector. </param>
         /// <returns> A new <see cref="Models.DetectorStatusInfo"/> instance for mocking. </returns>
@@ -426,6 +441,7 @@ namespace Azure.ResourceManager.CertificateRegistration.Models
             return new DetectorStatusInfo(message, statusId, default);
         }
 
+        /// <summary> Additional configuration for a data providers. </summary>
         /// <param name="providerName"></param>
         /// <param name="propertyBag"> Settings for the data provider. </param>
         /// <returns> A new <see cref="Models.DataProviderMetadata"/> instance for mocking. </returns>
@@ -436,6 +452,7 @@ namespace Azure.ResourceManager.CertificateRegistration.Models
             return new DataProviderMetadata(providerName, (propertyBag ?? new ChangeTrackingList<DataProviderKeyValuePair>()).ToList(), default);
         }
 
+        /// <summary> The DataProviderKeyValuePair. </summary>
         /// <param name="key"></param>
         /// <param name="value"> Any object. </param>
         /// <returns> A new <see cref="Models.DataProviderKeyValuePair"/> instance for mocking. </returns>
@@ -446,6 +463,7 @@ namespace Azure.ResourceManager.CertificateRegistration.Models
             return new DataProviderKeyValuePair(key, value ?? new ChangeTrackingDictionary<string, string>(), default);
         }
 
+        /// <summary> Suggested utterances where the detector can be applicable. </summary>
         /// <param name="query"> Search Query. </param>
         /// <param name="results"> Array of utterance results for search query. </param>
         /// <returns> A new <see cref="Models.QueryUtterancesResults"/> instance for mocking. </returns>
@@ -456,6 +474,7 @@ namespace Azure.ResourceManager.CertificateRegistration.Models
             return new QueryUtterancesResults(query, (results ?? new ChangeTrackingList<QueryUtterancesResult>()).ToList(), default);
         }
 
+        /// <summary> Result for utterances query. </summary>
         /// <param name="sampleUtterance"> A sample utterance. </param>
         /// <param name="score"> Score of a sample utterance. </param>
         /// <returns> A new <see cref="Models.QueryUtterancesResult"/> instance for mocking. </returns>
@@ -464,6 +483,7 @@ namespace Azure.ResourceManager.CertificateRegistration.Models
             return new QueryUtterancesResult(sampleUtterance, score, default);
         }
 
+        /// <summary> Sample utterance. </summary>
         /// <param name="text"> Text attribute of sample utterance. </param>
         /// <param name="links"> Links attribute of sample utterance. </param>
         /// <param name="qid"> Question id of sample utterance (for stackoverflow questions titles). </param>

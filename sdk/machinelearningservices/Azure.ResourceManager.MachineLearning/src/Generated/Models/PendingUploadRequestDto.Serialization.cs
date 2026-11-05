@@ -85,10 +85,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 throw new FormatException($"The model {nameof(PendingUploadRequestDto)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(PendingUploadId))
+            if (Optional.IsDefined(PendingUploadId, _pendingUploadIdIsDefined))
             {
-                writer.WritePropertyName("pendingUploadId"u8);
-                writer.WriteStringValue(PendingUploadId);
+                if (PendingUploadId != null)
+                {
+                    writer.WritePropertyName("pendingUploadId"u8);
+                    writer.WriteStringValue(PendingUploadId);
+                }
+                else
+                {
+                    writer.WriteNull("pendingUploadId"u8);
+                }
             }
             if (Optional.IsDefined(PendingUploadType))
             {
@@ -137,6 +144,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
+            bool pendingUploadIdIsDefined = false;
             string pendingUploadId = default;
             PendingUploadType? pendingUploadType = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -144,6 +152,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 if (prop.NameEquals("pendingUploadId"u8))
                 {
+                    pendingUploadIdIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         pendingUploadId = null;
@@ -163,10 +172,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new PendingUploadRequestDto(pendingUploadId, pendingUploadType, additionalBinaryDataProperties);
+            return new PendingUploadRequestDto(pendingUploadId, pendingUploadType, additionalBinaryDataProperties)
+            {
+                _pendingUploadIdIsDefined = pendingUploadIdIsDefined
+            };
         }
     }
 }

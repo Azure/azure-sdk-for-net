@@ -4,14 +4,19 @@
 
 using System;
 using System.Collections.Generic;
-using System.Text.Json;
-using OpenAI;
+using System.Diagnostics.CodeAnalysis;
+using Azure.AI.Extensions.OpenAI;
+using OpenAI.Responses;
 
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> An MCP tool stored in a toolbox. </summary>
     public partial class MCPToolboxTool : ToolboxTool
     {
+        [Experimental("AAIP002")]
+        private McpToolFilter _allowedTools;
+        private bool _allowedToolsIsDefined;
+
         /// <summary> Initializes a new instance of <see cref="MCPToolboxTool"/>. </summary>
         /// <param name="serverLabel"> A label for this MCP server, used to identify it in tool calls. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="serverLabel"/> is null. </exception>
@@ -21,6 +26,7 @@ namespace Azure.AI.Projects.Agents
 
             ServerLabel = serverLabel;
             Headers = new ChangeTrackingDictionary<string, string>();
+            AllowedCallers = new ChangeTrackingList<CallableToolAllowedCaller>();
         }
 
         /// <summary> Initializes a new instance of <see cref="MCPToolboxTool"/>. </summary>
@@ -35,15 +41,22 @@ namespace Azure.AI.Projects.Agents
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="serverLabel"> A label for this MCP server, used to identify it in tool calls. </param>
         /// <param name="serverUri">
-        /// The URL for the MCP server. One of `server_url` or `connector_id` must be
-        ///   provided.
+        /// The URL for the MCP server. One of `server_url`, `connector_id`, or
+        ///   `tunnel_id` must be provided.
         /// </param>
         /// <param name="connectorId">
         /// Identifier for service connectors, like those available in ChatGPT. One of
-        ///   `server_url` or `connector_id` must be provided. Learn more about service
-        ///   connectors [here](/docs/guides/tools-remote-mcp#connectors).
+        ///   `server_url`, `connector_id`, or `tunnel_id` must be provided. Learn more
+        ///   about service connectors [here](https://developers.openai.com/api/docs/guides/tools-connectors-mcp#connectors).
+        ///   This field is deprecated for models released after September 1, 2026.
+        ///   Use `server_url` to connect to a remote MCP server, or `tunnel_id` to
+        ///   connect through a Secure MCP Tunnel.
         ///   Currently supported `connector_id` values are:
         /// <list type="bullet"><item><description>Dropbox: `connector_dropbox`</description></item><item><description>Gmail: `connector_gmail`</description></item><item><description>Google Calendar: `connector_googlecalendar`</description></item><item><description>Google Drive: `connector_googledrive`</description></item><item><description>Microsoft Teams: `connector_microsoftteams`</description></item><item><description>Outlook Calendar: `connector_outlookcalendar`</description></item><item><description>Outlook Email: `connector_outlookemail`</description></item><item><description>SharePoint: `connector_sharepoint`</description></item></list>
+        /// </param>
+        /// <param name="tunnelId">
+        /// The Secure MCP Tunnel ID to use instead of a direct server URL. One of
+        ///   `server_url`, `connector_id`, or `tunnel_id` must be provided.
         /// </param>
         /// <param name="authorization">
         /// An OAuth access token that can be used with a remote MCP server, either
@@ -53,18 +66,22 @@ namespace Azure.AI.Projects.Agents
         /// <param name="serverDescription"> Optional description of the MCP server, used to provide more context. </param>
         /// <param name="headers"></param>
         /// <param name="allowedTools"></param>
+        /// <param name="allowedCallers"></param>
         /// <param name="requireApprovalInternal"></param>
         /// <param name="deferLoading"> Whether this MCP tool is deferred and discovered via tool search. </param>
         /// <param name="projectConnectionId"> The connection ID in the project for the MCP server. The connection stores authentication and other connection details needed to connect to the MCP server. </param>
-        internal MCPToolboxTool(ToolboxToolType @type, string name, string description, IDictionary<string, ToolConfig> toolConfigs, IDictionary<string, BinaryData> additionalBinaryDataProperties, string serverLabel, Uri serverUri, MCPToolboxToolConnectorId? connectorId, string authorization, string serverDescription, IDictionary<string, string> headers, BinaryData allowedTools, BinaryData requireApprovalInternal, bool? deferLoading, string projectConnectionId) : base(@type, name, description, toolConfigs, additionalBinaryDataProperties)
+        [Experimental("AAIP002")]
+        internal MCPToolboxTool(ToolboxToolType @type, string name, string description, IDictionary<string, ToolConfig> toolConfigs, IDictionary<string, BinaryData> additionalBinaryDataProperties, string serverLabel, Uri serverUri, McpToolConnectorId? connectorId, string tunnelId, string authorization, string serverDescription, IDictionary<string, string> headers, McpToolFilter allowedTools, IList<CallableToolAllowedCaller> allowedCallers, BinaryData requireApprovalInternal, bool? deferLoading, string projectConnectionId) : base(@type, name, description, toolConfigs, additionalBinaryDataProperties)
         {
             ServerLabel = serverLabel;
             ServerUri = serverUri;
             ConnectorId = connectorId;
+            TunnelId = tunnelId;
             Authorization = authorization;
             ServerDescription = serverDescription;
             Headers = headers;
-            AllowedTools = allowedTools;
+            _allowedTools = allowedTools;
+            AllowedCallers = allowedCallers;
             RequireApprovalInternal = requireApprovalInternal;
             DeferLoading = deferLoading;
             ProjectConnectionId = projectConnectionId;
@@ -75,12 +92,22 @@ namespace Azure.AI.Projects.Agents
 
         /// <summary>
         /// Identifier for service connectors, like those available in ChatGPT. One of
-        ///   `server_url` or `connector_id` must be provided. Learn more about service
-        ///   connectors [here](/docs/guides/tools-remote-mcp#connectors).
+        ///   `server_url`, `connector_id`, or `tunnel_id` must be provided. Learn more
+        ///   about service connectors [here](https://developers.openai.com/api/docs/guides/tools-connectors-mcp#connectors).
+        ///   This field is deprecated for models released after September 1, 2026.
+        ///   Use `server_url` to connect to a remote MCP server, or `tunnel_id` to
+        ///   connect through a Secure MCP Tunnel.
         ///   Currently supported `connector_id` values are:
         /// <list type="bullet"><item><description>Dropbox: `connector_dropbox`</description></item><item><description>Gmail: `connector_gmail`</description></item><item><description>Google Calendar: `connector_googlecalendar`</description></item><item><description>Google Drive: `connector_googledrive`</description></item><item><description>Microsoft Teams: `connector_microsoftteams`</description></item><item><description>Outlook Calendar: `connector_outlookcalendar`</description></item><item><description>Outlook Email: `connector_outlookemail`</description></item><item><description>SharePoint: `connector_sharepoint`</description></item></list>
         /// </summary>
-        public MCPToolboxToolConnectorId? ConnectorId { get; set; }
+        [Experimental("AAIP002")]
+        public McpToolConnectorId? ConnectorId { get; set; }
+
+        /// <summary>
+        /// The Secure MCP Tunnel ID to use instead of a direct server URL. One of
+        ///   `server_url`, `connector_id`, or `tunnel_id` must be provided.
+        /// </summary>
+        public string TunnelId { get; set; }
 
         /// <summary>
         /// An OAuth access token that can be used with a remote MCP server, either
@@ -95,46 +122,23 @@ namespace Azure.AI.Projects.Agents
         /// <summary> Gets or sets the Headers. </summary>
         public IDictionary<string, string> Headers { get; set; }
 
-        /// <summary>
-        /// Gets or sets the AllowedTools.
-        /// <para> To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
-        /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
-        /// <para>
-        /// <remarks>
-        /// Supported types:
-        /// <list type="bullet">
-        /// <item>
-        /// <description> <see cref="IList{T}"/> where <c>T</c> is of type <see cref="string"/>. </description>
-        /// </item>
-        /// <item>
-        /// <description> <see cref="InternalMCPToolFilter"/>. </description>
-        /// </item>
-        /// </list>
-        /// </remarks>
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term> BinaryData.FromObjectAsJson("foo"). </term>
-        /// <description> Creates a payload of "foo". </description>
-        /// </item>
-        /// <item>
-        /// <term> BinaryData.FromString("\"foo\""). </term>
-        /// <description> Creates a payload of "foo". </description>
-        /// </item>
-        /// <item>
-        /// <term> BinaryData.FromObjectAsJson(new { key = "value" }). </term>
-        /// <description> Creates a payload of { "key": "value" }. </description>
-        /// </item>
-        /// <item>
-        /// <term> BinaryData.FromString("{\"key\": \"value\"}"). </term>
-        /// <description> Creates a payload of { "key": "value" }. </description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        public BinaryData AllowedTools { get; set; }
+        /// <summary> Gets or sets the AllowedTools. </summary>
+        [Experimental("AAIP002")]
+        public McpToolFilter AllowedTools
+        {
+            get
+            {
+                return _allowedTools;
+            }
+            set
+            {
+                _allowedTools = value;
+                _allowedToolsIsDefined = true;
+            }
+        }
+
+        /// <summary> Gets or sets the AllowedCallers. </summary>
+        public IList<CallableToolAllowedCaller> AllowedCallers { get; set; }
 
         /// <summary> Whether this MCP tool is deferred and discovered via tool search. </summary>
         public bool? DeferLoading { get; set; }

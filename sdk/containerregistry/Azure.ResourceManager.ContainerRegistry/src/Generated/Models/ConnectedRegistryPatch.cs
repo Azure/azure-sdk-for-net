@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.ContainerRegistry;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
@@ -25,16 +26,22 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
 
         /// <summary> Initializes a new instance of <see cref="ConnectedRegistryPatch"/>. </summary>
         /// <param name="properties"> The properties of the connected registry update parameters. </param>
+        /// <param name="identity"> The user-assigned managed identity used to authenticate the connected registry with its parent during synchronization. Requires authType to be ManagedIdentity. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ConnectedRegistryPatch(ConnectedRegistryUpdateProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ConnectedRegistryPatch(ConnectedRegistryUpdateProperties properties, ManagedServiceIdentity identity, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Properties = properties;
+            Identity = identity;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The properties of the connected registry update parameters. </summary>
         [WirePath("properties")]
         internal ConnectedRegistryUpdateProperties Properties { get; set; }
+
+        /// <summary> The user-assigned managed identity used to authenticate the connected registry with its parent during synchronization. Requires authType to be ManagedIdentity. </summary>
+        [WirePath("identity")]
+        public ManagedServiceIdentity Identity { get; set; }
 
         /// <summary> The sync properties of the connected registry with its parent. </summary>
         [WirePath("properties.syncProperties")]

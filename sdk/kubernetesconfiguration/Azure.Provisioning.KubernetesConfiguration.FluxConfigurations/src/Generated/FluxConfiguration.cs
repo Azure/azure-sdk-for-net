@@ -21,7 +21,7 @@ namespace Azure.Provisioning.KubernetesConfiguration.FluxConfigurations
         private BicepValue<string> _name;
         private SystemData _systemData;
         private FluxConfigurationProperties _properties;
-        private ResourceReference<ProvisionableResource> _scope;
+        private ProvisioningResourceReference<ProvisionableResource> _scope;
 
         /// <summary> Creates a new FluxConfiguration. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -92,6 +92,24 @@ namespace Azure.Provisioning.KubernetesConfiguration.FluxConfigurations
             {
                 Initialize();
                 _scope.Value = value;
+            }
+        }
+
+        /// <summary> Scope at which the operator will be installed. </summary>
+        [CodeGenMember("Scope")]
+        public BicepValue<FluxConfigurationScopeType> InstallationScope
+        {
+            get
+            {
+                return Properties is null ? default : Properties.InstallationScope;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new FluxConfigurationProperties();
+                }
+                Properties.InstallationScope = value;
             }
         }
 
@@ -386,24 +404,6 @@ namespace Azure.Provisioning.KubernetesConfiguration.FluxConfigurations
             }
         }
 
-        /// <summary> Gets or sets the InstallationScope. </summary>
-        [CodeGenMember("Scope")]
-        public BicepValue<FluxConfigurationScopeType> InstallationScope
-        {
-            get
-            {
-                return Properties is null ? default : Properties.InstallationScope;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new FluxConfigurationProperties();
-                }
-                Properties.InstallationScope = value;
-            }
-        }
-
         /// <summary> Define all the provisionable properties for FluxConfiguration. </summary>
         protected override void DefineProvisionableProperties()
         {
@@ -412,7 +412,7 @@ namespace Azure.Provisioning.KubernetesConfiguration.FluxConfigurations
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _properties = DefineModelProperty<FluxConfigurationProperties>(nameof(Properties), new string[] { "properties" });
-            _scope = DefineResource<ProvisionableResource>(nameof(Scope), new string[] { "scope" });
+            _scope = new ProvisioningResourceReference<ProvisionableResource>(DefineProperty<string>(nameof(Scope), new string[] { "scope" }));
             DefineAdditionalProperties();
         }
 

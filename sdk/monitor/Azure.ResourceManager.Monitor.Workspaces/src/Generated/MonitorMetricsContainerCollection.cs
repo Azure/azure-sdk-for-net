@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.Monitor.Workspaces
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<MonitorMetricsContainerData, MonitorMetricsContainerResource>(new MetricsContainersGetByAzureMonitorWorkspaceAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<MonitorMetricsContainerData, MonitorMetricsContainerResource>(new MonitorMetricsContainerDataAsyncCollectionResultOfT(
                 _metricsContainersRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.Monitor.Workspaces
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<MonitorMetricsContainerData, MonitorMetricsContainerResource>(new MetricsContainersGetByAzureMonitorWorkspaceCollectionResultOfT(
+            return new PageableWrapper<MonitorMetricsContainerData, MonitorMetricsContainerResource>(new MonitorMetricsContainerDataCollectionResultOfT(
                 _metricsContainersRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

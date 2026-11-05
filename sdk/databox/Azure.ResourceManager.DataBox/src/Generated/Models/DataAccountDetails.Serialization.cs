@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataBox.Models
 {
     /// <summary>
     /// Account details of the data to be transferred
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ManagedDiskDetails"/> and <see cref="DataBoxStorageAccountDetails"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="DataBoxStorageAccountDetails"/> and <see cref="ManagedDiskDetails"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownDataAccountDetails))]
     public abstract partial class DataAccountDetails : IJsonModel<DataAccountDetails>
@@ -130,10 +130,10 @@ namespace Azure.ResourceManager.DataBox.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "ManagedDisk":
-                        return ManagedDiskDetails.DeserializeManagedDiskDetails(element, options);
                     case "StorageAccount":
                         return DataBoxStorageAccountDetails.DeserializeDataBoxStorageAccountDetails(element, options);
+                    case "ManagedDisk":
+                        return ManagedDiskDetails.DeserializeManagedDiskDetails(element, options);
                 }
             }
             return UnknownDataAccountDetails.DeserializeUnknownDataAccountDetails(element, options);

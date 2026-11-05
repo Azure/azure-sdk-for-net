@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary>
     /// The types of conditions for a multi query metric alert.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="StaticPromQLCriteria"/> and <see cref="DynamicPromQLCriteria"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="DynamicPromQLCriteria"/> and <see cref="StaticPromQLCriteria"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownMultiPromQLCriteria))]
     public abstract partial class MultiPromQLCriteria : IJsonModel<MultiPromQLCriteria>
@@ -134,10 +134,10 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "StaticThresholdCriterion":
-                        return StaticPromQLCriteria.DeserializeStaticPromQLCriteria(element, options);
                     case "DynamicThresholdCriterion":
                         return DynamicPromQLCriteria.DeserializeDynamicPromQLCriteria(element, options);
+                    case "StaticThresholdCriterion":
+                        return StaticPromQLCriteria.DeserializeStaticPromQLCriteria(element, options);
                 }
             }
             return UnknownMultiPromQLCriteria.DeserializeUnknownMultiPromQLCriteria(element, options);

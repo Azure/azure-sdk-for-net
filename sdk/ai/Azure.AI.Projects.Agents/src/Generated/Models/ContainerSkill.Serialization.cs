@@ -5,16 +5,15 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
-using Azure.AI.Projects.Agents;
 
-namespace OpenAI
+namespace Azure.AI.Projects.Agents
 {
     /// <summary>
     /// The ContainerSkill.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="SkillReferenceParam"/> and <see cref="InlineSkillParam"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="InlineSkillParam"/> and <see cref="SkillReferenceParam"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownContainerSkill))]
-    internal abstract partial class ContainerSkill : IJsonModel<ContainerSkill>
+    public abstract partial class ContainerSkill : IJsonModel<ContainerSkill>
     {
         /// <summary> Initializes a new instance of <see cref="ContainerSkill"/> for deserialization. </summary>
         internal ContainerSkill()
@@ -127,10 +126,10 @@ namespace OpenAI
             {
                 switch (discriminator.GetString())
                 {
-                    case "skill_reference":
-                        return SkillReferenceParam.DeserializeSkillReferenceParam(element, options);
                     case "inline":
                         return InlineSkillParam.DeserializeInlineSkillParam(element, options);
+                    case "skill_reference":
+                        return SkillReferenceParam.DeserializeSkillReferenceParam(element, options);
                 }
             }
             return UnknownContainerSkill.DeserializeUnknownContainerSkill(element, options);

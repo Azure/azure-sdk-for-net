@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Sql
         {
             get
             {
-                return Properties is null ? default : Properties.AutoExecuteStatus;
+                return Properties is null ? (AutoExecuteStatus?)default : Properties.AutoExecuteStatus;
             }
             set
             {

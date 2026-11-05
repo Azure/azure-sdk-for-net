@@ -5,21 +5,47 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Security.Attestation
 {
     /// <summary> Attestation response for Trusted Platform Module (TPM) attestation. </summary>
     public partial class TpmAttestationResponse
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
         /// <summary> Initializes a new instance of <see cref="TpmAttestationResponse"/>. </summary>
         internal TpmAttestationResponse()
         {
         }
 
         /// <summary> Initializes a new instance of <see cref="TpmAttestationResponse"/>. </summary>
-        /// <param name="internalData"> Protocol data containing attestation service response. </param>
-        internal TpmAttestationResponse(string internalData)
+        /// <param name="data"> Protocol data containing attestation service response. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal TpmAttestationResponse(BinaryData data, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            InternalData = internalData;
+            Data = data;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+
+        /// <summary>
+        /// Protocol data containing attestation service response.
+        /// <para>
+        /// To assign a byte[] to this property use <see cref="BinaryData.FromBytes(byte[])"/>.
+        /// The byte[] will be serialized to a Base64 encoded string.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term> BinaryData.FromBytes(new byte[] { 1, 2, 3 }). </term>
+        /// <description> Creates a payload of "AQID". </description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        public BinaryData Data { get; }
     }
 }

@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Commerce.Models
 {
     /// <summary>
     /// Describes the offer term.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="CommerceMonetaryCredit"/>, <see cref="CommerceMonetaryCommitment"/>, and <see cref="CommerceRecurringCharge"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="CommerceMonetaryCommitment"/>, <see cref="CommerceMonetaryCredit"/>, and <see cref="CommerceRecurringCharge"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownCommerceOfferTermInfo))]
     public abstract partial class CommerceOfferTermInfo : IJsonModel<CommerceOfferTermInfo>
@@ -135,10 +135,10 @@ namespace Azure.ResourceManager.Commerce.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "Monetary Credit":
-                        return CommerceMonetaryCredit.DeserializeCommerceMonetaryCredit(element, options);
                     case "Monetary Commitment":
                         return CommerceMonetaryCommitment.DeserializeCommerceMonetaryCommitment(element, options);
+                    case "Monetary Credit":
+                        return CommerceMonetaryCredit.DeserializeCommerceMonetaryCredit(element, options);
                     case "Recurring Charge":
                         return CommerceRecurringCharge.DeserializeCommerceRecurringCharge(element, options);
                 }

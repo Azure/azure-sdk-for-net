@@ -48,5 +48,47 @@ namespace Azure.Core.Tests
                 env?.Dispose();
             }
         }
+
+        [TestCase("true", true)]
+        [TestCase("TrUe", true)]
+        [TestCase("1", true)]
+        [TestCase("false", false)]
+        [TestCase("FaLsE", false)]
+        [TestCase("0", false)]
+        [NonParallelizable]
+        public void GetConfigValueWithDefaultParsesEnvironmentVariable(string environmentValue, bool expected)
+        {
+            string appContextSwitchName = $"Azure.Core.Tests.{Guid.NewGuid():N}";
+            using var environment = new TestEnvVar(envVarName, environmentValue);
+
+            Assert.AreEqual(expected, AppContextSwitchHelper.GetConfigValue(appContextSwitchName, envVarName, defaultValue: false));
+            Assert.AreEqual(expected, AppContextSwitchHelper.GetConfigValue(appContextSwitchName, envVarName, defaultValue: true));
+        }
+
+        [Test]
+        [NonParallelizable]
+        public void GetConfigValueWithDefaultUsesFallback(
+            [Values(null, "", "invalid")] string environmentValue,
+            [Values] bool defaultValue)
+        {
+            string appContextSwitchName = $"Azure.Core.Tests.{Guid.NewGuid():N}";
+            using var environment = new TestEnvVar(envVarName, environmentValue);
+
+            Assert.AreEqual(defaultValue, AppContextSwitchHelper.GetConfigValue(appContextSwitchName, envVarName, defaultValue));
+        }
+
+        [Test]
+        [NonParallelizable]
+        public void GetConfigValueWithDefaultPrefersAppContext(
+            [Values] bool switchValue,
+            [Values("true", "false", "1", "0", null)] string environmentValue,
+            [Values] bool defaultValue)
+        {
+            string appContextSwitchName = $"Azure.Core.Tests.{Guid.NewGuid():N}";
+            using var context = new TestAppContextSwitch(appContextSwitchName, switchValue.ToString());
+            using var environment = new TestEnvVar(envVarName, environmentValue);
+
+            Assert.AreEqual(switchValue, AppContextSwitchHelper.GetConfigValue(appContextSwitchName, envVarName, defaultValue));
+        }
     }
 }

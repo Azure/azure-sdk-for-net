@@ -128,10 +128,10 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.DataCollection
                 case OperationType.Http:
                     remoteDependencyDocument.Name = activity.DisplayName;
 
-                    var httpUrl = AzMonList.GetTagValue(ref liveMetricsTagsProcessor.Tags, SemanticConventions.AttributeUrlFull)?.ToString();
+                    var httpUrl = liveMetricsTagsProcessor.Tags[SemanticSlot.UrlFull]?.ToString();
                     remoteDependencyDocument.CommandName = httpUrl;
 
-                    var httpResponseStatusCode = AzMonList.GetTagValue(ref liveMetricsTagsProcessor.Tags, SemanticConventions.AttributeHttpResponseStatusCode)?.ToString();
+                    var httpResponseStatusCode = liveMetricsTagsProcessor.Tags[SemanticSlot.HttpResponseStatusCode]?.ToString();
                     remoteDependencyDocument.ResultCode = httpResponseStatusCode ?? "0";
 
                     // The following "EXTENSION" properties are used to calculate metrics. These are not serialized.
@@ -140,7 +140,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.DataCollection
                 case OperationType.Db:
                     remoteDependencyDocument.Name = activity.DisplayName;
 
-                    remoteDependencyDocument.CommandName = AzMonList.GetTagValue(ref liveMetricsTagsProcessor.Tags, SemanticConventions.AttributeDbStatement)?.ToString();
+                    remoteDependencyDocument.CommandName = liveMetricsTagsProcessor.Tags[SemanticSlot.DbStatement]?.ToString();
 
                     // TODO: remoteDependencyDocumentIngress.ResultCode = "";
                     // AI SDK reads a Number property from Connection or Command objects.

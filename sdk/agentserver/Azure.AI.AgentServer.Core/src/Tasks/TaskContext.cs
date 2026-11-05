@@ -36,6 +36,9 @@ public class TaskContext<TInput>
     /// <summary>The input id for this turn.</summary>
     public virtual string InputId => State.InputId;
 
+    /// <summary>Writes events to the stream associated with this task input.</summary>
+    public virtual TaskStreamWriter Stream => State.Stream;
+
     /// <summary>How the handler was entered for this turn.</summary>
     public virtual EntryMode EntryMode => State.EntryMode;
 

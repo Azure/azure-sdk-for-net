@@ -74,10 +74,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 throw new FormatException($"The model {nameof(MachineLearningFeaturizationSettings)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(DatasetLanguage))
+            if (Optional.IsDefined(DatasetLanguage, _datasetLanguageIsDefined))
             {
-                writer.WritePropertyName("datasetLanguage"u8);
-                writer.WriteStringValue(DatasetLanguage);
+                if (DatasetLanguage != null)
+                {
+                    writer.WritePropertyName("datasetLanguage"u8);
+                    writer.WriteStringValue(DatasetLanguage);
+                }
+                else
+                {
+                    writer.WriteNull("datasetLanguage"u8);
+                }
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -121,12 +128,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
+            bool datasetLanguageIsDefined = false;
             string datasetLanguage = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("datasetLanguage"u8))
                 {
+                    datasetLanguageIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         datasetLanguage = null;
@@ -137,10 +146,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new MachineLearningFeaturizationSettings(datasetLanguage, additionalBinaryDataProperties);
+            return new MachineLearningFeaturizationSettings(datasetLanguage, additionalBinaryDataProperties)
+            {
+                _datasetLanguageIsDefined = datasetLanguageIsDefined
+            };
         }
     }
 }

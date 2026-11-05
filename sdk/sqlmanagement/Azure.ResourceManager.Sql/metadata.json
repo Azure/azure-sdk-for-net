@@ -1,5 +1,5 @@
 {
   "apiVersions": {
-    "Microsoft.Sql": "2025-02-01-preview"
+    "Microsoft.Sql": "2025-08-01-preview"
   }
 }

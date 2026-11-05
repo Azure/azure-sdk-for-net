@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.DevHub
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DevHubTemplateData, DevHubTemplateResource>(new TemplateGetAllAsyncCollectionResultOfT(_templateRestClient, Guid.Parse(Id.SubscriptionId), context, "DevHubTemplateCollection.GetAll"), data => new DevHubTemplateResource(Client, data));
+            return new AsyncPageableWrapper<DevHubTemplateData, DevHubTemplateResource>(new DevHubTemplateDataAsyncCollectionResultOfT(_templateRestClient, Guid.Parse(Id.SubscriptionId), context, "DevHubTemplateCollection.GetAll"), data => new DevHubTemplateResource(Client, data));
         }
 
         /// <summary>
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.DevHub
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DevHubTemplateData, DevHubTemplateResource>(new TemplateGetAllCollectionResultOfT(_templateRestClient, Guid.Parse(Id.SubscriptionId), context, "DevHubTemplateCollection.GetAll"), data => new DevHubTemplateResource(Client, data));
+            return new PageableWrapper<DevHubTemplateData, DevHubTemplateResource>(new DevHubTemplateDataCollectionResultOfT(_templateRestClient, Guid.Parse(Id.SubscriptionId), context, "DevHubTemplateCollection.GetAll"), data => new DevHubTemplateResource(Client, data));
         }
 
         /// <summary>

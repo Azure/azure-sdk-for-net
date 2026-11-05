@@ -7,15 +7,15 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
-using OpenAI;
+using Azure.AI.Extensions.OpenAI;
 using OpenAI.Responses;
 
 namespace Azure.AI.Projects.Memory;
 
-[CodeGenSuppress("SearchMemories", typeof(string), typeof(string), typeof(IEnumerable<InternalItemParam>), typeof(string), typeof(MemorySearchResultOptions), typeof(CancellationToken))]
-[CodeGenSuppress("SearchMemoriesAsync", typeof(string), typeof(string), typeof(IEnumerable<InternalItemParam>), typeof(string), typeof(MemorySearchResultOptions), typeof(CancellationToken))]
-[CodeGenSuppress("UpdateMemories", typeof(string), typeof(string), typeof(IEnumerable<InternalItemParam>), typeof(string), typeof(int?), typeof(CancellationToken))]
-[CodeGenSuppress("UpdateMemoriesAsync", typeof(string), typeof(string), typeof(IEnumerable<InternalItemParam>), typeof(string), typeof(int?), typeof(CancellationToken))]
+[CodeGenSuppress("SearchMemories", typeof(string), typeof(string), typeof(IEnumerable<ResponseItem>), typeof(string), typeof(MemorySearchResultOptions), typeof(CancellationToken))]
+[CodeGenSuppress("SearchMemoriesAsync", typeof(string), typeof(string), typeof(IEnumerable<ResponseItem>), typeof(string), typeof(MemorySearchResultOptions), typeof(CancellationToken))]
+[CodeGenSuppress("UpdateMemories", typeof(string), typeof(string), typeof(IEnumerable<ResponseItem>), typeof(string), typeof(int?), typeof(CancellationToken))]
+[CodeGenSuppress("UpdateMemoriesAsync", typeof(string), typeof(string), typeof(IEnumerable<ResponseItem>), typeof(string), typeof(int?), typeof(CancellationToken))]
 [CodeGenSuppress("GetMemoryStores", typeof(int?), typeof(string), typeof(string), typeof(string), typeof(RequestOptions))]
 [CodeGenSuppress("GetMemoryStoresAsync", typeof(int?), typeof(string), typeof(string), typeof(string), typeof(RequestOptions))]
 [CodeGenSuppress("GetMemories", typeof(string), typeof(BinaryContent), typeof(string), typeof(int?), typeof(string), typeof(string), typeof(string), typeof(RequestOptions))]

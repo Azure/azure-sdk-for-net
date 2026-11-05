@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.ManufacturingPlatform.Mocking
 
         private ClientDiagnostics ManufacturingDataServicesClientDiagnostics => _manufacturingDataServicesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ManufacturingPlatform.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ManufacturingDataServices ManufacturingDataServicesRestClient => _manufacturingDataServicesRestClient ??= new ManufacturingDataServices(ManufacturingDataServicesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-03-01");
+        private ManufacturingDataServices ManufacturingDataServicesRestClient => _manufacturingDataServicesRestClient ??= new ManufacturingDataServices(ManufacturingDataServicesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.ManufacturingPlatform/manufacturingDataServices", out string apiVersion) ? apiVersion : "2025-03-01");
 
         /// <summary>
         /// List MdsResource resources by subscription ID
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.ManufacturingPlatform.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ManufacturingDataServiceData, ManufacturingDataServiceResource>(new ManufacturingDataServicesGetBySubscriptionAsyncCollectionResultOfT(ManufacturingDataServicesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableManufacturingPlatformSubscriptionResource.GetManufacturingDataServices"), data => new ManufacturingDataServiceResource(Client, data));
+            return new AsyncPageableWrapper<ManufacturingDataServiceData, ManufacturingDataServiceResource>(new ManufacturingDataServiceDataAsync0CollectionResultOfT(ManufacturingDataServicesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableManufacturingPlatformSubscriptionResource.GetManufacturingDataServices"), data => new ManufacturingDataServiceResource(Client, data));
         }
 
         /// <summary>
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.ManufacturingPlatform.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ManufacturingDataServiceData, ManufacturingDataServiceResource>(new ManufacturingDataServicesGetBySubscriptionCollectionResultOfT(ManufacturingDataServicesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableManufacturingPlatformSubscriptionResource.GetManufacturingDataServices"), data => new ManufacturingDataServiceResource(Client, data));
+            return new PageableWrapper<ManufacturingDataServiceData, ManufacturingDataServiceResource>(new ManufacturingDataServiceData0CollectionResultOfT(ManufacturingDataServicesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableManufacturingPlatformSubscriptionResource.GetManufacturingDataServices"), data => new ManufacturingDataServiceResource(Client, data));
         }
     }
 }

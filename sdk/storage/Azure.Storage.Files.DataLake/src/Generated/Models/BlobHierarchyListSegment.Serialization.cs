@@ -106,7 +106,7 @@ namespace Azure.Storage.Files.DataLake.Models
                 throw new FormatException($"The model {nameof(BlobHierarchyListSegment)} does not support writing '{format}' format.");
             }
 
-            if (Optional.IsCollectionDefined(BlobPrefixes))
+            if (BlobPrefixes != null && Optional.IsCollectionDefined(BlobPrefixes))
             {
                 foreach (BlobPrefix item in BlobPrefixes)
                 {
@@ -153,7 +153,7 @@ namespace Azure.Storage.Files.DataLake.Models
                     continue;
                 }
             }
-            return new BlobHierarchyListSegment(blobPrefixes ?? new ChangeTrackingList<BlobPrefix>(), blobItems);
+            return new BlobHierarchyListSegment(blobPrefixes ?? new ChangeTrackingList<BlobPrefix>(), blobItems ?? new ChangeTrackingList<BlobItemInternal>());
         }
 
         /// <param name="writer"> The XML writer. </param>

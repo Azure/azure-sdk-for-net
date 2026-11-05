@@ -330,7 +330,7 @@ namespace Azure.ResourceManager.BillingBenefits
         /// <param name="content"> Request body for validating a savings plan patch request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<SavingsPlanValidateResponse>> ValidateUpdateAsync(SavingsPlanUpdateValidateContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SavingsPlanValidateResult>> ValidateUpdateAsync(SavingsPlanUpdateValidateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -344,7 +344,7 @@ namespace Azure.ResourceManager.BillingBenefits
                 };
                 HttpMessage message = _savingsPlanRestClient.CreateValidateUpdateRequest(Id.Parent.Name, Id.Name, SavingsPlanUpdateValidateContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<SavingsPlanValidateResponse> response = Response.FromValue(SavingsPlanValidateResponse.FromResponse(result), result);
+                Response<SavingsPlanValidateResult> response = Response.FromValue(SavingsPlanValidateResult.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -382,7 +382,7 @@ namespace Azure.ResourceManager.BillingBenefits
         /// <param name="content"> Request body for validating a savings plan patch request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<SavingsPlanValidateResponse> ValidateUpdate(SavingsPlanUpdateValidateContent content, CancellationToken cancellationToken = default)
+        public virtual Response<SavingsPlanValidateResult> ValidateUpdate(SavingsPlanUpdateValidateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -396,7 +396,7 @@ namespace Azure.ResourceManager.BillingBenefits
                 };
                 HttpMessage message = _savingsPlanRestClient.CreateValidateUpdateRequest(Id.Parent.Name, Id.Name, SavingsPlanUpdateValidateContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<SavingsPlanValidateResponse> response = Response.FromValue(SavingsPlanValidateResponse.FromResponse(result), result);
+                Response<SavingsPlanValidateResult> response = Response.FromValue(SavingsPlanValidateResult.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());

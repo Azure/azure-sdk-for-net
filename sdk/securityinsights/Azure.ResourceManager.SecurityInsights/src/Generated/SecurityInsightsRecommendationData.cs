@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.SecurityInsights
         {
             get
             {
-                return Properties is null ? default : Properties.State;
+                return Properties is null ? (RecommendationState?)default : Properties.State;
             }
             set
             {
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.SecurityInsights
         {
             get
             {
-                return Properties is null ? default : Properties.CreatedOn;
+                return Properties is null ? (DateTimeOffset?)default : Properties.CreatedOn;
             }
             set
             {
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.SecurityInsights
         {
             get
             {
-                return Properties is null ? default : Properties.LastEvaluatedOn;
+                return Properties is null ? (DateTimeOffset?)default : Properties.LastEvaluatedOn;
             }
             set
             {
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.SecurityInsights
         {
             get
             {
-                return Properties is null ? default : Properties.LastModifiedOn;
+                return Properties is null ? (DateTimeOffset?)default : Properties.LastModifiedOn;
             }
             set
             {

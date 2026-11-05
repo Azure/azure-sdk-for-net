@@ -31,9 +31,9 @@ extends:
   template: /eng/common/pipelines/templates/stages/archetype-sdk-tool-pwsh.yml
   parameters:
     TargetDirectory: eng/scripts/
-    TargetTags: 'UnitTest'
+    TargetTags: 'UnitTest,SdkCompatibilityTest'
     PreTestSteps:
-      # The unit tests do not consume repository history or tags. Declaring checkout here replaces
+      # The tests do not consume repository history or tags. Declaring checkout here replaces
       # the implicit checkout performed by Azure Pipelines rather than adding another fetch.
       - checkout: self
         fetchDepth: 1
@@ -45,3 +45,13 @@ extends:
         inputs:
           useGlobalJson: true
           performMultiLevelLookup: true
+
+      - task: NuGetAuthenticate@1
+
+      - task: UseDotNet@2
+        displayName: Use .NET 8 SDK for compatibility fixtures
+        retryCountOnTaskFailure: 3
+        inputs:
+          packageType: sdk
+          performMultiLevelLookup: true
+          version: "8.0.x"

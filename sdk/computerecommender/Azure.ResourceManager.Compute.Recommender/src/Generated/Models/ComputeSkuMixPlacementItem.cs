@@ -31,15 +31,13 @@ namespace Azure.ResourceManager.Compute.Recommender.Models
         /// <param name="name"> VM size name (e.g. Standard_D2s_v3). </param>
         /// <param name="priority"> Priority of this allocation (Regular or Spot). </param>
         /// <param name="capacity"> Lower range of recommended allocation capacity. </param>
-        /// <param name="capacityMax"> Upper range of recommended allocation capacity. </param>
         /// <param name="zone"> Logical zone (e.g. "1", "2", "3"). Omitted or empty for regional deployments. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ComputeSkuMixPlacementItem(string name, SkuMixPlacementPriority priority, int capacity, int? capacityMax, string zone, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ComputeSkuMixPlacementItem(string name, SkuMixPlacementPriority priority, int capacity, string zone, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Priority = priority;
             Capacity = capacity;
-            CapacityMax = capacityMax;
             Zone = zone;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -52,9 +50,6 @@ namespace Azure.ResourceManager.Compute.Recommender.Models
 
         /// <summary> Lower range of recommended allocation capacity. </summary>
         public int Capacity { get; }
-
-        /// <summary> Upper range of recommended allocation capacity. </summary>
-        public int? CapacityMax { get; }
 
         /// <summary> Logical zone (e.g. "1", "2", "3"). Omitted or empty for regional deployments. </summary>
         public string Zone { get; }

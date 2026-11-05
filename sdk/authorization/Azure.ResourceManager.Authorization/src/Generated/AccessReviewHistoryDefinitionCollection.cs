@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.Authorization
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<AccessReviewHistoryDefinitionData, AccessReviewHistoryDefinitionResource>(new AccessReviewHistoryDefinitionsGetAllAsyncCollectionResultOfT(_accessReviewHistoryDefinitionsRestClient, Guid.Parse(Id.SubscriptionId), filter, context, "AccessReviewHistoryDefinitionCollection.GetAll"), data => new AccessReviewHistoryDefinitionResource(Client, data));
+            return new AsyncPageableWrapper<AccessReviewHistoryDefinitionData, AccessReviewHistoryDefinitionResource>(new AccessReviewHistoryDefinitionDataAsyncCollectionResultOfT(_accessReviewHistoryDefinitionsRestClient, Guid.Parse(Id.SubscriptionId), filter, context, "AccessReviewHistoryDefinitionCollection.GetAll"), data => new AccessReviewHistoryDefinitionResource(Client, data));
         }
 
         /// <summary>
@@ -323,7 +323,7 @@ namespace Azure.ResourceManager.Authorization
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<AccessReviewHistoryDefinitionData, AccessReviewHistoryDefinitionResource>(new AccessReviewHistoryDefinitionsGetAllCollectionResultOfT(_accessReviewHistoryDefinitionsRestClient, Guid.Parse(Id.SubscriptionId), filter, context, "AccessReviewHistoryDefinitionCollection.GetAll"), data => new AccessReviewHistoryDefinitionResource(Client, data));
+            return new PageableWrapper<AccessReviewHistoryDefinitionData, AccessReviewHistoryDefinitionResource>(new AccessReviewHistoryDefinitionDataCollectionResultOfT(_accessReviewHistoryDefinitionsRestClient, Guid.Parse(Id.SubscriptionId), filter, context, "AccessReviewHistoryDefinitionCollection.GetAll"), data => new AccessReviewHistoryDefinitionResource(Client, data));
         }
 
         /// <summary>

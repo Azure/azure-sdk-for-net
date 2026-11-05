@@ -99,25 +99,46 @@ namespace Azure.ResourceManager.Batch.Models
                 writer.WritePropertyName("keyVaultReference"u8);
                 writer.WriteObjectValue(KeyVaultReference, options);
             }
-            if (Optional.IsDefined(PublicNetworkAccess))
+            if (Optional.IsDefined(PublicNetworkAccess, _publicNetworkAccessIsDefined))
             {
-                writer.WritePropertyName("publicNetworkAccess"u8);
-                writer.WriteStringValue(PublicNetworkAccess.Value.ToSerialString());
+                if (PublicNetworkAccess != null)
+                {
+                    writer.WritePropertyName("publicNetworkAccess"u8);
+                    writer.WriteStringValue(PublicNetworkAccess.Value.ToSerialString());
+                }
+                else
+                {
+                    writer.WriteNull("publicNetworkAccess"u8);
+                }
             }
-            if (Optional.IsDefined(NetworkProfile))
+            if (Optional.IsDefined(NetworkProfile, _networkProfileIsDefined))
             {
-                writer.WritePropertyName("networkProfile"u8);
-                writer.WriteObjectValue(NetworkProfile, options);
+                if (NetworkProfile != null)
+                {
+                    writer.WritePropertyName("networkProfile"u8);
+                    writer.WriteObjectValue(NetworkProfile, options);
+                }
+                else
+                {
+                    writer.WriteNull("networkProfile"u8);
+                }
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(PrivateEndpointConnections))
             {
-                writer.WritePropertyName("privateEndpointConnections"u8);
-                writer.WriteStartArray();
-                foreach (BatchPrivateEndpointConnectionData item in PrivateEndpointConnections)
+                if (PrivateEndpointConnections != null)
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WritePropertyName("privateEndpointConnections"u8);
+                    writer.WriteStartArray();
+                    foreach (BatchPrivateEndpointConnectionData item in PrivateEndpointConnections)
+                    {
+                        writer.WriteObjectValue(item, options);
+                    }
+                    writer.WriteEndArray();
                 }
-                writer.WriteEndArray();
+                else
+                {
+                    writer.WriteNull("privateEndpointConnections"u8);
+                }
             }
             if (options.Format != "W" && Optional.IsDefined(AutoStorage))
             {
@@ -129,25 +150,46 @@ namespace Azure.ResourceManager.Batch.Models
                 writer.WritePropertyName("encryption"u8);
                 writer.WriteObjectValue(Encryption, options);
             }
-            if (options.Format != "W" && Optional.IsDefined(DedicatedCoreQuota))
+            if (options.Format != "W" && Optional.IsDefined(DedicatedCoreQuota, _dedicatedCoreQuotaIsDefined))
             {
-                writer.WritePropertyName("dedicatedCoreQuota"u8);
-                writer.WriteNumberValue(DedicatedCoreQuota.Value);
+                if (DedicatedCoreQuota != null)
+                {
+                    writer.WritePropertyName("dedicatedCoreQuota"u8);
+                    writer.WriteNumberValue(DedicatedCoreQuota.Value);
+                }
+                else
+                {
+                    writer.WriteNull("dedicatedCoreQuota"u8);
+                }
             }
-            if (options.Format != "W" && Optional.IsDefined(LowPriorityCoreQuota))
+            if (options.Format != "W" && Optional.IsDefined(LowPriorityCoreQuota, _lowPriorityCoreQuotaIsDefined))
             {
-                writer.WritePropertyName("lowPriorityCoreQuota"u8);
-                writer.WriteNumberValue(LowPriorityCoreQuota.Value);
+                if (LowPriorityCoreQuota != null)
+                {
+                    writer.WritePropertyName("lowPriorityCoreQuota"u8);
+                    writer.WriteNumberValue(LowPriorityCoreQuota.Value);
+                }
+                else
+                {
+                    writer.WriteNull("lowPriorityCoreQuota"u8);
+                }
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(DedicatedCoreQuotaPerVmFamily))
             {
-                writer.WritePropertyName("dedicatedCoreQuotaPerVMFamily"u8);
-                writer.WriteStartArray();
-                foreach (BatchVmFamilyCoreQuota item in DedicatedCoreQuotaPerVmFamily)
+                if (DedicatedCoreQuotaPerVmFamily != null)
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WritePropertyName("dedicatedCoreQuotaPerVMFamily"u8);
+                    writer.WriteStartArray();
+                    foreach (BatchVmFamilyCoreQuota item in DedicatedCoreQuotaPerVmFamily)
+                    {
+                        writer.WriteObjectValue(item, options);
+                    }
+                    writer.WriteEndArray();
                 }
-                writer.WriteEndArray();
+                else
+                {
+                    writer.WriteNull("dedicatedCoreQuotaPerVMFamily"u8);
+                }
             }
             if (options.Format != "W" && Optional.IsDefined(IsDedicatedCoreQuotaPerVmFamilyEnforced))
             {
@@ -166,13 +208,20 @@ namespace Azure.ResourceManager.Batch.Models
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(AllowedAuthenticationModes))
             {
-                writer.WritePropertyName("allowedAuthenticationModes"u8);
-                writer.WriteStartArray();
-                foreach (BatchAuthenticationMode item in AllowedAuthenticationModes)
+                if (AllowedAuthenticationModes != null)
                 {
-                    writer.WriteStringValue(item.ToSerialString());
+                    writer.WritePropertyName("allowedAuthenticationModes"u8);
+                    writer.WriteStartArray();
+                    foreach (BatchAuthenticationMode item in AllowedAuthenticationModes)
+                    {
+                        writer.WriteStringValue(item.ToSerialString());
+                    }
+                    writer.WriteEndArray();
                 }
-                writer.WriteEndArray();
+                else
+                {
+                    writer.WriteNull("allowedAuthenticationModes"u8);
+                }
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -221,18 +270,22 @@ namespace Azure.ResourceManager.Batch.Models
             BatchProvisioningState? provisioningState = default;
             BatchAccountPoolAllocationMode? poolAllocationMode = default;
             BatchKeyVaultReference keyVaultReference = default;
+            bool publicNetworkAccessIsDefined = false;
             BatchPublicNetworkAccess? publicNetworkAccess = default;
+            bool networkProfileIsDefined = false;
             BatchNetworkProfile networkProfile = default;
-            IReadOnlyList<BatchPrivateEndpointConnectionData> privateEndpointConnections = default;
+            IReadOnlyList<BatchPrivateEndpointConnectionData> privateEndpointConnections = new ChangeTrackingList<BatchPrivateEndpointConnectionData>();
             BatchAccountAutoStorageConfiguration autoStorage = default;
             BatchAccountEncryptionConfiguration encryption = default;
+            bool dedicatedCoreQuotaIsDefined = false;
             int? dedicatedCoreQuota = default;
+            bool lowPriorityCoreQuotaIsDefined = false;
             int? lowPriorityCoreQuota = default;
-            IReadOnlyList<BatchVmFamilyCoreQuota> dedicatedCoreQuotaPerVmFamily = default;
+            IReadOnlyList<BatchVmFamilyCoreQuota> dedicatedCoreQuotaPerVmFamily = new ChangeTrackingList<BatchVmFamilyCoreQuota>();
             bool? isDedicatedCoreQuotaPerVmFamilyEnforced = default;
             int? poolQuota = default;
             int? activeJobAndJobScheduleQuota = default;
-            IReadOnlyList<BatchAuthenticationMode> allowedAuthenticationModes = default;
+            IReadOnlyList<BatchAuthenticationMode> allowedAuthenticationModes = new ChangeTrackingList<BatchAuthenticationMode>();
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -275,6 +328,7 @@ namespace Azure.ResourceManager.Batch.Models
                 }
                 if (prop.NameEquals("publicNetworkAccess"u8))
                 {
+                    publicNetworkAccessIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         publicNetworkAccess = null;
@@ -285,6 +339,7 @@ namespace Azure.ResourceManager.Batch.Models
                 }
                 if (prop.NameEquals("networkProfile"u8))
                 {
+                    networkProfileIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         networkProfile = null;
@@ -297,6 +352,7 @@ namespace Azure.ResourceManager.Batch.Models
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
+                        privateEndpointConnections = null;
                         continue;
                     }
                     List<BatchPrivateEndpointConnectionData> array = new List<BatchPrivateEndpointConnectionData>();
@@ -327,6 +383,7 @@ namespace Azure.ResourceManager.Batch.Models
                 }
                 if (prop.NameEquals("dedicatedCoreQuota"u8))
                 {
+                    dedicatedCoreQuotaIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         dedicatedCoreQuota = null;
@@ -337,6 +394,7 @@ namespace Azure.ResourceManager.Batch.Models
                 }
                 if (prop.NameEquals("lowPriorityCoreQuota"u8))
                 {
+                    lowPriorityCoreQuotaIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         lowPriorityCoreQuota = null;
@@ -349,6 +407,7 @@ namespace Azure.ResourceManager.Batch.Models
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
+                        dedicatedCoreQuotaPerVmFamily = null;
                         continue;
                     }
                     List<BatchVmFamilyCoreQuota> array = new List<BatchVmFamilyCoreQuota>();
@@ -390,6 +449,7 @@ namespace Azure.ResourceManager.Batch.Models
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
+                        allowedAuthenticationModes = null;
                         continue;
                     }
                     List<BatchAuthenticationMode> array = new List<BatchAuthenticationMode>();
@@ -402,7 +462,7 @@ namespace Azure.ResourceManager.Batch.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new BatchAccountProperties(
@@ -413,17 +473,23 @@ namespace Azure.ResourceManager.Batch.Models
                 keyVaultReference,
                 publicNetworkAccess,
                 networkProfile,
-                privateEndpointConnections ?? new ChangeTrackingList<BatchPrivateEndpointConnectionData>(),
+                privateEndpointConnections,
                 autoStorage,
                 encryption,
                 dedicatedCoreQuota,
                 lowPriorityCoreQuota,
-                dedicatedCoreQuotaPerVmFamily ?? new ChangeTrackingList<BatchVmFamilyCoreQuota>(),
+                dedicatedCoreQuotaPerVmFamily,
                 isDedicatedCoreQuotaPerVmFamilyEnforced,
                 poolQuota,
                 activeJobAndJobScheduleQuota,
-                allowedAuthenticationModes ?? new ChangeTrackingList<BatchAuthenticationMode>(),
-                additionalBinaryDataProperties);
+                allowedAuthenticationModes,
+                additionalBinaryDataProperties)
+            {
+                _publicNetworkAccessIsDefined = publicNetworkAccessIsDefined,
+                _networkProfileIsDefined = networkProfileIsDefined,
+                _dedicatedCoreQuotaIsDefined = dedicatedCoreQuotaIsDefined,
+                _lowPriorityCoreQuotaIsDefined = lowPriorityCoreQuotaIsDefined
+            };
         }
     }
 }

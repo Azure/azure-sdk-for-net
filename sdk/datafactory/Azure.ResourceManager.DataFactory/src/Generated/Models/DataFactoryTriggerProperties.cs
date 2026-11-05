@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary>
     /// Azure data factory nested object which contains information about creating pipeline run
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="MultiplePipelineTrigger"/>, <see cref="DataFactoryScheduleTrigger"/>, <see cref="DataFactoryBlobTrigger"/>, <see cref="DataFactoryBlobEventsTrigger"/>, <see cref="CustomEventsTrigger"/>, <see cref="TumblingWindowTrigger"/>, <see cref="RerunTumblingWindowTrigger"/>, and <see cref="ChainingTrigger"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ChainingTrigger"/>, <see cref="CustomEventsTrigger"/>, <see cref="DataFactoryBlobEventsTrigger"/>, <see cref="DataFactoryBlobTrigger"/>, <see cref="DataFactoryScheduleTrigger"/>, <see cref="MultiplePipelineTrigger"/>, <see cref="RerunTumblingWindowTrigger"/>, and <see cref="TumblingWindowTrigger"/>.
     /// </summary>
     public abstract partial class DataFactoryTriggerProperties
     {
@@ -43,6 +43,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             RuntimeState = runtimeState;
             Annotations = annotations;
             _additionalBinaryDataProperties = additionalProperties;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DataFactoryTriggerProperties"/>. </summary>
+        protected DataFactoryTriggerProperties() : this(default)
+        {
         }
 
         /// <summary> Trigger type. </summary>

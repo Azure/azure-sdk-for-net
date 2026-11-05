@@ -19,11 +19,11 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 
         /// <summary> Initializes a new instance of <see cref="LtrBackupOperationResponseProperties"/>. </summary>
         /// <param name="status"> Service-set extensible enum indicating the status of operation. </param>
-        /// <param name="startOn"> Start time of the operation. </param>
-        public LtrBackupOperationResponseProperties(PostgreSqlExecutionStatus status, DateTimeOffset startOn)
+        /// <param name="startsOn"> Start time of the operation. </param>
+        public LtrBackupOperationResponseProperties(PostgreSqlExecutionStatus status, DateTimeOffset startsOn)
         {
             Status = status;
-            StartOn = startOn;
+            StartsOn = startsOn;
         }
 
         /// <summary> Initializes a new instance of <see cref="LtrBackupOperationResponseProperties"/>. </summary>
@@ -32,21 +32,21 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <param name="backupName"> Name of Backup operation. </param>
         /// <param name="backupMetadata"> Metadata to be stored in RP. Store everything that will be required to perform a successful restore using this Recovery point. e.g. Versions, DataFormat etc. </param>
         /// <param name="status"> Service-set extensible enum indicating the status of operation. </param>
-        /// <param name="startOn"> Start time of the operation. </param>
-        /// <param name="endOn"> End time of the operation. </param>
+        /// <param name="startsOn"> Start time of the operation. </param>
+        /// <param name="endsOn"> End time of the operation. </param>
         /// <param name="percentComplete"> Percentage completed. </param>
         /// <param name="errorCode"> Error code. </param>
         /// <param name="errorMessage"> Error message. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal LtrBackupOperationResponseProperties(long? datasourceSizeInBytes, long? dataTransferredInBytes, string backupName, string backupMetadata, PostgreSqlExecutionStatus status, DateTimeOffset startOn, DateTimeOffset? endOn, double? percentComplete, string errorCode, string errorMessage, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal LtrBackupOperationResponseProperties(long? datasourceSizeInBytes, long? dataTransferredInBytes, string backupName, string backupMetadata, PostgreSqlExecutionStatus status, DateTimeOffset startsOn, DateTimeOffset? endsOn, double? percentComplete, string errorCode, string errorMessage, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DatasourceSizeInBytes = datasourceSizeInBytes;
             DataTransferredInBytes = dataTransferredInBytes;
             BackupName = backupName;
             BackupMetadata = backupMetadata;
             Status = status;
-            StartOn = startOn;
-            EndOn = endOn;
+            StartsOn = startsOn;
+            EndsOn = endsOn;
             PercentComplete = percentComplete;
             ErrorCode = errorCode;
             ErrorMessage = errorMessage;
@@ -75,11 +75,11 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 
         /// <summary> Start time of the operation. </summary>
         [WirePath("startTime")]
-        public DateTimeOffset StartOn { get; set; }
+        public DateTimeOffset StartsOn { get; set; }
 
         /// <summary> End time of the operation. </summary>
         [WirePath("endTime")]
-        public DateTimeOffset? EndOn { get; set; }
+        public DateTimeOffset? EndsOn { get; set; }
 
         /// <summary> Percentage completed. </summary>
         [WirePath("percentComplete")]

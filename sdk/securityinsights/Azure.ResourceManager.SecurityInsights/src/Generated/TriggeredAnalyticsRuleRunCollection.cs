@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.SecurityInsights
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<TriggeredAnalyticsRuleRunData, TriggeredAnalyticsRuleRunResource>(new GetTriggeredAnalyticsRuleRunsGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<TriggeredAnalyticsRuleRunData, TriggeredAnalyticsRuleRunResource>(new TriggeredAnalyticsRuleRunDataAsyncCollectionResultOfT(
                 _getTriggeredAnalyticsRuleRunsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.SecurityInsights
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<TriggeredAnalyticsRuleRunData, TriggeredAnalyticsRuleRunResource>(new GetTriggeredAnalyticsRuleRunsGetAllCollectionResultOfT(
+            return new PageableWrapper<TriggeredAnalyticsRuleRunData, TriggeredAnalyticsRuleRunResource>(new TriggeredAnalyticsRuleRunDataCollectionResultOfT(
                 _getTriggeredAnalyticsRuleRunsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

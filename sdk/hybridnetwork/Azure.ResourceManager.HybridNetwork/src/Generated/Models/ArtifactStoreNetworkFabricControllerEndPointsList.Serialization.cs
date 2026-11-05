@@ -167,10 +167,10 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ArtifactStoreNetworkFabricControllerEndPointsList(value, nextLink, additionalBinaryDataProperties);
+            return new ArtifactStoreNetworkFabricControllerEndPointsList(value ?? new ChangeTrackingList<ArtifactStoreNetworkFabricControllerEndPoints>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

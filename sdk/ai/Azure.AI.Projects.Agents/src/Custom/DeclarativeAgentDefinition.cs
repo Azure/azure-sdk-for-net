@@ -5,6 +5,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.AI.Extensions.OpenAI;
 using OpenAI;
 using OpenAI.Responses;
 
@@ -21,15 +22,15 @@ public partial class DeclarativeAgentDefinition
     /// can specify which tool to use by setting the `tool_choice` parameter.
     /// </summary>
     [CodeGenMember("Tools")]
-    public IList<global::OpenAI.Responses.ResponseTool> Tools { get; }
+    public IList<ResponseTool> Tools { get; }
 
     /// <summary> Reasoning options controlling how the model produces its chain-of-thought response. </summary>
     [CodeGenMember("Reasoning")]
-    public global::OpenAI.Responses.ResponseReasoningOptions ReasoningOptions { get; set; }
+    public ResponseReasoningOptions ReasoningOptions { get; set; }
 
     /// <summary> Configuration options for a text response from the model. Can be plain text or structured JSON data. </summary>
     [CodeGenMember("Text")]
-    public global::OpenAI.Responses.ResponseTextOptions TextOptions { get; set; }
+    public ResponseTextOptions TextOptions { get; set; }
 
     private static void DeserializeToolsValue(JsonProperty property, ref IList<ResponseTool> tools)
     {
@@ -39,10 +40,12 @@ public partial class DeclarativeAgentDefinition
         {
             foreach (JsonElement element in property.Value.EnumerateArray())
             {
+                // Read through the Azure context so Azure-specific tool discriminators materialize as their
+                // concrete Azure.AI.Extensions.OpenAI subtypes instead of OpenAI's opaque unknown-tool fallback.
                 ResponseTool tool = ModelReaderWriter.Read<ResponseTool>(
                     BinaryData.FromString(element.GetRawText()),
                     ModelReaderWriterOptions.Json,
-                    OpenAIContext.Default);
+                    AzureAIExtensionsOpenAIContext.Default);
                 replacementTools.Add(tool);
             }
         }

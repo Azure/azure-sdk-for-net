@@ -33,14 +33,14 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         /// <summary> Initializes a new instance of <see cref="WorkspaceManagerAssignmentProperties"/>. </summary>
         /// <param name="targetResourceName"> The resource name of the workspace manager group targeted by the workspace manager assignment. </param>
-        /// <param name="lastJobEndOn"> The time the last job associated to this assignment ended at. </param>
+        /// <param name="lastJobEndsOn"> The time the last job associated to this assignment ended at. </param>
         /// <param name="lastJobProvisioningState"> State of the last job associated to this assignment. </param>
         /// <param name="items"> List of resources included in this workspace manager assignment. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal WorkspaceManagerAssignmentProperties(string targetResourceName, DateTimeOffset? lastJobEndOn, JobProvisioningState? lastJobProvisioningState, IList<WorkspaceManagerAssignmentItem> items, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal WorkspaceManagerAssignmentProperties(string targetResourceName, DateTimeOffset? lastJobEndsOn, JobProvisioningState? lastJobProvisioningState, IList<WorkspaceManagerAssignmentItem> items, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             TargetResourceName = targetResourceName;
-            LastJobEndOn = lastJobEndOn;
+            LastJobEndsOn = lastJobEndsOn;
             LastJobProvisioningState = lastJobProvisioningState;
             Items = items;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         /// <summary> The time the last job associated to this assignment ended at. </summary>
         [WirePath("lastJobEndTime")]
-        public DateTimeOffset? LastJobEndOn { get; }
+        public DateTimeOffset? LastJobEndsOn { get; }
 
         /// <summary> State of the last job associated to this assignment. </summary>
         [WirePath("lastJobProvisioningState")]

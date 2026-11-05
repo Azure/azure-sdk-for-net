@@ -386,7 +386,7 @@ namespace Azure.ResourceManager.Advisor.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new ConfigurationsGetAdvisorConfigurationsBySubscriptionAsyncCollectionResultOfT(ConfigurationsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableAdvisorSubscriptionResource.GetAdvisorConfigurationsBySubscription");
+            return new AdvisorConfigurationDataAsyncCollectionResultOfT(ConfigurationsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableAdvisorSubscriptionResource.GetAdvisorConfigurationsBySubscription");
         }
 
         /// <summary>
@@ -414,7 +414,7 @@ namespace Azure.ResourceManager.Advisor.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new ConfigurationsGetAdvisorConfigurationsBySubscriptionCollectionResultOfT(ConfigurationsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableAdvisorSubscriptionResource.GetAdvisorConfigurationsBySubscription");
+            return new AdvisorConfigurationDataCollectionResultOfT(ConfigurationsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableAdvisorSubscriptionResource.GetAdvisorConfigurationsBySubscription");
         }
 
         /// <summary>
@@ -700,7 +700,7 @@ namespace Azure.ResourceManager.Advisor.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<AdvisorSuppressionContractData, AdvisorSuppressionContractResource>(new SuppressionsOperationGroupGetAdvisorSuppressionContractsAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<AdvisorSuppressionContractData, AdvisorSuppressionContractResource>(new AdvisorSuppressionContractDataAsyncCollectionResultOfT(
                 SuppressionsOperationGroupRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 top,
@@ -736,7 +736,7 @@ namespace Azure.ResourceManager.Advisor.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<AdvisorSuppressionContractData, AdvisorSuppressionContractResource>(new SuppressionsOperationGroupGetAdvisorSuppressionContractsCollectionResultOfT(
+            return new PageableWrapper<AdvisorSuppressionContractData, AdvisorSuppressionContractResource>(new AdvisorSuppressionContractDataCollectionResultOfT(
                 SuppressionsOperationGroupRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 top,
@@ -770,7 +770,7 @@ namespace Azure.ResourceManager.Advisor.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AssessmentTypesOperationGroupGetAdvisorAssessmentTypesAsyncCollectionResultOfT(AssessmentTypesOperationGroupRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableAdvisorSubscriptionResource.GetAdvisorAssessmentTypes");
+            return new AdvisorAssessmentTypeAsyncCollectionResultOfT(AssessmentTypesOperationGroupRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableAdvisorSubscriptionResource.GetAdvisorAssessmentTypes");
         }
 
         /// <summary>
@@ -798,7 +798,7 @@ namespace Azure.ResourceManager.Advisor.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AssessmentTypesOperationGroupGetAdvisorAssessmentTypesCollectionResultOfT(AssessmentTypesOperationGroupRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableAdvisorSubscriptionResource.GetAdvisorAssessmentTypes");
+            return new AdvisorAssessmentTypeCollectionResultOfT(AssessmentTypesOperationGroupRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableAdvisorSubscriptionResource.GetAdvisorAssessmentTypes");
         }
 
         /// <summary>
@@ -826,7 +826,7 @@ namespace Azure.ResourceManager.Advisor.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new WorkloadsOperationGroupGetAdvisorWorkloadsAsyncCollectionResultOfT(WorkloadsOperationGroupRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableAdvisorSubscriptionResource.GetAdvisorWorkloads");
+            return new AdvisorWorkloadAsyncCollectionResultOfT(WorkloadsOperationGroupRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableAdvisorSubscriptionResource.GetAdvisorWorkloads");
         }
 
         /// <summary>
@@ -854,7 +854,7 @@ namespace Azure.ResourceManager.Advisor.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new WorkloadsOperationGroupGetAdvisorWorkloadsCollectionResultOfT(WorkloadsOperationGroupRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableAdvisorSubscriptionResource.GetAdvisorWorkloads");
+            return new AdvisorWorkloadCollectionResultOfT(WorkloadsOperationGroupRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableAdvisorSubscriptionResource.GetAdvisorWorkloads");
         }
     }
 }

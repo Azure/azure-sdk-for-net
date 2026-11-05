@@ -517,7 +517,7 @@ namespace Azure.Communication.Identity.Tests
         [TestCase(ServiceVersion.V2022_06_01, TestName = "CreateIdentityWithServiceVersion_V2022_06_01")]
         [TestCase(ServiceVersion.V2022_10_01, TestName = "CreateIdentityWithServiceVersion_V2022_10_01")]
         [TestCase(ServiceVersion.V2023_10_01, TestName = "CreateIdentityWithServiceVersion_V2023_10_01")]
-        [TestCase(ServiceVersion.V2025_03_02_PREVIEW, TestName = "CreateIdentityWithServiceVersion_V2025_03_02_PREVIEW")]
+        [TestCase(ServiceVersion.V2026_09_23, TestName = "CreateIdentityWithServiceVersion_V2026_09_23")]
         public async Task CreateIdentityWithDifferentServiceVersions(ServiceVersion version)
         {
             try
@@ -530,40 +530,6 @@ namespace Azure.Communication.Identity.Tests
             {
                 Assert.Fail($"Unexpected error: {ex}");
             }
-        }
-
-        [Test]
-        public async Task CreateUserWithCustomIdShouldReturnExistingIdentity()
-        {
-            var customId = "bob@contoso.com";
-            CommunicationIdentityClient client = CreateClient();
-            Response<CommunicationUserIdentifier> createResponse = await client.CreateUserAsync(customId);
-
-            Assert.That((int)HttpStatusCode.Created, Is.EqualTo(createResponse.GetRawResponse().Status));
-            Assert.That(createResponse.Value.Id, Is.Not.Null);
-
-            Response<CommunicationUserIdentifier> createResponse2 = await client.CreateUserAsync(customId);
-            Assert.That(createResponse2.GetRawResponse().Status, Is.EqualTo((int)HttpStatusCode.Created));
-            Assert.That(createResponse2.Value.Id, Is.EqualTo(createResponse.Value.Id));
-        }
-
-        [Test]
-        public async Task GetUserShouldReturnTheCustomId()
-        {
-            var customId = "alice@contoso.com";
-            CommunicationIdentityClient client = CreateClient();
-            Response<CommunicationUserIdentifierAndToken> createResponse = await client.CreateUserAndTokenAsync(customId,
-                new List<CommunicationTokenScope> { CommunicationTokenScope.VoIP },
-                TimeSpan.FromHours(2));
-            Assert.That((int)HttpStatusCode.Created == createResponse.GetRawResponse().Status
-                || (int)HttpStatusCode.OK == createResponse.GetRawResponse().Status, Is.True);
-            Assert.That(createResponse.Value.User, Is.Not.Null);
-
-            Response<CommunicationUserDetail> getResponse = await client.GetUserDetailAsync(createResponse.Value.User);
-            Assert.That(getResponse.GetRawResponse().Status, Is.EqualTo((int)HttpStatusCode.OK));
-            Assert.That(getResponse.Value.User.Id, Is.EqualTo(createResponse.Value.User.Id));
-            Assert.That(getResponse.Value.CustomId, Is.EqualTo(customId));
-            Assert.That(getResponse.Value.LastTokenIssuedAt, Is.Not.Null);
         }
 
         [Test]

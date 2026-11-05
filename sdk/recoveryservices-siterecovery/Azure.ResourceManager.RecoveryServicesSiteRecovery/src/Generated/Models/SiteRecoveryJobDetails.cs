@@ -39,6 +39,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryJobDetails"/>. </summary>
+        protected SiteRecoveryJobDetails() : this(default)
+        {
+        }
+
         /// <summary> Gets the type of job details (see JobDetailsTypes enum for possible values). </summary>
         internal string InstanceType { get; set; }
 

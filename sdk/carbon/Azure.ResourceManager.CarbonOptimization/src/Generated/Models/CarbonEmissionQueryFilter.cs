@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
 {
     /// <summary>
     /// Shared query filter parameter to configure carbon emissions data queries for all different report type defined in ReportTypeEnum.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="OverallSummaryReportQueryFilter"/>, <see cref="MonthlySummaryReportQueryFilter"/>, <see cref="TopItemsSummaryReportQueryFilter"/>, <see cref="TopItemsMonthlySummaryReportQueryFilter"/>, and <see cref="ItemDetailsQueryFilter"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ItemDetailsQueryFilter"/>, <see cref="MonthlySummaryReportQueryFilter"/>, <see cref="OverallSummaryReportQueryFilter"/>, <see cref="TopItemsMonthlySummaryReportQueryFilter"/>, and <see cref="TopItemsSummaryReportQueryFilter"/>.
     /// </summary>
     public abstract partial class CarbonEmissionQueryFilter
     {

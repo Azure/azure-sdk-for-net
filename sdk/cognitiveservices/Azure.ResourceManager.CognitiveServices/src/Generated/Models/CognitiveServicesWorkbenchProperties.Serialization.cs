@@ -85,6 +85,16 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             writer.WriteStringValue(TargetClusterId);
             writer.WritePropertyName("imageLink"u8);
             writer.WriteStringValue(ImageLink);
+            if (Optional.IsDefined(InstanceType))
+            {
+                writer.WritePropertyName("instanceType"u8);
+                writer.WriteStringValue(InstanceType);
+            }
+            if (Optional.IsDefined(GpuCount))
+            {
+                writer.WritePropertyName("gpuCount"u8);
+                writer.WriteNumberValue(GpuCount.Value);
+            }
             if (Optional.IsDefined(IdleTimeBeforeShutdown))
             {
                 writer.WritePropertyName("idleTimeBeforeShutdown"u8);
@@ -114,6 +124,11 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(Status))
+            {
+                writer.WritePropertyName("status"u8);
+                writer.WriteStringValue(Status.Value.ToString());
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(Errors))
             {
@@ -179,12 +194,15 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             }
             string targetClusterId = default;
             string imageLink = default;
+            string instanceType = default;
+            int? gpuCount = default;
             string idleTimeBeforeShutdown = default;
             string datasetId = default;
             CognitiveServicesComputeSshSettings sshSettings = default;
             CognitiveServicesComputeConnectivityEndpoints connectivityEndpoints = default;
             string webEndpoint = default;
-            CognitiveServicesComputeProvisioningState? provisioningState = default;
+            WorkbenchProvisioningState? provisioningState = default;
+            WorkbenchStatus? status = default;
             IReadOnlyList<ResponseError> errors = default;
             DateTimeOffset? createdOn = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -198,6 +216,20 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 if (prop.NameEquals("imageLink"u8))
                 {
                     imageLink = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("instanceType"u8))
+                {
+                    instanceType = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("gpuCount"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    gpuCount = prop.Value.GetInt32();
                     continue;
                 }
                 if (prop.NameEquals("idleTimeBeforeShutdown"u8))
@@ -239,7 +271,16 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     {
                         continue;
                     }
-                    provisioningState = new CognitiveServicesComputeProvisioningState(prop.Value.GetString());
+                    provisioningState = new WorkbenchProvisioningState(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("status"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    status = new WorkbenchStatus(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("errors"u8))
@@ -274,18 +315,21 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new CognitiveServicesWorkbenchProperties(
                 targetClusterId,
                 imageLink,
+                instanceType,
+                gpuCount,
                 idleTimeBeforeShutdown,
                 datasetId,
                 sshSettings,
                 connectivityEndpoints,
                 webEndpoint,
                 provisioningState,
+                status,
                 errors ?? new ChangeTrackingList<ResponseError>(),
                 createdOn,
                 additionalBinaryDataProperties);

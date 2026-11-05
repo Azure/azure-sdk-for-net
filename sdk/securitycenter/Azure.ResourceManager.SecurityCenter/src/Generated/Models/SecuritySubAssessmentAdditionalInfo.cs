@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary>
     /// Details of the sub-assessment
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="SqlServerVulnerabilityProperties"/>, <see cref="ContainerRegistryVulnerabilityProperties"/>, and <see cref="ServerVulnerabilityProperties"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ContainerRegistryVulnerabilityProperties"/>, <see cref="ServerVulnerabilityProperties"/>, and <see cref="SqlServerVulnerabilityProperties"/>.
     /// </summary>
     public abstract partial class SecuritySubAssessmentAdditionalInfo
     {

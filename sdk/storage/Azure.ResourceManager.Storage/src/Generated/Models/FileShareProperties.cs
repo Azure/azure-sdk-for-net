@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Storage.Models
         /// <param name="deletedOn"> The deleted time if the share was deleted. </param>
         /// <param name="remainingRetentionDays"> Remaining retention days for share that was soft deleted. </param>
         /// <param name="accessTier"> Access tier for specific share. GpV2 account can choose between TransactionOptimized (default), Hot, and Cool. FileStorage account can choose Premium. </param>
-        /// <param name="accessTierChangeOn"> Indicates the last modification time for share access tier. </param>
+        /// <param name="accessTierChangedOn"> Indicates the last modification time for share access tier. </param>
         /// <param name="accessTierStatus"> Indicates if there is a pending transition for access tier. </param>
         /// <param name="shareUsageBytes"> The approximate size of the data stored on the share. Note that this value may not include all recently created or recently resized files. </param>
         /// <param name="leaseStatus"> The lease status of the share. </param>
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Storage.Models
         /// <param name="snapshotOn"> Creation time of share snapshot returned in the response of list shares with expand param "snapshots". </param>
         /// <param name="fileSharePaidBursting"> File Share Paid Bursting properties. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal FileShareProperties(DateTimeOffset? lastModifiedOn, IDictionary<string, string> metadata, int? shareQuota, int? provisionedIops, int? provisionedBandwidthMibps, int? includedBurstIops, long? maxBurstCreditsForIops, DateTimeOffset? nextAllowedQuotaDowngradeOn, DateTimeOffset? nextAllowedProvisionedIopsDowngradeOn, DateTimeOffset? nextAllowedProvisionedBandwidthDowngradeOn, FileShareEnabledProtocol? enabledProtocol, RootSquashType? rootSquash, string version, bool? isDeleted, DateTimeOffset? deletedOn, int? remainingRetentionDays, FileShareAccessTier? accessTier, DateTimeOffset? accessTierChangeOn, string accessTierStatus, long? shareUsageBytes, StorageLeaseStatus? leaseStatus, StorageLeaseState? leaseState, StorageLeaseDurationType? leaseDuration, IList<StorageSignedIdentifier> signedIdentifiers, DateTimeOffset? snapshotOn, FileSharePropertiesFileSharePaidBursting fileSharePaidBursting, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal FileShareProperties(DateTimeOffset? lastModifiedOn, IDictionary<string, string> metadata, int? shareQuota, int? provisionedIops, int? provisionedBandwidthMibps, int? includedBurstIops, long? maxBurstCreditsForIops, DateTimeOffset? nextAllowedQuotaDowngradeOn, DateTimeOffset? nextAllowedProvisionedIopsDowngradeOn, DateTimeOffset? nextAllowedProvisionedBandwidthDowngradeOn, FileShareEnabledProtocol? enabledProtocol, RootSquashType? rootSquash, string version, bool? isDeleted, DateTimeOffset? deletedOn, int? remainingRetentionDays, FileShareAccessTier? accessTier, DateTimeOffset? accessTierChangedOn, string accessTierStatus, long? shareUsageBytes, StorageLeaseStatus? leaseStatus, StorageLeaseState? leaseState, StorageLeaseDurationType? leaseDuration, IList<StorageSignedIdentifier> signedIdentifiers, DateTimeOffset? snapshotOn, FileSharePropertiesFileSharePaidBursting fileSharePaidBursting, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             LastModifiedOn = lastModifiedOn;
             Metadata = metadata;
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Storage.Models
             DeletedOn = deletedOn;
             RemainingRetentionDays = remainingRetentionDays;
             AccessTier = accessTier;
-            AccessTierChangeOn = accessTierChangeOn;
+            AccessTierChangedOn = accessTierChangedOn;
             AccessTierStatus = accessTierStatus;
             ShareUsageBytes = shareUsageBytes;
             LeaseStatus = leaseStatus;
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <summary> Indicates the last modification time for share access tier. </summary>
         [WirePath("accessTierChangeTime")]
-        public DateTimeOffset? AccessTierChangeOn { get; }
+        public DateTimeOffset? AccessTierChangedOn { get; }
 
         /// <summary> Indicates if there is a pending transition for access tier. </summary>
         [WirePath("accessTierStatus")]

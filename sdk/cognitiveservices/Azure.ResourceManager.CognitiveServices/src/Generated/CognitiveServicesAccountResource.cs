@@ -16,6 +16,7 @@ using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.CognitiveServices.Models;
 using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.CognitiveServices
 {
@@ -51,9 +52,8 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal CognitiveServicesAccountResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string cognitiveServicesAccountApiVersion);
             _accountsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CognitiveServices", ResourceType.Namespace, Diagnostics);
-            _accountsRestClient = new Accounts(_accountsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, cognitiveServicesAccountApiVersion ?? "2026-07-15-preview");
+            _accountsRestClient = new Accounts(_accountsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.CognitiveServices/accounts", out string accountsApiVersionOverride) ? accountsApiVersionOverride : "2026-09-15-preview");
             ValidateResourceId(id);
         }
 
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-15-preview. </description>
+        /// <description> 2026-09-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-15-preview. </description>
+        /// <description> 2026-09-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-15-preview. </description>
+        /// <description> 2026-09-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-15-preview. </description>
+        /// <description> 2026-09-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -320,7 +320,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-15-preview. </description>
+        /// <description> 2026-09-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -369,7 +369,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-15-preview. </description>
+        /// <description> 2026-09-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -418,7 +418,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-15-preview. </description>
+        /// <description> 2026-09-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -473,7 +473,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-15-preview. </description>
+        /// <description> 2026-09-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -528,7 +528,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-15-preview. </description>
+        /// <description> 2026-09-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -580,7 +580,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-15-preview. </description>
+        /// <description> 2026-09-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -632,7 +632,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-15-preview. </description>
+        /// <description> 2026-09-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -680,7 +680,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-15-preview. </description>
+        /// <description> 2026-09-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -728,7 +728,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-15-preview. </description>
+        /// <description> 2026-09-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -744,7 +744,7 @@ namespace Azure.ResourceManager.CognitiveServices
             {
                 CancellationToken = cancellationToken
             };
-            return new AccountsGetModelsAsyncCollectionResultOfT(
+            return new CognitiveServicesAccountModelAsyncCollectionResultOfT(
                 _accountsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -766,7 +766,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-15-preview. </description>
+        /// <description> 2026-09-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -782,7 +782,7 @@ namespace Azure.ResourceManager.CognitiveServices
             {
                 CancellationToken = cancellationToken
             };
-            return new AccountsGetModelsCollectionResultOfT(
+            return new CognitiveServicesAccountModelCollectionResultOfT(
                 _accountsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -804,7 +804,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-15-preview. </description>
+        /// <description> 2026-09-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -820,7 +820,7 @@ namespace Azure.ResourceManager.CognitiveServices
             {
                 CancellationToken = cancellationToken
             };
-            return new AccountsGetSkusAsyncCollectionResultOfT(
+            return new CognitiveServicesAccountSkuAsyncCollectionResultOfT(
                 _accountsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -842,7 +842,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-15-preview. </description>
+        /// <description> 2026-09-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -858,7 +858,7 @@ namespace Azure.ResourceManager.CognitiveServices
             {
                 CancellationToken = cancellationToken
             };
-            return new AccountsGetSkusCollectionResultOfT(
+            return new CognitiveServicesAccountSkuCollectionResultOfT(
                 _accountsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -880,7 +880,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-15-preview. </description>
+        /// <description> 2026-09-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -897,7 +897,7 @@ namespace Azure.ResourceManager.CognitiveServices
             {
                 CancellationToken = cancellationToken
             };
-            return new AccountsGetUsagesAsyncCollectionResultOfT(
+            return new ServiceAccountUsageAsyncCollectionResultOfT(
                 _accountsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -920,7 +920,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-15-preview. </description>
+        /// <description> 2026-09-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -937,7 +937,7 @@ namespace Azure.ResourceManager.CognitiveServices
             {
                 CancellationToken = cancellationToken
             };
-            return new AccountsGetUsagesCollectionResultOfT(
+            return new ServiceAccountUsageCollectionResultOfT(
                 _accountsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -960,7 +960,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-15-preview. </description>
+        /// <description> 2026-09-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -976,7 +976,7 @@ namespace Azure.ResourceManager.CognitiveServices
             {
                 CancellationToken = cancellationToken
             };
-            return new AccountsGetPrivateLinkResourcesAsyncCollectionResultOfT(
+            return new CognitiveServicesPrivateLinkResourceAsyncCollectionResultOfT(
                 _accountsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -998,7 +998,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-15-preview. </description>
+        /// <description> 2026-09-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -1014,7 +1014,7 @@ namespace Azure.ResourceManager.CognitiveServices
             {
                 CancellationToken = cancellationToken
             };
-            return new AccountsGetPrivateLinkResourcesCollectionResultOfT(
+            return new CognitiveServicesPrivateLinkResourceCollectionResultOfT(
                 _accountsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -1036,7 +1036,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-15-preview. </description>
+        /// <description> 2026-09-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -1088,7 +1088,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-15-preview. </description>
+        /// <description> 2026-09-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -1237,10 +1237,9 @@ namespace Azure.ResourceManager.CognitiveServices
             {
                 if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
                 {
-                    await GetTagResource().DeleteAsync(WaitUntil.Completed, cancellationToken).ConfigureAwait(false);
-                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
-                    originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
+                    TagResourceData tagData = new TagResourceData(new Tag());
+                    tagData.TagValues.ReplaceWith(tags);
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, tagData, cancellationToken).ConfigureAwait(false);
                     RequestContext context = new RequestContext
                     {
                         CancellationToken = cancellationToken
@@ -1280,10 +1279,9 @@ namespace Azure.ResourceManager.CognitiveServices
             {
                 if (CanUseTagResource(cancellationToken))
                 {
-                    GetTagResource().Delete(WaitUntil.Completed, cancellationToken);
-                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
-                    originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
+                    TagResourceData tagData = new TagResourceData(new Tag());
+                    tagData.TagValues.ReplaceWith(tags);
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, tagData, cancellationToken);
                     RequestContext context = new RequestContext
                     {
                         CancellationToken = cancellationToken
@@ -1564,6 +1562,72 @@ namespace Azure.ResourceManager.CognitiveServices
             Argument.AssertNotNullOrEmpty(raiPolicyName, nameof(raiPolicyName));
 
             return GetRaiPolicies().Get(raiPolicyName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of RaiRegos in the <see cref="CognitiveServicesAccountResource"/>. </summary>
+        /// <returns> An object representing collection of RaiRegos and their operations over a RaiRegoResource. </returns>
+        public virtual RaiRegoCollection GetRaiRegos()
+        {
+            return GetCachedClient(client => new RaiRegoCollection(client, Id));
+        }
+
+        /// <summary> Gets one reusable Rego artifact. </summary>
+        /// <param name="raiRegoName"> The name of the reusable Rego artifact. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="raiRegoName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="raiRegoName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<RaiRegoResource>> GetRaiRegoAsync(string raiRegoName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(raiRegoName, nameof(raiRegoName));
+
+            return await GetRaiRegos().GetAsync(raiRegoName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Gets one reusable Rego artifact. </summary>
+        /// <param name="raiRegoName"> The name of the reusable Rego artifact. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="raiRegoName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="raiRegoName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<RaiRegoResource> GetRaiRego(string raiRegoName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(raiRegoName, nameof(raiRegoName));
+
+            return GetRaiRegos().Get(raiRegoName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of RaiBindings in the <see cref="CognitiveServicesAccountResource"/>. </summary>
+        /// <returns> An object representing collection of RaiBindings and their operations over a RaiBindingResource. </returns>
+        public virtual RaiBindingCollection GetRaiBindings()
+        {
+            return GetCachedClient(client => new RaiBindingCollection(client, Id));
+        }
+
+        /// <summary> Gets one RAI binding. </summary>
+        /// <param name="raiBindingName"> The name of the RAI binding. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="raiBindingName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="raiBindingName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<RaiBindingResource>> GetRaiBindingAsync(string raiBindingName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(raiBindingName, nameof(raiBindingName));
+
+            return await GetRaiBindings().GetAsync(raiBindingName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Gets one RAI binding. </summary>
+        /// <param name="raiBindingName"> The name of the RAI binding. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="raiBindingName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="raiBindingName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<RaiBindingResource> GetRaiBinding(string raiBindingName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(raiBindingName, nameof(raiBindingName));
+
+            return GetRaiBindings().Get(raiBindingName, cancellationToken);
         }
 
         /// <summary> Gets a collection of RaiBlocklists in the <see cref="CognitiveServicesAccountResource"/>. </summary>
@@ -1929,6 +1993,39 @@ namespace Azure.ResourceManager.CognitiveServices
             return GetCognitiveServicesManagedComputeDeployments().Get(deploymentName, cancellationToken);
         }
 
+        /// <summary> Gets a collection of AdapterDeployments in the <see cref="CognitiveServicesAccountResource"/>. </summary>
+        /// <returns> An object representing collection of AdapterDeployments and their operations over a AdapterDeploymentResource. </returns>
+        public virtual AdapterDeploymentCollection GetAdapterDeployments()
+        {
+            return GetCachedClient(client => new AdapterDeploymentCollection(client, Id));
+        }
+
+        /// <summary> Gets an adapter deployment by name. </summary>
+        /// <param name="adapterDeploymentName"> The account-unique adapter deployment name and inference identity. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="adapterDeploymentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="adapterDeploymentName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<AdapterDeploymentResource>> GetAdapterDeploymentAsync(string adapterDeploymentName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(adapterDeploymentName, nameof(adapterDeploymentName));
+
+            return await GetAdapterDeployments().GetAsync(adapterDeploymentName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Gets an adapter deployment by name. </summary>
+        /// <param name="adapterDeploymentName"> The account-unique adapter deployment name and inference identity. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="adapterDeploymentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="adapterDeploymentName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<AdapterDeploymentResource> GetAdapterDeployment(string adapterDeploymentName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(adapterDeploymentName, nameof(adapterDeploymentName));
+
+            return GetAdapterDeployments().Get(adapterDeploymentName, cancellationToken);
+        }
+
         /// <summary> Gets a collection of CognitiveServicesComputes in the <see cref="CognitiveServicesAccountResource"/>. </summary>
         /// <returns> An object representing collection of CognitiveServicesComputes and their operations over a CognitiveServicesComputeResource. </returns>
         public virtual CognitiveServicesComputeCollection GetCognitiveServicesComputes()
@@ -1960,6 +2057,39 @@ namespace Azure.ResourceManager.CognitiveServices
             Argument.AssertNotNullOrEmpty(computeName, nameof(computeName));
 
             return GetCognitiveServicesComputes().Get(computeName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of CognitiveServicesAccountCostControls in the <see cref="CognitiveServicesAccountResource"/>. </summary>
+        /// <returns> An object representing collection of CognitiveServicesAccountCostControls and their operations over a CognitiveServicesAccountCostControlResource. </returns>
+        public virtual CognitiveServicesAccountCostControlCollection GetCognitiveServicesAccountCostControls()
+        {
+            return GetCachedClient(client => new CognitiveServicesAccountCostControlCollection(client, Id));
+        }
+
+        /// <summary> Gets a cost control. </summary>
+        /// <param name="costControlName"> The name of the CostControl. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="costControlName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="costControlName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<CognitiveServicesAccountCostControlResource>> GetCognitiveServicesAccountCostControlAsync(string costControlName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(costControlName, nameof(costControlName));
+
+            return await GetCognitiveServicesAccountCostControls().GetAsync(costControlName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Gets a cost control. </summary>
+        /// <param name="costControlName"> The name of the CostControl. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="costControlName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="costControlName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<CognitiveServicesAccountCostControlResource> GetCognitiveServicesAccountCostControl(string costControlName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(costControlName, nameof(costControlName));
+
+            return GetCognitiveServicesAccountCostControls().Get(costControlName, cancellationToken);
         }
     }
 }

@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="src/Azure.Messaging.WebPubSub.Chat.csproj" />
+  <Project Path="tests/Azure.Messaging.WebPubSub.Chat.Tests.csproj" />
+</Solution>

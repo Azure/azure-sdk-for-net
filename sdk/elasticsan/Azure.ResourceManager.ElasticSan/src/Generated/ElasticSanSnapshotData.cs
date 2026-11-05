@@ -71,5 +71,23 @@ namespace Azure.ResourceManager.ElasticSan
                 return Properties is null ? default : Properties.VolumeName;
             }
         }
+
+        /// <summary> The state of snapshot which determines the access availability of the snapshot. </summary>
+        public SnapshotAccessState? SnapshotAccessState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SnapshotAccessState;
+            }
+        }
+
+        /// <summary> Percentage complete for the background copy of the snapshot when a snapshot is in InstantAccess state. </summary>
+        public float? CompletionPercent
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CompletionPercent;
+            }
+        }
     }
 }

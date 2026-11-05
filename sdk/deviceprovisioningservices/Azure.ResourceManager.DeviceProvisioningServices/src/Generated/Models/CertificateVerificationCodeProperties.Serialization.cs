@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
                     {
                         continue;
                     }
-                    thumbprint = BinaryData.FromString(prop.Value.GetRawText());
+                    thumbprint = prop.Value.GetUtf8Bytes();
                     continue;
                 }
                 if (prop.NameEquals("isVerified"u8))
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
                     {
                         continue;
                     }
-                    certificate = BinaryData.FromString(prop.Value.GetRawText());
+                    certificate = prop.Value.GetUtf8Bytes();
                     continue;
                 }
                 if (prop.NameEquals("created"u8))
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new CertificateVerificationCodeProperties(

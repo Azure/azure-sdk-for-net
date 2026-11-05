@@ -264,8 +264,8 @@ namespace Azure.Provisioning.DomainRegistration
             }
         }
 
-        /// <summary> Gets the ExpireOn. </summary>
-        public BicepValue<DateTimeOffset> ExpireOn
+        /// <summary> Gets the ExpiresOn. </summary>
+        public BicepValue<DateTimeOffset> ExpiresOn
         {
             get
             {
@@ -273,7 +273,7 @@ namespace Azure.Provisioning.DomainRegistration
                 {
                     Properties = new DomainProperties();
                 }
-                return Properties.ExpireOn;
+                return Properties.ExpiresOn;
             }
         }
 

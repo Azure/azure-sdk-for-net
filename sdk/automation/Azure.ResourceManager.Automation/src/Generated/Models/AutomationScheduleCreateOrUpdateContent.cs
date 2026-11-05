@@ -52,7 +52,16 @@ namespace Azure.ResourceManager.Automation.Models
         {
             get
             {
-                return Properties.StartOn;
+                return Properties.StartsOn;
+            }
+        }
+
+        /// <summary> Gets or sets the end time of the schedule. </summary>
+        public DateTimeOffset? ExpiresOn
+        {
+            get
+            {
+                return Properties.ExpiresOn;
             }
         }
 

@@ -6,7 +6,11 @@
 
 ### Breaking Changes
 
+- Changed `BatchAccessRuleProperties.Subscriptions` to use `AccessRulePropertiesSubscription` instead of `Azure.Provisioning.Resources.SubResource`.
+
 ### Bugs Fixed
+
+- Corrected Batch account validation to require `Location` and a minimum account name length of three characters.
 
 ### Other Changes
 

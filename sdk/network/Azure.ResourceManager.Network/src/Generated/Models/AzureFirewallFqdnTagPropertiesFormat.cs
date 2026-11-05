@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Network.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="AzureFirewallFqdnTagPropertiesFormat"/>. </summary>
-        internal AzureFirewallFqdnTagPropertiesFormat()
+        public AzureFirewallFqdnTagPropertiesFormat()
         {
         }
 

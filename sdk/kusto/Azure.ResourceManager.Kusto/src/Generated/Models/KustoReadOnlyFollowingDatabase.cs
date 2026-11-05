@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.Kusto.Models
         {
             get
             {
-                return Properties is null ? default : Properties.SuspensionStartOn;
+                return Properties is null ? default : Properties.SuspensionStartsOn;
             }
         }
     }

@@ -167,10 +167,10 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new DrillRunListResult(value, nextLink, additionalBinaryDataProperties);
+            return new DrillRunListResult(value ?? new ChangeTrackingList<DrillRunData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

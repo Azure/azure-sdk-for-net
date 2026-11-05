@@ -12,6 +12,12 @@ namespace Azure.ResourceManager.ContainerService.Models
 {
     public partial class ContainerServiceLinuxProfile
     {
+        // TODO: Remove this constructor when https://github.com/Azure/azure-sdk-for-net/issues/62678 is fixed.
+        internal ContainerServiceLinuxProfile(string adminUsername)
+            : this(adminUsername, null, null)
+        {
+        }
+
         /// <summary> Initializes a new instance of <see cref="ContainerServiceLinuxProfile"/>. </summary>
         /// <param name="adminUsername">
         /// The administrator username to use for Linux VMs.
