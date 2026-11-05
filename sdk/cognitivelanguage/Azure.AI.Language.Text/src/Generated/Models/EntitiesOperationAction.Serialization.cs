@@ -109,7 +109,7 @@ namespace Azure.AI.Language.Text
             string name = default;
             AnalyzeTextOperationActionKind kind = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            EntitiesActionContent parameters = default;
+            EntitiesActionRequest parameters = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("taskName"u8))
@@ -128,7 +128,7 @@ namespace Azure.AI.Language.Text
                     {
                         continue;
                     }
-                    parameters = EntitiesActionContent.DeserializeEntitiesActionContent(prop.Value, options);
+                    parameters = EntitiesActionRequest.DeserializeEntitiesActionRequest(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

@@ -23,12 +23,12 @@ namespace Azure.AI.Language.Text
         /// <param name="kind"> The kind of task to perform. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="actionContent"> Parameters for the Extractive Summarization task. </param>
-        internal ExtractiveSummarizationOperationAction(string name, AnalyzeTextOperationActionKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, ExtractiveSummarizationActionContent actionContent) : base(name, kind, additionalBinaryDataProperties)
+        internal ExtractiveSummarizationOperationAction(string name, AnalyzeTextOperationActionKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, ExtractiveSummarizationActionRequest actionContent) : base(name, kind, additionalBinaryDataProperties)
         {
             ActionContent = actionContent;
         }
 
         /// <summary> Parameters for the Extractive Summarization task. </summary>
-        public ExtractiveSummarizationActionContent ActionContent { get; set; }
+        public ExtractiveSummarizationActionRequest ActionContent { get; set; }
     }
 }

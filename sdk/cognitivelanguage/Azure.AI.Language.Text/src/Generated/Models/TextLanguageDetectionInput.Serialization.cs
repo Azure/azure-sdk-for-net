@@ -114,7 +114,7 @@ namespace Azure.AI.Language.Text
             AnalyzeTextInputKind kind = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             LanguageDetectionTextInput textInput = default;
-            LanguageDetectionActionContent actionContent = default;
+            LanguageDetectionActionRequest actionContent = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("kind"u8))
@@ -137,7 +137,7 @@ namespace Azure.AI.Language.Text
                     {
                         continue;
                     }
-                    actionContent = LanguageDetectionActionContent.DeserializeLanguageDetectionActionContent(prop.Value, options);
+                    actionContent = LanguageDetectionActionRequest.DeserializeLanguageDetectionActionRequest(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

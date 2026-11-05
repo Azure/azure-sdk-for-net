@@ -110,7 +110,7 @@ namespace Azure.AI.Language.Conversations.Models
             string name = default;
             AnalyzeConversationOperationActionKind kind = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            ConversationSummarizationActionContent actionContent = default;
+            ConversationSummarizationActionRequest actionContent = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("taskName"u8))
@@ -129,7 +129,7 @@ namespace Azure.AI.Language.Conversations.Models
                     {
                         continue;
                     }
-                    actionContent = ConversationSummarizationActionContent.DeserializeConversationSummarizationActionContent(prop.Value, options);
+                    actionContent = ConversationSummarizationActionRequest.DeserializeConversationSummarizationActionRequest(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

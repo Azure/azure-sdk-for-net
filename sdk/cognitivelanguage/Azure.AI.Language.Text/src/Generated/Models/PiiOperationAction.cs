@@ -23,12 +23,12 @@ namespace Azure.AI.Language.Text
         /// <param name="kind"> The kind of task to perform. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="parameters"> Pii task parameters. </param>
-        internal PiiOperationAction(string name, AnalyzeTextOperationActionKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, PiiActionContent parameters) : base(name, kind, additionalBinaryDataProperties)
+        internal PiiOperationAction(string name, AnalyzeTextOperationActionKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, PiiActionRequest parameters) : base(name, kind, additionalBinaryDataProperties)
         {
             Parameters = parameters;
         }
 
         /// <summary> Pii task parameters. </summary>
-        public PiiActionContent Parameters { get; set; }
+        public PiiActionRequest Parameters { get; set; }
     }
 }

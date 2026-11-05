@@ -30,7 +30,7 @@ namespace Azure.AI.Language.Conversations
         /// <param name="analysisInput"> The input ConversationItem and its optional parameters. </param>
         /// <param name="parameters"> Input parameters necessary for a Conversation language understanding task. </param>
         /// <returns> A new <see cref="Models.ConversationalAITask"/> instance for mocking. </returns>
-        public static ConversationalAITask ConversationalAITask(ConversationalAIAnalysisInput analysisInput = default, AIConversationLanguageUnderstandingActionContent parameters = default)
+        public static ConversationalAITask ConversationalAITask(ConversationalAIAnalysisInput analysisInput = default, AIConversationLanguageUnderstandingActionRequest parameters = default)
         {
             return new ConversationalAITask(AnalyzeConversationInputKind.ConversationalAI, additionalBinaryDataProperties: null, analysisInput, parameters);
         }
@@ -172,17 +172,17 @@ namespace Azure.AI.Language.Conversations
         /// <param name="projectName"> The name of the project to use. </param>
         /// <param name="deploymentName"> The name of the deployment to use. </param>
         /// <param name="stringIndexType"> Specifies the method used to interpret string offsets.  Defaults to Text Elements (Graphemes) according to Unicode v8.0.0. For additional information see https://aka.ms/text-analytics-offsets. </param>
-        /// <returns> A new <see cref="Models.AIConversationLanguageUnderstandingActionContent"/> instance for mocking. </returns>
-        public static AIConversationLanguageUnderstandingActionContent AIConversationLanguageUnderstandingActionContent(string projectName = default, string deploymentName = default, StringIndexType? stringIndexType = default)
+        /// <returns> A new <see cref="Models.AIConversationLanguageUnderstandingActionRequest"/> instance for mocking. </returns>
+        public static AIConversationLanguageUnderstandingActionRequest AIConversationLanguageUnderstandingActionRequest(string projectName = default, string deploymentName = default, StringIndexType? stringIndexType = default)
         {
-            return new AIConversationLanguageUnderstandingActionContent(projectName, deploymentName, stringIndexType, additionalBinaryDataProperties: null);
+            return new AIConversationLanguageUnderstandingActionRequest(projectName, deploymentName, stringIndexType, additionalBinaryDataProperties: null);
         }
 
         /// <summary> The input for a conversation language understanding task. </summary>
         /// <param name="conversationInput"> The input ConversationItem and its optional parameters. </param>
         /// <param name="actionContent"> Input parameters necessary for a Conversation language understanding task. </param>
         /// <returns> A new <see cref="Models.ConversationLanguageUnderstandingInput"/> instance for mocking. </returns>
-        public static ConversationLanguageUnderstandingInput ConversationLanguageUnderstandingInput(ConversationAnalysisInput conversationInput = default, ConversationLanguageUnderstandingActionContent actionContent = default)
+        public static ConversationLanguageUnderstandingInput ConversationLanguageUnderstandingInput(ConversationAnalysisInput conversationInput = default, ConversationLanguageUnderstandingActionRequest actionContent = default)
         {
             return new ConversationLanguageUnderstandingInput(AnalyzeConversationInputKind.Conversation, additionalBinaryDataProperties: null, conversationInput, actionContent);
         }
@@ -203,12 +203,12 @@ namespace Azure.AI.Language.Conversations
         /// <param name="stringIndexType"> Specifies the method used to interpret string offsets.  Defaults to Text Elements (Graphemes) according to Unicode v8.0.0. For additional information see https://aka.ms/text-analytics-offsets. </param>
         /// <param name="directTarget"> The name of a target project to forward the request to. </param>
         /// <param name="targetProjectParameters"> A dictionary representing the parameters for each target project. </param>
-        /// <returns> A new <see cref="Models.ConversationLanguageUnderstandingActionContent"/> instance for mocking. </returns>
-        public static ConversationLanguageUnderstandingActionContent ConversationLanguageUnderstandingActionContent(string projectName = default, string deploymentName = default, bool? verbose = default, bool? isLoggingEnabled = default, StringIndexType? stringIndexType = default, string directTarget = default, IDictionary<string, AnalysisConfig> targetProjectParameters = default)
+        /// <returns> A new <see cref="Models.ConversationLanguageUnderstandingActionRequest"/> instance for mocking. </returns>
+        public static ConversationLanguageUnderstandingActionRequest ConversationLanguageUnderstandingActionRequest(string projectName = default, string deploymentName = default, bool? verbose = default, bool? isLoggingEnabled = default, StringIndexType? stringIndexType = default, string directTarget = default, IDictionary<string, AnalysisConfig> targetProjectParameters = default)
         {
             targetProjectParameters ??= new ChangeTrackingDictionary<string, AnalysisConfig>();
 
-            return new ConversationLanguageUnderstandingActionContent(
+            return new ConversationLanguageUnderstandingActionRequest(
                 projectName,
                 deploymentName,
                 verbose,
@@ -1328,7 +1328,7 @@ namespace Azure.AI.Language.Conversations
         /// <param name="name"> task name. </param>
         /// <param name="actionContent"> parameters. </param>
         /// <returns> A new <see cref="Models.CustomSummarizationOperationAction"/> instance for mocking. </returns>
-        public static CustomSummarizationOperationAction CustomSummarizationOperationAction(string name = default, CustomConversationSummarizationActionContent actionContent = default)
+        public static CustomSummarizationOperationAction CustomSummarizationOperationAction(string name = default, CustomConversationSummarizationActionRequest actionContent = default)
         {
             return new CustomSummarizationOperationAction(name, AnalyzeConversationOperationActionKind.CustomConversationalSummarizationTask, additionalBinaryDataProperties: null, actionContent);
         }
@@ -1341,12 +1341,12 @@ namespace Azure.AI.Language.Conversations
         /// <param name="stringIndexType"> String index type. </param>
         /// <param name="summaryLength"> Controls the approximate length of the output summaries. Recommended to use summaryLength over sentenceCount. </param>
         /// <param name="summaryAspects"> Array of Summary Aspects. </param>
-        /// <returns> A new <see cref="Models.CustomConversationSummarizationActionContent"/> instance for mocking. </returns>
-        public static CustomConversationSummarizationActionContent CustomConversationSummarizationActionContent(bool? loggingOptOut = default, string projectName = default, string deploymentName = default, int? sentenceCount = default, StringIndexType? stringIndexType = default, SummaryLengthBucket? summaryLength = default, IEnumerable<SummaryAspect> summaryAspects = default)
+        /// <returns> A new <see cref="Models.CustomConversationSummarizationActionRequest"/> instance for mocking. </returns>
+        public static CustomConversationSummarizationActionRequest CustomConversationSummarizationActionRequest(bool? loggingOptOut = default, string projectName = default, string deploymentName = default, int? sentenceCount = default, StringIndexType? stringIndexType = default, SummaryLengthBucket? summaryLength = default, IEnumerable<SummaryAspect> summaryAspects = default)
         {
             summaryAspects ??= new ChangeTrackingList<SummaryAspect>();
 
-            return new CustomConversationSummarizationActionContent(
+            return new CustomConversationSummarizationActionRequest(
                 loggingOptOut,
                 projectName,
                 deploymentName,
@@ -1361,7 +1361,7 @@ namespace Azure.AI.Language.Conversations
         /// <param name="name"> task name. </param>
         /// <param name="actionContent"> parameters. </param>
         /// <returns> A new <see cref="Models.SummarizationOperationAction"/> instance for mocking. </returns>
-        public static SummarizationOperationAction SummarizationOperationAction(string name = default, ConversationSummarizationActionContent actionContent = default)
+        public static SummarizationOperationAction SummarizationOperationAction(string name = default, ConversationSummarizationActionRequest actionContent = default)
         {
             return new SummarizationOperationAction(name, AnalyzeConversationOperationActionKind.ConversationalSummarizationTask, additionalBinaryDataProperties: null, actionContent);
         }
@@ -1374,12 +1374,12 @@ namespace Azure.AI.Language.Conversations
         /// <param name="summaryLength"> (NOTE: Recommended to use summaryLength over sentenceCount) Controls the approximate length of the output summaries. </param>
         /// <param name="summaryAspects"> Array of Summary Aspects. </param>
         /// <param name="instruction"> a text field to allow customers to use natural language to describe their needs for summarization. </param>
-        /// <returns> A new <see cref="Models.ConversationSummarizationActionContent"/> instance for mocking. </returns>
-        public static ConversationSummarizationActionContent ConversationSummarizationActionContent(bool? loggingOptOut = default, string modelVersion = default, int? sentenceCount = default, StringIndexType? stringIndexType = default, SummaryLengthBucket? summaryLength = default, IEnumerable<SummaryAspect> summaryAspects = default, string instruction = default)
+        /// <returns> A new <see cref="Models.ConversationSummarizationActionRequest"/> instance for mocking. </returns>
+        public static ConversationSummarizationActionRequest ConversationSummarizationActionRequest(bool? loggingOptOut = default, string modelVersion = default, int? sentenceCount = default, StringIndexType? stringIndexType = default, SummaryLengthBucket? summaryLength = default, IEnumerable<SummaryAspect> summaryAspects = default, string instruction = default)
         {
             summaryAspects ??= new ChangeTrackingList<SummaryAspect>();
 
-            return new ConversationSummarizationActionContent(
+            return new ConversationSummarizationActionRequest(
                 loggingOptOut,
                 modelVersion,
                 sentenceCount,
@@ -1394,7 +1394,7 @@ namespace Azure.AI.Language.Conversations
         /// <param name="name"> task name. </param>
         /// <param name="actionContent"> parameters. </param>
         /// <returns> A new <see cref="Models.PiiOperationAction"/> instance for mocking. </returns>
-        public static PiiOperationAction PiiOperationAction(string name = default, ConversationPiiActionContent actionContent = default)
+        public static PiiOperationAction PiiOperationAction(string name = default, ConversationPiiActionRequest actionContent = default)
         {
             return new PiiOperationAction(name, AnalyzeConversationOperationActionKind.ConversationalPIITask, additionalBinaryDataProperties: null, actionContent);
         }
@@ -1408,13 +1408,13 @@ namespace Azure.AI.Language.Conversations
         /// <param name="redactionCharacter"> Optional parameter to use a Custom Character to be used for redaction in PII responses. Default character will be * as before. We allow specific ascii characters for redaction. </param>
         /// <param name="excludePiiCategories"> List of categories that need to be excluded instead of included. </param>
         /// <param name="redactionPolicy"> Optional parameter determine what type of redaction to use. </param>
-        /// <returns> A new <see cref="Models.ConversationPiiActionContent"/> instance for mocking. </returns>
-        public static ConversationPiiActionContent ConversationPiiActionContent(bool? loggingOptOut = default, string modelVersion = default, IEnumerable<ConversationPiiCategories> piiCategories = default, bool? redactAudioTiming = default, TranscriptContentType? redactionSource = default, RedactionCharacter? redactionCharacter = default, IEnumerable<ConversationPiiCategoryExclusions> excludePiiCategories = default, BaseRedactionPolicy redactionPolicy = default)
+        /// <returns> A new <see cref="Models.ConversationPiiActionRequest"/> instance for mocking. </returns>
+        public static ConversationPiiActionRequest ConversationPiiActionRequest(bool? loggingOptOut = default, string modelVersion = default, IEnumerable<ConversationPiiCategories> piiCategories = default, bool? redactAudioTiming = default, TranscriptContentType? redactionSource = default, RedactionCharacter? redactionCharacter = default, IEnumerable<ConversationPiiCategoryExclusions> excludePiiCategories = default, BaseRedactionPolicy redactionPolicy = default)
         {
             piiCategories ??= new ChangeTrackingList<ConversationPiiCategories>();
             excludePiiCategories ??= new ChangeTrackingList<ConversationPiiCategoryExclusions>();
 
-            return new ConversationPiiActionContent(
+            return new ConversationPiiActionRequest(
                 loggingOptOut,
                 modelVersion,
                 piiCategories.ToList(),
