@@ -3,7 +3,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "test": "node --test test/bundle.test.mjs",
+    "test": "node --test test/bundle.test.mjs test/publication.test.mjs",
     "test:browser": "node --test test/browser.test.mjs"
   },
   "dependencies": {
