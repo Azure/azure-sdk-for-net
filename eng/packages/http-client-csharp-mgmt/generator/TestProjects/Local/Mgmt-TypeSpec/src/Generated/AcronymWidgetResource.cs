@@ -125,7 +125,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _acronymWidgetsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _acronymWidgetsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<AcronymWidgetData> response = Response.FromValue(AcronymWidgetData.FromResponse(result), result);
                 if (response.Value == null)
@@ -173,7 +173,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _acronymWidgetsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _acronymWidgetsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<AcronymWidgetData> response = Response.FromValue(AcronymWidgetData.FromResponse(result), result);
                 if (response.Value == null)
@@ -225,7 +225,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _acronymWidgetsRestClient.CreateConfigureRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, IPAddress.ToRequestContent(ipAddress), context);
+                using HttpMessage message = _acronymWidgetsRestClient.CreateConfigureRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, IPAddress.ToRequestContent(ipAddress), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<IPAddress> response = Response.FromValue(IPAddress.FromResponse(result), result);
                 if (response.Value == null)
@@ -277,7 +277,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _acronymWidgetsRestClient.CreateConfigureRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, IPAddress.ToRequestContent(ipAddress), context);
+                using HttpMessage message = _acronymWidgetsRestClient.CreateConfigureRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, IPAddress.ToRequestContent(ipAddress), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<IPAddress> response = Response.FromValue(IPAddress.FromResponse(result), result);
                 if (response.Value == null)
@@ -329,7 +329,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _acronymWidgetsRestClient.CreateConfigureIPv4Request(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, IPv4Address.ToRequestContent(ipv4Address), context);
+                using HttpMessage message = _acronymWidgetsRestClient.CreateConfigureIPv4Request(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, IPv4Address.ToRequestContent(ipv4Address), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<IPv4Address> response = Response.FromValue(IPv4Address.FromResponse(result), result);
                 if (response.Value == null)
@@ -381,7 +381,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _acronymWidgetsRestClient.CreateConfigureIPv4Request(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, IPv4Address.ToRequestContent(ipv4Address), context);
+                using HttpMessage message = _acronymWidgetsRestClient.CreateConfigureIPv4Request(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, IPv4Address.ToRequestContent(ipv4Address), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<IPv4Address> response = Response.FromValue(IPv4Address.FromResponse(result), result);
                 if (response.Value == null)

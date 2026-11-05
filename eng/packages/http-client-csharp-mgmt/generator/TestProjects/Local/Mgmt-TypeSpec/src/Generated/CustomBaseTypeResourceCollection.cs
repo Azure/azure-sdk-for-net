@@ -89,7 +89,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _customBaseTypeResourcesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, customBaseTypeResourceName, CustomBaseTypeResourceCustomData.ToRequestContent(resource), context);
+                using HttpMessage message = _customBaseTypeResourcesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, customBaseTypeResourceName, CustomBaseTypeResourceCustomData.ToRequestContent(resource), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 TestsArmOperation<CustomBaseTypeResource> operation = new TestsArmOperation<CustomBaseTypeResource>(
                     new CustomBaseTypeResourceOperationSource(Client),
@@ -148,7 +148,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _customBaseTypeResourcesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, customBaseTypeResourceName, CustomBaseTypeResourceCustomData.ToRequestContent(resource), context);
+                using HttpMessage message = _customBaseTypeResourcesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, customBaseTypeResourceName, CustomBaseTypeResourceCustomData.ToRequestContent(resource), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 TestsArmOperation<CustomBaseTypeResource> operation = new TestsArmOperation<CustomBaseTypeResource>(
                     new CustomBaseTypeResourceOperationSource(Client),
@@ -204,7 +204,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _customBaseTypeResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, customBaseTypeResourceName, context);
+                using HttpMessage message = _customBaseTypeResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, customBaseTypeResourceName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<CustomBaseTypeResourceCustomData> response = Response.FromValue(CustomBaseTypeResourceCustomData.FromResponse(result), result);
                 if (response.Value == null)
@@ -253,7 +253,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _customBaseTypeResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, customBaseTypeResourceName, context);
+                using HttpMessage message = _customBaseTypeResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, customBaseTypeResourceName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<CustomBaseTypeResourceCustomData> response = Response.FromValue(CustomBaseTypeResourceCustomData.FromResponse(result), result);
                 if (response.Value == null)
@@ -302,7 +302,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _customBaseTypeResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, customBaseTypeResourceName, context);
+                using HttpMessage message = _customBaseTypeResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, customBaseTypeResourceName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<CustomBaseTypeResourceCustomData> response = default;
@@ -359,7 +359,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _customBaseTypeResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, customBaseTypeResourceName, context);
+                using HttpMessage message = _customBaseTypeResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, customBaseTypeResourceName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<CustomBaseTypeResourceCustomData> response = default;
@@ -416,7 +416,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _customBaseTypeResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, customBaseTypeResourceName, context);
+                using HttpMessage message = _customBaseTypeResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, customBaseTypeResourceName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<CustomBaseTypeResourceCustomData> response = default;
@@ -477,7 +477,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _customBaseTypeResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, customBaseTypeResourceName, context);
+                using HttpMessage message = _customBaseTypeResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, customBaseTypeResourceName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<CustomBaseTypeResourceCustomData> response = default;

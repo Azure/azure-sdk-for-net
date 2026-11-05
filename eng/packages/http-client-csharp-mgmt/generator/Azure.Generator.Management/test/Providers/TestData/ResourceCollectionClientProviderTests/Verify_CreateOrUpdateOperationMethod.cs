@@ -9,7 +9,7 @@ try
     {
         CancellationToken = cancellationToken
     };
-    global::Azure.Core.HttpMessage message = _testClientRestClient.CreateCreateTestRequest(global::System.Guid.Parse(this.Id.SubscriptionId), this.Id.ResourceGroupName, testName, global::Samples.ResponseTypeData.ToRequestContent(data), context);
+    using global::Azure.Core.HttpMessage message = _testClientRestClient.CreateCreateTestRequest(global::System.Guid.Parse(this.Id.SubscriptionId), this.Id.ResourceGroupName, testName, global::Samples.ResponseTypeData.ToRequestContent(data), context);
     global::Azure.Response result = this.Pipeline.ProcessMessage(message, context);
     global::Azure.Response<global::Samples.ResponseTypeData> response = global::Azure.Response.FromValue(global::Samples.ResponseTypeData.FromResponse(result), result);
     global::Azure.Core.RequestUriBuilder uri = message.Request.Uri;

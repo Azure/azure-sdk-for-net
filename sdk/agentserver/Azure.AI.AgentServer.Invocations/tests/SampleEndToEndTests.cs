@@ -1764,29 +1764,28 @@ public partial class SampleEndToEndTests
         // first turn is still running. The durable engine queues the second input as a
         // steering message (run.IsQueued == true on at least one response), and the
         // producer observes ctx.PendingInputCount > 0 and wraps up the in-flight turn.
-        await using var env = await CreateResilientMultiturnServerAsync();
-        var sessionId = "conv-test-steer-" + Guid.NewGuid().ToString("N")[..8];
-
-        // Warm up the host (JIT, routing, task-engine lease/store paths) with a throwaway
-        // turn on a separate session so the timed concurrency window below is not skewed by
-        // first-request cold-start jitter (which would otherwise let the second input land
-        // after the first turn already finished).
-        using (var warmup = await env.Client.PostAsync(
-            $"/invocations?agent_session_id=warmup-{Guid.NewGuid():N}",
-            new StringContent("""{"Message":"warm up"}""", Encoding.UTF8, "application/json")))
+        var firstTurnStarted = new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
+        await using var env = await CreateResilientMultiturnServerAsync(async (ctx, ct) =>
         {
-            Assert.That(warmup.StatusCode, Is.EqualTo(HttpStatusCode.OK));
-        }
+            if (ctx.Input.Message == "Write a long essay")
+            {
+                var steeringSignaled = new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
+                using var registration = ct.Register(() => steeringSignaled.TrySetResult());
+                firstTurnStarted.TrySetResult();
+                await steeringSignaled.Task.WaitAsync(TimeSpan.FromSeconds(10));
+                Assert.That(ctx.PendingInputCount, Is.GreaterThan(0));
+                Assert.That(ctx.CancelRequested, Is.False);
+            }
+        });
+        var sessionId = "conv-test-steer-" + Guid.NewGuid().ToString("N")[..8];
 
         var content1 = new StringContent(
             """{"Message":"Write a long essay"}""", Encoding.UTF8, "application/json");
         var content2 = new StringContent(
             """{"Message":"Actually just one sentence"}""", Encoding.UTF8, "application/json");
 
-        // Start turn 1 (the producer loops ~100ms so it stays in-flight), then fire the
-        // second input concurrently to land while turn 1 is still running.
         var task1 = env.Client.PostAsync($"/invocations?agent_session_id={sessionId}", content1);
-        await Task.Delay(20);
+        await firstTurnStarted.Task.WaitAsync(TimeSpan.FromSeconds(10));
         var task2 = env.Client.PostAsync($"/invocations?agent_session_id={sessionId}", content2);
 
         var responses = await Task.WhenAll(task1, task2);
@@ -2149,7 +2148,8 @@ public partial class SampleEndToEndTests
     /// steerable producer snippet method (<c>RunConversationTurnAsync</c>) with a
     /// deterministic stubbed reply.
     /// </summary>
-    private static async Task<TestEnv> CreateResilientMultiturnServerAsync()
+    private static async Task<TestEnv> CreateResilientMultiturnServerAsync(
+        Func<TaskContext<SampleResilientMultiturnSnippets.ConversationInput>, CancellationToken, Task>? beforeTurn = null)
     {
         return await CreateTestServerAsync<Snippets.SampleResilientMultiturnSnippets.ResilientMultiturnHandler>(
             services =>
@@ -2158,10 +2158,17 @@ public partial class SampleEndToEndTests
                 services.AddResilientMultiTurnTask<Snippets.SampleResilientMultiturnSnippets.ConversationInput,
                                       Snippets.SampleResilientMultiturnSnippets.ConversationOutput>(
                         "conversation",
-                        (ctx, ct) => Snippets.SampleResilientMultiturnSnippets.RunConversationTurnAsync(
-                            ctx,
-                            (history, msg, c) => Task.FromResult($"Turn reply: You said \"{msg}\""),
-                            ct),
+                        async (ctx, ct) =>
+                        {
+                            if (beforeTurn is not null)
+                            {
+                                await beforeTurn(ctx, ct);
+                            }
+                            return await Snippets.SampleResilientMultiturnSnippets.RunConversationTurnAsync(
+                                ctx,
+                                (history, msg, c) => Task.FromResult($"Turn reply: You said \"{msg}\""),
+                                ct);
+                        },
                         steerable: true);
             });
     }

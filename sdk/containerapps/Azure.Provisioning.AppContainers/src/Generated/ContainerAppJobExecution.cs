@@ -21,7 +21,7 @@ namespace Azure.Provisioning.AppContainers
         private BicepValue<string> _name;
         private SystemData _systemData;
         private JobExecutionProperties _properties;
-        private ResourceReference<ContainerAppJob> _parent;
+        private ProvisioningResourceReference<ContainerAppJob> _parent;
 
         /// <summary> Creates a new ContainerAppJobExecution. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -161,7 +161,7 @@ namespace Azure.Provisioning.AppContainers
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _properties = DefineModelProperty<JobExecutionProperties>(nameof(Properties), new string[] { "properties" });
-            _parent = DefineResource<ContainerAppJob>(nameof(Parent), new string[] { "parent" });
+            _parent = new ProvisioningResourceReference<ContainerAppJob>(DefineProperty<string>(nameof(Parent), new string[] { "parent" }));
             DefineAdditionalProperties();
         }
 

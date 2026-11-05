@@ -21,7 +21,7 @@ namespace Azure.Provisioning.Kusto
         private SystemData _systemData;
         private AttachedDatabaseConfigurationProperties _properties;
         private BicepValue<AzureLocation> _location;
-        private ResourceReference<KustoCluster> _parent;
+        private ProvisioningResourceReference<KustoCluster> _parent;
 
         /// <summary> Creates a new KustoAttachedDatabaseConfiguration. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -247,7 +247,7 @@ namespace Azure.Provisioning.Kusto
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _properties = DefineModelProperty<AttachedDatabaseConfigurationProperties>(nameof(Properties), new string[] { "properties" });
             _location = DefineProperty<AzureLocation>(nameof(Location), new string[] { "location" });
-            _parent = DefineResource<KustoCluster>(nameof(Parent), new string[] { "parent" });
+            _parent = new ProvisioningResourceReference<KustoCluster>(DefineProperty<string>(nameof(Parent), new string[] { "parent" }));
             DefineAdditionalProperties();
         }
 
