@@ -364,6 +364,8 @@ For each thread that **is resolved**:
 
 Independently review every changed file from Step 1, one file at a time, using the shared rules, exactly as a first-pass review would, to catch anything missed by earlier passes (including commits pushed after the native reviewer's last pass). Before posting any new finding, confirm it is not already covered by an existing open thread (Step 2) or another reviewer's comment.
 
+Keep a checklist of the exact paths returned by `get_files`, and mark a file reviewed only after completing its full review. Before moving to Step 4, reconcile the checked paths against `changed_files`; if any path is unchecked, review it before proceeding. Do not treat a partially reviewed file or a count such as 7/8 as complete.
+
 ## Step 4 - Confirm coverage, then submit one review
 
 Submit a review only when the re-review is complete:
@@ -372,7 +374,7 @@ Submit a review only when the re-review is complete:
 - Step 2 verified every unresolved thread against current file content.
 - Step 3 reviewed every changed file.
 
-If any of these is not true, do not call `submit_pull_request_review`, `create_pull_request_review_comment`, or `noop`; call `report_incomplete` instead. Report incomplete only because of something that happened while you worked: a page failed to load, a tool was unavailable or returned an error, or the 25-minute limit is close while you are still reviewing. An estimate that the pull request is too large to finish is not a reason; keep reviewing until the work is done or one of those happens. In `report_incomplete`, give the counts you completed, list the files you reviewed, and state the work remaining and why. The publishing job blocks any review or inline comment from an incomplete re-review, and the run fails.
+If any of these is not true, do not call `submit_pull_request_review`, `create_pull_request_review_comment`, or `noop`; call `report_incomplete` instead. Never submit a review with a coverage count below its total: continue with any unchecked paths, or report incomplete if a specific failure prevents you from finishing. Report incomplete only because of something that happened while you worked: a page failed to load, a tool was unavailable or returned an error, or the 25-minute limit is close while you are still reviewing. An estimate that the pull request is too large to finish is not a reason; keep reviewing until the work is done or one of those happens. In `report_incomplete`, give the counts you completed, list the files you reviewed, and state the work remaining and why. The publishing job blocks any review or inline comment from an incomplete re-review, and the run fails.
 
 When the re-review is complete, submit exactly one `submit_pull_request_review` with the `COMMENT` event, even when nothing changed — never `noop`. Its body must contain this line exactly once, on its own line and without formatting:
 
