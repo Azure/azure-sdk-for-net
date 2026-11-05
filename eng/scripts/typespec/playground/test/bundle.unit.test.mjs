@@ -177,11 +177,16 @@ test('includes separately bundled peers in the emitter import map', async (t) =>
   );
   strictEqual(
     index.imports['@typespec/http-client/typekit'],
-    'https://typespec.blob.core.windows.net/pkgs/@typespec/http-client/0.17.0/typekit.js',
+    `https://typespec.blob.core.windows.net/pkgs/${manifest.name}/${manifest.version}/peers/@typespec/http-client/0.17.0/typekit.js`,
   );
   strictEqual(
     await readFile(
-      join(directory, '@typespec/http-client/0.17.0/typekit.js'),
+      join(
+        directory,
+        manifest.name,
+        manifest.version,
+        'peers/@typespec/http-client/0.17.0/typekit.js',
+      ),
       'utf8',
     ),
     'export const typekit = {};',
@@ -192,6 +197,46 @@ test('includes separately bundled peers in the emitter import map', async (t) =>
       code: 'ENOENT',
     },
   );
+});
+
+test('isolates different peer builds by emitter and emitter version', async (t) => {
+  const directory = await mkdtemp(join(tmpdir(), 'csharp-playground-'));
+  t.after(() => rm(directory, { recursive: true, force: true }));
+  const builds = [
+    ['@azure-typespec/http-client-csharp', '1.0.0', 'vue-one'],
+    ['@azure-typespec/http-client-csharp-mgmt', '1.0.0', 'vue-two'],
+    ['@azure-typespec/http-client-csharp', '2.0.0', 'vue-three'],
+  ];
+  for (const [name, version, content] of builds) {
+    await writeBundle(
+      {
+        manifest: { name, version, imports: { '.': 'index.js' } },
+        files: [{ filename: 'index.js', content: 'export {};' }],
+      },
+      directory,
+      [
+        {
+          manifest: {
+            name: '@typespec/http-client',
+            version: '0.17.0',
+            imports: { './components': 'components.js' },
+          },
+          files: [{ filename: 'components.js', content }],
+        },
+      ],
+    );
+  }
+  for (const [name, version, content] of builds) {
+    const asset = `${name}/${version}/peers/@typespec/http-client/0.17.0/components.js`;
+    strictEqual(await readFile(join(directory, asset), 'utf8'), content);
+    const map = JSON.parse(
+      await readFile(join(directory, name, version, 'import-map.json')),
+    );
+    strictEqual(
+      map.imports['@typespec/http-client/components'],
+      `https://typespec.blob.core.windows.net/pkgs/${asset}`,
+    );
+  }
 });
 
 test('publishes the exact built runtime package with matching versioned metadata', async (t) => {

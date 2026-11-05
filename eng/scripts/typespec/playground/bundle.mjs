@@ -17,14 +17,20 @@ export async function writeBundle(
 ) {
   const imports = {};
   for (const { manifest, files } of [bundle, ...peerBundles]) {
-    const versionDirectory = resolve(
-      outputDirectory,
-      manifest.name,
-      manifest.version,
-    );
+    const assetDirectory =
+      manifest === bundle.manifest
+        ? join(manifest.name, manifest.version)
+        : join(
+            bundle.manifest.name,
+            bundle.manifest.version,
+            'peers',
+            manifest.name,
+            manifest.version,
+          );
+    const versionDirectory = resolve(outputDirectory, assetDirectory);
     for (const [key, value] of Object.entries(manifest.imports)) {
       imports[join(manifest.name, key)] = new URL(
-        join(manifest.name, manifest.version, value),
+        join(assetDirectory, value),
         storageUrl,
       ).href;
     }
