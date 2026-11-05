@@ -5,6 +5,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Text;
+using Azure.Core.Amqp;
 using Azure.Messaging.ServiceBus.Amqp;
 using Microsoft.Azure.Amqp;
 using Microsoft.Azure.Amqp.Framing;
@@ -20,6 +22,41 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
     [TestFixture]
     public class AmqpMessageBatchTests
     {
+        [TestCase(0)]
+        [TestCase(255)]
+        [TestCase(256)]
+        [TestCase(1024)]
+        public void TryAddUsesSameSizeForUtf8AndStringProperties(int length)
+        {
+            string text = new string('a', length);
+            var bytes = Encoding.UTF8.GetBytes(text);
+            using var utf8Batch = new AmqpMessageBatch(new AmqpMessageConverter(), new CreateMessageBatchOptions { MaxSizeInBytes = 512 });
+            using var stringBatch = new AmqpMessageBatch(new AmqpMessageConverter(), new CreateMessageBatchOptions { MaxSizeInBytes = 512 });
+            var utf8Message = new ServiceBusMessage();
+            utf8Message.ApplicationProperties["value"] = AmqpUtf8String.FromBytes(bytes);
+            var stringMessage = new ServiceBusMessage();
+            stringMessage.ApplicationProperties["value"] = text;
+            Assert.AreEqual(stringBatch.TryAddMessage(stringMessage), utf8Batch.TryAddMessage(utf8Message));
+            Assert.AreEqual(stringBatch.SizeInBytes, utf8Batch.SizeInBytes);
+            Assert.AreEqual(stringBatch.Count, utf8Batch.Count);
+        }
+
+        [Test]
+        public void TryAddSnapshotsUtf8PropertyReference()
+        {
+            using var batch = new AmqpMessageBatch(new AmqpMessageConverter(), new CreateMessageBatchOptions { MaxSizeInBytes = 4096 });
+            var source = new ServiceBusMessage();
+            source.ApplicationProperties["value"] = AmqpUtf8String.FromBytes(Encoding.UTF8.GetBytes("before"));
+            Assert.True(batch.TryAddMessage(source));
+            source.ApplicationProperties["value"] = AmqpUtf8String.FromBytes(Encoding.UTF8.GetBytes("after"));
+            var native = batch.AsReadOnly<AmqpMessage>().Single();
+            for (int attempt = 0; attempt < 2; attempt++)
+            {
+                using var stream = native.ToStream();
+                Assert.AreEqual("before", AmqpAnnotatedMessage.FromBytes(BinaryData.FromStream(stream)).ApplicationProperties["value"]);
+            }
+        }
+
         /// <summary>
         ///   Verifies functionality of the constructor.
         /// </summary>

@@ -2,7 +2,9 @@
 // Licensed under the MIT License.
 
 using System;
+using Azure.Core;
 using Azure.Core.TestFramework;
+using Azure.Identity;
 using Azure.Messaging.ServiceBus.Authorization;
 
 namespace Azure.Messaging.ServiceBus.Tests
@@ -20,6 +22,11 @@ namespace Azure.Messaging.ServiceBus.Tests
 
         /// <summary>A shared instance of <see cref="ServiceBusTestEnvironment"/>. </summary>
         public static ServiceBusTestEnvironment Instance { get; } = new ServiceBusTestEnvironment();
+
+        protected override TokenCredential CreateDeveloperCredential() =>
+            string.IsNullOrEmpty(Environment.GetEnvironmentVariable("AZURE_TOKEN_CREDENTIALS"))
+                ? base.CreateDeveloperCredential()
+                : new DefaultAzureCredential();
 
         /// <summary>The active Service Bus namespace for this test run.</summary>
         private ServiceBusConnectionStringProperties ParsedConnectionString => ServiceBusConnectionStringProperties.Parse(ServiceBusConnectionString);

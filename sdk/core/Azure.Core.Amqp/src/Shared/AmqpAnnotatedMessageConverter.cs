@@ -534,6 +534,10 @@ namespace Azure.Core.Amqp.Shared
                     amqpPropertyValue = byteSegment;
                     break;
 
+                case AmqpType.Unknown when propertyValue is AmqpUtf8String:
+                    amqpPropertyValue = propertyValue;
+                    break;
+
                 case AmqpType.Unknown when allowBodyTypes && propertyValue is IDictionary dict:
                     amqpPropertyValue = new AmqpMap(dict);
                     break;
