@@ -1,10 +1,13 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Serialization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.AspNetCore.SignalR.Protocol;
 using Microsoft.Azure.SignalR;
@@ -94,11 +97,31 @@ namespace SignalRServiceExtension.Tests
             Assert.IsType<NewtonsoftJsonObjectSerializer>(resultOptions.ObjectSerializer);
         }
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/64528")]
-        public async void TestConfigurationHotReload()
+        [Fact]
+        public async Task TestConfigurationHotReload()
         {
             var mock = new Mock<IEndpointRouter>();
             var connectionStrings = FakeEndpointUtils.GetFakeConnectionString(2).ToArray();
+            var initialEndpointObserved = new TaskCompletionSource<ServiceEndpoint[]>(TaskCreationOptions.RunContinuationsAsynchronously);
+            var updatedEndpointObserved = new TaskCompletionSource<ServiceEndpoint[]>(TaskCreationOptions.RunContinuationsAsynchronously);
+            mock.Setup(router => router.GetNegotiateEndpoint(It.IsAny<HttpContext>(), It.IsAny<IEnumerable<ServiceEndpoint>>()))
+                .Callback<HttpContext, IEnumerable<ServiceEndpoint>>((_, endpoints) =>
+                {
+                    var currentEndpoints = endpoints.ToArray();
+                    if (currentEndpoints.Length != 1)
+                    {
+                        return;
+                    }
+
+                    if (currentEndpoints[0].ConnectionString == connectionStrings[0])
+                    {
+                        initialEndpointObserved.TrySetResult(currentEndpoints);
+                    }
+                    else if (currentEndpoints[0].ConnectionString == connectionStrings[1])
+                    {
+                        updatedEndpointObserved.TrySetResult(currentEndpoints);
+                    }
+                });
             var configuration = new ConfigurationRoot(new List<IConfigurationProvider>() { new MemoryConfigurationProvider(new()) });
             configuration[Constants.AzureSignalRConnectionStringName] = connectionStrings[0];
             // Only persistent mode supports hot reload.
@@ -106,16 +129,26 @@ namespace SignalRServiceExtension.Tests
             var managerStore = new ServiceManagerStore(configuration, NullLoggerFactory.Instance, SingletonAzureComponentFactory.Instance, Options.Create(new SignalROptions()), mock.Object);
             var hubContextStore = managerStore.GetOrAddByConnectionStringKey(Constants.AzureSignalRConnectionStringName);
             var hubContext = await hubContextStore.GetAsync("hub") as ServiceHubContext;
+
+            using var timeout = new CancellationTokenSource(TimeSpan.FromSeconds(30));
             await hubContext.ClientManager.UserExistsAsync("a");
+            var initialEndpoints = await initialEndpointObserved.Task.WaitAsync(timeout.Token);
+            Assert.Single(initialEndpoints);
+            Assert.Equal(connectionStrings[0], initialEndpoints[0].ConnectionString);
 
             configuration[Constants.AzureSignalRConnectionStringName] = connectionStrings[1];
             configuration.Reload();
-            await Task.Delay(6000);
-            await hubContext.ClientManager.UserExistsAsync("a");
 
-            Assert.Equal(2, mock.Invocations.Count);
-            // By design, the new endpoint is firstly appended to the original endpoint list instead of replacing the old endpoint.
-            Assert.Equal(2, (mock.Invocations.Last().Arguments[1] as IEnumerable<ServiceEndpoint>).Count());
+            while (!updatedEndpointObserved.Task.IsCompleted)
+            {
+                timeout.Token.ThrowIfCancellationRequested();
+                await hubContext.ClientManager.UserExistsAsync("a").WaitAsync(timeout.Token);
+                await Task.WhenAny(updatedEndpointObserved.Task, Task.Delay(TimeSpan.FromMilliseconds(50), timeout.Token));
+            }
+
+            var updatedEndpoints = await updatedEndpointObserved.Task.WaitAsync(timeout.Token);
+            Assert.Single(updatedEndpoints);
+            Assert.Equal(connectionStrings[1], updatedEndpoints[0].ConnectionString);
         }
 
         [Theory]

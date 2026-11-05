@@ -7,6 +7,7 @@ using Microsoft.Azure.SignalR.Management;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Microsoft.Azure.WebJobs.Extensions.SignalRService.Tests.Samples;
+
 public class RetrySamples
 {
     #region Snippet:RetryCustomization
