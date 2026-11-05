@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     public partial class IaasComputeVmProtectedItem : IaasVmProtectedItem
     {
         /// <summary> Initializes a new instance of <see cref="IaasComputeVmProtectedItem"/>. </summary>
-        public IaasComputeVmProtectedItem()
+        public IaasComputeVmProtectedItem() : base("Microsoft.Compute/virtualMachines")
         {
         }
 

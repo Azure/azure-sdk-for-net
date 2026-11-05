@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.Sql
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ServerAdvancedThreatProtectionData, ServerAdvancedThreatProtectionResource>(new ServerAdvancedThreatProtectionSettingsGetByServerAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<ServerAdvancedThreatProtectionData, ServerAdvancedThreatProtectionResource>(new ServerAdvancedThreatProtectionDataAsyncCollectionResultOfT(
                 _serverAdvancedThreatProtectionSettingsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -316,7 +316,7 @@ namespace Azure.ResourceManager.Sql
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ServerAdvancedThreatProtectionData, ServerAdvancedThreatProtectionResource>(new ServerAdvancedThreatProtectionSettingsGetByServerCollectionResultOfT(
+            return new PageableWrapper<ServerAdvancedThreatProtectionData, ServerAdvancedThreatProtectionResource>(new ServerAdvancedThreatProtectionDataCollectionResultOfT(
                 _serverAdvancedThreatProtectionSettingsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

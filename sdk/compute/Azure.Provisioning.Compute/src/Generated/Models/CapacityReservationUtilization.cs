@@ -15,6 +15,7 @@ namespace Azure.Provisioning.Compute
     {
         private BicepValue<int> _currentCapacity;
         private BicepList<ComputeSubResourceData> _virtualMachinesAllocated;
+        private BicepDictionary<int> _usedReservedCountBySubscription;
 
         /// <summary> Creates a new CapacityReservationUtilization. </summary>
         public CapacityReservationUtilization()
@@ -41,12 +42,23 @@ namespace Azure.Provisioning.Compute
             }
         }
 
+        /// <summary> Gets the UsedReservedCountBySubscription. </summary>
+        public BicepDictionary<int> UsedReservedCountBySubscription
+        {
+            get
+            {
+                Initialize();
+                return _usedReservedCountBySubscription;
+            }
+        }
+
         /// <summary> Define all the provisionable properties for CapacityReservationUtilization. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
             _currentCapacity = DefineProperty<int>(nameof(CurrentCapacity), new string[] { "currentCapacity" }, isOutput: true);
             _virtualMachinesAllocated = DefineListProperty<ComputeSubResourceData>(nameof(VirtualMachinesAllocated), new string[] { "virtualMachinesAllocated" }, isOutput: true);
+            _usedReservedCountBySubscription = DefineDictionaryProperty<int>(nameof(UsedReservedCountBySubscription), new string[] { "usedReservedCountBySubscription" }, isOutput: true);
             DefineAdditionalProperties();
         }
 

@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.ComputeFleet.Mocking
 
         private ClientDiagnostics FleetsClientDiagnostics => _fleetsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ComputeFleet.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Fleets FleetsRestClient => _fleetsRestClient ??= new Fleets(FleetsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-08-01");
+        private Fleets FleetsRestClient => _fleetsRestClient ??= new Fleets(FleetsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.AzureFleet/fleets", out string apiVersion) ? apiVersion : "2026-08-01");
 
         /// <summary>
         /// List Fleet resources by subscription ID
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.ComputeFleet.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ComputeFleetData, ComputeFleetResource>(new FleetsGetBySubscriptionAsyncCollectionResultOfT(FleetsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableComputeFleetSubscriptionResource.GetComputeFleets"), data => new ComputeFleetResource(Client, data));
+            return new AsyncPageableWrapper<ComputeFleetData, ComputeFleetResource>(new ComputeFleetDataAsync0CollectionResultOfT(FleetsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableComputeFleetSubscriptionResource.GetComputeFleets"), data => new ComputeFleetResource(Client, data));
         }
 
         /// <summary>
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.ComputeFleet.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ComputeFleetData, ComputeFleetResource>(new FleetsGetBySubscriptionCollectionResultOfT(FleetsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableComputeFleetSubscriptionResource.GetComputeFleets"), data => new ComputeFleetResource(Client, data));
+            return new PageableWrapper<ComputeFleetData, ComputeFleetResource>(new ComputeFleetData0CollectionResultOfT(FleetsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableComputeFleetSubscriptionResource.GetComputeFleets"), data => new ComputeFleetResource(Client, data));
         }
     }
 }

@@ -39,9 +39,8 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal NetworkCloudKubernetesVersionCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(NetworkCloudKubernetesVersionResource.ResourceType, out string networkCloudKubernetesVersionApiVersion);
             _kubernetesVersionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.NetworkCloud", NetworkCloudKubernetesVersionResource.ResourceType.Namespace, Diagnostics);
-            _kubernetesVersionsRestClient = new KubernetesVersions(_kubernetesVersionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, networkCloudKubernetesVersionApiVersion ?? "2026-07-01");
+            _kubernetesVersionsRestClient = new KubernetesVersions(_kubernetesVersionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.NetworkCloud/kubernetesVersions", out string kubernetesVersionsApiVersionOverride) ? kubernetesVersionsApiVersionOverride : "2026-07-01");
             ValidateResourceId(id);
         }
 
@@ -298,7 +297,7 @@ namespace Azure.ResourceManager.NetworkCloud
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<NetworkCloudKubernetesVersionData, NetworkCloudKubernetesVersionResource>(new KubernetesVersionsGetByResourceGroupAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<NetworkCloudKubernetesVersionData, NetworkCloudKubernetesVersionResource>(new NetworkCloudKubernetesVersionDataAsyncCollectionResultOfT(
                 _kubernetesVersionsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -335,7 +334,7 @@ namespace Azure.ResourceManager.NetworkCloud
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<NetworkCloudKubernetesVersionData, NetworkCloudKubernetesVersionResource>(new KubernetesVersionsGetByResourceGroupCollectionResultOfT(
+            return new PageableWrapper<NetworkCloudKubernetesVersionData, NetworkCloudKubernetesVersionResource>(new NetworkCloudKubernetesVersionDataCollectionResultOfT(
                 _kubernetesVersionsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

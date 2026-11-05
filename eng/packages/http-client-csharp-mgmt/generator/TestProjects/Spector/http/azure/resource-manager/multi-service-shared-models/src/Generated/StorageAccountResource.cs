@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.MultiServiceSharedModels.Combined
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _storageAccountsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                HttpMessage message = _storageAccountsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<StorageAccountData> response = Response.FromValue(StorageAccountData.FromResponse(result), result);
                 if (response.Value == null)
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.MultiServiceSharedModels.Combined
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _storageAccountsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                HttpMessage message = _storageAccountsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<StorageAccountData> response = Response.FromValue(StorageAccountData.FromResponse(result), result);
                 if (response.Value == null)
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.MultiServiceSharedModels.Combined
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _storageAccountsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, StorageAccountData.ToRequestContent(data), context);
+                HttpMessage message = _storageAccountsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, StorageAccountData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 CombinedArmOperation<StorageAccountResource> operation = new CombinedArmOperation<StorageAccountResource>(
                     new StorageAccountResourceOperationSource(Client),
@@ -286,7 +286,7 @@ namespace Azure.ResourceManager.MultiServiceSharedModels.Combined
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _storageAccountsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, StorageAccountData.ToRequestContent(data), context);
+                HttpMessage message = _storageAccountsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, StorageAccountData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 CombinedArmOperation<StorageAccountResource> operation = new CombinedArmOperation<StorageAccountResource>(
                     new StorageAccountResourceOperationSource(Client),
@@ -331,7 +331,7 @@ namespace Azure.ResourceManager.MultiServiceSharedModels.Combined
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _storageAccountsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                    HttpMessage message = _storageAccountsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<StorageAccountData> response = Response.FromValue(StorageAccountData.FromResponse(result), result);
                     return Response.FromValue(new StorageAccountResource(Client, response.Value), response.GetRawResponse());
@@ -374,7 +374,7 @@ namespace Azure.ResourceManager.MultiServiceSharedModels.Combined
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _storageAccountsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                    HttpMessage message = _storageAccountsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<StorageAccountData> response = Response.FromValue(StorageAccountData.FromResponse(result), result);
                     return Response.FromValue(new StorageAccountResource(Client, response.Value), response.GetRawResponse());
@@ -415,7 +415,7 @@ namespace Azure.ResourceManager.MultiServiceSharedModels.Combined
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _storageAccountsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                    HttpMessage message = _storageAccountsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<StorageAccountData> response = Response.FromValue(StorageAccountData.FromResponse(result), result);
                     return Response.FromValue(new StorageAccountResource(Client, response.Value), response.GetRawResponse());
@@ -456,7 +456,7 @@ namespace Azure.ResourceManager.MultiServiceSharedModels.Combined
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _storageAccountsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                    HttpMessage message = _storageAccountsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<StorageAccountData> response = Response.FromValue(StorageAccountData.FromResponse(result), result);
                     return Response.FromValue(new StorageAccountResource(Client, response.Value), response.GetRawResponse());
@@ -497,7 +497,7 @@ namespace Azure.ResourceManager.MultiServiceSharedModels.Combined
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _storageAccountsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                    HttpMessage message = _storageAccountsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<StorageAccountData> response = Response.FromValue(StorageAccountData.FromResponse(result), result);
                     return Response.FromValue(new StorageAccountResource(Client, response.Value), response.GetRawResponse());
@@ -538,7 +538,7 @@ namespace Azure.ResourceManager.MultiServiceSharedModels.Combined
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _storageAccountsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                    HttpMessage message = _storageAccountsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<StorageAccountData> response = Response.FromValue(StorageAccountData.FromResponse(result), result);
                     return Response.FromValue(new StorageAccountResource(Client, response.Value), response.GetRawResponse());

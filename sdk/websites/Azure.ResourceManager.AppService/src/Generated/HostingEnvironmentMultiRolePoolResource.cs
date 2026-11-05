@@ -438,7 +438,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new WorkerPoolResourcesGetMultiRoleMetricDefinitionsAsyncCollectionResultOfT(
+            return new ResourceMetricDefinitionAsync2CollectionResultOfT(
                 _workerPoolResourcesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -476,7 +476,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new WorkerPoolResourcesGetMultiRoleMetricDefinitionsCollectionResultOfT(
+            return new ResourceMetricDefinition2CollectionResultOfT(
                 _workerPoolResourcesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -519,7 +519,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new WorkerPoolResourcesGetMultiRolePoolInstanceMetricDefinitionsAsyncCollectionResultOfT(
+            return new ResourceMetricDefinitionAsync1CollectionResultOfT(
                 _workerPoolResourcesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -563,7 +563,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new WorkerPoolResourcesGetMultiRolePoolInstanceMetricDefinitionsCollectionResultOfT(
+            return new ResourceMetricDefinition1CollectionResultOfT(
                 _workerPoolResourcesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -602,7 +602,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new WorkerPoolResourcesGetMultiRolePoolSkusAsyncCollectionResultOfT(
+            return new AppServicePoolSkuInfoAsync0CollectionResultOfT(
                 _workerPoolResourcesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -640,7 +640,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new WorkerPoolResourcesGetMultiRolePoolSkusCollectionResultOfT(
+            return new AppServicePoolSkuInfo0CollectionResultOfT(
                 _workerPoolResourcesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -678,7 +678,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new WorkerPoolResourcesGetMultiRoleUsagesAsyncCollectionResultOfT(
+            return new AppServiceUsageAsync0CollectionResultOfT(
                 _workerPoolResourcesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -716,7 +716,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new WorkerPoolResourcesGetMultiRoleUsagesCollectionResultOfT(
+            return new AppServiceUsage0CollectionResultOfT(
                 _workerPoolResourcesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

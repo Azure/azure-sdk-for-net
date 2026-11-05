@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new AutoscaleSettingResourceCollection(value, nextLink, additionalBinaryDataProperties);
+            return new AutoscaleSettingResourceCollection(value ?? new ChangeTrackingList<AutoscaleSettingData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

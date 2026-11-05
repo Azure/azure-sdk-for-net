@@ -39,9 +39,8 @@ namespace Azure.ResourceManager.MigrationDiscoverySap
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal SapDiscoverySiteCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(SapDiscoverySiteResource.ResourceType, out string sapDiscoverySiteApiVersion);
             _sapDiscoverySitesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MigrationDiscoverySap", SapDiscoverySiteResource.ResourceType.Namespace, Diagnostics);
-            _sapDiscoverySitesRestClient = new SAPDiscoverySites(_sapDiscoverySitesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, sapDiscoverySiteApiVersion ?? "2023-10-01-preview");
+            _sapDiscoverySitesRestClient = new SAPDiscoverySites(_sapDiscoverySitesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.Workloads/sapDiscoverySites", out string sapDiscoverySitesApiVersionOverride) ? sapDiscoverySitesApiVersionOverride : "2023-10-01-preview");
             ValidateResourceId(id);
         }
 
@@ -294,7 +293,7 @@ namespace Azure.ResourceManager.MigrationDiscoverySap
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<SapDiscoverySiteData, SapDiscoverySiteResource>(new SAPDiscoverySitesGetByResourceGroupAsyncCollectionResultOfT(_sapDiscoverySitesRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "SapDiscoverySiteCollection.GetAll"), data => new SapDiscoverySiteResource(Client, data));
+            return new AsyncPageableWrapper<SapDiscoverySiteData, SapDiscoverySiteResource>(new SapDiscoverySiteDataAsyncCollectionResultOfT(_sapDiscoverySitesRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "SapDiscoverySiteCollection.GetAll"), data => new SapDiscoverySiteResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +321,7 @@ namespace Azure.ResourceManager.MigrationDiscoverySap
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<SapDiscoverySiteData, SapDiscoverySiteResource>(new SAPDiscoverySitesGetByResourceGroupCollectionResultOfT(_sapDiscoverySitesRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "SapDiscoverySiteCollection.GetAll"), data => new SapDiscoverySiteResource(Client, data));
+            return new PageableWrapper<SapDiscoverySiteData, SapDiscoverySiteResource>(new SapDiscoverySiteDataCollectionResultOfT(_sapDiscoverySitesRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "SapDiscoverySiteCollection.GetAll"), data => new SapDiscoverySiteResource(Client, data));
         }
 
         /// <summary>

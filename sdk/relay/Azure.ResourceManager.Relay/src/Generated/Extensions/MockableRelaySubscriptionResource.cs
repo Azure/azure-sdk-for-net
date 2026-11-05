@@ -40,11 +40,23 @@ namespace Azure.ResourceManager.Relay.Mocking
 
         private ClientDiagnostics ClustersClientDiagnostics => _clustersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Relay.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Clusters ClustersRestClient => _clustersRestClient ??= new Clusters(ClustersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-07-01-preview");
+        private Clusters ClustersRestClient => _clustersRestClient ??= new Clusters(
+            ClustersClientDiagnostics,
+            Pipeline,
+            Diagnostics.ApplicationId,
+            Endpoint,
+            "2026-07-01-preview",
+            resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
 
         private ClientDiagnostics NamespacesClientDiagnostics => _namespacesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Relay.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Namespaces NamespacesRestClient => _namespacesRestClient ??= new Namespaces(NamespacesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-07-01-preview");
+        private Namespaces NamespacesRestClient => _namespacesRestClient ??= new Namespaces(
+            NamespacesClientDiagnostics,
+            Pipeline,
+            Diagnostics.ApplicationId,
+            Endpoint,
+            "2026-07-01-preview",
+            resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
 
         /// <summary>
         /// Lists Relay clusters in a subscription.
@@ -71,7 +83,7 @@ namespace Azure.ResourceManager.Relay.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<RelayClusterData, RelayClusterResource>(new ClustersGetBySubscriptionAsyncCollectionResultOfT(ClustersRestClient, Id.SubscriptionId, context, "MockableRelaySubscriptionResource.GetRelayClusters"), data => new RelayClusterResource(Client, data));
+            return new AsyncPageableWrapper<RelayClusterData, RelayClusterResource>(new RelayClusterDataAsync0CollectionResultOfT(ClustersRestClient, Id.SubscriptionId, context, "MockableRelaySubscriptionResource.GetRelayClusters"), data => new RelayClusterResource(Client, data));
         }
 
         /// <summary>
@@ -99,7 +111,7 @@ namespace Azure.ResourceManager.Relay.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<RelayClusterData, RelayClusterResource>(new ClustersGetBySubscriptionCollectionResultOfT(ClustersRestClient, Id.SubscriptionId, context, "MockableRelaySubscriptionResource.GetRelayClusters"), data => new RelayClusterResource(Client, data));
+            return new PageableWrapper<RelayClusterData, RelayClusterResource>(new RelayClusterData0CollectionResultOfT(ClustersRestClient, Id.SubscriptionId, context, "MockableRelaySubscriptionResource.GetRelayClusters"), data => new RelayClusterResource(Client, data));
         }
 
         /// <summary>
@@ -127,7 +139,7 @@ namespace Azure.ResourceManager.Relay.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<RelayNamespaceData, RelayNamespaceResource>(new NamespacesGetAllAsyncCollectionResultOfT(NamespacesRestClient, Id.SubscriptionId, context, "MockableRelaySubscriptionResource.GetRelayNamespaces"), data => new RelayNamespaceResource(Client, data));
+            return new AsyncPageableWrapper<RelayNamespaceData, RelayNamespaceResource>(new RelayNamespaceDataAsync0CollectionResultOfT(NamespacesRestClient, Id.SubscriptionId, context, "MockableRelaySubscriptionResource.GetRelayNamespaces"), data => new RelayNamespaceResource(Client, data));
         }
 
         /// <summary>
@@ -155,7 +167,7 @@ namespace Azure.ResourceManager.Relay.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<RelayNamespaceData, RelayNamespaceResource>(new NamespacesGetAllCollectionResultOfT(NamespacesRestClient, Id.SubscriptionId, context, "MockableRelaySubscriptionResource.GetRelayNamespaces"), data => new RelayNamespaceResource(Client, data));
+            return new PageableWrapper<RelayNamespaceData, RelayNamespaceResource>(new RelayNamespaceData0CollectionResultOfT(NamespacesRestClient, Id.SubscriptionId, context, "MockableRelaySubscriptionResource.GetRelayNamespaces"), data => new RelayNamespaceResource(Client, data));
         }
 
         /// <summary>

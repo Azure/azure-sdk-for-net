@@ -15,7 +15,7 @@ namespace Azure.Provisioning.Kusto
 {
     /// <summary>
     /// Class representing an data connection.
-    /// Please note this is the base class. The derived classes available for instantiation are: <see cref="KustoEventHubDataConnection"/>, <see cref="KustoIotHubDataConnection"/>, <see cref="KustoEventGridDataConnection"/>, <see cref="KustoCosmosDBDataConnection"/>, <see cref="EventGridDataConnectionWithManagedIdentity"/>, and <see cref="EventHubDataConnectionWithManagedIdentity"/>.
+    /// Please note this is the base class. The derived classes available for instantiation are: <see cref="EventGridDataConnectionWithManagedIdentity"/>, <see cref="EventHubDataConnectionWithManagedIdentity"/>, <see cref="KustoCosmosDBDataConnection"/>, <see cref="KustoEventGridDataConnection"/>, <see cref="KustoEventHubDataConnection"/>, and <see cref="KustoIotHubDataConnection"/>.
     /// </summary>
     public partial class KustoDataConnection : ProvisionableResource
     {
@@ -117,7 +117,7 @@ namespace Azure.Provisioning.Kusto
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _location = DefineProperty<AzureLocation>(nameof(Location), new string[] { "location" });
             _kind = DefineProperty<DataConnectionKind>(nameof(Kind), new string[] { "kind" }, isRequired: true);
-            _parent = DefineResource<KustoDatabase>(nameof(Parent), new string[] { "parent" }, isRequired: true);
+            _parent = DefineResource<KustoDatabase>(nameof(Parent), new string[] { "parent" });
             DefineAdditionalProperties();
         }
 

@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.ManagedApplications.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new JitRequestDefinitionListResult(value, nextLink, additionalBinaryDataProperties);
+            return new JitRequestDefinitionListResult(value ?? new ChangeTrackingList<JitRequestDefinitionData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

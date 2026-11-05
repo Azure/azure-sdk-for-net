@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.Sql
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<SqlServerJobExecutionData, SqlServerJobExecutionStepTargetResource>(new JobTargetExecutionsGetByStepAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<SqlServerJobExecutionData, SqlServerJobExecutionStepTargetResource>(new SqlServerJobExecutionDataAsync1CollectionResultOfT(
                 _jobTargetExecutionsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.Sql
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<SqlServerJobExecutionData, SqlServerJobExecutionStepTargetResource>(new JobTargetExecutionsGetByStepCollectionResultOfT(
+            return new PageableWrapper<SqlServerJobExecutionData, SqlServerJobExecutionStepTargetResource>(new SqlServerJobExecutionData1CollectionResultOfT(
                 _jobTargetExecutionsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

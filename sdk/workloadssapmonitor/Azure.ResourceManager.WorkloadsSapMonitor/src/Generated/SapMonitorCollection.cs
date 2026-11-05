@@ -39,9 +39,8 @@ namespace Azure.ResourceManager.WorkloadsSapMonitor
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal SapMonitorCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(SapMonitorResource.ResourceType, out string sapMonitorApiVersion);
             _monitorsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.WorkloadsSapMonitor", SapMonitorResource.ResourceType.Namespace, Diagnostics);
-            _monitorsRestClient = new Monitors(_monitorsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, sapMonitorApiVersion ?? "2024-02-01-preview");
+            _monitorsRestClient = new Monitors(_monitorsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.Workloads/monitors", out string monitorsApiVersionOverride) ? monitorsApiVersionOverride : "2024-02-01-preview");
             ValidateResourceId(id);
         }
 
@@ -294,7 +293,7 @@ namespace Azure.ResourceManager.WorkloadsSapMonitor
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<SapMonitorData, SapMonitorResource>(new MonitorsGetByResourceGroupAsyncCollectionResultOfT(_monitorsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "SapMonitorCollection.GetAll"), data => new SapMonitorResource(Client, data));
+            return new AsyncPageableWrapper<SapMonitorData, SapMonitorResource>(new SapMonitorDataAsyncCollectionResultOfT(_monitorsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "SapMonitorCollection.GetAll"), data => new SapMonitorResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +321,7 @@ namespace Azure.ResourceManager.WorkloadsSapMonitor
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<SapMonitorData, SapMonitorResource>(new MonitorsGetByResourceGroupCollectionResultOfT(_monitorsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "SapMonitorCollection.GetAll"), data => new SapMonitorResource(Client, data));
+            return new PageableWrapper<SapMonitorData, SapMonitorResource>(new SapMonitorDataCollectionResultOfT(_monitorsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "SapMonitorCollection.GetAll"), data => new SapMonitorResource(Client, data));
         }
 
         /// <summary>

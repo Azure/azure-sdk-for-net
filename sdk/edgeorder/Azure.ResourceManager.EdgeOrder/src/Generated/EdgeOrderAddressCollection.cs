@@ -40,9 +40,8 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal EdgeOrderAddressCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(EdgeOrderAddressResource.ResourceType, out string edgeOrderAddressApiVersion);
             _addressResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.EdgeOrder", EdgeOrderAddressResource.ResourceType.Namespace, Diagnostics);
-            _addressResourcesRestClient = new AddressResources(_addressResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, edgeOrderAddressApiVersion ?? "2024-02-01");
+            _addressResourcesRestClient = new AddressResources(_addressResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.EdgeOrder/addresses", out string addressResourcesApiVersionOverride) ? addressResourcesApiVersionOverride : "2024-02-01");
             ValidateResourceId(id);
         }
 
@@ -300,7 +299,7 @@ namespace Azure.ResourceManager.EdgeOrder
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<EdgeOrderAddressData, EdgeOrderAddressResource>(new AddressResourcesGetByResourceGroupAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<EdgeOrderAddressData, EdgeOrderAddressResource>(new EdgeOrderAddressDataAsyncCollectionResultOfT(
                 _addressResourcesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -339,7 +338,7 @@ namespace Azure.ResourceManager.EdgeOrder
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<EdgeOrderAddressData, EdgeOrderAddressResource>(new AddressResourcesGetByResourceGroupCollectionResultOfT(
+            return new PageableWrapper<EdgeOrderAddressData, EdgeOrderAddressResource>(new EdgeOrderAddressDataCollectionResultOfT(
                 _addressResourcesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

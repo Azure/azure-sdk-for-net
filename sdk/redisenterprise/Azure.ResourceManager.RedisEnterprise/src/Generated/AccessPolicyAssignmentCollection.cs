@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.RedisEnterprise
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<AccessPolicyAssignmentData, AccessPolicyAssignmentResource>(new AccessPolicyAssignmentGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<AccessPolicyAssignmentData, AccessPolicyAssignmentResource>(new AccessPolicyAssignmentDataAsyncCollectionResultOfT(
                 _accessPolicyAssignmentRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -328,7 +328,7 @@ namespace Azure.ResourceManager.RedisEnterprise
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<AccessPolicyAssignmentData, AccessPolicyAssignmentResource>(new AccessPolicyAssignmentGetAllCollectionResultOfT(
+            return new PageableWrapper<AccessPolicyAssignmentData, AccessPolicyAssignmentResource>(new AccessPolicyAssignmentDataCollectionResultOfT(
                 _accessPolicyAssignmentRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

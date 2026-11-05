@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new CustomRolloutListResult(value, nextLink, additionalBinaryDataProperties);
+            return new CustomRolloutListResult(value ?? new ChangeTrackingList<CustomRolloutData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.AppService.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new CsmUsageQuotaListResult(value, nextLink, additionalBinaryDataProperties);
+            return new CsmUsageQuotaListResult(value ?? new ChangeTrackingList<CsmUsageQuota>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

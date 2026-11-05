@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new SecretListResult(value, nextLink, additionalBinaryDataProperties);
+            return new SecretListResult(value ?? new ChangeTrackingList<FrontDoorSecretData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

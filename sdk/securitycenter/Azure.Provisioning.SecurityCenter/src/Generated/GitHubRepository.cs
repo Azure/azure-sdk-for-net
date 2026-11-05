@@ -97,7 +97,7 @@ namespace Azure.Provisioning.SecurityCenter
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _properties = DefineModelProperty<GitHubRepositoryProperties>(nameof(Properties), new string[] { "properties" });
-            _parent = DefineResource<GitHubOwner>(nameof(Parent), new string[] { "parent" }, isRequired: true);
+            _parent = DefineResource<GitHubOwner>(nameof(Parent), new string[] { "parent" });
             DefineAdditionalProperties();
         }
 

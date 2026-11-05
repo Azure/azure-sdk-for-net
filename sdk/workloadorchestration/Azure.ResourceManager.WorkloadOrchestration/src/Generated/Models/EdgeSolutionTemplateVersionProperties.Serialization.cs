@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new EdgeSolutionTemplateVersionProperties(configurations, specification, orchestratorType, provisioningState, additionalBinaryDataProperties);
+            return new EdgeSolutionTemplateVersionProperties(configurations, specification ?? new ChangeTrackingDictionary<string, BinaryData>(), orchestratorType, provisioningState, additionalBinaryDataProperties);
         }
     }
 }

@@ -1,0 +1,6 @@
+directory: specification/compute/resource-manager/Microsoft.Compute/WorkloadManager
+commit: 8ec074d8a9d4929f9db8c1e0c464507722f0f105
+repo: Azure/azure-rest-api-specs
+additionalDirectories: 
+
+emitterPackageJsonPath: eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json

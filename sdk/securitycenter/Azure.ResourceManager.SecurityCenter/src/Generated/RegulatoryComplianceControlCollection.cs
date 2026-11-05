@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<RegulatoryComplianceControlData, RegulatoryComplianceControlResource>(new RegulatoryComplianceControlsGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<RegulatoryComplianceControlData, RegulatoryComplianceControlResource>(new RegulatoryComplianceControlDataAsyncCollectionResultOfT(
                 _regulatoryComplianceControlsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.Name,
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<RegulatoryComplianceControlData, RegulatoryComplianceControlResource>(new RegulatoryComplianceControlsGetAllCollectionResultOfT(
+            return new PageableWrapper<RegulatoryComplianceControlData, RegulatoryComplianceControlResource>(new RegulatoryComplianceControlDataCollectionResultOfT(
                 _regulatoryComplianceControlsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.Name,

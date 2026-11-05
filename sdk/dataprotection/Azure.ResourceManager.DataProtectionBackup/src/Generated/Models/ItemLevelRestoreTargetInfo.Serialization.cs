@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 recoverySetting,
                 restoreLocation,
                 additionalBinaryDataProperties,
-                restoreCriteria,
+                restoreCriteria ?? new ChangeTrackingList<ItemLevelRestoreCriteria>(),
                 datasourceInfo,
                 datasourceSetInfo,
                 datasourceAuthCredentials);

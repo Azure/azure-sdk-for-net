@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.IotOperations.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new BrokerAuthenticationResourceListResult(value, nextLink, additionalBinaryDataProperties);
+            return new BrokerAuthenticationResourceListResult(value ?? new ChangeTrackingList<IotOperationsBrokerAuthenticationData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ScheduledActionResourceAttachContent(resources, additionalBinaryDataProperties);
+            return new ScheduledActionResourceAttachContent(resources ?? new ChangeTrackingList<ScheduledActionResourceDetails>(), additionalBinaryDataProperties);
         }
     }
 }

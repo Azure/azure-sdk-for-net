@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<BackupJobData, BackupJobResource>(new BackupJobsGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<BackupJobData, BackupJobResource>(new BackupJobDataAsyncCollectionResultOfT(
                 _backupJobsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<BackupJobData, BackupJobResource>(new BackupJobsGetAllCollectionResultOfT(
+            return new PageableWrapper<BackupJobData, BackupJobResource>(new BackupJobDataCollectionResultOfT(
                 _backupJobsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

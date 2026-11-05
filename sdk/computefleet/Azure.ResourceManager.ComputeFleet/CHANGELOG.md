@@ -1,14 +1,11 @@
 # Release History
 
-## 1.1.0-beta.4 (Unreleased)
-
-### Features Added
+## 1.1.0-beta.4 (2026-11-03)
 
 ### Breaking Changes
 
-### Bugs Fixed
-
-### Other Changes
+- Removed the `ZoneAllocationPolicy` property from `ComputeFleetProperties` and the corresponding `zoneAllocationPolicy` parameter from `ArmComputeFleetModelFactory.ComputeFleetProperties`.
+- Removed `ComputeFleetZoneAllocationPolicy`, `ComputeFleetZoneDistributionStrategy`, and `ZonePreference`, along with the `ArmComputeFleetModelFactory.ComputeFleetZoneAllocationPolicy` and `ArmComputeFleetModelFactory.ZonePreference` methods.
 
 ## 1.1.0-beta.3 (2026-08-01)
 

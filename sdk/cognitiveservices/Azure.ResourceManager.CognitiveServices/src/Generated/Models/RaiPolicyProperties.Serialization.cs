@@ -74,6 +74,26 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             {
                 throw new FormatException($"The model {nameof(RaiPolicyProperties)} does not support writing '{format}' format.");
             }
+            if (Optional.IsDefined(Format))
+            {
+                writer.WritePropertyName("format"u8);
+                writer.WriteStringValue(Format.Value.ToString());
+            }
+            if (Optional.IsDefined(Acs))
+            {
+                writer.WritePropertyName("acs"u8);
+                writer.WriteObjectValue(Acs, options);
+            }
+            if (Optional.IsCollectionDefined(AcsRegos))
+            {
+                writer.WritePropertyName("acsRegos"u8);
+                writer.WriteStartArray();
+                foreach (RaiRegoReference item in AcsRegos)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
             if (options.Format != "W" && Optional.IsDefined(PolicyType))
             {
                 writer.WritePropertyName("type"u8);
@@ -119,6 +139,21 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsCollectionDefined(CustomExternalSafetyProviders))
+            {
+                writer.WritePropertyName("customExternalSafetyProviders"u8);
+                writer.WriteStartArray();
+                foreach (RaiPolicyCustomExternalSafetyProviderReference item in CustomExternalSafetyProviders)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(EgressPolicy))
+            {
+                writer.WritePropertyName("egressPolicy"u8);
+                writer.WriteObjectValue(EgressPolicy, options);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -161,15 +196,52 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             {
                 return null;
             }
+            RaiPolicyFormat? format = default;
+            RaiAcsManifest acs = default;
+            IList<RaiRegoReference> acsRegos = default;
             RaiPolicyType? policyType = default;
             RaiPolicyMode? mode = default;
             string basePolicyName = default;
             IList<RaiPolicyContentFilter> contentFilters = default;
             IList<CustomBlocklistConfig> customBlocklists = default;
             IList<RaiSafetyProviderSourceConfig> safetyProviders = default;
+            IList<RaiPolicyCustomExternalSafetyProviderReference> customExternalSafetyProviders = default;
+            RaiEgressPolicyConfig egressPolicy = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
+                if (prop.NameEquals("format"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    format = new RaiPolicyFormat(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("acs"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    acs = RaiAcsManifest.DeserializeRaiAcsManifest(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("acsRegos"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<RaiRegoReference> array = new List<RaiRegoReference>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        array.Add(RaiRegoReference.DeserializeRaiRegoReference(item, options));
+                    }
+                    acsRegos = array;
+                    continue;
+                }
                 if (prop.NameEquals("type"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -235,18 +307,46 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     safetyProviders = array;
                     continue;
                 }
+                if (prop.NameEquals("customExternalSafetyProviders"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<RaiPolicyCustomExternalSafetyProviderReference> array = new List<RaiPolicyCustomExternalSafetyProviderReference>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        array.Add(RaiPolicyCustomExternalSafetyProviderReference.DeserializeRaiPolicyCustomExternalSafetyProviderReference(item, options));
+                    }
+                    customExternalSafetyProviders = array;
+                    continue;
+                }
+                if (prop.NameEquals("egressPolicy"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    egressPolicy = RaiEgressPolicyConfig.DeserializeRaiEgressPolicyConfig(prop.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new RaiPolicyProperties(
+                format,
+                acs,
+                acsRegos ?? new ChangeTrackingList<RaiRegoReference>(),
                 policyType,
                 mode,
                 basePolicyName,
                 contentFilters ?? new ChangeTrackingList<RaiPolicyContentFilter>(),
                 customBlocklists ?? new ChangeTrackingList<CustomBlocklistConfig>(),
                 safetyProviders ?? new ChangeTrackingList<RaiSafetyProviderSourceConfig>(),
+                customExternalSafetyProviders ?? new ChangeTrackingList<RaiPolicyCustomExternalSafetyProviderReference>(),
+                egressPolicy,
                 additionalBinaryDataProperties);
         }
     }

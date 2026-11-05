@@ -40,9 +40,8 @@ namespace Azure.ResourceManager.Compute
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal CapacityReservationGroupCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(CapacityReservationGroupResource.ResourceType, out string capacityReservationGroupApiVersion);
             _capacityReservationGroupsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", CapacityReservationGroupResource.ResourceType.Namespace, Diagnostics);
-            _capacityReservationGroupsRestClient = new CapacityReservationGroups(_capacityReservationGroupsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, capacityReservationGroupApiVersion ?? "2026-04-01");
+            _capacityReservationGroupsRestClient = new CapacityReservationGroups(_capacityReservationGroupsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 
@@ -292,7 +291,7 @@ namespace Azure.ResourceManager.Compute
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<CapacityReservationGroupData, CapacityReservationGroupResource>(new CapacityReservationGroupsGetByResourceGroupAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<CapacityReservationGroupData, CapacityReservationGroupResource>(new CapacityReservationGroupDataAsyncCollectionResultOfT(
                 _capacityReservationGroupsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -327,7 +326,7 @@ namespace Azure.ResourceManager.Compute
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<CapacityReservationGroupData, CapacityReservationGroupResource>(new CapacityReservationGroupsGetByResourceGroupCollectionResultOfT(
+            return new PageableWrapper<CapacityReservationGroupData, CapacityReservationGroupResource>(new CapacityReservationGroupDataCollectionResultOfT(
                 _capacityReservationGroupsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

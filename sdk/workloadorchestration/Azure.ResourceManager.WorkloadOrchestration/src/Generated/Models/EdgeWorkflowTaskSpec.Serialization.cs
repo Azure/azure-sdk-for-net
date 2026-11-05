@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new EdgeWorkflowTaskSpec(name, targetId, specification, additionalBinaryDataProperties);
+            return new EdgeWorkflowTaskSpec(name, targetId, specification ?? new ChangeTrackingDictionary<string, BinaryData>(), additionalBinaryDataProperties);
         }
     }
 }

@@ -299,7 +299,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<BarData, BarResource>(new BarsGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<BarData, BarResource>(new BarDataAsyncCollectionResultOfT(
                 _barsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -333,7 +333,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<BarData, BarResource>(new BarsGetAllCollectionResultOfT(
+            return new PageableWrapper<BarData, BarResource>(new BarDataCollectionResultOfT(
                 _barsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

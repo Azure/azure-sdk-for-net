@@ -39,9 +39,8 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal NetworkCloudKubernetesClusterCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(NetworkCloudKubernetesClusterResource.ResourceType, out string networkCloudKubernetesClusterApiVersion);
             _kubernetesClustersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.NetworkCloud", NetworkCloudKubernetesClusterResource.ResourceType.Namespace, Diagnostics);
-            _kubernetesClustersRestClient = new KubernetesClusters(_kubernetesClustersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, networkCloudKubernetesClusterApiVersion ?? "2026-07-01");
+            _kubernetesClustersRestClient = new KubernetesClusters(_kubernetesClustersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.NetworkCloud/kubernetesClusters", out string kubernetesClustersApiVersionOverride) ? kubernetesClustersApiVersionOverride : "2026-07-01");
             ValidateResourceId(id);
         }
 
@@ -298,7 +297,7 @@ namespace Azure.ResourceManager.NetworkCloud
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<NetworkCloudKubernetesClusterData, NetworkCloudKubernetesClusterResource>(new KubernetesClustersGetByResourceGroupAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<NetworkCloudKubernetesClusterData, NetworkCloudKubernetesClusterResource>(new NetworkCloudKubernetesClusterDataAsyncCollectionResultOfT(
                 _kubernetesClustersRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -335,7 +334,7 @@ namespace Azure.ResourceManager.NetworkCloud
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<NetworkCloudKubernetesClusterData, NetworkCloudKubernetesClusterResource>(new KubernetesClustersGetByResourceGroupCollectionResultOfT(
+            return new PageableWrapper<NetworkCloudKubernetesClusterData, NetworkCloudKubernetesClusterResource>(new NetworkCloudKubernetesClusterDataCollectionResultOfT(
                 _kubernetesClustersRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

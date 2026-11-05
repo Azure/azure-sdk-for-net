@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.Sql
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<LongTermRetentionPolicyData, LongTermRetentionPolicyResource>(new LongTermRetentionPoliciesGetByDatabaseAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<LongTermRetentionPolicyData, LongTermRetentionPolicyResource>(new LongTermRetentionPolicyDataAsyncCollectionResultOfT(
                 _longTermRetentionPoliciesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -317,7 +317,7 @@ namespace Azure.ResourceManager.Sql
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<LongTermRetentionPolicyData, LongTermRetentionPolicyResource>(new LongTermRetentionPoliciesGetByDatabaseCollectionResultOfT(
+            return new PageableWrapper<LongTermRetentionPolicyData, LongTermRetentionPolicyResource>(new LongTermRetentionPolicyDataCollectionResultOfT(
                 _longTermRetentionPoliciesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

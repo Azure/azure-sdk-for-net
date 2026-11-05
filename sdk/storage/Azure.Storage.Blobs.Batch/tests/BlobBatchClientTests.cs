@@ -346,7 +346,7 @@ namespace Azure.Storage.Blobs.Test
 
             string containerName = scenario.Containers[0].Container.Name;
 
-            BlobSasBuilder blobSasBuilder = new BlobSasBuilder(BlobContainerSasPermissions.All, Recording.Now.AddDays(1))
+            BlobSasBuilder blobSasBuilder = new BlobSasBuilder(BlobContainerSasPermissions.All, Recording.UtcNow.AddDays(1))
             {
                 BlobContainerName = containerName
             };
@@ -459,7 +459,7 @@ namespace Azure.Storage.Blobs.Test
 
             string containerName = scenario.Containers[0].Container.Name;
 
-            BlobSasBuilder blobSasBuilder = new BlobSasBuilder(BlobContainerSasPermissions.All, Recording.Now.AddDays(1))
+            BlobSasBuilder blobSasBuilder = new BlobSasBuilder(BlobContainerSasPermissions.All, Recording.UtcNow.AddDays(1))
             {
                 BlobContainerName = containerName
             };
@@ -785,7 +785,7 @@ namespace Azure.Storage.Blobs.Test
 
             string containerName = scenario.Containers[0].Container.Name;
 
-            BlobSasBuilder blobSasBuilder = new BlobSasBuilder(BlobContainerSasPermissions.All, Recording.Now.AddDays(1))
+            BlobSasBuilder blobSasBuilder = new BlobSasBuilder(BlobContainerSasPermissions.All, Recording.UtcNow.AddDays(1))
             {
                 BlobContainerName = containerName
             };
@@ -815,6 +815,7 @@ namespace Azure.Storage.Blobs.Test
 
         [RecordedTest]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2026_02_06)]
+        [Ignore("Smart Tier feature is paused by the service team; re-enable once the feature is restored.")]
         public async Task SetBlobAccessTier_Smart()
         {
             await using TestScenario scenario = Scenario();
@@ -913,7 +914,7 @@ namespace Azure.Storage.Blobs.Test
 
             string containerName = scenario.Containers[0].Container.Name;
 
-            BlobSasBuilder blobSasBuilder = new BlobSasBuilder(BlobContainerSasPermissions.All, Recording.Now.AddDays(1))
+            BlobSasBuilder blobSasBuilder = new BlobSasBuilder(BlobContainerSasPermissions.All, Recording.UtcNow.AddDays(1))
             {
                 BlobContainerName = containerName
             };

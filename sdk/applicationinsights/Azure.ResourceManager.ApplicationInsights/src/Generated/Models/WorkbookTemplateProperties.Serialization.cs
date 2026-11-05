@@ -240,7 +240,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 priority,
                 author,
                 templateData,
-                galleries,
+                galleries ?? new ChangeTrackingList<WorkbookTemplateGallery>(),
                 localized ?? new ChangeTrackingDictionary<string, IList<WorkbookTemplateLocalizedGallery>>(),
                 additionalBinaryDataProperties);
         }

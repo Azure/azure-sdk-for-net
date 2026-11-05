@@ -5,13 +5,16 @@
 
 #nullable disable
 
+using System.Runtime.Serialization;
+
 namespace Azure.Provisioning.MachineLearning
 {
     /// <summary> Load Balancer Type. </summary>
     public enum MachineLearningLoadBalancerType
     {
-        /// <summary> PublicIp. </summary>
-        PublicIp = 0,
+        /// <summary> PublicIP. </summary>
+        [DataMember(Name = "PublicIp")]
+        PublicIP = 0,
         /// <summary> InternalLoadBalancer. </summary>
         InternalLoadBalancer = 1
     }

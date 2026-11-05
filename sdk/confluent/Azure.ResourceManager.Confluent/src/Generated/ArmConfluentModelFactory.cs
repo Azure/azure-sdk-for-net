@@ -704,7 +704,7 @@ namespace Azure.ResourceManager.Confluent.Models
         /// <param name="network"> Specification of the cluster network. </param>
         /// <param name="byok"> Specification of the cluster byok. </param>
         /// <returns> A new <see cref="Models.SCClusterSpecEntity"/> instance for mocking. </returns>
-        public static SCClusterSpecEntity SCClusterSpecEntity(string name, string availability, string cloud, string zone, ConfluentPackage? package, string region, string kafkaBootstrapEndpoint, string httpEndpoint, string apiEndpoint, string configKind, SCClusterNetworkEnvironmentEntity environment, SCClusterNetworkEnvironmentEntity network, SCClusterByokEntity byok)
+        public static SCClusterSpecEntity SCClusterSpecEntity(string name = default, string availability = default, string cloud = default, string zone = default, ConfluentPackage? package = default, string region = default, string kafkaBootstrapEndpoint = default, string httpEndpoint = default, string apiEndpoint = default, string configKind = default, SCClusterNetworkEnvironmentEntity environment = default, SCClusterNetworkEnvironmentEntity network = default, SCClusterByokEntity byok = default)
         {
             return new SCClusterSpecEntity(
                 name,
@@ -798,7 +798,7 @@ namespace Azure.ResourceManager.Confluent.Models
         /// <returns> A new <see cref="Models.ConnectorServiceTypeInfoBase"/> instance for mocking. </returns>
         public static ConnectorServiceTypeInfoBase ConnectorServiceTypeInfoBase(string connectorServiceType = default)
         {
-            return new UnknownConnectorServiceTypeInfoBase(default, default);
+            return new UnknownConnectorServiceTypeInfoBase(connectorServiceType is null ? default : new ConnectorServiceType(connectorServiceType), default);
         }
 
         /// <summary> The authentication info when auth_type is azureBlobStorageSinkConnector. </summary>
@@ -808,7 +808,7 @@ namespace Azure.ResourceManager.Confluent.Models
         /// <returns> A new <see cref="Models.AzureBlobStorageSinkConnectorServiceInfo"/> instance for mocking. </returns>
         public static AzureBlobStorageSinkConnectorServiceInfo AzureBlobStorageSinkConnectorServiceInfo(string storageAccountName = default, string storageAccountKey = default, string storageContainerName = default)
         {
-            return new AzureBlobStorageSinkConnectorServiceInfo(default, default, storageAccountName, storageAccountKey, storageContainerName);
+            return new AzureBlobStorageSinkConnectorServiceInfo(ConnectorServiceType.AzureBlobStorageSinkConnector, default, storageAccountName, storageAccountKey, storageContainerName);
         }
 
         /// <summary> The connector service type is AzureBlobStorageSourceConnector. </summary>
@@ -818,7 +818,7 @@ namespace Azure.ResourceManager.Confluent.Models
         /// <returns> A new <see cref="Models.AzureBlobStorageSourceConnectorServiceInfo"/> instance for mocking. </returns>
         public static AzureBlobStorageSourceConnectorServiceInfo AzureBlobStorageSourceConnectorServiceInfo(string storageAccountName = default, string storageAccountKey = default, string storageContainerName = default)
         {
-            return new AzureBlobStorageSourceConnectorServiceInfo(default, default, storageAccountName, storageAccountKey, storageContainerName);
+            return new AzureBlobStorageSourceConnectorServiceInfo(ConnectorServiceType.AzureBlobStorageSourceConnector, default, storageAccountName, storageAccountKey, storageContainerName);
         }
 
         /// <summary> The authentication info when auth_type is AzureCosmosDBSinkConnector. </summary>
@@ -832,7 +832,7 @@ namespace Azure.ResourceManager.Confluent.Models
         public static AzureCosmosDBSinkConnectorServiceInfo AzureCosmosDBSinkConnectorServiceInfo(string cosmosDatabaseName = default, string cosmosMasterKey = default, string cosmosConnectionEndpoint = default, string cosmosContainersTopicMapping = default, string cosmosIdStrategy = default, string cosmosWriteDetails = default)
         {
             return new AzureCosmosDBSinkConnectorServiceInfo(
-                default,
+                ConnectorServiceType.AzureCosmosDBSinkConnector,
                 default,
                 cosmosDatabaseName,
                 cosmosMasterKey,
@@ -854,7 +854,7 @@ namespace Azure.ResourceManager.Confluent.Models
         public static AzureCosmosDBSourceConnectorServiceInfo AzureCosmosDBSourceConnectorServiceInfo(string cosmosDatabaseName = default, string cosmosMasterKey = default, string cosmosConnectionEndpoint = default, string cosmosContainersTopicMapping = default, bool? isCosmosMessageKeyEnabled = default, string cosmosMessageKeyField = default, string cosmosIncludeAllContainers = default)
         {
             return new AzureCosmosDBSourceConnectorServiceInfo(
-                default,
+                ConnectorServiceType.AzureCosmosDBSourceConnector,
                 default,
                 cosmosDatabaseName,
                 cosmosMasterKey,
@@ -874,7 +874,7 @@ namespace Azure.ResourceManager.Confluent.Models
         public static AzureSynapseAnalyticsSinkConnectorServiceInfo AzureSynapseAnalyticsSinkConnectorServiceInfo(string synapseSqlServerName = default, string synapseSqlUser = default, string synapseSqlPassword = default, string synapseSqlDatabaseName = default)
         {
             return new AzureSynapseAnalyticsSinkConnectorServiceInfo(
-                default,
+                ConnectorServiceType.AzureSynapseAnalyticsSinkConnector,
                 default,
                 synapseSqlServerName,
                 synapseSqlUser,
@@ -890,7 +890,7 @@ namespace Azure.ResourceManager.Confluent.Models
         /// <returns> A new <see cref="Models.PartnerInfoBase"/> instance for mocking. </returns>
         public static PartnerInfoBase PartnerInfoBase(string partnerConnectorType = default)
         {
-            return new UnknownPartnerInfoBase(default, default);
+            return new UnknownPartnerInfoBase(partnerConnectorType is null ? default : new PartnerConnectorType(partnerConnectorType), default);
         }
 
         /// <summary> The partner connector type is KafkaAzureBlobStorageSink. </summary>
@@ -912,7 +912,7 @@ namespace Azure.ResourceManager.Confluent.Models
             topics ??= new ChangeTrackingList<string>();
 
             return new KafkaAzureBlobStorageSinkConnectorInfo(
-                default,
+                PartnerConnectorType.KafkaAzureBlobStorageSink,
                 default,
                 authType,
                 inputFormat,
@@ -943,7 +943,7 @@ namespace Azure.ResourceManager.Confluent.Models
         public static KafkaAzureBlobStorageSourceConnectorInfo KafkaAzureBlobStorageSourceConnectorInfo(ConfluentAuthType? authType = default, ConfluentDataFormatType? inputFormat = default, ConfluentDataFormatType? outputFormat = default, string apiKey = default, string apiSecret = default, string serviceAccountId = default, string serviceAccountName = default, string topicRegex = default, string topicsDir = default, string maxTasks = default)
         {
             return new KafkaAzureBlobStorageSourceConnectorInfo(
-                default,
+                PartnerConnectorType.KafkaAzureBlobStorageSource,
                 default,
                 authType,
                 inputFormat,
@@ -976,7 +976,7 @@ namespace Azure.ResourceManager.Confluent.Models
             topics ??= new ChangeTrackingList<string>();
 
             return new KafkaAzureCosmosDBSinkConnectorInfo(
-                default,
+                PartnerConnectorType.KafkaAzureCosmosDBSink,
                 default,
                 authType,
                 inputFormat,
@@ -1007,7 +1007,7 @@ namespace Azure.ResourceManager.Confluent.Models
         public static KafkaAzureCosmosDBSourceConnectorInfo KafkaAzureCosmosDBSourceConnectorInfo(ConfluentAuthType? authType = default, ConfluentDataFormatType? inputFormat = default, ConfluentDataFormatType? outputFormat = default, string apiKey = default, string apiSecret = default, string serviceAccountId = default, string serviceAccountName = default, string topicRegex = default, string topicsDir = default, string maxTasks = default)
         {
             return new KafkaAzureCosmosDBSourceConnectorInfo(
-                default,
+                PartnerConnectorType.KafkaAzureCosmosDBSource,
                 default,
                 authType,
                 inputFormat,
@@ -1040,7 +1040,7 @@ namespace Azure.ResourceManager.Confluent.Models
             topics ??= new ChangeTrackingList<string>();
 
             return new KafkaAzureSynapseAnalyticsSinkConnectorInfo(
-                default,
+                PartnerConnectorType.KafkaAzureSynapseAnalyticsSink,
                 default,
                 authType,
                 inputFormat,
@@ -1266,7 +1266,7 @@ namespace Azure.ResourceManager.Confluent.Models
         /// <param name="byok"> Specification of the cluster byok. </param>
         /// <returns> A new <see cref="Models.SCClusterSpecEntity"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static SCClusterSpecEntity SCClusterSpecEntity(string name = default, string availability = default, string cloud = default, string zone = default, string region = default, string kafkaBootstrapEndpoint = default, string httpEndpoint = default, string apiEndpoint = default, string configKind = default, SCClusterNetworkEnvironmentEntity environment = default, SCClusterNetworkEnvironmentEntity network = default, SCClusterByokEntity byok = default)
+        public static SCClusterSpecEntity SCClusterSpecEntity(string name, string availability, string cloud, string zone, string region, string kafkaBootstrapEndpoint, string httpEndpoint, string apiEndpoint, string configKind, SCClusterNetworkEnvironmentEntity environment, SCClusterNetworkEnvironmentEntity network, SCClusterByokEntity byok)
         {
             return new SCClusterSpecEntity(
                 name,

@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.Automation
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<AutomationConnectionTypeData, AutomationConnectionTypeResource>(new ConnectionTypeGetByAutomationAccountAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<AutomationConnectionTypeData, AutomationConnectionTypeResource>(new AutomationConnectionTypeDataAsyncCollectionResultOfT(
                 _connectionTypeRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.Automation
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<AutomationConnectionTypeData, AutomationConnectionTypeResource>(new ConnectionTypeGetByAutomationAccountCollectionResultOfT(
+            return new PageableWrapper<AutomationConnectionTypeData, AutomationConnectionTypeResource>(new AutomationConnectionTypeDataCollectionResultOfT(
                 _connectionTypeRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

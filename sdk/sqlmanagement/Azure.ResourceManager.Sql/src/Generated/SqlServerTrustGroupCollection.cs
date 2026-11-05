@@ -298,7 +298,7 @@ namespace Azure.ResourceManager.Sql
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<SqlServerTrustGroupData, SqlServerTrustGroupResource>(new ServerTrustGroupsGetByLocationAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<SqlServerTrustGroupData, SqlServerTrustGroupResource>(new SqlServerTrustGroupDataAsyncCollectionResultOfT(
                 _serverTrustGroupsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -332,7 +332,7 @@ namespace Azure.ResourceManager.Sql
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<SqlServerTrustGroupData, SqlServerTrustGroupResource>(new ServerTrustGroupsGetByLocationCollectionResultOfT(
+            return new PageableWrapper<SqlServerTrustGroupData, SqlServerTrustGroupResource>(new SqlServerTrustGroupDataCollectionResultOfT(
                 _serverTrustGroupsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

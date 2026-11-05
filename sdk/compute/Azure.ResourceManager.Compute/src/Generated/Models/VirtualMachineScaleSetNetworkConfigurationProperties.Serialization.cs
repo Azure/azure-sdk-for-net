@@ -304,7 +304,7 @@ namespace Azure.ResourceManager.Compute.Models
                 enableFpga,
                 networkSecurityGroup,
                 dnsSettings,
-                ipConfigurations,
+                ipConfigurations ?? new ChangeTrackingList<VirtualMachineScaleSetIPConfiguration>(),
                 enableIPForwarding,
                 deleteOption,
                 auxiliaryMode,

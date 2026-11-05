@@ -39,9 +39,8 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MetricAlertCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(MetricAlertResource.ResourceType, out string metricAlertApiVersion);
             _metricAlertsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Monitor", MetricAlertResource.ResourceType.Namespace, Diagnostics);
-            _metricAlertsRestClient = new MetricAlerts(_metricAlertsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, metricAlertApiVersion ?? "2026-01-01");
+            _metricAlertsRestClient = new MetricAlerts(_metricAlertsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 
@@ -288,7 +287,7 @@ namespace Azure.ResourceManager.Monitor
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<MetricAlertData, MetricAlertResource>(new MetricAlertsGetByResourceGroupAsyncCollectionResultOfT(_metricAlertsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "MetricAlertCollection.GetAll"), data => new MetricAlertResource(Client, data));
+            return new AsyncPageableWrapper<MetricAlertData, MetricAlertResource>(new MetricAlertDataAsyncCollectionResultOfT(_metricAlertsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "MetricAlertCollection.GetAll"), data => new MetricAlertResource(Client, data));
         }
 
         /// <summary>
@@ -316,7 +315,7 @@ namespace Azure.ResourceManager.Monitor
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<MetricAlertData, MetricAlertResource>(new MetricAlertsGetByResourceGroupCollectionResultOfT(_metricAlertsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "MetricAlertCollection.GetAll"), data => new MetricAlertResource(Client, data));
+            return new PageableWrapper<MetricAlertData, MetricAlertResource>(new MetricAlertDataCollectionResultOfT(_metricAlertsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "MetricAlertCollection.GetAll"), data => new MetricAlertResource(Client, data));
         }
 
         /// <summary>

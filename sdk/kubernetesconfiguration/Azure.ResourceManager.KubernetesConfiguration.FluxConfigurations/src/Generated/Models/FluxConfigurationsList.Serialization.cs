@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new FluxConfigurationsList(value, nextLink, additionalBinaryDataProperties);
+            return new FluxConfigurationsList(value ?? new ChangeTrackingList<FluxConfigurationData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

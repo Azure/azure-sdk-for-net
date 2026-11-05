@@ -117,7 +117,6 @@
             "$id": "10",
             "name": "one",
             "isExactName": false,
-            "resourceName": "Service",
             "accessibility": "public",
             "parameters": [],
             "responses": [
@@ -158,7 +157,6 @@
             "$id": "12",
             "name": "two",
             "isExactName": false,
-            "resourceName": "Service",
             "accessibility": "public",
             "parameters": [],
             "responses": [
@@ -313,7 +311,6 @@
                     "$id": "22",
                     "name": "seven",
                     "isExactName": false,
-                    "resourceName": "Foo",
                     "accessibility": "public",
                     "parameters": [],
                     "responses": [
@@ -417,7 +414,6 @@
                 "$id": "28",
                 "name": "eight",
                 "isExactName": false,
-                "resourceName": "Qux",
                 "accessibility": "public",
                 "parameters": [],
                 "responses": [
@@ -517,7 +513,6 @@
                     "$id": "34",
                     "name": "nine",
                     "isExactName": false,
-                    "resourceName": "Bar",
                     "accessibility": "public",
                     "parameters": [],
                     "responses": [
@@ -621,7 +616,6 @@
                 "$id": "40",
                 "name": "three",
                 "isExactName": false,
-                "resourceName": "Foo",
                 "accessibility": "public",
                 "parameters": [],
                 "responses": [
@@ -662,7 +656,6 @@
                 "$id": "42",
                 "name": "four",
                 "isExactName": false,
-                "resourceName": "Foo",
                 "accessibility": "public",
                 "parameters": [],
                 "responses": [
@@ -763,7 +756,6 @@
                 "$id": "48",
                 "name": "five",
                 "isExactName": false,
-                "resourceName": "Bar",
                 "accessibility": "public",
                 "parameters": [],
                 "responses": [
@@ -804,7 +796,6 @@
                 "$id": "50",
                 "name": "six",
                 "isExactName": false,
-                "resourceName": "Bar",
                 "accessibility": "public",
                 "parameters": [],
                 "responses": [

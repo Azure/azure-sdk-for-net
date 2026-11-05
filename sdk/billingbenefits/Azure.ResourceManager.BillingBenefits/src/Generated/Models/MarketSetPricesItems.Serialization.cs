@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new MarketSetPricesItems(markets, value, currency, additionalBinaryDataProperties);
+            return new MarketSetPricesItems(markets ?? new ChangeTrackingList<string>(), value, currency, additionalBinaryDataProperties);
         }
     }
 }

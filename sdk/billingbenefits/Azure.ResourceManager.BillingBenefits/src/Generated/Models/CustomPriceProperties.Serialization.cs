@@ -217,11 +217,11 @@ namespace Azure.ResourceManager.BillingBenefits.Models
             return new CustomPriceProperties(
                 ruleType,
                 catalogId,
-                catalogClaims,
+                catalogClaims ?? new ChangeTrackingList<CatalogClaimsItem>(),
                 termUnits,
                 billingPeriod,
                 meterType,
-                marketSetPrices,
+                marketSetPrices ?? new ChangeTrackingList<MarketSetPricesItems>(),
                 additionalBinaryDataProperties);
         }
     }

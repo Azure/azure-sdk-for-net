@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new VnetConnectionListResult(value, nextLink, additionalBinaryDataProperties);
+            return new VnetConnectionListResult(value ?? new ChangeTrackingList<SandboxGroupVnetConnectionData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

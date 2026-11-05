@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.Sql
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<EncryptionProtectorData, EncryptionProtectorResource>(new EncryptionProtectorsGetByServerAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<EncryptionProtectorData, EncryptionProtectorResource>(new EncryptionProtectorDataAsyncCollectionResultOfT(
                 _encryptionProtectorsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -316,7 +316,7 @@ namespace Azure.ResourceManager.Sql
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<EncryptionProtectorData, EncryptionProtectorResource>(new EncryptionProtectorsGetByServerCollectionResultOfT(
+            return new PageableWrapper<EncryptionProtectorData, EncryptionProtectorResource>(new EncryptionProtectorDataCollectionResultOfT(
                 _encryptionProtectorsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

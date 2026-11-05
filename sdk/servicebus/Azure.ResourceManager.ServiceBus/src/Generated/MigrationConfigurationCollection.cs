@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.ServiceBus
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<MigrationConfigurationData, MigrationConfigurationResource>(new MigrationConfigsGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<MigrationConfigurationData, MigrationConfigurationResource>(new MigrationConfigurationDataAsyncCollectionResultOfT(
                 _migrationConfigsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -316,7 +316,7 @@ namespace Azure.ResourceManager.ServiceBus
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<MigrationConfigurationData, MigrationConfigurationResource>(new MigrationConfigsGetAllCollectionResultOfT(
+            return new PageableWrapper<MigrationConfigurationData, MigrationConfigurationResource>(new MigrationConfigurationDataCollectionResultOfT(
                 _migrationConfigsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

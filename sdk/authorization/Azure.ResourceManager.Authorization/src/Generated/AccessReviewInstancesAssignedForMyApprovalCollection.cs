@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.Authorization
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<AccessReviewInstanceData, AccessReviewInstancesAssignedForMyApprovalResource>(new AccessReviewInstancesAssignedForMyApprovalGetAllAsyncCollectionResultOfT(_accessReviewInstancesAssignedForMyApprovalRestClient, _scheduleDefinitionId, filter, context, "AccessReviewInstancesAssignedForMyApprovalCollection.GetAll"), data => new AccessReviewInstancesAssignedForMyApprovalResource(Client, data));
+            return new AsyncPageableWrapper<AccessReviewInstanceData, AccessReviewInstancesAssignedForMyApprovalResource>(new AccessReviewInstanceDataAsync1CollectionResultOfT(_accessReviewInstancesAssignedForMyApprovalRestClient, _scheduleDefinitionId, filter, context, "AccessReviewInstancesAssignedForMyApprovalCollection.GetAll"), data => new AccessReviewInstancesAssignedForMyApprovalResource(Client, data));
         }
 
         /// <summary>
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.Authorization
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<AccessReviewInstanceData, AccessReviewInstancesAssignedForMyApprovalResource>(new AccessReviewInstancesAssignedForMyApprovalGetAllCollectionResultOfT(_accessReviewInstancesAssignedForMyApprovalRestClient, _scheduleDefinitionId, filter, context, "AccessReviewInstancesAssignedForMyApprovalCollection.GetAll"), data => new AccessReviewInstancesAssignedForMyApprovalResource(Client, data));
+            return new PageableWrapper<AccessReviewInstanceData, AccessReviewInstancesAssignedForMyApprovalResource>(new AccessReviewInstanceData1CollectionResultOfT(_accessReviewInstancesAssignedForMyApprovalRestClient, _scheduleDefinitionId, filter, context, "AccessReviewInstancesAssignedForMyApprovalCollection.GetAll"), data => new AccessReviewInstancesAssignedForMyApprovalResource(Client, data));
         }
 
         /// <summary>

@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new WebApplicationFirewallPolicyList(value, nextLink, additionalBinaryDataProperties);
+            return new WebApplicationFirewallPolicyList(value ?? new ChangeTrackingList<FrontDoorWebApplicationFirewallPolicyData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Sql.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ServerKeyListResult(value, nextLink, additionalBinaryDataProperties);
+            return new ServerKeyListResult(value ?? new ChangeTrackingList<SqlServerKeyData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

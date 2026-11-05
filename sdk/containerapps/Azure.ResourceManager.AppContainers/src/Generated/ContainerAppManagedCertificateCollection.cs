@@ -291,7 +291,7 @@ namespace Azure.ResourceManager.AppContainers
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ContainerAppManagedCertificateData, ContainerAppManagedCertificateResource>(new ManagedCertificatesGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<ContainerAppManagedCertificateData, ContainerAppManagedCertificateResource>(new ContainerAppManagedCertificateDataAsyncCollectionResultOfT(
                 _managedCertificatesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -325,7 +325,7 @@ namespace Azure.ResourceManager.AppContainers
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ContainerAppManagedCertificateData, ContainerAppManagedCertificateResource>(new ManagedCertificatesGetAllCollectionResultOfT(
+            return new PageableWrapper<ContainerAppManagedCertificateData, ContainerAppManagedCertificateResource>(new ContainerAppManagedCertificateDataCollectionResultOfT(
                 _managedCertificatesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

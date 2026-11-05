@@ -14,7 +14,7 @@ using Azure.ResourceManager.Compute.BulkActions;
 
 namespace Azure.ResourceManager.Compute.BulkActions.Models
 {
-    /// <summary> Request body for canceling a scheduled action occurrence. </summary>
+    /// <summary> Request body for canceling a recurring bulk action occurrence. </summary>
     public partial class CancelOccurrenceRequestContent : IJsonModel<CancelOccurrenceRequestContent>
     {
         /// <summary> Initializes a new instance of <see cref="CancelOccurrenceRequestContent"/> for deserialization. </summary>
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new CancelOccurrenceRequestContent(resourceIds, additionalBinaryDataProperties);
+            return new CancelOccurrenceRequestContent(resourceIds ?? new ChangeTrackingList<ResourceIdentifier>(), additionalBinaryDataProperties);
         }
     }
 }

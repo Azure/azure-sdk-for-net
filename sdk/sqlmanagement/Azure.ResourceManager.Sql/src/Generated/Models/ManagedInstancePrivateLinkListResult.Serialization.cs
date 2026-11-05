@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Sql.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ManagedInstancePrivateLinkListResult(value, nextLink, additionalBinaryDataProperties);
+            return new ManagedInstancePrivateLinkListResult(value ?? new ChangeTrackingList<ManagedInstancePrivateLinkData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

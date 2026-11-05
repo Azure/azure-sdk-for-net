@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.HealthcareApis.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new OperationsGetAllAsyncCollectionResultOfT(OperationsRestClient, context, "MockableHealthcareApisTenantResource.GetAll");
+            return new OperationDetailAsyncCollectionResultOfT(OperationsRestClient, context, "MockableHealthcareApisTenantResource.GetAll");
         }
 
         /// <summary>
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.HealthcareApis.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new OperationsGetAllCollectionResultOfT(OperationsRestClient, context, "MockableHealthcareApisTenantResource.GetAll");
+            return new OperationDetailCollectionResultOfT(OperationsRestClient, context, "MockableHealthcareApisTenantResource.GetAll");
         }
     }
 }

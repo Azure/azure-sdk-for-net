@@ -432,7 +432,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new SiteConfigResourcesGetConfigurationSnapshotInfoAsyncCollectionResultOfT(
+            return new SiteConfigurationSnapshotInfoAsyncCollectionResultOfT(
                 _siteConfigResourcesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -470,7 +470,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new SiteConfigResourcesGetConfigurationSnapshotInfoCollectionResultOfT(
+            return new SiteConfigurationSnapshotInfoCollectionResultOfT(
                 _siteConfigResourcesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

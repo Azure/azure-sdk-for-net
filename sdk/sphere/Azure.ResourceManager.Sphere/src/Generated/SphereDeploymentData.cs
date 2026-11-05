@@ -13,7 +13,7 @@ using Azure.ResourceManager.Sphere.Models;
 
 namespace Azure.ResourceManager.Sphere
 {
-    /// <summary> An deployment resource belonging to a device group resource. </summary>
+    /// <summary> A deployment resource belonging to a device group resource. </summary>
     public partial class SphereDeploymentData : ResourceData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

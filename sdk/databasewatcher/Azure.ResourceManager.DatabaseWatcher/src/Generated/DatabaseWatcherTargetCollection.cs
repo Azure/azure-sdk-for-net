@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.DatabaseWatcher
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DatabaseWatcherTargetData, DatabaseWatcherTargetResource>(new TargetsGetByWatcherAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<DatabaseWatcherTargetData, DatabaseWatcherTargetResource>(new DatabaseWatcherTargetDataAsyncCollectionResultOfT(
                 _targetsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.DatabaseWatcher
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DatabaseWatcherTargetData, DatabaseWatcherTargetResource>(new TargetsGetByWatcherCollectionResultOfT(
+            return new PageableWrapper<DatabaseWatcherTargetData, DatabaseWatcherTargetResource>(new DatabaseWatcherTargetDataCollectionResultOfT(
                 _targetsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

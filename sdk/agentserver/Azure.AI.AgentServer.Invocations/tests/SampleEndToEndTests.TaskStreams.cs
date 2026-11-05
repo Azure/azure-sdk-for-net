@@ -235,6 +235,7 @@ public partial class SampleEndToEndTests
                 probe._env = await CreateTestServerAsync<Research.ResilientResearchHandler>(
                     services =>
                     {
+                        services.SetResilientTasksEnabled();
                         services.AddAgentEventStreams(options =>
                         {
                             if (fileBacked)

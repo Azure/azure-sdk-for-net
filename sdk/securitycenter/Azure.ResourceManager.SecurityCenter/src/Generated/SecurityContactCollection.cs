@@ -277,7 +277,7 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<SecurityContactData, SecurityContactResource>(new SecurityContactsGetAllAsyncCollectionResultOfT(_securityContactsRestClient, Guid.Parse(Id.SubscriptionId), context, "SecurityContactCollection.GetAll"), data => new SecurityContactResource(Client, data));
+            return new AsyncPageableWrapper<SecurityContactData, SecurityContactResource>(new SecurityContactDataAsyncCollectionResultOfT(_securityContactsRestClient, Guid.Parse(Id.SubscriptionId), context, "SecurityContactCollection.GetAll"), data => new SecurityContactResource(Client, data));
         }
 
         /// <summary>
@@ -305,7 +305,7 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<SecurityContactData, SecurityContactResource>(new SecurityContactsGetAllCollectionResultOfT(_securityContactsRestClient, Guid.Parse(Id.SubscriptionId), context, "SecurityContactCollection.GetAll"), data => new SecurityContactResource(Client, data));
+            return new PageableWrapper<SecurityContactData, SecurityContactResource>(new SecurityContactDataCollectionResultOfT(_securityContactsRestClient, Guid.Parse(Id.SubscriptionId), context, "SecurityContactCollection.GetAll"), data => new SecurityContactResource(Client, data));
         }
 
         /// <summary>

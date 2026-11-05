@@ -8,6 +8,7 @@ trigger:
     - release/*
   paths:
     include:
+    - sdk/sitemanager/Azure.Provisioning.SiteManager
     - sdk/sitemanager/Azure.ResourceManager.SiteManager
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
@@ -15,5 +16,7 @@ extends:
     ServiceDirectory: sitemanager
     LimitForPullRequest: true
     Artifacts:
+    - name: Azure.Provisioning.SiteManager
+      safeName: AzureProvisioningSiteManager
     - name: Azure.ResourceManager.SiteManager
       safeName: AzureResourceManagerSiteManager

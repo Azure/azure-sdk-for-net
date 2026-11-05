@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.Monitor.Slis.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new SliSignal(signalSources, signalFormula, additionalBinaryDataProperties);
+            return new SliSignal(signalSources ?? new ChangeTrackingList<SliSignalSource>(), signalFormula, additionalBinaryDataProperties);
         }
     }
 }

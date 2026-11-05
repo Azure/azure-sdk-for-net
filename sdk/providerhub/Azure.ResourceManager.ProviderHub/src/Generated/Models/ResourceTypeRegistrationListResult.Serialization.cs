@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ResourceTypeRegistrationListResult(value, nextLink, additionalBinaryDataProperties);
+            return new ResourceTypeRegistrationListResult(value ?? new ChangeTrackingList<ResourceTypeRegistrationData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

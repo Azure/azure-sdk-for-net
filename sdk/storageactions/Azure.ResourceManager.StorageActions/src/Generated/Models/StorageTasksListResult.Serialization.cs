@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.StorageActions.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new StorageTasksListResult(value, nextLink, additionalBinaryDataProperties);
+            return new StorageTasksListResult(value ?? new ChangeTrackingList<StorageTaskData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

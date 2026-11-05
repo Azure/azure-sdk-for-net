@@ -23,6 +23,8 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         private const string AjdValue = "AJD";
         /// <summary> APEX - indicates an Autonomous Database with the Oracle APEX Application Development workload type. </summary>
         private const string ApexValue = "APEX";
+        /// <summary> LH - indicates an Oracle Autonomous AI Lakehouse database. </summary>
+        private const string LHValue = "LH";
 
         /// <summary> Initializes a new instance of <see cref="AutonomousDatabaseWorkloadType"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -45,6 +47,9 @@ namespace Azure.ResourceManager.OracleDatabase.Models
 
         /// <summary> APEX - indicates an Autonomous Database with the Oracle APEX Application Development workload type. </summary>
         public static AutonomousDatabaseWorkloadType Apex { get; } = new AutonomousDatabaseWorkloadType(ApexValue);
+
+        /// <summary> LH - indicates an Oracle Autonomous AI Lakehouse database. </summary>
+        public static AutonomousDatabaseWorkloadType LH { get; } = new AutonomousDatabaseWorkloadType(LHValue);
 
         /// <summary> Determines if two <see cref="AutonomousDatabaseWorkloadType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

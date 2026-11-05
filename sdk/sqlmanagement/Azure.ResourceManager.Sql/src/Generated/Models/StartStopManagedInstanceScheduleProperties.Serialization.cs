@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.Sql.Models
             return new StartStopManagedInstanceScheduleProperties(
                 description,
                 timeZoneId,
-                scheduleList,
+                scheduleList ?? new ChangeTrackingList<SqlScheduleItem>(),
                 nextRunAction,
                 nextExecutionTime,
                 additionalBinaryDataProperties);

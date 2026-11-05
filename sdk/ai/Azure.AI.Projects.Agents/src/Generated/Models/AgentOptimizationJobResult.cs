@@ -4,43 +4,50 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 
 namespace Azure.AI.Projects.Agents
 {
-    /// <summary> Terminal-state result body. Populated when status is succeeded or failed. </summary>
-    [Experimental("AAIP001")]
+    /// <summary> Partial or terminal result produced by an agent optimization job. </summary>
     public partial class AgentOptimizationJobResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="AgentOptimizationJobResult"/>. </summary>
-        internal AgentOptimizationJobResult()
+        /// <param name="tokenUsage"> Aggregate token usage per stage and model. Always present; empty array when no calls were measured. </param>
+        /// <param name="latencyMetrics"> Aggregate latency per stage and model. Always present; empty when no server-measured latency is available. </param>
+        internal AgentOptimizationJobResult(IEnumerable<AgentOptimizationJobTokenUsage> tokenUsage, IEnumerable<AgentOptimizationJobLatency> latencyMetrics)
         {
-            Candidates = new ChangeTrackingList<AgentOptimizationCandidate>();
+            TokenUsage = tokenUsage.ToList();
+            LatencyMetrics = latencyMetrics.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="AgentOptimizationJobResult"/>. </summary>
-        /// <param name="baseline"> Candidate ID of the original (un-optimized) baseline evaluation. </param>
-        /// <param name="best"> Candidate ID of the highest-scoring candidate found during optimization. </param>
-        /// <param name="candidates"> All evaluated candidates including baseline. </param>
+        /// <param name="candidateSummary"> Summary of candidates produced by the job. Omitted until candidate processing begins. </param>
+        /// <param name="tokenUsage"> Aggregate token usage per stage and model. Always present; empty array when no calls were measured. </param>
+        /// <param name="latencyMetrics"> Aggregate latency per stage and model. Always present; empty when no server-measured latency is available. </param>
+        /// <param name="terminationReason"> Reason the candidate search terminated. Omitted for jobs that do not comparatively evaluate candidates and until the job reaches a terminal state. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AgentOptimizationJobResult(string baseline, string best, IList<AgentOptimizationCandidate> candidates, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AgentOptimizationJobResult(AgentOptimizationResultCandidateSummary candidateSummary, IList<AgentOptimizationJobTokenUsage> tokenUsage, IList<AgentOptimizationJobLatency> latencyMetrics, AgentOptimizationTerminationReason? terminationReason, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Baseline = baseline;
-            Best = best;
-            Candidates = candidates;
+            CandidateSummary = candidateSummary;
+            TokenUsage = tokenUsage;
+            LatencyMetrics = latencyMetrics;
+            TerminationReason = terminationReason;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Candidate ID of the original (un-optimized) baseline evaluation. </summary>
-        public string Baseline { get; }
+        /// <summary> Summary of candidates produced by the job. Omitted until candidate processing begins. </summary>
+        public AgentOptimizationResultCandidateSummary CandidateSummary { get; }
 
-        /// <summary> Candidate ID of the highest-scoring candidate found during optimization. </summary>
-        public string Best { get; }
+        /// <summary> Aggregate token usage per stage and model. Always present; empty array when no calls were measured. </summary>
+        public IList<AgentOptimizationJobTokenUsage> TokenUsage { get; }
 
-        /// <summary> All evaluated candidates including baseline. </summary>
-        public IList<AgentOptimizationCandidate> Candidates { get; }
+        /// <summary> Aggregate latency per stage and model. Always present; empty when no server-measured latency is available. </summary>
+        public IList<AgentOptimizationJobLatency> LatencyMetrics { get; }
+
+        /// <summary> Reason the candidate search terminated. Omitted for jobs that do not comparatively evaluate candidates and until the job reaches a terminal state. </summary>
+        public AgentOptimizationTerminationReason? TerminationReason { get; }
     }
 }

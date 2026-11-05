@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new SharedPrivateLinkResourceList(value, nextLink, additionalBinaryDataProperties);
+            return new SharedPrivateLinkResourceList(value ?? new ChangeTrackingList<WebPubSubSharedPrivateLinkData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

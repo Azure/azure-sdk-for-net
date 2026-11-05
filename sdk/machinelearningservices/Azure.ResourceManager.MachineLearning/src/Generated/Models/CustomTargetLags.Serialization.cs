@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new CustomTargetLags(mode, additionalBinaryDataProperties, values);
+            return new CustomTargetLags(mode, additionalBinaryDataProperties, values ?? new ChangeTrackingList<int>());
         }
     }
 }

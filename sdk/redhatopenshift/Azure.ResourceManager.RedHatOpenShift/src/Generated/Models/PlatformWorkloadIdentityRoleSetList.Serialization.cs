@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.RedHatOpenShift.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new PlatformWorkloadIdentityRoleSetList(value, nextLink, additionalBinaryDataProperties);
+            return new PlatformWorkloadIdentityRoleSetList(value ?? new ChangeTrackingList<OpenShiftPlatformWorkloadIdentityRoleSetData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

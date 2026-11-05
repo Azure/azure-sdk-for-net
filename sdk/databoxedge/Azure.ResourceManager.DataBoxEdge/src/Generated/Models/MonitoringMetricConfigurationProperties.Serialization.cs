@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new MonitoringMetricConfigurationProperties(metricConfigurations, additionalBinaryDataProperties);
+            return new MonitoringMetricConfigurationProperties(metricConfigurations ?? new ChangeTrackingList<DataBoxEdgeMetricConfiguration>(), additionalBinaryDataProperties);
         }
     }
 }

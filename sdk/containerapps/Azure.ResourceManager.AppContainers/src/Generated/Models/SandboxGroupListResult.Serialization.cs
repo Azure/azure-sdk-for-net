@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new SandboxGroupListResult(value, nextLink, additionalBinaryDataProperties);
+            return new SandboxGroupListResult(value ?? new ChangeTrackingList<SandboxGroupData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

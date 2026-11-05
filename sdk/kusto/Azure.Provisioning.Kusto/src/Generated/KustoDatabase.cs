@@ -15,7 +15,7 @@ namespace Azure.Provisioning.Kusto
 {
     /// <summary>
     /// Class representing a Kusto database.
-    /// Please note this is the base class. The derived classes available for instantiation are: <see cref="KustoReadWriteDatabase"/> and <see cref="KustoReadOnlyFollowingDatabase"/>.
+    /// Please note this is the base class. The derived classes available for instantiation are: <see cref="KustoReadOnlyFollowingDatabase"/> and <see cref="KustoReadWriteDatabase"/>.
     /// </summary>
     public partial class KustoDatabase : ProvisionableResource
     {
@@ -117,7 +117,7 @@ namespace Azure.Provisioning.Kusto
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _location = DefineProperty<AzureLocation>(nameof(Location), new string[] { "location" });
             _kind = DefineProperty<KustoKind>(nameof(Kind), new string[] { "kind" }, isRequired: true);
-            _parent = DefineResource<KustoCluster>(nameof(Parent), new string[] { "parent" }, isRequired: true);
+            _parent = DefineResource<KustoCluster>(nameof(Parent), new string[] { "parent" });
             DefineAdditionalProperties();
         }
 

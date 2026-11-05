@@ -78,13 +78,20 @@ namespace Azure.AI.Projects.Agents
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsCollectionDefined(IceServers))
             {
-                writer.WritePropertyName("ice_servers"u8);
-                writer.WriteStartArray();
-                foreach (VoiceAgentAvatarIceServer item in IceServers)
+                if (IceServers != null)
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WritePropertyName("ice_servers"u8);
+                    writer.WriteStartArray();
+                    foreach (VoiceAgentAvatarIceServer item in IceServers)
+                    {
+                        writer.WriteObjectValue(item, options);
+                    }
+                    writer.WriteEndArray();
                 }
-                writer.WriteEndArray();
+                else
+                {
+                    writer.WriteNull("ice_servers"u8);
+                }
             }
         }
 
@@ -123,7 +130,7 @@ namespace Azure.AI.Projects.Agents
             VoiceAgentAvatarScene scene = default;
             bool? outputAuditAudio = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            IList<VoiceAgentAvatarIceServer> iceServers = default;
+            IList<VoiceAgentAvatarIceServer> iceServers = new ChangeTrackingList<VoiceAgentAvatarIceServer>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
@@ -195,6 +202,7 @@ namespace Azure.AI.Projects.Agents
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
+                        iceServers = null;
                         continue;
                     }
                     List<VoiceAgentAvatarIceServer> array = new List<VoiceAgentAvatarIceServer>();
@@ -221,7 +229,7 @@ namespace Azure.AI.Projects.Agents
                 scene,
                 outputAuditAudio,
                 additionalBinaryDataProperties,
-                iceServers ?? new ChangeTrackingList<VoiceAgentAvatarIceServer>());
+                iceServers);
         }
     }
 }

@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<PaymentHsmClusterPrivateEndpointConnectionData, PaymentHsmClusterPrivateEndpointConnectionResource>(new PaymentHsmClusterPrivateEndpointConnectionsGetByPaymentHsmClusterAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<PaymentHsmClusterPrivateEndpointConnectionData, PaymentHsmClusterPrivateEndpointConnectionResource>(new PaymentHsmClusterPrivateEndpointConnectionDataAsyncCollectionResultOfT(
                 _paymentHsmClusterPrivateEndpointConnectionsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<PaymentHsmClusterPrivateEndpointConnectionData, PaymentHsmClusterPrivateEndpointConnectionResource>(new PaymentHsmClusterPrivateEndpointConnectionsGetByPaymentHsmClusterCollectionResultOfT(
+            return new PageableWrapper<PaymentHsmClusterPrivateEndpointConnectionData, PaymentHsmClusterPrivateEndpointConnectionResource>(new PaymentHsmClusterPrivateEndpointConnectionDataCollectionResultOfT(
                 _paymentHsmClusterPrivateEndpointConnectionsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

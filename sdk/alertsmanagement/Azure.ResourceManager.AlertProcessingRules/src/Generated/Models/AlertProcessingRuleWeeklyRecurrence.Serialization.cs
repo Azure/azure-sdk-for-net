@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.AlertProcessingRules.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new AlertProcessingRuleWeeklyRecurrence(recurrenceType, startOn, endOn, additionalBinaryDataProperties, daysOfWeek);
+            return new AlertProcessingRuleWeeklyRecurrence(recurrenceType, startOn, endOn, additionalBinaryDataProperties, daysOfWeek ?? new ChangeTrackingList<AlertsManagementDayOfWeek>());
         }
     }
 }

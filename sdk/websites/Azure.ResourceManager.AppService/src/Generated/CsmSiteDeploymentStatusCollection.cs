@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<CsmDeploymentStatusData, CsmSiteDeploymentStatusResource>(new CsmDeploymentStatusesGetProductionSiteDeploymentStatusesAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<CsmDeploymentStatusData, CsmSiteDeploymentStatusResource>(new CsmDeploymentStatusDataAsync0CollectionResultOfT(
                 _csmDeploymentStatusesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<CsmDeploymentStatusData, CsmSiteDeploymentStatusResource>(new CsmDeploymentStatusesGetProductionSiteDeploymentStatusesCollectionResultOfT(
+            return new PageableWrapper<CsmDeploymentStatusData, CsmSiteDeploymentStatusResource>(new CsmDeploymentStatusData0CollectionResultOfT(
                 _csmDeploymentStatusesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

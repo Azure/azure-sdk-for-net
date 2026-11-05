@@ -132,7 +132,7 @@ MemorySearchOptions searchOptions = new(scope)
 };
 MemoryStoreSearchResponse resp = projectClient.MemoryStores.SearchMemories(
     memoryStoreName: memoryStore.Name,
-    options: searchOptionscd
+    options: searchOptions
 );
 Console.WriteLine("==The output from memory search tool.==");
 foreach (MemorySearchItem item in resp.Memories)

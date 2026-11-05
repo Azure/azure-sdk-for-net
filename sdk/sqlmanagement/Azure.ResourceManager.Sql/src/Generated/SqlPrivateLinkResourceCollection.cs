@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.Sql
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<SqlPrivateLinkResourceData, SqlPrivateLinkResource>(new PrivateLinkResourcesGetByServerAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<SqlPrivateLinkResourceData, SqlPrivateLinkResource>(new SqlPrivateLinkResourceDataAsyncCollectionResultOfT(
                 _privateLinkResourcesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.Sql
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<SqlPrivateLinkResourceData, SqlPrivateLinkResource>(new PrivateLinkResourcesGetByServerCollectionResultOfT(
+            return new PageableWrapper<SqlPrivateLinkResourceData, SqlPrivateLinkResource>(new SqlPrivateLinkResourceDataCollectionResultOfT(
                 _privateLinkResourcesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

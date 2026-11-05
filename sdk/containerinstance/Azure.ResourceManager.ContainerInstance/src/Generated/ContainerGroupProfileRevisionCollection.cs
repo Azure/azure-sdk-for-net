@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.ContainerInstance
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ContainerGroupProfileData, ContainerGroupProfileRevisionResource>(new CGProfileGetAllRevisionsAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<ContainerGroupProfileData, ContainerGroupProfileRevisionResource>(new ContainerGroupProfileDataAsyncCollectionResultOfT(
                 _cgProfileRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.ContainerInstance
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ContainerGroupProfileData, ContainerGroupProfileRevisionResource>(new CGProfileGetAllRevisionsCollectionResultOfT(
+            return new PageableWrapper<ContainerGroupProfileData, ContainerGroupProfileRevisionResource>(new ContainerGroupProfileDataCollectionResultOfT(
                 _cgProfileRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

@@ -284,7 +284,7 @@ namespace Azure.ResourceManager.Resources.Deployments
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ArmDeploymentData, ArmDeploymentResource>(new ArmDeploymentsGetAtScopeAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<ArmDeploymentData, ArmDeploymentResource>(new ArmDeploymentDataAsyncCollectionResultOfT(
                 _armDeploymentsRestClient,
                 Id.ToString(),
                 filter,
@@ -320,7 +320,7 @@ namespace Azure.ResourceManager.Resources.Deployments
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ArmDeploymentData, ArmDeploymentResource>(new ArmDeploymentsGetAtScopeCollectionResultOfT(
+            return new PageableWrapper<ArmDeploymentData, ArmDeploymentResource>(new ArmDeploymentDataCollectionResultOfT(
                 _armDeploymentsRestClient,
                 Id.ToString(),
                 filter,

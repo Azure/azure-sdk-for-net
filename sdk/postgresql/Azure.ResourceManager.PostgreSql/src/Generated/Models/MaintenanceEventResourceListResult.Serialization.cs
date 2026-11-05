@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new MaintenanceEventResourceListResult(value, nextLink, additionalBinaryDataProperties);
+            return new MaintenanceEventResourceListResult(value ?? new ChangeTrackingList<MaintenanceEventData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

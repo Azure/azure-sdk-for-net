@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.Dynatrace
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DynatraceSingleSignOnData, DynatraceSingleSignOnResource>(new SingleSignOnGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<DynatraceSingleSignOnData, DynatraceSingleSignOnResource>(new DynatraceSingleSignOnDataAsyncCollectionResultOfT(
                 _singleSignOnRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.Dynatrace
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DynatraceSingleSignOnData, DynatraceSingleSignOnResource>(new SingleSignOnGetAllCollectionResultOfT(
+            return new PageableWrapper<DynatraceSingleSignOnData, DynatraceSingleSignOnResource>(new DynatraceSingleSignOnDataCollectionResultOfT(
                 _singleSignOnRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

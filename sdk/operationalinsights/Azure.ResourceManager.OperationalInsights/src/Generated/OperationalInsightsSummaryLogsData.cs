@@ -30,16 +30,22 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> Summary rule properties. </param>
+        /// <param name="identity"> The managed identity of the summary logs resource. Only user-assigned identity is supported. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal OperationalInsightsSummaryLogsData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SummaryLogsProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
+        internal OperationalInsightsSummaryLogsData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SummaryLogsProperties properties, SummaryLogsIdentity identity, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
+            Identity = identity;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Summary rule properties. </summary>
         [WirePath("properties")]
         internal SummaryLogsProperties Properties { get; set; }
+
+        /// <summary> The managed identity of the summary logs resource. Only user-assigned identity is supported. </summary>
+        [WirePath("identity")]
+        public SummaryLogsIdentity Identity { get; set; }
 
         /// <summary> SummaryRules rule type: User. </summary>
         [WirePath("properties.ruleType")]

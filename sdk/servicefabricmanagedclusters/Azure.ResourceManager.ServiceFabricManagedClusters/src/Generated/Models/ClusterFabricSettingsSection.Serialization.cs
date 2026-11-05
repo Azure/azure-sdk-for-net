@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ClusterFabricSettingsSection(name, parameters, additionalBinaryDataProperties);
+            return new ClusterFabricSettingsSection(name, parameters ?? new ChangeTrackingList<ClusterFabricSettingsParameterDescription>(), additionalBinaryDataProperties);
         }
     }
 }

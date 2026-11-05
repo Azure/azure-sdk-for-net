@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Compute.Models
         internal ComputeWriteableSubResourceData DefaultVirtualMachineScaleSet { get; }
 
         /// <summary> Resource Id. </summary>
-        public ResourceIdentifier DefaultVirtualMachineScaleSetId
+        public virtual ResourceIdentifier DefaultVirtualMachineScaleSetId
         {
             get
             {

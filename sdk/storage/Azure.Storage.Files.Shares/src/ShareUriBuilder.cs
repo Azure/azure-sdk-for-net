@@ -109,6 +109,22 @@ namespace Azure.Storage.Files.Shares
         private string _directoryOrFilePath;
 
         /// <summary>
+        /// Gets or sets the file ID of the file or directory.  The value
+        /// defaults to <see cref="string.Empty"/> if not present in the
+        /// <see cref="System.Uri"/>.
+        ///
+        /// When present, the file or directory is addressed by its file ID
+        /// instead of by its path, and <see cref="DirectoryOrFilePath"/> is
+        /// not included in the <see cref="System.Uri"/>.
+        /// </summary>
+        public string FileId
+        {
+            get => _fileId;
+            set { ResetUri(); _fileId = value; }
+        }
+        private string _fileId;
+
+        /// <summary>
         /// Gets or sets the name of a file snapshot.  The value defaults to
         /// <see cref="string.Empty"/> if not present in the <see cref="System.Uri"/>.
         /// </summary>
@@ -167,6 +183,7 @@ namespace Azure.Storage.Files.Shares
             ShareName = "";
             DirectoryOrFilePath = "";
 
+            FileId = "";
             Snapshot = "";
             Sas = null;
 
@@ -222,6 +239,14 @@ namespace Azure.Storage.Files.Shares
 
             var paramsMap = new UriQueryParamsCollection(uri.Query);
 
+            if (paramsMap.TryGetValue(Constants.File.FileIdParameterName, out var fileId))
+            {
+                FileId = fileId;
+
+                // If we recognized the query parameter, remove it from the map
+                paramsMap.Remove(Constants.File.FileIdParameterName);
+            }
+
             if (paramsMap.TryGetValue(Constants.File.SnapshotParameterName, out var snapshotTime))
             {
                 Snapshot = snapshotTime;
@@ -272,7 +297,7 @@ namespace Azure.Storage.Files.Shares
         /// <summary>
         /// Construct a <see cref="RequestUriBuilder"/> representing the
         /// <see cref="ShareUriBuilder"/>'s fields. The <see cref="Uri.Query"/>
-        /// property contains the SAS, snapshot, and additional query parameters.
+        /// property contains the SAS, snapshot, file ID, and additional query parameters.
         /// </summary>
         /// <returns>The constructed <see cref="RequestUriBuilder"/>.</returns>
         private RequestUriBuilder BuildUri()
@@ -296,6 +321,12 @@ namespace Azure.Storage.Files.Shares
 
             // Concatenate query parameters
             var query = new StringBuilder(Query);
+            if (!string.IsNullOrWhiteSpace(FileId))
+            {
+                if (query.Length > 0)
+                { query.Append('&'); }
+                query.Append(Constants.File.FileIdParameterName).Append('=').Append(FileId);
+            }
             if (!string.IsNullOrWhiteSpace(Snapshot))
             {
                 if (query.Length > 0)

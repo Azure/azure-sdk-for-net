@@ -299,7 +299,7 @@ namespace Azure.ResourceManager.Billing
             {
                 CancellationToken = cancellationToken
             };
-            return new DepartmentsGetBillingPermissionsAsyncCollectionResultOfT(_departmentsRestClient, Id.Parent.Name, Id.Name, context, "BillingDepartmentResource.GetBillingPermissions");
+            return new BillingPermissionAsync2CollectionResultOfT(_departmentsRestClient, Id.Parent.Name, Id.Name, context, "BillingDepartmentResource.GetBillingPermissions");
         }
 
         /// <summary>
@@ -331,7 +331,7 @@ namespace Azure.ResourceManager.Billing
             {
                 CancellationToken = cancellationToken
             };
-            return new DepartmentsGetBillingPermissionsCollectionResultOfT(_departmentsRestClient, Id.Parent.Name, Id.Name, context, "BillingDepartmentResource.GetBillingPermissions");
+            return new BillingPermission2CollectionResultOfT(_departmentsRestClient, Id.Parent.Name, Id.Name, context, "BillingDepartmentResource.GetBillingPermissions");
         }
 
         /// <summary> Gets a collection of BillingDepartmentRoleAssignments in the <see cref="BillingDepartmentResource"/>. </summary>

@@ -1141,6 +1141,24 @@ namespace Azure.Generator.Management.Visitors
                                     updatedBodyStatements.Add(((MemberExpression)currentInternalProperty).Assign(Default).Terminate());
                                 }
                             }
+                            else
+                            {
+                                // No required leaves remain to initialize this wrapper in the public
+                                // constructor. A required getter-only collection wrapper must still
+                                // be usable, so initialize it inline without changing optional wrappers.
+                                foreach (var internalProperty in value.Where(x => x.FlattenedProperty.Type.IsCollection)
+                                    .Select(x => x.InternalProperty).Distinct())
+                                {
+                                    if (internalProperty.WireInfo?.IsRequired == true
+                                        && internalProperty.Body is AutoPropertyBody { HasSetter: false, InitializationExpression: null } autoBody
+                                        && TryGetModelProvider(internalProperty.Type, out var nestedModel)
+                                        && nestedModel.Constructors.Any(c => c.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Public)
+                                            && c.Signature.Parameters.Count == 0))
+                                    {
+                                        internalProperty.Update(body: autoBody with { InitializationExpression = New.Instance(internalProperty.Type) });
+                                    }
+                                }
+                            }
                         }
                         else
                         {

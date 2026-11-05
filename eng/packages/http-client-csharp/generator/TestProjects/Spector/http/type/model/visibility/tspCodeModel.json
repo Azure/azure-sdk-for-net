@@ -440,7 +440,6 @@
             "$id": "41",
             "name": "getModel",
             "isExactName": false,
-            "resourceName": "Visibility",
             "accessibility": "public",
             "parameters": [
               {
@@ -676,7 +675,6 @@
             "$id": "52",
             "name": "headModel",
             "isExactName": false,
-            "resourceName": "Visibility",
             "accessibility": "public",
             "parameters": [
               {
@@ -842,7 +840,6 @@
             "$id": "60",
             "name": "putModel",
             "isExactName": false,
-            "resourceName": "Visibility",
             "accessibility": "public",
             "parameters": [
               {
@@ -978,7 +975,6 @@
             "$id": "66",
             "name": "patchModel",
             "isExactName": false,
-            "resourceName": "Visibility",
             "accessibility": "public",
             "parameters": [
               {
@@ -1114,7 +1110,6 @@
             "$id": "72",
             "name": "postModel",
             "isExactName": false,
-            "resourceName": "Visibility",
             "accessibility": "public",
             "parameters": [
               {
@@ -1250,7 +1245,6 @@
             "$id": "78",
             "name": "deleteModel",
             "isExactName": false,
-            "resourceName": "Visibility",
             "accessibility": "public",
             "parameters": [
               {
@@ -1386,7 +1380,6 @@
             "$id": "84",
             "name": "putReadOnlyModel",
             "isExactName": false,
-            "resourceName": "Visibility",
             "accessibility": "public",
             "parameters": [
               {

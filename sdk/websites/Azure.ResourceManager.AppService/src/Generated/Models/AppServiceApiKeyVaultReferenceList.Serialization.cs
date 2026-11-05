@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.AppService.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new AppServiceApiKeyVaultReferenceList(value, nextLink, additionalBinaryDataProperties);
+            return new AppServiceApiKeyVaultReferenceList(value ?? new ChangeTrackingList<ApiKeyVaultReferenceData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

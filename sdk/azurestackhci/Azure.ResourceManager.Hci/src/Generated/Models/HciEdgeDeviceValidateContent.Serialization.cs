@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.Hci.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new HciEdgeDeviceValidateContent(edgeDeviceIds, additionalInfo, additionalBinaryDataProperties);
+            return new HciEdgeDeviceValidateContent(edgeDeviceIds ?? new ChangeTrackingList<ResourceIdentifier>(), additionalInfo, additionalBinaryDataProperties);
         }
     }
 }

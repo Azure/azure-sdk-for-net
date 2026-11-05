@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<PostgreSqlFlexibleServerMicrosoftEntraAdministratorData, PostgreSqlFlexibleServerMicrosoftEntraAdministratorResource>(new AdministratorsMicrosoftEntraGetByServerAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<PostgreSqlFlexibleServerMicrosoftEntraAdministratorData, PostgreSqlFlexibleServerMicrosoftEntraAdministratorResource>(new PostgreSqlFlexibleServerMicrosoftEntraAdministratorDataAsyncCollectionResultOfT(
                 _administratorsMicrosoftEntraRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -328,7 +328,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<PostgreSqlFlexibleServerMicrosoftEntraAdministratorData, PostgreSqlFlexibleServerMicrosoftEntraAdministratorResource>(new AdministratorsMicrosoftEntraGetByServerCollectionResultOfT(
+            return new PageableWrapper<PostgreSqlFlexibleServerMicrosoftEntraAdministratorData, PostgreSqlFlexibleServerMicrosoftEntraAdministratorResource>(new PostgreSqlFlexibleServerMicrosoftEntraAdministratorDataCollectionResultOfT(
                 _administratorsMicrosoftEntraRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

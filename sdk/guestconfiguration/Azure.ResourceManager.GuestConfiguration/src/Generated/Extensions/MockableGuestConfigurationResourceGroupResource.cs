@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new GuestConfigurationAssignmentsGetGuestConfigurationAssignmentsAsyncCollectionResultOfT(GuestConfigurationAssignmentsRestClient, Id.ResourceGroupName, Id.SubscriptionId, context, "MockableGuestConfigurationResourceGroupResource.GetGuestConfigurationAssignments");
+            return new GuestConfigurationAssignmentDataAsync1CollectionResultOfT(GuestConfigurationAssignmentsRestClient, Id.ResourceGroupName, Id.SubscriptionId, context, "MockableGuestConfigurationResourceGroupResource.GetGuestConfigurationAssignments");
         }
 
         /// <summary>
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new GuestConfigurationAssignmentsGetGuestConfigurationAssignmentsCollectionResultOfT(GuestConfigurationAssignmentsRestClient, Id.ResourceGroupName, Id.SubscriptionId, context, "MockableGuestConfigurationResourceGroupResource.GetGuestConfigurationAssignments");
+            return new GuestConfigurationAssignmentData1CollectionResultOfT(GuestConfigurationAssignmentsRestClient, Id.ResourceGroupName, Id.SubscriptionId, context, "MockableGuestConfigurationResourceGroupResource.GetGuestConfigurationAssignments");
         }
     }
 }

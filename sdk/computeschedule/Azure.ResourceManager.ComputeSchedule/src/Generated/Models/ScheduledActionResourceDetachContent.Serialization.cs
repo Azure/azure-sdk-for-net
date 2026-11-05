@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ScheduledActionResourceDetachContent(resources, additionalBinaryDataProperties);
+            return new ScheduledActionResourceDetachContent(resources ?? new ChangeTrackingList<ResourceIdentifier>(), additionalBinaryDataProperties);
         }
     }
 }

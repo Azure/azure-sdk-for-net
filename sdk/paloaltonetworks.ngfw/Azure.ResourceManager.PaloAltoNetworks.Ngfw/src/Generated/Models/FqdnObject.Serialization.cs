@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             }
             return new FqdnObject(
                 description,
-                fqdnList,
+                fqdnList ?? new ChangeTrackingList<string>(),
                 eTag,
                 auditComment,
                 provisioningState,

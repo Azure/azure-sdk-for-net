@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.IotHub.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new EventHubConsumerGroupsListResult(value, nextLink, additionalBinaryDataProperties);
+            return new EventHubConsumerGroupsListResult(value ?? new ChangeTrackingList<EventHubConsumerGroupInfoData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

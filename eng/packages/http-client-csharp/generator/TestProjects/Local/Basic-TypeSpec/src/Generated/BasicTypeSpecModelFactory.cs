@@ -10,6 +10,7 @@ using System.ClientModel;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
 
 namespace BasicTypeSpec
@@ -357,6 +358,19 @@ namespace BasicTypeSpec
         public static StreamingItem StreamingItem(string message = default)
         {
             return new StreamingItem(message, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The ResourceIdentifierModel. </summary>
+        /// <param name="id"></param>
+        /// <param name="optionalId"></param>
+        /// <param name="nullableId"></param>
+        /// <param name="ids"></param>
+        /// <returns> A new <see cref="BasicTypeSpec.ResourceIdentifierModel"/> instance for mocking. </returns>
+        public static ResourceIdentifierModel ResourceIdentifierModel(ResourceIdentifier id = default, ResourceIdentifier optionalId = default, ResourceIdentifier nullableId = default, IEnumerable<ResourceIdentifier> ids = default)
+        {
+            ids ??= new ChangeTrackingList<ResourceIdentifier>();
+
+            return new ResourceIdentifierModel(id, optionalId, nullableId, ids.ToList(), additionalBinaryDataProperties: null);
         }
 
         /// <summary> Tree is a specific type of plant. </summary>

@@ -296,9 +296,9 @@ namespace Azure.ResourceManager.ProgrammableConnectivity.Models
                 status,
                 isPlanTermsAndConditionsAccepted,
                 planTermsAndConditionsLinks ?? new ChangeTrackingList<string>(),
-                purposes,
+                purposes ?? new ChangeTrackingList<OperatorApiConnectionPurpose>(),
                 purposeReason,
-                dataProcessingList,
+                dataProcessingList ?? new ChangeTrackingList<OperatorApiConnectionDataProcessing>(),
                 additionalBinaryDataProperties);
         }
     }

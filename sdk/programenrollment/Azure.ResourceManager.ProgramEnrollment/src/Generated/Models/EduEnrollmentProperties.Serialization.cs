@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.ProgramEnrollment.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new EduEnrollmentProperties(provisioningState, domains, failureReason, additionalBinaryDataProperties);
+            return new EduEnrollmentProperties(provisioningState, domains ?? new ChangeTrackingList<ProgramEnrollmentDomainGroup>(), failureReason, additionalBinaryDataProperties);
         }
     }
 }

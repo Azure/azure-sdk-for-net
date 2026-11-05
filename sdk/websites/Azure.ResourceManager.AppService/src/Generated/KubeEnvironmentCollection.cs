@@ -39,9 +39,8 @@ namespace Azure.ResourceManager.AppService
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal KubeEnvironmentCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(KubeEnvironmentResource.ResourceType, out string kubeEnvironmentApiVersion);
             _kubeEnvironmentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", KubeEnvironmentResource.ResourceType.Namespace, Diagnostics);
-            _kubeEnvironmentsRestClient = new KubeEnvironments(_kubeEnvironmentsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, kubeEnvironmentApiVersion ?? "2026-03-15");
+            _kubeEnvironmentsRestClient = new KubeEnvironments(_kubeEnvironmentsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.Web/kubeEnvironments", out string kubeEnvironmentsApiVersionOverride) ? kubeEnvironmentsApiVersionOverride : "2026-03-15");
             ValidateResourceId(id);
         }
 
@@ -294,7 +293,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<KubeEnvironmentData, KubeEnvironmentResource>(new KubeEnvironmentsGetByResourceGroupAsyncCollectionResultOfT(_kubeEnvironmentsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "KubeEnvironmentCollection.GetAll"), data => new KubeEnvironmentResource(Client, data));
+            return new AsyncPageableWrapper<KubeEnvironmentData, KubeEnvironmentResource>(new KubeEnvironmentDataAsyncCollectionResultOfT(_kubeEnvironmentsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "KubeEnvironmentCollection.GetAll"), data => new KubeEnvironmentResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +321,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<KubeEnvironmentData, KubeEnvironmentResource>(new KubeEnvironmentsGetByResourceGroupCollectionResultOfT(_kubeEnvironmentsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "KubeEnvironmentCollection.GetAll"), data => new KubeEnvironmentResource(Client, data));
+            return new PageableWrapper<KubeEnvironmentData, KubeEnvironmentResource>(new KubeEnvironmentDataCollectionResultOfT(_kubeEnvironmentsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "KubeEnvironmentCollection.GetAll"), data => new KubeEnvironmentResource(Client, data));
         }
 
         /// <summary>

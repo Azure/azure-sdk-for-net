@@ -238,21 +238,21 @@ namespace Azure.ResourceManager.Monitor.Workspaces.Models
         /// <returns> A new <see cref="Models.IssueNotificationType"/> instance for mocking. </returns>
         public static IssueNotificationType IssueNotificationType(string updateType = default)
         {
-            return new UnknownIssueNotificationType(default, default);
+            return new UnknownIssueNotificationType(updateType is null ? default : new IssueNotificationUpdateType(updateType), default);
         }
 
         /// <summary> Notification type for issue creation events. </summary>
         /// <returns> A new <see cref="Models.IssueCreationNotificationType"/> instance for mocking. </returns>
         public static IssueCreationNotificationType IssueCreationNotificationType()
         {
-            return new IssueCreationNotificationType(default, default);
+            return new IssueCreationNotificationType(IssueNotificationUpdateType.IssueCreation, default);
         }
 
         /// <summary> Notification type for on-change events. </summary>
         /// <returns> A new <see cref="Models.OnChangeNotificationType"/> instance for mocking. </returns>
         public static OnChangeNotificationType OnChangeNotificationType()
         {
-            return new OnChangeNotificationType(default, default);
+            return new OnChangeNotificationType(IssueNotificationUpdateType.OnChange, default);
         }
 
         /// <summary> Notification type for time-based updates. </summary>
@@ -260,7 +260,7 @@ namespace Azure.ResourceManager.Monitor.Workspaces.Models
         /// <returns> A new <see cref="Models.TimeBasedUpdatesNotificationType"/> instance for mocking. </returns>
         public static TimeBasedUpdatesNotificationType TimeBasedUpdatesNotificationType(string updateInterval = default)
         {
-            return new TimeBasedUpdatesNotificationType(default, default, updateInterval);
+            return new TimeBasedUpdatesNotificationType(IssueNotificationUpdateType.TimeBased, default, updateInterval);
         }
 
         /// <summary> The Issue resource update. </summary>

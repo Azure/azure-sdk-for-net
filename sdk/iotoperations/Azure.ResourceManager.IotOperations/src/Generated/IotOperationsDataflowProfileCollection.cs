@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.IotOperations
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<IotOperationsDataflowProfileData, IotOperationsDataflowProfileResource>(new DataflowProfileGetByResourceGroupAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<IotOperationsDataflowProfileData, IotOperationsDataflowProfileResource>(new IotOperationsDataflowProfileDataAsyncCollectionResultOfT(
                 _dataflowProfileRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.IotOperations
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<IotOperationsDataflowProfileData, IotOperationsDataflowProfileResource>(new DataflowProfileGetByResourceGroupCollectionResultOfT(
+            return new PageableWrapper<IotOperationsDataflowProfileData, IotOperationsDataflowProfileResource>(new IotOperationsDataflowProfileDataCollectionResultOfT(
                 _dataflowProfileRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

@@ -739,7 +739,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
         /// <returns> A new <see cref="Models.DatasetDestination"/> instance for mocking. </returns>
         public static DatasetDestination DatasetDestination(string target = default)
         {
-            return new UnknownDatasetDestination(default, default);
+            return new UnknownDatasetDestination(target is null ? (DatasetDestinationTarget?)default : new DatasetDestinationTarget(target), default);
         }
 
         /// <summary> The type for a MQTT destination. </summary>
@@ -747,7 +747,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
         /// <returns> A new <see cref="Models.DatasetMqttDestination"/> instance for mocking. </returns>
         public static DatasetMqttDestination DatasetMqttDestination(MqttDestinationConfiguration configuration = default)
         {
-            return new DatasetMqttDestination(default, default, configuration);
+            return new DatasetMqttDestination(DatasetDestinationTarget.Mqtt, default, configuration);
         }
 
         /// <summary> The configuration for a MQTT destination. </summary>
@@ -766,7 +766,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
         /// <returns> A new <see cref="Models.DatasetBrokerStateStoreDestination"/> instance for mocking. </returns>
         public static DatasetBrokerStateStoreDestination DatasetBrokerStateStoreDestination(string key = default)
         {
-            return new DatasetBrokerStateStoreDestination(default, default, key is null ? default : new BrokerStateStoreDestinationConfiguration(key, default));
+            return new DatasetBrokerStateStoreDestination(DatasetDestinationTarget.BrokerStateStore, default, key is null ? default : new BrokerStateStoreDestinationConfiguration(key, default));
         }
 
         /// <param name="path"> The storage destination path. </param>
@@ -774,7 +774,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
         /// <returns> A new <see cref="Models.DatasetStorageDestination"/> instance for mocking. </returns>
         public static DatasetStorageDestination DatasetStorageDestination(string path = default)
         {
-            return new DatasetStorageDestination(default, default, path is null ? default : new StorageDestinationConfiguration(path, default));
+            return new DatasetStorageDestination(DatasetDestinationTarget.Storage, default, path is null ? default : new StorageDestinationConfiguration(path, default));
         }
 
         /// <summary>
@@ -785,7 +785,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
         /// <returns> A new <see cref="Models.EventDestination"/> instance for mocking. </returns>
         public static EventDestination EventDestination(string target = default)
         {
-            return new UnknownEventDestination(default, default);
+            return new UnknownEventDestination(target is null ? (EventDestinationTarget?)default : new EventDestinationTarget(target), default);
         }
 
         /// <summary> The type for a MQTT destination. </summary>
@@ -793,7 +793,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
         /// <returns> A new <see cref="Models.EventMqttDestination"/> instance for mocking. </returns>
         public static EventMqttDestination EventMqttDestination(MqttDestinationConfiguration configuration = default)
         {
-            return new EventMqttDestination(default, default, configuration);
+            return new EventMqttDestination(EventDestinationTarget.Mqtt, default, configuration);
         }
 
         /// <param name="path"> The storage destination path. </param>
@@ -801,7 +801,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
         /// <returns> A new <see cref="Models.EventStorageDestination"/> instance for mocking. </returns>
         public static EventStorageDestination EventStorageDestination(string path = default)
         {
-            return new EventStorageDestination(default, default, path is null ? default : new StorageDestinationConfiguration(path, default));
+            return new EventStorageDestination(EventDestinationTarget.Storage, default, path is null ? default : new StorageDestinationConfiguration(path, default));
         }
 
         /// <summary>
@@ -812,7 +812,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
         /// <returns> A new <see cref="Models.StreamDestination"/> instance for mocking. </returns>
         public static StreamDestination StreamDestination(string target = default)
         {
-            return new UnknownStreamDestination(default, default);
+            return new UnknownStreamDestination(target is null ? (StreamDestinationTarget?)default : new StreamDestinationTarget(target), default);
         }
 
         /// <summary> The type for a MQTT destination. </summary>
@@ -820,7 +820,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
         /// <returns> A new <see cref="Models.StreamMqttDestination"/> instance for mocking. </returns>
         public static StreamMqttDestination StreamMqttDestination(MqttDestinationConfiguration configuration = default)
         {
-            return new StreamMqttDestination(default, default, configuration);
+            return new StreamMqttDestination(StreamDestinationTarget.Mqtt, default, configuration);
         }
 
         /// <param name="path"> The storage destination path. </param>
@@ -828,7 +828,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
         /// <returns> A new <see cref="Models.StreamStorageDestination"/> instance for mocking. </returns>
         public static StreamStorageDestination StreamStorageDestination(string path = default)
         {
-            return new StreamStorageDestination(default, default, path is null ? default : new StorageDestinationConfiguration(path, default));
+            return new StreamStorageDestination(StreamDestinationTarget.Storage, default, path is null ? default : new StorageDestinationConfiguration(path, default));
         }
 
         /// <summary> Defines the dataset properties. </summary>

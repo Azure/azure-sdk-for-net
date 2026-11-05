@@ -39,9 +39,8 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal NetworkCloudRackCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(NetworkCloudRackResource.ResourceType, out string networkCloudRackApiVersion);
             _racksClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.NetworkCloud", NetworkCloudRackResource.ResourceType.Namespace, Diagnostics);
-            _racksRestClient = new Racks(_racksClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, networkCloudRackApiVersion ?? "2026-07-01");
+            _racksRestClient = new Racks(_racksClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.NetworkCloud/racks", out string racksApiVersionOverride) ? racksApiVersionOverride : "2026-07-01");
             ValidateResourceId(id);
         }
 
@@ -180,7 +179,7 @@ namespace Azure.ResourceManager.NetworkCloud
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<NetworkCloudRackData, NetworkCloudRackResource>(new RacksGetByResourceGroupAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<NetworkCloudRackData, NetworkCloudRackResource>(new NetworkCloudRackDataAsyncCollectionResultOfT(
                 _racksRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -217,7 +216,7 @@ namespace Azure.ResourceManager.NetworkCloud
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<NetworkCloudRackData, NetworkCloudRackResource>(new RacksGetByResourceGroupCollectionResultOfT(
+            return new PageableWrapper<NetworkCloudRackData, NetworkCloudRackResource>(new NetworkCloudRackDataCollectionResultOfT(
                 _racksRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

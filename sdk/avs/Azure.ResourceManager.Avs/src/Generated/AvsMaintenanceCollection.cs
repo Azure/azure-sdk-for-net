@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.Avs
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<AvsMaintenanceData, AvsMaintenanceResource>(new MaintenancesGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<AvsMaintenanceData, AvsMaintenanceResource>(new AvsMaintenanceDataAsyncCollectionResultOfT(
                 _maintenancesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.Avs
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<AvsMaintenanceData, AvsMaintenanceResource>(new MaintenancesGetAllCollectionResultOfT(
+            return new PageableWrapper<AvsMaintenanceData, AvsMaintenanceResource>(new AvsMaintenanceDataCollectionResultOfT(
                 _maintenancesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

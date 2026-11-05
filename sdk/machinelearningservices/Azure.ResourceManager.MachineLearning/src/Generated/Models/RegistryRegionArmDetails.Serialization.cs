@@ -77,13 +77,20 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             if (Optional.IsCollectionDefined(AcrDetails))
             {
-                writer.WritePropertyName("acrDetails"u8);
-                writer.WriteStartArray();
-                foreach (RegistryAcrDetails item in AcrDetails)
+                if (AcrDetails != null)
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WritePropertyName("acrDetails"u8);
+                    writer.WriteStartArray();
+                    foreach (RegistryAcrDetails item in AcrDetails)
+                    {
+                        writer.WriteObjectValue(item, options);
+                    }
+                    writer.WriteEndArray();
                 }
-                writer.WriteEndArray();
+                else
+                {
+                    writer.WriteNull("acrDetails"u8);
+                }
             }
             if (Optional.IsDefined(Location))
             {
@@ -92,13 +99,20 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             if (Optional.IsCollectionDefined(StorageAccountDetails))
             {
-                writer.WritePropertyName("storageAccountDetails"u8);
-                writer.WriteStartArray();
-                foreach (StorageAccountDetails item in StorageAccountDetails)
+                if (StorageAccountDetails != null)
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WritePropertyName("storageAccountDetails"u8);
+                    writer.WriteStartArray();
+                    foreach (StorageAccountDetails item in StorageAccountDetails)
+                    {
+                        writer.WriteObjectValue(item, options);
+                    }
+                    writer.WriteEndArray();
                 }
-                writer.WriteEndArray();
+                else
+                {
+                    writer.WriteNull("storageAccountDetails"u8);
+                }
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -142,9 +156,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            IList<RegistryAcrDetails> acrDetails = default;
+            IList<RegistryAcrDetails> acrDetails = new ChangeTrackingList<RegistryAcrDetails>();
             AzureLocation? location = default;
-            IList<StorageAccountDetails> storageAccountDetails = default;
+            IList<StorageAccountDetails> storageAccountDetails = new ChangeTrackingList<StorageAccountDetails>();
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -152,6 +166,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
+                        acrDetails = null;
                         continue;
                     }
                     List<RegistryAcrDetails> array = new List<RegistryAcrDetails>();
@@ -175,6 +190,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
+                        storageAccountDetails = null;
                         continue;
                     }
                     List<StorageAccountDetails> array = new List<StorageAccountDetails>();
@@ -190,7 +206,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new RegistryRegionArmDetails(acrDetails ?? new ChangeTrackingList<RegistryAcrDetails>(), location, storageAccountDetails ?? new ChangeTrackingList<StorageAccountDetails>(), additionalBinaryDataProperties);
+            return new RegistryRegionArmDetails(acrDetails, location, storageAccountDetails, additionalBinaryDataProperties);
         }
     }
 }

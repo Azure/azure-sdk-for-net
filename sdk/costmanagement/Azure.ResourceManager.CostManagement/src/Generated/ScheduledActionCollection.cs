@@ -279,7 +279,7 @@ namespace Azure.ResourceManager.CostManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ScheduledActionData, ScheduledActionResource>(new ScheduledActionOperationGroupGetAllByScopeAsyncCollectionResultOfT(_scheduledActionOperationGroupRestClient, Id.ToString(), filter, context, "ScheduledActionCollection.GetAll"), data => new ScheduledActionResource(Client, data));
+            return new AsyncPageableWrapper<ScheduledActionData, ScheduledActionResource>(new ScheduledActionDataAsync0CollectionResultOfT(_scheduledActionOperationGroupRestClient, Id.ToString(), filter, context, "ScheduledActionCollection.GetAll"), data => new ScheduledActionResource(Client, data));
         }
 
         /// <summary>
@@ -308,7 +308,7 @@ namespace Azure.ResourceManager.CostManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ScheduledActionData, ScheduledActionResource>(new ScheduledActionOperationGroupGetAllByScopeCollectionResultOfT(_scheduledActionOperationGroupRestClient, Id.ToString(), filter, context, "ScheduledActionCollection.GetAll"), data => new ScheduledActionResource(Client, data));
+            return new PageableWrapper<ScheduledActionData, ScheduledActionResource>(new ScheduledActionData0CollectionResultOfT(_scheduledActionOperationGroupRestClient, Id.ToString(), filter, context, "ScheduledActionCollection.GetAll"), data => new ScheduledActionResource(Client, data));
         }
 
         /// <summary>

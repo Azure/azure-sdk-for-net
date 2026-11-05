@@ -21,18 +21,18 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of <see cref="NvaInterfaceConfigurationsProperties"/>. </summary>
         public NvaInterfaceConfigurationsProperties()
         {
-            Type = new ChangeTrackingList<NvaNicType>();
+            PropertiesType = new ChangeTrackingList<NvaNicType>();
         }
 
         /// <summary> Initializes a new instance of <see cref="NvaInterfaceConfigurationsProperties"/>. </summary>
         /// <param name="subnet"> A subnet resource id where the NIC will be deployed. Each subnet resource uri should be unique. </param>
-        /// <param name="type"> Specifies the NIC types for the NVA interface configuration. Allowed values: PrivateNic, PublicNic, AdditionalPrivateNic, AdditionalPublicNic. Only the combination of PrivateNic and PublicNic is currently supported. </param>
+        /// <param name="propertiesType"> Specifies the NIC types for the NVA interface configuration. Allowed values: PrivateNic, PublicNic, AdditionalPrivateNic, AdditionalPublicNic. Only the combination of PrivateNic and PublicNic is currently supported. </param>
         /// <param name="name"> Specifies the name of the interface. Maximum length is 70 characters. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NvaInterfaceConfigurationsProperties(NvaInVnetSubnetReferenceProperties subnet, IList<NvaNicType> @type, string name, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal NvaInterfaceConfigurationsProperties(NvaInVnetSubnetReferenceProperties subnet, IList<NvaNicType> propertiesType, string name, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Subnet = subnet;
-            Type = @type;
+            PropertiesType = propertiesType;
             Name = name;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Specifies the NIC types for the NVA interface configuration. Allowed values: PrivateNic, PublicNic, AdditionalPrivateNic, AdditionalPublicNic. Only the combination of PrivateNic and PublicNic is currently supported. </summary>
         [WirePath("type")]
-        public IList<NvaNicType> Type { get; }
+        public IList<NvaNicType> PropertiesType { get; }
 
         /// <summary> Specifies the name of the interface. Maximum length is 70 characters. </summary>
         [WirePath("name")]

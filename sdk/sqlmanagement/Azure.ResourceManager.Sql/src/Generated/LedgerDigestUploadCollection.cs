@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.Sql
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<LedgerDigestUploadData, LedgerDigestUploadResource>(new LedgerDigestUploadsGetByDatabaseAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<LedgerDigestUploadData, LedgerDigestUploadResource>(new LedgerDigestUploadDataAsyncCollectionResultOfT(
                 _ledgerDigestUploadsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -317,7 +317,7 @@ namespace Azure.ResourceManager.Sql
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<LedgerDigestUploadData, LedgerDigestUploadResource>(new LedgerDigestUploadsGetByDatabaseCollectionResultOfT(
+            return new PageableWrapper<LedgerDigestUploadData, LedgerDigestUploadResource>(new LedgerDigestUploadDataCollectionResultOfT(
                 _ledgerDigestUploadsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

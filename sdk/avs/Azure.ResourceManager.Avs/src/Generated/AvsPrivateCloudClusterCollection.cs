@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.Avs
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<AvsPrivateCloudClusterData, AvsPrivateCloudClusterResource>(new ClustersGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<AvsPrivateCloudClusterData, AvsPrivateCloudClusterResource>(new AvsPrivateCloudClusterDataAsyncCollectionResultOfT(
                 _clustersRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.Avs
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<AvsPrivateCloudClusterData, AvsPrivateCloudClusterResource>(new ClustersGetAllCollectionResultOfT(
+            return new PageableWrapper<AvsPrivateCloudClusterData, AvsPrivateCloudClusterResource>(new AvsPrivateCloudClusterDataCollectionResultOfT(
                 _clustersRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

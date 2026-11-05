@@ -381,7 +381,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                 boolValue,
                 floatValue,
                 doubleValue,
-                prop1,
+                prop1 ?? new ChangeTrackingList<string>(),
                 prop2 ?? new ChangeTrackingList<int>(),
                 nestedProperty,
                 optionalProperty,

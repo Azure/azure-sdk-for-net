@@ -299,7 +299,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<AutoUpgradeProfileData, AutoUpgradeProfileResource>(new AutoUpgradeProfilesGetByFleetAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<AutoUpgradeProfileData, AutoUpgradeProfileResource>(new AutoUpgradeProfileDataAsyncCollectionResultOfT(
                 _autoUpgradeProfilesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -337,7 +337,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<AutoUpgradeProfileData, AutoUpgradeProfileResource>(new AutoUpgradeProfilesGetByFleetCollectionResultOfT(
+            return new PageableWrapper<AutoUpgradeProfileData, AutoUpgradeProfileResource>(new AutoUpgradeProfileDataCollectionResultOfT(
                 _autoUpgradeProfilesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

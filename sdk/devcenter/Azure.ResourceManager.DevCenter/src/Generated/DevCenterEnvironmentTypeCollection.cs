@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.DevCenter
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DevCenterEnvironmentTypeData, DevCenterEnvironmentTypeResource>(new EnvironmentTypesGetByDevCenterAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<DevCenterEnvironmentTypeData, DevCenterEnvironmentTypeResource>(new DevCenterEnvironmentTypeDataAsyncCollectionResultOfT(
                 _environmentTypesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -324,7 +324,7 @@ namespace Azure.ResourceManager.DevCenter
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DevCenterEnvironmentTypeData, DevCenterEnvironmentTypeResource>(new EnvironmentTypesGetByDevCenterCollectionResultOfT(
+            return new PageableWrapper<DevCenterEnvironmentTypeData, DevCenterEnvironmentTypeResource>(new DevCenterEnvironmentTypeDataCollectionResultOfT(
                 _environmentTypesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

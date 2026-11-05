@@ -51,11 +51,17 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
 
         private ClientDiagnostics ApiGatewayClientDiagnostics => _apiGatewayClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ApiManagement.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ApiGateway ApiGatewayRestClient => _apiGatewayRestClient ??= new ApiGateway(ApiGatewayClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-09-01-preview");
+        private ApiGateway ApiGatewayRestClient => _apiGatewayRestClient ??= new ApiGateway(ApiGatewayClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.ApiManagement/gateways", out string apiVersion) ? apiVersion : "2025-09-01-preview");
 
         private ClientDiagnostics ApiManagementServiceClientDiagnostics => _apiManagementServiceClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ApiManagement.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ApiManagementService ApiManagementServiceRestClient => _apiManagementServiceRestClient ??= new ApiManagementService(ApiManagementServiceClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-09-01-preview");
+        private ApiManagementService ApiManagementServiceRestClient => _apiManagementServiceRestClient ??= new ApiManagementService(
+            ApiManagementServiceClientDiagnostics,
+            Pipeline,
+            Diagnostics.ApplicationId,
+            Endpoint,
+            "2025-09-01-preview",
+            resourceType => TryGetApiVersion(resourceType, out string apiVersion0) ? apiVersion0 : null);
 
         private ClientDiagnostics DeletedServicesClientDiagnostics => _deletedServicesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ApiManagement.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
@@ -167,7 +173,7 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ApiGatewayData, ApiGatewayResource>(new ApiGatewayGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<ApiGatewayData, ApiGatewayResource>(new ApiGatewayDataAsync0CollectionResultOfT(
                 ApiGatewayRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 top,
@@ -203,7 +209,7 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ApiGatewayData, ApiGatewayResource>(new ApiGatewayGetAllCollectionResultOfT(
+            return new PageableWrapper<ApiGatewayData, ApiGatewayResource>(new ApiGatewayData0CollectionResultOfT(
                 ApiGatewayRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 top,
@@ -239,7 +245,7 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ApiManagementServiceData, ApiManagementServiceResource>(new ApiManagementServiceGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<ApiManagementServiceData, ApiManagementServiceResource>(new ApiManagementServiceDataAsync0CollectionResultOfT(
                 ApiManagementServiceRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 top,
@@ -275,7 +281,7 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ApiManagementServiceData, ApiManagementServiceResource>(new ApiManagementServiceGetAllCollectionResultOfT(
+            return new PageableWrapper<ApiManagementServiceData, ApiManagementServiceResource>(new ApiManagementServiceData0CollectionResultOfT(
                 ApiManagementServiceRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 top,
@@ -493,7 +499,7 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ApiManagementDeletedServiceData, ApiManagementDeletedServiceResource>(new DeletedServicesGetApiManagementDeletedServicesAsyncCollectionResultOfT(DeletedServicesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableApiManagementSubscriptionResource.GetApiManagementDeletedServices"), data => new ApiManagementDeletedServiceResource(Client, data));
+            return new AsyncPageableWrapper<ApiManagementDeletedServiceData, ApiManagementDeletedServiceResource>(new ApiManagementDeletedServiceDataAsyncCollectionResultOfT(DeletedServicesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableApiManagementSubscriptionResource.GetApiManagementDeletedServices"), data => new ApiManagementDeletedServiceResource(Client, data));
         }
 
         /// <summary>
@@ -521,7 +527,7 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ApiManagementDeletedServiceData, ApiManagementDeletedServiceResource>(new DeletedServicesGetApiManagementDeletedServicesCollectionResultOfT(DeletedServicesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableApiManagementSubscriptionResource.GetApiManagementDeletedServices"), data => new ApiManagementDeletedServiceResource(Client, data));
+            return new PageableWrapper<ApiManagementDeletedServiceData, ApiManagementDeletedServiceResource>(new ApiManagementDeletedServiceDataCollectionResultOfT(DeletedServicesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableApiManagementSubscriptionResource.GetApiManagementDeletedServices"), data => new ApiManagementDeletedServiceResource(Client, data));
         }
 
         /// <summary>
@@ -549,7 +555,7 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new ApiManagementSkusGetApiManagementSkusAsyncCollectionResultOfT(ApiManagementSkusRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableApiManagementSubscriptionResource.GetApiManagementSkus");
+            return new ApiManagementSkuAsyncCollectionResultOfT(ApiManagementSkusRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableApiManagementSubscriptionResource.GetApiManagementSkus");
         }
 
         /// <summary>
@@ -577,7 +583,7 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new ApiManagementSkusGetApiManagementSkusCollectionResultOfT(ApiManagementSkusRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableApiManagementSubscriptionResource.GetApiManagementSkus");
+            return new ApiManagementSkuCollectionResultOfT(ApiManagementSkusRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableApiManagementSubscriptionResource.GetApiManagementSkus");
         }
 
         /// <summary>

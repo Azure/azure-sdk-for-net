@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Sql.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new InstanceFailoverGroupListResult(value, nextLink, additionalBinaryDataProperties);
+            return new InstanceFailoverGroupListResult(value ?? new ChangeTrackingList<InstanceFailoverGroupData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

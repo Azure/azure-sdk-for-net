@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Fabric.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new PagedQuota(value, nextLink, additionalBinaryDataProperties);
+            return new PagedQuota(value ?? new ChangeTrackingList<FabricCapacitiesQuota>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

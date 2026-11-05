@@ -3,10 +3,14 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Diagnostics.Metrics;
 using System.Linq;
+using Azure.Monitor.OpenTelemetry.Exporter.Internals;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.ConnectionString;
+using Azure.Monitor.OpenTelemetry.Exporter.Internals.Platform;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat;
+using Azure.Monitor.OpenTelemetry.Exporter.Models;
 using Azure.Monitor.OpenTelemetry.Exporter.Tests.CommonTestFramework;
 using OpenTelemetry;
 using OpenTelemetry.Metrics;
@@ -15,8 +19,39 @@ using Xunit;
 namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 {
     [Collection(nameof(DistroSdkStatsRoutingCollection))]
-    public class StatsbeatTests
+    public class StatsbeatTests : IDisposable
     {
+        private readonly MockStatsbeatScope _stats = new();
+
+        public void Dispose() => _stats.Dispose();
+
+        [Fact]
+        public void AttachTimestampUsesTheMonotonicClockInTimeSpanTicks()
+        {
+            var before = Stopwatch.GetTimestamp();
+            var timestamp = AzureMonitorStatsbeat.GetTimestampTicks();
+            var after = Stopwatch.GetTimestamp();
+            var factor = (double)TimeSpan.TicksPerSecond / Stopwatch.Frequency;
+
+            Assert.InRange(timestamp, (long)(before * factor), (long)(after * factor));
+        }
+
+        [Theory]
+        [InlineData(0)]
+        [InlineData(1000)]
+        public void SingleEndpointAttachIsThrottledUntilTheExactInterval(long start)
+        {
+            using var statsbeat = new AzureMonitorStatsbeat(
+                ConnectionStringParser.GetValues("InstrumentationKey=customer;IngestionEndpoint=https://eastus.in.applicationinsights.azure.com/"),
+                _stats.Platform);
+            var interval = statsbeat._attachEmissionInterval.Ticks;
+
+            Assert.Single(statsbeat.GetAttachStatsbeat(start));
+            Assert.Empty(statsbeat.GetAttachStatsbeat(start));
+            Assert.Empty(statsbeat.GetAttachStatsbeat(start + interval - 1));
+            Assert.Single(statsbeat.GetAttachStatsbeat(start + interval));
+        }
+
         public static TheoryData<string> EuEndpoints
         {
             get
@@ -49,7 +84,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         {
             var customer_ConnectionString = $"InstrumentationKey=00000000-0000-0000-0000-000000000000;IngestionEndpoint=https://{euEndpoint}.in.applicationinsights.azure.com/";
             var connectionStringVars = ConnectionStringParser.GetValues(customer_ConnectionString);
-            var statsBeatInstance = new AzureMonitorStatsbeat(connectionStringVars, new MockPlatform());
+            using var statsBeatInstance = new AzureMonitorStatsbeat(connectionStringVars, _stats.Platform);
 
             Assert.Equal(StatsbeatConstants.Statsbeat_ConnectionString_EU, statsBeatInstance._statsbeat_ConnectionString);
         }
@@ -60,7 +95,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         {
             var customer_ConnectionString = $"InstrumentationKey=00000000-0000-0000-0000-000000000000;IngestionEndpoint=https://{nonEUEndpoint}.in.applicationinsights.azure.com/";
             var connectionStringVars = ConnectionStringParser.GetValues(customer_ConnectionString);
-            var statsBeatInstance = new AzureMonitorStatsbeat(connectionStringVars, new MockPlatform());
+            using var statsBeatInstance = new AzureMonitorStatsbeat(connectionStringVars, _stats.Platform);
 
             Assert.Equal(StatsbeatConstants.Statsbeat_ConnectionString_NonEU, statsBeatInstance._statsbeat_ConnectionString);
         }
@@ -71,7 +106,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             var customer_ConnectionString = "InstrumentationKey=00000000-0000-0000-0000-000000000000;IngestionEndpoint=https://foo.in.applicationinsights.azure.com/";
 
             var connectionStringVars = ConnectionStringParser.GetValues(customer_ConnectionString);
-            Assert.Throws<InvalidOperationException>(() => new AzureMonitorStatsbeat(connectionStringVars, new MockPlatform()));
+            Assert.Throws<InvalidOperationException>(() => new AzureMonitorStatsbeat(connectionStringVars, _stats.Platform));
         }
 
         [Fact]
@@ -116,6 +151,24 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             StatsbeatConstants.DistroNetworkSdkStatsMeterName,
         };
 
+        [Fact]
+        public void StatsbeatCreatedAfterMockScopeDisposalStillUsesMockTransmitter()
+        {
+            var connectionString = $"InstrumentationKey={Guid.NewGuid()};IngestionEndpoint=https://stats.example.invalid/";
+            var scope = new MockStatsbeatScope();
+            scope.Add(connectionString);
+            scope.Platform.SetEnvironmentVariable(EnvironmentVariableConstants.APPLICATIONINSIGHTS_STATS_CONNECTION_STRING, connectionString);
+            scope.Dispose();
+
+            Assert.IsType<MockTransmitter>(TransmitterFactory.Instance._transmitters[connectionString]);
+            using var statsbeat = new AzureMonitorStatsbeat(
+                ConnectionStringParser.GetValues("InstrumentationKey=customer"), scope.Platform);
+
+            Assert.True(statsbeat._statsbeatMeterProvider!.ForceFlush());
+            Assert.Contains(scope.TelemetryItems, item => item.Data.BaseData is MetricsData data
+                && data.Metrics.Any(metric => metric.Name == "Attach"));
+        }
+
         [Theory]
         [MemberData(nameof(DistroSdkStatsMeterNames))]
         public void StatsbeatMeterProvider_SubscribesToDistroSdkStatsMeters(string distroMeterName)
@@ -132,7 +185,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             var connectionString = "InstrumentationKey=00000000-0000-0000-0000-000000000000;IngestionEndpoint=https://eastus.in.applicationinsights.azure.com/";
             var connectionStringVars = ConnectionStringParser.GetValues(connectionString);
 
-            using var statsbeat = new AzureMonitorStatsbeat(connectionStringVars, new MockPlatform());
+            using var statsbeat = new AzureMonitorStatsbeat(connectionStringVars, _stats.Platform);
             Assert.NotNull(statsbeat._statsbeatMeterProvider);
 
             // Publish an observable instrument on the distro meter. If the Statsbeat

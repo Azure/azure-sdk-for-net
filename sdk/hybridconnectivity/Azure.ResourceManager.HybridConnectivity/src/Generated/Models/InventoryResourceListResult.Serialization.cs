@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new InventoryResourceListResult(value, nextLink, additionalBinaryDataProperties);
+            return new InventoryResourceListResult(value ?? new ChangeTrackingList<PublicCloudInventoryData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

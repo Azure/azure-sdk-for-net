@@ -201,7 +201,7 @@ namespace Azure.Provisioning.SignalR
             _location = DefineProperty<AzureLocation>(nameof(Location), new string[] { "location" }, isRequired: true);
             _properties = DefineModelProperty<ReplicaProperties>(nameof(Properties), new string[] { "properties" });
             _sku = DefineModelProperty<SignalRResourceSku>(nameof(Sku), new string[] { "sku" });
-            _parent = DefineResource<SignalRService>(nameof(Parent), new string[] { "parent" }, isRequired: true);
+            _parent = DefineResource<SignalRService>(nameof(Parent), new string[] { "parent" });
             DefineAdditionalProperties();
         }
 

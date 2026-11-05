@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Quantum.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new QuantumSuiteOfferListResult(value, nextLink, additionalBinaryDataProperties);
+            return new QuantumSuiteOfferListResult(value ?? new ChangeTrackingList<QuantumSuiteOffer>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

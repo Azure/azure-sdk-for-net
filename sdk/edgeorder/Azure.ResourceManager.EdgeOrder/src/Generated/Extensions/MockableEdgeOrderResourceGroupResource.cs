@@ -266,7 +266,7 @@ namespace Azure.ResourceManager.EdgeOrder.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<EdgeOrderData, EdgeOrderResource>(new OrdersOperationGroupGetEdgeOrdersAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<EdgeOrderData, EdgeOrderResource>(new EdgeOrderDataAsyncCollectionResultOfT(
                 OrdersOperationGroupRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -303,7 +303,7 @@ namespace Azure.ResourceManager.EdgeOrder.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<EdgeOrderData, EdgeOrderResource>(new OrdersOperationGroupGetEdgeOrdersCollectionResultOfT(
+            return new PageableWrapper<EdgeOrderData, EdgeOrderResource>(new EdgeOrderDataCollectionResultOfT(
                 OrdersOperationGroupRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.Sql
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<WorkloadGroupData, WorkloadGroupResource>(new WorkloadGroupsGetByDatabaseAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<WorkloadGroupData, WorkloadGroupResource>(new WorkloadGroupDataAsyncCollectionResultOfT(
                 _workloadGroupsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -328,7 +328,7 @@ namespace Azure.ResourceManager.Sql
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<WorkloadGroupData, WorkloadGroupResource>(new WorkloadGroupsGetByDatabaseCollectionResultOfT(
+            return new PageableWrapper<WorkloadGroupData, WorkloadGroupResource>(new WorkloadGroupDataCollectionResultOfT(
                 _workloadGroupsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.Billing
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<BillingTransferDetailData, BillingTransferDetailResource>(new TransfersGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<BillingTransferDetailData, BillingTransferDetailResource>(new BillingTransferDetailDataAsyncCollectionResultOfT(
                 _transfersRestClient,
                 Id.Parent.Parent.Name,
                 Id.Parent.Name,
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.Billing
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<BillingTransferDetailData, BillingTransferDetailResource>(new TransfersGetAllCollectionResultOfT(
+            return new PageableWrapper<BillingTransferDetailData, BillingTransferDetailResource>(new BillingTransferDetailDataCollectionResultOfT(
                 _transfersRestClient,
                 Id.Parent.Parent.Name,
                 Id.Parent.Name,

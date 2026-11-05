@@ -276,7 +276,7 @@ namespace Azure.ResourceManager.Sql
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<GeoBackupPolicyData, GeoBackupPolicyResource>(new GeoBackupPoliciesGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<GeoBackupPolicyData, GeoBackupPolicyResource>(new GeoBackupPolicyDataAsyncCollectionResultOfT(
                 _geoBackupPoliciesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -311,7 +311,7 @@ namespace Azure.ResourceManager.Sql
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<GeoBackupPolicyData, GeoBackupPolicyResource>(new GeoBackupPoliciesGetAllCollectionResultOfT(
+            return new PageableWrapper<GeoBackupPolicyData, GeoBackupPolicyResource>(new GeoBackupPolicyDataCollectionResultOfT(
                 _geoBackupPoliciesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

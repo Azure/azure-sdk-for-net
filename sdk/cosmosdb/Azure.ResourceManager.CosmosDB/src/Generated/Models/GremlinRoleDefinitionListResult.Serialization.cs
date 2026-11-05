@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new GremlinRoleDefinitionListResult(value, nextLink, additionalBinaryDataProperties);
+            return new GremlinRoleDefinitionListResult(value ?? new ChangeTrackingList<GremlinRoleDefinitionData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

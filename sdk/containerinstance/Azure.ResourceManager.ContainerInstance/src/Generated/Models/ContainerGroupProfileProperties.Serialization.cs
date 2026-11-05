@@ -463,7 +463,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             return new ContainerGroupProfileProperties(
                 sku,
                 encryptionProperties,
-                containers,
+                containers ?? new ChangeTrackingList<ContainerInstanceContainer>(),
                 initContainers ?? new ChangeTrackingList<InitContainerDefinitionContent>(),
                 extensions ?? new ChangeTrackingList<DeploymentExtensionSpec>(),
                 imageRegistryCredentials ?? new ChangeTrackingList<ContainerGroupImageRegistryCredential>(),

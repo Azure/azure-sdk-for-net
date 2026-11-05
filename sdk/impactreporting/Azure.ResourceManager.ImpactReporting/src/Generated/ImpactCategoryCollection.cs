@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.ImpactReporting
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ImpactCategoryData, ImpactCategoryResource>(new ImpactCategoriesGetBySubscriptionAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<ImpactCategoryData, ImpactCategoryResource>(new ImpactCategoryDataAsyncCollectionResultOfT(
                 _impactCategoriesRestClient,
                 Id.SubscriptionId,
                 resourceType,
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.ImpactReporting
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ImpactCategoryData, ImpactCategoryResource>(new ImpactCategoriesGetBySubscriptionCollectionResultOfT(
+            return new PageableWrapper<ImpactCategoryData, ImpactCategoryResource>(new ImpactCategoryDataCollectionResultOfT(
                 _impactCategoriesRestClient,
                 Id.SubscriptionId,
                 resourceType,

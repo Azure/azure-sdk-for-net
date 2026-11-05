@@ -40,9 +40,8 @@ namespace Azure.ResourceManager.PrivateDns
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal PrivateDnsZoneCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(PrivateDnsZoneResource.ResourceType, out string privateDnsZoneApiVersion);
             _privateZonesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.PrivateDns", PrivateDnsZoneResource.ResourceType.Namespace, Diagnostics);
-            _privateZonesRestClient = new PrivateZones(_privateZonesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, privateDnsZoneApiVersion ?? "2024-06-01");
+            _privateZonesRestClient = new PrivateZones(_privateZonesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.Network/privateDnsZones", out string privateZonesApiVersionOverride) ? privateZonesApiVersionOverride : "2024-06-01");
             ValidateResourceId(id);
         }
 
@@ -298,7 +297,7 @@ namespace Azure.ResourceManager.PrivateDns
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<PrivateDnsZoneData, PrivateDnsZoneResource>(new PrivateZonesGetByResourceGroupAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<PrivateDnsZoneData, PrivateDnsZoneResource>(new PrivateDnsZoneDataAsyncCollectionResultOfT(
                 _privateZonesRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -333,7 +332,7 @@ namespace Azure.ResourceManager.PrivateDns
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<PrivateDnsZoneData, PrivateDnsZoneResource>(new PrivateZonesGetByResourceGroupCollectionResultOfT(
+            return new PageableWrapper<PrivateDnsZoneData, PrivateDnsZoneResource>(new PrivateDnsZoneDataCollectionResultOfT(
                 _privateZonesRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

@@ -245,9 +245,9 @@ namespace Azure.ResourceManager.Monitor.PipelineGroups.Models
             return new PipelineGroupPipeline(
                 name,
                 @type,
-                receivers,
+                receivers ?? new ChangeTrackingList<string>(),
                 processors ?? new ChangeTrackingList<string>(),
-                exporters,
+                exporters ?? new ChangeTrackingList<string>(),
                 additionalBinaryDataProperties);
         }
     }

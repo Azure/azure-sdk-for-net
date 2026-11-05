@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// <returns> An object representing collection of SqlServerTrustGroups and their operations over a SqlServerTrustGroupResource. </returns>
         public virtual SqlServerTrustGroupCollection GetSqlServerTrustGroups(AzureLocation locationName)
         {
-            return GetCachedClient(client => new SqlServerTrustGroupCollection(client, Id, locationName));
+            return new SqlServerTrustGroupCollection(Client, Id, locationName);
         }
 
         /// <summary>
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// <returns> An object representing collection of InstanceFailoverGroups and their operations over a InstanceFailoverGroupResource. </returns>
         public virtual InstanceFailoverGroupCollection GetInstanceFailoverGroups(AzureLocation locationName)
         {
-            return GetCachedClient(client => new InstanceFailoverGroupCollection(client, Id, locationName));
+            return new InstanceFailoverGroupCollection(Client, Id, locationName);
         }
 
         /// <summary>
@@ -388,7 +388,7 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// <returns> An object representing collection of ResourceGroupLongTermRetentionBackups and their operations over a ResourceGroupLongTermRetentionBackupResource. </returns>
         public virtual ResourceGroupLongTermRetentionBackupCollection GetResourceGroupLongTermRetentionBackups(AzureLocation locationName, string longTermRetentionServerName, string longTermRetentionDatabaseName)
         {
-            return GetCachedClient(client => new ResourceGroupLongTermRetentionBackupCollection(client, Id, locationName, longTermRetentionServerName, longTermRetentionDatabaseName));
+            return new ResourceGroupLongTermRetentionBackupCollection(Client, Id, locationName, longTermRetentionServerName, longTermRetentionDatabaseName);
         }
 
         /// <summary>
@@ -462,7 +462,7 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// <returns> An object representing collection of ResourceGroupLongTermRetentionManagedInstanceBackups and their operations over a ResourceGroupLongTermRetentionManagedInstanceBackupResource. </returns>
         public virtual ResourceGroupLongTermRetentionManagedInstanceBackupCollection GetResourceGroupLongTermRetentionManagedInstanceBackups(AzureLocation locationName, string managedInstanceName, string databaseName)
         {
-            return GetCachedClient(client => new ResourceGroupLongTermRetentionManagedInstanceBackupCollection(client, Id, locationName, managedInstanceName, databaseName));
+            return new ResourceGroupLongTermRetentionManagedInstanceBackupCollection(Client, Id, locationName, managedInstanceName, databaseName);
         }
 
         /// <summary>
@@ -624,7 +624,7 @@ namespace Azure.ResourceManager.Sql.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new LongTermRetentionBackupsGetLongTermRetentionBackupsWithResourceGroupLocationAsyncCollectionResultOfT(
+            return new LongTermRetentionBackupDataAsync3CollectionResultOfT(
                 LongTermRetentionBackupsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -667,7 +667,7 @@ namespace Azure.ResourceManager.Sql.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new LongTermRetentionBackupsGetLongTermRetentionBackupsWithResourceGroupLocationCollectionResultOfT(
+            return new LongTermRetentionBackupData3CollectionResultOfT(
                 LongTermRetentionBackupsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -715,7 +715,7 @@ namespace Azure.ResourceManager.Sql.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new LongTermRetentionBackupsGetLongTermRetentionBackupsWithResourceGroupServerAsyncCollectionResultOfT(
+            return new LongTermRetentionBackupDataAsync4CollectionResultOfT(
                 LongTermRetentionBackupsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -764,7 +764,7 @@ namespace Azure.ResourceManager.Sql.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new LongTermRetentionBackupsGetLongTermRetentionBackupsWithResourceGroupServerCollectionResultOfT(
+            return new LongTermRetentionBackupData4CollectionResultOfT(
                 LongTermRetentionBackupsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -809,7 +809,7 @@ namespace Azure.ResourceManager.Sql.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new LongTermRetentionManagedInstanceBackupsGetLongTermRetentionManagedInstanceBackupsWithResourceGroupLocationAsyncCollectionResultOfT(
+            return new ManagedInstanceLongTermRetentionBackupDataAsync3CollectionResultOfT(
                 LongTermRetentionManagedInstanceBackupsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -854,7 +854,7 @@ namespace Azure.ResourceManager.Sql.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new LongTermRetentionManagedInstanceBackupsGetLongTermRetentionManagedInstanceBackupsWithResourceGroupLocationCollectionResultOfT(
+            return new ManagedInstanceLongTermRetentionBackupData3CollectionResultOfT(
                 LongTermRetentionManagedInstanceBackupsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -901,7 +901,7 @@ namespace Azure.ResourceManager.Sql.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new LongTermRetentionManagedInstanceBackupsGetLongTermRetentionManagedInstanceBackupsWithResourceGroupInstanceAsyncCollectionResultOfT(
+            return new ManagedInstanceLongTermRetentionBackupDataAsync4CollectionResultOfT(
                 LongTermRetentionManagedInstanceBackupsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -946,7 +946,7 @@ namespace Azure.ResourceManager.Sql.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new LongTermRetentionManagedInstanceBackupsGetLongTermRetentionManagedInstanceBackupsWithResourceGroupInstanceCollectionResultOfT(
+            return new ManagedInstanceLongTermRetentionBackupData4CollectionResultOfT(
                 LongTermRetentionManagedInstanceBackupsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

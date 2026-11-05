@@ -39,9 +39,8 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MachineLearningWorkspaceCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(MachineLearningWorkspaceResource.ResourceType, out string machineLearningWorkspaceApiVersion);
             _workspacesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MachineLearning", MachineLearningWorkspaceResource.ResourceType.Namespace, Diagnostics);
-            _workspacesRestClient = new Workspaces(_workspacesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, machineLearningWorkspaceApiVersion ?? "2026-07-01");
+            _workspacesRestClient = new Workspaces(_workspacesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.MachineLearningServices/workspaces", out string workspacesApiVersionOverride) ? workspacesApiVersionOverride : "2026-07-01");
             ValidateResourceId(id);
         }
 
@@ -297,7 +296,7 @@ namespace Azure.ResourceManager.MachineLearning
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<MachineLearningWorkspaceData, MachineLearningWorkspaceResource>(new WorkspacesGetByResourceGroupAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<MachineLearningWorkspaceData, MachineLearningWorkspaceResource>(new MachineLearningWorkspaceDataAsyncCollectionResultOfT(
                 _workspacesRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -336,7 +335,7 @@ namespace Azure.ResourceManager.MachineLearning
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<MachineLearningWorkspaceData, MachineLearningWorkspaceResource>(new WorkspacesGetByResourceGroupCollectionResultOfT(
+            return new PageableWrapper<MachineLearningWorkspaceData, MachineLearningWorkspaceResource>(new MachineLearningWorkspaceDataCollectionResultOfT(
                 _workspacesRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

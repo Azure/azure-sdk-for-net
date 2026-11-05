@@ -142,12 +142,6 @@ Policy = ResourceConcurrencyPolicy.SynchronizeBeginExtension,
                         IncidentRoutingService = "",
                         IncidentRoutingTeam = "",
                         IncidentContactEmail = "helpme@contoso.com",
-                        ServiceTreeInfos = {new ServiceTreeInfo
-{
-ServiceId = "d1b7d8ba-05e2-48e6-90d6-d781b99c6e69",
-ComponentId = "d1b7d8ba-05e2-48e6-90d6-d781b99c6e69",
-Readiness = ServiceTreeReadiness.InDevelopment,
-}},
                         ResourceAccessPolicy = ResourceAccessPolicy.NotSpecified,
                     },
                     IsNoncompliantCollectionResponseAllowed = true,
@@ -164,10 +158,6 @@ SkipNotifications = SkipNotification.Disabled,
                     IsEmptyRoleAssignmentsAllowed = false,
                     PolicyExecutionType = PolicyExecutionType.BypassPolicies,
                     AvailabilityZonePolicy = AvailabilityZonePolicy.MultiZoned,
-                    DstsConfiguration = new ProviderDstsConfiguration("prds-shim")
-                    {
-                        ServiceDnsName = "prds.sparta.azure.com",
-                    },
                     AsyncTimeoutRules = {new AsyncTimeoutRule
 {
 ActionName = "Microsoft.ClassicCompute/domainNames/write",
@@ -220,7 +210,10 @@ Name = "name2",
                     AreTagsSupported = true,
                     ResourceManagementOptions = new ResourceTypeRegistrationResourceManagementOptions
                     {
-                        BatchProvisioningSupportSupportedOperations = new ResourceManagementSupportedOperation("Get, Delete"),
+                        BatchProvisioningSupport = new BatchProvisioningSupport
+                        {
+                            SupportedOperations = new ResourceManagementSupportedOperation("Get, Delete"),
+                        },
                         DeleteDependencies = {new ResourceTypeRegistrationDeleteDependency
 {
 LinkedProperty = "properties.edgeProfile.subscription.id",
@@ -312,12 +305,6 @@ Policy = ResourceConcurrencyPolicy.SynchronizeBeginExtension,
                         IncidentRoutingService = "",
                         IncidentRoutingTeam = "",
                         IncidentContactEmail = "helpme@contoso.com",
-                        ServiceTreeInfos = {new ServiceTreeInfo
-{
-ServiceId = "d1b7d8ba-05e2-48e6-90d6-d781b99c6e69",
-ComponentId = "d1b7d8ba-05e2-48e6-90d6-d781b99c6e69",
-Readiness = ServiceTreeReadiness.InDevelopment,
-}},
                         ResourceAccessPolicy = ResourceAccessPolicy.NotSpecified,
                     },
                     IsNoncompliantCollectionResponseAllowed = true,

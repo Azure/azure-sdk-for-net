@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.SignalR
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<SignalRCustomDomainData, SignalRCustomDomainResource>(new CustomDomainsGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<SignalRCustomDomainData, SignalRCustomDomainResource>(new SignalRCustomDomainDataAsyncCollectionResultOfT(
                 _customDomainsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.SignalR
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<SignalRCustomDomainData, SignalRCustomDomainResource>(new CustomDomainsGetAllCollectionResultOfT(
+            return new PageableWrapper<SignalRCustomDomainData, SignalRCustomDomainResource>(new SignalRCustomDomainDataCollectionResultOfT(
                 _customDomainsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

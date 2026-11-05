@@ -442,7 +442,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             {
                 CancellationToken = cancellationToken
             };
-            return new EmployeesGetEmployeesAsyncCollectionResultOfT(
+            return new EmployeeAsyncCollectionResultOfT(
                 _employeesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -481,7 +481,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             {
                 CancellationToken = cancellationToken
             };
-            return new EmployeesGetEmployeesCollectionResultOfT(
+            return new EmployeeCollectionResultOfT(
                 _employeesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

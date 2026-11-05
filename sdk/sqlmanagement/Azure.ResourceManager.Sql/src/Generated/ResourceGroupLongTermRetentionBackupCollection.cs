@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.Sql
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<LongTermRetentionBackupData, ResourceGroupLongTermRetentionBackupResource>(new LongTermRetentionBackupsGetByResourceGroupDatabaseAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<LongTermRetentionBackupData, ResourceGroupLongTermRetentionBackupResource>(new LongTermRetentionBackupDataAsync0CollectionResultOfT(
                 _longTermRetentionBackupsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.Sql
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<LongTermRetentionBackupData, ResourceGroupLongTermRetentionBackupResource>(new LongTermRetentionBackupsGetByResourceGroupDatabaseCollectionResultOfT(
+            return new PageableWrapper<LongTermRetentionBackupData, ResourceGroupLongTermRetentionBackupResource>(new LongTermRetentionBackupData0CollectionResultOfT(
                 _longTermRetentionBackupsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new GetUserTablesPostgreSqlTaskInput(connectionInfo, selectedDatabases, additionalBinaryDataProperties);
+            return new GetUserTablesPostgreSqlTaskInput(connectionInfo, selectedDatabases ?? new ChangeTrackingList<string>(), additionalBinaryDataProperties);
         }
     }
 }

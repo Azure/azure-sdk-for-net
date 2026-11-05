@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.Sql
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ElasticPoolData, ElasticPoolResource>(new ElasticPoolsGetByServerAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<ElasticPoolData, ElasticPoolResource>(new ElasticPoolDataAsyncCollectionResultOfT(
                 _elasticPoolsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -330,7 +330,7 @@ namespace Azure.ResourceManager.Sql
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ElasticPoolData, ElasticPoolResource>(new ElasticPoolsGetByServerCollectionResultOfT(
+            return new PageableWrapper<ElasticPoolData, ElasticPoolResource>(new ElasticPoolDataCollectionResultOfT(
                 _elasticPoolsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

@@ -39,9 +39,8 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal NetworkCloudL3NetworkCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(NetworkCloudL3NetworkResource.ResourceType, out string networkCloudL3NetworkApiVersion);
             _l3NetworksClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.NetworkCloud", NetworkCloudL3NetworkResource.ResourceType.Namespace, Diagnostics);
-            _l3NetworksRestClient = new L3Networks(_l3NetworksClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, networkCloudL3NetworkApiVersion ?? "2026-07-01");
+            _l3NetworksRestClient = new L3Networks(_l3NetworksClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.NetworkCloud/l3Networks", out string l3NetworksApiVersionOverride) ? l3NetworksApiVersionOverride : "2026-07-01");
             ValidateResourceId(id);
         }
 
@@ -298,7 +297,7 @@ namespace Azure.ResourceManager.NetworkCloud
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<NetworkCloudL3NetworkData, NetworkCloudL3NetworkResource>(new L3NetworksGetByResourceGroupAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<NetworkCloudL3NetworkData, NetworkCloudL3NetworkResource>(new NetworkCloudL3NetworkDataAsyncCollectionResultOfT(
                 _l3NetworksRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -335,7 +334,7 @@ namespace Azure.ResourceManager.NetworkCloud
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<NetworkCloudL3NetworkData, NetworkCloudL3NetworkResource>(new L3NetworksGetByResourceGroupCollectionResultOfT(
+            return new PageableWrapper<NetworkCloudL3NetworkData, NetworkCloudL3NetworkResource>(new NetworkCloudL3NetworkDataCollectionResultOfT(
                 _l3NetworksRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

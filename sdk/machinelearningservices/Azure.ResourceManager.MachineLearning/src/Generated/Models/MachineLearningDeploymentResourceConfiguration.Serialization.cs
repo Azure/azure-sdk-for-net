@@ -103,8 +103,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 return null;
             }
             int? instanceCount = default;
+            bool instanceTypeIsDefined = false;
             string instanceType = default;
-            IDictionary<string, BinaryData> properties = default;
+            IDictionary<string, BinaryData> properties = new ChangeTrackingDictionary<string, BinaryData>();
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -119,6 +120,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("instanceType"u8))
                 {
+                    instanceTypeIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         instanceType = null;
@@ -131,6 +133,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
+                        properties = null;
                         continue;
                     }
                     Dictionary<string, BinaryData> dictionary = new Dictionary<string, BinaryData>();
@@ -153,7 +156,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new MachineLearningDeploymentResourceConfiguration(instanceCount, instanceType, properties ?? new ChangeTrackingDictionary<string, BinaryData>(), additionalBinaryDataProperties);
+            return new MachineLearningDeploymentResourceConfiguration(instanceCount, instanceType, properties, additionalBinaryDataProperties)
+            {
+                _instanceTypeIsDefined = instanceTypeIsDefined
+            };
         }
     }
 }

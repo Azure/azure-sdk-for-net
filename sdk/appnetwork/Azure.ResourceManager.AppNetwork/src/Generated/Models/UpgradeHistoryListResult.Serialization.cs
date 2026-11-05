@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.AppNetwork.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new UpgradeHistoryListResult(value, nextLink, additionalBinaryDataProperties);
+            return new UpgradeHistoryListResult(value ?? new ChangeTrackingList<AppLinkUpgradeHistory>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

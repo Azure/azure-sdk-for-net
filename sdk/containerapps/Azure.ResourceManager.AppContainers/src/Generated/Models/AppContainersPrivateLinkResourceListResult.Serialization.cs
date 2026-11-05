@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new AppContainersPrivateLinkResourceListResult(value, nextLink, additionalBinaryDataProperties);
+            return new AppContainersPrivateLinkResourceListResult(value ?? new ChangeTrackingList<ContainerAppPrivateLink>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

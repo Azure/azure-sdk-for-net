@@ -292,7 +292,7 @@ namespace Azure.ResourceManager.Dns
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DnsZoneData, DnsZoneResource>(new ZonesGetByResourceGroupAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<DnsZoneData, DnsZoneResource>(new DnsZoneDataAsyncCollectionResultOfT(
                 _zonesRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.Dns
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DnsZoneData, DnsZoneResource>(new ZonesGetByResourceGroupCollectionResultOfT(
+            return new PageableWrapper<DnsZoneData, DnsZoneResource>(new DnsZoneDataCollectionResultOfT(
                 _zonesRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

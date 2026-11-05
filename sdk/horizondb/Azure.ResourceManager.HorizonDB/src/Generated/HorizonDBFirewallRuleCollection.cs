@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.HorizonDB
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<HorizonDBFirewallRuleData, HorizonDBFirewallRuleResource>(new HorizonDBFirewallRulesGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<HorizonDBFirewallRuleData, HorizonDBFirewallRuleResource>(new HorizonDBFirewallRuleDataAsyncCollectionResultOfT(
                 _horizonDBFirewallRulesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -328,7 +328,7 @@ namespace Azure.ResourceManager.HorizonDB
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<HorizonDBFirewallRuleData, HorizonDBFirewallRuleResource>(new HorizonDBFirewallRulesGetAllCollectionResultOfT(
+            return new PageableWrapper<HorizonDBFirewallRuleData, HorizonDBFirewallRuleResource>(new HorizonDBFirewallRuleDataCollectionResultOfT(
                 _horizonDBFirewallRulesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

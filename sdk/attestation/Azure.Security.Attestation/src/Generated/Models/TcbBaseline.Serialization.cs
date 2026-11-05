@@ -16,7 +16,7 @@ namespace Azure.Security.Attestation
     /// TEE specific Tcb baseline used in attestation, and baseline details including
     /// baseline identifier, release date and minimum required software version
     /// </summary>
-    internal partial class TcbBaseline : IJsonModel<TcbBaseline>
+    public partial class TcbBaseline : IJsonModel<TcbBaseline>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -86,10 +86,10 @@ namespace Azure.Security.Attestation
                 writer.WritePropertyName("tcbEvaluationDataNumber"u8);
                 writer.WriteNumberValue(TcbEvaluationDataNumber.Value);
             }
-            if (Optional.IsDefined(TcbReleaseOn))
+            if (Optional.IsDefined(TcbReleasedOn))
             {
                 writer.WritePropertyName("tcbReleaseDate"u8);
-                writer.WriteStringValue(TcbReleaseOn.Value, "O");
+                writer.WriteStringValue(TcbReleasedOn.Value, "O");
             }
             if (Optional.IsDefined(MinimumPswLinuxVersion))
             {
@@ -150,7 +150,7 @@ namespace Azure.Security.Attestation
             }
             string tcbIdentifier = default;
             int? tcbEvaluationDataNumber = default;
-            DateTimeOffset? tcbReleaseOn = default;
+            DateTimeOffset? tcbReleasedOn = default;
             string minimumPswLinuxVersion = default;
             string minimumPswWindowsVersion = default;
             bool? isSelectedTcb = default;
@@ -177,7 +177,7 @@ namespace Azure.Security.Attestation
                     {
                         continue;
                     }
-                    tcbReleaseOn = prop.Value.GetDateTimeOffset("O");
+                    tcbReleasedOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("minimumPswLinuxVersion"u8))
@@ -207,7 +207,7 @@ namespace Azure.Security.Attestation
             return new TcbBaseline(
                 tcbIdentifier,
                 tcbEvaluationDataNumber,
-                tcbReleaseOn,
+                tcbReleasedOn,
                 minimumPswLinuxVersion,
                 minimumPswWindowsVersion,
                 isSelectedTcb,

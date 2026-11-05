@@ -276,7 +276,7 @@ namespace Azure.ResourceManager.Sql
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ManagedInstanceStartStopScheduleData, ManagedInstanceStartStopScheduleResource>(new StartStopManagedInstanceSchedulesGetByInstanceAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<ManagedInstanceStartStopScheduleData, ManagedInstanceStartStopScheduleResource>(new ManagedInstanceStartStopScheduleDataAsyncCollectionResultOfT(
                 _startStopManagedInstanceSchedulesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -310,7 +310,7 @@ namespace Azure.ResourceManager.Sql
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ManagedInstanceStartStopScheduleData, ManagedInstanceStartStopScheduleResource>(new StartStopManagedInstanceSchedulesGetByInstanceCollectionResultOfT(
+            return new PageableWrapper<ManagedInstanceStartStopScheduleData, ManagedInstanceStartStopScheduleResource>(new ManagedInstanceStartStopScheduleDataCollectionResultOfT(
                 _startStopManagedInstanceSchedulesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
