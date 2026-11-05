@@ -223,6 +223,90 @@ public class TelephonyCampaignErrorTests
         });
     }
 
+    [TestCase("A \"quoted\" value")]
+    [TestCase(@"A path C:\folder\file")]
+    [TestCase("First line\r\nSecond line")]
+    public void OpenAIConversionEscapesAllStringFields(string value)
+        => AssertOpenAIConversionEscapesStringFields(value);
+
+    [Test]
+    public void OpenAIConversionEscapesControlCharacters()
+        => AssertOpenAIConversionEscapesStringFields("Tab\tand control\u0001");
+
+    private static void AssertOpenAIConversionEscapesStringFields(string value)
+    {
+        FoundryOpenAIError detail = ProjectsAgentsModelFactory.FoundryOpenAIError(message: "Detail.", param: value);
+        FoundryOpenAIError error = ProjectsAgentsModelFactory.FoundryOpenAIError(
+            code: value, message: value, details: new[] { detail });
+        using JsonDocument document = JsonDocument.Parse(error.ToOpenAIError());
+        JsonElement converted = document.RootElement.GetProperty("error");
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(converted.GetProperty("message").GetString(), Does.StartWith(value));
+            Assert.That(converted.GetProperty("code").GetString(), Is.EqualTo(value));
+            Assert.That(converted.GetProperty("param").GetString(), Is.EqualTo(value));
+            Assert.That(converted.GetProperty("type").GetString(), Is.EqualTo(nameof(FoundryOpenAIError)));
+        });
+    }
+
+    [Test]
+    public void OpenAIConversionPreservesLeafDetailMessages()
+    {
+        FoundryOpenAIError detail = ProjectsAgentsModelFactory.FoundryOpenAIError(
+            code: "InvalidField", message: "Must be positive.", param: "field");
+        FoundryOpenAIError error = ProjectsAgentsModelFactory.FoundryOpenAIError(
+            code: "InvalidRequest", message: "Validation failed.", details: new[] { detail });
+        using JsonDocument document = JsonDocument.Parse(error.ToOpenAIError());
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(document.RootElement.GetProperty("error").GetProperty("message").GetString(),
+                Is.EqualTo("Validation failed. (Must be positive.)"));
+            Assert.That(document.RootElement.GetProperty("error").GetProperty("param").GetString(), Is.EqualTo("field"));
+        });
+    }
+
+    [Test]
+    public void OpenAIConversionPreservesNestedAndSiblingDetails()
+    {
+        FoundryOpenAIError leaf = ProjectsAgentsModelFactory.FoundryOpenAIError(
+            message: "The \"number\" is invalid.\nUse a positive value.", param: "number");
+        FoundryOpenAIError branch = ProjectsAgentsModelFactory.FoundryOpenAIError(
+            message: "Recipient failed validation.", param: "recipient", details: new[] { leaf });
+        FoundryOpenAIError sibling = ProjectsAgentsModelFactory.FoundryOpenAIError(
+            message: "Another field is missing.", param: "other");
+        FoundryOpenAIError error = ProjectsAgentsModelFactory.FoundryOpenAIError(
+            message: "Validation failed.", details: new[] { branch, sibling });
+        using JsonDocument document = JsonDocument.Parse(error.ToOpenAIError());
+        JsonElement converted = document.RootElement.GetProperty("error");
+        string message = converted.GetProperty("message").GetString();
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(message, Does.Contain("Recipient failed validation."));
+            Assert.That(message, Does.Contain(leaf.Message));
+            Assert.That(message, Does.Contain("Another field is missing."));
+            Assert.That(converted.GetProperty("param").GetString(), Is.EqualTo("recipient;other"));
+        });
+    }
+
+    [Test]
+    public void OpenAIConversionPreservesEmptyDefaults()
+    {
+        FoundryOpenAIError error = ProjectsAgentsModelFactory.FoundryOpenAIError();
+        using JsonDocument document = JsonDocument.Parse(error.ToOpenAIError());
+        JsonElement converted = document.RootElement.GetProperty("error");
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(converted.GetProperty("message").GetString(), Is.Empty);
+            Assert.That(converted.GetProperty("code").GetString(), Is.Empty);
+            Assert.That(converted.GetProperty("param").GetString(), Is.Empty);
+            Assert.That(converted.GetProperty("type").GetString(), Is.EqualTo(nameof(FoundryOpenAIError)));
+        });
+    }
+
     [Test]
     public void NestedDetailsRemainAvailableToExceptionFormatting()
     {

@@ -119,4 +119,4 @@ ClientResult deleteResult = await projectClient.AgentAdministrationClient.Delete
 Console.WriteLine($"Deleted voice agent {agentName} version {agentVersion.Version}: HTTP {deleteResult.GetRawResponse().Status}");
 ```
 
-For WebRTC requirements, see the [transport sample](Sample_VoiceAgent_WebSocketTransport.md).
+For WebRTC signaling requirements, see [transport selection and saved history](Sample_VoiceAgent_ReadConversation.md).

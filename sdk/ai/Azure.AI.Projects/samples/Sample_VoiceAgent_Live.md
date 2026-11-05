@@ -146,7 +146,8 @@ public static async Task ConversationAsync(
         byte[] speech = ReadPcmWave(speechFile);
         using MemoryStream output = new();
         await session.SendEventAsync(new LiveClientEventLiveThinkingAppendParam(null,
-            "This example has no connection to a live weather service.") { EventId = "sample-context" }, cancellationToken);
+            "This example has no connection to a live weather service.")
+        { EventId = "sample-context" }, cancellationToken);
         await RunAudioConversationAsync(session, speech, output, Console.Out, cancellationToken);
         if (output.Length == 0)
         {
@@ -357,16 +358,20 @@ internal static async Task RunSessionControlsAsync(
     };
     await session.SendEventAsync(new LiveClientEventLiveSessionUpdateParam(new LiveSessionUpdateParams
     {
-        Delegation = ModelReaderWriter.Write(delegation, new ModelReaderWriterOptions("W"), AzureAIProjectsAgentsContext.Default)
-    }) { EventId = "sample-update" }, cancellationToken);
+        Delegation = delegation
+    })
+    { EventId = "sample-update" }, cancellationToken);
     await session.SendEventAsync(new LiveClientEventLiveInputAudioMuteParam { EventId = "sample-mute" }, cancellationToken);
     await session.SendEventAsync(new LiveClientEventLiveInputAudioUnmuteParam { EventId = "sample-unmute" }, cancellationToken);
     await session.SendEventAsync(new LiveClientEventLiveThinkingAppendParam(null,
-        "The verified demonstration value is seven.") { EventId = "sample-thinking" }, cancellationToken);
+        "The verified demonstration value is seven.")
+    { EventId = "sample-thinking" }, cancellationToken);
     await session.SendEventAsync(new LiveClientEventLiveCommentaryAppendParam(null,
-        "The test lookup is complete.") { EventId = "sample-commentary" }, cancellationToken);
+        "The test lookup is complete.")
+    { EventId = "sample-commentary" }, cancellationToken);
     await session.SendEventAsync(new LiveClientEventLiveInstructionsAppendParam(null,
-        "Keep spoken answers brief.") { EventId = "sample-instructions" }, cancellationToken);
+        "Keep spoken answers brief.")
+    { EventId = "sample-instructions" }, cancellationToken);
     await session.SendCommandAsync(BinaryData.FromString("""
         {"type":"session.thinking.append","event_id":"sample-raw","delegation_id":null,
          "content":"This command demonstrates the raw JSON escape hatch."}

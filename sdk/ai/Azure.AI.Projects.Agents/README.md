@@ -21,6 +21,7 @@ Develop Agents using the Azure AI Foundry platform, leveraging an extensive ecos
   - [Select a service API version](#select-a-service-api-version)
 - [Additional concepts](#additional-concepts)
 - [Examples](#examples)
+  - [Voice Agents REST administration and telephony](#voice-agents-rest-administration-and-telephony)
   - [Declarative Agents](#declarative-agents)
     - [Agent version drafts](#agent-version-drafts)
   - [Hosted Agents](#hosted-agents)
@@ -124,6 +125,17 @@ Console.WriteLine($"Agent created (id: {agentVersion2.Id}, name: {agentVersion2.
 In most of the code snippets we will show only the asynchronous sample for brevity. Please refer to the individual [samples][samples] for both synchronous and asynchronous code.
 
 ## Examples
+
+### Voice Agents REST administration and telephony
+
+Use the [Voice Agents REST sample](samples/Sample_VoiceAgents_REST.md) to create and inspect a
+typed voice agent definition and to read existing telephony bindings, call history, call jobs,
+transfer targets, and campaign status. The telephony examples are read-only and do not place calls
+or submit campaigns.
+
+For runtime scenarios that use WebSockets, realtime sessions, or GPT Live audio, see the
+[`Azure.AI.Projects` voice agent sample](../Azure.AI.Projects/samples/Sample_VoiceAgent.md) and
+[`Azure.AI.Projects` GPT Live sample](../Azure.AI.Projects/samples/Sample_VoiceAgent_Live.md).
 
 ### Declarative Agents
 

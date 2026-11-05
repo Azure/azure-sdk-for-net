@@ -27,6 +27,10 @@
 - Fixed the Realtime model factory to preserve newly added fields, including `Soundscape` and `PostCall`, without changing the order of its existing parameters.
 - Preserved the audio-output model factory's existing parameter order when introducing shared voice configuration.
 - Preserved typed deserialization of existing delegate configurations that omit `subagent_type`.
+- Fixed telephony call-history pagination to stop on terminal pages and use the correct cursor when paging backward.
+
+### Sample Updates
+- Added Voice Agent REST administration, read-only telephony inspection, and campaign inspection samples, including typed address configuration without dispatching calls.
 
 ### Other Changes
 - Regenerated from `feature/foundry-release` at [`57834b966f8efbe7486fd7ca32898f8983907249`](https://github.com/Azure/azure-rest-api-specs/tree/57834b966f8efbe7486fd7ca32898f8983907249), using OpenAI TypeSpec 1.34.1.

@@ -137,7 +137,7 @@ using RealtimeSessionClient session = await projectClient.ProjectsRealtimeClient
 application must handle the peer connection, audio transport, and SDP exchange.
 
 For runnable examples, see [text and function calls](samples/Sample_VoiceAgent.md),
-[WebSocket transport and saved history](samples/Sample_VoiceAgent_WebSocketTransport.md),
+[WebSocket transport and saved history](samples/Sample_VoiceAgent_ReadConversation.md),
 and [audio streaming](samples/Sample_VoiceAgent_WebSocketAudio.md).
 
 ### Performing Agent operations

@@ -2,6 +2,8 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ClientModel;
+using System.Threading;
 using System.Threading.Tasks;
 using Azure.AI.Projects.Agents;
 using Azure.Identity;
@@ -34,73 +36,119 @@ public class Sample_VoiceAgent_ReadConversation : SamplesBase
         var projectEndpoint = TestEnvironment.FOUNDRY_PROJECT_ENDPOINT;
         var modelDeploymentName = TestEnvironment.FOUNDRY_REALTIME_MODEL_NAME;
 #endif
-        string agentName = $"voice-agent-conv-sample-{Guid.NewGuid():N}".Substring(0, 40);
+        #region Snippet:Sample_VoiceAgent_ReadConversation_Initialize
+        string agentName = $"voice-h-{Guid.NewGuid():N}";
+        using CancellationTokenSource timeout = new(TimeSpan.FromMinutes(2));
 
         AIProjectClient projectClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
-
-        #region Snippet:Sample_VoiceAgent_ReadConversation_Create
-        VoiceAgentDefinition definition = new()
-        {
-            ModelType = VoiceModelType.SelfDeployed,
-            Model = modelDeploymentName,
-            Instructions = "Respond briefly and helpfully.",
-        };
-        definition.OutputModalities.Add(VoiceOutputModality.Text);
-        ProjectsAgentVersion agentVersion = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
-            agentName,
-            new ProjectsAgentVersionCreationOptions(definition));
         #endregion
 
         try
         {
+            #region Snippet:Sample_VoiceAgent_ReadConversation_Create
+            VoiceAgentDefinition definition = new()
+            {
+                ModelType = VoiceModelType.SelfDeployed,
+                Model = modelDeploymentName,
+                Instructions = "Respond briefly and helpfully.",
+            };
+            definition.OutputModalities.Add(VoiceOutputModality.Text);
+            ClientResult<ProjectsAgentVersion> created = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
+                agentName, new ProjectsAgentVersionCreationOptions(definition), cancellationToken: timeout.Token);
+            Console.WriteLine($"Created voice agent {created.Value.Name}: HTTP {created.GetRawResponse().Status}");
+            #endregion
+
             #region Snippet:Sample_VoiceAgent_ReadConversation_HoldSession
-            // Save the conversation with store=true and get its ID from response.done.
-            string conversationId;
+            ProjectsRealtimeSessionClientOptions options = new()
+            {
+                Transport = VoiceAgentTransport.Websocket,
+                QueryString = "store=true"
+            };
+            string conversationId = null;
             using (ProjectsRealtimeSessionClient session = (ProjectsRealtimeSessionClient)
                 await projectClient.ProjectsRealtimeClient.StartSessionAsync(
-                    agentName,
-                    intent: null,
-                    options: new RealtimeSessionClientOptions { QueryString = "store=true" }))
+                    agentName, intent: null, options: options, cancellationToken: timeout.Token))
             {
-                await session.AddItemAsync(RealtimeItem.CreateUserMessageItem("Say hello in one short sentence."));
-                await session.StartResponseAsync();
+                await session.AddItemAsync(RealtimeItem.CreateUserMessageItem("Say hello in one short sentence."), timeout.Token);
+                await session.StartResponseAsync(timeout.Token);
 
-                conversationId = null;
-                await foreach (RealtimeServerUpdate update in session.ReceiveUpdatesAsync())
+                string responseText = string.Empty;
+                bool completed = false;
+                await foreach (RealtimeServerUpdate update in session.ReceiveUpdatesAsync(timeout.Token))
                 {
                     Console.WriteLine($"Received event: {update.Kind}");
-                    if (update is RealtimeServerUpdateResponseDone doneUpdate)
+                    if (update is RealtimeServerUpdateResponseOutputTextDone text)
                     {
-                        conversationId = doneUpdate.Response.ConversationId;
+                        responseText = text.Text;
+                    }
+                    else if (update is RealtimeServerUpdateResponseDone done)
+                    {
+                        completed = done.Response.Status == RealtimeResponseStatus.Completed;
+                        conversationId = done.Response.ConversationId;
                         break;
                     }
                 }
+                if (!completed || string.IsNullOrWhiteSpace(responseText) || string.IsNullOrWhiteSpace(conversationId))
+                {
+                    throw new InvalidOperationException("The voice agent did not complete a stored text response.");
+                }
+                Console.WriteLine($"Voice agent response: {responseText}");
             }
             #endregion
             #region Snippet:Sample_VoiceAgent_ReadConversation_Read
             // Read the saved messages and responses over REST.
             BetaVoiceAgentsConversations conversationsClient = projectClient.AgentAdministrationClient.GetBetaVoiceAgentEndpointConversations();
 
-            VoiceConversation conversation = await conversationsClient.GetAgentConversationAsync(agentName, conversationId);
-            Console.WriteLine($"Conversation {conversation.Id} status: {conversation.Status}");
-
-            await foreach (RealtimeItem item in conversationsClient.GetAgentConversationItemsAsync(agentName, conversationId))
+            ClientResult<VoiceConversation> conversation = await conversationsClient.GetAgentConversationAsync(
+                agentName, conversationId, cancellationToken: timeout.Token);
+            if (conversation.Value.Id != conversationId)
             {
+                throw new InvalidOperationException("The saved conversation ID did not match the Realtime response.");
+            }
+            Console.WriteLine($"Conversation {conversation.Value.Id} status: {conversation.Value.Status}; HTTP {conversation.GetRawResponse().Status}");
+
+            int itemCount = 0;
+            await foreach (RealtimeItem item in conversationsClient.GetAgentConversationItemsAsync(
+                agentName, conversationId, cancellationToken: timeout.Token))
+            {
+                itemCount++;
                 Console.WriteLine($"Conversation item: {item.Kind}");
             }
 
-            await foreach (VoiceResult response in conversationsClient.GetAgentConversationResponsesAsync(agentName, conversationId))
+            int completedResponses = 0;
+            await foreach (VoiceResult response in conversationsClient.GetAgentConversationResponsesAsync(
+                agentName, conversationId, cancellationToken: timeout.Token))
             {
+                if (response.Status == RealtimeResponseStatus.Completed)
+                {
+                    completedResponses++;
+                }
                 Console.WriteLine($"Response {response.Id} status: {response.Status}");
             }
             #endregion
-            Assert.That(conversation.Id, Is.EqualTo(conversationId));
+            Assert.That(itemCount, Is.GreaterThanOrEqualTo(2));
+            Assert.That(completedResponses, Is.GreaterThanOrEqualTo(1));
         }
         finally
         {
             #region Snippet:Sample_VoiceAgent_ReadConversation_Cleanup
-            await projectClient.AgentAdministrationClient.DeleteAgentVersionAsync(agentName: agentName, agentVersion: agentVersion.Version);
+            using CancellationTokenSource cleanupTimeout = new(TimeSpan.FromSeconds(30));
+            try
+            {
+                ClientResult deleted = await projectClient.AgentAdministrationClient.DeleteAgentAsync(
+                    agentName, cancellationToken: cleanupTimeout.Token);
+                Console.WriteLine($"Deleted temporary voice agent {agentName}: HTTP {deleted.GetRawResponse().Status}");
+            }
+            catch (ClientResultException exception) when (exception.Status == 404)
+            {
+                Console.WriteLine($"Temporary voice agent {agentName} is already absent.");
+            }
             #endregion
         }
+        using CancellationTokenSource verificationTimeout = new(TimeSpan.FromSeconds(30));
+        ClientResultException notFound = Assert.ThrowsAsync<ClientResultException>(async () =>
+            await projectClient.AgentAdministrationClient.GetAgentAsync(agentName, verificationTimeout.Token));
+        Assert.That(notFound.Status, Is.EqualTo(404));
+        Console.WriteLine($"Verified temporary voice agent {agentName} is absent: HTTP 404");
     }
 }
