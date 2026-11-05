@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.MachineLearning
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workspacesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _workspacesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<MachineLearningWorkspaceData> response = Response.FromValue(MachineLearningWorkspaceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.MachineLearning
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workspacesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _workspacesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<MachineLearningWorkspaceData> response = Response.FromValue(MachineLearningWorkspaceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.MachineLearning
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workspacesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, MachineLearningWorkspacePatch.ToRequestContent(patch), context);
+                using HttpMessage message = _workspacesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, MachineLearningWorkspacePatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 MachineLearningArmOperation<MachineLearningWorkspaceResource> operation = new MachineLearningArmOperation<MachineLearningWorkspaceResource>(
                     new MachineLearningWorkspaceResourceOperationSource(Client),
@@ -298,7 +298,7 @@ namespace Azure.ResourceManager.MachineLearning
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workspacesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, MachineLearningWorkspacePatch.ToRequestContent(patch), context);
+                using HttpMessage message = _workspacesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, MachineLearningWorkspacePatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 MachineLearningArmOperation<MachineLearningWorkspaceResource> operation = new MachineLearningArmOperation<MachineLearningWorkspaceResource>(
                     new MachineLearningWorkspaceResourceOperationSource(Client),
@@ -354,7 +354,7 @@ namespace Azure.ResourceManager.MachineLearning
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workspacesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, forceToPurge, context);
+                using HttpMessage message = _workspacesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, forceToPurge, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 MachineLearningArmOperation operation = new MachineLearningArmOperation(_workspacesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -404,7 +404,7 @@ namespace Azure.ResourceManager.MachineLearning
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workspacesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, forceToPurge, context);
+                using HttpMessage message = _workspacesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, forceToPurge, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 MachineLearningArmOperation operation = new MachineLearningArmOperation(_workspacesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -454,7 +454,7 @@ namespace Azure.ResourceManager.MachineLearning
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workspacesRestClient.CreateDiagnoseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, MachineLearningWorkspaceDiagnoseContent.ToRequestContent(content), context);
+                using HttpMessage message = _workspacesRestClient.CreateDiagnoseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, MachineLearningWorkspaceDiagnoseContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 MachineLearningArmOperation<MachineLearningWorkspaceDiagnoseResult> operation = new MachineLearningArmOperation<MachineLearningWorkspaceDiagnoseResult>(
                     new MachineLearningWorkspaceDiagnoseResultOperationSource(),
@@ -510,7 +510,7 @@ namespace Azure.ResourceManager.MachineLearning
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workspacesRestClient.CreateDiagnoseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, MachineLearningWorkspaceDiagnoseContent.ToRequestContent(content), context);
+                using HttpMessage message = _workspacesRestClient.CreateDiagnoseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, MachineLearningWorkspaceDiagnoseContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 MachineLearningArmOperation<MachineLearningWorkspaceDiagnoseResult> operation = new MachineLearningArmOperation<MachineLearningWorkspaceDiagnoseResult>(
                     new MachineLearningWorkspaceDiagnoseResultOperationSource(),
@@ -640,7 +640,7 @@ namespace Azure.ResourceManager.MachineLearning
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workspacesRestClient.CreateGetKeysRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _workspacesRestClient.CreateGetKeysRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<MachineLearningWorkspaceGetKeysResult> response = Response.FromValue(MachineLearningWorkspaceGetKeysResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -688,7 +688,7 @@ namespace Azure.ResourceManager.MachineLearning
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workspacesRestClient.CreateGetKeysRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _workspacesRestClient.CreateGetKeysRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<MachineLearningWorkspaceGetKeysResult> response = Response.FromValue(MachineLearningWorkspaceGetKeysResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -736,7 +736,7 @@ namespace Azure.ResourceManager.MachineLearning
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workspacesRestClient.CreateGetNotebookAccessTokenRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _workspacesRestClient.CreateGetNotebookAccessTokenRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<MachineLearningWorkspaceNotebookAccessTokenResult> response = Response.FromValue(MachineLearningWorkspaceNotebookAccessTokenResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -784,7 +784,7 @@ namespace Azure.ResourceManager.MachineLearning
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workspacesRestClient.CreateGetNotebookAccessTokenRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _workspacesRestClient.CreateGetNotebookAccessTokenRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<MachineLearningWorkspaceNotebookAccessTokenResult> response = Response.FromValue(MachineLearningWorkspaceNotebookAccessTokenResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -832,7 +832,7 @@ namespace Azure.ResourceManager.MachineLearning
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workspacesRestClient.CreateGetNotebookKeysRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _workspacesRestClient.CreateGetNotebookKeysRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<MachineLearningWorkspaceGetNotebookKeysResult> response = Response.FromValue(MachineLearningWorkspaceGetNotebookKeysResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -880,7 +880,7 @@ namespace Azure.ResourceManager.MachineLearning
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workspacesRestClient.CreateGetNotebookKeysRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _workspacesRestClient.CreateGetNotebookKeysRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<MachineLearningWorkspaceGetNotebookKeysResult> response = Response.FromValue(MachineLearningWorkspaceGetNotebookKeysResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -928,7 +928,7 @@ namespace Azure.ResourceManager.MachineLearning
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workspacesRestClient.CreateGetStorageAccountKeysRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _workspacesRestClient.CreateGetStorageAccountKeysRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<MachineLearningWorkspaceGetStorageAccountKeysResult> response = Response.FromValue(MachineLearningWorkspaceGetStorageAccountKeysResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -976,7 +976,7 @@ namespace Azure.ResourceManager.MachineLearning
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workspacesRestClient.CreateGetStorageAccountKeysRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _workspacesRestClient.CreateGetStorageAccountKeysRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<MachineLearningWorkspaceGetStorageAccountKeysResult> response = Response.FromValue(MachineLearningWorkspaceGetStorageAccountKeysResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -1025,7 +1025,7 @@ namespace Azure.ResourceManager.MachineLearning
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workspacesRestClient.CreatePrepareNotebookRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _workspacesRestClient.CreatePrepareNotebookRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 MachineLearningArmOperation<MachineLearningNotebookResourceInfo> operation = new MachineLearningArmOperation<MachineLearningNotebookResourceInfo>(
                     new MachineLearningNotebookResourceInfoOperationSource(),
@@ -1080,7 +1080,7 @@ namespace Azure.ResourceManager.MachineLearning
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workspacesRestClient.CreatePrepareNotebookRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _workspacesRestClient.CreatePrepareNotebookRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 MachineLearningArmOperation<MachineLearningNotebookResourceInfo> operation = new MachineLearningArmOperation<MachineLearningNotebookResourceInfo>(
                     new MachineLearningNotebookResourceInfoOperationSource(),
@@ -1220,7 +1220,7 @@ namespace Azure.ResourceManager.MachineLearning
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _managedNetworkProvisionsRestClient.CreateProvisionManagedNetworkRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ManagedNetworkProvisionContent.ToRequestContent(content), context);
+                using HttpMessage message = _managedNetworkProvisionsRestClient.CreateProvisionManagedNetworkRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ManagedNetworkProvisionContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 MachineLearningArmOperation<ManagedNetworkProvisionStatus> operation = new MachineLearningArmOperation<ManagedNetworkProvisionStatus>(
                     new ManagedNetworkProvisionStatusOperationSource(),
@@ -1276,7 +1276,7 @@ namespace Azure.ResourceManager.MachineLearning
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _managedNetworkProvisionsRestClient.CreateProvisionManagedNetworkRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ManagedNetworkProvisionContent.ToRequestContent(content), context);
+                using HttpMessage message = _managedNetworkProvisionsRestClient.CreateProvisionManagedNetworkRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ManagedNetworkProvisionContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 MachineLearningArmOperation<ManagedNetworkProvisionStatus> operation = new MachineLearningArmOperation<ManagedNetworkProvisionStatus>(
                     new ManagedNetworkProvisionStatusOperationSource(),
@@ -1331,7 +1331,7 @@ namespace Azure.ResourceManager.MachineLearning
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workspacesRestClient.CreateResyncKeysRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _workspacesRestClient.CreateResyncKeysRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 MachineLearningArmOperation operation = new MachineLearningArmOperation(_workspacesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -1380,7 +1380,7 @@ namespace Azure.ResourceManager.MachineLearning
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workspacesRestClient.CreateResyncKeysRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _workspacesRestClient.CreateResyncKeysRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 MachineLearningArmOperation operation = new MachineLearningArmOperation(_workspacesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -1419,7 +1419,7 @@ namespace Azure.ResourceManager.MachineLearning
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _workspacesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _workspacesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<MachineLearningWorkspaceData> response = Response.FromValue(MachineLearningWorkspaceData.FromResponse(result), result);
                     return Response.FromValue(new MachineLearningWorkspaceResource(Client, response.Value), response.GetRawResponse());
@@ -1467,7 +1467,7 @@ namespace Azure.ResourceManager.MachineLearning
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _workspacesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _workspacesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<MachineLearningWorkspaceData> response = Response.FromValue(MachineLearningWorkspaceData.FromResponse(result), result);
                     return Response.FromValue(new MachineLearningWorkspaceResource(Client, response.Value), response.GetRawResponse());
@@ -1513,7 +1513,7 @@ namespace Azure.ResourceManager.MachineLearning
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _workspacesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _workspacesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<MachineLearningWorkspaceData> response = Response.FromValue(MachineLearningWorkspaceData.FromResponse(result), result);
                     return Response.FromValue(new MachineLearningWorkspaceResource(Client, response.Value), response.GetRawResponse());
@@ -1555,7 +1555,7 @@ namespace Azure.ResourceManager.MachineLearning
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _workspacesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _workspacesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<MachineLearningWorkspaceData> response = Response.FromValue(MachineLearningWorkspaceData.FromResponse(result), result);
                     return Response.FromValue(new MachineLearningWorkspaceResource(Client, response.Value), response.GetRawResponse());
@@ -1597,7 +1597,7 @@ namespace Azure.ResourceManager.MachineLearning
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _workspacesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _workspacesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<MachineLearningWorkspaceData> response = Response.FromValue(MachineLearningWorkspaceData.FromResponse(result), result);
                     return Response.FromValue(new MachineLearningWorkspaceResource(Client, response.Value), response.GetRawResponse());
@@ -1643,7 +1643,7 @@ namespace Azure.ResourceManager.MachineLearning
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _workspacesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _workspacesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<MachineLearningWorkspaceData> response = Response.FromValue(MachineLearningWorkspaceData.FromResponse(result), result);
                     return Response.FromValue(new MachineLearningWorkspaceResource(Client, response.Value), response.GetRawResponse());

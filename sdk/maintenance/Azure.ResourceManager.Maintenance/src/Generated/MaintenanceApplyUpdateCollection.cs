@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Maintenance
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _maintenanceApplyUpdateRestClient.CreateGetApplyUpdatesByParentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.ResourceType.Type, Id.Parent.Name, Id.ResourceType.Type, Id.Name, applyUpdateName, context);
+                using HttpMessage message = _maintenanceApplyUpdateRestClient.CreateGetApplyUpdatesByParentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.ResourceType.Type, Id.Parent.Name, Id.ResourceType.Type, Id.Name, applyUpdateName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<MaintenanceApplyUpdateData> response = Response.FromValue(MaintenanceApplyUpdateData.FromResponse(result), result);
                 if (response.Value == null)
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Maintenance
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _maintenanceApplyUpdateRestClient.CreateGetApplyUpdatesByParentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.ResourceType.Type, Id.Parent.Name, Id.ResourceType.Type, Id.Name, applyUpdateName, context);
+                using HttpMessage message = _maintenanceApplyUpdateRestClient.CreateGetApplyUpdatesByParentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.ResourceType.Type, Id.Parent.Name, Id.ResourceType.Type, Id.Name, applyUpdateName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<MaintenanceApplyUpdateData> response = Response.FromValue(MaintenanceApplyUpdateData.FromResponse(result), result);
                 if (response.Value == null)
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.Maintenance
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _maintenanceApplyUpdateRestClient.CreateGetApplyUpdatesByParentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.ResourceType.Type, Id.Parent.Name, Id.ResourceType.Type, Id.Name, applyUpdateName, context);
+                using HttpMessage message = _maintenanceApplyUpdateRestClient.CreateGetApplyUpdatesByParentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.ResourceType.Type, Id.Parent.Name, Id.ResourceType.Type, Id.Name, applyUpdateName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<MaintenanceApplyUpdateData> response = default;
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.Maintenance
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _maintenanceApplyUpdateRestClient.CreateGetApplyUpdatesByParentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.ResourceType.Type, Id.Parent.Name, Id.ResourceType.Type, Id.Name, applyUpdateName, context);
+                using HttpMessage message = _maintenanceApplyUpdateRestClient.CreateGetApplyUpdatesByParentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.ResourceType.Type, Id.Parent.Name, Id.ResourceType.Type, Id.Name, applyUpdateName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<MaintenanceApplyUpdateData> response = default;
@@ -291,7 +291,7 @@ namespace Azure.ResourceManager.Maintenance
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _maintenanceApplyUpdateRestClient.CreateGetApplyUpdatesByParentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.ResourceType.Type, Id.Parent.Name, Id.ResourceType.Type, Id.Name, applyUpdateName, context);
+                using HttpMessage message = _maintenanceApplyUpdateRestClient.CreateGetApplyUpdatesByParentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.ResourceType.Type, Id.Parent.Name, Id.ResourceType.Type, Id.Name, applyUpdateName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<MaintenanceApplyUpdateData> response = default;
@@ -352,7 +352,7 @@ namespace Azure.ResourceManager.Maintenance
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _maintenanceApplyUpdateRestClient.CreateGetApplyUpdatesByParentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.ResourceType.Type, Id.Parent.Name, Id.ResourceType.Type, Id.Name, applyUpdateName, context);
+                using HttpMessage message = _maintenanceApplyUpdateRestClient.CreateGetApplyUpdatesByParentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.ResourceType.Type, Id.Parent.Name, Id.ResourceType.Type, Id.Name, applyUpdateName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<MaintenanceApplyUpdateData> response = default;

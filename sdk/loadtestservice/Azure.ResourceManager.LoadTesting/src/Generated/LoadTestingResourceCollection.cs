@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.LoadTesting
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _loadTestsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, loadTestName, LoadTestingResourceData.ToRequestContent(data), context);
+                using HttpMessage message = _loadTestsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, loadTestName, LoadTestingResourceData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 LoadTestingArmOperation<LoadTestingResource> operation = new LoadTestingArmOperation<LoadTestingResource>(
                     new LoadTestingResourceOperationSource(Client),
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.LoadTesting
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _loadTestsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, loadTestName, LoadTestingResourceData.ToRequestContent(data), context);
+                using HttpMessage message = _loadTestsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, loadTestName, LoadTestingResourceData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 LoadTestingArmOperation<LoadTestingResource> operation = new LoadTestingArmOperation<LoadTestingResource>(
                     new LoadTestingResourceOperationSource(Client),
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.LoadTesting
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _loadTestsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, loadTestName, context);
+                using HttpMessage message = _loadTestsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, loadTestName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<LoadTestingResourceData> response = Response.FromValue(LoadTestingResourceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.LoadTesting
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _loadTestsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, loadTestName, context);
+                using HttpMessage message = _loadTestsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, loadTestName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<LoadTestingResourceData> response = Response.FromValue(LoadTestingResourceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -357,7 +357,7 @@ namespace Azure.ResourceManager.LoadTesting
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _loadTestsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, loadTestName, context);
+                using HttpMessage message = _loadTestsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, loadTestName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<LoadTestingResourceData> response = default;
@@ -414,7 +414,7 @@ namespace Azure.ResourceManager.LoadTesting
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _loadTestsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, loadTestName, context);
+                using HttpMessage message = _loadTestsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, loadTestName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<LoadTestingResourceData> response = default;
@@ -471,7 +471,7 @@ namespace Azure.ResourceManager.LoadTesting
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _loadTestsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, loadTestName, context);
+                using HttpMessage message = _loadTestsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, loadTestName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<LoadTestingResourceData> response = default;
@@ -532,7 +532,7 @@ namespace Azure.ResourceManager.LoadTesting
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _loadTestsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, loadTestName, context);
+                using HttpMessage message = _loadTestsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, loadTestName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<LoadTestingResourceData> response = default;

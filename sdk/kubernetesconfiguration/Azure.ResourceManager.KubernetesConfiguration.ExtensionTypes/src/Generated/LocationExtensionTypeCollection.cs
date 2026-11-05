@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.ExtensionTypes
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _extensionTypeInterfaceRestClient.CreateLocationGetRequest(Id.SubscriptionId, _location, extensionTypeName, context);
+                using HttpMessage message = _extensionTypeInterfaceRestClient.CreateLocationGetRequest(Id.SubscriptionId, _location, extensionTypeName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<KubernetesConfigurationExtensionTypeData> response = Response.FromValue(KubernetesConfigurationExtensionTypeData.FromResponse(result), result);
                 if (response.Value == null)
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.ExtensionTypes
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _extensionTypeInterfaceRestClient.CreateLocationGetRequest(Id.SubscriptionId, _location, extensionTypeName, context);
+                using HttpMessage message = _extensionTypeInterfaceRestClient.CreateLocationGetRequest(Id.SubscriptionId, _location, extensionTypeName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<KubernetesConfigurationExtensionTypeData> response = Response.FromValue(KubernetesConfigurationExtensionTypeData.FromResponse(result), result);
                 if (response.Value == null)
@@ -276,7 +276,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.ExtensionTypes
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _extensionTypeInterfaceRestClient.CreateLocationGetRequest(Id.SubscriptionId, _location, extensionTypeName, context);
+                using HttpMessage message = _extensionTypeInterfaceRestClient.CreateLocationGetRequest(Id.SubscriptionId, _location, extensionTypeName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<KubernetesConfigurationExtensionTypeData> response = default;
@@ -333,7 +333,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.ExtensionTypes
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _extensionTypeInterfaceRestClient.CreateLocationGetRequest(Id.SubscriptionId, _location, extensionTypeName, context);
+                using HttpMessage message = _extensionTypeInterfaceRestClient.CreateLocationGetRequest(Id.SubscriptionId, _location, extensionTypeName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<KubernetesConfigurationExtensionTypeData> response = default;
@@ -390,7 +390,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.ExtensionTypes
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _extensionTypeInterfaceRestClient.CreateLocationGetRequest(Id.SubscriptionId, _location, extensionTypeName, context);
+                using HttpMessage message = _extensionTypeInterfaceRestClient.CreateLocationGetRequest(Id.SubscriptionId, _location, extensionTypeName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<KubernetesConfigurationExtensionTypeData> response = default;
@@ -451,7 +451,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.ExtensionTypes
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _extensionTypeInterfaceRestClient.CreateLocationGetRequest(Id.SubscriptionId, _location, extensionTypeName, context);
+                using HttpMessage message = _extensionTypeInterfaceRestClient.CreateLocationGetRequest(Id.SubscriptionId, _location, extensionTypeName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<KubernetesConfigurationExtensionTypeData> response = default;

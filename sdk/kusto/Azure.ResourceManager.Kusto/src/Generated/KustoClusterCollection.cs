@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Kusto
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _clustersRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, clusterName, KustoClusterData.ToRequestContent(data), matchConditions, context);
+                using HttpMessage message = _clustersRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, clusterName, KustoClusterData.ToRequestContent(data), matchConditions, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 KustoArmOperation<KustoClusterResource> operation = new KustoArmOperation<KustoClusterResource>(
                     new KustoClusterResourceOperationSource(Client),
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.Kusto
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _clustersRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, clusterName, KustoClusterData.ToRequestContent(data), matchConditions, context);
+                using HttpMessage message = _clustersRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, clusterName, KustoClusterData.ToRequestContent(data), matchConditions, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 KustoArmOperation<KustoClusterResource> operation = new KustoArmOperation<KustoClusterResource>(
                     new KustoClusterResourceOperationSource(Client),
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.Kusto
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _clustersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, clusterName, context);
+                using HttpMessage message = _clustersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, clusterName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<KustoClusterData> response = Response.FromValue(KustoClusterData.FromResponse(result), result);
                 if (response.Value == null)
@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.Kusto
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _clustersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, clusterName, context);
+                using HttpMessage message = _clustersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, clusterName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<KustoClusterData> response = Response.FromValue(KustoClusterData.FromResponse(result), result);
                 if (response.Value == null)
@@ -366,7 +366,7 @@ namespace Azure.ResourceManager.Kusto
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _clustersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, clusterName, context);
+                using HttpMessage message = _clustersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, clusterName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<KustoClusterData> response = default;
@@ -423,7 +423,7 @@ namespace Azure.ResourceManager.Kusto
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _clustersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, clusterName, context);
+                using HttpMessage message = _clustersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, clusterName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<KustoClusterData> response = default;
@@ -480,7 +480,7 @@ namespace Azure.ResourceManager.Kusto
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _clustersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, clusterName, context);
+                using HttpMessage message = _clustersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, clusterName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<KustoClusterData> response = default;
@@ -541,7 +541,7 @@ namespace Azure.ResourceManager.Kusto
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _clustersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, clusterName, context);
+                using HttpMessage message = _clustersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, clusterName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<KustoClusterData> response = default;

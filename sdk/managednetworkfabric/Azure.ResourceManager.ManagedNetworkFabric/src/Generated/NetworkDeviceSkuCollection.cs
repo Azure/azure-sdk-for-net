@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkDeviceSkusRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), networkDeviceSkuName, context);
+                using HttpMessage message = _networkDeviceSkusRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), networkDeviceSkuName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<NetworkDeviceSkuData> response = Response.FromValue(NetworkDeviceSkuData.FromResponse(result), result);
                 if (response.Value == null)
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkDeviceSkusRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), networkDeviceSkuName, context);
+                using HttpMessage message = _networkDeviceSkusRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), networkDeviceSkuName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<NetworkDeviceSkuData> response = Response.FromValue(NetworkDeviceSkuData.FromResponse(result), result);
                 if (response.Value == null)
@@ -242,7 +242,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkDeviceSkusRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), networkDeviceSkuName, context);
+                using HttpMessage message = _networkDeviceSkusRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), networkDeviceSkuName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<NetworkDeviceSkuData> response = default;
@@ -299,7 +299,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkDeviceSkusRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), networkDeviceSkuName, context);
+                using HttpMessage message = _networkDeviceSkusRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), networkDeviceSkuName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<NetworkDeviceSkuData> response = default;
@@ -356,7 +356,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkDeviceSkusRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), networkDeviceSkuName, context);
+                using HttpMessage message = _networkDeviceSkusRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), networkDeviceSkuName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<NetworkDeviceSkuData> response = default;
@@ -417,7 +417,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkDeviceSkusRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), networkDeviceSkuName, context);
+                using HttpMessage message = _networkDeviceSkusRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), networkDeviceSkuName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<NetworkDeviceSkuData> response = default;

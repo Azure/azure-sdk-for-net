@@ -290,7 +290,7 @@ namespace Azure.ResourceManager.ManagedApplications.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = JitRequestsRestClient.CreateGetByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, context);
+                using HttpMessage message = JitRequestsRestClient.CreateGetByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<JitRequestDefinitionListResult> response = Response.FromValue(JitRequestDefinitionListResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -334,7 +334,7 @@ namespace Azure.ResourceManager.ManagedApplications.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = JitRequestsRestClient.CreateGetByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, context);
+                using HttpMessage message = JitRequestsRestClient.CreateGetByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<JitRequestDefinitionListResult> response = Response.FromValue(JitRequestDefinitionListResult.FromResponse(result), result);
                 if (response.Value == null)

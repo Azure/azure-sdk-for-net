@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.ManagedApplications.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = JitRequestsRestClient.CreateGetBySubscriptionRequest(Id.SubscriptionId, context);
+                using HttpMessage message = JitRequestsRestClient.CreateGetBySubscriptionRequest(Id.SubscriptionId, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<JitRequestDefinitionListResult> response = Response.FromValue(JitRequestDefinitionListResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -242,7 +242,7 @@ namespace Azure.ResourceManager.ManagedApplications.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = JitRequestsRestClient.CreateGetBySubscriptionRequest(Id.SubscriptionId, context);
+                using HttpMessage message = JitRequestsRestClient.CreateGetBySubscriptionRequest(Id.SubscriptionId, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<JitRequestDefinitionListResult> response = Response.FromValue(JitRequestDefinitionListResult.FromResponse(result), result);
                 if (response.Value == null)

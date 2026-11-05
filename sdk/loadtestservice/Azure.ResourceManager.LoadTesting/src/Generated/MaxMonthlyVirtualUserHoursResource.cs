@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.LoadTesting
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _loadTestsMaxMonthlyVirtualUserHoursLimitsResourceRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, context);
+                using HttpMessage message = _loadTestsMaxMonthlyVirtualUserHoursLimitsResourceRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<MaxMonthlyVirtualUserHoursData> response = Response.FromValue(MaxMonthlyVirtualUserHoursData.FromResponse(result), result);
                 if (response.Value == null)
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.LoadTesting
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _loadTestsMaxMonthlyVirtualUserHoursLimitsResourceRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, context);
+                using HttpMessage message = _loadTestsMaxMonthlyVirtualUserHoursLimitsResourceRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<MaxMonthlyVirtualUserHoursData> response = Response.FromValue(MaxMonthlyVirtualUserHoursData.FromResponse(result), result);
                 if (response.Value == null)
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.LoadTesting
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _loadTestsMaxMonthlyVirtualUserHoursLimitsResourceRestClient.CreateSetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, MaxMonthlyVirtualUserHoursLimitContent.ToRequestContent(content), context);
+                using HttpMessage message = _loadTestsMaxMonthlyVirtualUserHoursLimitsResourceRestClient.CreateSetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, MaxMonthlyVirtualUserHoursLimitContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<MaxMonthlyVirtualUserHoursData> response = Response.FromValue(MaxMonthlyVirtualUserHoursData.FromResponse(result), result);
                 if (response.Value == null)
@@ -275,7 +275,7 @@ namespace Azure.ResourceManager.LoadTesting
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _loadTestsMaxMonthlyVirtualUserHoursLimitsResourceRestClient.CreateSetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, MaxMonthlyVirtualUserHoursLimitContent.ToRequestContent(content), context);
+                using HttpMessage message = _loadTestsMaxMonthlyVirtualUserHoursLimitsResourceRestClient.CreateSetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, MaxMonthlyVirtualUserHoursLimitContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<MaxMonthlyVirtualUserHoursData> response = Response.FromValue(MaxMonthlyVirtualUserHoursData.FromResponse(result), result);
                 if (response.Value == null)

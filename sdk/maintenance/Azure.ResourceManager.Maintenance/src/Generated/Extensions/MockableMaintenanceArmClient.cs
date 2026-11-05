@@ -308,7 +308,7 @@ namespace Azure.ResourceManager.Maintenance.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = ScheduledEventsRestClient.CreateAcknowledgeRequest(Guid.Parse(scope.SubscriptionId), scope.ResourceGroupName, scope.ResourceType.Type, scope.Name, scheduledEventId, context);
+                using HttpMessage message = ScheduledEventsRestClient.CreateAcknowledgeRequest(Guid.Parse(scope.SubscriptionId), scope.ResourceGroupName, scope.ResourceType.Type, scope.Name, scheduledEventId, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<MaintenanceScheduledEventApproveResult> response = Response.FromValue(MaintenanceScheduledEventApproveResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -359,7 +359,7 @@ namespace Azure.ResourceManager.Maintenance.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = ScheduledEventsRestClient.CreateAcknowledgeRequest(Guid.Parse(scope.SubscriptionId), scope.ResourceGroupName, scope.ResourceType.Type, scope.Name, scheduledEventId, context);
+                using HttpMessage message = ScheduledEventsRestClient.CreateAcknowledgeRequest(Guid.Parse(scope.SubscriptionId), scope.ResourceGroupName, scope.ResourceType.Type, scope.Name, scheduledEventId, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<MaintenanceScheduledEventApproveResult> response = Response.FromValue(MaintenanceScheduledEventApproveResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -409,7 +409,7 @@ namespace Azure.ResourceManager.Maintenance.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = ScheduledEventsRestClient.CreateAcknowledgeListRequest(Guid.Parse(scope.SubscriptionId), scope.ResourceGroupName, scope.ResourceType.Type, scope.Name, MaintenanceScheduledEventIdList.ToRequestContent(scheduledEventsIdList), context);
+                using HttpMessage message = ScheduledEventsRestClient.CreateAcknowledgeListRequest(Guid.Parse(scope.SubscriptionId), scope.ResourceGroupName, scope.ResourceType.Type, scope.Name, MaintenanceScheduledEventIdList.ToRequestContent(scheduledEventsIdList), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<MaintenanceScheduledEventApproveResult> response = Response.FromValue(MaintenanceScheduledEventApproveResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -459,7 +459,7 @@ namespace Azure.ResourceManager.Maintenance.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = ScheduledEventsRestClient.CreateAcknowledgeListRequest(Guid.Parse(scope.SubscriptionId), scope.ResourceGroupName, scope.ResourceType.Type, scope.Name, MaintenanceScheduledEventIdList.ToRequestContent(scheduledEventsIdList), context);
+                using HttpMessage message = ScheduledEventsRestClient.CreateAcknowledgeListRequest(Guid.Parse(scope.SubscriptionId), scope.ResourceGroupName, scope.ResourceType.Type, scope.Name, MaintenanceScheduledEventIdList.ToRequestContent(scheduledEventsIdList), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<MaintenanceScheduledEventApproveResult> response = Response.FromValue(MaintenanceScheduledEventApproveResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -507,7 +507,7 @@ namespace Azure.ResourceManager.Maintenance.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = MaintenanceApplyUpdateRestClient.CreateCreateOrUpdateApplyUpdateByParentRequest(Guid.Parse(scope.SubscriptionId), scope.ResourceGroupName, scope.Parent.ResourceType.Namespace, scope.Parent.ResourceType.Type, scope.Parent.Name, scope.ResourceType.Type, scope.Name, context);
+                using HttpMessage message = MaintenanceApplyUpdateRestClient.CreateCreateOrUpdateApplyUpdateByParentRequest(Guid.Parse(scope.SubscriptionId), scope.ResourceGroupName, scope.Parent.ResourceType.Namespace, scope.Parent.ResourceType.Type, scope.Parent.Name, scope.ResourceType.Type, scope.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<MaintenanceApplyUpdateData> response = Response.FromValue(MaintenanceApplyUpdateData.FromResponse(result), result);
                 if (response.Value == null)
@@ -555,7 +555,7 @@ namespace Azure.ResourceManager.Maintenance.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = MaintenanceApplyUpdateRestClient.CreateCreateOrUpdateApplyUpdateByParentRequest(Guid.Parse(scope.SubscriptionId), scope.ResourceGroupName, scope.Parent.ResourceType.Namespace, scope.Parent.ResourceType.Type, scope.Parent.Name, scope.ResourceType.Type, scope.Name, context);
+                using HttpMessage message = MaintenanceApplyUpdateRestClient.CreateCreateOrUpdateApplyUpdateByParentRequest(Guid.Parse(scope.SubscriptionId), scope.ResourceGroupName, scope.Parent.ResourceType.Namespace, scope.Parent.ResourceType.Type, scope.Parent.Name, scope.ResourceType.Type, scope.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<MaintenanceApplyUpdateData> response = Response.FromValue(MaintenanceApplyUpdateData.FromResponse(result), result);
                 if (response.Value == null)
@@ -603,7 +603,7 @@ namespace Azure.ResourceManager.Maintenance.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = MaintenanceApplyUpdateRestClient.CreateCreateOrUpdateRequest(Guid.Parse(scope.SubscriptionId), scope.ResourceGroupName, scope.ResourceType.Namespace, scope.ResourceType.Type, scope.Name, context);
+                using HttpMessage message = MaintenanceApplyUpdateRestClient.CreateCreateOrUpdateRequest(Guid.Parse(scope.SubscriptionId), scope.ResourceGroupName, scope.ResourceType.Namespace, scope.ResourceType.Type, scope.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<MaintenanceApplyUpdateData> response = Response.FromValue(MaintenanceApplyUpdateData.FromResponse(result), result);
                 if (response.Value == null)
@@ -651,7 +651,7 @@ namespace Azure.ResourceManager.Maintenance.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = MaintenanceApplyUpdateRestClient.CreateCreateOrUpdateRequest(Guid.Parse(scope.SubscriptionId), scope.ResourceGroupName, scope.ResourceType.Namespace, scope.ResourceType.Type, scope.Name, context);
+                using HttpMessage message = MaintenanceApplyUpdateRestClient.CreateCreateOrUpdateRequest(Guid.Parse(scope.SubscriptionId), scope.ResourceGroupName, scope.ResourceType.Namespace, scope.ResourceType.Type, scope.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<MaintenanceApplyUpdateData> response = Response.FromValue(MaintenanceApplyUpdateData.FromResponse(result), result);
                 if (response.Value == null)

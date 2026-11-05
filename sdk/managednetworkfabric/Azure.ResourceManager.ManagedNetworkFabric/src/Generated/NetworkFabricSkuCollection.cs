@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkFabricSkusRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), networkFabricSkuName, context);
+                using HttpMessage message = _networkFabricSkusRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), networkFabricSkuName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<NetworkFabricSkuData> response = Response.FromValue(NetworkFabricSkuData.FromResponse(result), result);
                 if (response.Value == null)
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkFabricSkusRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), networkFabricSkuName, context);
+                using HttpMessage message = _networkFabricSkusRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), networkFabricSkuName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<NetworkFabricSkuData> response = Response.FromValue(NetworkFabricSkuData.FromResponse(result), result);
                 if (response.Value == null)
@@ -242,7 +242,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkFabricSkusRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), networkFabricSkuName, context);
+                using HttpMessage message = _networkFabricSkusRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), networkFabricSkuName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<NetworkFabricSkuData> response = default;
@@ -299,7 +299,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkFabricSkusRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), networkFabricSkuName, context);
+                using HttpMessage message = _networkFabricSkusRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), networkFabricSkuName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<NetworkFabricSkuData> response = default;
@@ -356,7 +356,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkFabricSkusRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), networkFabricSkuName, context);
+                using HttpMessage message = _networkFabricSkusRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), networkFabricSkuName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<NetworkFabricSkuData> response = default;
@@ -417,7 +417,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkFabricSkusRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), networkFabricSkuName, context);
+                using HttpMessage message = _networkFabricSkusRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), networkFabricSkuName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<NetworkFabricSkuData> response = default;

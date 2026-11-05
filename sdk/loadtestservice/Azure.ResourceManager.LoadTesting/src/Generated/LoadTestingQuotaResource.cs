@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.LoadTesting
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _quotasRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _quotasRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<LoadTestingQuotaData> response = Response.FromValue(LoadTestingQuotaData.FromResponse(result), result);
                 if (response.Value == null)
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.LoadTesting
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _quotasRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _quotasRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<LoadTestingQuotaData> response = Response.FromValue(LoadTestingQuotaData.FromResponse(result), result);
                 if (response.Value == null)
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.LoadTesting
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _quotasRestClient.CreateCheckLoadTestingQuotaAvailabilityRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, LoadTestingQuotaBucketContent.ToRequestContent(content), context);
+                using HttpMessage message = _quotasRestClient.CreateCheckLoadTestingQuotaAvailabilityRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, LoadTestingQuotaBucketContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<LoadTestingQuotaAvailabilityResult> response = Response.FromValue(LoadTestingQuotaAvailabilityResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -276,7 +276,7 @@ namespace Azure.ResourceManager.LoadTesting
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _quotasRestClient.CreateCheckLoadTestingQuotaAvailabilityRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, LoadTestingQuotaBucketContent.ToRequestContent(content), context);
+                using HttpMessage message = _quotasRestClient.CreateCheckLoadTestingQuotaAvailabilityRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, LoadTestingQuotaBucketContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<LoadTestingQuotaAvailabilityResult> response = Response.FromValue(LoadTestingQuotaAvailabilityResult.FromResponse(result), result);
                 if (response.Value == null)

@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.MachineLearning
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _registriesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _registriesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<MachineLearningRegistryData> response = Response.FromValue(MachineLearningRegistryData.FromResponse(result), result);
                 if (response.Value == null)
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.MachineLearning
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _registriesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _registriesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<MachineLearningRegistryData> response = Response.FromValue(MachineLearningRegistryData.FromResponse(result), result);
                 if (response.Value == null)
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.MachineLearning
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _registriesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, MachineLearningRegistryPatch.ToRequestContent(patch), context);
+                using HttpMessage message = _registriesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, MachineLearningRegistryPatch.ToRequestContent(patch), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<MachineLearningRegistryData> response = Response.FromValue(MachineLearningRegistryData.FromResponse(result), result);
                 if (response.Value == null)
@@ -280,7 +280,7 @@ namespace Azure.ResourceManager.MachineLearning
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _registriesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, MachineLearningRegistryPatch.ToRequestContent(patch), context);
+                using HttpMessage message = _registriesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, MachineLearningRegistryPatch.ToRequestContent(patch), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<MachineLearningRegistryData> response = Response.FromValue(MachineLearningRegistryData.FromResponse(result), result);
                 if (response.Value == null)
@@ -329,7 +329,7 @@ namespace Azure.ResourceManager.MachineLearning
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _registriesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _registriesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 MachineLearningArmOperation operation = new MachineLearningArmOperation(_registriesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -378,7 +378,7 @@ namespace Azure.ResourceManager.MachineLearning
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _registriesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _registriesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 MachineLearningArmOperation operation = new MachineLearningArmOperation(_registriesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -435,7 +435,7 @@ namespace Azure.ResourceManager.MachineLearning
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _registryDataReferencesRestClient.CreateGetBlobReferenceSasRegistryDataReferenceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, version, BlobReferenceSasContent.ToRequestContent(content), context);
+                using HttpMessage message = _registryDataReferencesRestClient.CreateGetBlobReferenceSasRegistryDataReferenceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, version, BlobReferenceSasContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<BlobReferenceSasResult> response = Response.FromValue(BlobReferenceSasResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -492,7 +492,7 @@ namespace Azure.ResourceManager.MachineLearning
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _registryDataReferencesRestClient.CreateGetBlobReferenceSasRegistryDataReferenceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, version, BlobReferenceSasContent.ToRequestContent(content), context);
+                using HttpMessage message = _registryDataReferencesRestClient.CreateGetBlobReferenceSasRegistryDataReferenceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, version, BlobReferenceSasContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<BlobReferenceSasResult> response = Response.FromValue(BlobReferenceSasResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -545,7 +545,7 @@ namespace Azure.ResourceManager.MachineLearning
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _registriesRestClient.CreateRemoveRegionsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, MachineLearningRegistryData.ToRequestContent(data), context);
+                using HttpMessage message = _registriesRestClient.CreateRemoveRegionsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, MachineLearningRegistryData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 MachineLearningArmOperation<MachineLearningRegistryResource> operation = new MachineLearningArmOperation<MachineLearningRegistryResource>(
                     new MachineLearningRegistryResourceOperationSource(Client),
@@ -604,7 +604,7 @@ namespace Azure.ResourceManager.MachineLearning
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _registriesRestClient.CreateRemoveRegionsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, MachineLearningRegistryData.ToRequestContent(data), context);
+                using HttpMessage message = _registriesRestClient.CreateRemoveRegionsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, MachineLearningRegistryData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 MachineLearningArmOperation<MachineLearningRegistryResource> operation = new MachineLearningArmOperation<MachineLearningRegistryResource>(
                     new MachineLearningRegistryResourceOperationSource(Client),

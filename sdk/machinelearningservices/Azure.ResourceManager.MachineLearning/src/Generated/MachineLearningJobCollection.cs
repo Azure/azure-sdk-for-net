@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.MachineLearning
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _jobsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, id, MachineLearningJobData.ToRequestContent(data), context);
+                using HttpMessage message = _jobsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, id, MachineLearningJobData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<MachineLearningJobData> response = Response.FromValue(MachineLearningJobData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.MachineLearning
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _jobsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, id, MachineLearningJobData.ToRequestContent(data), context);
+                using HttpMessage message = _jobsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, id, MachineLearningJobData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<MachineLearningJobData> response = Response.FromValue(MachineLearningJobData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.MachineLearning
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _jobsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, id, context);
+                using HttpMessage message = _jobsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, id, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<MachineLearningJobData> response = Response.FromValue(MachineLearningJobData.FromResponse(result), result);
                 if (response.Value == null)
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.MachineLearning
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _jobsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, id, context);
+                using HttpMessage message = _jobsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, id, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<MachineLearningJobData> response = Response.FromValue(MachineLearningJobData.FromResponse(result), result);
                 if (response.Value == null)
@@ -386,7 +386,7 @@ namespace Azure.ResourceManager.MachineLearning
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _jobsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, id, context);
+                using HttpMessage message = _jobsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, id, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<MachineLearningJobData> response = default;
@@ -443,7 +443,7 @@ namespace Azure.ResourceManager.MachineLearning
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _jobsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, id, context);
+                using HttpMessage message = _jobsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, id, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<MachineLearningJobData> response = default;
@@ -500,7 +500,7 @@ namespace Azure.ResourceManager.MachineLearning
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _jobsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, id, context);
+                using HttpMessage message = _jobsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, id, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<MachineLearningJobData> response = default;
@@ -561,7 +561,7 @@ namespace Azure.ResourceManager.MachineLearning
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _jobsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, id, context);
+                using HttpMessage message = _jobsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, id, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<MachineLearningJobData> response = default;
