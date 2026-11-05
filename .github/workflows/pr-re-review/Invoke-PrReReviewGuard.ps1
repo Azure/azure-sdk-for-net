@@ -14,4 +14,3 @@ if (!$env:AGENT_OUTPUT) {
 }
 $output = ConvertFrom-PrReReviewJson ([IO.File]::ReadAllText($env:AGENT_OUTPUT))
 Write-Host (Assert-PrReReviewOutput -AgentOutput $output)
-Write-Host (Assert-PrReReviewReadCoverage -AgentOutput $output -MarkersPath "$env:REVIEW_INPUT_MARKERS" -SessionLogPath "$env:AGENT_SESSION_LOG")

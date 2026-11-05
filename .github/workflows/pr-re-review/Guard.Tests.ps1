@@ -27,10 +27,11 @@ BeforeAll {
         param([string[]]$Paths)
 
         $files = @(foreach ($path in $Paths) {
-            [ordered]@{ path = $path; marker = [Convert]::ToHexString([Security.Cryptography.RandomNumberGenerator]::GetBytes(8)).ToLowerInvariant() }
+            $marker = [Convert]::ToHexString([Security.Cryptography.RandomNumberGenerator]::GetBytes(8)).ToLowerInvariant()
+            [ordered]@{ path = $path; marker = $marker; chunks = @(@{ content = "+changed line`n# End of review input [$marker]" }) }
         })
         $path = Join-Path $TestDrive "markers-$([guid]::NewGuid()).json"
-        [IO.File]::WriteAllText($path, (ConvertTo-Json -InputObject ([ordered]@{ headSha = 'abc1234'; files = $files }) -Depth 5))
+        [IO.File]::WriteAllText($path, (ConvertTo-Json -InputObject ([ordered]@{ headSha = 'abc1234'; files = $files }) -Depth 10))
         return [pscustomobject]@{ Path = $path; Files = $files }
     }
 
@@ -292,6 +293,55 @@ Describe 'Assert-PrReReviewReadCoverage' {
             Should -Throw -ExpectedMessage '*2 of 3*Azure.Widgets.net8.0.cs*'
     }
 
+    It 'rejects an end-marker-only tool result even when the file is listed as reviewed' {
+        $markers = New-ReviewInputMarkers $script:Paths
+        $log = New-SessionLog @(
+            (New-ToolResult "$(New-PatchRead $markers.Files[0])`n$(New-PatchRead $markers.Files[1])")
+            (New-ToolResult "# End of review input [$($markers.Files[2].marker)]")
+        )
+        { Assert-PrReReviewReadCoverage $script:CompleteOutput -MarkersPath $markers.Path -SessionLogPath $log } |
+            Should -Throw -ExpectedMessage '*2 of 3*Azure.Widgets.net8.0.cs*'
+    }
+
+    It 'does not count the text of a failed tool call as a read' {
+        $markers = New-ReviewInputMarkers $script:Paths
+        $failed = New-ToolResult (New-PatchRead $markers.Files[2])
+        $failed.data.success = $false
+        $log = New-SessionLog @(
+            (New-ToolResult (New-PatchRead $markers.Files[0]))
+            (New-ToolResult (New-PatchRead $markers.Files[1]))
+            $failed
+        )
+        { Assert-PrReReviewReadCoverage $script:CompleteOutput -MarkersPath $markers.Path -SessionLogPath $log } |
+            Should -Throw -ExpectedMessage '*2 of 3*Azure.Widgets.net8.0.cs*'
+    }
+
+    It 'requires every part of a large patch, even when its first and last parts were read' {
+        $markers = New-ReviewInputMarkers $script:Paths
+        $markers.Files[2].chunks = @(
+            @{ content = 'part-one: unique start' }
+            @{ content = 'part-two: omitted middle' }
+            @{ content = 'part-three: unique end' }
+        )
+        [IO.File]::WriteAllText($markers.Path, (ConvertTo-Json -InputObject @{ headSha = 'abc1234'; files = $markers.Files } -Depth 10))
+        $log = New-SessionLog @(
+            (New-ToolResult (New-PatchRead $markers.Files[0]))
+            (New-ToolResult (New-PatchRead $markers.Files[1]))
+            (New-ToolResult 'part-one: unique start')
+            (New-ToolResult 'part-three: unique end')
+        )
+        { Assert-PrReReviewReadCoverage $script:CompleteOutput -MarkersPath $markers.Path -SessionLogPath $log } |
+            Should -Throw -ExpectedMessage '*2 of 3*Azure.Widgets.net8.0.cs*'
+        $completeLog = New-SessionLog @(
+            (New-ToolResult (New-PatchRead $markers.Files[0]))
+            (New-ToolResult (New-PatchRead $markers.Files[1]))
+            (New-ToolResult 'part-one: unique start')
+            (New-ToolResult 'part-two: omitted middle')
+            (New-ToolResult 'part-three: unique end')
+        )
+        { Assert-PrReReviewReadCoverage $script:CompleteOutput -MarkersPath $markers.Path -SessionLogPath $completeLog } | Should -Not -Throw
+    }
+
     It 'leaves a run that submitted no review to terminal validation' {
         $markers = New-ReviewInputMarkers $script:Paths
         $output = New-AgentOutput @(@{ type = 'report_incomplete'; reason = 'Time limit close after 1 of 3 files.' })
@@ -310,7 +360,7 @@ Describe 'Assert-PrReReviewReadCoverage' {
     }
 }
 
-Describe 'Invoke-PrReReviewGuard.ps1' {
+Describe 'Invoke-PrReReviewCoverageGuard.ps1' {
     BeforeEach {
         $script:PreviousEnvironment = @{}
         foreach ($name in 'AGENT_OUTPUT', 'AGENT_SESSION_LOG', 'REVIEW_INPUT_MARKERS') {
@@ -326,7 +376,7 @@ Describe 'Invoke-PrReReviewGuard.ps1' {
 
     It 'fails when the agent output path is missing' {
         $env:AGENT_OUTPUT = $null
-        { & (Join-Path $script:GuardDirectory 'Invoke-PrReReviewGuard.ps1') } | Should -Throw -ExpectedMessage 'Missing AGENT_OUTPUT.'
+        { & (Join-Path $script:GuardDirectory 'Invoke-PrReReviewCoverageGuard.ps1') } | Should -Throw -ExpectedMessage 'Missing AGENT_OUTPUT.'
     }
 
     It 'rejects run 41426389667, whose coverage line claims 110 patches its tool log never shows' {
@@ -334,7 +384,7 @@ Describe 'Invoke-PrReReviewGuard.ps1' {
         [IO.File]::WriteAllText($env:AGENT_OUTPUT, $script:Run41426389667)
         $env:AGENT_SESSION_LOG = New-NamesOnlySessionLog
         $env:REVIEW_INPUT_MARKERS = (New-ReviewInputMarkers $script:Run41426389667Paths).Path
-        { & (Join-Path $script:GuardDirectory 'Invoke-PrReReviewGuard.ps1') } | Should -Throw -ExpectedMessage '*0 of 110*'
+        { & (Join-Path $script:GuardDirectory 'Invoke-PrReReviewCoverageGuard.ps1') } | Should -Throw -ExpectedMessage '*0 of 110*'
     }
 }
 
@@ -356,12 +406,17 @@ Describe 'Compiled re-review publication guard' {
 
             $guard = Get-Step 'Require complete re-review coverage before publishing'
             Get-StepProperty $guard 'shell' | Should -BeExactly 'pwsh'
+            Get-StepProperty $guard 'run' | Should -BeExactly './.github/workflows/pr-re-review/Invoke-PrReReviewCoverageGuard.ps1'
             $environment = Get-StepMapping $guard 'env'
-            $environment.Count | Should -Be 3
+            $environment.Count | Should -Be 7
             $environment['AGENT_OUTPUT'] | Should -BeExactly '${{ steps.setup-agent-output-env.outputs.GH_AW_AGENT_OUTPUT }}'
             $environment['AGENT_SESSION_LOG'] | Should -BeExactly '/tmp/gh-aw/agent-session.jsonl'
             $environment['REVIEW_INPUT_MARKERS'] | Should -BeExactly '${{ runner.temp }}/pr-re-review-input/markers.json'
-            $values = @{ AGENT_OUTPUT = $AgentOutputPath; AGENT_SESSION_LOG = $SessionLogPath; REVIEW_INPUT_MARKERS = $MarkersPath }
+            $environment['GH_TOKEN'] | Should -BeExactly '${{ github.token }}'
+            $environment['PR_NUMBER'] | Should -BeExactly '${{ github.event.pull_request.number }}'
+            $environment['PR_HEAD_SHA'] | Should -BeExactly '${{ github.event.pull_request.head.sha }}'
+            $environment['PR_BASE_SHA'] | Should -BeExactly '${{ github.event.pull_request.base.sha }}'
+            $values = @{ AGENT_OUTPUT = $AgentOutputPath; AGENT_SESSION_LOG = $SessionLogPath; REVIEW_INPUT_MARKERS = $MarkersPath; GH_TOKEN = 'synthetic-token'; GITHUB_REPOSITORY = 'Azure/azure-sdk-for-net'; PR_NUMBER = '1'; PR_HEAD_SHA = 'abc1234'; PR_BASE_SHA = 'base' }
             $previous = @{}
             foreach ($name in $values.Keys) {
                 $previous[$name] = [Environment]::GetEnvironmentVariable($name)
@@ -377,11 +432,21 @@ Describe 'Compiled re-review publication guard' {
         }
     }
 
-    It 'checks out the guard from the workflow commit without persisting credentials' {
+    BeforeEach {
+        Import-Module (Join-Path $script:GuardDirectory 'PrReReviewInput.psm1')
+        Mock -ModuleName PrReReviewInput Invoke-PrReReviewGhApi { '{"head":{"sha":"abc1234"},"base":{"sha":"base"}}' }
+    }
+
+    It 'checks out the publication guard from the trusted PR base commit, not the merge commit' {
+        $checkout = Get-Step 'Checkout trusted re-review publication guard'
+        (Get-StepMapping $checkout 'with')['ref'] | Should -BeExactly '${{ github.event.pull_request.base.sha }}'
+    }
+
+    It 'checks out the guard from the base commit without persisting credentials' {
         $checkout = Get-Step 'Checkout trusted re-review publication guard'
         Get-StepProperty $checkout 'uses' | Should -BeExactly 'actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1'
         $with = Get-StepMapping $checkout 'with'
-        $with['ref'] | Should -BeExactly '${{ github.sha }}'
+        $with['ref'] | Should -BeExactly '${{ github.event.pull_request.base.sha }}'
         $with['persist-credentials'] | Should -BeExactly 'false'
         $with['sparse-checkout'] | Should -BeExactly '.github/workflows/pr-re-review'
     }
@@ -439,6 +504,17 @@ Describe 'Compiled re-review publication guard' {
         { Invoke-CompiledGuard $path (New-NamesOnlySessionLog) $markers.Path } | Should -Throw -ExpectedMessage '*0 of 110*'
     }
 
+    It 'blocks a stale head when the compiled step runs the guard' {
+        Mock -ModuleName PrReReviewInput Invoke-PrReReviewGhApi { '{"head":{"sha":"new-head"},"base":{"sha":"base"}}' }
+        $path = Join-Path $TestDrive 'stale-agent-output.json'
+        $output = New-AgentOutput @(New-Review "Re-review of head abc1234.`n`n$script:Complete`n`nNo new findings.")
+        [IO.File]::WriteAllText($path, (ConvertTo-Json -InputObject $output -Depth 10 -Compress))
+        $markers = New-ReviewInputMarkers @('src/Client.cs')
+        $log = New-SessionLog @((New-ToolResult (New-PatchRead $markers.Files[0])))
+        { Invoke-CompiledGuard $path $log $markers.Path } | Should -Throw -ExpectedMessage '*head*base*'
+        Assert-MockCalled Invoke-PrReReviewGhApi -ModuleName PrReReviewInput -Times 1 -Exactly -ParameterFilter { $Arguments -contains 'repos/Azure/azure-sdk-for-net/pulls/1' }
+    }
+
     It 'passes a complete re-review when the compiled step runs the guard' {
         $path = Join-Path $TestDrive 'agent_output.json'
         $output = New-AgentOutput @(New-Review "Re-review of head abc1234.`n`n$script:Complete`n`nNo new findings.")
@@ -446,6 +522,7 @@ Describe 'Compiled re-review publication guard' {
         $markers = New-ReviewInputMarkers @('src/Client.cs', 'CHANGELOG.md')
         $log = New-SessionLog @((New-ToolResult "$(New-PatchRead $markers.Files[0])`n$(New-PatchRead $markers.Files[1])"))
         { Invoke-CompiledGuard $path $log $markers.Path } | Should -Not -Throw
+        Assert-MockCalled Invoke-PrReReviewGhApi -ModuleName PrReReviewInput -Times 1 -Exactly -ParameterFilter { $Arguments -contains 'repos/Azure/azure-sdk-for-net/pulls/1' }
     }
 }
 
@@ -479,10 +556,14 @@ Describe 'Compiled re-review input export' {
     It 'writes the patches where the agent reads them and the markers where the guard downloads them' {
         $export = Get-AgentStep 'Export changed-file patches for the re-review'
         Get-StepProperty $export 'shell' | Should -BeExactly 'pwsh'
-        Get-StepProperty $export 'run' | Should -BeExactly './.github/workflows/pr-re-review/Invoke-PrReReviewInputExport.ps1'
+        Get-StepProperty $export 'run' | Should -BeExactly '|'
+        ($export.Lines -join "`n") | Should -Match 'trusted base branch does not contain the re-review exporter'
+        ($export.Lines -join "`n") | Should -Match '(?m)^\s+\./\.github/workflows/pr-re-review/Invoke-PrReReviewInputExport\.ps1$'
         $environment = Get-StepMapping $export 'env'
         $environment['GH_TOKEN'] | Should -BeExactly '${{ github.token }}'
         $environment['PR_NUMBER'] | Should -BeExactly '${{ github.event.pull_request.number }}'
+        $environment['PR_HEAD_SHA'] | Should -BeExactly '${{ github.event.pull_request.head.sha }}'
+        $environment['PR_BASE_SHA'] | Should -BeExactly '${{ github.event.pull_request.base.sha }}'
         $environment['REVIEW_INPUT_DIR'] | Should -BeExactly '/tmp/gh-aw/pr-review-input'
         $environment['REVIEW_INPUT_MARKERS'] | Should -BeExactly '${{ runner.temp }}/pr-re-review-input/markers.json'
 

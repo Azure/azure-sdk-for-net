@@ -107,32 +107,47 @@ function Assert-PrReReviewReadCoverage {
 
     $files = @((ConvertFrom-PrReReviewJson ([IO.File]::ReadAllText($MarkersPath))).files)
     foreach ($file in $files) {
-        if ($file -isnot [System.Collections.IDictionary] -or $file.marker -isnot [string] -or $file.marker.Length -lt 16) {
+        if ($file -isnot [System.Collections.IDictionary] -or $file.marker -isnot [string] -or $file.marker.Length -lt 16 -or @($file.chunks).Count -eq 0) {
             throw 'The guard cannot verify read coverage because the exported-patch markers are malformed.'
+        }
+        foreach ($chunk in $file.chunks) {
+            if ($chunk -isnot [System.Collections.IDictionary] -or $chunk.content -isnot [string] -or $chunk.content.Length -eq 0) {
+                throw 'The guard cannot verify read coverage because the exported-patch chunks are malformed.'
+            }
         }
     }
 
-    # Only tool results reached the model. A read the CLI cut off as too large returns a notice instead of
-    # the content, so it never contains the end-of-patch marker.
-    $seen = [System.Text.StringBuilder]::new()
+    # Check for ordinary missed or truncated reads. The agent can influence its session log,
+    # so these matches are not tamper-proof evidence and cannot establish comprehension.
+    # Each complete chunk must appear in one successful tool result.
+    $results = [System.Collections.Generic.List[string]]::new()
     foreach ($line in [IO.File]::ReadLines($SessionLogPath)) {
         if (!$line.Contains('"tool.execution_complete"', [StringComparison]::Ordinal)) { continue }
         try { $event = ConvertFrom-PrReReviewJson $line } catch { continue }
-        if ($event -isnot [System.Collections.IDictionary] -or $event.type -cne 'tool.execution_complete') { continue }
+        if ($event -isnot [System.Collections.IDictionary] -or $event.type -cne 'tool.execution_complete' -or $event.data.success -eq $false) { continue }
         $content = $event.data.result.content
         if ($null -eq $content) { continue }
         $text = if ($content -is [string]) { $content } else { ConvertTo-Json -InputObject $content -Depth 20 -Compress }
-        [void]$seen.Append($text).Append("`n")
+        $results.Add($text)
     }
-    $results = $seen.ToString()
 
-    $unread = @($files | Where-Object { !$results.Contains($_.marker, [StringComparison]::Ordinal) } | ForEach-Object { [string]$_.path })
+    $unread = @(
+        foreach ($file in $files) {
+            foreach ($chunk in $file.chunks) {
+                $expected = $chunk.content.TrimEnd([char[]]"`r`n")
+                if (!@($results | Where-Object { $_.Contains($expected, [StringComparison]::Ordinal) }).Count) {
+                    [string]$file.path
+                    break
+                }
+            }
+        }
+    )
     if ($unread.Count -gt 0) {
         $listed = ($unread | Select-Object -First 10) -join ', '
         if ($unread.Count -gt 10) { $listed += ", and $($unread.Count - 10) more" }
-        throw "The agent's tool log shows it read $($files.Count - $unread.Count) of $($files.Count) exported patches in full; unread: $listed. A re-review that did not read every changed file must call report_incomplete instead of submitting a review."
+        throw "The agent's tool log contains complete content for $($files.Count - $unread.Count) of $($files.Count) exported patches; missing: $listed. A re-review that did not read every changed file must call report_incomplete instead of submitting a review."
     }
-    return "Read coverage verified from the tool log: all $($files.Count) exported patches were read in full."
+    return "Read coverage check passed: the agent's tool log contains all $($files.Count) exported patches. This check is not tamper-proof."
 }
 
 Export-ModuleMember -Function ConvertFrom-PrReReviewJson, Get-PrReReviewCoverageTemplate, Assert-PrReReviewOutput, Assert-PrReReviewReadCoverage

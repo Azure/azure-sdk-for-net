@@ -32,9 +32,15 @@ pre-agent-steps:
     env:
       GH_TOKEN: ${{ github.token }}
       PR_NUMBER: ${{ github.event.pull_request.number }}
+      PR_HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+      PR_BASE_SHA: ${{ github.event.pull_request.base.sha }}
       REVIEW_INPUT_DIR: /tmp/gh-aw/pr-review-input
       REVIEW_INPUT_MARKERS: ${{ runner.temp }}/pr-re-review-input/markers.json
-    run: ./.github/workflows/pr-re-review/Invoke-PrReReviewInputExport.ps1
+    run: |
+      if (!(Test-Path -PathType Leaf './.github/workflows/pr-re-review/Invoke-PrReReviewInputExport.ps1')) {
+        throw 'The trusted base branch does not contain the re-review exporter. Deploy the helpers to the base branch before enabling this workflow; do not run the PR version.'
+      }
+      ./.github/workflows/pr-re-review/Invoke-PrReReviewInputExport.ps1
   - name: Upload exported-patch markers
     uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
     with:
@@ -81,7 +87,7 @@ safe-outputs:
     - name: Checkout trusted re-review publication guard
       uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
       with:
-        ref: ${{ github.sha }}
+        ref: ${{ github.event.pull_request.base.sha }}
         persist-credentials: false
         sparse-checkout: .github/workflows/pr-re-review
     - name: Download exported-patch markers
@@ -95,7 +101,11 @@ safe-outputs:
         AGENT_OUTPUT: ${{ steps.setup-agent-output-env.outputs.GH_AW_AGENT_OUTPUT }}
         AGENT_SESSION_LOG: /tmp/gh-aw/agent-session.jsonl
         REVIEW_INPUT_MARKERS: ${{ runner.temp }}/pr-re-review-input/markers.json
-      run: ./.github/workflows/pr-re-review/Invoke-PrReReviewGuard.ps1
+        GH_TOKEN: ${{ github.token }}
+        PR_NUMBER: ${{ github.event.pull_request.number }}
+        PR_HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+        PR_BASE_SHA: ${{ github.event.pull_request.base.sha }}
+      run: ./.github/workflows/pr-re-review/Invoke-PrReReviewCoverageGuard.ps1
   jobs:
     unresolve-review-thread:
       description: "Reopen a review thread the agent concluded was resolved without adequate justification"
@@ -359,7 +369,7 @@ on top of that shared foundation.
 
 ## Step 1 - Gather review history
 
-Every changed file's patch is already exported to `/tmp/gh-aw/pr-review-input/`. `files.json` lists each changed file with its status, line counts, and patch file under `patches/`; where GitHub omitted a patch, the patch file holds the file's full content at the head commit instead. The local checkout contains only `.github`, so read surrounding code with `get_file_contents` at the target head commit.
+Every changed file's patch is already exported to `/tmp/gh-aw/pr-review-input/`. `files.json` lists each changed file with its status, line counts, and patch file under `patches/`; where GitHub omitted a patch, the input contains head content and, for an existing file, its merge-base content. The local checkout contains only `.github`, so read surrounding code with `get_file_contents` at the target head commit.
 
 Read GitHub data with the GitHub MCP `pull_request_read` tool. Page every list to its end; a first page is not the full history.
 
@@ -389,7 +399,7 @@ For each thread that **is resolved**:
 
 ## Step 3 - Fresh full review pass
 
-Independently review every changed file listed in `files.json`, one file at a time, using the shared rules, exactly as a first-pass review would, to catch anything missed by earlier passes (including commits pushed after the native reviewer's last pass). Read each file's patch file through to its last line; when a read is cut off as too large, read the rest in ranges. Before posting any new finding, confirm it is not already covered by an existing open thread (Step 2) or another reviewer's comment.
+Independently review every changed file listed in `files.json`, one file at a time, using the shared rules, exactly as a first-pass review would, to catch anything missed by earlier passes (including commits pushed after the native reviewer's last pass). For each file, read every file in its `readFiles` array in full, in order, as plain text with no line numbers or filtering. Large patches are split into bounded parts; `patchFile` also contains the complete patch for context. Before posting any new finding, confirm it is not already covered by an existing open thread (Step 2) or another reviewer's comment.
 
 ## Step 4 - Confirm coverage, then submit one review
 
@@ -407,7 +417,7 @@ When the re-review is complete, submit exactly one `submit_pull_request_review` 
 Coverage: <fetched>/<total> threads fetched, <verified>/<unresolved> unresolved threads verified, <reviewed>/<changed> changed files reviewed
 ```
 
-`<total>` is the `get_review_comments` `totalCount`, `<unresolved>` is the number of threads that were unresolved when you fetched them, and `<changed>` is the pull request's `changed_files`. Publication is blocked unless each count equals its total. The publishing job also checks this run's tool log, and blocks the review unless it shows every exported patch file read in full, whatever the coverage line says.
+`<total>` is the `get_review_comments` `totalCount`, `<unresolved>` is the number of threads that were unresolved when you fetched them, and `<changed>` is the pull request's `changed_files`. Publication is blocked unless each count equals its total. The publishing job also checks this run's tool log, and blocks the review unless it shows the full text of every exported read part, whatever the coverage line says.
 
 The rest of the review body should summarize:
 

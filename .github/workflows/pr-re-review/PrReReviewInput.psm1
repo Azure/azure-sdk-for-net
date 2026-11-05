@@ -16,27 +16,60 @@ function Invoke-PrReReviewGhApi {
 }
 
 function Get-PrReReviewPullRequestInput {
-    param([Parameter(Mandatory)][string]$Repository, [Parameter(Mandatory)][int]$Number)
+    param(
+        [Parameter(Mandatory)][string]$Repository,
+        [Parameter(Mandatory)][int]$Number,
+        [Parameter(Mandatory)][string]$ExpectedHeadSha,
+        [Parameter(Mandatory)][string]$ExpectedBaseSha
+    )
 
     $pullRequest = ConvertFrom-Json (Invoke-PrReReviewGhApi @("repos/$Repository/pulls/$Number"))
+    if ($pullRequest.head.sha -cne $ExpectedHeadSha -or $pullRequest.base.sha -cne $ExpectedBaseSha) {
+        throw "The event head $ExpectedHeadSha or base $ExpectedBaseSha no longer matches the pull request head $($pullRequest.head.sha) and base $($pullRequest.base.sha)."
+    }
     $pages = ConvertFrom-Json (Invoke-PrReReviewGhApi @('--paginate', '--slurp', "repos/$Repository/pulls/$Number/files?per_page=100")) -NoEnumerate
     $files = @(foreach ($page in $pages) { foreach ($file in $page) { $file } })
     # A partial export would let the guard verify a review against an incomplete file list.
     if ($files.Count -ne $pullRequest.changed_files) {
         throw "GitHub listed $($files.Count) of the pull request's $($pullRequest.changed_files) changed files."
     }
-    return [pscustomobject]@{ HeadSha = [string]$pullRequest.head.sha; Files = $files }
+    $after = ConvertFrom-Json (Invoke-PrReReviewGhApi @("repos/$Repository/pulls/$Number"))
+    if ($after.head.sha -cne $ExpectedHeadSha -or $after.base.sha -cne $ExpectedBaseSha) {
+        throw "The pull request head or base changed while listing files: expected $ExpectedHeadSha/$ExpectedBaseSha, got $($after.head.sha)/$($after.base.sha)."
+    }
+    $mergeBaseSha = ''
+    $missingExistingPatches = @($files | Where-Object { $null -eq $_.patch -and $_.status -cne 'added' -and $_.status -cne 'removed' })
+    if ($missingExistingPatches.Count -gt 0) {
+        # The PR diff compares against the merge base, which can differ from the base branch tip.
+        $comparison = ConvertFrom-Json (Invoke-PrReReviewGhApi @("repos/$Repository/compare/$ExpectedBaseSha...${ExpectedHeadSha}?per_page=1"))
+        $mergeBaseSha = [string]$comparison.merge_base_commit.sha
+        if ($mergeBaseSha -notmatch '^(?:[0-9a-f]{40}|[0-9a-f]{64})$') {
+            throw 'GitHub did not return a valid merge-base commit for the pull request.'
+        }
+    }
+    return [pscustomobject]@{ HeadSha = $ExpectedHeadSha; MergeBaseSha = $mergeBaseSha; Files = $files }
+}
+
+function Assert-PrReReviewCurrentState {
+    param(
+        [Parameter(Mandatory)][string]$Repository,
+        [Parameter(Mandatory)][int]$Number,
+        [Parameter(Mandatory)][string]$ExpectedHeadSha,
+        [Parameter(Mandatory)][string]$ExpectedBaseSha
+    )
+
+    $pullRequest = ConvertFrom-Json (Invoke-PrReReviewGhApi @("repos/$Repository/pulls/$Number"))
+    if ($pullRequest.head.sha -cne $ExpectedHeadSha -or $pullRequest.base.sha -cne $ExpectedBaseSha) {
+        throw "The event head $ExpectedHeadSha or base $ExpectedBaseSha no longer matches the pull request head $($pullRequest.head.sha) and base $($pullRequest.base.sha); refusing stale publication."
+    }
+    return "The pull request head and base still match the event."
 }
 
 function Get-PrReReviewHeadContent {
     param([Parameter(Mandatory)][string]$Repository, [Parameter(Mandatory)][string]$HeadSha, [Parameter(Mandatory)][string]$Path)
 
     $encodedPath = ($Path -split '/' | ForEach-Object { [uri]::EscapeDataString($_) }) -join '/'
-    try {
-        $content = Invoke-PrReReviewGhApi @('-H', 'Accept: application/vnd.github.raw+json', "repos/$Repository/contents/${encodedPath}?ref=$HeadSha")
-    } catch {
-        return $null
-    }
+    $content = Invoke-PrReReviewGhApi @('-H', 'Accept: application/vnd.github.raw+json', "repos/$Repository/contents/${encodedPath}?ref=$HeadSha")
     if ($content.Contains([char]0)) {
         return $null
     }
@@ -48,6 +81,7 @@ function Export-PrReReviewInput {
         [Parameter(Mandatory)][AllowEmptyCollection()][object[]]$Files,
         [Parameter(Mandatory)][string]$Repository,
         [Parameter(Mandatory)][string]$HeadSha,
+        [AllowEmptyString()][string]$MergeBaseSha = '',
         [Parameter(Mandatory)][string]$InputDirectory,
         [Parameter(Mandatory)][string]$MarkersPath
     )
@@ -75,13 +109,25 @@ function Export-PrReReviewInput {
         $body = if ($null -ne $file.patch) {
             [string]$file.patch
         } elseif ($file.status -ceq 'removed') {
-            'GitHub returned no patch for this removed file.'
+            throw "GitHub returned no patch for removed file '$($file.filename)'; its deletion cannot be reviewed."
         } else {
             $content = Get-PrReReviewHeadContent -Repository $Repository -HeadSha $HeadSha -Path $file.filename
-            if ($null -eq $content) {
+            $headText = if ($null -eq $content) {
                 'GitHub returned no patch, and the file has no text content at the head commit.'
             } else {
                 "GitHub returned no patch; this is the file's full content at the head commit.`n$content"
+            }
+            if ($file.status -ceq 'added') {
+                $headText
+            } else {
+                if (!$MergeBaseSha) { throw "GitHub returned no patch for '$($file.filename)', and the merge base is unavailable." }
+                if ($file.status -cin @('renamed', 'copied') -and !$file.previous_filename) {
+                    throw "GitHub returned no patch or previous path for $($file.status) file '$($file.filename)'."
+                }
+                $previousPath = if ($file.previous_filename) { [string]$file.previous_filename } else { [string]$file.filename }
+                $previous = Get-PrReReviewHeadContent -Repository $Repository -HeadSha $MergeBaseSha -Path $previousPath
+                $baseText = if ($null -eq $previous) { 'The file has no text content at the merge base.' } else { $previous }
+                "GitHub returned no patch; full content at the merge base ($previousPath):`n$baseText`n$headText"
             }
         }
 
@@ -91,6 +137,28 @@ function Export-PrReReviewInput {
             "# End of review input ${number}/${total} [$marker]`n"
         [IO.File]::WriteAllText((Join-Path $InputDirectory $patchFile), $text)
 
+        # Keep each independently verifiable read small enough for a tool result. The original
+        # patch remains available for context; large patches must be read through these parts.
+        $readFiles = [System.Collections.Generic.List[string]]::new()
+        $chunks = [System.Collections.Generic.List[object]]::new()
+        if ($text.Length -le 4000) {
+            $readFiles.Add($patchFile)
+            $chunks.Add([ordered]@{ content = $text })
+        } else {
+            for ($offset = 0; $offset -lt $text.Length;) {
+                $length = [Math]::Min(4000, $text.Length - $offset)
+                if ($offset + $length -lt $text.Length -and [char]::IsHighSurrogate($text[$offset + $length - 1])) { $length-- }
+                $partNumber = $chunks.Count + 1
+                $partFile = "patches/$number-part-$partNumber.txt"
+                $partMarker = [Convert]::ToHexString([Security.Cryptography.RandomNumberGenerator]::GetBytes(8)).ToLowerInvariant()
+                $partText = "# Review input part $partNumber [$partMarker]`n" + $text.Substring($offset, $length) + "`n# End of part [$partMarker]`n"
+                [IO.File]::WriteAllText((Join-Path $InputDirectory $partFile), $partText)
+                $readFiles.Add($partFile)
+                $chunks.Add([ordered]@{ content = $partText })
+                $offset += $length
+            }
+        }
+
         $list.Add([ordered]@{
             path = [string]$file.filename
             status = [string]$file.status
@@ -98,12 +166,13 @@ function Export-PrReReviewInput {
             deletions = $file.deletions
             previousPath = $file.previous_filename
             patchFile = $patchFile
+            readFiles = $readFiles.ToArray()
         })
-        $markers.Add([ordered]@{ path = [string]$file.filename; marker = $marker })
+        $markers.Add([ordered]@{ path = [string]$file.filename; marker = $marker; chunks = $chunks.ToArray() })
     }
 
     [IO.File]::WriteAllText((Join-Path $InputDirectory 'files.json'), (ConvertTo-Json -InputObject ([ordered]@{ headSha = $HeadSha; files = $list.ToArray() }) -Depth 5))
-    [IO.File]::WriteAllText($markersFullPath, (ConvertTo-Json -InputObject ([ordered]@{ headSha = $HeadSha; files = $markers.ToArray() }) -Depth 5))
+    [IO.File]::WriteAllText($markersFullPath, (ConvertTo-Json -InputObject ([ordered]@{ headSha = $HeadSha; files = $markers.ToArray() }) -Depth 10))
 }
 
-Export-ModuleMember -Function Invoke-PrReReviewGhApi, Get-PrReReviewPullRequestInput, Get-PrReReviewHeadContent, Export-PrReReviewInput
+Export-ModuleMember -Function Invoke-PrReReviewGhApi, Get-PrReReviewPullRequestInput, Assert-PrReReviewCurrentState, Get-PrReReviewHeadContent, Export-PrReReviewInput
