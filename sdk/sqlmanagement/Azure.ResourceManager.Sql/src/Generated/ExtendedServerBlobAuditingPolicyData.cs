@@ -42,6 +42,9 @@ namespace Azure.ResourceManager.Sql
         internal ExtendedServerBlobAuditingPolicyProperties Properties { get; set; }
 
         /// <summary>
+        /// <b>Note:</b> This field will soon be deprecated. Going forward, use the dedicated Server DevOps Audit Settings APIs to configure DevOps audit. See:
+        /// <list type="bullet"><item><description>[Server DevOps Audit Settings - Create Or Update](https://learn.microsoft.com/en-us/rest/api/sql/server-devops-audit-settings/create-or-update)</description></item><item><description>[Server DevOps Audit Settings - Get](https://learn.microsoft.com/en-us/rest/api/sql/server-devops-audit-settings/get)</description></item></list>
+        /// ---
         /// Specifies the state of devops audit. If state is Enabled, devops logs will be sent to Azure Monitor.
         /// In order to send the events to Azure Monitor, specify 'State' as 'Enabled', 'IsAzureMonitorTargetEnabled' as true and 'IsDevopsAuditEnabled' as true
         /// When using REST API to configure auditing, Diagnostic Settings with 'DevOpsOperationsAudit' diagnostic logs category on the master database should also be created.

@@ -929,6 +929,9 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="isDevopsAuditEnabled">
+        /// <b>Note:</b> This field will soon be deprecated. Going forward, use the dedicated Server DevOps Audit Settings APIs to configure DevOps audit. See:
+        /// <list type="bullet"><item><description>[Server DevOps Audit Settings - Create Or Update](https://learn.microsoft.com/en-us/rest/api/sql/server-devops-audit-settings/create-or-update)</description></item><item><description>[Server DevOps Audit Settings - Get](https://learn.microsoft.com/en-us/rest/api/sql/server-devops-audit-settings/get)</description></item></list>
+        /// ---
         /// Specifies the state of devops audit. If state is Enabled, devops logs will be sent to Azure Monitor.
         /// In order to send the events to Azure Monitor, specify 'State' as 'Enabled', 'IsAzureMonitorTargetEnabled' as true and 'IsDevopsAuditEnabled' as true
         /// When using REST API to configure auditing, Diagnostic Settings with 'DevOpsOperationsAudit' diagnostic logs category on the master database should also be created.
@@ -1279,6 +1282,9 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="isDevopsAuditEnabled">
+        /// <b>Note:</b> This field will soon be deprecated. Going forward, use the dedicated Server DevOps Audit Settings APIs to configure DevOps audit. See:
+        /// <list type="bullet"><item><description>[Server DevOps Audit Settings - Create Or Update](https://learn.microsoft.com/en-us/rest/api/sql/server-devops-audit-settings/create-or-update)</description></item><item><description>[Server DevOps Audit Settings - Get](https://learn.microsoft.com/en-us/rest/api/sql/server-devops-audit-settings/get)</description></item></list>
+        /// ---
         /// Specifies the state of devops audit. If state is Enabled, devops logs will be sent to Azure Monitor.
         /// In order to send the events to Azure Monitor, specify 'State' as 'Enabled', 'IsAzureMonitorTargetEnabled' as true and 'IsDevopsAuditEnabled' as true
         /// When using REST API to configure auditing, Diagnostic Settings with 'DevOpsOperationsAudit' diagnostic logs category on the master database should also be created.
@@ -6832,6 +6838,9 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="isDevopsAuditEnabled">
+        /// <b>Note:</b> This field will soon be deprecated. Going forward, use the dedicated Server DevOps Audit Settings APIs to configure DevOps audit. See:
+        /// <list type="bullet"><item><description>[Server DevOps Audit Settings - Create Or Update](https://learn.microsoft.com/en-us/rest/api/sql/server-devops-audit-settings/create-or-update)</description></item><item><description>[Server DevOps Audit Settings - Get](https://learn.microsoft.com/en-us/rest/api/sql/server-devops-audit-settings/get)</description></item></list>
+        /// ---
         /// Specifies the state of devops audit. If state is Enabled, devops logs will be sent to Azure Monitor.
         /// In order to send the events to Azure Monitor, specify 'State' as 'Enabled', 'IsAzureMonitorTargetEnabled' as true and 'IsDevopsAuditEnabled' as true
         /// When using REST API to configure auditing, Diagnostic Settings with 'DevOpsOperationsAudit' diagnostic logs category on the master database should also be created.
@@ -7170,6 +7179,9 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="isDevopsAuditEnabled">
+        /// <b>Note:</b> This field will soon be deprecated. Going forward, use the dedicated Server DevOps Audit Settings APIs to configure DevOps audit. See:
+        /// <list type="bullet"><item><description>[Server DevOps Audit Settings - Create Or Update](https://learn.microsoft.com/en-us/rest/api/sql/server-devops-audit-settings/create-or-update)</description></item><item><description>[Server DevOps Audit Settings - Get](https://learn.microsoft.com/en-us/rest/api/sql/server-devops-audit-settings/get)</description></item></list>
+        /// ---
         /// Specifies the state of devops audit. If state is Enabled, devops logs will be sent to Azure Monitor.
         /// In order to send the events to Azure Monitor, specify 'State' as 'Enabled', 'IsAzureMonitorTargetEnabled' as true and 'IsDevopsAuditEnabled' as true
         /// When using REST API to configure auditing, Diagnostic Settings with 'DevOpsOperationsAudit' diagnostic logs category on the master database should also be created.

@@ -1,5 +1,5 @@
 directory: specification/sql/resource-manager/Microsoft.Sql/SQL
-commit: 9162bb30e7dead5e941decd6fa2ee6879bf1a111
+commit: 8b84bd863837457c76168e7f1bd3b4c0e556d046
 repo: Azure/azure-rest-api-specs
 additionalDirectories: 
 

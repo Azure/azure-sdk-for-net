@@ -26,6 +26,8 @@ namespace Azure.ResourceManager.Sql
     {
         private readonly ClientDiagnostics _longTermRetentionManagedInstanceBackupsClientDiagnostics;
         private readonly LongTermRetentionManagedInstanceBackups _longTermRetentionManagedInstanceBackupsRestClient;
+        private readonly ClientDiagnostics _managedInstanceLongTermRetentionBackupsClientDiagnostics;
+        private readonly ManagedInstanceLongTermRetentionBackups _managedInstanceLongTermRetentionBackupsRestClient;
         private readonly ManagedInstanceLongTermRetentionBackupData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Sql/locations/longTermRetentionManagedInstances/longTermRetentionDatabases/longTermRetentionManagedInstanceBackups";
@@ -52,6 +54,8 @@ namespace Azure.ResourceManager.Sql
             TryGetApiVersion(ResourceType, out string subscriptionLongTermRetentionManagedInstanceBackupApiVersion);
             _longTermRetentionManagedInstanceBackupsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ResourceType.Namespace, Diagnostics);
             _longTermRetentionManagedInstanceBackupsRestClient = new LongTermRetentionManagedInstanceBackups(_longTermRetentionManagedInstanceBackupsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, subscriptionLongTermRetentionManagedInstanceBackupApiVersion ?? "2026-08-01-preview");
+            _managedInstanceLongTermRetentionBackupsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ResourceType.Namespace, Diagnostics);
+            _managedInstanceLongTermRetentionBackupsRestClient = new ManagedInstanceLongTermRetentionBackups(_managedInstanceLongTermRetentionBackupsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, subscriptionLongTermRetentionManagedInstanceBackupApiVersion ?? "2026-08-01-preview");
             ValidateResourceId(id);
         }
 
@@ -277,6 +281,446 @@ namespace Azure.ResourceManager.Sql
                 if (waitUntil == WaitUntil.Completed)
                 {
                     operation.WaitForCompletionResponse(cancellationToken);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Lock time based immutability of an existing managed instance long term retention backup.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/longTermRetentionManagedInstances/{managedInstanceName}/longTermRetentionDatabases/{databaseName}/longTermRetentionManagedInstanceBackups/{backupName}/lockTimeBasedImmutability. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ManagedInstanceLongTermRetentionBackups_LockTimeBasedImmutability. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-08-01-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="SubscriptionLongTermRetentionManagedInstanceBackupResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<ArmOperation<SubscriptionLongTermRetentionManagedInstanceBackupResource>> LockTimeBasedImmutabilityAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _managedInstanceLongTermRetentionBackupsClientDiagnostics.CreateScope("SubscriptionLongTermRetentionManagedInstanceBackupResource.LockTimeBasedImmutability");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _managedInstanceLongTermRetentionBackupsRestClient.CreateLockTimeBasedImmutabilityRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                SqlArmOperation<SubscriptionLongTermRetentionManagedInstanceBackupResource> operation = new SqlArmOperation<SubscriptionLongTermRetentionManagedInstanceBackupResource>(
+                    new SubscriptionLongTermRetentionManagedInstanceBackupResourceOperationSource(Client),
+                    _managedInstanceLongTermRetentionBackupsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Lock time based immutability of an existing managed instance long term retention backup.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/longTermRetentionManagedInstances/{managedInstanceName}/longTermRetentionDatabases/{databaseName}/longTermRetentionManagedInstanceBackups/{backupName}/lockTimeBasedImmutability. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ManagedInstanceLongTermRetentionBackups_LockTimeBasedImmutability. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-08-01-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="SubscriptionLongTermRetentionManagedInstanceBackupResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual ArmOperation<SubscriptionLongTermRetentionManagedInstanceBackupResource> LockTimeBasedImmutability(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _managedInstanceLongTermRetentionBackupsClientDiagnostics.CreateScope("SubscriptionLongTermRetentionManagedInstanceBackupResource.LockTimeBasedImmutability");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _managedInstanceLongTermRetentionBackupsRestClient.CreateLockTimeBasedImmutabilityRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                SqlArmOperation<SubscriptionLongTermRetentionManagedInstanceBackupResource> operation = new SqlArmOperation<SubscriptionLongTermRetentionManagedInstanceBackupResource>(
+                    new SubscriptionLongTermRetentionManagedInstanceBackupResourceOperationSource(Client),
+                    _managedInstanceLongTermRetentionBackupsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    operation.WaitForCompletion(cancellationToken);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Remove legal hold immutability of an existing managed instance long term retention backup.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/longTermRetentionManagedInstances/{managedInstanceName}/longTermRetentionDatabases/{databaseName}/longTermRetentionManagedInstanceBackups/{backupName}/removeLegalHoldImmutability. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ManagedInstanceLongTermRetentionBackups_RemoveLegalHoldImmutability. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-08-01-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="SubscriptionLongTermRetentionManagedInstanceBackupResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<ArmOperation<SubscriptionLongTermRetentionManagedInstanceBackupResource>> RemoveLegalHoldImmutabilityAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _managedInstanceLongTermRetentionBackupsClientDiagnostics.CreateScope("SubscriptionLongTermRetentionManagedInstanceBackupResource.RemoveLegalHoldImmutability");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _managedInstanceLongTermRetentionBackupsRestClient.CreateRemoveLegalHoldImmutabilityRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                SqlArmOperation<SubscriptionLongTermRetentionManagedInstanceBackupResource> operation = new SqlArmOperation<SubscriptionLongTermRetentionManagedInstanceBackupResource>(
+                    new SubscriptionLongTermRetentionManagedInstanceBackupResourceOperationSource(Client),
+                    _managedInstanceLongTermRetentionBackupsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Remove legal hold immutability of an existing managed instance long term retention backup.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/longTermRetentionManagedInstances/{managedInstanceName}/longTermRetentionDatabases/{databaseName}/longTermRetentionManagedInstanceBackups/{backupName}/removeLegalHoldImmutability. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ManagedInstanceLongTermRetentionBackups_RemoveLegalHoldImmutability. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-08-01-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="SubscriptionLongTermRetentionManagedInstanceBackupResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual ArmOperation<SubscriptionLongTermRetentionManagedInstanceBackupResource> RemoveLegalHoldImmutability(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _managedInstanceLongTermRetentionBackupsClientDiagnostics.CreateScope("SubscriptionLongTermRetentionManagedInstanceBackupResource.RemoveLegalHoldImmutability");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _managedInstanceLongTermRetentionBackupsRestClient.CreateRemoveLegalHoldImmutabilityRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                SqlArmOperation<SubscriptionLongTermRetentionManagedInstanceBackupResource> operation = new SqlArmOperation<SubscriptionLongTermRetentionManagedInstanceBackupResource>(
+                    new SubscriptionLongTermRetentionManagedInstanceBackupResourceOperationSource(Client),
+                    _managedInstanceLongTermRetentionBackupsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    operation.WaitForCompletion(cancellationToken);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Remove time based immutability of an existing managed instance long term retention backup.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/longTermRetentionManagedInstances/{managedInstanceName}/longTermRetentionDatabases/{databaseName}/longTermRetentionManagedInstanceBackups/{backupName}/removeTimeBasedImmutability. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ManagedInstanceLongTermRetentionBackups_RemoveTimeBasedImmutability. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-08-01-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="SubscriptionLongTermRetentionManagedInstanceBackupResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<ArmOperation<SubscriptionLongTermRetentionManagedInstanceBackupResource>> RemoveTimeBasedImmutabilityAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _managedInstanceLongTermRetentionBackupsClientDiagnostics.CreateScope("SubscriptionLongTermRetentionManagedInstanceBackupResource.RemoveTimeBasedImmutability");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _managedInstanceLongTermRetentionBackupsRestClient.CreateRemoveTimeBasedImmutabilityRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                SqlArmOperation<SubscriptionLongTermRetentionManagedInstanceBackupResource> operation = new SqlArmOperation<SubscriptionLongTermRetentionManagedInstanceBackupResource>(
+                    new SubscriptionLongTermRetentionManagedInstanceBackupResourceOperationSource(Client),
+                    _managedInstanceLongTermRetentionBackupsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Remove time based immutability of an existing managed instance long term retention backup.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/longTermRetentionManagedInstances/{managedInstanceName}/longTermRetentionDatabases/{databaseName}/longTermRetentionManagedInstanceBackups/{backupName}/removeTimeBasedImmutability. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ManagedInstanceLongTermRetentionBackups_RemoveTimeBasedImmutability. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-08-01-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="SubscriptionLongTermRetentionManagedInstanceBackupResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual ArmOperation<SubscriptionLongTermRetentionManagedInstanceBackupResource> RemoveTimeBasedImmutability(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _managedInstanceLongTermRetentionBackupsClientDiagnostics.CreateScope("SubscriptionLongTermRetentionManagedInstanceBackupResource.RemoveTimeBasedImmutability");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _managedInstanceLongTermRetentionBackupsRestClient.CreateRemoveTimeBasedImmutabilityRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                SqlArmOperation<SubscriptionLongTermRetentionManagedInstanceBackupResource> operation = new SqlArmOperation<SubscriptionLongTermRetentionManagedInstanceBackupResource>(
+                    new SubscriptionLongTermRetentionManagedInstanceBackupResourceOperationSource(Client),
+                    _managedInstanceLongTermRetentionBackupsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    operation.WaitForCompletion(cancellationToken);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Set legal hold immutability of an existing managed instance long term retention backup.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/longTermRetentionManagedInstances/{managedInstanceName}/longTermRetentionDatabases/{databaseName}/longTermRetentionManagedInstanceBackups/{backupName}/setLegalHoldImmutability. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ManagedInstanceLongTermRetentionBackups_SetLegalHoldImmutability. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-08-01-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="SubscriptionLongTermRetentionManagedInstanceBackupResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<ArmOperation<SubscriptionLongTermRetentionManagedInstanceBackupResource>> SetLegalHoldImmutabilityAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _managedInstanceLongTermRetentionBackupsClientDiagnostics.CreateScope("SubscriptionLongTermRetentionManagedInstanceBackupResource.SetLegalHoldImmutability");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _managedInstanceLongTermRetentionBackupsRestClient.CreateSetLegalHoldImmutabilityRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                SqlArmOperation<SubscriptionLongTermRetentionManagedInstanceBackupResource> operation = new SqlArmOperation<SubscriptionLongTermRetentionManagedInstanceBackupResource>(
+                    new SubscriptionLongTermRetentionManagedInstanceBackupResourceOperationSource(Client),
+                    _managedInstanceLongTermRetentionBackupsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Set legal hold immutability of an existing managed instance long term retention backup.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/longTermRetentionManagedInstances/{managedInstanceName}/longTermRetentionDatabases/{databaseName}/longTermRetentionManagedInstanceBackups/{backupName}/setLegalHoldImmutability. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ManagedInstanceLongTermRetentionBackups_SetLegalHoldImmutability. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-08-01-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="SubscriptionLongTermRetentionManagedInstanceBackupResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual ArmOperation<SubscriptionLongTermRetentionManagedInstanceBackupResource> SetLegalHoldImmutability(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _managedInstanceLongTermRetentionBackupsClientDiagnostics.CreateScope("SubscriptionLongTermRetentionManagedInstanceBackupResource.SetLegalHoldImmutability");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _managedInstanceLongTermRetentionBackupsRestClient.CreateSetLegalHoldImmutabilityRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                SqlArmOperation<SubscriptionLongTermRetentionManagedInstanceBackupResource> operation = new SqlArmOperation<SubscriptionLongTermRetentionManagedInstanceBackupResource>(
+                    new SubscriptionLongTermRetentionManagedInstanceBackupResourceOperationSource(Client),
+                    _managedInstanceLongTermRetentionBackupsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    operation.WaitForCompletion(cancellationToken);
                 }
                 return operation;
             }
