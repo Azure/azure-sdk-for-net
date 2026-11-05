@@ -46,7 +46,7 @@ Relative to the previous GA release, `12.0.0`:
 ### Other Changes
 
 - Added experimental (`SCME0002`) generic-host registration extensions, including keyed registration, for `SearchClient`, `SearchIndexClient`, `SearchIndexerClient`, and `KnowledgeBaseRetrievalClient`.
-- Added a parameterless `SearchResourceEncryptionKey` constructor and setters for `KeyName`, `KeyVersion`, and `VaultUri`. Added constructors and setters that allow knowledge base message roles, text content, image content, and image URLs to be updated.
+- Added constructors and setters that allow knowledge base message roles, text content, image content, and image URLs to be updated.
 
 ## 12.1.0-beta.3 (2026-09-14)
 
