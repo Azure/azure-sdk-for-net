@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.DependencyMap
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _discoverySourcesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _discoverySourcesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<DependencyMapDiscoverySourceData> response = Response.FromValue(DependencyMapDiscoverySourceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.DependencyMap
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _discoverySourcesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _discoverySourcesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<DependencyMapDiscoverySourceData> response = Response.FromValue(DependencyMapDiscoverySourceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.DependencyMap
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _discoverySourcesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, DependencyMapDiscoverySourcePatch.ToRequestContent(patch), context);
+                using HttpMessage message = _discoverySourcesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, DependencyMapDiscoverySourcePatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DependencyMapArmOperation<DependencyMapDiscoverySourceResource> operation = new DependencyMapArmOperation<DependencyMapDiscoverySourceResource>(
                     new DependencyMapDiscoverySourceResourceOperationSource(Client),
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.DependencyMap
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _discoverySourcesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, DependencyMapDiscoverySourcePatch.ToRequestContent(patch), context);
+                using HttpMessage message = _discoverySourcesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, DependencyMapDiscoverySourcePatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DependencyMapArmOperation<DependencyMapDiscoverySourceResource> operation = new DependencyMapArmOperation<DependencyMapDiscoverySourceResource>(
                     new DependencyMapDiscoverySourceResourceOperationSource(Client),
@@ -342,7 +342,7 @@ namespace Azure.ResourceManager.DependencyMap
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _discoverySourcesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _discoverySourcesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DependencyMapArmOperation operation = new DependencyMapArmOperation(_discoverySourcesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -391,7 +391,7 @@ namespace Azure.ResourceManager.DependencyMap
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _discoverySourcesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _discoverySourcesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DependencyMapArmOperation operation = new DependencyMapArmOperation(_discoverySourcesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -430,7 +430,7 @@ namespace Azure.ResourceManager.DependencyMap
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _discoverySourcesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                    using HttpMessage message = _discoverySourcesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<DependencyMapDiscoverySourceData> response = Response.FromValue(DependencyMapDiscoverySourceData.FromResponse(result), result);
                     return Response.FromValue(new DependencyMapDiscoverySourceResource(Client, response.Value), response.GetRawResponse());
@@ -478,7 +478,7 @@ namespace Azure.ResourceManager.DependencyMap
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _discoverySourcesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                    using HttpMessage message = _discoverySourcesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<DependencyMapDiscoverySourceData> response = Response.FromValue(DependencyMapDiscoverySourceData.FromResponse(result), result);
                     return Response.FromValue(new DependencyMapDiscoverySourceResource(Client, response.Value), response.GetRawResponse());
@@ -524,7 +524,7 @@ namespace Azure.ResourceManager.DependencyMap
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _discoverySourcesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                    using HttpMessage message = _discoverySourcesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<DependencyMapDiscoverySourceData> response = Response.FromValue(DependencyMapDiscoverySourceData.FromResponse(result), result);
                     return Response.FromValue(new DependencyMapDiscoverySourceResource(Client, response.Value), response.GetRawResponse());
@@ -566,7 +566,7 @@ namespace Azure.ResourceManager.DependencyMap
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _discoverySourcesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                    using HttpMessage message = _discoverySourcesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<DependencyMapDiscoverySourceData> response = Response.FromValue(DependencyMapDiscoverySourceData.FromResponse(result), result);
                     return Response.FromValue(new DependencyMapDiscoverySourceResource(Client, response.Value), response.GetRawResponse());
@@ -608,7 +608,7 @@ namespace Azure.ResourceManager.DependencyMap
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _discoverySourcesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                    using HttpMessage message = _discoverySourcesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<DependencyMapDiscoverySourceData> response = Response.FromValue(DependencyMapDiscoverySourceData.FromResponse(result), result);
                     return Response.FromValue(new DependencyMapDiscoverySourceResource(Client, response.Value), response.GetRawResponse());
@@ -654,7 +654,7 @@ namespace Azure.ResourceManager.DependencyMap
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _discoverySourcesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                    using HttpMessage message = _discoverySourcesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<DependencyMapDiscoverySourceData> response = Response.FromValue(DependencyMapDiscoverySourceData.FromResponse(result), result);
                     return Response.FromValue(new DependencyMapDiscoverySourceResource(Client, response.Value), response.GetRawResponse());

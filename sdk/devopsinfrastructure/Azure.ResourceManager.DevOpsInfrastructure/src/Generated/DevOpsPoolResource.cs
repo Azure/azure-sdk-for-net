@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _poolsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _poolsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<DevOpsPoolData> response = Response.FromValue(DevOpsPoolData.FromResponse(result), result);
                 if (response.Value == null)
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _poolsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _poolsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<DevOpsPoolData> response = Response.FromValue(DevOpsPoolData.FromResponse(result), result);
                 if (response.Value == null)
@@ -237,7 +237,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _poolsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, DevOpsPoolPatch.ToRequestContent(patch), context);
+                using HttpMessage message = _poolsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, DevOpsPoolPatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DevOpsInfrastructureArmOperation<DevOpsPoolResource> operation = new DevOpsInfrastructureArmOperation<DevOpsPoolResource>(
                     new DevOpsPoolResourceOperationSource(Client),
@@ -296,7 +296,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _poolsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, DevOpsPoolPatch.ToRequestContent(patch), context);
+                using HttpMessage message = _poolsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, DevOpsPoolPatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DevOpsInfrastructureArmOperation<DevOpsPoolResource> operation = new DevOpsInfrastructureArmOperation<DevOpsPoolResource>(
                     new DevOpsPoolResourceOperationSource(Client),
@@ -351,7 +351,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _poolsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _poolsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DevOpsInfrastructureArmOperation operation = new DevOpsInfrastructureArmOperation(_poolsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -400,7 +400,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _poolsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _poolsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DevOpsInfrastructureArmOperation operation = new DevOpsInfrastructureArmOperation(_poolsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -452,7 +452,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _poolsRestClient.CreateDeleteResourcesRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, DevOpsDeleteResourcesDetails.ToRequestContent(details), context);
+                using HttpMessage message = _poolsRestClient.CreateDeleteResourcesRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, DevOpsDeleteResourcesDetails.ToRequestContent(details), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 return response;
             }
@@ -499,7 +499,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _poolsRestClient.CreateDeleteResourcesRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, DevOpsDeleteResourcesDetails.ToRequestContent(details), context);
+                using HttpMessage message = _poolsRestClient.CreateDeleteResourcesRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, DevOpsDeleteResourcesDetails.ToRequestContent(details), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 return response;
             }
@@ -609,7 +609,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _poolsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _poolsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<DevOpsPoolData> response = Response.FromValue(DevOpsPoolData.FromResponse(result), result);
                     return Response.FromValue(new DevOpsPoolResource(Client, response.Value), response.GetRawResponse());
@@ -657,7 +657,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _poolsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _poolsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<DevOpsPoolData> response = Response.FromValue(DevOpsPoolData.FromResponse(result), result);
                     return Response.FromValue(new DevOpsPoolResource(Client, response.Value), response.GetRawResponse());
@@ -703,7 +703,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _poolsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _poolsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<DevOpsPoolData> response = Response.FromValue(DevOpsPoolData.FromResponse(result), result);
                     return Response.FromValue(new DevOpsPoolResource(Client, response.Value), response.GetRawResponse());
@@ -745,7 +745,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _poolsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _poolsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<DevOpsPoolData> response = Response.FromValue(DevOpsPoolData.FromResponse(result), result);
                     return Response.FromValue(new DevOpsPoolResource(Client, response.Value), response.GetRawResponse());
@@ -787,7 +787,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _poolsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _poolsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<DevOpsPoolData> response = Response.FromValue(DevOpsPoolData.FromResponse(result), result);
                     return Response.FromValue(new DevOpsPoolResource(Client, response.Value), response.GetRawResponse());
@@ -833,7 +833,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _poolsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _poolsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<DevOpsPoolData> response = Response.FromValue(DevOpsPoolData.FromResponse(result), result);
                     return Response.FromValue(new DevOpsPoolResource(Client, response.Value), response.GetRawResponse());

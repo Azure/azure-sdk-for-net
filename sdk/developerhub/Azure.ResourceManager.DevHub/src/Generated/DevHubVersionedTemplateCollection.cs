@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.DevHub
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _versionedTemplateRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Name, templateVersion, context);
+                using HttpMessage message = _versionedTemplateRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Name, templateVersion, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<DevHubVersionedTemplateData> response = Response.FromValue(DevHubVersionedTemplateData.FromResponse(result), result);
                 if (response.Value == null)
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.DevHub
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _versionedTemplateRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Name, templateVersion, context);
+                using HttpMessage message = _versionedTemplateRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Name, templateVersion, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<DevHubVersionedTemplateData> response = Response.FromValue(DevHubVersionedTemplateData.FromResponse(result), result);
                 if (response.Value == null)
@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.DevHub
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _versionedTemplateRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Name, templateVersion, context);
+                using HttpMessage message = _versionedTemplateRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Name, templateVersion, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<DevHubVersionedTemplateData> response = default;
@@ -298,7 +298,7 @@ namespace Azure.ResourceManager.DevHub
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _versionedTemplateRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Name, templateVersion, context);
+                using HttpMessage message = _versionedTemplateRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Name, templateVersion, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<DevHubVersionedTemplateData> response = default;
@@ -355,7 +355,7 @@ namespace Azure.ResourceManager.DevHub
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _versionedTemplateRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Name, templateVersion, context);
+                using HttpMessage message = _versionedTemplateRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Name, templateVersion, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<DevHubVersionedTemplateData> response = default;
@@ -416,7 +416,7 @@ namespace Azure.ResourceManager.DevHub
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _versionedTemplateRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Name, templateVersion, context);
+                using HttpMessage message = _versionedTemplateRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Name, templateVersion, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<DevHubVersionedTemplateData> response = default;

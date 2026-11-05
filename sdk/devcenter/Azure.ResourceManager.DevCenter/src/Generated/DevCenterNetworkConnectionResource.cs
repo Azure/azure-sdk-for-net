@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.DevCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkConnectionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _networkConnectionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<DevCenterNetworkConnectionData> response = Response.FromValue(DevCenterNetworkConnectionData.FromResponse(result), result);
                 if (response.Value == null)
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.DevCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkConnectionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _networkConnectionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<DevCenterNetworkConnectionData> response = Response.FromValue(DevCenterNetworkConnectionData.FromResponse(result), result);
                 if (response.Value == null)
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.DevCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkConnectionsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, DevCenterNetworkConnectionPatch.ToRequestContent(patch), context);
+                using HttpMessage message = _networkConnectionsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, DevCenterNetworkConnectionPatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DevCenterArmOperation<DevCenterNetworkConnectionResource> operation = new DevCenterArmOperation<DevCenterNetworkConnectionResource>(
                     new DevCenterNetworkConnectionResourceOperationSource(Client),
@@ -285,7 +285,7 @@ namespace Azure.ResourceManager.DevCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkConnectionsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, DevCenterNetworkConnectionPatch.ToRequestContent(patch), context);
+                using HttpMessage message = _networkConnectionsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, DevCenterNetworkConnectionPatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DevCenterArmOperation<DevCenterNetworkConnectionResource> operation = new DevCenterArmOperation<DevCenterNetworkConnectionResource>(
                     new DevCenterNetworkConnectionResourceOperationSource(Client),
@@ -340,7 +340,7 @@ namespace Azure.ResourceManager.DevCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkConnectionsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _networkConnectionsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DevCenterArmOperation operation = new DevCenterArmOperation(_networkConnectionsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -389,7 +389,7 @@ namespace Azure.ResourceManager.DevCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkConnectionsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _networkConnectionsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DevCenterArmOperation operation = new DevCenterArmOperation(_networkConnectionsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -518,7 +518,7 @@ namespace Azure.ResourceManager.DevCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkConnectionsRestClient.CreateRunHealthChecksRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _networkConnectionsRestClient.CreateRunHealthChecksRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DevCenterArmOperation operation = new DevCenterArmOperation(_networkConnectionsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -567,7 +567,7 @@ namespace Azure.ResourceManager.DevCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkConnectionsRestClient.CreateRunHealthChecksRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _networkConnectionsRestClient.CreateRunHealthChecksRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DevCenterArmOperation operation = new DevCenterArmOperation(_networkConnectionsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -606,7 +606,7 @@ namespace Azure.ResourceManager.DevCenter
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _networkConnectionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _networkConnectionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<DevCenterNetworkConnectionData> response = Response.FromValue(DevCenterNetworkConnectionData.FromResponse(result), result);
                     return Response.FromValue(new DevCenterNetworkConnectionResource(Client, response.Value), response.GetRawResponse());
@@ -654,7 +654,7 @@ namespace Azure.ResourceManager.DevCenter
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _networkConnectionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _networkConnectionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<DevCenterNetworkConnectionData> response = Response.FromValue(DevCenterNetworkConnectionData.FromResponse(result), result);
                     return Response.FromValue(new DevCenterNetworkConnectionResource(Client, response.Value), response.GetRawResponse());
@@ -700,7 +700,7 @@ namespace Azure.ResourceManager.DevCenter
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _networkConnectionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _networkConnectionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<DevCenterNetworkConnectionData> response = Response.FromValue(DevCenterNetworkConnectionData.FromResponse(result), result);
                     return Response.FromValue(new DevCenterNetworkConnectionResource(Client, response.Value), response.GetRawResponse());
@@ -742,7 +742,7 @@ namespace Azure.ResourceManager.DevCenter
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _networkConnectionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _networkConnectionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<DevCenterNetworkConnectionData> response = Response.FromValue(DevCenterNetworkConnectionData.FromResponse(result), result);
                     return Response.FromValue(new DevCenterNetworkConnectionResource(Client, response.Value), response.GetRawResponse());
@@ -784,7 +784,7 @@ namespace Azure.ResourceManager.DevCenter
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _networkConnectionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _networkConnectionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<DevCenterNetworkConnectionData> response = Response.FromValue(DevCenterNetworkConnectionData.FromResponse(result), result);
                     return Response.FromValue(new DevCenterNetworkConnectionResource(Client, response.Value), response.GetRawResponse());
@@ -830,7 +830,7 @@ namespace Azure.ResourceManager.DevCenter
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _networkConnectionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _networkConnectionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<DevCenterNetworkConnectionData> response = Response.FromValue(DevCenterNetworkConnectionData.FromResponse(result), result);
                     return Response.FromValue(new DevCenterNetworkConnectionResource(Client, response.Value), response.GetRawResponse());

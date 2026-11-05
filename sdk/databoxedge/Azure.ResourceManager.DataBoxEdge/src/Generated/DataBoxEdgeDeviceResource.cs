@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _devicesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _devicesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<DataBoxEdgeDeviceData> response = Response.FromValue(DataBoxEdgeDeviceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _devicesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _devicesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<DataBoxEdgeDeviceData> response = Response.FromValue(DataBoxEdgeDeviceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _devicesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, DataBoxEdgeDevicePatch.ToRequestContent(patch), context);
+                using HttpMessage message = _devicesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, DataBoxEdgeDevicePatch.ToRequestContent(patch), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<DataBoxEdgeDeviceData> response = Response.FromValue(DataBoxEdgeDeviceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -290,7 +290,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _devicesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, DataBoxEdgeDevicePatch.ToRequestContent(patch), context);
+                using HttpMessage message = _devicesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, DataBoxEdgeDevicePatch.ToRequestContent(patch), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<DataBoxEdgeDeviceData> response = Response.FromValue(DataBoxEdgeDeviceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -339,7 +339,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _devicesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _devicesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DataBoxEdgeArmOperation operation = new DataBoxEdgeArmOperation(_devicesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -388,7 +388,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _devicesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _devicesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DataBoxEdgeArmOperation operation = new DataBoxEdgeArmOperation(_devicesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -442,7 +442,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _deviceCapacityCheckRestClient.CreateCheckResourceCreationFeasibilityRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, DeviceCapacityRequestContent.ToRequestContent(content), capacityName, context);
+                using HttpMessage message = _deviceCapacityCheckRestClient.CreateCheckResourceCreationFeasibilityRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, DeviceCapacityRequestContent.ToRequestContent(content), capacityName, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DataBoxEdgeArmOperation operation = new DataBoxEdgeArmOperation(_deviceCapacityCheckClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
@@ -496,7 +496,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _deviceCapacityCheckRestClient.CreateCheckResourceCreationFeasibilityRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, DeviceCapacityRequestContent.ToRequestContent(content), capacityName, context);
+                using HttpMessage message = _deviceCapacityCheckRestClient.CreateCheckResourceCreationFeasibilityRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, DeviceCapacityRequestContent.ToRequestContent(content), capacityName, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DataBoxEdgeArmOperation operation = new DataBoxEdgeArmOperation(_deviceCapacityCheckClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
@@ -549,7 +549,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _devicesRestClient.CreateCreateOrUpdateSecuritySettingsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, DataBoxEdgeSecuritySettings.ToRequestContent(securitySettings), context);
+                using HttpMessage message = _devicesRestClient.CreateCreateOrUpdateSecuritySettingsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, DataBoxEdgeSecuritySettings.ToRequestContent(securitySettings), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DataBoxEdgeArmOperation operation = new DataBoxEdgeArmOperation(_devicesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -602,7 +602,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _devicesRestClient.CreateCreateOrUpdateSecuritySettingsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, DataBoxEdgeSecuritySettings.ToRequestContent(securitySettings), context);
+                using HttpMessage message = _devicesRestClient.CreateCreateOrUpdateSecuritySettingsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, DataBoxEdgeSecuritySettings.ToRequestContent(securitySettings), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DataBoxEdgeArmOperation operation = new DataBoxEdgeArmOperation(_devicesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -651,7 +651,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _devicesRestClient.CreateDownloadUpdatesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _devicesRestClient.CreateDownloadUpdatesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DataBoxEdgeArmOperation operation = new DataBoxEdgeArmOperation(_devicesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -700,7 +700,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _devicesRestClient.CreateDownloadUpdatesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _devicesRestClient.CreateDownloadUpdatesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DataBoxEdgeArmOperation operation = new DataBoxEdgeArmOperation(_devicesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -748,7 +748,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _devicesRestClient.CreateGenerateCertificateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _devicesRestClient.CreateGenerateCertificateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<GenerateCertResult> response = Response.FromValue(GenerateCertResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -796,7 +796,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _devicesRestClient.CreateGenerateCertificateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _devicesRestClient.CreateGenerateCertificateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<GenerateCertResult> response = Response.FromValue(GenerateCertResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -844,7 +844,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _devicesRestClient.CreateGetExtendedInformationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _devicesRestClient.CreateGetExtendedInformationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<DataBoxEdgeDeviceExtendedInfo> response = Response.FromValue(DataBoxEdgeDeviceExtendedInfo.FromResponse(result), result);
                 if (response.Value == null)
@@ -892,7 +892,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _devicesRestClient.CreateGetExtendedInformationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _devicesRestClient.CreateGetExtendedInformationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<DataBoxEdgeDeviceExtendedInfo> response = Response.FromValue(DataBoxEdgeDeviceExtendedInfo.FromResponse(result), result);
                 if (response.Value == null)
@@ -941,7 +941,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _devicesRestClient.CreateInstallUpdatesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _devicesRestClient.CreateInstallUpdatesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DataBoxEdgeArmOperation operation = new DataBoxEdgeArmOperation(_devicesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -990,7 +990,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _devicesRestClient.CreateInstallUpdatesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _devicesRestClient.CreateInstallUpdatesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DataBoxEdgeArmOperation operation = new DataBoxEdgeArmOperation(_devicesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -1115,7 +1115,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _devicesRestClient.CreateScanForUpdatesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _devicesRestClient.CreateScanForUpdatesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DataBoxEdgeArmOperation operation = new DataBoxEdgeArmOperation(_devicesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -1164,7 +1164,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _devicesRestClient.CreateScanForUpdatesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _devicesRestClient.CreateScanForUpdatesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DataBoxEdgeArmOperation operation = new DataBoxEdgeArmOperation(_devicesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -1217,7 +1217,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _supportPackagesRestClient.CreateTriggerSupportPackageRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, TriggerSupportPackageContent.ToRequestContent(content), context);
+                using HttpMessage message = _supportPackagesRestClient.CreateTriggerSupportPackageRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, TriggerSupportPackageContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DataBoxEdgeArmOperation operation = new DataBoxEdgeArmOperation(_supportPackagesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -1270,7 +1270,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _supportPackagesRestClient.CreateTriggerSupportPackageRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, TriggerSupportPackageContent.ToRequestContent(content), context);
+                using HttpMessage message = _supportPackagesRestClient.CreateTriggerSupportPackageRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, TriggerSupportPackageContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DataBoxEdgeArmOperation operation = new DataBoxEdgeArmOperation(_supportPackagesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -1322,7 +1322,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _devicesRestClient.CreateUpdateExtendedInformationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, DataBoxEdgeDeviceExtendedInfoPatch.ToRequestContent(patch), context);
+                using HttpMessage message = _devicesRestClient.CreateUpdateExtendedInformationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, DataBoxEdgeDeviceExtendedInfoPatch.ToRequestContent(patch), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<DataBoxEdgeDeviceExtendedInfo> response = Response.FromValue(DataBoxEdgeDeviceExtendedInfo.FromResponse(result), result);
                 if (response.Value == null)
@@ -1374,7 +1374,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _devicesRestClient.CreateUpdateExtendedInformationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, DataBoxEdgeDeviceExtendedInfoPatch.ToRequestContent(patch), context);
+                using HttpMessage message = _devicesRestClient.CreateUpdateExtendedInformationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, DataBoxEdgeDeviceExtendedInfoPatch.ToRequestContent(patch), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<DataBoxEdgeDeviceExtendedInfo> response = Response.FromValue(DataBoxEdgeDeviceExtendedInfo.FromResponse(result), result);
                 if (response.Value == null)
@@ -1426,7 +1426,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _devicesRestClient.CreateUploadCertificateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, UploadCertificateContent.ToRequestContent(content), context);
+                using HttpMessage message = _devicesRestClient.CreateUploadCertificateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, UploadCertificateContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<UploadCertificateResponse> response = Response.FromValue(UploadCertificateResponse.FromResponse(result), result);
                 if (response.Value == null)
@@ -1478,7 +1478,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _devicesRestClient.CreateUploadCertificateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, UploadCertificateContent.ToRequestContent(content), context);
+                using HttpMessage message = _devicesRestClient.CreateUploadCertificateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, UploadCertificateContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<UploadCertificateResponse> response = Response.FromValue(UploadCertificateResponse.FromResponse(result), result);
                 if (response.Value == null)
@@ -1517,7 +1517,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _devicesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _devicesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<DataBoxEdgeDeviceData> response = Response.FromValue(DataBoxEdgeDeviceData.FromResponse(result), result);
                     return Response.FromValue(new DataBoxEdgeDeviceResource(Client, response.Value), response.GetRawResponse());
@@ -1565,7 +1565,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _devicesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _devicesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<DataBoxEdgeDeviceData> response = Response.FromValue(DataBoxEdgeDeviceData.FromResponse(result), result);
                     return Response.FromValue(new DataBoxEdgeDeviceResource(Client, response.Value), response.GetRawResponse());
@@ -1611,7 +1611,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _devicesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _devicesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<DataBoxEdgeDeviceData> response = Response.FromValue(DataBoxEdgeDeviceData.FromResponse(result), result);
                     return Response.FromValue(new DataBoxEdgeDeviceResource(Client, response.Value), response.GetRawResponse());
@@ -1653,7 +1653,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _devicesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _devicesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<DataBoxEdgeDeviceData> response = Response.FromValue(DataBoxEdgeDeviceData.FromResponse(result), result);
                     return Response.FromValue(new DataBoxEdgeDeviceResource(Client, response.Value), response.GetRawResponse());
@@ -1695,7 +1695,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _devicesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _devicesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<DataBoxEdgeDeviceData> response = Response.FromValue(DataBoxEdgeDeviceData.FromResponse(result), result);
                     return Response.FromValue(new DataBoxEdgeDeviceResource(Client, response.Value), response.GetRawResponse());
@@ -1741,7 +1741,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _devicesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _devicesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<DataBoxEdgeDeviceData> response = Response.FromValue(DataBoxEdgeDeviceData.FromResponse(result), result);
                     return Response.FromValue(new DataBoxEdgeDeviceResource(Client, response.Value), response.GetRawResponse());

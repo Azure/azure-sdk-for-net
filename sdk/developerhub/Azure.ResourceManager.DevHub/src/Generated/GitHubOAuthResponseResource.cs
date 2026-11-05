@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.DevHub
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _devHubClientRestClient.CreateGitHubOAuthCallbackRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, code, state, context);
+                using HttpMessage message = _devHubClientRestClient.CreateGitHubOAuthCallbackRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, code, state, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<GitHubOAuthResultData> response = Response.FromValue(GitHubOAuthResultData.FromResponse(result), result);
                 if (response.Value == null)
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.DevHub
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _devHubClientRestClient.CreateGitHubOAuthCallbackRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, code, state, context);
+                using HttpMessage message = _devHubClientRestClient.CreateGitHubOAuthCallbackRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, code, state, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<GitHubOAuthResultData> response = Response.FromValue(GitHubOAuthResultData.FromResponse(result), result);
                 if (response.Value == null)
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.DevHub
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _devHubClientRestClient.CreateGitHubOAuthRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, DeveloperHubGitHubOAuthCallContent.ToRequestContent(content), context);
+                using HttpMessage message = _devHubClientRestClient.CreateGitHubOAuthRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, DeveloperHubGitHubOAuthCallContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<DeveloperHubGitHubOAuthInfoResult> response = Response.FromValue(DeveloperHubGitHubOAuthInfoResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -283,7 +283,7 @@ namespace Azure.ResourceManager.DevHub
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _devHubClientRestClient.CreateGitHubOAuthRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, DeveloperHubGitHubOAuthCallContent.ToRequestContent(content), context);
+                using HttpMessage message = _devHubClientRestClient.CreateGitHubOAuthRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, DeveloperHubGitHubOAuthCallContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<DeveloperHubGitHubOAuthInfoResult> response = Response.FromValue(DeveloperHubGitHubOAuthInfoResult.FromResponse(result), result);
                 if (response.Value == null)

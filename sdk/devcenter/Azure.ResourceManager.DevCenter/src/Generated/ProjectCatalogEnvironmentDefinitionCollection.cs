@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.DevCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _environmentDefinitionsRestClient.CreateGetByProjectCatalogRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, environmentDefinitionName, context);
+                using HttpMessage message = _environmentDefinitionsRestClient.CreateGetByProjectCatalogRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, environmentDefinitionName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<EnvironmentDefinitionData> response = Response.FromValue(EnvironmentDefinitionData.FromResponse(result), result);
                 if (response.Value == null)
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.DevCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _environmentDefinitionsRestClient.CreateGetByProjectCatalogRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, environmentDefinitionName, context);
+                using HttpMessage message = _environmentDefinitionsRestClient.CreateGetByProjectCatalogRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, environmentDefinitionName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<EnvironmentDefinitionData> response = Response.FromValue(EnvironmentDefinitionData.FromResponse(result), result);
                 if (response.Value == null)
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.DevCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _environmentDefinitionsRestClient.CreateGetByProjectCatalogRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, environmentDefinitionName, context);
+                using HttpMessage message = _environmentDefinitionsRestClient.CreateGetByProjectCatalogRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, environmentDefinitionName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<EnvironmentDefinitionData> response = default;
@@ -312,7 +312,7 @@ namespace Azure.ResourceManager.DevCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _environmentDefinitionsRestClient.CreateGetByProjectCatalogRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, environmentDefinitionName, context);
+                using HttpMessage message = _environmentDefinitionsRestClient.CreateGetByProjectCatalogRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, environmentDefinitionName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<EnvironmentDefinitionData> response = default;
@@ -369,7 +369,7 @@ namespace Azure.ResourceManager.DevCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _environmentDefinitionsRestClient.CreateGetByProjectCatalogRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, environmentDefinitionName, context);
+                using HttpMessage message = _environmentDefinitionsRestClient.CreateGetByProjectCatalogRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, environmentDefinitionName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<EnvironmentDefinitionData> response = default;
@@ -430,7 +430,7 @@ namespace Azure.ResourceManager.DevCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _environmentDefinitionsRestClient.CreateGetByProjectCatalogRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, environmentDefinitionName, context);
+                using HttpMessage message = _environmentDefinitionsRestClient.CreateGetByProjectCatalogRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, environmentDefinitionName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<EnvironmentDefinitionData> response = default;

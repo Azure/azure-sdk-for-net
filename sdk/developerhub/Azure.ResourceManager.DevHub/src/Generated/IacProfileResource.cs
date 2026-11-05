@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.DevHub
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _iacProfilesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _iacProfilesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<IacProfileData> response = Response.FromValue(IacProfileData.FromResponse(result), result);
                 if (response.Value == null)
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.DevHub
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _iacProfilesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _iacProfilesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<IacProfileData> response = Response.FromValue(IacProfileData.FromResponse(result), result);
                 if (response.Value == null)
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.DevHub
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _iacProfilesRestClient.CreateUpdateTagsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, DevHubTagsPatch.ToRequestContent(patch), context);
+                using HttpMessage message = _iacProfilesRestClient.CreateUpdateTagsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, DevHubTagsPatch.ToRequestContent(patch), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<IacProfileData> response = Response.FromValue(IacProfileData.FromResponse(result), result);
                 if (response.Value == null)
@@ -277,7 +277,7 @@ namespace Azure.ResourceManager.DevHub
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _iacProfilesRestClient.CreateUpdateTagsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, DevHubTagsPatch.ToRequestContent(patch), context);
+                using HttpMessage message = _iacProfilesRestClient.CreateUpdateTagsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, DevHubTagsPatch.ToRequestContent(patch), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<IacProfileData> response = Response.FromValue(IacProfileData.FromResponse(result), result);
                 if (response.Value == null)
@@ -326,7 +326,7 @@ namespace Azure.ResourceManager.DevHub
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _iacProfilesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _iacProfilesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
@@ -377,7 +377,7 @@ namespace Azure.ResourceManager.DevHub
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _iacProfilesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _iacProfilesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
@@ -431,7 +431,7 @@ namespace Azure.ResourceManager.DevHub
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _iacProfilesRestClient.CreateExportRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, DeveloperHubExportTemplateContent.ToRequestContent(content), context);
+                using HttpMessage message = _iacProfilesRestClient.CreateExportRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, DeveloperHubExportTemplateContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<DeveloperHubPrLinkResult> response = Response.FromValue(DeveloperHubPrLinkResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -483,7 +483,7 @@ namespace Azure.ResourceManager.DevHub
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _iacProfilesRestClient.CreateExportRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, DeveloperHubExportTemplateContent.ToRequestContent(content), context);
+                using HttpMessage message = _iacProfilesRestClient.CreateExportRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, DeveloperHubExportTemplateContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<DeveloperHubPrLinkResult> response = Response.FromValue(DeveloperHubPrLinkResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -535,7 +535,7 @@ namespace Azure.ResourceManager.DevHub
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _iacProfilesRestClient.CreateScaleRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, DeveloperHubScaleTemplateContent.ToRequestContent(content), context);
+                using HttpMessage message = _iacProfilesRestClient.CreateScaleRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, DeveloperHubScaleTemplateContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<DeveloperHubPrLinkResult> response = Response.FromValue(DeveloperHubPrLinkResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -587,7 +587,7 @@ namespace Azure.ResourceManager.DevHub
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _iacProfilesRestClient.CreateScaleRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, DeveloperHubScaleTemplateContent.ToRequestContent(content), context);
+                using HttpMessage message = _iacProfilesRestClient.CreateScaleRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, DeveloperHubScaleTemplateContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<DeveloperHubPrLinkResult> response = Response.FromValue(DeveloperHubPrLinkResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -635,7 +635,7 @@ namespace Azure.ResourceManager.DevHub
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _iacProfilesRestClient.CreateSyncRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _iacProfilesRestClient.CreateSyncRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 return response;
             }
@@ -678,7 +678,7 @@ namespace Azure.ResourceManager.DevHub
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _iacProfilesRestClient.CreateSyncRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _iacProfilesRestClient.CreateSyncRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 return response;
             }
@@ -712,7 +712,7 @@ namespace Azure.ResourceManager.DevHub
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _iacProfilesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _iacProfilesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<IacProfileData> response = Response.FromValue(IacProfileData.FromResponse(result), result);
                     return Response.FromValue(new IacProfileResource(Client, response.Value), response.GetRawResponse());
@@ -760,7 +760,7 @@ namespace Azure.ResourceManager.DevHub
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _iacProfilesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _iacProfilesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<IacProfileData> response = Response.FromValue(IacProfileData.FromResponse(result), result);
                     return Response.FromValue(new IacProfileResource(Client, response.Value), response.GetRawResponse());
@@ -806,7 +806,7 @@ namespace Azure.ResourceManager.DevHub
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _iacProfilesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _iacProfilesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<IacProfileData> response = Response.FromValue(IacProfileData.FromResponse(result), result);
                     return Response.FromValue(new IacProfileResource(Client, response.Value), response.GetRawResponse());
@@ -848,7 +848,7 @@ namespace Azure.ResourceManager.DevHub
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _iacProfilesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _iacProfilesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<IacProfileData> response = Response.FromValue(IacProfileData.FromResponse(result), result);
                     return Response.FromValue(new IacProfileResource(Client, response.Value), response.GetRawResponse());
@@ -890,7 +890,7 @@ namespace Azure.ResourceManager.DevHub
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _iacProfilesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _iacProfilesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<IacProfileData> response = Response.FromValue(IacProfileData.FromResponse(result), result);
                     return Response.FromValue(new IacProfileResource(Client, response.Value), response.GetRawResponse());
@@ -936,7 +936,7 @@ namespace Azure.ResourceManager.DevHub
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _iacProfilesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _iacProfilesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<IacProfileData> response = Response.FromValue(IacProfileData.FromResponse(result), result);
                     return Response.FromValue(new IacProfileResource(Client, response.Value), response.GetRawResponse());

@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _diagnosticSettingsRestClient.CreateUpdateDiagnosticProactiveLogCollectionSettingsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, DiagnosticProactiveLogCollectionSettingData.ToRequestContent(data), context);
+                using HttpMessage message = _diagnosticSettingsRestClient.CreateUpdateDiagnosticProactiveLogCollectionSettingsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, DiagnosticProactiveLogCollectionSettingData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DataBoxEdgeArmOperation<DiagnosticProactiveLogCollectionSettingResource> operation = new DataBoxEdgeArmOperation<DiagnosticProactiveLogCollectionSettingResource>(
                     new DiagnosticProactiveLogCollectionSettingResourceOperationSource(Client),
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _diagnosticSettingsRestClient.CreateUpdateDiagnosticProactiveLogCollectionSettingsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, DiagnosticProactiveLogCollectionSettingData.ToRequestContent(data), context);
+                using HttpMessage message = _diagnosticSettingsRestClient.CreateUpdateDiagnosticProactiveLogCollectionSettingsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, DiagnosticProactiveLogCollectionSettingData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DataBoxEdgeArmOperation<DiagnosticProactiveLogCollectionSettingResource> operation = new DataBoxEdgeArmOperation<DiagnosticProactiveLogCollectionSettingResource>(
                     new DiagnosticProactiveLogCollectionSettingResourceOperationSource(Client),
@@ -240,7 +240,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _diagnosticSettingsRestClient.CreateGetDiagnosticProactiveLogCollectionSettingsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, context);
+                using HttpMessage message = _diagnosticSettingsRestClient.CreateGetDiagnosticProactiveLogCollectionSettingsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<DiagnosticProactiveLogCollectionSettingData> response = Response.FromValue(DiagnosticProactiveLogCollectionSettingData.FromResponse(result), result);
                 if (response.Value == null)
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _diagnosticSettingsRestClient.CreateGetDiagnosticProactiveLogCollectionSettingsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, context);
+                using HttpMessage message = _diagnosticSettingsRestClient.CreateGetDiagnosticProactiveLogCollectionSettingsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<DiagnosticProactiveLogCollectionSettingData> response = Response.FromValue(DiagnosticProactiveLogCollectionSettingData.FromResponse(result), result);
                 if (response.Value == null)
