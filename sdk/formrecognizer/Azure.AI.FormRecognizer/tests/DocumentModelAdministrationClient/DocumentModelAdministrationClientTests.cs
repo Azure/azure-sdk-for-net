@@ -4,6 +4,7 @@
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using Azure.AI.FormRecognizer.Tests;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.Identity;
@@ -81,20 +82,15 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         }
 
         [Test]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/64511")]
-        public async Task ClientThrowsWithNonExistingResourceEndpoint()
+        public void ClientThrowsWithNonExistingResourceEndpoint()
         {
-            var client = CreateInstrumentedClient();
+            var options = new DocumentAnalysisClientOptions();
+            var transport = TransportFailureTestHelpers.ConfigureConnectionFailure(options, IsAsync);
+            // Instrument only this test; argument validation calls both sync and async methods.
+            var client = InstrumentClient(CreateInstrumentedClient(options));
 
-            try
-            {
-                await client.GetResourceDetailsAsync();
-            }
-            catch (AggregateException ex)
-            {
-                var innerExceptions = ex.InnerExceptions.ToList();
-                Assert.IsTrue(innerExceptions.All(ex => ex is RequestFailedException));
-            }
+            TransportFailureTestHelpers.AssertRetryFailure(
+                async () => await client.GetResourceDetailsAsync(), options, transport);
         }
 
         [Test]
