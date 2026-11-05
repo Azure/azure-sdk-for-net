@@ -34,9 +34,16 @@ The migration is being done incrementally:
 - All 27 tests pass, validating the converter produces identical results to the existing implementation
 - The converter maintains full compatibility with existing code while using the standardized API internally
 
-The converter selects the API version resolved by TCGC for the ARM service,
-including the default latest version. With `api-version: all`, it preserves the
-multi-version declaration view. Its `nameResolver` uses TCGC's `getLibraryName`
+The converter passes TCGC's `apiVersion` through to the ARM resolver when it is
+a string. For namespace-to-version dictionaries, it resolves the exact
+namespace and version objects and passes them through `serviceVersions`.
+Both dotted namespace keys and nested namespace dictionaries are supported.
+Unresolvable namespaces or undeclared versions produce an error rather than
+falling back to another version. The converter does not select a version from
+TCGC's package-version list; an omitted value remains `undefined`.
+Special strings such as `all` are also passed through unchanged; the current
+ARM resolver rejects `all` when it is not a declared service version.
+Its `nameResolver` uses TCGC's `getLibraryName`
 for model, operation, and operation-group names so that scoped `@clientName`
 customizations apply to resource metadata. Shared extension models retain their
 path-specific default stems unless an occurrence has an explicit override.

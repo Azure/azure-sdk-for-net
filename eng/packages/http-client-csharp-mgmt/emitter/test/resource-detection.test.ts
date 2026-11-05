@@ -156,9 +156,19 @@ interface HiddenWidgets {
       widgetMethods: 2
     },
     {
-      version: "all",
+      version: { "Microsoft.ContosoProviderHub": "2025-01-01" },
       resources: ["ClientGadget", "ClientTemporary", "ClientWidget"],
       widgetMethods: 3
+    },
+    {
+      version: { Microsoft: { ContosoProviderHub: "2025-01-01" } },
+      resources: ["ClientGadget", "ClientTemporary", "ClientWidget"],
+      widgetMethods: 3
+    },
+    {
+      version: { Microsoft: { ContosoProviderHub: "2026-01-01" } },
+      resources: ["ClientGadget", "ClientWidget"],
+      widgetMethods: 2
     }
   ])(
     "resolves ARM resource client names for API version $version",
@@ -251,6 +261,131 @@ interface Temporaries {
       }
     }
   );
+
+  it.each([
+    {
+      "Microsoft.Services.Compute": "2024-01-01",
+      "Microsoft.Services.Network": "2025-01-01"
+    },
+    {
+      Microsoft: {
+        Services: {
+          Compute: "2024-01-01",
+          Network: "2025-01-01"
+        }
+      }
+    },
+    {
+      "Microsoft.Services.Compute": "2024-01-01",
+      Microsoft: { Services: { Network: "2025-01-01" } }
+    }
+  ])("resolves independently versioned ARM services: %j", async (versions) => {
+    runner.addTypeSpecFile(
+      "main.tsp",
+      `
+import "@typespec/http";
+import "@typespec/rest";
+import "@typespec/versioning";
+import "@azure-tools/typespec-azure-core";
+import "@azure-tools/typespec-azure-resource-manager";
+import "@azure-tools/typespec-client-generator-core";
+using TypeSpec.Http;
+using TypeSpec.Rest;
+using TypeSpec.Versioning;
+using Azure.ResourceManager;
+using Azure.ClientGenerator.Core;
+
+${["Compute", "Network"]
+  .map(
+    (service) => `
+@service
+@armProviderNamespace
+@versioned(Versions)
+namespace Microsoft.Services.${service} {
+  enum Versions {
+    @armCommonTypesVersion(Azure.ResourceManager.CommonTypes.Versions.v5)
+    v2024: "2024-01-01",
+    @armCommonTypesVersion(Azure.ResourceManager.CommonTypes.Versions.v5)
+    v2025: "2025-01-01",
+  }
+  @renamedFrom(Versions.v2025, "Legacy${service}Widget")
+  model ${service}Widget is TrackedResource<{}> {
+    ...ResourceNameParameter<${service}Widget>;
+  }
+  @added(Versions.v2025)
+  model ${service}Gadget is TrackedResource<{}> {
+    ...ResourceNameParameter<${service}Gadget>;
+  }
+  @armResourceOperations
+  interface Widgets {
+    get is ArmResourceRead<${service}Widget>;
+  }
+  @added(Versions.v2025)
+  @armResourceOperations
+  interface Gadgets {
+    get is ArmResourceRead<${service}Gadget>;
+  }
+}`
+  )
+  .join("\n")}
+
+@client({
+  name: "Combined",
+  service: [Microsoft.Services.Compute, Microsoft.Services.Network],
+  autoMergeService: true
+})
+namespace Combined {}
+`
+    );
+    await runner.compile("main.tsp");
+    const context = createEmitterContext(runner.program);
+    context.options["api-version"] = versions;
+    const sdkContext = await createCSharpSdkContext(context);
+    createModel(sdkContext);
+    const schema = resolveArmResources(runner.program, sdkContext);
+    deepStrictEqual(
+      runner.program.diagnostics.filter((d) => d.severity === "error"),
+      []
+    );
+    deepStrictEqual(
+      schema.resources.map((resource) => resource.metadata.resourceName).sort(),
+      ["LegacyComputeWidget", "NetworkGadget", "NetworkWidget"]
+    );
+  });
+
+  it.each([
+    { "Microsoft.Unknown": "2021-10-01-preview" },
+    { Microsoft: { Unknown: "2021-10-01-preview" } },
+    { "Microsoft.ContosoProviderHub": "1900-01-01" },
+    { Microsoft: { ContosoProviderHub: "latest" } }
+  ])("reports invalid exact service selections: %j", async (versions) => {
+    const program = await typeSpecCompile(
+      `
+model Widget is TrackedResource<{}> {
+  ...ResourceNameParameter<Widget>;
+}
+@armResourceOperations
+interface Widgets {
+  get is ArmResourceRead<Widget>;
+}
+`,
+      runner
+    );
+    const context = createEmitterContext(program);
+    context.options["api-version"] = versions;
+    const sdkContext = await createCSharpSdkContext(context);
+    createModel(sdkContext);
+    const schema = resolveArmResources(program, sdkContext);
+    deepStrictEqual(schema.resources, []);
+    ok(
+      program.diagnostics.some(
+        (diagnostic) =>
+          diagnostic.code ===
+            "@azure-typespec/http-client-csharp-mgmt/invalid-arm-service-version" &&
+          diagnostic.severity === "error"
+      )
+    );
+  });
 
   it("composes resource client names and preserves explicit resource names", async () => {
     const program = await typeSpecCompile(

@@ -35,9 +35,11 @@ import {
 import {
   ResolvedResource,
   ResourceType,
-  isArmProviderNamespace,
+  ArmServiceVersionSelection,
+  ResolveArmResourcesOptions,
   resolveArmResources as resolveArmResourcesFromLibrary
 } from "@azure-tools/typespec-azure-resource-manager";
+import { getVersions } from "@typespec/versioning";
 import {
   findLongestPrefixMatch,
   RequestPath,
@@ -83,6 +85,59 @@ import {
 import { $lib } from "./lib/lib.js";
 import pluralize from "pluralize";
 
+interface ServiceVersionMap {
+  [namespace: string]: string | ServiceVersionMap;
+}
+
+function resolveServiceVersions(
+  program: Program,
+  versions: ServiceVersionMap
+): ArmServiceVersionSelection[] | undefined {
+  const selections: ArmServiceVersionSelection[] = [];
+  function visit(entries: ServiceVersionMap, prefix: string): boolean {
+    for (const [name, value] of Object.entries(entries)) {
+      const namespaceName = prefix ? `${prefix}.${name}` : name;
+      if (typeof value !== "string") {
+        if (!visit(value, namespaceName)) {
+          return false;
+        }
+        continue;
+      }
+      const [namespace] = program.resolveTypeReference(namespaceName);
+      if (namespace?.kind !== "Namespace") {
+        $lib.reportDiagnostic(program, {
+          code: "invalid-arm-service-version",
+          format: {
+            namespace: namespaceName,
+            version: value,
+            reason: "The service namespace could not be resolved."
+          },
+          target: NoTarget
+        });
+        return false;
+      }
+      const version = getVersions(program, namespace)[1]
+        ?.getVersions()
+        .find((candidate) => candidate.value === value);
+      if (version === undefined) {
+        $lib.reportDiagnostic(program, {
+          code: "invalid-arm-service-version",
+          format: {
+            namespace: namespaceName,
+            version: value,
+            reason: "The version is not declared for this service."
+          },
+          target: namespace
+        });
+        return false;
+      }
+      selections.push({ namespace, version });
+    }
+    return true;
+  }
+  return visit(versions, "") ? selections : undefined;
+}
+
 /**
  * Resolves ARM resources from TypeSpec definitions using the standard resolveArmResources API
  * and returns them in our ArmProviderSchema format.
@@ -98,11 +153,34 @@ export function resolveArmResources(
   program: Program,
   sdkContext: CSharpEmitterContext
 ): ArmProviderSchema {
-  const versions = Array.from(sdkContext.getPackageVersions()).find(
-    ([namespace]) => isArmProviderNamespace(program, namespace)
-  )?.[1];
+  // Pass through TCGC's selected version rather than selecting one from its
+  // package-version list. Strings go to TARM's `version`; dictionaries go to
+  // `serviceVersions` after resolving the namespace and exact Version objects.
+  // TCGC accepts both dotted namespace keys and nested namespace dictionaries,
+  // so flatten nested keys before looking up the corresponding TypeSpec types.
+  // TODO: Have TCGC expose the exact selected date-like version for each service,
+  // including when the emitter option is omitted or uses `latest` / `all`.
+  // Do not resolve those configuration values to a version in this converter.
+  // Strings remain unchanged, so TARM currently diagnoses
+  // `latest` / `all` if they are not declared service versions.
+  let versionOptions: ResolveArmResourcesOptions;
+  if (
+    sdkContext.apiVersion !== undefined &&
+    typeof sdkContext.apiVersion !== "string"
+  ) {
+    const serviceVersions = resolveServiceVersions(
+      program,
+      sdkContext.apiVersion
+    );
+    if (serviceVersions === undefined) {
+      return { resources: [], nonResourceMethods: [] };
+    }
+    versionOptions = { serviceVersions };
+  } else {
+    versionOptions = { version: sdkContext.apiVersion };
+  }
   const provider = resolveArmResourcesFromLibrary(program, {
-    version: sdkContext.apiVersion === "all" ? undefined : versions?.at(-1),
+    ...versionOptions,
     nameResolver: ({ kind, type }) =>
       kind === "resource" || type === undefined
         ? undefined
