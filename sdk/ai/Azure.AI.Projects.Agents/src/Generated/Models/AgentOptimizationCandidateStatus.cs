@@ -15,10 +15,12 @@ namespace Azure.AI.Projects.Agents
         private const string GeneratingValue = "generating";
         /// <summary> The accepted candidate is undergoing full evaluation. </summary>
         private const string EvaluatingValue = "evaluating";
-        /// <summary> The candidate completed full evaluation. </summary>
+        /// <summary> Candidate processing completed, including evaluation when applicable. </summary>
         private const string CompletedValue = "completed";
         /// <summary> The optimizer stopped before this candidate completed. </summary>
         private const string FailedValue = "failed";
+        /// <summary> Required input was unavailable, so skill optimization did not run. </summary>
+        private const string SkippedValue = "skipped";
 
         /// <summary> Initializes a new instance of <see cref="AgentOptimizationCandidateStatus"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -36,11 +38,14 @@ namespace Azure.AI.Projects.Agents
         /// <summary> The accepted candidate is undergoing full evaluation. </summary>
         public static AgentOptimizationCandidateStatus Evaluating { get; } = new AgentOptimizationCandidateStatus(EvaluatingValue);
 
-        /// <summary> The candidate completed full evaluation. </summary>
+        /// <summary> Candidate processing completed, including evaluation when applicable. </summary>
         public static AgentOptimizationCandidateStatus Completed { get; } = new AgentOptimizationCandidateStatus(CompletedValue);
 
         /// <summary> The optimizer stopped before this candidate completed. </summary>
         public static AgentOptimizationCandidateStatus Failed { get; } = new AgentOptimizationCandidateStatus(FailedValue);
+
+        /// <summary> Required input was unavailable, so skill optimization did not run. </summary>
+        public static AgentOptimizationCandidateStatus Skipped { get; } = new AgentOptimizationCandidateStatus(SkippedValue);
 
         /// <summary> Determines if two <see cref="AgentOptimizationCandidateStatus"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

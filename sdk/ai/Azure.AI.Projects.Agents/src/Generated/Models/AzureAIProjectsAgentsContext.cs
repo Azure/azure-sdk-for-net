@@ -32,9 +32,11 @@ namespace Azure.AI.Projects.Agents
     [ModelReaderWriterBuildable(typeof(AgentManifestOptions))]
     [ModelReaderWriterBuildable(typeof(AgentObjectVersions))]
     [ModelReaderWriterBuildable(typeof(AgentOptimizationAgentCandidateOutput))]
+    [ModelReaderWriterBuildable(typeof(AgentOptimizationAppInsightsTraceConnectionConfiguration))]
     [ModelReaderWriterBuildable(typeof(AgentOptimizationBaselineAgentConfiguration))]
     [ModelReaderWriterBuildable(typeof(AgentOptimizationCandidate))]
     [ModelReaderWriterBuildable(typeof(AgentOptimizationCandidateEvaluation))]
+    [ModelReaderWriterBuildable(typeof(AgentOptimizationCandidateFile))]
     [ModelReaderWriterBuildable(typeof(AgentOptimizationCandidateOutput))]
     [ModelReaderWriterBuildable(typeof(AgentOptimizationCandidatePromotionInfo))]
     [ModelReaderWriterBuildable(typeof(AgentOptimizationCandidateSearchConfiguration))]
@@ -47,7 +49,11 @@ namespace Azure.AI.Projects.Agents
     [ModelReaderWriterBuildable(typeof(AgentOptimizationEvaluationConfiguration))]
     [ModelReaderWriterBuildable(typeof(AgentOptimizationEvaluationSet))]
     [ModelReaderWriterBuildable(typeof(AgentOptimizationEvaluator))]
+    [ModelReaderWriterBuildable(typeof(AgentOptimizationEvaluatorGenerationConfiguration))]
+    [ModelReaderWriterBuildable(typeof(AgentOptimizationFixedTraceWindow))]
     [ModelReaderWriterBuildable(typeof(AgentOptimizationFoundryAgentTargetConfiguration))]
+    [ModelReaderWriterBuildable(typeof(AgentOptimizationFoundrySkillOutputReference))]
+    [ModelReaderWriterBuildable(typeof(AgentOptimizationFoundrySkillReference))]
     [ModelReaderWriterBuildable(typeof(AgentOptimizationInstructionsMutation))]
     [ModelReaderWriterBuildable(typeof(AgentOptimizationJob))]
     [ModelReaderWriterBuildable(typeof(AgentOptimizationJobLatency))]
@@ -59,7 +65,17 @@ namespace Azure.AI.Projects.Agents
     [ModelReaderWriterBuildable(typeof(AgentOptimizationPromptCandidateOutput))]
     [ModelReaderWriterBuildable(typeof(AgentOptimizationResultCandidateSummary))]
     [ModelReaderWriterBuildable(typeof(AgentOptimizationSkill))]
+    [ModelReaderWriterBuildable(typeof(AgentOptimizationSkillArtifactValidation))]
+    [ModelReaderWriterBuildable(typeof(AgentOptimizationSkillCandidateOutput))]
+    [ModelReaderWriterBuildable(typeof(AgentOptimizationSkillExecutionStep))]
+    [ModelReaderWriterBuildable(typeof(AgentOptimizationSkillExecutionSummary))]
+    [ModelReaderWriterBuildable(typeof(AgentOptimizationSkillOutputReference))]
+    [ModelReaderWriterBuildable(typeof(AgentOptimizationSkillReference))]
+    [ModelReaderWriterBuildable(typeof(AgentOptimizationSkillResolvedContext))]
+    [ModelReaderWriterBuildable(typeof(AgentOptimizationSkillResult))]
+    [ModelReaderWriterBuildable(typeof(AgentOptimizationSkillResultError))]
     [ModelReaderWriterBuildable(typeof(AgentOptimizationSkillsMutation))]
+    [ModelReaderWriterBuildable(typeof(AgentOptimizationSkillValidation))]
     [ModelReaderWriterBuildable(typeof(AgentOptimizationSpace))]
     [ModelReaderWriterBuildable(typeof(AgentOptimizationStageEstimate))]
     [ModelReaderWriterBuildable(typeof(AgentOptimizationTargetCompletionDatasetReferenceDataSource))]
@@ -69,6 +85,10 @@ namespace Azure.AI.Projects.Agents
     [ModelReaderWriterBuildable(typeof(AgentOptimizationTargetCompletionTestCase))]
     [ModelReaderWriterBuildable(typeof(AgentOptimizationTargetConfiguration))]
     [ModelReaderWriterBuildable(typeof(AgentOptimizationToolsMutation))]
+    [ModelReaderWriterBuildable(typeof(AgentOptimizationTraceConnectionConfiguration))]
+    [ModelReaderWriterBuildable(typeof(AgentOptimizationTraceEvaluatorGenerationConfiguration))]
+    [ModelReaderWriterBuildable(typeof(AgentOptimizationTraceIdsTraceWindow))]
+    [ModelReaderWriterBuildable(typeof(AgentOptimizationTraceWindow))]
     [ModelReaderWriterBuildable(typeof(AgentOptimizationUserConversationSimulationDatasetReferenceDataSource))]
     [ModelReaderWriterBuildable(typeof(AgentOptimizationUserConversationSimulationDataSource))]
     [ModelReaderWriterBuildable(typeof(AgentOptimizationUserConversationSimulationEvaluationSet))]
@@ -77,6 +97,7 @@ namespace Azure.AI.Projects.Agents
 #pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.AgentsSkill is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(AgentsSkill))]
 #pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.AgentsSkill is experimental and may change in future versions.
+    [ModelReaderWriterBuildable(typeof(AgentTracesOptimizationContext))]
     [ModelReaderWriterBuildable(typeof(AgentVersionFromCodeMetadata))]
 #pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.AnswerResource is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(AnswerResource))]
@@ -682,10 +703,13 @@ namespace Azure.AI.Projects.Agents
 #pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.SkillInlineContent is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(SkillInlineContent))]
 #pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.SkillInlineContent is experimental and may change in future versions.
+    [ModelReaderWriterBuildable(typeof(SkillOptimizationConfiguration))]
+    [ModelReaderWriterBuildable(typeof(SkillOptimizationEvaluationConfiguration))]
 #pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.SkillReference is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(SkillReference))]
 #pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.SkillReference is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(SkillReferenceParam))]
+    [ModelReaderWriterBuildable(typeof(SkillReferencesOptimizationContext))]
 #pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.SkillVersion is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(SkillVersion))]
 #pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.SkillVersion is experimental and may change in future versions.

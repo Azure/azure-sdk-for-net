@@ -80,7 +80,7 @@ namespace Azure.AI.Projects.Agents
             if (Optional.IsDefined(RingTimeoutSeconds))
             {
                 writer.WritePropertyName("ring_timeout_seconds"u8);
-                writer.WriteNumberValue(RingTimeoutSeconds.Value);
+                writer.WriteNumberValue(Convert.ToInt32(Math.Round(RingTimeoutSeconds.Value.TotalSeconds)));
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -125,7 +125,7 @@ namespace Azure.AI.Projects.Agents
                 return null;
             }
             VoiceAgentTransferStrategy strategy = default;
-            int? ringTimeoutSeconds = default;
+            TimeSpan? ringTimeoutSeconds = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -140,7 +140,7 @@ namespace Azure.AI.Projects.Agents
                     {
                         continue;
                     }
-                    ringTimeoutSeconds = prop.Value.GetInt32();
+                    ringTimeoutSeconds = TimeSpan.FromSeconds(prop.Value.GetInt32());
                     continue;
                 }
                 if (options.Format != "W")
