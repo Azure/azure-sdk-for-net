@@ -7,20 +7,20 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Speech.Transcription
 {
-    internal partial class TranscriptionContent
+    internal partial class TranscriptionRequest
     {
-        /// <summary> Initializes a new instance of <see cref="TranscriptionContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="TranscriptionRequest"/>. </summary>
         /// <param name="options"> Metadata for a transcription request. This field contains a JSON-serialized object of type `TranscriptionOptions`. </param>
-        public TranscriptionContent(TranscriptionOptions options)
+        public TranscriptionRequest(TranscriptionOptions options)
         {
             Options = options;
         }
 
-        /// <summary> Initializes a new instance of <see cref="TranscriptionContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="TranscriptionRequest"/>. </summary>
         /// <param name="options"> Metadata for a transcription request. This field contains a JSON-serialized object of type `TranscriptionOptions`. </param>
         /// <param name="audio"> The content of the audio file to be transcribed. The audio file must be shorter than 2 hours in audio duration and smaller than 250 MB in size. Optional if audioUrl is provided in the definition. </param>
 #pragma warning disable SCME0004 // Type is for evaluation purposes only and is subject to change or removal in future updates.
-        internal TranscriptionContent(TranscriptionOptions options, FileBinaryContent audio)
+        internal TranscriptionRequest(TranscriptionOptions options, FileBinaryContent audio)
         {
             Options = options;
             Audio = audio;
