@@ -2,7 +2,7 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 import { deepStrictEqual, rejects, strictEqual } from 'node:assert';
-import { mkdtemp, readFile, rm } from 'node:fs/promises';
+import { mkdtemp, readFile, rm, writeFile } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { test } from 'node:test';
@@ -172,4 +172,63 @@ test('includes separately bundled peers in the emitter import map', async (t) =>
       code: 'ENOENT',
     },
   );
+});
+
+test('publishes the exact built runtime package with matching versioned metadata', async (t) => {
+  const directory = await mkdtemp(join(tmpdir(), 'csharp-playground-'));
+  t.after(() => rm(directory, { recursive: true, force: true }));
+  const runtimePackage = join(directory, 'built-package.tgz');
+  const bytes = Buffer.from([0x1f, 0x8b, 0x08, 0x00, 0x01, 0x02]);
+  await writeFile(runtimePackage, bytes);
+  const name = '@azure-typespec/http-client-csharp-mgmt';
+  const version = '1.0.0-alpha.42';
+  await writeBundle(
+    {
+      manifest: { name, version, imports: { '.': 'index.js' } },
+      files: [{ filename: 'index.js', content: 'export {};' }],
+    },
+    directory,
+    [],
+    runtimePackage,
+  );
+  deepStrictEqual(
+    await readFile(join(directory, name, version, 'runtime.tgz')),
+    bytes,
+  );
+  const map = JSON.parse(
+    await readFile(join(directory, name, version, 'import-map.json')),
+  );
+  strictEqual(map.version, version);
+  strictEqual(
+    map.runtimeUrl,
+    `https://typespec.blob.core.windows.net/pkgs/${name}/${version}/runtime.tgz`,
+  );
+  deepStrictEqual(
+    JSON.parse(await readFile(join(directory, name, 'latest.json'))),
+    map,
+  );
+});
+
+test('does not publish an import map when the built runtime package is missing', async (t) => {
+  const directory = await mkdtemp(join(tmpdir(), 'csharp-playground-'));
+  t.after(() => rm(directory, { recursive: true, force: true }));
+  const name = '@azure-typespec/http-client-csharp-provisioning';
+  await rejects(
+    writeBundle(
+      {
+        manifest: { name, version: '1.0.0', imports: { '.': 'index.js' } },
+        files: [{ filename: 'index.js', content: 'export {};' }],
+      },
+      directory,
+      [],
+      join(directory, 'missing.tgz'),
+    ),
+    { code: 'ENOENT' },
+  );
+  await rejects(readFile(join(directory, name, 'latest.json')), {
+    code: 'ENOENT',
+  });
+  await rejects(readFile(join(directory, name, '1.0.0', 'import-map.json')), {
+    code: 'ENOENT',
+  });
 });

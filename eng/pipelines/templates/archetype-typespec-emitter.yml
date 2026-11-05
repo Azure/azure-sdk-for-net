@@ -313,7 +313,11 @@ extends:
                           $orderedFiles = @($files | Where-Object Name -ne 'latest.json') + $indexes
                           foreach ($file in $orderedFiles) {
                             $blob = [System.IO.Path]::GetRelativePath($root, $file.FullName).Replace('\', '/')
-                            $contentType = if ($file.Extension -eq '.json') { 'application/json; charset=utf-8' } else { 'application/javascript; charset=utf-8' }
+                            $contentType = switch ($file.Extension) {
+                              '.json' { 'application/json; charset=utf-8' }
+                              '.tgz' { 'application/gzip' }
+                              default { 'application/javascript; charset=utf-8' }
+                            }
                             $overwrite = if ($file.Name -eq 'latest.json') { 'true' } else { 'false' }
                             if ($overwrite -eq 'false') {
                               $exists = az storage blob exists --account-name typespec --container-name pkgs --name $blob --auth-mode login --query exists --output tsv
@@ -323,6 +327,37 @@ extends:
                             az storage blob upload --account-name typespec --container-name pkgs --name $blob --file $file.FullName --content-type $contentType --overwrite $overwrite --auth-mode login --only-show-errors --output none
                             if ($LASTEXITCODE -ne 0) { throw "Failed to upload playground blob $blob." }
                           }
+
+    - ${{ if and(parameters.ShouldPublish, parameters.PublishPublic, parameters.UploadPlaygroundBundle) }}:
+      - stage: DeployPlayground
+        displayName: Deploy C# playground server
+        dependsOn: Publish
+        pool: ${{ parameters.Pool }}
+        jobs:
+        - deployment: DeployPlayground
+          environment: none
+          templateContext:
+            type: releaseJob
+            isProduction: true
+          strategy:
+            runOnce:
+              deploy:
+                steps:
+                - task: AzureCLI@2
+                  displayName: Build and deploy matching playground runtimes
+                  inputs:
+                    azureSubscription: Azure SDK Engineering System
+                    scriptType: bash
+                    scriptLocation: inlineScript
+                    inlineScript: |
+                      set -euo pipefail
+                      source="$(mktemp -d "$(Agent.TempDirectory)/typespec-playground.XXXXXX")"
+                      git clone --quiet --depth 1 --single-branch --branch main --filter=blob:none --sparse \
+                        https://github.com/microsoft/typespec.git "$source"
+                      git -C "$source" sparse-checkout set packages/http-client-csharp
+                      echo "Building playground server from TypeSpec commit $(git -C "$source" rev-parse HEAD)"
+                      context="$source/packages/http-client-csharp"
+                      bash "$context/playground-server/deploy.sh" "$context" "azsdk-$(Build.BuildId)"
 
     # Regenerate stage
     # Responsible for regenerating the SDK code using the emitter package and the generation matrix.

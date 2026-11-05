@@ -35,16 +35,6 @@ function Build-Emitter {
         # build and pack the emitter
         Invoke-LoggedCommand "npm run build" -GroupOutput
 
-        if ($BuildPlaygroundBundle) {
-            $playgroundTools = Join-Path $PSScriptRoot "playground"
-            $playgroundOutput = [System.IO.Path]::GetFullPath((Join-Path $outputPath "../playground"))
-            Invoke-LoggedCommand "npm ci --prefix `"$playgroundTools`""
-            Invoke-LoggedCommand "npm test --prefix `"$playgroundTools`""
-            $packageName = Split-Path $packageRoot -Leaf
-            Invoke-LoggedCommand "node --test --test-name-pattern `"^$packageName bundles `" `"$playgroundTools/browser.test.mjs`""
-            Invoke-LoggedCommand "node `"$playgroundTools/bundle.mjs`" `"$packageRoot`" `"$playgroundOutput`""
-        }
-
         # remove any existing tarballs
         Remove-Item -Path "./*.tgz" -Force | Out-Null
 
@@ -54,6 +44,16 @@ function Build-Emitter {
 
         Write-Host "Copying $file to $outputPath"
         Copy-Item $file -Destination $outputPath
+
+        if ($BuildPlaygroundBundle) {
+            $playgroundTools = Join-Path $PSScriptRoot "playground"
+            $playgroundOutput = [System.IO.Path]::GetFullPath((Join-Path $outputPath "../playground"))
+            Invoke-LoggedCommand "npm ci --prefix `"$playgroundTools`""
+            Invoke-LoggedCommand "npm test --prefix `"$playgroundTools`""
+            $packageName = Split-Path $packageRoot -Leaf
+            Invoke-LoggedCommand "node --test --test-name-pattern `"^$packageName bundles `" `"$playgroundTools/browser.test.mjs`""
+            Invoke-LoggedCommand "node `"$playgroundTools/bundle.mjs`" `"$packageRoot`" `"$playgroundOutput`" `"$file`""
+        }
 
         if (!$TargetNpmJsFeed) {
             $feedUrl = "https://pkgs.dev.azure.com/azure-sdk/public/_packaging/azure-sdk-for-js/npm/registry"
