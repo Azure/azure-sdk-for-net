@@ -130,7 +130,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workloadNetworksRestClient.CreateGetSegmentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _workloadNetworksRestClient.CreateGetSegmentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<WorkloadNetworkSegmentData> response = Response.FromValue(WorkloadNetworkSegmentData.FromResponse(result), result);
                 if (response.Value == null)
@@ -179,7 +179,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workloadNetworksRestClient.CreateGetSegmentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _workloadNetworksRestClient.CreateGetSegmentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<WorkloadNetworkSegmentData> response = Response.FromValue(WorkloadNetworkSegmentData.FromResponse(result), result);
                 if (response.Value == null)
@@ -233,7 +233,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workloadNetworkSegmentsRestClient.CreateUpdateSegmentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, WorkloadNetworkSegmentData.ToRequestContent(data), context);
+                using HttpMessage message = _workloadNetworkSegmentsRestClient.CreateUpdateSegmentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, WorkloadNetworkSegmentData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 TestsArmOperation<WorkloadNetworkSegmentResource> operation = new TestsArmOperation<WorkloadNetworkSegmentResource>(
                     new WorkloadNetworkSegmentResourceOperationSource(Client),
@@ -294,7 +294,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workloadNetworkSegmentsRestClient.CreateUpdateSegmentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, WorkloadNetworkSegmentData.ToRequestContent(data), context);
+                using HttpMessage message = _workloadNetworkSegmentsRestClient.CreateUpdateSegmentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, WorkloadNetworkSegmentData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 TestsArmOperation<WorkloadNetworkSegmentResource> operation = new TestsArmOperation<WorkloadNetworkSegmentResource>(
                     new WorkloadNetworkSegmentResourceOperationSource(Client),
@@ -351,7 +351,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workloadNetworksRestClient.CreateDeleteSegmentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _workloadNetworksRestClient.CreateDeleteSegmentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 TestsArmOperation operation = new TestsArmOperation(
                     _workloadNetworksClientDiagnostics,
@@ -407,7 +407,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workloadNetworksRestClient.CreateDeleteSegmentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _workloadNetworksRestClient.CreateDeleteSegmentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 TestsArmOperation operation = new TestsArmOperation(
                     _workloadNetworksClientDiagnostics,
@@ -452,7 +452,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _workloadNetworksRestClient.CreateGetSegmentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _workloadNetworksRestClient.CreateGetSegmentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<WorkloadNetworkSegmentData> response = Response.FromValue(WorkloadNetworkSegmentData.FromResponse(result), result);
                     return Response.FromValue(new WorkloadNetworkSegmentResource(Client, response.Value), response.GetRawResponse());
@@ -500,7 +500,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _workloadNetworksRestClient.CreateGetSegmentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _workloadNetworksRestClient.CreateGetSegmentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<WorkloadNetworkSegmentData> response = Response.FromValue(WorkloadNetworkSegmentData.FromResponse(result), result);
                     return Response.FromValue(new WorkloadNetworkSegmentResource(Client, response.Value), response.GetRawResponse());
@@ -546,7 +546,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _workloadNetworksRestClient.CreateGetSegmentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _workloadNetworksRestClient.CreateGetSegmentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<WorkloadNetworkSegmentData> response = Response.FromValue(WorkloadNetworkSegmentData.FromResponse(result), result);
                     return Response.FromValue(new WorkloadNetworkSegmentResource(Client, response.Value), response.GetRawResponse());
@@ -588,7 +588,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _workloadNetworksRestClient.CreateGetSegmentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _workloadNetworksRestClient.CreateGetSegmentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<WorkloadNetworkSegmentData> response = Response.FromValue(WorkloadNetworkSegmentData.FromResponse(result), result);
                     return Response.FromValue(new WorkloadNetworkSegmentResource(Client, response.Value), response.GetRawResponse());
@@ -630,7 +630,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _workloadNetworksRestClient.CreateGetSegmentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _workloadNetworksRestClient.CreateGetSegmentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<WorkloadNetworkSegmentData> response = Response.FromValue(WorkloadNetworkSegmentData.FromResponse(result), result);
                     return Response.FromValue(new WorkloadNetworkSegmentResource(Client, response.Value), response.GetRawResponse());
@@ -676,7 +676,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _workloadNetworksRestClient.CreateGetSegmentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _workloadNetworksRestClient.CreateGetSegmentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<WorkloadNetworkSegmentData> response = Response.FromValue(WorkloadNetworkSegmentData.FromResponse(result), result);
                     return Response.FromValue(new WorkloadNetworkSegmentResource(Client, response.Value), response.GetRawResponse());

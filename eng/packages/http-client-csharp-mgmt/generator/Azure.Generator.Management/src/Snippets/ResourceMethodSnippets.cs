@@ -88,8 +88,8 @@ namespace Azure.Generator.Management.Snippets
             IReadOnlyList<ValueExpression> arguments,
             out VariableExpression messageVariable)
         {
-            // HttpMessage message = _restClient.{methodName}(...arguments);
-            return Declare(
+            // using HttpMessage message = _restClient.{methodName}(...arguments);
+            return UsingDeclare(
                 "message",
                 typeof(HttpMessage),
                 restClient.Invoke(methodName, arguments),

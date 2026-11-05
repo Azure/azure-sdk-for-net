@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Resources
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _topLevelRestClient.CreateCreateOrReplaceRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, topLevelTrackedResourceName, TopLevelTrackedResourceData.ToRequestContent(data), context);
+                using HttpMessage message = _topLevelRestClient.CreateCreateOrReplaceRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, topLevelTrackedResourceName, TopLevelTrackedResourceData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ResourcesArmOperation<TopLevelTrackedResource> operation = new ResourcesArmOperation<TopLevelTrackedResource>(
                     new TopLevelTrackedResourceOperationSource(Client),
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.Resources
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _topLevelRestClient.CreateCreateOrReplaceRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, topLevelTrackedResourceName, TopLevelTrackedResourceData.ToRequestContent(data), context);
+                using HttpMessage message = _topLevelRestClient.CreateCreateOrReplaceRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, topLevelTrackedResourceName, TopLevelTrackedResourceData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ResourcesArmOperation<TopLevelTrackedResource> operation = new ResourcesArmOperation<TopLevelTrackedResource>(
                     new TopLevelTrackedResourceOperationSource(Client),
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.Resources
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _topLevelRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, topLevelTrackedResourceName, context);
+                using HttpMessage message = _topLevelRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, topLevelTrackedResourceName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<TopLevelTrackedResourceData> response = Response.FromValue(TopLevelTrackedResourceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.Resources
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _topLevelRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, topLevelTrackedResourceName, context);
+                using HttpMessage message = _topLevelRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, topLevelTrackedResourceName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<TopLevelTrackedResourceData> response = Response.FromValue(TopLevelTrackedResourceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -356,7 +356,7 @@ namespace Azure.ResourceManager.Resources
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _topLevelRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, topLevelTrackedResourceName, context);
+                using HttpMessage message = _topLevelRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, topLevelTrackedResourceName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<TopLevelTrackedResourceData> response = default;
@@ -413,7 +413,7 @@ namespace Azure.ResourceManager.Resources
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _topLevelRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, topLevelTrackedResourceName, context);
+                using HttpMessage message = _topLevelRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, topLevelTrackedResourceName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<TopLevelTrackedResourceData> response = default;
@@ -470,7 +470,7 @@ namespace Azure.ResourceManager.Resources
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _topLevelRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, topLevelTrackedResourceName, context);
+                using HttpMessage message = _topLevelRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, topLevelTrackedResourceName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<TopLevelTrackedResourceData> response = default;
@@ -531,7 +531,7 @@ namespace Azure.ResourceManager.Resources
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _topLevelRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, topLevelTrackedResourceName, context);
+                using HttpMessage message = _topLevelRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, topLevelTrackedResourceName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<TopLevelTrackedResourceData> response = default;

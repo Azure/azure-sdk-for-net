@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.ServiceGroupExtension
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serviceGroupExtensionResourcesRestClient.CreateCreateOrUpdateRequest(Id.Name, serviceGroupExtensionResourceName, ServiceGroupExtensionResourceData.ToRequestContent(data), context);
+                using HttpMessage message = _serviceGroupExtensionResourcesRestClient.CreateCreateOrUpdateRequest(Id.Name, serviceGroupExtensionResourceName, ServiceGroupExtensionResourceData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ServiceGroupExtensionArmOperation<ServiceGroupExtensionResource> operation = new ServiceGroupExtensionArmOperation<ServiceGroupExtensionResource>(
                     new ServiceGroupExtensionResourceOperationSource(Client),
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.ServiceGroupExtension
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serviceGroupExtensionResourcesRestClient.CreateCreateOrUpdateRequest(Id.Name, serviceGroupExtensionResourceName, ServiceGroupExtensionResourceData.ToRequestContent(data), context);
+                using HttpMessage message = _serviceGroupExtensionResourcesRestClient.CreateCreateOrUpdateRequest(Id.Name, serviceGroupExtensionResourceName, ServiceGroupExtensionResourceData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ServiceGroupExtensionArmOperation<ServiceGroupExtensionResource> operation = new ServiceGroupExtensionArmOperation<ServiceGroupExtensionResource>(
                     new ServiceGroupExtensionResourceOperationSource(Client),
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.ServiceGroupExtension
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serviceGroupExtensionResourcesRestClient.CreateGetRequest(Id.Name, serviceGroupExtensionResourceName, context);
+                using HttpMessage message = _serviceGroupExtensionResourcesRestClient.CreateGetRequest(Id.Name, serviceGroupExtensionResourceName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ServiceGroupExtensionResourceData> response = Response.FromValue(ServiceGroupExtensionResourceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.ServiceGroupExtension
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serviceGroupExtensionResourcesRestClient.CreateGetRequest(Id.Name, serviceGroupExtensionResourceName, context);
+                using HttpMessage message = _serviceGroupExtensionResourcesRestClient.CreateGetRequest(Id.Name, serviceGroupExtensionResourceName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ServiceGroupExtensionResourceData> response = Response.FromValue(ServiceGroupExtensionResourceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -357,7 +357,7 @@ namespace Azure.ResourceManager.ServiceGroupExtension
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serviceGroupExtensionResourcesRestClient.CreateGetRequest(Id.Name, serviceGroupExtensionResourceName, context);
+                using HttpMessage message = _serviceGroupExtensionResourcesRestClient.CreateGetRequest(Id.Name, serviceGroupExtensionResourceName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ServiceGroupExtensionResourceData> response = default;
@@ -414,7 +414,7 @@ namespace Azure.ResourceManager.ServiceGroupExtension
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serviceGroupExtensionResourcesRestClient.CreateGetRequest(Id.Name, serviceGroupExtensionResourceName, context);
+                using HttpMessage message = _serviceGroupExtensionResourcesRestClient.CreateGetRequest(Id.Name, serviceGroupExtensionResourceName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ServiceGroupExtensionResourceData> response = default;
@@ -471,7 +471,7 @@ namespace Azure.ResourceManager.ServiceGroupExtension
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serviceGroupExtensionResourcesRestClient.CreateGetRequest(Id.Name, serviceGroupExtensionResourceName, context);
+                using HttpMessage message = _serviceGroupExtensionResourcesRestClient.CreateGetRequest(Id.Name, serviceGroupExtensionResourceName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ServiceGroupExtensionResourceData> response = default;
@@ -532,7 +532,7 @@ namespace Azure.ResourceManager.ServiceGroupExtension
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serviceGroupExtensionResourcesRestClient.CreateGetRequest(Id.Name, serviceGroupExtensionResourceName, context);
+                using HttpMessage message = _serviceGroupExtensionResourcesRestClient.CreateGetRequest(Id.Name, serviceGroupExtensionResourceName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ServiceGroupExtensionResourceData> response = default;

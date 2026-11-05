@@ -124,7 +124,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _bazsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _bazsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<BazData> response = Response.FromValue(BazData.FromResponse(result), result);
                 if (response.Value == null)
@@ -172,7 +172,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _bazsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _bazsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<BazData> response = Response.FromValue(BazData.FromResponse(result), result);
                 if (response.Value == null)
@@ -225,7 +225,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _bazsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, BazData.ToRequestContent(data), context);
+                using HttpMessage message = _bazsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, BazData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 TestsArmOperation<BazResource> operation = new TestsArmOperation<BazResource>(
                     new BazResourceOperationSource(Client),
@@ -285,7 +285,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _bazsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, BazData.ToRequestContent(data), context);
+                using HttpMessage message = _bazsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, BazData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 TestsArmOperation<BazResource> operation = new TestsArmOperation<BazResource>(
                     new BazResourceOperationSource(Client),
@@ -341,7 +341,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _bazsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _bazsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 TestsArmOperation operation = new TestsArmOperation(
                     _bazsClientDiagnostics,
@@ -396,7 +396,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _bazsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _bazsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 TestsArmOperation operation = new TestsArmOperation(
                     _bazsClientDiagnostics,
@@ -441,7 +441,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _bazsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _bazsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<BazData> response = Response.FromValue(BazData.FromResponse(result), result);
                     return Response.FromValue(new BazResource(Client, response.Value), response.GetRawResponse());
@@ -489,7 +489,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _bazsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _bazsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<BazData> response = Response.FromValue(BazData.FromResponse(result), result);
                     return Response.FromValue(new BazResource(Client, response.Value), response.GetRawResponse());
@@ -535,7 +535,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _bazsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _bazsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<BazData> response = Response.FromValue(BazData.FromResponse(result), result);
                     return Response.FromValue(new BazResource(Client, response.Value), response.GetRawResponse());
@@ -577,7 +577,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _bazsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _bazsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<BazData> response = Response.FromValue(BazData.FromResponse(result), result);
                     return Response.FromValue(new BazResource(Client, response.Value), response.GetRawResponse());
@@ -619,7 +619,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _bazsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _bazsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<BazData> response = Response.FromValue(BazData.FromResponse(result), result);
                     return Response.FromValue(new BazResource(Client, response.Value), response.GetRawResponse());
@@ -665,7 +665,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _bazsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _bazsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<BazData> response = Response.FromValue(BazData.FromResponse(result), result);
                     return Response.FromValue(new BazResource(Client, response.Value), response.GetRawResponse());
