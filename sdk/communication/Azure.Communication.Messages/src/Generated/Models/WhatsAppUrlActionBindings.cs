@@ -17,7 +17,7 @@ namespace Azure.Communication.Messages.Models.Channels
         /// <summary> Initializes a new instance of <see cref="WhatsAppUrlActionBindings"/>. </summary>
         /// <param name="content"> Action content of Interactive message. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public WhatsAppUrlActionBindings(LinkContent content) : base(MessageActionBindingKind.WhatsAppUrlAction)
+        public WhatsAppUrlActionBindings(LinkRequest content) : base(MessageActionBindingKind.WhatsAppUrlAction)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -28,12 +28,12 @@ namespace Azure.Communication.Messages.Models.Channels
         /// <param name="kind"> Kind of the MessageActionBinding. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="content"> Action content of Interactive message. </param>
-        internal WhatsAppUrlActionBindings(MessageActionBindingKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, LinkContent content) : base(kind, additionalBinaryDataProperties)
+        internal WhatsAppUrlActionBindings(MessageActionBindingKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, LinkRequest content) : base(kind, additionalBinaryDataProperties)
         {
             Content = content;
         }
 
         /// <summary> Action content of Interactive message. </summary>
-        public LinkContent Content { get; }
+        public LinkRequest Content { get; }
     }
 }

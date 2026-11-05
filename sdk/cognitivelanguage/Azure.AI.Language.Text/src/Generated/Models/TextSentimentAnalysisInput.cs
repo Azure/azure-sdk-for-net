@@ -23,7 +23,7 @@ namespace Azure.AI.Language.Text
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="textInput"> Contains the input documents. </param>
         /// <param name="actionContent"> Sentiment Analysis task parameters. </param>
-        internal TextSentimentAnalysisInput(AnalyzeTextInputKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, MultiLanguageTextInput textInput, SentimentAnalysisActionContent actionContent) : base(kind, additionalBinaryDataProperties)
+        internal TextSentimentAnalysisInput(AnalyzeTextInputKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, MultiLanguageTextInput textInput, SentimentAnalysisActionRequest actionContent) : base(kind, additionalBinaryDataProperties)
         {
             TextInput = textInput;
             ActionContent = actionContent;
@@ -33,6 +33,6 @@ namespace Azure.AI.Language.Text
         public MultiLanguageTextInput TextInput { get; set; }
 
         /// <summary> Sentiment Analysis task parameters. </summary>
-        public SentimentAnalysisActionContent ActionContent { get; set; }
+        public SentimentAnalysisActionRequest ActionContent { get; set; }
     }
 }

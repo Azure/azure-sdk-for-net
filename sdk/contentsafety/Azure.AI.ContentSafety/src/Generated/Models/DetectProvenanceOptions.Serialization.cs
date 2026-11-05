@@ -133,13 +133,13 @@ namespace Azure.AI.ContentSafety
             {
                 return null;
             }
-            ProvenanceContent content = default;
+            ProvenanceRequest content = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("content"u8))
                 {
-                    content = ProvenanceContent.DeserializeProvenanceContent(prop.Value, options);
+                    content = ProvenanceRequest.DeserializeProvenanceRequest(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
