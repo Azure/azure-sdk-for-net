@@ -1,9 +1,17 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Description>This is the preview projection of the Azure.Provisioning.ProvisioningTypeSpec generator test library.</Description>
+    <Description>Azure.Provisioning.ProvisioningTypeSpec.Preview simplifies declarative resource provisioning in .NET.</Description>
     <AssemblyTitle>SDK Code Generation Azure.Provisioning.ProvisioningTypeSpec.Preview</AssemblyTitle>
     <Version>1.0.0-beta.1</Version>
     <PackageTags>Azure.Provisioning.ProvisioningTypeSpec.Preview</PackageTags>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="$(AzureCoreSharedSources)ExperimentalAttribute.cs" LinkBase="Shared/Core" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Azure.Provisioning" />
+  </ItemGroup>
 </Project>

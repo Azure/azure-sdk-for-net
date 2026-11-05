@@ -10,8 +10,4 @@
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
   </PropertyGroup>
 
-  <ItemGroup>
-    <PackageReference Include="Azure.Provisioning" />
-    <Compile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\..\..\sdk\core\Azure.Core\src\Shared\ExperimentalAttribute.cs" LinkBase="Shared\Core" />
-  </ItemGroup>
 </Project>
