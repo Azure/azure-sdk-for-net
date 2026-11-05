@@ -128,6 +128,15 @@ namespace SignalRServiceExtension.Tests
         }
 
         [Fact]
+        public async Task SignalRAttribute_WrongBoundClientIsDetected()
+        {
+            _curConfigDict = DiffConfigKeyDiffConnStrConfigDict;
+            var exception = await Assert.ThrowsAsync<FunctionInvocationException>(() =>
+                CreateTestTask(typeof(SignalRFunctionsWithMismatchedKey), _curConfigDict));
+            Assert.IsType<Xunit.Sdk.EqualException>(exception.GetBaseException());
+        }
+
+        [Fact]
         public async Task SignalRConnectionInfoAttribute_MissingConnectionStringSettingFacts()
         {
             var task = CreateTestTask(typeof(SignalRConnectionInfoFunctions), null);
@@ -195,12 +204,13 @@ namespace SignalRServiceExtension.Tests
 
         private static async Task AssertOutputBindingConnectionString(IAsyncCollector<SignalRMessage> signalRMessages, string expectedConfigurationKey)
         {
-            Assert.IsType<SignalRAsyncCollector<SignalRMessage>>(signalRMessages);
+            var collector = Assert.IsType<SignalRAsyncCollector<SignalRMessage>>(signalRMessages);
             var store = Assert.IsType<ServiceManagerStore>(StaticServiceHubContextStore.ServiceManagerStore);
             Assert.NotNull(store.GetByConfigurationKey(expectedConfigurationKey));
 
-            var client = await Microsoft.Azure.WebJobs.Extensions.SignalRService.Utils.GetAzureSignalRClientAsync(
-                expectedConfigurationKey, DefaultHubName, store);
+            var clientField = typeof(SignalRAsyncCollector<SignalRMessage>).GetField("_client", BindingFlags.Instance | BindingFlags.NonPublic);
+            Assert.NotNull(clientField);
+            var client = Assert.IsType<AzureSignalRClient>(clientField.GetValue(collector));
             var connectionInfo = await client.GetClientConnectionInfoAsync(DefaultUserId, null, null, null);
             UpdateFunctionOutConnectionString(connectionInfo, expectedConfigurationKey);
         }
@@ -240,6 +250,17 @@ namespace SignalRServiceExtension.Tests
             public async Task Func2([SignalR(HubName = DefaultHubName, ConnectionStringSetting = AttrConnStrConfigKey)] IAsyncCollector<SignalRMessage> signalRMessages)
             {
                 await AssertOutputBindingConnectionString(signalRMessages, AttrConnStrConfigKey);
+            }
+        }
+
+        public class SignalRFunctionsWithMismatchedKey
+        {
+            public async Task Func(
+                [SignalR(HubName = DefaultHubName)] IAsyncCollector<SignalRMessage> defaultMessages,
+                [SignalR(HubName = DefaultHubName, ConnectionStringSetting = AttrConnStrConfigKey)] IAsyncCollector<SignalRMessage> attributeMessages)
+            {
+                Assert.IsType<SignalRAsyncCollector<SignalRMessage>>(attributeMessages);
+                await AssertOutputBindingConnectionString(defaultMessages, AttrConnStrConfigKey);
             }
         }
 

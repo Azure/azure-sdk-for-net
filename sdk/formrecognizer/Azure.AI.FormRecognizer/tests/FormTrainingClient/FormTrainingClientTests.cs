@@ -102,12 +102,15 @@ namespace Azure.AI.FormRecognizer.Tests
         {
             var transport = new MockTransport(_ => status == 0
                 ? throw new RequestFailedException(0, "Connection failed.")
-                : new MockResponse(status));
-            var client = CreateClient(new FormRecognizerClientOptions
+                : new MockResponse(status))
+            {
+                ExpectSyncPipeline = !IsAsync
+            };
+            var client = InstrumentClient(CreateClient(new FormRecognizerClientOptions
             {
                 Transport = transport,
                 Retry = { Delay = TimeSpan.Zero, Mode = RetryMode.Fixed }
-            });
+            }));
 
             if (status == 0)
             {

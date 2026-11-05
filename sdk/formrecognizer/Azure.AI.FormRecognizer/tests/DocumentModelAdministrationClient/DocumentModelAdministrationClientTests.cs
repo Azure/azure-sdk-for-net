@@ -86,12 +86,15 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         {
             var transport = new MockTransport(_ => status == 0
                 ? throw new RequestFailedException(0, "Connection failed.")
-                : new MockResponse(status));
-            var client = CreateInstrumentedClient(new DocumentAnalysisClientOptions
+                : new MockResponse(status))
+            {
+                ExpectSyncPipeline = !IsAsync
+            };
+            var client = InstrumentClient(CreateInstrumentedClient(new DocumentAnalysisClientOptions
             {
                 Transport = transport,
                 Retry = { Delay = TimeSpan.Zero, Mode = RetryMode.Fixed }
-            });
+            }));
 
             if (status == 0)
             {
