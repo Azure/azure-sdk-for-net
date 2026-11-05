@@ -2901,7 +2901,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         public static Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.HyperVFailoverIPConfigDetails HyperVFailoverIPConfigDetails(string ipConfigName = null, bool? isPrimary = default(bool?), bool? isSeletedForFailover = default(bool?), string recoverySubnetName = null, System.Net.IPAddress recoveryStaticIPAddress = null, Azure.Core.ResourceIdentifier recoveryPublicIPAddressId = null, System.Collections.Generic.IEnumerable<string> recoveryLBBackendAddressPoolIds = null, string tfoSubnetName = null, System.Net.IPAddress tfoStaticIPAddress = null, Azure.Core.ResourceIdentifier tfoPublicIPAddressId = null, System.Collections.Generic.IEnumerable<string> tfoLBBackendAddressPoolIds = null) { throw null; }
         public static Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.HyperVHostDetails HyperVHostDetails(string id = null, string name = null, string marsAgentVersion = null) { throw null; }
         public static Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.HyperVIPConfigDetails HyperVIPConfigDetails(string name, bool? isPrimary, string subnetName, System.Net.IPAddress staticIPAddress, string ipAddressType, bool? isSeletedForFailover, string recoverySubnetName, System.Net.IPAddress recoveryStaticIPAddress, string recoveryIPAddressType, Azure.Core.ResourceIdentifier recoveryPublicIPAddressId, System.Collections.Generic.IEnumerable<string> recoveryLBBackendAddressPoolIds, string tfoSubnetName, System.Net.IPAddress tfoStaticIPAddress, Azure.Core.ResourceIdentifier tfoPublicIPAddressId, System.Collections.Generic.IEnumerable<string> tfoLBBackendAddressPoolIds) { throw null; }
-        public static Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.HyperVIPConfigDetails HyperVIPConfigDetails(string name = null, bool? isPrimary = default(bool?), string subnetName = null, System.Net.IPAddress staticIPAddress = null, string ipAddressType = null, bool? isSeletedForFailover = default(bool?), string recoverySubnetName = null, System.Net.IPAddress recoveryStaticIPAddress = null, string recoveryIPAddressType = null, Azure.Core.ResourceIdentifier recoveryPublicIPAddressId = null, System.Collections.Generic.IEnumerable<string> recoveryLBBackendAddressPoolIds = null, string tfoSubnetName = null, System.Net.IPAddress tfoStaticIPAddress = null, Azure.Core.ResourceIdentifier tfoPublicIPAddressId = null, System.Collections.Generic.IEnumerable<string> tfoLBBackendAddressPoolIds = null, Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.IPVersion? ipVersion = default(Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.IPVersion?)) { throw null; }
+        public static Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.HyperVIPConfigDetails HyperVIPConfigDetails(string name = null, bool? isPrimary = default(bool?), string subnetName = null, System.Net.IPAddress staticIPAddress = null, string ipAddressType = null, bool? isSeletedForFailover = default(bool?), string recoverySubnetName = null, System.Net.IPAddress recoveryStaticIPAddress = null, string recoveryIPAddressType = null, Azure.Core.ResourceIdentifier recoveryPublicIPAddressId = null, System.Collections.Generic.IEnumerable<string> recoveryLBBackendAddressPoolIds = null, string tfoSubnetName = null, System.Net.IPAddress tfoStaticIPAddress = null, Azure.Core.ResourceIdentifier tfoPublicIPAddressId = null, System.Collections.Generic.IEnumerable<string> tfoLBBackendAddressPoolIds = null, Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.SiteRecoveryIPVersion? ipVersion = default(Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.SiteRecoveryIPVersion?)) { throw null; }
         public static Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.HyperVReplica2012EventDetails HyperVReplica2012EventDetails(string containerName = null, string fabricName = null, string remoteContainerName = null, string remoteFabricName = null) { throw null; }
         public static Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.HyperVReplica2012R2EventDetails HyperVReplica2012R2EventDetails(string containerName = null, string fabricName = null, string remoteContainerName = null, string remoteFabricName = null) { throw null; }
         public static Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.HyperVReplicaAzureApplyRecoveryPointContent HyperVReplicaAzureApplyRecoveryPointContent(string primaryKekCertificatePfx = null, string secondaryKekCertificatePfx = null) { throw null; }
@@ -4288,7 +4288,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     {
         internal HyperVIPConfigDetails() { }
         public string IPAddressType { get { throw null; } }
-        public Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.IPVersion? IPVersion { get { throw null; } }
+        public Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.SiteRecoveryIPVersion? IPVersion { get { throw null; } }
         public bool? IsPrimary { get { throw null; } }
         public bool? IsSeletedForFailover { get { throw null; } }
         public string Name { get { throw null; } }
@@ -6715,23 +6715,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.InMageVolumeExclusionOptions System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.InMageVolumeExclusionOptions>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.InMageVolumeExclusionOptions>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.InMageVolumeExclusionOptions>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct IPVersion : System.IEquatable<Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.IPVersion>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public IPVersion(string value) { throw null; }
-        public static Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.IPVersion IPv4 { get { throw null; } }
-        public static Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.IPVersion IPv6 { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.IPVersion other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.IPVersion left, Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.IPVersion right) { throw null; }
-        public static implicit operator Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.IPVersion (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.IPVersion? (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.IPVersion left, Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.IPVersion right) { throw null; }
-        public override string ToString() { throw null; }
     }
     public partial class ManagedRunCommandScriptContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.ManagedRunCommandScriptContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.ManagedRunCommandScriptContent>
     {
@@ -9466,6 +9449,23 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.SiteRecoveryInnerHealthError System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.SiteRecoveryInnerHealthError>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.SiteRecoveryInnerHealthError>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.SiteRecoveryInnerHealthError>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct SiteRecoveryIPVersion : System.IEquatable<Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.SiteRecoveryIPVersion>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public SiteRecoveryIPVersion(string value) { throw null; }
+        public static Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.SiteRecoveryIPVersion IPv4 { get { throw null; } }
+        public static Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.SiteRecoveryIPVersion IPv6 { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.SiteRecoveryIPVersion other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.SiteRecoveryIPVersion left, Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.SiteRecoveryIPVersion right) { throw null; }
+        public static implicit operator Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.SiteRecoveryIPVersion (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.SiteRecoveryIPVersion? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.SiteRecoveryIPVersion left, Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.SiteRecoveryIPVersion right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public abstract partial class SiteRecoveryJobDetails : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.SiteRecoveryJobDetails>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.SiteRecoveryJobDetails>
     {

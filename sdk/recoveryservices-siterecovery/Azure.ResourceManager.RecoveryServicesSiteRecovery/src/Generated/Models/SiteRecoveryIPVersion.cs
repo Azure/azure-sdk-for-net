@@ -12,7 +12,7 @@ using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     /// <summary> The IP version (address family) of an ip-config. </summary>
-    public readonly partial struct IPVersion : IEquatable<IPVersion>
+    public readonly partial struct SiteRecoveryIPVersion : IEquatable<SiteRecoveryIPVersion>
     {
         private readonly string _value;
         /// <summary> The ip-config carries an IPv4 address. </summary>
@@ -20,10 +20,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <summary> The ip-config carries an IPv6 address. </summary>
         private const string IPv6Value = "IPv6";
 
-        /// <summary> Initializes a new instance of <see cref="IPVersion"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryIPVersion"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public IPVersion(string value)
+        public SiteRecoveryIPVersion(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -31,35 +31,35 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> The ip-config carries an IPv4 address. </summary>
-        public static IPVersion IPv4 { get; } = new IPVersion(IPv4Value);
+        public static SiteRecoveryIPVersion IPv4 { get; } = new SiteRecoveryIPVersion(IPv4Value);
 
         /// <summary> The ip-config carries an IPv6 address. </summary>
-        public static IPVersion IPv6 { get; } = new IPVersion(IPv6Value);
+        public static SiteRecoveryIPVersion IPv6 { get; } = new SiteRecoveryIPVersion(IPv6Value);
 
-        /// <summary> Determines if two <see cref="IPVersion"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="SiteRecoveryIPVersion"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(IPVersion left, IPVersion right) => left.Equals(right);
+        public static bool operator ==(SiteRecoveryIPVersion left, SiteRecoveryIPVersion right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="IPVersion"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="SiteRecoveryIPVersion"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(IPVersion left, IPVersion right) => !left.Equals(right);
+        public static bool operator !=(SiteRecoveryIPVersion left, SiteRecoveryIPVersion right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="IPVersion"/>. </summary>
+        /// <summary> Converts a string to a <see cref="SiteRecoveryIPVersion"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator IPVersion(string value) => new IPVersion(value);
+        public static implicit operator SiteRecoveryIPVersion(string value) => new SiteRecoveryIPVersion(value);
 
-        /// <summary> Converts a string to a <see cref="IPVersion"/>. </summary>
+        /// <summary> Converts a string to a <see cref="SiteRecoveryIPVersion"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator IPVersion?(string value) => value == null ? null : new IPVersion(value);
+        public static implicit operator SiteRecoveryIPVersion?(string value) => value == null ? null : new SiteRecoveryIPVersion(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is IPVersion other && Equals(other);
+        public override bool Equals(object obj) => obj is SiteRecoveryIPVersion other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(IPVersion other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(SiteRecoveryIPVersion other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

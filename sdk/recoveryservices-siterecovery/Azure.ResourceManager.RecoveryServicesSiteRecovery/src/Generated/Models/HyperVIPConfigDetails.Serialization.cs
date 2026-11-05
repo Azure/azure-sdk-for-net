@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             IPAddress tfoStaticIPAddress = default;
             ResourceIdentifier tfoPublicIPAddressId = default;
             IReadOnlyList<string> tfoLBBackendAddressPoolIds = default;
-            IPVersion? ipVersion = default;
+            SiteRecoveryIPVersion? ipVersion = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -378,7 +378,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    ipVersion = new IPVersion(prop.Value.GetString());
+                    ipVersion = new SiteRecoveryIPVersion(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
