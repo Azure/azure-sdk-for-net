@@ -98,17 +98,21 @@ test('does not publish an import map when writing a bundle fails', async (t) => 
   );
 });
 
-test('retains the old versioned map when the latest package advances', async (t) => {
+test('retains the old versioned map and runtime when the latest package advances', async (t) => {
   const directory = await mkdtemp(join(tmpdir(), 'csharp-playground-'));
   t.after(() => rm(directory, { recursive: true, force: true }));
   const name = '@azure-typespec/http-client-csharp';
+  const runtimePackage = join(directory, 'built-package.tgz');
   for (const version of ['1.0.0', '2.0.0']) {
+    await writeFile(runtimePackage, `runtime-${version}`);
     await writeBundle(
       {
         manifest: { name, version, imports: { '.': 'index.js' } },
         files: [{ filename: 'index.js', content: 'export {};' }],
       },
       directory,
+      [],
+      runtimePackage,
     );
   }
   const oldMap = JSON.parse(
@@ -122,7 +126,23 @@ test('retains the old versioned map when the latest package advances', async (t)
     oldMap.imports[name],
     `https://typespec.blob.core.windows.net/pkgs/${name}/1.0.0/index.js`,
   );
+  strictEqual(
+    oldMap.runtimeUrl,
+    `https://typespec.blob.core.windows.net/pkgs/${name}/1.0.0/runtime.tgz`,
+  );
+  strictEqual(
+    await readFile(join(directory, name, '1.0.0/runtime.tgz'), 'utf8'),
+    'runtime-1.0.0',
+  );
   strictEqual(latestMap.version, '2.0.0');
+  strictEqual(
+    latestMap.runtimeUrl,
+    `https://typespec.blob.core.windows.net/pkgs/${name}/2.0.0/runtime.tgz`,
+  );
+  strictEqual(
+    await readFile(join(directory, name, '2.0.0/runtime.tgz'), 'utf8'),
+    'runtime-2.0.0',
+  );
 });
 
 test('includes separately bundled peers in the emitter import map', async (t) => {
