@@ -14,6 +14,22 @@ namespace Azure.AI.Projects.Agents.Tests
     {
         internal const string LegacyRealtimeVoiceDefinitionPattern = @"(""definition""\s*:\s*\{\s*""kind""\s*:\s*""voice""\s*,)(?![^{}]*""sub_protocol""\s*:)";
         internal const string LegacyRealtimeVoiceDefinitionReplacement = "${1}\"sub_protocol\":\"realtime\",";
+        internal const string LegacyTelephonyCallJobPathPattern = @"(/agents/[^/?]+/)telephony/call_jobs(?=/|:|\?|$)";
+        internal const string LegacyTelephonyCallJobPathReplacement = "${1}telephony_call_jobs";
+
+        internal static void ApplyLegacyTelephonyCallJobRecordingRoutes<TEnvironment>(RecordedTestBase<TEnvironment> testBase)
+            where TEnvironment : TestEnvironment, new()
+        {
+            if (testBase.Mode == RecordedTestMode.Playback)
+            {
+                // Match legacy recording routes without changing requests sent to the live service.
+                testBase.UriRegexSanitizers.Add(new UriRegexSanitizer(new()
+                {
+                    Regex = LegacyTelephonyCallJobPathPattern,
+                    Value = LegacyTelephonyCallJobPathReplacement
+                }));
+            }
+        }
 
         internal static void ApplyLegacyRealtimeVoiceRecordingDefaults<TEnvironment>(RecordedTestBase<TEnvironment> testBase)
             where TEnvironment : TestEnvironment, new()

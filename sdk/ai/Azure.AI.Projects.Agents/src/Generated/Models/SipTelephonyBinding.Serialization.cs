@@ -9,7 +9,7 @@ using System.Text.Json;
 
 namespace Azure.AI.Projects.Agents
 {
-    /// <summary> A SIP binding. </summary>
+    /// <summary> Inbound binding using a same-project SipInbound connection for authentication/network restrictions. Creation does not prove regional runtime readiness. </summary>
     public partial class SipTelephonyBinding : TelephonyBinding, IJsonModel<SipTelephonyBinding>
     {
         /// <summary> Initializes a new instance of <see cref="SipTelephonyBinding"/> for deserialization. </summary>
@@ -127,7 +127,6 @@ namespace Azure.AI.Projects.Agents
             TelephonyProvider provider = default;
             string connectionName = default;
             string label = default;
-            TelephonyBindingStatus status = default;
             Uri incomingCallUrl = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string phoneNumber = default;
@@ -154,14 +153,9 @@ namespace Azure.AI.Projects.Agents
                     label = prop.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("status"u8))
-                {
-                    status = new TelephonyBindingStatus(prop.Value.GetString());
-                    continue;
-                }
                 if (prop.NameEquals("incoming_call_url"u8))
                 {
-                    incomingCallUrl = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
+                    DeserializeIncomingCallUrl(prop, ref incomingCallUrl);
                     continue;
                 }
                 if (prop.NameEquals("phone_number"u8))
@@ -200,7 +194,6 @@ namespace Azure.AI.Projects.Agents
                 provider,
                 connectionName,
                 label,
-                status,
                 incomingCallUrl,
                 additionalBinaryDataProperties,
                 phoneNumber,

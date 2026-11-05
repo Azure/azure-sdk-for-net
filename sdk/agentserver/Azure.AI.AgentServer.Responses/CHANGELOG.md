@@ -16,6 +16,9 @@
 
 ### Bugs Fixed
 
+- Preserved asynchronously replayed SSE events before reporting a resilient task's
+  terminal persistence failure. The HTTP relay drains retained events through the
+  failure-time watermark without closing the task stream needed for recovery.
 - Do not reclaim, delete, or dispatch Responses tasks during startup or inline
   recovery when Responses task execution is disabled, even if Invocations
   enables the shared Core runtime. Tasks started from a Responses request retain

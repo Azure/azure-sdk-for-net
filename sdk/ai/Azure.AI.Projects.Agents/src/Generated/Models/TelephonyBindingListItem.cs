@@ -22,14 +22,12 @@ namespace Azure.AI.Projects.Agents
         /// <param name="id"> The service-generated binding identifier. </param>
         /// <param name="provider"> The telephony provider. </param>
         /// <param name="connectionName"> The Foundry connection name for the telephony provider. </param>
-        /// <param name="status"> The lifecycle status. </param>
-        /// <param name="incomingCallUrl"> The service-generated webhook URL to configure with the telephony provider. For SIP bindings, this is a SIP URI. </param>
-        private protected TelephonyBindingListItem(string id, TelephonyProvider provider, string connectionName, TelephonyBindingStatus status, Uri incomingCallUrl)
+        /// <param name="incomingCallUrl"> The service-generated HTTPS webhook or SIP/SIPS ingress URI to configure with the telephony provider. </param>
+        private protected TelephonyBindingListItem(string id, TelephonyProvider provider, string connectionName, Uri incomingCallUrl)
         {
             Id = id;
             Provider = provider;
             ConnectionName = connectionName;
-            Status = status;
             IncomingCallUrl = incomingCallUrl;
         }
 
@@ -38,17 +36,15 @@ namespace Azure.AI.Projects.Agents
         /// <param name="provider"> The telephony provider. </param>
         /// <param name="connectionName"> The Foundry connection name for the telephony provider. </param>
         /// <param name="label"> The optional display label for the binding. </param>
-        /// <param name="status"> The lifecycle status. </param>
-        /// <param name="incomingCallUrl"> The service-generated webhook URL to configure with the telephony provider. For SIP bindings, this is a SIP URI. </param>
+        /// <param name="incomingCallUrl"> The service-generated HTTPS webhook or SIP/SIPS ingress URI to configure with the telephony provider. </param>
         /// <param name="etag"> The entity tag to send in the `If-Match` header when updating or deleting this binding. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TelephonyBindingListItem(string id, TelephonyProvider provider, string connectionName, string label, TelephonyBindingStatus status, Uri incomingCallUrl, string etag, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal TelephonyBindingListItem(string id, TelephonyProvider provider, string connectionName, string label, Uri incomingCallUrl, string etag, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Provider = provider;
             ConnectionName = connectionName;
             Label = label;
-            Status = status;
             IncomingCallUrl = incomingCallUrl;
             Etag = etag;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -66,10 +62,7 @@ namespace Azure.AI.Projects.Agents
         /// <summary> The optional display label for the binding. </summary>
         public string Label { get; }
 
-        /// <summary> The lifecycle status. </summary>
-        public TelephonyBindingStatus Status { get; }
-
-        /// <summary> The service-generated webhook URL to configure with the telephony provider. For SIP bindings, this is a SIP URI. </summary>
+        /// <summary> The service-generated HTTPS webhook or SIP/SIPS ingress URI to configure with the telephony provider. </summary>
         public Uri IncomingCallUrl { get; }
 
         /// <summary> The entity tag to send in the `If-Match` header when updating or deleting this binding. </summary>

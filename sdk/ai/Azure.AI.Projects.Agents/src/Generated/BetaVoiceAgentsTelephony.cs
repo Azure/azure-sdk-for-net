@@ -104,25 +104,25 @@ namespace Azure.AI.Projects.Agents
 
         /// <summary> Creates a telephony binding for the voice agent named in the path. </summary>
         /// <param name="agentName"> The name of the voice agent that owns the binding. </param>
-        /// <param name="telephonyBinding"> The provider-specific binding to create. </param>
+        /// <param name="binding"> The provider-specific binding to create. </param>
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        internal virtual ClientResult<TelephonyBinding> CreateTelephonyBinding(string agentName, CreateTelephonyBindingContent telephonyBinding, AgentDefinitionOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
+        internal virtual ClientResult<TelephonyBinding> CreateTelephonyBinding(string agentName, TelephonyBinding binding, AgentDefinitionOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
         {
-            ClientResult result = CreateTelephonyBinding(agentName, telephonyBinding, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions());
+            ClientResult result = CreateTelephonyBinding(agentName, binding, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions());
             return ClientResult.FromValue((TelephonyBinding)result, result.GetRawResponse());
         }
 
         /// <summary> Creates a telephony binding for the voice agent named in the path. </summary>
         /// <param name="agentName"> The name of the voice agent that owns the binding. </param>
-        /// <param name="telephonyBinding"> The provider-specific binding to create. </param>
+        /// <param name="binding"> The provider-specific binding to create. </param>
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        internal virtual async Task<ClientResult<TelephonyBinding>> CreateTelephonyBindingAsync(string agentName, CreateTelephonyBindingContent telephonyBinding, AgentDefinitionOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
+        internal virtual async Task<ClientResult<TelephonyBinding>> CreateTelephonyBindingAsync(string agentName, TelephonyBinding binding, AgentDefinitionOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
         {
-            ClientResult result = await CreateTelephonyBindingAsync(agentName, telephonyBinding, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions()).ConfigureAwait(false);
+            ClientResult result = await CreateTelephonyBindingAsync(agentName, binding, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions()).ConfigureAwait(false);
             return ClientResult.FromValue((TelephonyBinding)result, result.GetRawResponse());
         }
 
@@ -982,7 +982,9 @@ namespace Azure.AI.Projects.Agents
         internal virtual ClientResult<TelephonyTransferTargets> ReplaceTelephonyTransferTargets(string agentName, string ifMatch, IEnumerable<TelephonyTransferTarget> transferTargets, AgentDefinitionOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
         {
             ReplaceTelephonyTransferTargetsRequest spreadModel = new ReplaceTelephonyTransferTargetsRequest(transferTargets?.ToList() as IList<TelephonyTransferTarget> ?? new ChangeTrackingList<TelephonyTransferTarget>(), default);
-            ClientResult result = ReplaceTelephonyTransferTargets(agentName, ifMatch, spreadModel, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions());
+            using Utf8JsonBinaryContent content = new Utf8JsonBinaryContent();
+            content.JsonWriter.WriteObjectValue(spreadModel, new LifecycleModelReaderWriterOptions(LifecycleVisibility.Create | LifecycleVisibility.Update, "W"));
+            ClientResult result = ReplaceTelephonyTransferTargets(agentName, ifMatch, content, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions());
             return ClientResult.FromValue((TelephonyTransferTargets)result, result.GetRawResponse());
         }
 
@@ -996,12 +998,14 @@ namespace Azure.AI.Projects.Agents
         internal virtual async Task<ClientResult<TelephonyTransferTargets>> ReplaceTelephonyTransferTargetsAsync(string agentName, string ifMatch, IEnumerable<TelephonyTransferTarget> transferTargets, AgentDefinitionOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
         {
             ReplaceTelephonyTransferTargetsRequest spreadModel = new ReplaceTelephonyTransferTargetsRequest(transferTargets?.ToList() as IList<TelephonyTransferTarget> ?? new ChangeTrackingList<TelephonyTransferTarget>(), default);
-            ClientResult result = await ReplaceTelephonyTransferTargetsAsync(agentName, ifMatch, spreadModel, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions()).ConfigureAwait(false);
+            using Utf8JsonBinaryContent content = new Utf8JsonBinaryContent();
+            content.JsonWriter.WriteObjectValue(spreadModel, new LifecycleModelReaderWriterOptions(LifecycleVisibility.Create | LifecycleVisibility.Update, "W"));
+            ClientResult result = await ReplaceTelephonyTransferTargetsAsync(agentName, ifMatch, content, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions()).ConfigureAwait(false);
             return ClientResult.FromValue((TelephonyTransferTargets)result, result.GetRawResponse());
         }
 
         /// <summary>
-        /// [Protocol Method] Creates one durable direct outbound call job. The latest agent definition is resolved when each attempt executes.
+        /// [Protocol Method] Creates one durable outbound CallJob. Each attempt pins the Agent endpoint's execution version for validation and its voice session.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -1009,7 +1013,7 @@ namespace Azure.AI.Projects.Agents
         /// </list>
         /// </summary>
         /// <param name="agentName"> The name of the voice agent that executes the call. </param>
-        /// <param name="idempotencyKey"> A customer-generated idempotency key. Reusing it with an equivalent request returns the same call job. </param>
+        /// <param name="idempotencyKey"> Customer retry key. Equivalent requests return the same job; retained keys for deleted jobs return 409 call_job_deleted, never redial. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -1032,7 +1036,7 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <summary>
-        /// [Protocol Method] Creates one durable direct outbound call job. The latest agent definition is resolved when each attempt executes.
+        /// [Protocol Method] Creates one durable outbound CallJob. Each attempt pins the Agent endpoint's execution version for validation and its voice session.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -1040,7 +1044,7 @@ namespace Azure.AI.Projects.Agents
         /// </list>
         /// </summary>
         /// <param name="agentName"> The name of the voice agent that executes the call. </param>
-        /// <param name="idempotencyKey"> A customer-generated idempotency key. Reusing it with an equivalent request returns the same call job. </param>
+        /// <param name="idempotencyKey"> Customer retry key. Equivalent requests return the same job; retained keys for deleted jobs return 409 call_job_deleted, never redial. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -1062,30 +1066,296 @@ namespace Azure.AI.Projects.Agents
             }
         }
 
-        /// <summary> Creates one durable direct outbound call job. The latest agent definition is resolved when each attempt executes. </summary>
+        /// <summary> Creates one durable outbound CallJob. Each attempt pins the Agent endpoint's execution version for validation and its voice session. </summary>
         /// <param name="agentName"> The name of the voice agent that executes the call. </param>
-        /// <param name="idempotencyKey"> A customer-generated idempotency key. Reusing it with an equivalent request returns the same call job. </param>
-        /// <param name="body"> The direct outbound call to create. </param>
+        /// <param name="idempotencyKey"> Customer retry key. Equivalent requests return the same job; retained keys for deleted jobs return 409 call_job_deleted, never redial. </param>
+        /// <param name="job"> The direct outbound call to create. </param>
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        internal virtual ClientResult<TelephonyCallJob> CreateTelephonyCallJob(string agentName, string idempotencyKey, CreateTelephonyCallJobContent body, AgentDefinitionOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
+        internal virtual ClientResult<TelephonyCallJob> CreateTelephonyCallJob(string agentName, string idempotencyKey, TelephonyCallJobCreate job, AgentDefinitionOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
         {
-            ClientResult result = CreateTelephonyCallJob(agentName, idempotencyKey, body, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions());
+            ClientResult result = CreateTelephonyCallJob(agentName, idempotencyKey, job, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions());
             return ClientResult.FromValue((TelephonyCallJob)result, result.GetRawResponse());
         }
 
-        /// <summary> Creates one durable direct outbound call job. The latest agent definition is resolved when each attempt executes. </summary>
+        /// <summary> Creates one durable outbound CallJob. Each attempt pins the Agent endpoint's execution version for validation and its voice session. </summary>
         /// <param name="agentName"> The name of the voice agent that executes the call. </param>
-        /// <param name="idempotencyKey"> A customer-generated idempotency key. Reusing it with an equivalent request returns the same call job. </param>
-        /// <param name="body"> The direct outbound call to create. </param>
+        /// <param name="idempotencyKey"> Customer retry key. Equivalent requests return the same job; retained keys for deleted jobs return 409 call_job_deleted, never redial. </param>
+        /// <param name="job"> The direct outbound call to create. </param>
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        internal virtual async Task<ClientResult<TelephonyCallJob>> CreateTelephonyCallJobAsync(string agentName, string idempotencyKey, CreateTelephonyCallJobContent body, AgentDefinitionOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
+        internal virtual async Task<ClientResult<TelephonyCallJob>> CreateTelephonyCallJobAsync(string agentName, string idempotencyKey, TelephonyCallJobCreate job, AgentDefinitionOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
         {
-            ClientResult result = await CreateTelephonyCallJobAsync(agentName, idempotencyKey, body, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions()).ConfigureAwait(false);
+            ClientResult result = await CreateTelephonyCallJobAsync(agentName, idempotencyKey, job, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions()).ConfigureAwait(false);
             return ClientResult.FromValue((TelephonyCallJob)result, result.GetRawResponse());
+        }
+
+        /// <summary>
+        /// [Protocol Method] Lists current direct/Campaign jobs, excluding deleted or superseded rounds. Pages are live. Campaign cursors survive boundary deletion/cancel, not replacement/name reuse (400 invalid_cursor).
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="agentName"> The owning voice agent. Authorization is applied before pagination. </param>
+        /// <param name="limit">
+        /// A limit on the number of objects to be returned. Limit can range between 1 and 100, and the
+        /// default is 20.
+        /// </param>
+        /// <param name="order">
+        /// Sort order by the `created_at` timestamp of the objects. `asc` for ascending order and`desc`
+        /// for descending order.
+        /// </param>
+        /// <param name="after">
+        /// A cursor for use in pagination. `after` is an object ID that defines your place in the list.
+        /// For instance, if you make a list request and receive 100 objects, ending with obj_foo, your
+        /// subsequent call can include after=obj_foo in order to fetch the next page of the list.
+        /// </param>
+        /// <param name="before">
+        /// A cursor for use in pagination. `before` is an object ID that defines your place in the list.
+        /// For instance, if you make a list request and receive 100 objects, ending with obj_foo, your
+        /// subsequent call can include before=obj_foo in order to fetch the previous page of the list.
+        /// </param>
+        /// <param name="status"> Optional lifecycle filter. </param>
+        /// <param name="campaignName"> Current Campaign round: 404 if absent, empty while deleting. Omit for direct and Campaign jobs. Replacement/name reuse invalidates cursors. </param>
+        /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        internal virtual CollectionResult GetTelephonyCallJobs(string agentName, int? limit, string order, string after, string before, string status, string campaignName, RequestOptions options)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BetaVoiceAgentsTelephony.GetTelephonyCallJobs");
+            scope.Start();
+            try
+            {
+                return new BetaVoiceAgentsTelephonyGetTelephonyCallJobsCollectionResult(
+                    this,
+                    agentName,
+                    limit,
+                    order,
+                    after,
+                    before,
+                    status,
+                    campaignName,
+                    options);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Lists current direct/Campaign jobs, excluding deleted or superseded rounds. Pages are live. Campaign cursors survive boundary deletion/cancel, not replacement/name reuse (400 invalid_cursor).
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="agentName"> The owning voice agent. Authorization is applied before pagination. </param>
+        /// <param name="limit">
+        /// A limit on the number of objects to be returned. Limit can range between 1 and 100, and the
+        /// default is 20.
+        /// </param>
+        /// <param name="order">
+        /// Sort order by the `created_at` timestamp of the objects. `asc` for ascending order and`desc`
+        /// for descending order.
+        /// </param>
+        /// <param name="after">
+        /// A cursor for use in pagination. `after` is an object ID that defines your place in the list.
+        /// For instance, if you make a list request and receive 100 objects, ending with obj_foo, your
+        /// subsequent call can include after=obj_foo in order to fetch the next page of the list.
+        /// </param>
+        /// <param name="before">
+        /// A cursor for use in pagination. `before` is an object ID that defines your place in the list.
+        /// For instance, if you make a list request and receive 100 objects, ending with obj_foo, your
+        /// subsequent call can include before=obj_foo in order to fetch the previous page of the list.
+        /// </param>
+        /// <param name="status"> Optional lifecycle filter. </param>
+        /// <param name="campaignName"> Current Campaign round: 404 if absent, empty while deleting. Omit for direct and Campaign jobs. Replacement/name reuse invalidates cursors. </param>
+        /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        internal virtual AsyncCollectionResult GetTelephonyCallJobsAsync(string agentName, int? limit, string order, string after, string before, string status, string campaignName, RequestOptions options)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BetaVoiceAgentsTelephony.GetTelephonyCallJobs");
+            scope.Start();
+            try
+            {
+                return new BetaVoiceAgentsTelephonyGetTelephonyCallJobsAsyncCollectionResult(
+                    this,
+                    agentName,
+                    limit,
+                    order,
+                    after,
+                    before,
+                    status,
+                    campaignName,
+                    options);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Lists current direct/Campaign jobs, excluding deleted or superseded rounds. Pages are live. Campaign cursors survive boundary deletion/cancel, not replacement/name reuse (400 invalid_cursor). </summary>
+        /// <param name="agentName"> The owning voice agent. Authorization is applied before pagination. </param>
+        /// <param name="limit">
+        /// A limit on the number of objects to be returned. Limit can range between 1 and 100, and the
+        /// default is 20.
+        /// </param>
+        /// <param name="order">
+        /// Sort order by the `created_at` timestamp of the objects. `asc` for ascending order and`desc`
+        /// for descending order.
+        /// </param>
+        /// <param name="after">
+        /// A cursor for use in pagination. `after` is an object ID that defines your place in the list.
+        /// For instance, if you make a list request and receive 100 objects, ending with obj_foo, your
+        /// subsequent call can include after=obj_foo in order to fetch the next page of the list.
+        /// </param>
+        /// <param name="before">
+        /// A cursor for use in pagination. `before` is an object ID that defines your place in the list.
+        /// For instance, if you make a list request and receive 100 objects, ending with obj_foo, your
+        /// subsequent call can include before=obj_foo in order to fetch the previous page of the list.
+        /// </param>
+        /// <param name="status"> Optional lifecycle filter. </param>
+        /// <param name="campaignName"> Current Campaign round: 404 if absent, empty while deleting. Omit for direct and Campaign jobs. Replacement/name reuse invalidates cursors. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        internal virtual CollectionResult<TelephonyCallJob> GetTelephonyCallJobs(string agentName, int? limit = default, AgentListOrder? order = default, string after = default, string before = default, TelephonyCallJobStatus? status = default, string campaignName = default, CancellationToken cancellationToken = default)
+        {
+            return new BetaVoiceAgentsTelephonyGetTelephonyCallJobsCollectionResultOfT(
+                this,
+                agentName,
+                limit,
+                order?.ToString(),
+                after,
+                before,
+                status?.ToString(),
+                campaignName,
+                cancellationToken.ToRequestOptions());
+        }
+
+        /// <summary> Lists current direct/Campaign jobs, excluding deleted or superseded rounds. Pages are live. Campaign cursors survive boundary deletion/cancel, not replacement/name reuse (400 invalid_cursor). </summary>
+        /// <param name="agentName"> The owning voice agent. Authorization is applied before pagination. </param>
+        /// <param name="limit">
+        /// A limit on the number of objects to be returned. Limit can range between 1 and 100, and the
+        /// default is 20.
+        /// </param>
+        /// <param name="order">
+        /// Sort order by the `created_at` timestamp of the objects. `asc` for ascending order and`desc`
+        /// for descending order.
+        /// </param>
+        /// <param name="after">
+        /// A cursor for use in pagination. `after` is an object ID that defines your place in the list.
+        /// For instance, if you make a list request and receive 100 objects, ending with obj_foo, your
+        /// subsequent call can include after=obj_foo in order to fetch the next page of the list.
+        /// </param>
+        /// <param name="before">
+        /// A cursor for use in pagination. `before` is an object ID that defines your place in the list.
+        /// For instance, if you make a list request and receive 100 objects, ending with obj_foo, your
+        /// subsequent call can include before=obj_foo in order to fetch the previous page of the list.
+        /// </param>
+        /// <param name="status"> Optional lifecycle filter. </param>
+        /// <param name="campaignName"> Current Campaign round: 404 if absent, empty while deleting. Omit for direct and Campaign jobs. Replacement/name reuse invalidates cursors. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        internal virtual AsyncCollectionResult<TelephonyCallJob> GetTelephonyCallJobsAsync(string agentName, int? limit = default, AgentListOrder? order = default, string after = default, string before = default, TelephonyCallJobStatus? status = default, string campaignName = default, CancellationToken cancellationToken = default)
+        {
+            return new BetaVoiceAgentsTelephonyGetTelephonyCallJobsAsyncCollectionResultOfT(
+                this,
+                agentName,
+                limit,
+                order?.ToString(),
+                after,
+                before,
+                status?.ToString(),
+                campaignName,
+                cancellationToken.ToRequestOptions());
+        }
+
+        /// <summary>
+        /// [Protocol Method] Deletes a terminal, reconciled job (otherwise 409), without cancelling calls or removing Campaign outcomes/call history. Later GET returns 404; repeated DELETE returns 204.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="agentName"> The owning voice agent. </param>
+        /// <param name="callJobId"> The call-job identifier. </param>
+        /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        internal virtual ClientResult DeleteTelephonyCallJob(string agentName, string callJobId, RequestOptions options)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BetaVoiceAgentsTelephony.DeleteTelephonyCallJob");
+            scope.Start();
+            try
+            {
+                using PipelineMessage message = CreateDeleteTelephonyCallJobRequest(agentName, callJobId, options);
+                return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Deletes a terminal, reconciled job (otherwise 409), without cancelling calls or removing Campaign outcomes/call history. Later GET returns 404; repeated DELETE returns 204.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="agentName"> The owning voice agent. </param>
+        /// <param name="callJobId"> The call-job identifier. </param>
+        /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        internal virtual async Task<ClientResult> DeleteTelephonyCallJobAsync(string agentName, string callJobId, RequestOptions options)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BetaVoiceAgentsTelephony.DeleteTelephonyCallJob");
+            scope.Start();
+            try
+            {
+                using PipelineMessage message = CreateDeleteTelephonyCallJobRequest(agentName, callJobId, options);
+                return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Deletes a terminal, reconciled job (otherwise 409), without cancelling calls or removing Campaign outcomes/call history. Later GET returns 404; repeated DELETE returns 204. </summary>
+        /// <param name="agentName"> The owning voice agent. </param>
+        /// <param name="callJobId"> The call-job identifier. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        internal virtual ClientResult DeleteTelephonyCallJob(string agentName, string callJobId, CancellationToken cancellationToken = default)
+        {
+            return DeleteTelephonyCallJob(agentName, callJobId, cancellationToken.ToRequestOptions());
+        }
+
+        /// <summary> Deletes a terminal, reconciled job (otherwise 409), without cancelling calls or removing Campaign outcomes/call history. Later GET returns 404; repeated DELETE returns 204. </summary>
+        /// <param name="agentName"> The owning voice agent. </param>
+        /// <param name="callJobId"> The call-job identifier. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        internal virtual async Task<ClientResult> DeleteTelephonyCallJobAsync(string agentName, string callJobId, CancellationToken cancellationToken = default)
+        {
+            return await DeleteTelephonyCallJobAsync(agentName, callJobId, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1096,8 +1366,8 @@ namespace Azure.AI.Projects.Agents
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="agentName"></param>
-        /// <param name="callJobId"></param>
+        /// <param name="agentName"> The name of the voice agent that owns the call job. </param>
+        /// <param name="callJobId"> The service-generated identifier of the call job to retrieve. </param>
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
@@ -1126,8 +1396,8 @@ namespace Azure.AI.Projects.Agents
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="agentName"></param>
-        /// <param name="callJobId"></param>
+        /// <param name="agentName"> The name of the voice agent that owns the call job. </param>
+        /// <param name="callJobId"> The service-generated identifier of the call job to retrieve. </param>
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
@@ -1149,8 +1419,8 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <summary> Retrieves a durable direct or campaign-created outbound call job. </summary>
-        /// <param name="agentName"></param>
-        /// <param name="callJobId"></param>
+        /// <param name="agentName"> The name of the voice agent that owns the call job. </param>
+        /// <param name="callJobId"> The service-generated identifier of the call job to retrieve. </param>
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
@@ -1161,8 +1431,8 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <summary> Retrieves a durable direct or campaign-created outbound call job. </summary>
-        /// <param name="agentName"></param>
-        /// <param name="callJobId"></param>
+        /// <param name="agentName"> The name of the voice agent that owns the call job. </param>
+        /// <param name="callJobId"> The service-generated identifier of the call job to retrieve. </param>
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
@@ -1173,15 +1443,15 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <summary>
-        /// [Protocol Method] Requests cancellation of a durable outbound call job. A connected call is allowed to finish.
+        /// [Protocol Method] Cancels future attempts using If-Match; completion may be asynchronous. New cancellation after connection returns 409 and lets the active call finish.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="agentName"></param>
-        /// <param name="callJobId"></param>
+        /// <param name="agentName"> The name of the voice agent that owns the call job. </param>
+        /// <param name="callJobId"> The service-generated identifier of the call job to cancel. </param>
         /// <param name="ifMatch"> The entity tag returned by the latest read. The request fails if the resource changed since that read. </param>
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -1204,15 +1474,15 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <summary>
-        /// [Protocol Method] Requests cancellation of a durable outbound call job. A connected call is allowed to finish.
+        /// [Protocol Method] Cancels future attempts using If-Match; completion may be asynchronous. New cancellation after connection returns 409 and lets the active call finish.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="agentName"></param>
-        /// <param name="callJobId"></param>
+        /// <param name="agentName"> The name of the voice agent that owns the call job. </param>
+        /// <param name="callJobId"> The service-generated identifier of the call job to cancel. </param>
         /// <param name="ifMatch"> The entity tag returned by the latest read. The request fails if the resource changed since that read. </param>
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -1234,9 +1504,9 @@ namespace Azure.AI.Projects.Agents
             }
         }
 
-        /// <summary> Requests cancellation of a durable outbound call job. A connected call is allowed to finish. </summary>
-        /// <param name="agentName"></param>
-        /// <param name="callJobId"></param>
+        /// <summary> Cancels future attempts using If-Match; completion may be asynchronous. New cancellation after connection returns 409 and lets the active call finish. </summary>
+        /// <param name="agentName"> The name of the voice agent that owns the call job. </param>
+        /// <param name="callJobId"> The service-generated identifier of the call job to cancel. </param>
         /// <param name="ifMatch"> The entity tag returned by the latest read. The request fails if the resource changed since that read. </param>
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
@@ -1247,9 +1517,9 @@ namespace Azure.AI.Projects.Agents
             return ClientResult.FromValue((TelephonyCallJob)result, result.GetRawResponse());
         }
 
-        /// <summary> Requests cancellation of a durable outbound call job. A connected call is allowed to finish. </summary>
-        /// <param name="agentName"></param>
-        /// <param name="callJobId"></param>
+        /// <summary> Cancels future attempts using If-Match; completion may be asynchronous. New cancellation after connection returns 409 and lets the active call finish. </summary>
+        /// <param name="agentName"> The name of the voice agent that owns the call job. </param>
+        /// <param name="callJobId"> The service-generated identifier of the call job to cancel. </param>
         /// <param name="ifMatch"> The entity tag returned by the latest read. The request fails if the resource changed since that read. </param>
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>

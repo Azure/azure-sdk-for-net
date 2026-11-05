@@ -11,10 +11,14 @@ using System.Text.Json;
 
 namespace Azure.AI.Projects.Agents;
 
-/// <summary> The ApiError. </summary>
+/// <summary> Details of an error returned by the service. </summary>
 [CodeGenType("Error")]
-internal partial class FoundryOpenAIError
+public partial class FoundryOpenAIError
 {
+    // Preserve upstream diagnostics in serialization without exposing their internal model hierarchy.
+    [CodeGenMember("Misalignment")]
+    internal MisalignmentErrorDetailsResource Misalignment { get; }
+
     internal static FoundryOpenAIError TryCreateFromResponse(PipelineResponse response)
     {
         try
@@ -42,7 +46,7 @@ internal partial class FoundryOpenAIError
         }
     }
 
-    public string ToExceptionMessage(int httpStatus)
+    internal string ToExceptionMessage(int httpStatus)
     {
         StringBuilder messageBuilder = new();
         messageBuilder.Append("HTTP ").Append(httpStatus).Append(" (").Append(Code).AppendLine(")");
@@ -82,7 +86,7 @@ internal partial class FoundryOpenAIError
     /// intended.
     /// </summary>
     /// <returns></returns>
-    public BinaryData ToOpenAIError()
+    internal BinaryData ToOpenAIError()
     {
         StringBuilder messageBuilder = new(Message);
         string parameterDetails = null;

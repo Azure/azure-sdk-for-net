@@ -54,6 +54,14 @@ public class VoiceAgentLiveVisitor : ScmLibraryVisitor
         {
             client.Update(name: LiveClientName);
         }
+        foreach (InputModelType model in input.Models.Where(model =>
+            model.CrossLanguageDefinitionId == "Azure.AI.Projects.SipAddress" &&
+            model.BaseModel?.Name == "TelephonyAddress"))
+        {
+            // A SIP URI remains a JSON string and must share its base address's CLR value type.
+            InputProperty baseValue = model.BaseModel.Properties.Single(property => property.Name == "value");
+            model.Properties.Single(property => property.Name == "value").Update(type: baseValue.Type);
+        }
     }
 
     protected override ModelProvider PreVisitModel(InputModelType model, ModelProvider type)

@@ -12,6 +12,7 @@
 ### Breaking Changes
 
 - Realtime connection options no longer allow overriding the client-managed `Authorization` or `Foundry-Features` headers; these overrides now throw `ArgumentException`.
+- `EvaluatorGenerationArtifacts.Reference` now uses `VersionedDatasetReference` instead of the removed `DatasetReference` model, retaining the required dataset version.
 
 ### Bugs Fixed
 
@@ -24,7 +25,7 @@
 
 ### Other Changes
 
-- Regenerated from `feature/foundry-release` at [`4ea2e73c87f09a311f1b6018ddcb23f3cf7ed0df`](https://github.com/Azure/azure-rest-api-specs/tree/4ea2e73c87f09a311f1b6018ddcb23f3cf7ed0df).
+- Regenerated from `feature/foundry-release` at [`57834b966f8efbe7486fd7ca32898f8983907249`](https://github.com/Azure/azure-rest-api-specs/tree/57834b966f8efbe7486fd7ca32898f8983907249).
 
 ## 3.0.0-beta.6 (2026-10-30)
 

@@ -64,6 +64,8 @@ public partial class AgentAdministrationClient
     private BetaVoiceAgentsConversations _cachedAgentEndpointConversations;
     [Experimental("AAIP001")]
     private BetaVoiceAgentsTelephony _cachedAgentTelephony;
+    [Experimental("AAIP001")]
+    private TelephonyCampaigns _cachedAgentTelephonyCampaigns;
     private AgentOptimizationJobCandidates _cachedAgentOptimizationJobCandidates;
     /// <summary>
     /// Initializes a new <see cref="AgentAdministrationClient"/> with the specified
@@ -1134,6 +1136,13 @@ public partial class AgentAdministrationClient
     public virtual BetaVoiceAgentsTelephony GetBetaVoiceAgentTelephony()
     {
         return Volatile.Read(ref _cachedAgentTelephony) ?? Interlocked.CompareExchange(ref _cachedAgentTelephony, new BetaVoiceAgentsTelephony(ClientDiagnostics, Pipeline, _endpoint, _apiVersion), null) ?? _cachedAgentTelephony;
+    }
+
+    /// <summary> Gets the client for telephony campaigns owned by voice agents. </summary>
+    [Experimental("AAIP001")]
+    public virtual TelephonyCampaigns GetBetaVoiceAgentTelephonyCampaigns()
+    {
+        return Volatile.Read(ref _cachedAgentTelephonyCampaigns) ?? Interlocked.CompareExchange(ref _cachedAgentTelephonyCampaigns, new TelephonyCampaigns(ClientDiagnostics, Pipeline, _endpoint, _apiVersion), null) ?? _cachedAgentTelephonyCampaigns;
     }
 
     /// <summary>
