@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Chaos
     [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
     [ModelReaderWriterBuildable(typeof(ValidationProperties))]
     [ModelReaderWriterBuildable(typeof(WorkspaceCustomerManagedKeyEncryption))]
-    [ModelReaderWriterBuildable(typeof(WorkspaceCustomerManagedKeyEncryptionPatchMergePatchUpdateOrCreate))]
+    [ModelReaderWriterBuildable(typeof(WorkspaceCustomerManagedKeyEncryptionPatch))]
     [ModelReaderWriterBuildable(typeof(WorkspaceDiscoveryAccessWarning))]
     [ModelReaderWriterBuildable(typeof(WorkspaceDiscoveryCoverageSummary))]
     [ModelReaderWriterBuildable(typeof(WorkspaceDiscoveryData))]

@@ -15,51 +15,51 @@ using Azure.ResourceManager.Chaos;
 namespace Azure.ResourceManager.Chaos.Models
 {
     /// <summary> A partial customer key reference, validated after merging with the stored setting. </summary>
-    public partial class WorkspaceCustomerManagedKeyEncryptionPatchMergePatchUpdateOrCreate : IJsonModel<WorkspaceCustomerManagedKeyEncryptionPatchMergePatchUpdateOrCreate>
+    public partial class WorkspaceCustomerManagedKeyEncryptionPatch : IJsonModel<WorkspaceCustomerManagedKeyEncryptionPatch>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual WorkspaceCustomerManagedKeyEncryptionPatchMergePatchUpdateOrCreate PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual WorkspaceCustomerManagedKeyEncryptionPatch PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<WorkspaceCustomerManagedKeyEncryptionPatchMergePatchUpdateOrCreate>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<WorkspaceCustomerManagedKeyEncryptionPatch>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeWorkspaceCustomerManagedKeyEncryptionPatchMergePatchUpdateOrCreate(document.RootElement, options);
+                        return DeserializeWorkspaceCustomerManagedKeyEncryptionPatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(WorkspaceCustomerManagedKeyEncryptionPatchMergePatchUpdateOrCreate)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(WorkspaceCustomerManagedKeyEncryptionPatch)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<WorkspaceCustomerManagedKeyEncryptionPatchMergePatchUpdateOrCreate>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<WorkspaceCustomerManagedKeyEncryptionPatch>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerChaosContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(WorkspaceCustomerManagedKeyEncryptionPatchMergePatchUpdateOrCreate)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(WorkspaceCustomerManagedKeyEncryptionPatch)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<WorkspaceCustomerManagedKeyEncryptionPatchMergePatchUpdateOrCreate>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<WorkspaceCustomerManagedKeyEncryptionPatch>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        WorkspaceCustomerManagedKeyEncryptionPatchMergePatchUpdateOrCreate IPersistableModel<WorkspaceCustomerManagedKeyEncryptionPatchMergePatchUpdateOrCreate>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        WorkspaceCustomerManagedKeyEncryptionPatch IPersistableModel<WorkspaceCustomerManagedKeyEncryptionPatch>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<WorkspaceCustomerManagedKeyEncryptionPatchMergePatchUpdateOrCreate>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<WorkspaceCustomerManagedKeyEncryptionPatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<WorkspaceCustomerManagedKeyEncryptionPatchMergePatchUpdateOrCreate>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<WorkspaceCustomerManagedKeyEncryptionPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -70,10 +70,10 @@ namespace Azure.ResourceManager.Chaos.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<WorkspaceCustomerManagedKeyEncryptionPatchMergePatchUpdateOrCreate>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<WorkspaceCustomerManagedKeyEncryptionPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(WorkspaceCustomerManagedKeyEncryptionPatchMergePatchUpdateOrCreate)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(WorkspaceCustomerManagedKeyEncryptionPatch)} does not support writing '{format}' format.");
             }
             if (Optional.IsDefined(KeyEncryptionKeyUri, _keyEncryptionKeyUriIsDefined))
             {
@@ -118,24 +118,24 @@ namespace Azure.ResourceManager.Chaos.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        WorkspaceCustomerManagedKeyEncryptionPatchMergePatchUpdateOrCreate IJsonModel<WorkspaceCustomerManagedKeyEncryptionPatchMergePatchUpdateOrCreate>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        WorkspaceCustomerManagedKeyEncryptionPatch IJsonModel<WorkspaceCustomerManagedKeyEncryptionPatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual WorkspaceCustomerManagedKeyEncryptionPatchMergePatchUpdateOrCreate JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual WorkspaceCustomerManagedKeyEncryptionPatch JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<WorkspaceCustomerManagedKeyEncryptionPatchMergePatchUpdateOrCreate>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<WorkspaceCustomerManagedKeyEncryptionPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(WorkspaceCustomerManagedKeyEncryptionPatchMergePatchUpdateOrCreate)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(WorkspaceCustomerManagedKeyEncryptionPatch)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeWorkspaceCustomerManagedKeyEncryptionPatchMergePatchUpdateOrCreate(document.RootElement, options);
+            return DeserializeWorkspaceCustomerManagedKeyEncryptionPatch(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static WorkspaceCustomerManagedKeyEncryptionPatchMergePatchUpdateOrCreate DeserializeWorkspaceCustomerManagedKeyEncryptionPatchMergePatchUpdateOrCreate(JsonElement element, ModelReaderWriterOptions options)
+        internal static WorkspaceCustomerManagedKeyEncryptionPatch DeserializeWorkspaceCustomerManagedKeyEncryptionPatch(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.Chaos.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new WorkspaceCustomerManagedKeyEncryptionPatchMergePatchUpdateOrCreate(keyEncryptionKeyUri, keyVaultResourceId, additionalBinaryDataProperties)
+            return new WorkspaceCustomerManagedKeyEncryptionPatch(keyEncryptionKeyUri, keyVaultResourceId, additionalBinaryDataProperties)
             {
                 _keyEncryptionKeyUriIsDefined = keyEncryptionKeyUriIsDefined,
                 _keyVaultResourceIdIsDefined = keyVaultResourceIdIsDefined

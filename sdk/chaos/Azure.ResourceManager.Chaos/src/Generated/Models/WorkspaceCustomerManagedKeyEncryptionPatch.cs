@@ -12,7 +12,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Chaos.Models
 {
     /// <summary> A partial customer key reference, validated after merging with the stored setting. </summary>
-    public partial class WorkspaceCustomerManagedKeyEncryptionPatchMergePatchUpdateOrCreate
+    public partial class WorkspaceCustomerManagedKeyEncryptionPatch
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
@@ -21,12 +21,12 @@ namespace Azure.ResourceManager.Chaos.Models
         private ResourceIdentifier _keyVaultResourceId;
         private bool _keyVaultResourceIdIsDefined;
 
-        /// <summary> Initializes a new instance of <see cref="WorkspaceCustomerManagedKeyEncryptionPatchMergePatchUpdateOrCreate"/>. </summary>
-        public WorkspaceCustomerManagedKeyEncryptionPatchMergePatchUpdateOrCreate()
+        /// <summary> Initializes a new instance of <see cref="WorkspaceCustomerManagedKeyEncryptionPatch"/>. </summary>
+        public WorkspaceCustomerManagedKeyEncryptionPatch()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="WorkspaceCustomerManagedKeyEncryptionPatchMergePatchUpdateOrCreate"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkspaceCustomerManagedKeyEncryptionPatch"/>. </summary>
         /// <param name="keyEncryptionKeyUri">
         /// The replacement versionless key URI. Omission retains the URI; null deletes
         /// it. A same-vault replacement retains the stored vault ID. The effective
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Chaos.Models
         /// vault requires a coherent new URL and ID pair.
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal WorkspaceCustomerManagedKeyEncryptionPatchMergePatchUpdateOrCreate(Uri keyEncryptionKeyUri, ResourceIdentifier keyVaultResourceId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal WorkspaceCustomerManagedKeyEncryptionPatch(Uri keyEncryptionKeyUri, ResourceIdentifier keyVaultResourceId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             _keyEncryptionKeyUri = keyEncryptionKeyUri;
             _keyVaultResourceId = keyVaultResourceId;

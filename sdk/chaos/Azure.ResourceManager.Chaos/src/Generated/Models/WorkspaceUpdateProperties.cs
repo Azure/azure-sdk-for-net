@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Chaos.Models
         /// when the merged pair is incomplete. Unsupported mode changes are rejected
         /// before vault lookup, operation creation, desired mutation, or Storage effects.
         /// </summary>
-        public WorkspaceCustomerManagedKeyEncryptionPatchMergePatchUpdateOrCreate CustomerManagedKeyEncryption
+        public WorkspaceCustomerManagedKeyEncryptionPatch CustomerManagedKeyEncryption
         {
             get
             {

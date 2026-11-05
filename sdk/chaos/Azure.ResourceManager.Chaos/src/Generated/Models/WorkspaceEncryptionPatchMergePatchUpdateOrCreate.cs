@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Chaos.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
-        private WorkspaceCustomerManagedKeyEncryptionPatchMergePatchUpdateOrCreate _customerManagedKeyEncryption;
+        private WorkspaceCustomerManagedKeyEncryptionPatch _customerManagedKeyEncryption;
         private bool _customerManagedKeyEncryptionIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="WorkspaceEncryptionPatchMergePatchUpdateOrCreate"/>. </summary>
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Chaos.Models
         /// before vault lookup, operation creation, desired mutation, or Storage effects.
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal WorkspaceEncryptionPatchMergePatchUpdateOrCreate(WorkspaceCustomerManagedKeyEncryptionPatchMergePatchUpdateOrCreate customerManagedKeyEncryption, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal WorkspaceEncryptionPatchMergePatchUpdateOrCreate(WorkspaceCustomerManagedKeyEncryptionPatch customerManagedKeyEncryption, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             _customerManagedKeyEncryption = customerManagedKeyEncryption;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Chaos.Models
         /// when the merged pair is incomplete. Unsupported mode changes are rejected
         /// before vault lookup, operation creation, desired mutation, or Storage effects.
         /// </summary>
-        public WorkspaceCustomerManagedKeyEncryptionPatchMergePatchUpdateOrCreate CustomerManagedKeyEncryption
+        public WorkspaceCustomerManagedKeyEncryptionPatch CustomerManagedKeyEncryption
         {
             get
             {

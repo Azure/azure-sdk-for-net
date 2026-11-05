@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Chaos.Models
                 return null;
             }
             bool customerManagedKeyEncryptionIsDefined = false;
-            WorkspaceCustomerManagedKeyEncryptionPatchMergePatchUpdateOrCreate customerManagedKeyEncryption = default;
+            WorkspaceCustomerManagedKeyEncryptionPatch customerManagedKeyEncryption = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Chaos.Models
                         customerManagedKeyEncryption = null;
                         continue;
                     }
-                    customerManagedKeyEncryption = WorkspaceCustomerManagedKeyEncryptionPatchMergePatchUpdateOrCreate.DeserializeWorkspaceCustomerManagedKeyEncryptionPatchMergePatchUpdateOrCreate(prop.Value, options);
+                    customerManagedKeyEncryption = WorkspaceCustomerManagedKeyEncryptionPatch.DeserializeWorkspaceCustomerManagedKeyEncryptionPatch(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

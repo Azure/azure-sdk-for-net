@@ -687,7 +687,7 @@ namespace Azure.ResourceManager.Chaos.Models
         /// before vault lookup, operation creation, desired mutation, or Storage effects.
         /// </param>
         /// <returns> A new <see cref="Models.ChaosWorkspacePatch"/> instance for mocking. </returns>
-        public static ChaosWorkspacePatch ChaosWorkspacePatch(IDictionary<string, string> tags = default, ManagedServiceIdentity identity = default, WorkspaceCustomerManagedKeyEncryptionPatchMergePatchUpdateOrCreate workspaceUpdateCustomerManagedKeyEncryption = default)
+        public static ChaosWorkspacePatch ChaosWorkspacePatch(IDictionary<string, string> tags = default, ManagedServiceIdentity identity = default, WorkspaceCustomerManagedKeyEncryptionPatch workspaceUpdateCustomerManagedKeyEncryption = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -707,10 +707,10 @@ namespace Azure.ResourceManager.Chaos.Models
         /// the ID; a remaining CMK object without both members is invalid. Changing
         /// vault requires a coherent new URL and ID pair.
         /// </param>
-        /// <returns> A new <see cref="Models.WorkspaceCustomerManagedKeyEncryptionPatchMergePatchUpdateOrCreate"/> instance for mocking. </returns>
-        public static WorkspaceCustomerManagedKeyEncryptionPatchMergePatchUpdateOrCreate WorkspaceCustomerManagedKeyEncryptionPatchMergePatchUpdateOrCreate(Uri keyEncryptionKeyUri = default, ResourceIdentifier keyVaultResourceId = default)
+        /// <returns> A new <see cref="Models.WorkspaceCustomerManagedKeyEncryptionPatch"/> instance for mocking. </returns>
+        public static WorkspaceCustomerManagedKeyEncryptionPatch WorkspaceCustomerManagedKeyEncryptionPatch(Uri keyEncryptionKeyUri = default, ResourceIdentifier keyVaultResourceId = default)
         {
-            return new WorkspaceCustomerManagedKeyEncryptionPatchMergePatchUpdateOrCreate(keyEncryptionKeyUri, keyVaultResourceId, default);
+            return new WorkspaceCustomerManagedKeyEncryptionPatch(keyEncryptionKeyUri, keyVaultResourceId, default);
         }
 
         /// <summary> A retained workspace discovery result and its accepted coverage facts. </summary>
