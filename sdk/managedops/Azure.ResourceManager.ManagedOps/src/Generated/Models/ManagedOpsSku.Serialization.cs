@@ -132,11 +132,19 @@ namespace Azure.ResourceManager.ManagedOps.Models
             {
                 if (prop.NameEquals("name"u8))
                 {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     name = new ManagedOpsSkuName(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("tier"u8))
                 {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     tier = new ManagedOpsSkuTier(prop.Value.GetString());
                     continue;
                 }
