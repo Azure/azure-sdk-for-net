@@ -24,6 +24,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
         private readonly IMultiEndpointTransmitter? _multiEndpointTransmitter;
         private readonly ConnectionVars? _defaultMetricRoute;
         private readonly string? _routedMeterName;
+        private readonly Func<string, ConnectionVars?>? _networkStatsDestination;
+        private readonly bool _isInternalTelemetry;
         private EndpointRouteBatch? _routeBatch;
         private AzureMonitorResource? _resource;
         private bool _disposed;
@@ -55,25 +57,29 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
         /// a real one.
         /// </remarks>
         internal static AzureMonitorMetricExporter CreateForInternalTelemetry(ITransmitter transmitter)
-            => new(transmitter, multiEndpointEnabled: false);
+            => new(transmitter, multiEndpointEnabled: false, isInternalTelemetry: true);
 
         internal static AzureMonitorMetricExporter CreateForInternalTelemetry(
-            AzureMonitorExporterOptions options, string routedMeterName)
+            AzureMonitorExporterOptions options, string routedMeterName,
+            Func<string, ConnectionVars?>? networkStatsDestination = null)
             => new(TransmitterFactory.Instance.Get(options), multiEndpointEnabled: true,
-                ConnectionStringParser.GetValues(options.ConnectionString!), routedMeterName);
+                ConnectionStringParser.GetValues(options.ConnectionString!), routedMeterName, networkStatsDestination, isInternalTelemetry: true);
 
         /// <remarks>
         /// The gate is a constructor parameter so a test can exercise either path without mutating
         /// process-wide state that other tests observe.
         /// </remarks>
         internal AzureMonitorMetricExporter(ITransmitter transmitter, bool multiEndpointEnabled,
-            ConnectionVars? defaultMetricRoute = null, string? routedMeterName = null)
+            ConnectionVars? defaultMetricRoute = null, string? routedMeterName = null,
+            Func<string, ConnectionVars?>? networkStatsDestination = null, bool isInternalTelemetry = false)
         {
             _transmitter = transmitter;
             _instrumentationKey = transmitter.InstrumentationKey;
             _multiEndpointEnabled = multiEndpointEnabled;
             _defaultMetricRoute = defaultMetricRoute;
             _routedMeterName = routedMeterName;
+            _networkStatsDestination = networkStatsDestination;
+            _isInternalTelemetry = isInternalTelemetry;
 
             if (_multiEndpointEnabled)
             {
@@ -115,7 +121,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                 // even if there are no items in batch
                 if (batch.Count > 0)
                 {
-                    (var telemetryItems, var telemetrySchemaTypeCounter) = MetricHelper.OtelToAzureMonitorMetrics(batch, MetricResource, _instrumentationKey);
+                    (var telemetryItems, var telemetrySchemaTypeCounter) = MetricHelper.OtelToAzureMonitorMetrics(batch, MetricResource, _instrumentationKey, _isInternalTelemetry);
                     if (telemetryItems.Count > 0)
                     {
                         exportResult = _transmitter.TrackAsync(telemetryItems, telemetrySchemaTypeCounter, TelemetryItemOrigin.AzureMonitorMetricExporter, false, CancellationToken.None).EnsureCompleted();
@@ -148,7 +154,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             try
             {
                 MetricHelper.OtelToAzureMonitorMetricsMultiEndpoint(
-                    batch, MetricResource, routeBatch, _defaultMetricRoute, _routedMeterName);
+                    batch, MetricResource, routeBatch, _defaultMetricRoute, _routedMeterName, _networkStatsDestination);
 
                 if (routeBatch.Count == 0)
                 {

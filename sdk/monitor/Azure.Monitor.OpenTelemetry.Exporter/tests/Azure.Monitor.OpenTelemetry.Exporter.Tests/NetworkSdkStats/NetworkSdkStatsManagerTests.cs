@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.Metrics;
+using System.Reflection;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.ConnectionString;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.NetworkSdkStats;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat;
@@ -32,7 +33,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.NetworkSdkStats
             var connectionVars = ConnectionStringParser.GetValues(
                 "InstrumentationKey=00000000-0000-0000-0000-000000000001;IngestionEndpoint=https://westus-0.in.applicationinsights.azure.com/");
 
-            var manager = new NetworkSdkStatsManager(connectionVars, new MockPlatform());
+            using var manager = new NetworkSdkStatsManager(connectionVars, new MockPlatform());
 
             var tags = manager.BuildBaseTags("westus-0");
 
@@ -46,6 +47,12 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.NetworkSdkStats
             Assert.Contains(tags, t => t.Key == "version");
             Assert.Contains(tags, t => t.Key == "endpoint" && (string?)t.Value == StatsbeatConstants.NetworkSdkStatsEndpointBreeze);
             Assert.Contains(tags, t => t.Key == "host" && (string?)t.Value == "westus-0");
+            var packageVersion = typeof(AzureMonitorTraceExporter).Assembly
+                .GetCustomAttribute<AssemblyInformationalVersionAttribute>()!.InformationalVersion.Split('+', '@', ' ')[0];
+            Assert.Contains(tags, t => t.Key == "version" && (string?)t.Value == packageVersion);
+            var runtimeVersion = typeof(object).Assembly
+                .GetCustomAttribute<AssemblyInformationalVersionAttribute>()!.InformationalVersion.Split('+', '@', ' ')[0];
+            Assert.Contains(tags, t => t.Key == "runtimeVersion" && (string?)t.Value == runtimeVersion);
         }
 
         [Fact]
@@ -53,7 +60,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.NetworkSdkStats
         {
             var connectionVars = ConnectionStringParser.GetValues(
                 "InstrumentationKey=00000000-0000-0000-0000-000000000002;IngestionEndpoint=https://westus-0.in.applicationinsights.azure.com/");
-            var manager = new NetworkSdkStatsManager(connectionVars, new MockPlatform());
+            using var manager = new NetworkSdkStatsManager(connectionVars, new MockPlatform());
 
             long recorded = 0;
             string? observedHost = null;
@@ -93,7 +100,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.NetworkSdkStats
         {
             var connectionVars = ConnectionStringParser.GetValues(
                 "InstrumentationKey=00000000-0000-0000-0000-000000000003;IngestionEndpoint=https://westus-0.in.applicationinsights.azure.com/");
-            var manager = new NetworkSdkStatsManager(connectionVars, new MockPlatform());
+            using var manager = new NetworkSdkStatsManager(connectionVars, new MockPlatform());
 
             long recorded = 0;
             using var listener = new MeterListener
@@ -120,7 +127,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.NetworkSdkStats
         {
             var connectionVars = ConnectionStringParser.GetValues(
                 "InstrumentationKey=00000000-0000-0000-0000-000000000004;IngestionEndpoint=https://westus-0.in.applicationinsights.azure.com/");
-            var manager = new NetworkSdkStatsManager(connectionVars, new MockPlatform());
+            using var manager = new NetworkSdkStatsManager(connectionVars, new MockPlatform());
 
             long recorded = 0;
             using var listener = new MeterListener
@@ -177,7 +184,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.NetworkSdkStats
         [Fact]
         public void TrackDuration_RecordsRequestDuration()
         {
-            var manager = CreateManager("00000000-0000-0000-0000-000000000010");
+            using var manager = CreateManager("00000000-0000-0000-0000-000000000010");
 
             double recorded = 0;
             string? observedHost = null;
@@ -197,7 +204,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.NetworkSdkStats
         [Fact]
         public void TrackResponseFailure_NonRetriableStatus_RecordsRequestFailureCountWithStatusCode()
         {
-            var manager = CreateManager("00000000-0000-0000-0000-000000000011");
+            using var manager = CreateManager("00000000-0000-0000-0000-000000000011");
 
             long recorded = 0;
             int? observedStatusCode = null;
@@ -217,7 +224,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.NetworkSdkStats
         [Fact]
         public void TrackResponseFailure_RetriableStatus_RecordsRetryCount()
         {
-            var manager = CreateManager("00000000-0000-0000-0000-000000000012");
+            using var manager = CreateManager("00000000-0000-0000-0000-000000000012");
 
             long recorded = 0;
             int? observedStatusCode = null;
@@ -237,7 +244,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.NetworkSdkStats
         [Fact]
         public void TrackResponseFailure_ThrottleStatus_RecordsThrottleCount()
         {
-            var manager = CreateManager("00000000-0000-0000-0000-000000000013");
+            using var manager = CreateManager("00000000-0000-0000-0000-000000000013");
 
             long recorded = 0;
             int? observedStatusCode = null;
@@ -261,7 +268,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.NetworkSdkStats
         [InlineData(308)]
         public void TrackResponseFailure_SuccessPartialOrRedirect_DoesNotRecord(int statusCode)
         {
-            var manager = CreateManager("00000000-0000-0000-0000-000000000014");
+            using var manager = CreateManager("00000000-0000-0000-0000-000000000014");
 
             long recorded = 0;
             using var failureListener = CreateCounterListener("Request_Failure_Count", (value, _) => recorded += value);
@@ -279,7 +286,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.NetworkSdkStats
         [Fact]
         public void TrackException_RecordsExceptionCountWithExceptionType()
         {
-            var manager = CreateManager("00000000-0000-0000-0000-000000000015");
+            using var manager = CreateManager("00000000-0000-0000-0000-000000000015");
 
             long recorded = 0;
             string? observedExceptionType = null;
@@ -299,7 +306,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.NetworkSdkStats
         [Fact]
         public void TrackException_NullExceptionType_RecordsUnknown()
         {
-            var manager = CreateManager("00000000-0000-0000-0000-000000000016");
+            using var manager = CreateManager("00000000-0000-0000-0000-000000000016");
 
             string? observedExceptionType = null;
             using var listener = CreateCounterListener("Exception_Count", (_, tags) => observedExceptionType = GetTag(tags, "exceptionType"));
@@ -313,7 +320,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.NetworkSdkStats
         [Fact]
         public void TrackException_NullHost_FallsBackToConfiguredIngestionHost()
         {
-            var manager = CreateManager("00000000-0000-0000-0000-000000000017");
+            using var manager = CreateManager("00000000-0000-0000-0000-000000000017");
 
             string? observedHost = null;
             using var listener = CreateCounterListener("Exception_Count", (_, tags) => observedHost = GetTag(tags, "host"));

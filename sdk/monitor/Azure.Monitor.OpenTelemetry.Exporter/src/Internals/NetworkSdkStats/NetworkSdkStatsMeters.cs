@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Diagnostics.Metrics;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat;
 
@@ -12,36 +13,47 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.NetworkSdkStats
     /// exception counts and request duration). Metric names follow the SDKStats specification.
     /// </summary>
     /// <remarks>
-    /// The meter is process-static (matching the existing Statsbeat meters); per-instance
-    /// dimension context is added by <see cref="NetworkSdkStatsManager"/> at recording time.
+    /// Each stats owner has its own instruments so another owner's reader cannot export its counts.
     /// </remarks>
-    internal static class NetworkSdkStatsMeters
+    internal sealed class NetworkSdkStatsMeters : IDisposable
     {
-        public static readonly Meter Meter = new(StatsbeatConstants.NetworkSdkStatsMeterName, "1.0.0");
+        public readonly Meter Meter = new(StatsbeatConstants.NetworkSdkStatsMeterName, "1.0.0");
 
-        public static readonly Counter<long> RequestSuccessCount = Meter.CreateCounter<long>(
-            "Request_Success_Count",
-            description: "Count of requests accepted by the destination ingestion endpoint.");
+        public Counter<long> RequestSuccessCount { get; }
+        public Counter<long> RequestFailureCount { get; }
+        public Histogram<double> RequestDuration { get; }
+        public Counter<long> RetryCount { get; }
+        public Counter<long> ThrottleCount { get; }
+        public Counter<long> ExceptionCount { get; }
 
-        public static readonly Counter<long> RequestFailureCount = Meter.CreateCounter<long>(
-            "Request_Failure_Count",
-            description: "Count of requests that returned a non-retryable, non-throttling failure from the destination ingestion endpoint.");
+        public NetworkSdkStatsMeters()
+        {
+            RequestSuccessCount = Meter.CreateCounter<long>(
+                "Request_Success_Count",
+                description: "Count of requests accepted by the destination ingestion endpoint.");
 
-        public static readonly Histogram<double> RequestDuration = Meter.CreateHistogram<double>(
-            "Request_Duration",
-            unit: "ms",
-            description: "Duration of requests to the destination ingestion endpoint.");
+            RequestFailureCount = Meter.CreateCounter<long>(
+                "Request_Failure_Count",
+                description: "Count of requests that returned a non-retryable, non-throttling failure from the destination ingestion endpoint.");
 
-        public static readonly Counter<long> RetryCount = Meter.CreateCounter<long>(
-            "Retry_Count",
-            description: "Count of requests for which the destination ingestion endpoint returned a retryable response.");
+            RequestDuration = Meter.CreateHistogram<double>(
+                "Request_Duration",
+                unit: "ms",
+                description: "Duration of requests to the destination ingestion endpoint.");
 
-        public static readonly Counter<long> ThrottleCount = Meter.CreateCounter<long>(
-            "Throttle_Count",
-            description: "Count of requests for which the destination ingestion endpoint returned a quota / rate-limit response.");
+            RetryCount = Meter.CreateCounter<long>(
+                "Retry_Count",
+                description: "Count of requests for which the destination ingestion endpoint returned a retryable response.");
 
-        public static readonly Counter<long> ExceptionCount = Meter.CreateCounter<long>(
-            "Exception_Count",
-            description: "Count of requests that failed with an exception (no response code received).");
+            ThrottleCount = Meter.CreateCounter<long>(
+                "Throttle_Count",
+                description: "Count of requests for which the destination ingestion endpoint returned a quota / rate-limit response.");
+
+            ExceptionCount = Meter.CreateCounter<long>(
+                "Exception_Count",
+                description: "Count of requests that failed with an exception (no response code received).");
+        }
+
+        public void Dispose() => Meter.Dispose();
     }
 }
