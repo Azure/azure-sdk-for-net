@@ -12,7 +12,7 @@ import { fileURLToPath, pathToFileURL } from 'node:url';
 
 const packagesDirectory = resolve(
   dirname(fileURLToPath(import.meta.url)),
-  '../../../packages',
+  '../../../../packages',
 );
 const dataPlane = `
 import "@typespec/http";

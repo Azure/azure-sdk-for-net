@@ -6,7 +6,7 @@ import { mkdtemp, readFile, rm, writeFile } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { test } from 'node:test';
-import { writeBundle } from './bundle.mjs';
+import { writeBundle } from '../bundle.mjs';
 
 test('writes versioned bundles and the standalone TypeSpec import map', async (t) => {
   const directory = await mkdtemp(join(tmpdir(), 'csharp-playground-'));

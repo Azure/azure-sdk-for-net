@@ -3,8 +3,8 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "test": "node --test bundle.test.mjs",
-    "test:browser": "node --test browser.test.mjs"
+    "test": "node --test test/bundle.test.mjs",
+    "test:browser": "node --test test/browser.test.mjs"
   },
   "dependencies": {
     "@typespec/bundler": "0.6.1"

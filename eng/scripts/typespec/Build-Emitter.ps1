@@ -51,7 +51,7 @@ function Build-Emitter {
             Invoke-LoggedCommand "npm ci --prefix `"$playgroundTools`""
             Invoke-LoggedCommand "npm test --prefix `"$playgroundTools`""
             $packageName = Split-Path $packageRoot -Leaf
-            Invoke-LoggedCommand "node --test --test-name-pattern `"^$packageName bundles `" `"$playgroundTools/browser.test.mjs`""
+            Invoke-LoggedCommand "node --test --test-name-pattern `"^$packageName bundles `" `"$playgroundTools/test/browser.test.mjs`""
             Invoke-LoggedCommand "node `"$playgroundTools/bundle.mjs`" `"$packageRoot`" `"$playgroundOutput`" `"$file`""
         }
 
