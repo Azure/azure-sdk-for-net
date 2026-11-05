@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.MongoCluster.Models
 {
-    /// <summary> Connection string for the mongo cluster. </summary>
+    /// <summary> Connection string for the DocumentDB cluster. </summary>
     public partial class MongoClusterConnectionString
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

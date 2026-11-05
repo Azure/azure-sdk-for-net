@@ -13,7 +13,7 @@ using Azure.ResourceManager.MongoCluster;
 
 namespace Azure.ResourceManager.MongoCluster.Models
 {
-    /// <summary> The properties of a mongo cluster. </summary>
+    /// <summary> The properties of a DocumentDB cluster. </summary>
     public partial class MongoClusterProperties : IJsonModel<MongoClusterProperties>
     {
         /// <param name="data"> The data to parse. </param>

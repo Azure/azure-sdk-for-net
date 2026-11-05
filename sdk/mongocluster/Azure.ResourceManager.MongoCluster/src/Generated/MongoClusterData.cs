@@ -13,7 +13,7 @@ using Azure.ResourceManager.MongoCluster.Models;
 
 namespace Azure.ResourceManager.MongoCluster
 {
-    /// <summary> Represents a mongo cluster resource. </summary>
+    /// <summary> Represents a DocumentDB cluster resource. </summary>
     public partial class MongoClusterData : TrackedResourceData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

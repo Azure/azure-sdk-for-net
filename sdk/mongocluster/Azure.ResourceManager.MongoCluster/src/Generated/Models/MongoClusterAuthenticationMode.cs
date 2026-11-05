@@ -11,7 +11,7 @@ using Azure.ResourceManager.MongoCluster;
 
 namespace Azure.ResourceManager.MongoCluster.Models
 {
-    /// <summary> The authentication modes supporting on the Mongo cluster. </summary>
+    /// <summary> The authentication modes supporting on the DocumentDB cluster. </summary>
     public readonly partial struct MongoClusterAuthenticationMode : IEquatable<MongoClusterAuthenticationMode>
     {
         private readonly string _value;
