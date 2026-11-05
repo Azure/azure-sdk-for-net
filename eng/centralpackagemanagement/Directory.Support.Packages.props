@@ -1,6 +1,6 @@
 <Project>
   <PropertyGroup>
-     <TestProxyVersion>1.0.0-dev.20260128.1</TestProxyVersion>
+     <TestProxyVersion>1.0.0-dev.20260924.2</TestProxyVersion>
   </PropertyGroup>
 
   <!-- ============================================================== -->
