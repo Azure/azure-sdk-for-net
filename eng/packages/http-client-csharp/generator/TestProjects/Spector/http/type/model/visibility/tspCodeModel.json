@@ -217,8 +217,7 @@
             "crossLanguageDefinitionId": "TypeSpec.int32",
             "decorators": []
           },
-          "optional": true,
-          "lifecycleVisibility": 16,
+          "optional": false,
           "readOnly": false,
           "discriminator": false,
           "flatten": false,
@@ -253,8 +252,7 @@
             "crossLanguageDefinitionId": "TypeSpec.Array",
             "decorators": []
           },
-          "optional": true,
-          "lifecycleVisibility": 2,
+          "optional": false,
           "readOnly": false,
           "discriminator": false,
           "flatten": false,
@@ -289,8 +287,7 @@
             "crossLanguageDefinitionId": "TypeSpec.Array",
             "decorators": []
           },
-          "optional": true,
-          "lifecycleVisibility": 4,
+          "optional": false,
           "readOnly": false,
           "discriminator": false,
           "flatten": false,
@@ -318,8 +315,7 @@
             "crossLanguageDefinitionId": "TypeSpec.boolean",
             "decorators": []
           },
-          "optional": true,
-          "lifecycleVisibility": 8,
+          "optional": false,
           "readOnly": false,
           "discriminator": false,
           "flatten": false,
@@ -635,7 +631,6 @@
               }
             ],
             "httpMethod": "GET",
-            "requestVisibility": 16,
             "uri": "{endpoint}",
             "path": "/type/model/visibility",
             "requestMediaTypes": [
@@ -808,7 +803,6 @@
               }
             ],
             "httpMethod": "HEAD",
-            "requestVisibility": 16,
             "uri": "{endpoint}",
             "path": "/type/model/visibility",
             "requestMediaTypes": [
@@ -944,7 +938,6 @@
               }
             ],
             "httpMethod": "PUT",
-            "requestVisibility": 6,
             "uri": "{endpoint}",
             "path": "/type/model/visibility",
             "requestMediaTypes": [
@@ -1080,7 +1073,6 @@
               }
             ],
             "httpMethod": "PATCH",
-            "requestVisibility": 4,
             "uri": "{endpoint}",
             "path": "/type/model/visibility",
             "requestMediaTypes": [
@@ -1216,7 +1208,6 @@
               }
             ],
             "httpMethod": "POST",
-            "requestVisibility": 2,
             "uri": "{endpoint}",
             "path": "/type/model/visibility",
             "requestMediaTypes": [
@@ -1352,7 +1343,6 @@
               }
             ],
             "httpMethod": "DELETE",
-            "requestVisibility": 8,
             "uri": "{endpoint}",
             "path": "/type/model/visibility",
             "requestMediaTypes": [
