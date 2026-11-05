@@ -2,10 +2,15 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ClientModel.Primitives;
+using System.IO;
+using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using Azure.AI.OpenAI.Files;
 using OpenAI.Files;
 using OpenAI.TestFramework;
+using OpenAI.TestFramework.Mocks;
 
 namespace Azure.AI.OpenAI.Tests;
 
@@ -81,5 +86,118 @@ public class FileTests : AoaiTestBase<OpenAIFileClient>
     private static TestClientOptions GetTestClientOptions(AzureOpenAIClientOptions.ServiceVersion? version)
     {
         return version is null ? new TestClientOptions() : new TestClientOptions(version.Value);
+    }
+
+    [Test]
+    [Category("Smoke")]
+    public void FineTuneFileUploadIncludesContentType()
+    {
+        // Regression test: Azure OpenAI requires a Content-Type header on the file part of multipart
+        // uploads for fine-tune and batch purposes. Verify that the request includes it.
+        CapturedResponse ValidFileResponse(CapturedRequest _) => new()
+        {
+            Status = System.Net.HttpStatusCode.OK,
+            ReasonPhrase = "OK",
+            Content = BinaryData.FromString(@"{
+                ""id"": ""file-abc123"",
+                ""bytes"": 100,
+                ""created_at"": 1700000000,
+                ""filename"": ""training.jsonl"",
+                ""object"": ""file"",
+                ""purpose"": ""fine-tune"",
+                ""status"": ""processed""
+            }"),
+            Headers = new System.Collections.Generic.Dictionary<string, System.Collections.Generic.IReadOnlyList<string>>
+            {
+                ["Content-Type"] = ["application/json"]
+            }
+        };
+
+        using var mockHandler = new MockHttpMessageHandler(ValidFileResponse);
+        var pipelineOptions = new ClientPipelineOptions
+        {
+            Transport = mockHandler.Transport,
+            RetryPolicy = new ClientRetryPolicy(maxRetries: 0)
+        };
+        var pipeline = ClientPipeline.Create(pipelineOptions);
+        var client = new AzureFileClient(pipeline, new Uri("https://test.openai.azure.com/"), new AzureOpenAIClientOptions());
+
+        // Test FineTune - should set Content-Type: text/plain on the file part
+        using var fineTuneStream = new MemoryStream(Encoding.UTF8.GetBytes("training data"));
+        client.UploadFile(fineTuneStream, "training.jsonl", FileUploadPurpose.FineTune);
+
+        Assert.That(mockHandler.Requests, Has.Count.GreaterThan(0), "Expected at least one request for FineTune upload");
+        string fineTuneFilePartContentType = GetFilePartContentType(mockHandler.Requests[0].Content);
+        Assert.That(fineTuneFilePartContentType, Does.StartWith("text/plain"),
+            "Azure OpenAI requires Content-Type: text/plain on the file part for FineTune uploads");
+
+        // Test Batch - should set Content-Type: application/json on the file part
+        using var batchStream = new MemoryStream(Encoding.UTF8.GetBytes("{\"test\":true}"));
+        client.UploadFile(batchStream, "batch.jsonl", FileUploadPurpose.Batch);
+
+        Assert.That(mockHandler.Requests, Has.Count.GreaterThan(1), "Expected at least two requests for Batch upload");
+        string batchFilePartContentType = GetFilePartContentType(mockHandler.Requests[1].Content);
+        Assert.That(batchFilePartContentType, Does.StartWith("application/json"),
+            "Azure OpenAI requires Content-Type: application/json on the file part for Batch uploads");
+    }
+
+    /// <summary>
+    /// Extracts the Content-Type header value from the file part (name="file") of a multipart body.
+    /// </summary>
+    private static string GetFilePartContentType(BinaryData multipartBody)
+    {
+        const string contentTypePrefix = "Content-Type:";
+        string body = Encoding.UTF8.GetString(multipartBody.ToArray());
+
+        // Split on boundary markers (lines starting with "--")
+        string[] lines = body.Split(["\r\n", "\n"], StringSplitOptions.None);
+
+        bool inFilePart = false;
+        string? contentType = null;
+
+        for (int i = 0; i < lines.Length; i++)
+        {
+            string line = lines[i];
+
+            // A boundary line starts a new part (has content after "--"); reset state
+            if (line.StartsWith("--") && line.Length > 2)
+            {
+                inFilePart = false;
+                contentType = null;
+                continue;
+            }
+
+            // Empty line ends headers section
+            if (line.Length == 0)
+            {
+                if (inFilePart && contentType is not null)
+                {
+                    return contentType;
+                }
+                continue;
+            }
+
+            // Check Content-Disposition to identify the file part by parsing semicolon-delimited attributes
+            if (line.StartsWith("Content-Disposition:", StringComparison.OrdinalIgnoreCase))
+            {
+                string[] attributes = line.Split(';');
+                bool isFilePart = attributes.Any(
+                    a => a.Trim().Equals("name=file", StringComparison.OrdinalIgnoreCase));
+                if (isFilePart)
+                {
+                    inFilePart = true;
+                }
+                continue;
+            }
+
+            // Capture Content-Type header value
+            if (line.StartsWith(contentTypePrefix, StringComparison.OrdinalIgnoreCase))
+            {
+                contentType = line[contentTypePrefix.Length..].Trim();
+                continue;
+            }
+        }
+
+        return contentType ?? string.Empty;
     }
 }

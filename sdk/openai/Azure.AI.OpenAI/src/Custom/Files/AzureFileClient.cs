@@ -3,7 +3,6 @@
 
 using System.ClientModel;
 using System.ClientModel.Primitives;
-using System.Data.SqlTypes;
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
 using OpenAI.Files;
