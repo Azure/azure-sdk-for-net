@@ -12,22 +12,22 @@ using Azure;
 namespace Azure.ResourceManager.HorizonDB.Models
 {
     /// <summary> The current validation result for a change data capture identity assignment. </summary>
-    public partial class IdentityValidationStatus
+    public partial class ChangeDataCaptureIdentityValidationStatus
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="IdentityValidationStatus"/>. </summary>
-        internal IdentityValidationStatus()
+        /// <summary> Initializes a new instance of <see cref="ChangeDataCaptureIdentityValidationStatus"/>. </summary>
+        internal ChangeDataCaptureIdentityValidationStatus()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="IdentityValidationStatus"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ChangeDataCaptureIdentityValidationStatus"/>. </summary>
         /// <param name="state"> The current validation state. </param>
         /// <param name="validatedAtUtc"> The date and time, in UTC, when validation most recently completed. </param>
         /// <param name="error"> The customer-safe validation error when validation failed. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal IdentityValidationStatus(ChangeDataCaptureIdentityValidationState state, DateTimeOffset? validatedAtUtc, ResponseError error, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ChangeDataCaptureIdentityValidationStatus(ChangeDataCaptureIdentityValidationState state, DateTimeOffset? validatedAtUtc, ResponseError error, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             State = state;
             ValidatedAtUtc = validatedAtUtc;

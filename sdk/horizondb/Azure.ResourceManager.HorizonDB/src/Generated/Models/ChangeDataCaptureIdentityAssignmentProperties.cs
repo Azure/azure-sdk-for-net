@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
         /// <param name="validation"> The latest validation result for this identity assignment. </param>
         /// <param name="status"> Customer-safe health information for the identity assignment. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ChangeDataCaptureIdentityAssignmentProperties(ResourceIdentifier identityResourceId, ChangeDataCaptureIdentityAssignmentState effectiveState, ChangeDataCaptureIdentityActivationState activationState, string principalId, string tenantId, HorizonDBProvisioningState? provisioningState, IdentityValidationStatus validation, ChangeDataCaptureStatus status, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ChangeDataCaptureIdentityAssignmentProperties(ResourceIdentifier identityResourceId, ChangeDataCaptureIdentityAssignmentState effectiveState, ChangeDataCaptureIdentityActivationState activationState, string principalId, string tenantId, HorizonDBProvisioningState? provisioningState, ChangeDataCaptureIdentityValidationStatus validation, ChangeDataCaptureStatus status, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             IdentityResourceId = identityResourceId;
             EffectiveState = effectiveState;
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
         public HorizonDBProvisioningState? ProvisioningState { get; }
 
         /// <summary> The latest validation result for this identity assignment. </summary>
-        public IdentityValidationStatus Validation { get; }
+        public ChangeDataCaptureIdentityValidationStatus Validation { get; }
 
         /// <summary> Customer-safe health information for the identity assignment. </summary>
         public ChangeDataCaptureStatus Status { get; }

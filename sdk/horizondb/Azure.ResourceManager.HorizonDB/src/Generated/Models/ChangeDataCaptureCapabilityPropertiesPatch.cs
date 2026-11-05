@@ -11,21 +11,21 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.HorizonDB.Models
 {
     /// <summary> Properties for updating the singleton change data capture capability. Omitted properties preserve their current values. </summary>
-    public partial class ChangeDataCaptureCapabilityPropertiesForPatchUpdate
+    public partial class ChangeDataCaptureCapabilityPropertiesPatch
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ChangeDataCaptureCapabilityPropertiesForPatchUpdate"/>. </summary>
-        public ChangeDataCaptureCapabilityPropertiesForPatchUpdate()
+        /// <summary> Initializes a new instance of <see cref="ChangeDataCaptureCapabilityPropertiesPatch"/>. </summary>
+        public ChangeDataCaptureCapabilityPropertiesPatch()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ChangeDataCaptureCapabilityPropertiesForPatchUpdate"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ChangeDataCaptureCapabilityPropertiesPatch"/>. </summary>
         /// <param name="desiredState"> The requested capability state. </param>
         /// <param name="isAutoUpgradeExtensionEnabled"> Whether HorizonDB may automatically upgrade the service-owned change data capture extension within the supported compatibility policy. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ChangeDataCaptureCapabilityPropertiesForPatchUpdate(ChangeDataCaptureDesiredState? desiredState, bool? isAutoUpgradeExtensionEnabled, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ChangeDataCaptureCapabilityPropertiesPatch(ChangeDataCaptureDesiredState? desiredState, bool? isAutoUpgradeExtensionEnabled, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DesiredState = desiredState;
             IsAutoUpgradeExtensionEnabled = isAutoUpgradeExtensionEnabled;

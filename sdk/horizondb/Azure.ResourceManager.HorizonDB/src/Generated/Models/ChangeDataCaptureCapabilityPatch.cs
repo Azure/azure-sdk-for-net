@@ -24,13 +24,13 @@ namespace Azure.ResourceManager.HorizonDB.Models
         /// <summary> Initializes a new instance of <see cref="ChangeDataCaptureCapabilityPatch"/>. </summary>
         /// <param name="properties"> The capability properties to update. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ChangeDataCaptureCapabilityPatch(ChangeDataCaptureCapabilityPropertiesForPatchUpdate properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ChangeDataCaptureCapabilityPatch(ChangeDataCaptureCapabilityPropertiesPatch properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Properties = properties;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The capability properties to update. </summary>
-        public ChangeDataCaptureCapabilityPropertiesForPatchUpdate Properties { get; set; }
+        public ChangeDataCaptureCapabilityPropertiesPatch Properties { get; set; }
     }
 }

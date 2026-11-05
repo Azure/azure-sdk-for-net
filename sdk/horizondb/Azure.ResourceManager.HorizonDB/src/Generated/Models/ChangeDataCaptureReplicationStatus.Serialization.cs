@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.HorizonDB.Models
                 writer.WritePropertyName("externalArtifactId"u8);
                 writer.WriteStringValue(ExternalArtifactId);
             }
-            if (options.Format != "W" && Optional.IsDefined(LastConnectedAtUtc))
+            if (options.Format != "W" && Optional.IsDefined(LastConnectedOn))
             {
                 writer.WritePropertyName("lastConnectedAtUtc"u8);
-                writer.WriteStringValue(LastConnectedAtUtc.Value, "O");
+                writer.WriteStringValue(LastConnectedOn.Value, "O");
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
             }
             ChangeDataCaptureReplicationState state = default;
             string externalArtifactId = default;
-            DateTimeOffset? lastConnectedAtUtc = default;
+            DateTimeOffset? lastConnectedOn = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
                     {
                         continue;
                     }
-                    lastConnectedAtUtc = prop.Value.GetDateTimeOffset("O");
+                    lastConnectedOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (options.Format != "W")
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ChangeDataCaptureReplicationStatus(state, externalArtifactId, lastConnectedAtUtc, additionalBinaryDataProperties);
+            return new ChangeDataCaptureReplicationStatus(state, externalArtifactId, lastConnectedOn, additionalBinaryDataProperties);
         }
     }
 }

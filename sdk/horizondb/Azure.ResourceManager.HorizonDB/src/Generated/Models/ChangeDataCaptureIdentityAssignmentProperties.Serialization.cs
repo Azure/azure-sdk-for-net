@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
             string principalId = default;
             string tenantId = default;
             HorizonDBProvisioningState? provisioningState = default;
-            IdentityValidationStatus validation = default;
+            ChangeDataCaptureIdentityValidationStatus validation = default;
             ChangeDataCaptureStatus status = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
                 }
                 if (prop.NameEquals("validation"u8))
                 {
-                    validation = IdentityValidationStatus.DeserializeIdentityValidationStatus(prop.Value, options);
+                    validation = ChangeDataCaptureIdentityValidationStatus.DeserializeChangeDataCaptureIdentityValidationStatus(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("status"u8))

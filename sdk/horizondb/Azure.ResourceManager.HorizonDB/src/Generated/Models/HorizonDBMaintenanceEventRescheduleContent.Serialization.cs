@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
                 throw new FormatException($"The model {nameof(HorizonDBMaintenanceEventRescheduleContent)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("postponeToDateTimeUtc"u8);
-            writer.WriteStringValue(PostponeToDateTimeUtc, "O");
+            writer.WriteStringValue(ScheduledStartsOn, "O");
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -134,13 +134,13 @@ namespace Azure.ResourceManager.HorizonDB.Models
             {
                 return null;
             }
-            DateTimeOffset postponeToDateTimeUtc = default;
+            DateTimeOffset scheduledStartsOn = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("postponeToDateTimeUtc"u8))
                 {
-                    postponeToDateTimeUtc = prop.Value.GetDateTimeOffset("O");
+                    scheduledStartsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (options.Format != "W")
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new HorizonDBMaintenanceEventRescheduleContent(postponeToDateTimeUtc, additionalBinaryDataProperties);
+            return new HorizonDBMaintenanceEventRescheduleContent(scheduledStartsOn, additionalBinaryDataProperties);
         }
     }
 }

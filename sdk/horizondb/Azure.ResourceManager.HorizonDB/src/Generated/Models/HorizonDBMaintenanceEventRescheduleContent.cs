@@ -17,22 +17,22 @@ namespace Azure.ResourceManager.HorizonDB.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="HorizonDBMaintenanceEventRescheduleContent"/>. </summary>
-        /// <param name="postponeToDateTimeUtc"> The new start time in RFC 3339 format. </param>
-        public HorizonDBMaintenanceEventRescheduleContent(DateTimeOffset postponeToDateTimeUtc)
+        /// <param name="scheduledStartsOn"> The new start time in RFC 3339 format. </param>
+        public HorizonDBMaintenanceEventRescheduleContent(DateTimeOffset scheduledStartsOn)
         {
-            PostponeToDateTimeUtc = postponeToDateTimeUtc;
+            ScheduledStartsOn = scheduledStartsOn;
         }
 
         /// <summary> Initializes a new instance of <see cref="HorizonDBMaintenanceEventRescheduleContent"/>. </summary>
-        /// <param name="postponeToDateTimeUtc"> The new start time in RFC 3339 format. </param>
+        /// <param name="scheduledStartsOn"> The new start time in RFC 3339 format. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal HorizonDBMaintenanceEventRescheduleContent(DateTimeOffset postponeToDateTimeUtc, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HorizonDBMaintenanceEventRescheduleContent(DateTimeOffset scheduledStartsOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            PostponeToDateTimeUtc = postponeToDateTimeUtc;
+            ScheduledStartsOn = scheduledStartsOn;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The new start time in RFC 3339 format. </summary>
-        public DateTimeOffset PostponeToDateTimeUtc { get; }
+        public DateTimeOffset ScheduledStartsOn { get; }
     }
 }

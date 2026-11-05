@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
             {
                 return null;
             }
-            ChangeDataCaptureCapabilityPropertiesForPatchUpdate properties = default;
+            ChangeDataCaptureCapabilityPropertiesPatch properties = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
                     {
                         continue;
                     }
-                    properties = ChangeDataCaptureCapabilityPropertiesForPatchUpdate.DeserializeChangeDataCaptureCapabilityPropertiesForPatchUpdate(prop.Value, options);
+                    properties = ChangeDataCaptureCapabilityPropertiesPatch.DeserializeChangeDataCaptureCapabilityPropertiesPatch(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

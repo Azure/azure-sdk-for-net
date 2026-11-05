@@ -873,7 +873,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
         /// <summary> A sparse update request for the singleton change data capture capability. </summary>
         /// <param name="properties"> The capability properties to update. </param>
         /// <returns> A new <see cref="Models.ChangeDataCaptureCapabilityPatch"/> instance for mocking. </returns>
-        public static ChangeDataCaptureCapabilityPatch ChangeDataCaptureCapabilityPatch(ChangeDataCaptureCapabilityPropertiesForPatchUpdate properties = default)
+        public static ChangeDataCaptureCapabilityPatch ChangeDataCaptureCapabilityPatch(ChangeDataCaptureCapabilityPropertiesPatch properties = default)
         {
             return new ChangeDataCaptureCapabilityPatch(properties, default);
         }
@@ -881,10 +881,10 @@ namespace Azure.ResourceManager.HorizonDB.Models
         /// <summary> Properties for updating the singleton change data capture capability. Omitted properties preserve their current values. </summary>
         /// <param name="desiredState"> The requested capability state. </param>
         /// <param name="isAutoUpgradeExtensionEnabled"> Whether HorizonDB may automatically upgrade the service-owned change data capture extension within the supported compatibility policy. </param>
-        /// <returns> A new <see cref="Models.ChangeDataCaptureCapabilityPropertiesForPatchUpdate"/> instance for mocking. </returns>
-        public static ChangeDataCaptureCapabilityPropertiesForPatchUpdate ChangeDataCaptureCapabilityPropertiesForPatchUpdate(ChangeDataCaptureDesiredState? desiredState = default, bool? isAutoUpgradeExtensionEnabled = default)
+        /// <returns> A new <see cref="Models.ChangeDataCaptureCapabilityPropertiesPatch"/> instance for mocking. </returns>
+        public static ChangeDataCaptureCapabilityPropertiesPatch ChangeDataCaptureCapabilityPropertiesPatch(ChangeDataCaptureDesiredState? desiredState = default, bool? isAutoUpgradeExtensionEnabled = default)
         {
-            return new ChangeDataCaptureCapabilityPropertiesForPatchUpdate(desiredState, isAutoUpgradeExtensionEnabled, default);
+            return new ChangeDataCaptureCapabilityPropertiesPatch(desiredState, isAutoUpgradeExtensionEnabled, default);
         }
 
         /// <summary> A reusable Microsoft Fabric destination for HorizonDB change data capture configurations. </summary>
@@ -1005,7 +1005,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
         /// <param name="validation"> The latest validation result for this identity assignment. </param>
         /// <param name="status"> Customer-safe health information for the identity assignment. </param>
         /// <returns> A new <see cref="Models.ChangeDataCaptureIdentityAssignmentProperties"/> instance for mocking. </returns>
-        public static ChangeDataCaptureIdentityAssignmentProperties ChangeDataCaptureIdentityAssignmentProperties(ResourceIdentifier identityResourceId = default, ChangeDataCaptureIdentityAssignmentState effectiveState = default, ChangeDataCaptureIdentityActivationState activationState = default, string principalId = default, string tenantId = default, HorizonDBProvisioningState? provisioningState = default, IdentityValidationStatus validation = default, ChangeDataCaptureStatus status = default)
+        public static ChangeDataCaptureIdentityAssignmentProperties ChangeDataCaptureIdentityAssignmentProperties(ResourceIdentifier identityResourceId = default, ChangeDataCaptureIdentityAssignmentState effectiveState = default, ChangeDataCaptureIdentityActivationState activationState = default, string principalId = default, string tenantId = default, HorizonDBProvisioningState? provisioningState = default, ChangeDataCaptureIdentityValidationStatus validation = default, ChangeDataCaptureStatus status = default)
         {
             return new ChangeDataCaptureIdentityAssignmentProperties(
                 identityResourceId,
@@ -1023,10 +1023,10 @@ namespace Azure.ResourceManager.HorizonDB.Models
         /// <param name="state"> The current validation state. </param>
         /// <param name="validatedAtUtc"> The date and time, in UTC, when validation most recently completed. </param>
         /// <param name="error"> The customer-safe validation error when validation failed. </param>
-        /// <returns> A new <see cref="Models.IdentityValidationStatus"/> instance for mocking. </returns>
-        public static IdentityValidationStatus IdentityValidationStatus(ChangeDataCaptureIdentityValidationState state = default, DateTimeOffset? validatedAtUtc = default, ResponseError error = default)
+        /// <returns> A new <see cref="Models.ChangeDataCaptureIdentityValidationStatus"/> instance for mocking. </returns>
+        public static ChangeDataCaptureIdentityValidationStatus ChangeDataCaptureIdentityValidationStatus(ChangeDataCaptureIdentityValidationState state = default, DateTimeOffset? validatedAtUtc = default, ResponseError error = default)
         {
-            return new IdentityValidationStatus(state, validatedAtUtc, error, default);
+            return new ChangeDataCaptureIdentityValidationStatus(state, validatedAtUtc, error, default);
         }
 
         /// <summary> A HorizonDB database enrollment for Microsoft Fabric Mirroring. </summary>
@@ -1082,11 +1082,11 @@ namespace Azure.ResourceManager.HorizonDB.Models
         /// <summary> The destination-owned replication-session status known to HorizonDB. </summary>
         /// <param name="state"> The current replication-session state. </param>
         /// <param name="externalArtifactId"> An opaque identifier of a destination-owned artifact, such as a Microsoft Fabric mirrored-database item. HorizonDB does not create, update, or delete the identified artifact. </param>
-        /// <param name="lastConnectedAtUtc"> The date and time, in UTC, when a destination session most recently connected. </param>
+        /// <param name="lastConnectedOn"> The date and time, in UTC, when a destination session most recently connected. </param>
         /// <returns> A new <see cref="Models.ChangeDataCaptureReplicationStatus"/> instance for mocking. </returns>
-        public static ChangeDataCaptureReplicationStatus ChangeDataCaptureReplicationStatus(ChangeDataCaptureReplicationState state = default, string externalArtifactId = default, DateTimeOffset? lastConnectedAtUtc = default)
+        public static ChangeDataCaptureReplicationStatus ChangeDataCaptureReplicationStatus(ChangeDataCaptureReplicationState state = default, string externalArtifactId = default, DateTimeOffset? lastConnectedOn = default)
         {
-            return new ChangeDataCaptureReplicationStatus(state, externalArtifactId, lastConnectedAtUtc, default);
+            return new ChangeDataCaptureReplicationStatus(state, externalArtifactId, lastConnectedOn, default);
         }
 
         /// <summary> The current writer-topology binding of a change data capture configuration. </summary>
@@ -1187,11 +1187,11 @@ namespace Azure.ResourceManager.HorizonDB.Models
         }
 
         /// <summary> Parameters for rescheduling a maintenance event. </summary>
-        /// <param name="postponeToDateTimeUtc"> The new start time in RFC 3339 format. </param>
+        /// <param name="scheduledStartsOn"> The new start time in RFC 3339 format. </param>
         /// <returns> A new <see cref="Models.HorizonDBMaintenanceEventRescheduleContent"/> instance for mocking. </returns>
-        public static HorizonDBMaintenanceEventRescheduleContent HorizonDBMaintenanceEventRescheduleContent(DateTimeOffset postponeToDateTimeUtc = default)
+        public static HorizonDBMaintenanceEventRescheduleContent HorizonDBMaintenanceEventRescheduleContent(DateTimeOffset scheduledStartsOn = default)
         {
-            return new HorizonDBMaintenanceEventRescheduleContent(postponeToDateTimeUtc, default);
+            return new HorizonDBMaintenanceEventRescheduleContent(scheduledStartsOn, default);
         }
 
         /// <summary> The response from a maintenance event reschedule or apply-now action. </summary>

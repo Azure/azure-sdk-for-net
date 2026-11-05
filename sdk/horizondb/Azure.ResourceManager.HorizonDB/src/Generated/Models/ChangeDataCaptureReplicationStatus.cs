@@ -24,13 +24,13 @@ namespace Azure.ResourceManager.HorizonDB.Models
         /// <summary> Initializes a new instance of <see cref="ChangeDataCaptureReplicationStatus"/>. </summary>
         /// <param name="state"> The current replication-session state. </param>
         /// <param name="externalArtifactId"> An opaque identifier of a destination-owned artifact, such as a Microsoft Fabric mirrored-database item. HorizonDB does not create, update, or delete the identified artifact. </param>
-        /// <param name="lastConnectedAtUtc"> The date and time, in UTC, when a destination session most recently connected. </param>
+        /// <param name="lastConnectedOn"> The date and time, in UTC, when a destination session most recently connected. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ChangeDataCaptureReplicationStatus(ChangeDataCaptureReplicationState state, string externalArtifactId, DateTimeOffset? lastConnectedAtUtc, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ChangeDataCaptureReplicationStatus(ChangeDataCaptureReplicationState state, string externalArtifactId, DateTimeOffset? lastConnectedOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             State = state;
             ExternalArtifactId = externalArtifactId;
-            LastConnectedAtUtc = lastConnectedAtUtc;
+            LastConnectedOn = lastConnectedOn;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -41,6 +41,6 @@ namespace Azure.ResourceManager.HorizonDB.Models
         public string ExternalArtifactId { get; }
 
         /// <summary> The date and time, in UTC, when a destination session most recently connected. </summary>
-        public DateTimeOffset? LastConnectedAtUtc { get; }
+        public DateTimeOffset? LastConnectedOn { get; }
     }
 }

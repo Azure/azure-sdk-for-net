@@ -8,59 +8,57 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
-using Azure;
 using Azure.ResourceManager.HorizonDB;
 
 namespace Azure.ResourceManager.HorizonDB.Models
 {
-    /// <summary> The current validation result for a change data capture identity assignment. </summary>
-    public partial class IdentityValidationStatus : IJsonModel<IdentityValidationStatus>
+    /// <summary> Properties for updating the singleton change data capture capability. Omitted properties preserve their current values. </summary>
+    public partial class ChangeDataCaptureCapabilityPropertiesPatch : IJsonModel<ChangeDataCaptureCapabilityPropertiesPatch>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual IdentityValidationStatus PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual ChangeDataCaptureCapabilityPropertiesPatch PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<IdentityValidationStatus>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ChangeDataCaptureCapabilityPropertiesPatch>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeIdentityValidationStatus(document.RootElement, options);
+                        return DeserializeChangeDataCaptureCapabilityPropertiesPatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(IdentityValidationStatus)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ChangeDataCaptureCapabilityPropertiesPatch)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<IdentityValidationStatus>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ChangeDataCaptureCapabilityPropertiesPatch>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerHorizonDBContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(IdentityValidationStatus)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ChangeDataCaptureCapabilityPropertiesPatch)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<IdentityValidationStatus>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<ChangeDataCaptureCapabilityPropertiesPatch>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        IdentityValidationStatus IPersistableModel<IdentityValidationStatus>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        ChangeDataCaptureCapabilityPropertiesPatch IPersistableModel<ChangeDataCaptureCapabilityPropertiesPatch>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<IdentityValidationStatus>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ChangeDataCaptureCapabilityPropertiesPatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<IdentityValidationStatus>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ChangeDataCaptureCapabilityPropertiesPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -71,25 +69,20 @@ namespace Azure.ResourceManager.HorizonDB.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<IdentityValidationStatus>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ChangeDataCaptureCapabilityPropertiesPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IdentityValidationStatus)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ChangeDataCaptureCapabilityPropertiesPatch)} does not support writing '{format}' format.");
             }
-            if (options.Format != "W")
+            if (Optional.IsDefined(DesiredState))
             {
-                writer.WritePropertyName("state"u8);
-                writer.WriteStringValue(State.ToString());
+                writer.WritePropertyName("desiredState"u8);
+                writer.WriteStringValue(DesiredState.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(ValidatedAtUtc))
+            if (Optional.IsDefined(IsAutoUpgradeExtensionEnabled))
             {
-                writer.WritePropertyName("validatedAtUtc"u8);
-                writer.WriteStringValue(ValidatedAtUtc.Value, "O");
-            }
-            if (options.Format != "W" && Optional.IsDefined(Error))
-            {
-                writer.WritePropertyName("error"u8);
-                ((IJsonModel<ResponseError>)Error).Write(writer, options);
+                writer.WritePropertyName("autoUpgradeExtension"u8);
+                writer.WriteBooleanValue(IsAutoUpgradeExtensionEnabled.Value);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -110,56 +103,50 @@ namespace Azure.ResourceManager.HorizonDB.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        IdentityValidationStatus IJsonModel<IdentityValidationStatus>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        ChangeDataCaptureCapabilityPropertiesPatch IJsonModel<ChangeDataCaptureCapabilityPropertiesPatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual IdentityValidationStatus JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual ChangeDataCaptureCapabilityPropertiesPatch JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<IdentityValidationStatus>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ChangeDataCaptureCapabilityPropertiesPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IdentityValidationStatus)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ChangeDataCaptureCapabilityPropertiesPatch)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeIdentityValidationStatus(document.RootElement, options);
+            return DeserializeChangeDataCaptureCapabilityPropertiesPatch(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static IdentityValidationStatus DeserializeIdentityValidationStatus(JsonElement element, ModelReaderWriterOptions options)
+        internal static ChangeDataCaptureCapabilityPropertiesPatch DeserializeChangeDataCaptureCapabilityPropertiesPatch(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            ChangeDataCaptureIdentityValidationState state = default;
-            DateTimeOffset? validatedAtUtc = default;
-            ResponseError error = default;
+            ChangeDataCaptureDesiredState? desiredState = default;
+            bool? isAutoUpgradeExtensionEnabled = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("state"u8))
-                {
-                    state = new ChangeDataCaptureIdentityValidationState(prop.Value.GetString());
-                    continue;
-                }
-                if (prop.NameEquals("validatedAtUtc"u8))
+                if (prop.NameEquals("desiredState"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    validatedAtUtc = prop.Value.GetDateTimeOffset("O");
+                    desiredState = new ChangeDataCaptureDesiredState(prop.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("error"u8))
+                if (prop.NameEquals("autoUpgradeExtension"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    error = ModelReaderWriter.Read<ResponseError>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerHorizonDBContext.Default);
+                    isAutoUpgradeExtensionEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (options.Format != "W")
@@ -167,7 +154,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new IdentityValidationStatus(state, validatedAtUtc, error, additionalBinaryDataProperties);
+            return new ChangeDataCaptureCapabilityPropertiesPatch(desiredState, isAutoUpgradeExtensionEnabled, additionalBinaryDataProperties);
         }
     }
 }
