@@ -12,6 +12,8 @@ namespace Azure.AI.Extensions.OpenAI.Tests.Utils
     /// </summary>
     public static class ProjectsTestSanitizers
     {
+        internal const string LegacyAgentInsightsFeaturePattern = @"(?:^AgentInsights=V1Preview(?:,|$)|,AgentInsights=V1Preview(?=,|$))";
+
         // Replacement values
         public const string SANITIZED_SUBSCRIPTION = "00000000-0000-0000-0000-000000000000";
         public const string SANITIZED_HOST = "sanitized-host";
@@ -56,6 +58,16 @@ namespace Azure.AI.Extensions.OpenAI.Tests.Utils
         public static void ApplySanitizers<TEnvironment>(RecordedTestBase<TEnvironment> testBase)
             where TEnvironment : TestEnvironment, new()
         {
+            if (testBase.Mode == RecordedTestMode.Playback)
+            {
+                // Older recordings opted into Agent Insights before its feature flag was retired.
+                testBase.HeaderRegexSanitizers.Add(new HeaderRegexSanitizer(new("Foundry-Features")
+                {
+                    Regex = LegacyAgentInsightsFeaturePattern,
+                    Value = string.Empty
+                }));
+            }
+
             // Remove default sanitizers that are too restrictive
             testBase.SanitizersToRemove.Add("AZSDK2003"); // Location header (we use a custom one)
             testBase.SanitizersToRemove.Add("AZSDK4001"); // Replaces entire host name (we want to keep structure)
