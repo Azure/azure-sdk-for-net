@@ -303,12 +303,19 @@ Describe 'Re-review prompt' {
     BeforeAll {
         Import-Module (Join-Path $PSScriptRoot 'PrReReviewGuard.psm1') -Force
         $script:Frontmatter, $script:PromptBody = ([IO.File]::ReadAllText((Join-Path $script:GuardDirectory '..' 'pr-re-review.md')) -split '(?m)^---\s*$', 3)[1, 2]
+        $script:Step3 = [regex]::Match($script:PromptBody, '(?ms)^## Step 3\b.*?(?=^## |\z)').Value
         $script:Step4 = [regex]::Match($script:PromptBody, '(?ms)^## Step 4\b.*?(?=^## |\z)').Value
     }
 
     It 'asks for the exact coverage line the guard enforces' {
         $prompt = [IO.File]::ReadAllText((Join-Path $script:GuardDirectory '..' 'pr-re-review.md'))
         $prompt.Contains((Get-PrReReviewCoverageTemplate), [StringComparison]::Ordinal) | Should -BeTrue
+    }
+
+    It 'requires reconciling every changed-file path before submitting a review' {
+        $script:Step3 | Should -Match 'checklist of the exact paths returned by `get_files`'
+        $script:Step3 | Should -Match 'reconcile the checked paths against `changed_files`'
+        $script:Step4 | Should -Match 'Never submit a review with a coverage count below its total'
     }
 
     It 'accepts that coverage line once every placeholder is a matching count' {
