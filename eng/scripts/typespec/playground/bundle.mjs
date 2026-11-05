@@ -34,9 +34,23 @@ export async function writeBundle(bundle, outputDirectory, peerBundles = []) {
       JSON.stringify(manifest, null, 2),
     );
   }
+  const importMap = JSON.stringify(
+    { version: bundle.manifest.version, imports },
+    null,
+    2,
+  );
+  await writeFile(
+    resolve(
+      outputDirectory,
+      bundle.manifest.name,
+      bundle.manifest.version,
+      'import-map.json',
+    ),
+    importMap,
+  );
   await writeFile(
     resolve(outputDirectory, bundle.manifest.name, 'latest.json'),
-    JSON.stringify({ version: bundle.manifest.version, imports }, null, 2),
+    importMap,
   );
 }
 
