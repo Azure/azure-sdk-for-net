@@ -23,8 +23,6 @@
   - `DataLakeServiceClient.GenerateAccountSasUri(...)`
   - `DataLakeSasBuilder`
 
-### Other Changes
-
 ## 12.28.0 (2026-09-28)
 
 ### Features Added
