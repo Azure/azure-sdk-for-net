@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Chaos
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _scenarioConfigurationsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, scenarioConfigurationName, ChaosScenarioConfigurationData.ToRequestContent(data), context);
+                using HttpMessage message = _scenarioConfigurationsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, scenarioConfigurationName, ChaosScenarioConfigurationData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ChaosArmOperation<ChaosScenarioConfigurationResource> operation = new ChaosArmOperation<ChaosScenarioConfigurationResource>(
                     new ChaosScenarioConfigurationResourceOperationSource(Client),
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Chaos
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _scenarioConfigurationsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, scenarioConfigurationName, ChaosScenarioConfigurationData.ToRequestContent(data), context);
+                using HttpMessage message = _scenarioConfigurationsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, scenarioConfigurationName, ChaosScenarioConfigurationData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ChaosArmOperation<ChaosScenarioConfigurationResource> operation = new ChaosArmOperation<ChaosScenarioConfigurationResource>(
                     new ChaosScenarioConfigurationResourceOperationSource(Client),
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.Chaos
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _scenarioConfigurationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, scenarioConfigurationName, context);
+                using HttpMessage message = _scenarioConfigurationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, scenarioConfigurationName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ChaosScenarioConfigurationData> response = Response.FromValue(ChaosScenarioConfigurationData.FromResponse(result), result);
                 if (response.Value == null)
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.Chaos
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _scenarioConfigurationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, scenarioConfigurationName, context);
+                using HttpMessage message = _scenarioConfigurationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, scenarioConfigurationName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ChaosScenarioConfigurationData> response = Response.FromValue(ChaosScenarioConfigurationData.FromResponse(result), result);
                 if (response.Value == null)
@@ -371,7 +371,7 @@ namespace Azure.ResourceManager.Chaos
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _scenarioConfigurationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, scenarioConfigurationName, context);
+                using HttpMessage message = _scenarioConfigurationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, scenarioConfigurationName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ChaosScenarioConfigurationData> response = default;
@@ -428,7 +428,7 @@ namespace Azure.ResourceManager.Chaos
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _scenarioConfigurationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, scenarioConfigurationName, context);
+                using HttpMessage message = _scenarioConfigurationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, scenarioConfigurationName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ChaosScenarioConfigurationData> response = default;
@@ -485,7 +485,7 @@ namespace Azure.ResourceManager.Chaos
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _scenarioConfigurationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, scenarioConfigurationName, context);
+                using HttpMessage message = _scenarioConfigurationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, scenarioConfigurationName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ChaosScenarioConfigurationData> response = default;
@@ -546,7 +546,7 @@ namespace Azure.ResourceManager.Chaos
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _scenarioConfigurationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, scenarioConfigurationName, context);
+                using HttpMessage message = _scenarioConfigurationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, scenarioConfigurationName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ChaosScenarioConfigurationData> response = default;

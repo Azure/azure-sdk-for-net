@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _quotaTiersRestClient.CreateGetRequest(Id.SubscriptionId, Id.Name, context);
+                using HttpMessage message = _quotaTiersRestClient.CreateGetRequest(Id.SubscriptionId, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<CognitiveServicesQuotaTierData> response = Response.FromValue(CognitiveServicesQuotaTierData.FromResponse(result), result);
                 if (response.Value == null)
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _quotaTiersRestClient.CreateGetRequest(Id.SubscriptionId, Id.Name, context);
+                using HttpMessage message = _quotaTiersRestClient.CreateGetRequest(Id.SubscriptionId, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<CognitiveServicesQuotaTierData> response = Response.FromValue(CognitiveServicesQuotaTierData.FromResponse(result), result);
                 if (response.Value == null)
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _quotaTiersRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.Name, CognitiveServicesQuotaTierData.ToRequestContent(data), context);
+                using HttpMessage message = _quotaTiersRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.Name, CognitiveServicesQuotaTierData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<CognitiveServicesQuotaTierData> response = Response.FromValue(CognitiveServicesQuotaTierData.FromResponse(result), result);
                 if (response.Value == null)
@@ -274,7 +274,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _quotaTiersRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.Name, CognitiveServicesQuotaTierData.ToRequestContent(data), context);
+                using HttpMessage message = _quotaTiersRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.Name, CognitiveServicesQuotaTierData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<CognitiveServicesQuotaTierData> response = Response.FromValue(CognitiveServicesQuotaTierData.FromResponse(result), result);
                 if (response.Value == null)

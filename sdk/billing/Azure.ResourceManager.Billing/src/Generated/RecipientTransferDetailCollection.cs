@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Billing
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _recipientTransfersRestClient.CreateGetRequest(transferName, context);
+                using HttpMessage message = _recipientTransfersRestClient.CreateGetRequest(transferName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<RecipientTransferDetailData> response = Response.FromValue(RecipientTransferDetailData.FromResponse(result), result);
                 if (response.Value == null)
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Billing
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _recipientTransfersRestClient.CreateGetRequest(transferName, context);
+                using HttpMessage message = _recipientTransfersRestClient.CreateGetRequest(transferName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<RecipientTransferDetailData> response = Response.FromValue(RecipientTransferDetailData.FromResponse(result), result);
                 if (response.Value == null)
@@ -242,7 +242,7 @@ namespace Azure.ResourceManager.Billing
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _recipientTransfersRestClient.CreateGetRequest(transferName, context);
+                using HttpMessage message = _recipientTransfersRestClient.CreateGetRequest(transferName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<RecipientTransferDetailData> response = default;
@@ -299,7 +299,7 @@ namespace Azure.ResourceManager.Billing
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _recipientTransfersRestClient.CreateGetRequest(transferName, context);
+                using HttpMessage message = _recipientTransfersRestClient.CreateGetRequest(transferName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<RecipientTransferDetailData> response = default;
@@ -356,7 +356,7 @@ namespace Azure.ResourceManager.Billing
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _recipientTransfersRestClient.CreateGetRequest(transferName, context);
+                using HttpMessage message = _recipientTransfersRestClient.CreateGetRequest(transferName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<RecipientTransferDetailData> response = default;
@@ -417,7 +417,7 @@ namespace Azure.ResourceManager.Billing
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _recipientTransfersRestClient.CreateGetRequest(transferName, context);
+                using HttpMessage message = _recipientTransfersRestClient.CreateGetRequest(transferName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<RecipientTransferDetailData> response = default;

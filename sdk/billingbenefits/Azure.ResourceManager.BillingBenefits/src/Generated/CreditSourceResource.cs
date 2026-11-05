@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.BillingBenefits
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _sourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<CreditSourceData> response = Response.FromValue(CreditSourceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.BillingBenefits
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _sourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<CreditSourceData> response = Response.FromValue(CreditSourceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.BillingBenefits
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sourcesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, CreditSourcePatch.ToRequestContent(patch), context);
+                using HttpMessage message = _sourcesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, CreditSourcePatch.ToRequestContent(patch), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<CreditSourceData> response = Response.FromValue(CreditSourceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -279,7 +279,7 @@ namespace Azure.ResourceManager.BillingBenefits
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sourcesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, CreditSourcePatch.ToRequestContent(patch), context);
+                using HttpMessage message = _sourcesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, CreditSourcePatch.ToRequestContent(patch), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<CreditSourceData> response = Response.FromValue(CreditSourceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -328,7 +328,7 @@ namespace Azure.ResourceManager.BillingBenefits
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sourcesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _sourcesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
@@ -379,7 +379,7 @@ namespace Azure.ResourceManager.BillingBenefits
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sourcesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _sourcesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
@@ -420,7 +420,7 @@ namespace Azure.ResourceManager.BillingBenefits
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _sourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                    using HttpMessage message = _sourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<CreditSourceData> response = Response.FromValue(CreditSourceData.FromResponse(result), result);
                     return Response.FromValue(new CreditSourceResource(Client, response.Value), response.GetRawResponse());
@@ -468,7 +468,7 @@ namespace Azure.ResourceManager.BillingBenefits
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _sourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                    using HttpMessage message = _sourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<CreditSourceData> response = Response.FromValue(CreditSourceData.FromResponse(result), result);
                     return Response.FromValue(new CreditSourceResource(Client, response.Value), response.GetRawResponse());
@@ -514,7 +514,7 @@ namespace Azure.ResourceManager.BillingBenefits
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _sourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                    using HttpMessage message = _sourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<CreditSourceData> response = Response.FromValue(CreditSourceData.FromResponse(result), result);
                     return Response.FromValue(new CreditSourceResource(Client, response.Value), response.GetRawResponse());
@@ -556,7 +556,7 @@ namespace Azure.ResourceManager.BillingBenefits
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _sourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                    using HttpMessage message = _sourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<CreditSourceData> response = Response.FromValue(CreditSourceData.FromResponse(result), result);
                     return Response.FromValue(new CreditSourceResource(Client, response.Value), response.GetRawResponse());
@@ -598,7 +598,7 @@ namespace Azure.ResourceManager.BillingBenefits
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _sourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                    using HttpMessage message = _sourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<CreditSourceData> response = Response.FromValue(CreditSourceData.FromResponse(result), result);
                     return Response.FromValue(new CreditSourceResource(Client, response.Value), response.GetRawResponse());
@@ -644,7 +644,7 @@ namespace Azure.ResourceManager.BillingBenefits
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _sourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                    using HttpMessage message = _sourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<CreditSourceData> response = Response.FromValue(CreditSourceData.FromResponse(result), result);
                     return Response.FromValue(new CreditSourceResource(Client, response.Value), response.GetRawResponse());

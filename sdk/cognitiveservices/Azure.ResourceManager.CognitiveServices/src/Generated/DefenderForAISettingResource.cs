@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _defenderForAISettingsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _defenderForAISettingsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<DefenderForAISettingData> response = Response.FromValue(DefenderForAISettingData.FromResponse(result), result);
                 if (response.Value == null)
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _defenderForAISettingsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _defenderForAISettingsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<DefenderForAISettingData> response = Response.FromValue(DefenderForAISettingData.FromResponse(result), result);
                 if (response.Value == null)
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _defenderForAISettingsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, DefenderForAISettingData.ToRequestContent(data), context);
+                using HttpMessage message = _defenderForAISettingsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, DefenderForAISettingData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<DefenderForAISettingData> response = Response.FromValue(DefenderForAISettingData.FromResponse(result), result);
                 if (response.Value == null)
@@ -278,7 +278,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _defenderForAISettingsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, DefenderForAISettingData.ToRequestContent(data), context);
+                using HttpMessage message = _defenderForAISettingsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, DefenderForAISettingData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<DefenderForAISettingData> response = Response.FromValue(DefenderForAISettingData.FromResponse(result), result);
                 if (response.Value == null)
@@ -317,7 +317,7 @@ namespace Azure.ResourceManager.CognitiveServices
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _defenderForAISettingsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                    using HttpMessage message = _defenderForAISettingsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<DefenderForAISettingData> response = Response.FromValue(DefenderForAISettingData.FromResponse(result), result);
                     return Response.FromValue(new DefenderForAISettingResource(Client, response.Value), response.GetRawResponse());
@@ -365,7 +365,7 @@ namespace Azure.ResourceManager.CognitiveServices
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _defenderForAISettingsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                    using HttpMessage message = _defenderForAISettingsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<DefenderForAISettingData> response = Response.FromValue(DefenderForAISettingData.FromResponse(result), result);
                     return Response.FromValue(new DefenderForAISettingResource(Client, response.Value), response.GetRawResponse());
@@ -411,7 +411,7 @@ namespace Azure.ResourceManager.CognitiveServices
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _defenderForAISettingsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                    using HttpMessage message = _defenderForAISettingsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<DefenderForAISettingData> response = Response.FromValue(DefenderForAISettingData.FromResponse(result), result);
                     return Response.FromValue(new DefenderForAISettingResource(Client, response.Value), response.GetRawResponse());
@@ -453,7 +453,7 @@ namespace Azure.ResourceManager.CognitiveServices
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _defenderForAISettingsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                    using HttpMessage message = _defenderForAISettingsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<DefenderForAISettingData> response = Response.FromValue(DefenderForAISettingData.FromResponse(result), result);
                     return Response.FromValue(new DefenderForAISettingResource(Client, response.Value), response.GetRawResponse());
@@ -495,7 +495,7 @@ namespace Azure.ResourceManager.CognitiveServices
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _defenderForAISettingsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                    using HttpMessage message = _defenderForAISettingsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<DefenderForAISettingData> response = Response.FromValue(DefenderForAISettingData.FromResponse(result), result);
                     return Response.FromValue(new DefenderForAISettingResource(Client, response.Value), response.GetRawResponse());
@@ -541,7 +541,7 @@ namespace Azure.ResourceManager.CognitiveServices
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _defenderForAISettingsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                    using HttpMessage message = _defenderForAISettingsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<DefenderForAISettingData> response = Response.FromValue(DefenderForAISettingData.FromResponse(result), result);
                     return Response.FromValue(new DefenderForAISettingResource(Client, response.Value), response.GetRawResponse());

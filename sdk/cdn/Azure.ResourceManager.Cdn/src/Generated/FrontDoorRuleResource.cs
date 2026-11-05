@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Cdn
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _rulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _rulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<FrontDoorRuleData> response = Response.FromValue(FrontDoorRuleData.FromResponse(result), result);
                 if (response.Value == null)
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.Cdn
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _rulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _rulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<FrontDoorRuleData> response = Response.FromValue(FrontDoorRuleData.FromResponse(result), result);
                 if (response.Value == null)
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.Cdn
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _rulesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, FrontDoorRulePatch.ToRequestContent(patch), context);
+                using HttpMessage message = _rulesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, FrontDoorRulePatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 CdnArmOperation<FrontDoorRuleResource> operation = new CdnArmOperation<FrontDoorRuleResource>(
                     new FrontDoorRuleResourceOperationSource(Client),
@@ -285,7 +285,7 @@ namespace Azure.ResourceManager.Cdn
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _rulesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, FrontDoorRulePatch.ToRequestContent(patch), context);
+                using HttpMessage message = _rulesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, FrontDoorRulePatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 CdnArmOperation<FrontDoorRuleResource> operation = new CdnArmOperation<FrontDoorRuleResource>(
                     new FrontDoorRuleResourceOperationSource(Client),
@@ -340,7 +340,7 @@ namespace Azure.ResourceManager.Cdn
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _rulesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _rulesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 CdnArmOperation operation = new CdnArmOperation(_rulesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
@@ -389,7 +389,7 @@ namespace Azure.ResourceManager.Cdn
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _rulesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _rulesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 CdnArmOperation operation = new CdnArmOperation(_rulesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)

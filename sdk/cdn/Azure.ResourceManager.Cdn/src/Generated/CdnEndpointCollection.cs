@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Cdn
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _endpointsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, endpointName, CdnEndpointData.ToRequestContent(data), context);
+                using HttpMessage message = _endpointsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, endpointName, CdnEndpointData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 CdnArmOperation<CdnEndpointResource> operation = new CdnArmOperation<CdnEndpointResource>(
                     new CdnEndpointResourceOperationSource(Client),
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Cdn
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _endpointsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, endpointName, CdnEndpointData.ToRequestContent(data), context);
+                using HttpMessage message = _endpointsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, endpointName, CdnEndpointData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 CdnArmOperation<CdnEndpointResource> operation = new CdnArmOperation<CdnEndpointResource>(
                     new CdnEndpointResourceOperationSource(Client),
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.Cdn
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _endpointsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, endpointName, context);
+                using HttpMessage message = _endpointsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, endpointName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<CdnEndpointData> response = Response.FromValue(CdnEndpointData.FromResponse(result), result);
                 if (response.Value == null)
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.Cdn
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _endpointsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, endpointName, context);
+                using HttpMessage message = _endpointsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, endpointName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<CdnEndpointData> response = Response.FromValue(CdnEndpointData.FromResponse(result), result);
                 if (response.Value == null)
@@ -369,7 +369,7 @@ namespace Azure.ResourceManager.Cdn
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _endpointsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, endpointName, context);
+                using HttpMessage message = _endpointsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, endpointName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<CdnEndpointData> response = default;
@@ -426,7 +426,7 @@ namespace Azure.ResourceManager.Cdn
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _endpointsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, endpointName, context);
+                using HttpMessage message = _endpointsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, endpointName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<CdnEndpointData> response = default;
@@ -483,7 +483,7 @@ namespace Azure.ResourceManager.Cdn
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _endpointsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, endpointName, context);
+                using HttpMessage message = _endpointsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, endpointName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<CdnEndpointData> response = default;
@@ -544,7 +544,7 @@ namespace Azure.ResourceManager.Cdn
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _endpointsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, endpointName, context);
+                using HttpMessage message = _endpointsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, endpointName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<CdnEndpointData> response = default;

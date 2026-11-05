@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Cdn
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _originsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _originsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<CdnOriginData> response = Response.FromValue(CdnOriginData.FromResponse(result), result);
                 if (response.Value == null)
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.Cdn
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _originsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _originsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<CdnOriginData> response = Response.FromValue(CdnOriginData.FromResponse(result), result);
                 if (response.Value == null)
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.Cdn
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _originsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, CdnOriginPatch.ToRequestContent(patch), context);
+                using HttpMessage message = _originsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, CdnOriginPatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 CdnArmOperation<CdnOriginResource> operation = new CdnArmOperation<CdnOriginResource>(
                     new CdnOriginResourceOperationSource(Client),
@@ -285,7 +285,7 @@ namespace Azure.ResourceManager.Cdn
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _originsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, CdnOriginPatch.ToRequestContent(patch), context);
+                using HttpMessage message = _originsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, CdnOriginPatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 CdnArmOperation<CdnOriginResource> operation = new CdnArmOperation<CdnOriginResource>(
                     new CdnOriginResourceOperationSource(Client),
@@ -340,7 +340,7 @@ namespace Azure.ResourceManager.Cdn
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _originsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _originsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 CdnArmOperation operation = new CdnArmOperation(_originsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -389,7 +389,7 @@ namespace Azure.ResourceManager.Cdn
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _originsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _originsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 CdnArmOperation operation = new CdnArmOperation(_originsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)

@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Cdn
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _secretsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, secretName, FrontDoorSecretData.ToRequestContent(data), context);
+                using HttpMessage message = _secretsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, secretName, FrontDoorSecretData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 CdnArmOperation<FrontDoorSecretResource> operation = new CdnArmOperation<FrontDoorSecretResource>(
                     new FrontDoorSecretResourceOperationSource(Client),
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Cdn
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _secretsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, secretName, FrontDoorSecretData.ToRequestContent(data), context);
+                using HttpMessage message = _secretsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, secretName, FrontDoorSecretData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 CdnArmOperation<FrontDoorSecretResource> operation = new CdnArmOperation<FrontDoorSecretResource>(
                     new FrontDoorSecretResourceOperationSource(Client),
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.Cdn
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _secretsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, secretName, context);
+                using HttpMessage message = _secretsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, secretName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<FrontDoorSecretData> response = Response.FromValue(FrontDoorSecretData.FromResponse(result), result);
                 if (response.Value == null)
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.Cdn
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _secretsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, secretName, context);
+                using HttpMessage message = _secretsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, secretName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<FrontDoorSecretData> response = Response.FromValue(FrontDoorSecretData.FromResponse(result), result);
                 if (response.Value == null)
@@ -369,7 +369,7 @@ namespace Azure.ResourceManager.Cdn
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _secretsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, secretName, context);
+                using HttpMessage message = _secretsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, secretName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<FrontDoorSecretData> response = default;
@@ -426,7 +426,7 @@ namespace Azure.ResourceManager.Cdn
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _secretsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, secretName, context);
+                using HttpMessage message = _secretsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, secretName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<FrontDoorSecretData> response = default;
@@ -483,7 +483,7 @@ namespace Azure.ResourceManager.Cdn
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _secretsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, secretName, context);
+                using HttpMessage message = _secretsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, secretName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<FrontDoorSecretData> response = default;
@@ -544,7 +544,7 @@ namespace Azure.ResourceManager.Cdn
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _secretsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, secretName, context);
+                using HttpMessage message = _secretsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, secretName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<FrontDoorSecretData> response = default;

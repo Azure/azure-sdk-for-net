@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Chaos
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _experimentExecutionsRestClient.CreateGetExecutionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _experimentExecutionsRestClient.CreateGetExecutionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ChaosExperimentExecutionData> response = Response.FromValue(ChaosExperimentExecutionData.FromResponse(result), result);
                 if (response.Value == null)
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.Chaos
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _experimentExecutionsRestClient.CreateGetExecutionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _experimentExecutionsRestClient.CreateGetExecutionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ChaosExperimentExecutionData> response = Response.FromValue(ChaosExperimentExecutionData.FromResponse(result), result);
                 if (response.Value == null)
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.Chaos
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _experimentExecutionsRestClient.CreateExecutionDetailsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _experimentExecutionsRestClient.CreateExecutionDetailsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ExperimentExecutionDetails> response = Response.FromValue(ExperimentExecutionDetails.FromResponse(result), result);
                 if (response.Value == null)
@@ -268,7 +268,7 @@ namespace Azure.ResourceManager.Chaos
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _experimentExecutionsRestClient.CreateExecutionDetailsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _experimentExecutionsRestClient.CreateExecutionDetailsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ExperimentExecutionDetails> response = Response.FromValue(ExperimentExecutionDetails.FromResponse(result), result);
                 if (response.Value == null)

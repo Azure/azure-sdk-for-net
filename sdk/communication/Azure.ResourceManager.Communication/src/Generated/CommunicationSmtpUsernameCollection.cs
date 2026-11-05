@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Communication
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _smtpUsernamesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, smtpUsername, CommunicationSmtpUsernameData.ToRequestContent(data), context);
+                using HttpMessage message = _smtpUsernamesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, smtpUsername, CommunicationSmtpUsernameData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<CommunicationSmtpUsernameData> response = Response.FromValue(CommunicationSmtpUsernameData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.Communication
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _smtpUsernamesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, smtpUsername, CommunicationSmtpUsernameData.ToRequestContent(data), context);
+                using HttpMessage message = _smtpUsernamesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, smtpUsername, CommunicationSmtpUsernameData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<CommunicationSmtpUsernameData> response = Response.FromValue(CommunicationSmtpUsernameData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.Communication
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _smtpUsernamesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, smtpUsername, context);
+                using HttpMessage message = _smtpUsernamesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, smtpUsername, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<CommunicationSmtpUsernameData> response = Response.FromValue(CommunicationSmtpUsernameData.FromResponse(result), result);
                 if (response.Value == null)
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.Communication
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _smtpUsernamesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, smtpUsername, context);
+                using HttpMessage message = _smtpUsernamesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, smtpUsername, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<CommunicationSmtpUsernameData> response = Response.FromValue(CommunicationSmtpUsernameData.FromResponse(result), result);
                 if (response.Value == null)
@@ -363,7 +363,7 @@ namespace Azure.ResourceManager.Communication
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _smtpUsernamesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, smtpUsername, context);
+                using HttpMessage message = _smtpUsernamesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, smtpUsername, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<CommunicationSmtpUsernameData> response = default;
@@ -420,7 +420,7 @@ namespace Azure.ResourceManager.Communication
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _smtpUsernamesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, smtpUsername, context);
+                using HttpMessage message = _smtpUsernamesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, smtpUsername, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<CommunicationSmtpUsernameData> response = default;
@@ -477,7 +477,7 @@ namespace Azure.ResourceManager.Communication
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _smtpUsernamesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, smtpUsername, context);
+                using HttpMessage message = _smtpUsernamesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, smtpUsername, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<CommunicationSmtpUsernameData> response = default;
@@ -538,7 +538,7 @@ namespace Azure.ResourceManager.Communication
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _smtpUsernamesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, smtpUsername, context);
+                using HttpMessage message = _smtpUsernamesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, smtpUsername, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<CommunicationSmtpUsernameData> response = default;

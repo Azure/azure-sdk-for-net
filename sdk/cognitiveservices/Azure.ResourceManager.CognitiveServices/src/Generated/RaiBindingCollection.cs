@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _raiBindingsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, raiBindingName, RaiBindingData.ToRequestContent(data), matchConditions, context);
+                using HttpMessage message = _raiBindingsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, raiBindingName, RaiBindingData.ToRequestContent(data), matchConditions, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<RaiBindingData> response = Response.FromValue(RaiBindingData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _raiBindingsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, raiBindingName, RaiBindingData.ToRequestContent(data), matchConditions, context);
+                using HttpMessage message = _raiBindingsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, raiBindingName, RaiBindingData.ToRequestContent(data), matchConditions, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<RaiBindingData> response = Response.FromValue(RaiBindingData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _raiBindingsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, raiBindingName, context);
+                using HttpMessage message = _raiBindingsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, raiBindingName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<RaiBindingData> response = Response.FromValue(RaiBindingData.FromResponse(result), result);
                 if (response.Value == null)
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _raiBindingsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, raiBindingName, context);
+                using HttpMessage message = _raiBindingsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, raiBindingName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<RaiBindingData> response = Response.FromValue(RaiBindingData.FromResponse(result), result);
                 if (response.Value == null)
@@ -369,7 +369,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _raiBindingsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, raiBindingName, context);
+                using HttpMessage message = _raiBindingsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, raiBindingName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<RaiBindingData> response = default;
@@ -426,7 +426,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _raiBindingsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, raiBindingName, context);
+                using HttpMessage message = _raiBindingsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, raiBindingName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<RaiBindingData> response = default;
@@ -483,7 +483,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _raiBindingsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, raiBindingName, context);
+                using HttpMessage message = _raiBindingsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, raiBindingName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<RaiBindingData> response = default;
@@ -544,7 +544,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _raiBindingsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, raiBindingName, context);
+                using HttpMessage message = _raiBindingsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, raiBindingName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<RaiBindingData> response = default;

@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Chaos
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _capabilitiesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.ResourceType.Type, Id.Parent.Name, Id.Name, capabilityName, ChaosCapabilityData.ToRequestContent(data), context);
+                using HttpMessage message = _capabilitiesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.ResourceType.Type, Id.Parent.Name, Id.Name, capabilityName, ChaosCapabilityData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ChaosCapabilityData> response = Response.FromValue(ChaosCapabilityData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.Chaos
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _capabilitiesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.ResourceType.Type, Id.Parent.Name, Id.Name, capabilityName, ChaosCapabilityData.ToRequestContent(data), context);
+                using HttpMessage message = _capabilitiesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.ResourceType.Type, Id.Parent.Name, Id.Name, capabilityName, ChaosCapabilityData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ChaosCapabilityData> response = Response.FromValue(ChaosCapabilityData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.Chaos
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _capabilitiesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.ResourceType.Type, Id.Parent.Name, Id.Name, capabilityName, context);
+                using HttpMessage message = _capabilitiesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.ResourceType.Type, Id.Parent.Name, Id.Name, capabilityName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ChaosCapabilityData> response = Response.FromValue(ChaosCapabilityData.FromResponse(result), result);
                 if (response.Value == null)
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.Chaos
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _capabilitiesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.ResourceType.Type, Id.Parent.Name, Id.Name, capabilityName, context);
+                using HttpMessage message = _capabilitiesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.ResourceType.Type, Id.Parent.Name, Id.Name, capabilityName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ChaosCapabilityData> response = Response.FromValue(ChaosCapabilityData.FromResponse(result), result);
                 if (response.Value == null)
@@ -373,7 +373,7 @@ namespace Azure.ResourceManager.Chaos
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _capabilitiesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.ResourceType.Type, Id.Parent.Name, Id.Name, capabilityName, context);
+                using HttpMessage message = _capabilitiesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.ResourceType.Type, Id.Parent.Name, Id.Name, capabilityName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ChaosCapabilityData> response = default;
@@ -430,7 +430,7 @@ namespace Azure.ResourceManager.Chaos
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _capabilitiesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.ResourceType.Type, Id.Parent.Name, Id.Name, capabilityName, context);
+                using HttpMessage message = _capabilitiesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.ResourceType.Type, Id.Parent.Name, Id.Name, capabilityName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ChaosCapabilityData> response = default;
@@ -487,7 +487,7 @@ namespace Azure.ResourceManager.Chaos
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _capabilitiesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.ResourceType.Type, Id.Parent.Name, Id.Name, capabilityName, context);
+                using HttpMessage message = _capabilitiesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.ResourceType.Type, Id.Parent.Name, Id.Name, capabilityName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ChaosCapabilityData> response = default;
@@ -548,7 +548,7 @@ namespace Azure.ResourceManager.Chaos
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _capabilitiesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.ResourceType.Type, Id.Parent.Name, Id.Name, capabilityName, context);
+                using HttpMessage message = _capabilitiesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.ResourceType.Type, Id.Parent.Name, Id.Name, capabilityName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ChaosCapabilityData> response = default;

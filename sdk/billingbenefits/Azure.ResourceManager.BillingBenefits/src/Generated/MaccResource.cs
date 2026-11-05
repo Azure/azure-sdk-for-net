@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.BillingBenefits
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _maccsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _maccsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<MaccData> response = Response.FromValue(MaccData.FromResponse(result), result);
                 if (response.Value == null)
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.BillingBenefits
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _maccsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _maccsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<MaccData> response = Response.FromValue(MaccData.FromResponse(result), result);
                 if (response.Value == null)
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.BillingBenefits
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _maccsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, MaccPatch.ToRequestContent(patch), context);
+                using HttpMessage message = _maccsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, MaccPatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 BillingBenefitsArmOperation<MaccResource> operation = new BillingBenefitsArmOperation<MaccResource>(
                     new MaccResourceOperationSource(Client),
@@ -285,7 +285,7 @@ namespace Azure.ResourceManager.BillingBenefits
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _maccsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, MaccPatch.ToRequestContent(patch), context);
+                using HttpMessage message = _maccsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, MaccPatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 BillingBenefitsArmOperation<MaccResource> operation = new BillingBenefitsArmOperation<MaccResource>(
                     new MaccResourceOperationSource(Client),
@@ -340,7 +340,7 @@ namespace Azure.ResourceManager.BillingBenefits
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _maccsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _maccsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 BillingBenefitsArmOperation operation = new BillingBenefitsArmOperation(_maccsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
@@ -389,7 +389,7 @@ namespace Azure.ResourceManager.BillingBenefits
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _maccsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _maccsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 BillingBenefitsArmOperation operation = new BillingBenefitsArmOperation(_maccsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
@@ -438,7 +438,7 @@ namespace Azure.ResourceManager.BillingBenefits
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _maccsRestClient.CreateCancelRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _maccsRestClient.CreateCancelRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 BillingBenefitsArmOperation<MaccResource> operation = new BillingBenefitsArmOperation<MaccResource>(
                     new MaccResourceOperationSource(Client),
@@ -493,7 +493,7 @@ namespace Azure.ResourceManager.BillingBenefits
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _maccsRestClient.CreateCancelRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _maccsRestClient.CreateCancelRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 BillingBenefitsArmOperation<MaccResource> operation = new BillingBenefitsArmOperation<MaccResource>(
                     new MaccResourceOperationSource(Client),
@@ -552,7 +552,7 @@ namespace Azure.ResourceManager.BillingBenefits
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _maccsRestClient.CreateChargeShortfallRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ChargeShortfallRequest.ToRequestContent(content), context);
+                using HttpMessage message = _maccsRestClient.CreateChargeShortfallRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ChargeShortfallRequest.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 BillingBenefitsArmOperation<MaccResource> operation = new BillingBenefitsArmOperation<MaccResource>(
                     new MaccResourceOperationSource(Client),
@@ -611,7 +611,7 @@ namespace Azure.ResourceManager.BillingBenefits
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _maccsRestClient.CreateChargeShortfallRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ChargeShortfallRequest.ToRequestContent(content), context);
+                using HttpMessage message = _maccsRestClient.CreateChargeShortfallRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ChargeShortfallRequest.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 BillingBenefitsArmOperation<MaccResource> operation = new BillingBenefitsArmOperation<MaccResource>(
                     new MaccResourceOperationSource(Client),
@@ -666,7 +666,7 @@ namespace Azure.ResourceManager.BillingBenefits
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _maccsRestClient.CreateWriteOffRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _maccsRestClient.CreateWriteOffRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 BillingBenefitsArmOperation<MaccResource> operation = new BillingBenefitsArmOperation<MaccResource>(
                     new MaccResourceOperationSource(Client),
@@ -721,7 +721,7 @@ namespace Azure.ResourceManager.BillingBenefits
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _maccsRestClient.CreateWriteOffRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _maccsRestClient.CreateWriteOffRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 BillingBenefitsArmOperation<MaccResource> operation = new BillingBenefitsArmOperation<MaccResource>(
                     new MaccResourceOperationSource(Client),
@@ -766,7 +766,7 @@ namespace Azure.ResourceManager.BillingBenefits
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _maccsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _maccsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<MaccData> response = Response.FromValue(MaccData.FromResponse(result), result);
                     return Response.FromValue(new MaccResource(Client, response.Value), response.GetRawResponse());
@@ -814,7 +814,7 @@ namespace Azure.ResourceManager.BillingBenefits
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _maccsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _maccsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<MaccData> response = Response.FromValue(MaccData.FromResponse(result), result);
                     return Response.FromValue(new MaccResource(Client, response.Value), response.GetRawResponse());
@@ -860,7 +860,7 @@ namespace Azure.ResourceManager.BillingBenefits
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _maccsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _maccsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<MaccData> response = Response.FromValue(MaccData.FromResponse(result), result);
                     return Response.FromValue(new MaccResource(Client, response.Value), response.GetRawResponse());
@@ -902,7 +902,7 @@ namespace Azure.ResourceManager.BillingBenefits
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _maccsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _maccsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<MaccData> response = Response.FromValue(MaccData.FromResponse(result), result);
                     return Response.FromValue(new MaccResource(Client, response.Value), response.GetRawResponse());
@@ -944,7 +944,7 @@ namespace Azure.ResourceManager.BillingBenefits
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _maccsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _maccsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<MaccData> response = Response.FromValue(MaccData.FromResponse(result), result);
                     return Response.FromValue(new MaccResource(Client, response.Value), response.GetRawResponse());
@@ -990,7 +990,7 @@ namespace Azure.ResourceManager.BillingBenefits
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _maccsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _maccsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<MaccData> response = Response.FromValue(MaccData.FromResponse(result), result);
                     return Response.FromValue(new MaccResource(Client, response.Value), response.GetRawResponse());

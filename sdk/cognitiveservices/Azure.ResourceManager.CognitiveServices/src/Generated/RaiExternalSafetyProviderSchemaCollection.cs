@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _raiExternalSafetyProviderSchemasRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, safetyProviderName, RaiExternalSafetyProviderSchemaData.ToRequestContent(data), context);
+                using HttpMessage message = _raiExternalSafetyProviderSchemasRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, safetyProviderName, RaiExternalSafetyProviderSchemaData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<RaiExternalSafetyProviderSchemaData> response = Response.FromValue(RaiExternalSafetyProviderSchemaData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _raiExternalSafetyProviderSchemasRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, safetyProviderName, RaiExternalSafetyProviderSchemaData.ToRequestContent(data), context);
+                using HttpMessage message = _raiExternalSafetyProviderSchemasRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, safetyProviderName, RaiExternalSafetyProviderSchemaData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<RaiExternalSafetyProviderSchemaData> response = Response.FromValue(RaiExternalSafetyProviderSchemaData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _raiExternalSafetyProviderSchemasRestClient.CreateGetRequest(Id.SubscriptionId, safetyProviderName, context);
+                using HttpMessage message = _raiExternalSafetyProviderSchemasRestClient.CreateGetRequest(Id.SubscriptionId, safetyProviderName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<RaiExternalSafetyProviderSchemaData> response = Response.FromValue(RaiExternalSafetyProviderSchemaData.FromResponse(result), result);
                 if (response.Value == null)
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _raiExternalSafetyProviderSchemasRestClient.CreateGetRequest(Id.SubscriptionId, safetyProviderName, context);
+                using HttpMessage message = _raiExternalSafetyProviderSchemasRestClient.CreateGetRequest(Id.SubscriptionId, safetyProviderName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<RaiExternalSafetyProviderSchemaData> response = Response.FromValue(RaiExternalSafetyProviderSchemaData.FromResponse(result), result);
                 if (response.Value == null)
@@ -352,7 +352,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _raiExternalSafetyProviderSchemasRestClient.CreateGetRequest(Id.SubscriptionId, safetyProviderName, context);
+                using HttpMessage message = _raiExternalSafetyProviderSchemasRestClient.CreateGetRequest(Id.SubscriptionId, safetyProviderName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<RaiExternalSafetyProviderSchemaData> response = default;
@@ -409,7 +409,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _raiExternalSafetyProviderSchemasRestClient.CreateGetRequest(Id.SubscriptionId, safetyProviderName, context);
+                using HttpMessage message = _raiExternalSafetyProviderSchemasRestClient.CreateGetRequest(Id.SubscriptionId, safetyProviderName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<RaiExternalSafetyProviderSchemaData> response = default;
@@ -466,7 +466,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _raiExternalSafetyProviderSchemasRestClient.CreateGetRequest(Id.SubscriptionId, safetyProviderName, context);
+                using HttpMessage message = _raiExternalSafetyProviderSchemasRestClient.CreateGetRequest(Id.SubscriptionId, safetyProviderName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<RaiExternalSafetyProviderSchemaData> response = default;
@@ -527,7 +527,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _raiExternalSafetyProviderSchemasRestClient.CreateGetRequest(Id.SubscriptionId, safetyProviderName, context);
+                using HttpMessage message = _raiExternalSafetyProviderSchemasRestClient.CreateGetRequest(Id.SubscriptionId, safetyProviderName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<RaiExternalSafetyProviderSchemaData> response = default;

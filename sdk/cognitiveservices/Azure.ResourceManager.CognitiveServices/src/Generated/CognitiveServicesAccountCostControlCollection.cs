@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _costControlsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, costControlName, CognitiveServicesAccountCostControlData.ToRequestContent(data), matchConditions, context);
+                using HttpMessage message = _costControlsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, costControlName, CognitiveServicesAccountCostControlData.ToRequestContent(data), matchConditions, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<CognitiveServicesAccountCostControlData> response = Response.FromValue(CognitiveServicesAccountCostControlData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _costControlsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, costControlName, CognitiveServicesAccountCostControlData.ToRequestContent(data), matchConditions, context);
+                using HttpMessage message = _costControlsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, costControlName, CognitiveServicesAccountCostControlData.ToRequestContent(data), matchConditions, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<CognitiveServicesAccountCostControlData> response = Response.FromValue(CognitiveServicesAccountCostControlData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _costControlsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, costControlName, context);
+                using HttpMessage message = _costControlsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, costControlName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<CognitiveServicesAccountCostControlData> response = Response.FromValue(CognitiveServicesAccountCostControlData.FromResponse(result), result);
                 if (response.Value == null)
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _costControlsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, costControlName, context);
+                using HttpMessage message = _costControlsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, costControlName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<CognitiveServicesAccountCostControlData> response = Response.FromValue(CognitiveServicesAccountCostControlData.FromResponse(result), result);
                 if (response.Value == null)
@@ -365,7 +365,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _costControlsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, costControlName, context);
+                using HttpMessage message = _costControlsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, costControlName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<CognitiveServicesAccountCostControlData> response = default;
@@ -422,7 +422,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _costControlsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, costControlName, context);
+                using HttpMessage message = _costControlsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, costControlName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<CognitiveServicesAccountCostControlData> response = default;
@@ -479,7 +479,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _costControlsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, costControlName, context);
+                using HttpMessage message = _costControlsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, costControlName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<CognitiveServicesAccountCostControlData> response = default;
@@ -540,7 +540,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _costControlsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, costControlName, context);
+                using HttpMessage message = _costControlsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, costControlName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<CognitiveServicesAccountCostControlData> response = default;

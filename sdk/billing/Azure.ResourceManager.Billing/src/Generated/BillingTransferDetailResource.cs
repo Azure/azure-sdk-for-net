@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Billing
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _transfersRestClient.CreateGetRequest(Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _transfersRestClient.CreateGetRequest(Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<BillingTransferDetailData> response = Response.FromValue(BillingTransferDetailData.FromResponse(result), result);
                 if (response.Value == null)
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.Billing
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _transfersRestClient.CreateGetRequest(Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _transfersRestClient.CreateGetRequest(Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<BillingTransferDetailData> response = Response.FromValue(BillingTransferDetailData.FromResponse(result), result);
                 if (response.Value == null)
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.Billing
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _transfersRestClient.CreateCancelRequest(Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _transfersRestClient.CreateCancelRequest(Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<BillingTransferDetailData> response = Response.FromValue(BillingTransferDetailData.FromResponse(result), result);
                 if (response.Value == null)
@@ -268,7 +268,7 @@ namespace Azure.ResourceManager.Billing
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _transfersRestClient.CreateCancelRequest(Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _transfersRestClient.CreateCancelRequest(Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<BillingTransferDetailData> response = Response.FromValue(BillingTransferDetailData.FromResponse(result), result);
                 if (response.Value == null)
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.Billing
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _transfersRestClient.CreateInitiateRequest(Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, BillingTransferDetailCreateOrUpdateContent.ToRequestContent(content), context);
+                using HttpMessage message = _transfersRestClient.CreateInitiateRequest(Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, BillingTransferDetailCreateOrUpdateContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<BillingTransferDetailData> response = Response.FromValue(BillingTransferDetailData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -377,7 +377,7 @@ namespace Azure.ResourceManager.Billing
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _transfersRestClient.CreateInitiateRequest(Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, BillingTransferDetailCreateOrUpdateContent.ToRequestContent(content), context);
+                using HttpMessage message = _transfersRestClient.CreateInitiateRequest(Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, BillingTransferDetailCreateOrUpdateContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<BillingTransferDetailData> response = Response.FromValue(BillingTransferDetailData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;

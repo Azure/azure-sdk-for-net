@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Billing
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _billingSubscriptionsRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, expand, context);
+                using HttpMessage message = _billingSubscriptionsRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, expand, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<BillingSubscriptionData> response = Response.FromValue(BillingSubscriptionData.FromResponse(result), result);
                 if (response.Value == null)
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.Billing
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _billingSubscriptionsRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, expand, context);
+                using HttpMessage message = _billingSubscriptionsRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, expand, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<BillingSubscriptionData> response = Response.FromValue(BillingSubscriptionData.FromResponse(result), result);
                 if (response.Value == null)
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.Billing
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _billingSubscriptionsRestClient.CreateUpdateRequest(Id.Parent.Name, Id.Name, BillingSubscriptionPatch.ToRequestContent(patch), context);
+                using HttpMessage message = _billingSubscriptionsRestClient.CreateUpdateRequest(Id.Parent.Name, Id.Name, BillingSubscriptionPatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 BillingArmOperation<BillingSubscriptionResource> operation = new BillingArmOperation<BillingSubscriptionResource>(
                     new BillingSubscriptionResourceOperationSource(Client),
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.Billing
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _billingSubscriptionsRestClient.CreateUpdateRequest(Id.Parent.Name, Id.Name, BillingSubscriptionPatch.ToRequestContent(patch), context);
+                using HttpMessage message = _billingSubscriptionsRestClient.CreateUpdateRequest(Id.Parent.Name, Id.Name, BillingSubscriptionPatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 BillingArmOperation<BillingSubscriptionResource> operation = new BillingArmOperation<BillingSubscriptionResource>(
                     new BillingSubscriptionResourceOperationSource(Client),
@@ -343,7 +343,7 @@ namespace Azure.ResourceManager.Billing
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _billingSubscriptionsRestClient.CreateDeleteRequest(Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _billingSubscriptionsRestClient.CreateDeleteRequest(Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 BillingArmOperation operation = new BillingArmOperation(_billingSubscriptionsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -392,7 +392,7 @@ namespace Azure.ResourceManager.Billing
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _billingSubscriptionsRestClient.CreateDeleteRequest(Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _billingSubscriptionsRestClient.CreateDeleteRequest(Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 BillingArmOperation operation = new BillingArmOperation(_billingSubscriptionsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -445,7 +445,7 @@ namespace Azure.ResourceManager.Billing
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _billingSubscriptionsRestClient.CreateCancelRequest(Id.Parent.Name, Id.Name, CancelSubscriptionContent.ToRequestContent(content), context);
+                using HttpMessage message = _billingSubscriptionsRestClient.CreateCancelRequest(Id.Parent.Name, Id.Name, CancelSubscriptionContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 BillingArmOperation operation = new BillingArmOperation(_billingSubscriptionsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -498,7 +498,7 @@ namespace Azure.ResourceManager.Billing
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _billingSubscriptionsRestClient.CreateCancelRequest(Id.Parent.Name, Id.Name, CancelSubscriptionContent.ToRequestContent(content), context);
+                using HttpMessage message = _billingSubscriptionsRestClient.CreateCancelRequest(Id.Parent.Name, Id.Name, CancelSubscriptionContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 BillingArmOperation operation = new BillingArmOperation(_billingSubscriptionsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -551,7 +551,7 @@ namespace Azure.ResourceManager.Billing
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _billingSubscriptionsRestClient.CreateMergeRequest(Id.Parent.Name, Id.Name, BillingSubscriptionMergeContent.ToRequestContent(content), context);
+                using HttpMessage message = _billingSubscriptionsRestClient.CreateMergeRequest(Id.Parent.Name, Id.Name, BillingSubscriptionMergeContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 BillingArmOperation<BillingSubscriptionResource> operation = new BillingArmOperation<BillingSubscriptionResource>(
                     new BillingSubscriptionResourceOperationSource(Client),
@@ -610,7 +610,7 @@ namespace Azure.ResourceManager.Billing
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _billingSubscriptionsRestClient.CreateMergeRequest(Id.Parent.Name, Id.Name, BillingSubscriptionMergeContent.ToRequestContent(content), context);
+                using HttpMessage message = _billingSubscriptionsRestClient.CreateMergeRequest(Id.Parent.Name, Id.Name, BillingSubscriptionMergeContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 BillingArmOperation<BillingSubscriptionResource> operation = new BillingArmOperation<BillingSubscriptionResource>(
                     new BillingSubscriptionResourceOperationSource(Client),
@@ -669,7 +669,7 @@ namespace Azure.ResourceManager.Billing
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _billingSubscriptionsRestClient.CreateMoveRequest(Id.Parent.Name, Id.Name, BillingSubscriptionMoveContent.ToRequestContent(content), context);
+                using HttpMessage message = _billingSubscriptionsRestClient.CreateMoveRequest(Id.Parent.Name, Id.Name, BillingSubscriptionMoveContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 BillingArmOperation<BillingSubscriptionResource> operation = new BillingArmOperation<BillingSubscriptionResource>(
                     new BillingSubscriptionResourceOperationSource(Client),
@@ -728,7 +728,7 @@ namespace Azure.ResourceManager.Billing
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _billingSubscriptionsRestClient.CreateMoveRequest(Id.Parent.Name, Id.Name, BillingSubscriptionMoveContent.ToRequestContent(content), context);
+                using HttpMessage message = _billingSubscriptionsRestClient.CreateMoveRequest(Id.Parent.Name, Id.Name, BillingSubscriptionMoveContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 BillingArmOperation<BillingSubscriptionResource> operation = new BillingArmOperation<BillingSubscriptionResource>(
                     new BillingSubscriptionResourceOperationSource(Client),
@@ -787,7 +787,7 @@ namespace Azure.ResourceManager.Billing
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _billingSubscriptionsRestClient.CreateSplitRequest(Id.Parent.Name, Id.Name, BillingSubscriptionSplitContent.ToRequestContent(content), context);
+                using HttpMessage message = _billingSubscriptionsRestClient.CreateSplitRequest(Id.Parent.Name, Id.Name, BillingSubscriptionSplitContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 BillingArmOperation<BillingSubscriptionResource> operation = new BillingArmOperation<BillingSubscriptionResource>(
                     new BillingSubscriptionResourceOperationSource(Client),
@@ -846,7 +846,7 @@ namespace Azure.ResourceManager.Billing
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _billingSubscriptionsRestClient.CreateSplitRequest(Id.Parent.Name, Id.Name, BillingSubscriptionSplitContent.ToRequestContent(content), context);
+                using HttpMessage message = _billingSubscriptionsRestClient.CreateSplitRequest(Id.Parent.Name, Id.Name, BillingSubscriptionSplitContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 BillingArmOperation<BillingSubscriptionResource> operation = new BillingArmOperation<BillingSubscriptionResource>(
                     new BillingSubscriptionResourceOperationSource(Client),
@@ -904,7 +904,7 @@ namespace Azure.ResourceManager.Billing
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _billingSubscriptionsRestClient.CreateValidateMoveEligibilityRequest(Id.Parent.Name, Id.Name, BillingSubscriptionMoveContent.ToRequestContent(content), context);
+                using HttpMessage message = _billingSubscriptionsRestClient.CreateValidateMoveEligibilityRequest(Id.Parent.Name, Id.Name, BillingSubscriptionMoveContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<BillingSubscriptionValidateMoveEligibilityResult> response = Response.FromValue(BillingSubscriptionValidateMoveEligibilityResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -956,7 +956,7 @@ namespace Azure.ResourceManager.Billing
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _billingSubscriptionsRestClient.CreateValidateMoveEligibilityRequest(Id.Parent.Name, Id.Name, BillingSubscriptionMoveContent.ToRequestContent(content), context);
+                using HttpMessage message = _billingSubscriptionsRestClient.CreateValidateMoveEligibilityRequest(Id.Parent.Name, Id.Name, BillingSubscriptionMoveContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<BillingSubscriptionValidateMoveEligibilityResult> response = Response.FromValue(BillingSubscriptionValidateMoveEligibilityResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -995,7 +995,7 @@ namespace Azure.ResourceManager.Billing
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _billingSubscriptionsRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, default, context);
+                    using HttpMessage message = _billingSubscriptionsRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, default, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<BillingSubscriptionData> response = Response.FromValue(BillingSubscriptionData.FromResponse(result), result);
                     return Response.FromValue(new BillingSubscriptionResource(Client, response.Value), response.GetRawResponse());
@@ -1043,7 +1043,7 @@ namespace Azure.ResourceManager.Billing
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _billingSubscriptionsRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, default, context);
+                    using HttpMessage message = _billingSubscriptionsRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, default, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<BillingSubscriptionData> response = Response.FromValue(BillingSubscriptionData.FromResponse(result), result);
                     return Response.FromValue(new BillingSubscriptionResource(Client, response.Value), response.GetRawResponse());
@@ -1089,7 +1089,7 @@ namespace Azure.ResourceManager.Billing
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _billingSubscriptionsRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, default, context);
+                    using HttpMessage message = _billingSubscriptionsRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, default, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<BillingSubscriptionData> response = Response.FromValue(BillingSubscriptionData.FromResponse(result), result);
                     return Response.FromValue(new BillingSubscriptionResource(Client, response.Value), response.GetRawResponse());
@@ -1131,7 +1131,7 @@ namespace Azure.ResourceManager.Billing
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _billingSubscriptionsRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, default, context);
+                    using HttpMessage message = _billingSubscriptionsRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, default, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<BillingSubscriptionData> response = Response.FromValue(BillingSubscriptionData.FromResponse(result), result);
                     return Response.FromValue(new BillingSubscriptionResource(Client, response.Value), response.GetRawResponse());
@@ -1173,7 +1173,7 @@ namespace Azure.ResourceManager.Billing
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _billingSubscriptionsRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, default, context);
+                    using HttpMessage message = _billingSubscriptionsRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, default, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<BillingSubscriptionData> response = Response.FromValue(BillingSubscriptionData.FromResponse(result), result);
                     return Response.FromValue(new BillingSubscriptionResource(Client, response.Value), response.GetRawResponse());
@@ -1219,7 +1219,7 @@ namespace Azure.ResourceManager.Billing
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _billingSubscriptionsRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, default, context);
+                    using HttpMessage message = _billingSubscriptionsRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, default, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<BillingSubscriptionData> response = Response.FromValue(BillingSubscriptionData.FromResponse(result), result);
                     return Response.FromValue(new BillingSubscriptionResource(Client, response.Value), response.GetRawResponse());

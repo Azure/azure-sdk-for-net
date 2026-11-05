@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkSecurityPerimeterConfigurationsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _networkSecurityPerimeterConfigurationsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<NetworkSecurityPerimeterConfigurationData> response = Response.FromValue(NetworkSecurityPerimeterConfigurationData.FromResponse(result), result);
                 if (response.Value == null)
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkSecurityPerimeterConfigurationsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _networkSecurityPerimeterConfigurationsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<NetworkSecurityPerimeterConfigurationData> response = Response.FromValue(NetworkSecurityPerimeterConfigurationData.FromResponse(result), result);
                 if (response.Value == null)
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkSecurityPerimeterConfigurationsRestClient.CreateReconcileRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _networkSecurityPerimeterConfigurationsRestClient.CreateReconcileRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 CognitiveServicesArmOperation<NetworkSecurityPerimeterConfigurationResource> operation = new CognitiveServicesArmOperation<NetworkSecurityPerimeterConfigurationResource>(
                     new NetworkSecurityPerimeterConfigurationResourceOperationSource(Client),
@@ -275,7 +275,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkSecurityPerimeterConfigurationsRestClient.CreateReconcileRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _networkSecurityPerimeterConfigurationsRestClient.CreateReconcileRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 CognitiveServicesArmOperation<NetworkSecurityPerimeterConfigurationResource> operation = new CognitiveServicesArmOperation<NetworkSecurityPerimeterConfigurationResource>(
                     new NetworkSecurityPerimeterConfigurationResourceOperationSource(Client),

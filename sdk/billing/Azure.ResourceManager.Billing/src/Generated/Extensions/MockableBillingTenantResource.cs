@@ -538,7 +538,7 @@ namespace Azure.ResourceManager.Billing.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = InvoicesRestClient.CreateDownloadDocumentsByBillingSubscriptionInvoiceRequest(subscriptionId, BinaryContentHelper.FromEnumerable(arrayOfDocumentDownloadRequest), context);
+                using HttpMessage message = InvoicesRestClient.CreateDownloadDocumentsByBillingSubscriptionInvoiceRequest(subscriptionId, BinaryContentHelper.FromEnumerable(arrayOfDocumentDownloadRequest), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 BillingArmOperation<BillingDocumentDownloadResult> operation = new BillingArmOperation<BillingDocumentDownloadResult>(
                     new BillingDocumentDownloadResultOperationSource(),
@@ -596,7 +596,7 @@ namespace Azure.ResourceManager.Billing.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = InvoicesRestClient.CreateDownloadDocumentsByBillingSubscriptionInvoiceRequest(subscriptionId, BinaryContentHelper.FromEnumerable(arrayOfDocumentDownloadRequest), context);
+                using HttpMessage message = InvoicesRestClient.CreateDownloadDocumentsByBillingSubscriptionInvoiceRequest(subscriptionId, BinaryContentHelper.FromEnumerable(arrayOfDocumentDownloadRequest), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 BillingArmOperation<BillingDocumentDownloadResult> operation = new BillingArmOperation<BillingDocumentDownloadResult>(
                     new BillingDocumentDownloadResultOperationSource(),
@@ -650,7 +650,7 @@ namespace Azure.ResourceManager.Billing.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = AddressRestClient.CreateValidateRequest(BillingAddressDetails.ToRequestContent(details), context);
+                using HttpMessage message = AddressRestClient.CreateValidateRequest(BillingAddressDetails.ToRequestContent(details), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<BillingAddressValidationResult> response = Response.FromValue(BillingAddressValidationResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -698,7 +698,7 @@ namespace Azure.ResourceManager.Billing.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = AddressRestClient.CreateValidateRequest(BillingAddressDetails.ToRequestContent(details), context);
+                using HttpMessage message = AddressRestClient.CreateValidateRequest(BillingAddressDetails.ToRequestContent(details), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<BillingAddressValidationResult> response = Response.FromValue(BillingAddressValidationResult.FromResponse(result), result);
                 if (response.Value == null)

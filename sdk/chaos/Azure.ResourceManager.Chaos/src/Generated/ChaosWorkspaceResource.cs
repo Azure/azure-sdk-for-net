@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Chaos
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workspacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _workspacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ChaosWorkspaceData> response = Response.FromValue(ChaosWorkspaceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.Chaos
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workspacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _workspacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ChaosWorkspaceData> response = Response.FromValue(ChaosWorkspaceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.Chaos
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workspacesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ChaosWorkspacePatch.ToRequestContent(patch), context);
+                using HttpMessage message = _workspacesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ChaosWorkspacePatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ChaosArmOperation<ChaosWorkspaceResource> operation = new ChaosArmOperation<ChaosWorkspaceResource>(
                     new ChaosWorkspaceResourceOperationSource(Client),
@@ -285,7 +285,7 @@ namespace Azure.ResourceManager.Chaos
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workspacesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ChaosWorkspacePatch.ToRequestContent(patch), context);
+                using HttpMessage message = _workspacesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ChaosWorkspacePatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ChaosArmOperation<ChaosWorkspaceResource> operation = new ChaosArmOperation<ChaosWorkspaceResource>(
                     new ChaosWorkspaceResourceOperationSource(Client),
@@ -340,7 +340,7 @@ namespace Azure.ResourceManager.Chaos
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workspacesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _workspacesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ChaosArmOperation operation = new ChaosArmOperation(_workspacesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -389,7 +389,7 @@ namespace Azure.ResourceManager.Chaos
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workspacesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _workspacesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ChaosArmOperation operation = new ChaosArmOperation(_workspacesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -438,7 +438,7 @@ namespace Azure.ResourceManager.Chaos
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workspacesRestClient.CreateDiscoverRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _workspacesRestClient.CreateDiscoverRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ChaosArmOperation<WorkspaceDiscovery> operation = new ChaosArmOperation<WorkspaceDiscovery>(
                     new WorkspaceDiscoveryOperationSource(),
@@ -493,7 +493,7 @@ namespace Azure.ResourceManager.Chaos
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workspacesRestClient.CreateDiscoverRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _workspacesRestClient.CreateDiscoverRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ChaosArmOperation<WorkspaceDiscovery> operation = new ChaosArmOperation<WorkspaceDiscovery>(
                     new WorkspaceDiscoveryOperationSource(),
@@ -548,7 +548,7 @@ namespace Azure.ResourceManager.Chaos
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workspacesRestClient.CreateEvaluateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _workspacesRestClient.CreateEvaluateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ChaosArmOperation<ChaosWorkspaceEvaluationData> operation = new ChaosArmOperation<ChaosWorkspaceEvaluationData>(
                     new ChaosWorkspaceEvaluationDataOperationSource(),
@@ -603,7 +603,7 @@ namespace Azure.ResourceManager.Chaos
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workspacesRestClient.CreateEvaluateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _workspacesRestClient.CreateEvaluateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ChaosArmOperation<ChaosWorkspaceEvaluationData> operation = new ChaosArmOperation<ChaosWorkspaceEvaluationData>(
                     new ChaosWorkspaceEvaluationDataOperationSource(),
@@ -648,7 +648,7 @@ namespace Azure.ResourceManager.Chaos
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _workspacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _workspacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<ChaosWorkspaceData> response = Response.FromValue(ChaosWorkspaceData.FromResponse(result), result);
                     return Response.FromValue(new ChaosWorkspaceResource(Client, response.Value), response.GetRawResponse());
@@ -696,7 +696,7 @@ namespace Azure.ResourceManager.Chaos
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _workspacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _workspacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<ChaosWorkspaceData> response = Response.FromValue(ChaosWorkspaceData.FromResponse(result), result);
                     return Response.FromValue(new ChaosWorkspaceResource(Client, response.Value), response.GetRawResponse());
@@ -742,7 +742,7 @@ namespace Azure.ResourceManager.Chaos
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _workspacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _workspacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<ChaosWorkspaceData> response = Response.FromValue(ChaosWorkspaceData.FromResponse(result), result);
                     return Response.FromValue(new ChaosWorkspaceResource(Client, response.Value), response.GetRawResponse());
@@ -784,7 +784,7 @@ namespace Azure.ResourceManager.Chaos
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _workspacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _workspacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<ChaosWorkspaceData> response = Response.FromValue(ChaosWorkspaceData.FromResponse(result), result);
                     return Response.FromValue(new ChaosWorkspaceResource(Client, response.Value), response.GetRawResponse());
@@ -826,7 +826,7 @@ namespace Azure.ResourceManager.Chaos
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _workspacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _workspacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<ChaosWorkspaceData> response = Response.FromValue(ChaosWorkspaceData.FromResponse(result), result);
                     return Response.FromValue(new ChaosWorkspaceResource(Client, response.Value), response.GetRawResponse());
@@ -872,7 +872,7 @@ namespace Azure.ResourceManager.Chaos
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _workspacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _workspacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<ChaosWorkspaceData> response = Response.FromValue(ChaosWorkspaceData.FromResponse(result), result);
                     return Response.FromValue(new ChaosWorkspaceResource(Client, response.Value), response.GetRawResponse());

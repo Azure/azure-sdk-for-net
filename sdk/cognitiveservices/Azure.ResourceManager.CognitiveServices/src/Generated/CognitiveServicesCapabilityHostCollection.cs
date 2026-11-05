@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _capabilityHostsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, capabilityHostName, CognitiveServicesCapabilityHostData.ToRequestContent(data), context);
+                using HttpMessage message = _capabilityHostsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, capabilityHostName, CognitiveServicesCapabilityHostData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 CognitiveServicesArmOperation<CognitiveServicesCapabilityHostResource> operation = new CognitiveServicesArmOperation<CognitiveServicesCapabilityHostResource>(
                     new CognitiveServicesCapabilityHostResourceOperationSource(Client),
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _capabilityHostsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, capabilityHostName, CognitiveServicesCapabilityHostData.ToRequestContent(data), context);
+                using HttpMessage message = _capabilityHostsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, capabilityHostName, CognitiveServicesCapabilityHostData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 CognitiveServicesArmOperation<CognitiveServicesCapabilityHostResource> operation = new CognitiveServicesArmOperation<CognitiveServicesCapabilityHostResource>(
                     new CognitiveServicesCapabilityHostResourceOperationSource(Client),
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _capabilityHostsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, capabilityHostName, context);
+                using HttpMessage message = _capabilityHostsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, capabilityHostName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<CognitiveServicesCapabilityHostData> response = Response.FromValue(CognitiveServicesCapabilityHostData.FromResponse(result), result);
                 if (response.Value == null)
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _capabilityHostsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, capabilityHostName, context);
+                using HttpMessage message = _capabilityHostsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, capabilityHostName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<CognitiveServicesCapabilityHostData> response = Response.FromValue(CognitiveServicesCapabilityHostData.FromResponse(result), result);
                 if (response.Value == null)
@@ -369,7 +369,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _capabilityHostsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, capabilityHostName, context);
+                using HttpMessage message = _capabilityHostsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, capabilityHostName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<CognitiveServicesCapabilityHostData> response = default;
@@ -426,7 +426,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _capabilityHostsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, capabilityHostName, context);
+                using HttpMessage message = _capabilityHostsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, capabilityHostName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<CognitiveServicesCapabilityHostData> response = default;
@@ -483,7 +483,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _capabilityHostsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, capabilityHostName, context);
+                using HttpMessage message = _capabilityHostsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, capabilityHostName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<CognitiveServicesCapabilityHostData> response = default;
@@ -544,7 +544,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _capabilityHostsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, capabilityHostName, context);
+                using HttpMessage message = _capabilityHostsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, capabilityHostName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<CognitiveServicesCapabilityHostData> response = default;

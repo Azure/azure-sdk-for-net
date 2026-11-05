@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.CloudHealth
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _signalDefinitionsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, signalDefinitionName, HealthModelSignalDefinitionData.ToRequestContent(data), context);
+                using HttpMessage message = _signalDefinitionsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, signalDefinitionName, HealthModelSignalDefinitionData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 CloudHealthArmOperation<HealthModelSignalDefinitionResource> operation = new CloudHealthArmOperation<HealthModelSignalDefinitionResource>(
                     new HealthModelSignalDefinitionResourceOperationSource(Client),
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.CloudHealth
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _signalDefinitionsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, signalDefinitionName, HealthModelSignalDefinitionData.ToRequestContent(data), context);
+                using HttpMessage message = _signalDefinitionsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, signalDefinitionName, HealthModelSignalDefinitionData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 CloudHealthArmOperation<HealthModelSignalDefinitionResource> operation = new CloudHealthArmOperation<HealthModelSignalDefinitionResource>(
                     new HealthModelSignalDefinitionResourceOperationSource(Client),
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.CloudHealth
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _signalDefinitionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, signalDefinitionName, context);
+                using HttpMessage message = _signalDefinitionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, signalDefinitionName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<HealthModelSignalDefinitionData> response = Response.FromValue(HealthModelSignalDefinitionData.FromResponse(result), result);
                 if (response.Value == null)
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.CloudHealth
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _signalDefinitionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, signalDefinitionName, context);
+                using HttpMessage message = _signalDefinitionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, signalDefinitionName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<HealthModelSignalDefinitionData> response = Response.FromValue(HealthModelSignalDefinitionData.FromResponse(result), result);
                 if (response.Value == null)
@@ -373,7 +373,7 @@ namespace Azure.ResourceManager.CloudHealth
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _signalDefinitionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, signalDefinitionName, context);
+                using HttpMessage message = _signalDefinitionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, signalDefinitionName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<HealthModelSignalDefinitionData> response = default;
@@ -430,7 +430,7 @@ namespace Azure.ResourceManager.CloudHealth
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _signalDefinitionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, signalDefinitionName, context);
+                using HttpMessage message = _signalDefinitionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, signalDefinitionName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<HealthModelSignalDefinitionData> response = default;
@@ -487,7 +487,7 @@ namespace Azure.ResourceManager.CloudHealth
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _signalDefinitionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, signalDefinitionName, context);
+                using HttpMessage message = _signalDefinitionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, signalDefinitionName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<HealthModelSignalDefinitionData> response = default;
@@ -548,7 +548,7 @@ namespace Azure.ResourceManager.CloudHealth
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _signalDefinitionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, signalDefinitionName, context);
+                using HttpMessage message = _signalDefinitionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, signalDefinitionName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<HealthModelSignalDefinitionData> response = default;

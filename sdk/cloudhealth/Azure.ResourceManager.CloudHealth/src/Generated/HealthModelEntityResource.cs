@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.CloudHealth
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _entitiesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _entitiesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<HealthModelEntityData> response = Response.FromValue(HealthModelEntityData.FromResponse(result), result);
                 if (response.Value == null)
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.CloudHealth
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _entitiesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _entitiesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<HealthModelEntityData> response = Response.FromValue(HealthModelEntityData.FromResponse(result), result);
                 if (response.Value == null)
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.CloudHealth
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _entitiesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _entitiesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 CloudHealthArmOperation operation = new CloudHealthArmOperation(_entitiesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -270,7 +270,7 @@ namespace Azure.ResourceManager.CloudHealth
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _entitiesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _entitiesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 CloudHealthArmOperation operation = new CloudHealthArmOperation(_entitiesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.CloudHealth
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _entitiesRestClient.CreateAddDataAnnotationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, EntityAddDataAnnotationContent.ToRequestContent(content), context);
+                using HttpMessage message = _entitiesRestClient.CreateAddDataAnnotationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, EntityAddDataAnnotationContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<EntityDataAnnotation> response = Response.FromValue(EntityDataAnnotation.FromResponse(result), result);
                 if (response.Value == null)
@@ -374,7 +374,7 @@ namespace Azure.ResourceManager.CloudHealth
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _entitiesRestClient.CreateAddDataAnnotationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, EntityAddDataAnnotationContent.ToRequestContent(content), context);
+                using HttpMessage message = _entitiesRestClient.CreateAddDataAnnotationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, EntityAddDataAnnotationContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<EntityDataAnnotation> response = Response.FromValue(EntityDataAnnotation.FromResponse(result), result);
                 if (response.Value == null)
@@ -426,7 +426,7 @@ namespace Azure.ResourceManager.CloudHealth
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _entitiesRestClient.CreateGetDataAnnotationsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, EntityGetDataAnnotationsContent.ToRequestContent(content), context);
+                using HttpMessage message = _entitiesRestClient.CreateGetDataAnnotationsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, EntityGetDataAnnotationsContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<EntityGetDataAnnotationsResult> response = Response.FromValue(EntityGetDataAnnotationsResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -478,7 +478,7 @@ namespace Azure.ResourceManager.CloudHealth
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _entitiesRestClient.CreateGetDataAnnotationsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, EntityGetDataAnnotationsContent.ToRequestContent(content), context);
+                using HttpMessage message = _entitiesRestClient.CreateGetDataAnnotationsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, EntityGetDataAnnotationsContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<EntityGetDataAnnotationsResult> response = Response.FromValue(EntityGetDataAnnotationsResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -530,7 +530,7 @@ namespace Azure.ResourceManager.CloudHealth
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _entitiesRestClient.CreateGetHistoryRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, EntityHistoryContent.ToRequestContent(content), context);
+                using HttpMessage message = _entitiesRestClient.CreateGetHistoryRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, EntityHistoryContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<EntityHistoryResult> response = Response.FromValue(EntityHistoryResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -582,7 +582,7 @@ namespace Azure.ResourceManager.CloudHealth
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _entitiesRestClient.CreateGetHistoryRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, EntityHistoryContent.ToRequestContent(content), context);
+                using HttpMessage message = _entitiesRestClient.CreateGetHistoryRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, EntityHistoryContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<EntityHistoryResult> response = Response.FromValue(EntityHistoryResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -634,7 +634,7 @@ namespace Azure.ResourceManager.CloudHealth
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _entitiesRestClient.CreateGetSignalHistoryRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, EntitySignalHistoryContent.ToRequestContent(content), context);
+                using HttpMessage message = _entitiesRestClient.CreateGetSignalHistoryRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, EntitySignalHistoryContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<EntitySignalHistoryResult> response = Response.FromValue(EntitySignalHistoryResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -686,7 +686,7 @@ namespace Azure.ResourceManager.CloudHealth
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _entitiesRestClient.CreateGetSignalHistoryRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, EntitySignalHistoryContent.ToRequestContent(content), context);
+                using HttpMessage message = _entitiesRestClient.CreateGetSignalHistoryRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, EntitySignalHistoryContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<EntitySignalHistoryResult> response = Response.FromValue(EntitySignalHistoryResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -734,7 +734,7 @@ namespace Azure.ResourceManager.CloudHealth
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _entitiesRestClient.CreateGetSignalRecommendationsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _entitiesRestClient.CreateGetSignalRecommendationsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<EntityGetSignalRecommendationsResult> response = Response.FromValue(EntityGetSignalRecommendationsResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -782,7 +782,7 @@ namespace Azure.ResourceManager.CloudHealth
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _entitiesRestClient.CreateGetSignalRecommendationsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _entitiesRestClient.CreateGetSignalRecommendationsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<EntityGetSignalRecommendationsResult> response = Response.FromValue(EntityGetSignalRecommendationsResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -834,7 +834,7 @@ namespace Azure.ResourceManager.CloudHealth
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _entitiesRestClient.CreateIngestHealthReportRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, EntityHealthReportContent.ToRequestContent(content), context);
+                using HttpMessage message = _entitiesRestClient.CreateIngestHealthReportRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, EntityHealthReportContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 return response;
             }
@@ -881,7 +881,7 @@ namespace Azure.ResourceManager.CloudHealth
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _entitiesRestClient.CreateIngestHealthReportRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, EntityHealthReportContent.ToRequestContent(content), context);
+                using HttpMessage message = _entitiesRestClient.CreateIngestHealthReportRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, EntityHealthReportContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 return response;
             }
@@ -929,7 +929,7 @@ namespace Azure.ResourceManager.CloudHealth
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _entitiesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, HealthModelEntityData.ToRequestContent(data), context);
+                using HttpMessage message = _entitiesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, HealthModelEntityData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 CloudHealthArmOperation<HealthModelEntityResource> operation = new CloudHealthArmOperation<HealthModelEntityResource>(
                     new HealthModelEntityResourceOperationSource(Client),
@@ -988,7 +988,7 @@ namespace Azure.ResourceManager.CloudHealth
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _entitiesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, HealthModelEntityData.ToRequestContent(data), context);
+                using HttpMessage message = _entitiesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, HealthModelEntityData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 CloudHealthArmOperation<HealthModelEntityResource> operation = new CloudHealthArmOperation<HealthModelEntityResource>(
                     new HealthModelEntityResourceOperationSource(Client),

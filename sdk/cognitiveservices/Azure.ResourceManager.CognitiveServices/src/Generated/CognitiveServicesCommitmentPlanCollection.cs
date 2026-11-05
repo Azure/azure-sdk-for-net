@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _commitmentPlanOperationGroupRestClient.CreateCreateOrUpdatePlanRequest(Id.SubscriptionId, Id.ResourceGroupName, commitmentPlanName, CommitmentPlanData.ToRequestContent(data), context);
+                using HttpMessage message = _commitmentPlanOperationGroupRestClient.CreateCreateOrUpdatePlanRequest(Id.SubscriptionId, Id.ResourceGroupName, commitmentPlanName, CommitmentPlanData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 CognitiveServicesArmOperation<CognitiveServicesCommitmentPlanResource> operation = new CognitiveServicesArmOperation<CognitiveServicesCommitmentPlanResource>(
                     new CognitiveServicesCommitmentPlanResourceOperationSource(Client),
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _commitmentPlanOperationGroupRestClient.CreateCreateOrUpdatePlanRequest(Id.SubscriptionId, Id.ResourceGroupName, commitmentPlanName, CommitmentPlanData.ToRequestContent(data), context);
+                using HttpMessage message = _commitmentPlanOperationGroupRestClient.CreateCreateOrUpdatePlanRequest(Id.SubscriptionId, Id.ResourceGroupName, commitmentPlanName, CommitmentPlanData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 CognitiveServicesArmOperation<CognitiveServicesCommitmentPlanResource> operation = new CognitiveServicesArmOperation<CognitiveServicesCommitmentPlanResource>(
                     new CognitiveServicesCommitmentPlanResourceOperationSource(Client),
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _commitmentPlanOperationGroupRestClient.CreateGetPlanRequest(Id.SubscriptionId, Id.ResourceGroupName, commitmentPlanName, context);
+                using HttpMessage message = _commitmentPlanOperationGroupRestClient.CreateGetPlanRequest(Id.SubscriptionId, Id.ResourceGroupName, commitmentPlanName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<CommitmentPlanData> response = Response.FromValue(CommitmentPlanData.FromResponse(result), result);
                 if (response.Value == null)
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _commitmentPlanOperationGroupRestClient.CreateGetPlanRequest(Id.SubscriptionId, Id.ResourceGroupName, commitmentPlanName, context);
+                using HttpMessage message = _commitmentPlanOperationGroupRestClient.CreateGetPlanRequest(Id.SubscriptionId, Id.ResourceGroupName, commitmentPlanName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<CommitmentPlanData> response = Response.FromValue(CommitmentPlanData.FromResponse(result), result);
                 if (response.Value == null)
@@ -357,7 +357,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _commitmentPlanOperationGroupRestClient.CreateGetPlanRequest(Id.SubscriptionId, Id.ResourceGroupName, commitmentPlanName, context);
+                using HttpMessage message = _commitmentPlanOperationGroupRestClient.CreateGetPlanRequest(Id.SubscriptionId, Id.ResourceGroupName, commitmentPlanName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<CommitmentPlanData> response = default;
@@ -414,7 +414,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _commitmentPlanOperationGroupRestClient.CreateGetPlanRequest(Id.SubscriptionId, Id.ResourceGroupName, commitmentPlanName, context);
+                using HttpMessage message = _commitmentPlanOperationGroupRestClient.CreateGetPlanRequest(Id.SubscriptionId, Id.ResourceGroupName, commitmentPlanName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<CommitmentPlanData> response = default;
@@ -471,7 +471,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _commitmentPlanOperationGroupRestClient.CreateGetPlanRequest(Id.SubscriptionId, Id.ResourceGroupName, commitmentPlanName, context);
+                using HttpMessage message = _commitmentPlanOperationGroupRestClient.CreateGetPlanRequest(Id.SubscriptionId, Id.ResourceGroupName, commitmentPlanName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<CommitmentPlanData> response = default;
@@ -532,7 +532,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _commitmentPlanOperationGroupRestClient.CreateGetPlanRequest(Id.SubscriptionId, Id.ResourceGroupName, commitmentPlanName, context);
+                using HttpMessage message = _commitmentPlanOperationGroupRestClient.CreateGetPlanRequest(Id.SubscriptionId, Id.ResourceGroupName, commitmentPlanName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<CommitmentPlanData> response = default;

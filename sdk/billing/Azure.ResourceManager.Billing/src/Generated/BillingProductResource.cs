@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Billing
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _productsRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _productsRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<BillingProductData> response = Response.FromValue(BillingProductData.FromResponse(result), result);
                 if (response.Value == null)
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.Billing
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _productsRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _productsRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<BillingProductData> response = Response.FromValue(BillingProductData.FromResponse(result), result);
                 if (response.Value == null)
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.Billing
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _productsRestClient.CreateUpdateRequest(Id.Parent.Name, Id.Name, BillingProductPatch.ToRequestContent(patch), context);
+                using HttpMessage message = _productsRestClient.CreateUpdateRequest(Id.Parent.Name, Id.Name, BillingProductPatch.ToRequestContent(patch), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<BillingProductData> response = Response.FromValue(BillingProductData.FromResponse(result), result);
                 if (response.Value == null)
@@ -277,7 +277,7 @@ namespace Azure.ResourceManager.Billing
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _productsRestClient.CreateUpdateRequest(Id.Parent.Name, Id.Name, BillingProductPatch.ToRequestContent(patch), context);
+                using HttpMessage message = _productsRestClient.CreateUpdateRequest(Id.Parent.Name, Id.Name, BillingProductPatch.ToRequestContent(patch), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<BillingProductData> response = Response.FromValue(BillingProductData.FromResponse(result), result);
                 if (response.Value == null)
@@ -330,7 +330,7 @@ namespace Azure.ResourceManager.Billing
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _productsRestClient.CreateMoveRequest(Id.Parent.Name, Id.Name, MoveProductContent.ToRequestContent(content), context);
+                using HttpMessage message = _productsRestClient.CreateMoveRequest(Id.Parent.Name, Id.Name, MoveProductContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 BillingArmOperation<BillingProductResource> operation = new BillingArmOperation<BillingProductResource>(
                     new BillingProductResourceOperationSource(Client),
@@ -389,7 +389,7 @@ namespace Azure.ResourceManager.Billing
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _productsRestClient.CreateMoveRequest(Id.Parent.Name, Id.Name, MoveProductContent.ToRequestContent(content), context);
+                using HttpMessage message = _productsRestClient.CreateMoveRequest(Id.Parent.Name, Id.Name, MoveProductContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 BillingArmOperation<BillingProductResource> operation = new BillingArmOperation<BillingProductResource>(
                     new BillingProductResourceOperationSource(Client),
@@ -447,7 +447,7 @@ namespace Azure.ResourceManager.Billing
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _productsRestClient.CreateValidateMoveEligibilityRequest(Id.Parent.Name, Id.Name, MoveProductContent.ToRequestContent(content), context);
+                using HttpMessage message = _productsRestClient.CreateValidateMoveEligibilityRequest(Id.Parent.Name, Id.Name, MoveProductContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<MoveProductEligibilityResult> response = Response.FromValue(MoveProductEligibilityResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -499,7 +499,7 @@ namespace Azure.ResourceManager.Billing
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _productsRestClient.CreateValidateMoveEligibilityRequest(Id.Parent.Name, Id.Name, MoveProductContent.ToRequestContent(content), context);
+                using HttpMessage message = _productsRestClient.CreateValidateMoveEligibilityRequest(Id.Parent.Name, Id.Name, MoveProductContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<MoveProductEligibilityResult> response = Response.FromValue(MoveProductEligibilityResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -538,7 +538,7 @@ namespace Azure.ResourceManager.Billing
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _productsRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, context);
+                    using HttpMessage message = _productsRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<BillingProductData> response = Response.FromValue(BillingProductData.FromResponse(result), result);
                     return Response.FromValue(new BillingProductResource(Client, response.Value), response.GetRawResponse());
@@ -586,7 +586,7 @@ namespace Azure.ResourceManager.Billing
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _productsRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, context);
+                    using HttpMessage message = _productsRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<BillingProductData> response = Response.FromValue(BillingProductData.FromResponse(result), result);
                     return Response.FromValue(new BillingProductResource(Client, response.Value), response.GetRawResponse());
@@ -632,7 +632,7 @@ namespace Azure.ResourceManager.Billing
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _productsRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, context);
+                    using HttpMessage message = _productsRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<BillingProductData> response = Response.FromValue(BillingProductData.FromResponse(result), result);
                     return Response.FromValue(new BillingProductResource(Client, response.Value), response.GetRawResponse());
@@ -674,7 +674,7 @@ namespace Azure.ResourceManager.Billing
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _productsRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, context);
+                    using HttpMessage message = _productsRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<BillingProductData> response = Response.FromValue(BillingProductData.FromResponse(result), result);
                     return Response.FromValue(new BillingProductResource(Client, response.Value), response.GetRawResponse());
@@ -716,7 +716,7 @@ namespace Azure.ResourceManager.Billing
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _productsRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, context);
+                    using HttpMessage message = _productsRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<BillingProductData> response = Response.FromValue(BillingProductData.FromResponse(result), result);
                     return Response.FromValue(new BillingProductResource(Client, response.Value), response.GetRawResponse());
@@ -762,7 +762,7 @@ namespace Azure.ResourceManager.Billing
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _productsRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, context);
+                    using HttpMessage message = _productsRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<BillingProductData> response = Response.FromValue(BillingProductData.FromResponse(result), result);
                     return Response.FromValue(new BillingProductResource(Client, response.Value), response.GetRawResponse());

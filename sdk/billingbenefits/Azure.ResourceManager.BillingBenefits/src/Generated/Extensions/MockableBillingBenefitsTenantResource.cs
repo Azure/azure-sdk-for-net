@@ -367,7 +367,7 @@ namespace Azure.ResourceManager.BillingBenefits.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = BenefitRestClient.CreateValidateRequest(BenefitValidateRequest.ToRequestContent(content), context);
+                using HttpMessage message = BenefitRestClient.CreateValidateRequest(BenefitValidateRequest.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<BenefitValidateResult> response = Response.FromValue(BenefitValidateResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -415,7 +415,7 @@ namespace Azure.ResourceManager.BillingBenefits.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = BenefitRestClient.CreateValidateRequest(BenefitValidateRequest.ToRequestContent(content), context);
+                using HttpMessage message = BenefitRestClient.CreateValidateRequest(BenefitValidateRequest.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<BenefitValidateResult> response = Response.FromValue(BenefitValidateResult.FromResponse(result), result);
                 if (response.Value == null)

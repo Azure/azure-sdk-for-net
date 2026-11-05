@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Cdn
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _frontDoorEndpointsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _frontDoorEndpointsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<FrontDoorEndpointData> response = Response.FromValue(FrontDoorEndpointData.FromResponse(result), result);
                 if (response.Value == null)
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.Cdn
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _frontDoorEndpointsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _frontDoorEndpointsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<FrontDoorEndpointData> response = Response.FromValue(FrontDoorEndpointData.FromResponse(result), result);
                 if (response.Value == null)
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.Cdn
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _frontDoorEndpointsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, FrontDoorEndpointPatch.ToRequestContent(patch), context);
+                using HttpMessage message = _frontDoorEndpointsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, FrontDoorEndpointPatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 CdnArmOperation<FrontDoorEndpointResource> operation = new CdnArmOperation<FrontDoorEndpointResource>(
                     new FrontDoorEndpointResourceOperationSource(Client),
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.Cdn
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _frontDoorEndpointsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, FrontDoorEndpointPatch.ToRequestContent(patch), context);
+                using HttpMessage message = _frontDoorEndpointsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, FrontDoorEndpointPatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 CdnArmOperation<FrontDoorEndpointResource> operation = new CdnArmOperation<FrontDoorEndpointResource>(
                     new FrontDoorEndpointResourceOperationSource(Client),
@@ -342,7 +342,7 @@ namespace Azure.ResourceManager.Cdn
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _frontDoorEndpointsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _frontDoorEndpointsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 CdnArmOperation operation = new CdnArmOperation(_frontDoorEndpointsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
@@ -391,7 +391,7 @@ namespace Azure.ResourceManager.Cdn
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _frontDoorEndpointsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _frontDoorEndpointsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 CdnArmOperation operation = new CdnArmOperation(_frontDoorEndpointsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
@@ -522,7 +522,7 @@ namespace Azure.ResourceManager.Cdn
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _frontDoorEndpointsRestClient.CreatePurgeContentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, FrontDoorPurgeContent.ToRequestContent(content), context);
+                using HttpMessage message = _frontDoorEndpointsRestClient.CreatePurgeContentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, FrontDoorPurgeContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 CdnArmOperation operation = new CdnArmOperation(_frontDoorEndpointsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
@@ -575,7 +575,7 @@ namespace Azure.ResourceManager.Cdn
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _frontDoorEndpointsRestClient.CreatePurgeContentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, FrontDoorPurgeContent.ToRequestContent(content), context);
+                using HttpMessage message = _frontDoorEndpointsRestClient.CreatePurgeContentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, FrontDoorPurgeContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 CdnArmOperation operation = new CdnArmOperation(_frontDoorEndpointsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
@@ -627,7 +627,7 @@ namespace Azure.ResourceManager.Cdn
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _frontDoorEndpointsRestClient.CreateValidateCustomDomainRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ValidateCustomDomainContent.ToRequestContent(content), context);
+                using HttpMessage message = _frontDoorEndpointsRestClient.CreateValidateCustomDomainRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ValidateCustomDomainContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ValidateCustomDomainResult> response = Response.FromValue(ValidateCustomDomainResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -679,7 +679,7 @@ namespace Azure.ResourceManager.Cdn
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _frontDoorEndpointsRestClient.CreateValidateCustomDomainRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ValidateCustomDomainContent.ToRequestContent(content), context);
+                using HttpMessage message = _frontDoorEndpointsRestClient.CreateValidateCustomDomainRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ValidateCustomDomainContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ValidateCustomDomainResult> response = Response.FromValue(ValidateCustomDomainResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -718,7 +718,7 @@ namespace Azure.ResourceManager.Cdn
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _frontDoorEndpointsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                    using HttpMessage message = _frontDoorEndpointsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<FrontDoorEndpointData> response = Response.FromValue(FrontDoorEndpointData.FromResponse(result), result);
                     return Response.FromValue(new FrontDoorEndpointResource(Client, response.Value), response.GetRawResponse());
@@ -766,7 +766,7 @@ namespace Azure.ResourceManager.Cdn
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _frontDoorEndpointsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                    using HttpMessage message = _frontDoorEndpointsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<FrontDoorEndpointData> response = Response.FromValue(FrontDoorEndpointData.FromResponse(result), result);
                     return Response.FromValue(new FrontDoorEndpointResource(Client, response.Value), response.GetRawResponse());
@@ -812,7 +812,7 @@ namespace Azure.ResourceManager.Cdn
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _frontDoorEndpointsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                    using HttpMessage message = _frontDoorEndpointsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<FrontDoorEndpointData> response = Response.FromValue(FrontDoorEndpointData.FromResponse(result), result);
                     return Response.FromValue(new FrontDoorEndpointResource(Client, response.Value), response.GetRawResponse());
@@ -854,7 +854,7 @@ namespace Azure.ResourceManager.Cdn
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _frontDoorEndpointsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                    using HttpMessage message = _frontDoorEndpointsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<FrontDoorEndpointData> response = Response.FromValue(FrontDoorEndpointData.FromResponse(result), result);
                     return Response.FromValue(new FrontDoorEndpointResource(Client, response.Value), response.GetRawResponse());
@@ -896,7 +896,7 @@ namespace Azure.ResourceManager.Cdn
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _frontDoorEndpointsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                    using HttpMessage message = _frontDoorEndpointsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<FrontDoorEndpointData> response = Response.FromValue(FrontDoorEndpointData.FromResponse(result), result);
                     return Response.FromValue(new FrontDoorEndpointResource(Client, response.Value), response.GetRawResponse());
@@ -942,7 +942,7 @@ namespace Azure.ResourceManager.Cdn
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _frontDoorEndpointsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                    using HttpMessage message = _frontDoorEndpointsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<FrontDoorEndpointData> response = Response.FromValue(FrontDoorEndpointData.FromResponse(result), result);
                     return Response.FromValue(new FrontDoorEndpointResource(Client, response.Value), response.GetRawResponse());

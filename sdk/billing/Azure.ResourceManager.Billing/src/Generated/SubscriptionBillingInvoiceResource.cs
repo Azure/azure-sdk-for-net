@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Billing
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _invoicesRestClient.CreateGetByBillingSubscriptionRequest(Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _invoicesRestClient.CreateGetByBillingSubscriptionRequest(Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<BillingInvoiceData> response = Response.FromValue(BillingInvoiceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.Billing
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _invoicesRestClient.CreateGetByBillingSubscriptionRequest(Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _invoicesRestClient.CreateGetByBillingSubscriptionRequest(Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<BillingInvoiceData> response = Response.FromValue(BillingInvoiceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.Billing
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _invoicesRestClient.CreateDownloadByBillingSubscriptionRequest(Id.Parent.Name, Id.Name, documentName, context);
+                using HttpMessage message = _invoicesRestClient.CreateDownloadByBillingSubscriptionRequest(Id.Parent.Name, Id.Name, documentName, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 BillingArmOperation<BillingDocumentDownloadResult> operation = new BillingArmOperation<BillingDocumentDownloadResult>(
                     new BillingDocumentDownloadResultOperationSource(),
@@ -277,7 +277,7 @@ namespace Azure.ResourceManager.Billing
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _invoicesRestClient.CreateDownloadByBillingSubscriptionRequest(Id.Parent.Name, Id.Name, documentName, context);
+                using HttpMessage message = _invoicesRestClient.CreateDownloadByBillingSubscriptionRequest(Id.Parent.Name, Id.Name, documentName, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 BillingArmOperation<BillingDocumentDownloadResult> operation = new BillingArmOperation<BillingDocumentDownloadResult>(
                     new BillingDocumentDownloadResultOperationSource(),

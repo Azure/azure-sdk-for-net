@@ -346,7 +346,7 @@ namespace Azure.ResourceManager.Chaos.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = OperationStatusesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), location, operationId, context);
+                using HttpMessage message = OperationStatusesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), location, operationId, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<OperationStatusResult> response = Response.FromValue(ModelReaderWriter.Read<OperationStatusResult>(result.Content, ModelSerializationExtensions.WireOptions, AzureResourceManagerChaosContext.Default), result);
                 if (response.Value == null)
@@ -397,7 +397,7 @@ namespace Azure.ResourceManager.Chaos.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = OperationStatusesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), location, operationId, context);
+                using HttpMessage message = OperationStatusesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), location, operationId, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<OperationStatusResult> response = Response.FromValue(ModelReaderWriter.Read<OperationStatusResult>(result.Content, ModelSerializationExtensions.WireOptions, AzureResourceManagerChaosContext.Default), result);
                 if (response.Value == null)
