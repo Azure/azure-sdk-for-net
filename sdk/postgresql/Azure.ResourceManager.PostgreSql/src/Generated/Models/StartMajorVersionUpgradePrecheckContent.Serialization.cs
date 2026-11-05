@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 throw new FormatException($"The model {nameof(StartMajorVersionUpgradePrecheckContent)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("targetVersion"u8);
-            writer.WriteStringValue(TargetVersion.ToString());
+            writer.WriteStringValue(TargetVersion);
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -135,13 +135,13 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             {
                 return null;
             }
-            PostgreSqlFlexibleServerVersion targetVersion = default;
+            string targetVersion = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("targetVersion"u8))
                 {
-                    targetVersion = new PostgreSqlFlexibleServerVersion(prop.Value.GetString());
+                    targetVersion = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")

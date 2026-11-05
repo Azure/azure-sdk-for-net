@@ -25,12 +25,14 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerBackupProperties"/>. </summary>
         /// <param name="backupRetentionDays"> Backup retention days for the server. </param>
         /// <param name="geoRedundantBackup"> Indicates if the server is configured to create geographically redundant backups. </param>
+        /// <param name="immutableBackup"> Indicates if the server is configured to create immutable backups. </param>
         /// <param name="earliestRestoreOn"> Earliest restore point time (ISO8601 format) for a server. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PostgreSqlFlexibleServerBackupProperties(int? backupRetentionDays, PostgreSqlFlexibleServerGeoRedundantBackupEnum? geoRedundantBackup, DateTimeOffset? earliestRestoreOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PostgreSqlFlexibleServerBackupProperties(int? backupRetentionDays, PostgreSqlFlexibleServerGeoRedundantBackupEnum? geoRedundantBackup, ImmutableBackup? immutableBackup, DateTimeOffset? earliestRestoreOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             BackupRetentionDays = backupRetentionDays;
             GeoRedundantBackup = geoRedundantBackup;
+            ImmutableBackup = immutableBackup;
             EarliestRestoreOn = earliestRestoreOn;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -42,6 +44,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <summary> Indicates if the server is configured to create geographically redundant backups. </summary>
         [WirePath("geoRedundantBackup")]
         public PostgreSqlFlexibleServerGeoRedundantBackupEnum? GeoRedundantBackup { get; set; }
+
+        /// <summary> Indicates if the server is configured to create immutable backups. </summary>
+        [WirePath("immutableBackup")]
+        public ImmutableBackup? ImmutableBackup { get; set; }
 
         /// <summary> Earliest restore point time (ISO8601 format) for a server. </summary>
         [WirePath("earliestRestoreDate")]

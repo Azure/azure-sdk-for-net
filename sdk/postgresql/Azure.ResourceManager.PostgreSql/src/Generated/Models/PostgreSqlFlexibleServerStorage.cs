@@ -25,15 +25,19 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerStorage"/>. </summary>
         /// <param name="storageSizeInGB"> Size of storage assigned to a server. </param>
         /// <param name="autoGrow"> Flag to enable or disable the automatic growth of storage size of a server when available space is nearing zero and conditions allow for automatically growing storage size. </param>
+        /// <param name="autoGrowMaxThresholdMb"> Maximum allocated storage size to which storage autogrow may grow, in MB. This value is not a disk-utilization trigger threshold and must be at least the effective current or requested storage size. Storage conversion uses 1 GB = 1,024 MB. </param>
+        /// <param name="autoGrowIncrementPercent"> Storage autogrow increment as a percentage of the current allocated storage size. This value is not an absolute size increment or a utilization threshold. </param>
         /// <param name="tier"> Storage tier of a server. </param>
         /// <param name="iops"> Maximum IOPS supported for storage. Required when type of storage is PremiumV2_LRS or UltraSSD_LRS. </param>
         /// <param name="throughput"> Maximum throughput supported for storage. Required when type of storage is PremiumV2_LRS or UltraSSD_LRS. </param>
         /// <param name="storageType"> Type of storage assigned to a server. Allowed values are Premium_LRS, PremiumV2_LRS, or UltraSSD_LRS. If not specified, it defaults to Premium_LRS. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PostgreSqlFlexibleServerStorage(int? storageSizeInGB, StorageAutoGrow? autoGrow, PostgreSqlManagedDiskPerformanceTier? tier, int? iops, int? throughput, PostgreSqlFlexibleServersStorageType? storageType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PostgreSqlFlexibleServerStorage(int? storageSizeInGB, StorageAutoGrow? autoGrow, int? autoGrowMaxThresholdMb, int? autoGrowIncrementPercent, PostgreSqlManagedDiskPerformanceTier? tier, int? iops, int? throughput, PostgreSqlFlexibleServersStorageType? storageType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             StorageSizeInGB = storageSizeInGB;
             AutoGrow = autoGrow;
+            AutoGrowMaxThresholdMb = autoGrowMaxThresholdMb;
+            AutoGrowIncrementPercent = autoGrowIncrementPercent;
             Tier = tier;
             Iops = iops;
             Throughput = throughput;
@@ -48,6 +52,14 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <summary> Flag to enable or disable the automatic growth of storage size of a server when available space is nearing zero and conditions allow for automatically growing storage size. </summary>
         [WirePath("autoGrow")]
         public StorageAutoGrow? AutoGrow { get; set; }
+
+        /// <summary> Maximum allocated storage size to which storage autogrow may grow, in MB. This value is not a disk-utilization trigger threshold and must be at least the effective current or requested storage size. Storage conversion uses 1 GB = 1,024 MB. </summary>
+        [WirePath("autoGrowMaxThresholdMb")]
+        public int? AutoGrowMaxThresholdMb { get; set; }
+
+        /// <summary> Storage autogrow increment as a percentage of the current allocated storage size. This value is not an absolute size increment or a utilization threshold. </summary>
+        [WirePath("autoGrowIncrementPercent")]
+        public int? AutoGrowIncrementPercent { get; set; }
 
         /// <summary> Storage tier of a server. </summary>
         [WirePath("tier")]
