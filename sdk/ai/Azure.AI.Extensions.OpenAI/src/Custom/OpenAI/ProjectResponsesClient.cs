@@ -357,111 +357,111 @@ public partial class ProjectResponsesClient : ResponsesClient
         }
     }
 
-    /// <summary> Creates a streaming response using the supplied response options. </summary>
-    /// <param name="options"> The options used to create the streaming response. </param>
-    /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-    /// <returns> The streaming response updates. </returns>
-    public override CollectionResult<StreamingResponseUpdate> CreateResponseStreaming(CreateResponseOptions options, CancellationToken cancellationToken = default)
-    {
-        Argument.AssertNotNull(options, nameof(options));
-        options.StreamingEnabled = true;
-        ApplyClientDefaults(options);
-        if (!OpenTelemetryResponseScope.IsEnabled)
-        {
-            return new NormalizingStreamingCollectionResult(base.CreateResponseStreaming(options, cancellationToken));
-        }
+    ///// <summary> Creates a streaming response using the supplied response options. </summary>
+    ///// <param name="options"> The options used to create the streaming response. </param>
+    ///// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+    ///// <returns> The streaming response updates. </returns>
+    //public override CollectionResult<StreamingResponseUpdate> CreateResponseStreaming(CreateResponseOptions options, CancellationToken cancellationToken = default)
+    //{
+    //    Argument.AssertNotNull(options, nameof(options));
+    //    options.StreamingEnabled = true;
+    //    ApplyClientDefaults(options);
+    //    if (!OpenTelemetryResponseScope.IsEnabled)
+    //    {
+    //        return new NormalizingStreamingCollectionResult(base.CreateResponseStreaming(options, cancellationToken));
+    //    }
 
-        var telemetryContext = StreamingTelemetryContext.Create(options, Endpoint, _defaultModelName);
+    //    var telemetryContext = StreamingTelemetryContext.Create(options, Endpoint, _defaultModelName);
 
-        try
-        {
-            var innerResult = base.CreateResponseStreaming(options, cancellationToken);
-            return new NormalizingStreamingCollectionResult(new TelemetryStreamingCollectionResult(innerResult, telemetryContext));
-        }
-        catch (Exception ex)
-        {
-            var scope = telemetryContext.CreateScope();
-            scope?.RecordError(ex);
-            scope?.Dispose();
-            throw;
-        }
-    }
+    //    try
+    //    {
+    //        var innerResult = base.CreateResponseStreaming(options, cancellationToken);
+    //        return new NormalizingStreamingCollectionResult(new TelemetryStreamingCollectionResult(innerResult, telemetryContext));
+    //    }
+    //    catch (Exception ex)
+    //    {
+    //        var scope = telemetryContext.CreateScope();
+    //        scope?.RecordError(ex);
+    //        scope?.Dispose();
+    //        throw;
+    //    }
+    //}
 
-    /// <summary> Creates a streaming response from the supplied input items. </summary>
-    /// <param name="inputItems"> The input items used to create the streaming response. </param>
-    /// <param name="previousResponseId"> The ID of the previous response to continue. </param>
-    /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-    /// <returns> The streaming response updates. </returns>
-    public virtual CollectionResult<StreamingResponseUpdate> CreateResponseStreaming(IEnumerable<ResponseItem> inputItems, string previousResponseId = null, CancellationToken cancellationToken = default)
-    {
-        return CreateResponseStreaming(null, inputItems, previousResponseId, cancellationToken);
-    }
+    ///// <summary> Creates a streaming response from the supplied input items. </summary>
+    ///// <param name="inputItems"> The input items used to create the streaming response. </param>
+    ///// <param name="previousResponseId"> The ID of the previous response to continue. </param>
+    ///// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+    ///// <returns> The streaming response updates. </returns>
+    //public virtual CollectionResult<StreamingResponseUpdate> CreateResponseStreaming(IEnumerable<ResponseItem> inputItems, string previousResponseId = null, CancellationToken cancellationToken = default)
+    //{
+    //    return CreateResponseStreaming(null, inputItems, previousResponseId, cancellationToken);
+    //}
 
-    /// <summary> Creates a streaming response for the specified model from the supplied input items. </summary>
-    /// <param name="model"> The model used to create the streaming response. </param>
-    /// <param name="inputItems"> The input items used to create the streaming response. </param>
-    /// <param name="previousResponseId"> The ID of the previous response to continue. </param>
-    /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-    /// <returns> The streaming response updates. </returns>
-    public override CollectionResult<StreamingResponseUpdate> CreateResponseStreaming(string model, IEnumerable<ResponseItem> inputItems, string previousResponseId = null, CancellationToken cancellationToken = default)
-    {
-        Argument.AssertNotNull(inputItems, nameof(inputItems));
-        CreateResponseOptions options = new()
-        {
-            StreamingEnabled = true,
-            PreviousResponseId = previousResponseId,
-            Model = model,
-        };
-        foreach (ResponseItem inputItem in inputItems)
-        {
-            options.InputItems.Add(inputItem);
-        }
-        ApplyClientDefaults(options);
-        return CreateResponseStreaming(options, cancellationToken);
-    }
+    ///// <summary> Creates a streaming response for the specified model from the supplied input items. </summary>
+    ///// <param name="model"> The model used to create the streaming response. </param>
+    ///// <param name="inputItems"> The input items used to create the streaming response. </param>
+    ///// <param name="previousResponseId"> The ID of the previous response to continue. </param>
+    ///// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+    ///// <returns> The streaming response updates. </returns>
+    //public override CollectionResult<StreamingResponseUpdate> CreateResponseStreaming(string model, IEnumerable<ResponseItem> inputItems, string previousResponseId = null, CancellationToken cancellationToken = default)
+    //{
+    //    Argument.AssertNotNull(inputItems, nameof(inputItems));
+    //    CreateResponseOptions options = new()
+    //    {
+    //        StreamingEnabled = true,
+    //        PreviousResponseId = previousResponseId,
+    //        Model = model,
+    //    };
+    //    foreach (ResponseItem inputItem in inputItems)
+    //    {
+    //        options.InputItems.Add(inputItem);
+    //    }
+    //    ApplyClientDefaults(options);
+    //    return CreateResponseStreaming(options, cancellationToken);
+    //}
 
-    /// <summary> Creates a streaming response from user input text. </summary>
-    /// <param name="userInputText"> The user input text used to create the streaming response. </param>
-    /// <param name="previousResponseId"> The ID of the previous response to continue. </param>
-    /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-    /// <returns> The streaming response updates. </returns>
-    public virtual CollectionResult<StreamingResponseUpdate> CreateResponseStreaming(string userInputText, string previousResponseId = null, CancellationToken cancellationToken = default)
-    {
-        return CreateResponseStreaming(null, userInputText, previousResponseId, cancellationToken);
-    }
+    ///// <summary> Creates a streaming response from user input text. </summary>
+    ///// <param name="userInputText"> The user input text used to create the streaming response. </param>
+    ///// <param name="previousResponseId"> The ID of the previous response to continue. </param>
+    ///// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+    ///// <returns> The streaming response updates. </returns>
+    //public virtual CollectionResult<StreamingResponseUpdate> CreateResponseStreaming(string userInputText, string previousResponseId = null, CancellationToken cancellationToken = default)
+    //{
+    //    return CreateResponseStreaming(null, userInputText, previousResponseId, cancellationToken);
+    //}
 
-    /// <summary> Creates a streaming response for the specified model from user input text. </summary>
-    /// <param name="model"> The model used to create the streaming response. </param>
-    /// <param name="userInputText"> The user input text used to create the streaming response. </param>
-    /// <param name="previousResponseId"> The ID of the previous response to continue. </param>
-    /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-    /// <returns> The streaming response updates. </returns>
-    public override CollectionResult<StreamingResponseUpdate> CreateResponseStreaming(string model, string userInputText, string previousResponseId = null, CancellationToken cancellationToken = default)
-    {
-        Argument.AssertNotNullOrEmpty(userInputText, nameof(userInputText));
-        CreateResponseOptions options = new()
-        {
-            StreamingEnabled = true,
-            PreviousResponseId = previousResponseId,
-            InputItems = { ResponseItem.CreateUserMessageItem(userInputText) },
-            Model = model,
-        };
-        ApplyClientDefaults(options);
-        return CreateResponseStreaming(options, cancellationToken);
-    }
+    ///// <summary> Creates a streaming response for the specified model from user input text. </summary>
+    ///// <param name="model"> The model used to create the streaming response. </param>
+    ///// <param name="userInputText"> The user input text used to create the streaming response. </param>
+    ///// <param name="previousResponseId"> The ID of the previous response to continue. </param>
+    ///// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+    ///// <returns> The streaming response updates. </returns>
+    //public override CollectionResult<StreamingResponseUpdate> CreateResponseStreaming(string model, string userInputText, string previousResponseId = null, CancellationToken cancellationToken = default)
+    //{
+    //    Argument.AssertNotNullOrEmpty(userInputText, nameof(userInputText));
+    //    CreateResponseOptions options = new()
+    //    {
+    //        StreamingEnabled = true,
+    //        PreviousResponseId = previousResponseId,
+    //        InputItems = { ResponseItem.CreateUserMessageItem(userInputText) },
+    //        Model = model,
+    //    };
+    //    ApplyClientDefaults(options);
+    //    return CreateResponseStreaming(options, cancellationToken);
+    //}
 
     /// <summary> Asynchronously creates a streaming response using the supplied response options. </summary>
     /// <param name="options"> The options used to create the streaming response. </param>
     /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
     /// <returns> The streaming response updates. </returns>
-    public override AsyncCollectionResult<StreamingResponseUpdate> CreateResponseStreamingAsync(CreateResponseOptions options, CancellationToken cancellationToken = default)
+    public override async Task<AsyncStreamingResult<StreamingResponseUpdate>> CreateResponseStreamingAsync(CreateResponseOptions options, CancellationToken cancellationToken = default)
     {
         Argument.AssertNotNull(options, nameof(options));
         options.StreamingEnabled = true;
         ApplyClientDefaults(options);
         if (!OpenTelemetryResponseScope.IsEnabled)
         {
-            return new NormalizingAsyncStreamingCollectionResult(base.CreateResponseStreamingAsync(options, cancellationToken));
+            return new NormalizingAsyncStreamingCollectionResult(base.CreateResponseStreamingAsync(options, cancellationToken).);
         }
 
         var telemetryContext = StreamingTelemetryContext.Create(options, Endpoint, _defaultModelName);
@@ -469,6 +469,9 @@ public partial class ProjectResponsesClient : ResponsesClient
         try
         {
             var innerResult = base.CreateResponseStreamingAsync(options, cancellationToken);
+            //
+            (await base.CreateResponseStreamingAsync(options, cancellationToken).ConfigureAwait(false)).
+            //
             return new NormalizingAsyncStreamingCollectionResult(new TelemetryAsyncStreamingCollectionResult(innerResult, telemetryContext));
         }
         catch (Exception ex)
