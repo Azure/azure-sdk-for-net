@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _reportRestClient.CreateGetRequest(Id.Name, context);
+                using HttpMessage message = _reportRestClient.CreateGetRequest(Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<AppComplianceReportData> response = Response.FromValue(AppComplianceReportData.FromResponse(result), result);
                 if (response.Value == null)
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _reportRestClient.CreateGetRequest(Id.Name, context);
+                using HttpMessage message = _reportRestClient.CreateGetRequest(Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<AppComplianceReportData> response = Response.FromValue(AppComplianceReportData.FromResponse(result), result);
                 if (response.Value == null)
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _reportRestClient.CreateUpdateRequest(Id.Name, AppComplianceReportPatch.ToRequestContent(patch), context);
+                using HttpMessage message = _reportRestClient.CreateUpdateRequest(Id.Name, AppComplianceReportPatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 AppComplianceAutomationArmOperation<AppComplianceReportResource> operation = new AppComplianceAutomationArmOperation<AppComplianceReportResource>(
                     new AppComplianceReportResourceOperationSource(Client),
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _reportRestClient.CreateUpdateRequest(Id.Name, AppComplianceReportPatch.ToRequestContent(patch), context);
+                using HttpMessage message = _reportRestClient.CreateUpdateRequest(Id.Name, AppComplianceReportPatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 AppComplianceAutomationArmOperation<AppComplianceReportResource> operation = new AppComplianceAutomationArmOperation<AppComplianceReportResource>(
                     new AppComplianceReportResourceOperationSource(Client),
@@ -337,7 +337,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _reportRestClient.CreateDeleteRequest(Id.Name, context);
+                using HttpMessage message = _reportRestClient.CreateDeleteRequest(Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 AppComplianceAutomationArmOperation operation = new AppComplianceAutomationArmOperation(_reportClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -386,7 +386,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _reportRestClient.CreateDeleteRequest(Id.Name, context);
+                using HttpMessage message = _reportRestClient.CreateDeleteRequest(Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 AppComplianceAutomationArmOperation operation = new AppComplianceAutomationArmOperation(_reportClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -438,7 +438,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _reportRestClient.CreateCheckAppComplianceReportNestedResourceNameAvailabilityRequest(Id.Name, AppComplianceReportNameAvailabilityContent.ToRequestContent(content), context);
+                using HttpMessage message = _reportRestClient.CreateCheckAppComplianceReportNestedResourceNameAvailabilityRequest(Id.Name, AppComplianceReportNameAvailabilityContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<AppComplianceReportNameAvailabilityResult> response = Response.FromValue(AppComplianceReportNameAvailabilityResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -490,7 +490,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _reportRestClient.CreateCheckAppComplianceReportNestedResourceNameAvailabilityRequest(Id.Name, AppComplianceReportNameAvailabilityContent.ToRequestContent(content), context);
+                using HttpMessage message = _reportRestClient.CreateCheckAppComplianceReportNestedResourceNameAvailabilityRequest(Id.Name, AppComplianceReportNameAvailabilityContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<AppComplianceReportNameAvailabilityResult> response = Response.FromValue(AppComplianceReportNameAvailabilityResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -539,7 +539,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _reportRestClient.CreateFixRequest(Id.Name, context);
+                using HttpMessage message = _reportRestClient.CreateFixRequest(Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 AppComplianceAutomationArmOperation<ReportFixResult> operation = new AppComplianceAutomationArmOperation<ReportFixResult>(
                     new ReportFixResultOperationSource(),
@@ -594,7 +594,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _reportRestClient.CreateFixRequest(Id.Name, context);
+                using HttpMessage message = _reportRestClient.CreateFixRequest(Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 AppComplianceAutomationArmOperation<ReportFixResult> operation = new AppComplianceAutomationArmOperation<ReportFixResult>(
                     new ReportFixResultOperationSource(),
@@ -648,7 +648,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _reportRestClient.CreateGetScopingQuestionsRequest(Id.Name, context);
+                using HttpMessage message = _reportRestClient.CreateGetScopingQuestionsRequest(Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ScopingQuestions> response = Response.FromValue(ScopingQuestions.FromResponse(result), result);
                 if (response.Value == null)
@@ -696,7 +696,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _reportRestClient.CreateGetScopingQuestionsRequest(Id.Name, context);
+                using HttpMessage message = _reportRestClient.CreateGetScopingQuestionsRequest(Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ScopingQuestions> response = Response.FromValue(ScopingQuestions.FromResponse(result), result);
                 if (response.Value == null)
@@ -749,7 +749,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _reportRestClient.CreateSyncCertRecordRequest(Id.Name, SyncCertRecordContent.ToRequestContent(content), context);
+                using HttpMessage message = _reportRestClient.CreateSyncCertRecordRequest(Id.Name, SyncCertRecordContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 AppComplianceAutomationArmOperation<SyncCertRecordResult> operation = new AppComplianceAutomationArmOperation<SyncCertRecordResult>(
                     new SyncCertRecordResultOperationSource(),
@@ -808,7 +808,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _reportRestClient.CreateSyncCertRecordRequest(Id.Name, SyncCertRecordContent.ToRequestContent(content), context);
+                using HttpMessage message = _reportRestClient.CreateSyncCertRecordRequest(Id.Name, SyncCertRecordContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 AppComplianceAutomationArmOperation<SyncCertRecordResult> operation = new AppComplianceAutomationArmOperation<SyncCertRecordResult>(
                     new SyncCertRecordResultOperationSource(),
@@ -863,7 +863,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _reportRestClient.CreateVerifyRequest(Id.Name, context);
+                using HttpMessage message = _reportRestClient.CreateVerifyRequest(Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 AppComplianceAutomationArmOperation<ReportVerificationResult> operation = new AppComplianceAutomationArmOperation<ReportVerificationResult>(
                     new ReportVerificationResultOperationSource(),
@@ -918,7 +918,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _reportRestClient.CreateVerifyRequest(Id.Name, context);
+                using HttpMessage message = _reportRestClient.CreateVerifyRequest(Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 AppComplianceAutomationArmOperation<ReportVerificationResult> operation = new AppComplianceAutomationArmOperation<ReportVerificationResult>(
                     new ReportVerificationResultOperationSource(),

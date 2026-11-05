@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Advisor
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _resiliencyReviewsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), reviewId, context);
+                using HttpMessage message = _resiliencyReviewsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), reviewId, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<AdvisorResiliencyReviewData> response = Response.FromValue(AdvisorResiliencyReviewData.FromResponse(result), result);
                 if (response.Value == null)
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Advisor
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _resiliencyReviewsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), reviewId, context);
+                using HttpMessage message = _resiliencyReviewsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), reviewId, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<AdvisorResiliencyReviewData> response = Response.FromValue(AdvisorResiliencyReviewData.FromResponse(result), result);
                 if (response.Value == null)
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.Advisor
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _resiliencyReviewsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), reviewId, context);
+                using HttpMessage message = _resiliencyReviewsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), reviewId, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<AdvisorResiliencyReviewData> response = default;
@@ -319,7 +319,7 @@ namespace Azure.ResourceManager.Advisor
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _resiliencyReviewsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), reviewId, context);
+                using HttpMessage message = _resiliencyReviewsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), reviewId, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<AdvisorResiliencyReviewData> response = default;
@@ -376,7 +376,7 @@ namespace Azure.ResourceManager.Advisor
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _resiliencyReviewsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), reviewId, context);
+                using HttpMessage message = _resiliencyReviewsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), reviewId, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<AdvisorResiliencyReviewData> response = default;
@@ -437,7 +437,7 @@ namespace Azure.ResourceManager.Advisor
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _resiliencyReviewsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), reviewId, context);
+                using HttpMessage message = _resiliencyReviewsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), reviewId, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<AdvisorResiliencyReviewData> response = default;

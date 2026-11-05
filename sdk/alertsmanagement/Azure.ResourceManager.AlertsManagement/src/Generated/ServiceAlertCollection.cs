@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.AlertsManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _alertsRestClient.CreateGetByIdRequest(Id.ToString(), alertId, context);
+                using HttpMessage message = _alertsRestClient.CreateGetByIdRequest(Id.ToString(), alertId, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ServiceAlertData> response = Response.FromValue(ServiceAlertData.FromResponse(result), result);
                 if (response.Value == null)
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.AlertsManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _alertsRestClient.CreateGetByIdRequest(Id.ToString(), alertId, context);
+                using HttpMessage message = _alertsRestClient.CreateGetByIdRequest(Id.ToString(), alertId, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ServiceAlertData> response = Response.FromValue(ServiceAlertData.FromResponse(result), result);
                 if (response.Value == null)
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.AlertsManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _alertsRestClient.CreateGetByIdRequest(Id.ToString(), alertId, context);
+                using HttpMessage message = _alertsRestClient.CreateGetByIdRequest(Id.ToString(), alertId, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ServiceAlertData> response = default;
@@ -347,7 +347,7 @@ namespace Azure.ResourceManager.AlertsManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _alertsRestClient.CreateGetByIdRequest(Id.ToString(), alertId, context);
+                using HttpMessage message = _alertsRestClient.CreateGetByIdRequest(Id.ToString(), alertId, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ServiceAlertData> response = default;
@@ -400,7 +400,7 @@ namespace Azure.ResourceManager.AlertsManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _alertsRestClient.CreateGetByIdRequest(Id.ToString(), alertId, context);
+                using HttpMessage message = _alertsRestClient.CreateGetByIdRequest(Id.ToString(), alertId, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ServiceAlertData> response = default;
@@ -457,7 +457,7 @@ namespace Azure.ResourceManager.AlertsManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _alertsRestClient.CreateGetByIdRequest(Id.ToString(), alertId, context);
+                using HttpMessage message = _alertsRestClient.CreateGetByIdRequest(Id.ToString(), alertId, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ServiceAlertData> response = default;

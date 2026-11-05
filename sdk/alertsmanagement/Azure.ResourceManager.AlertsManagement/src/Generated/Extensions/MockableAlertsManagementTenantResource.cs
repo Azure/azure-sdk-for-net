@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.AlertsManagement.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = AlertsRestClient.CreateGetServiceAlertMetadataRequest(identifier.ToString(), context);
+                using HttpMessage message = AlertsRestClient.CreateGetServiceAlertMetadataRequest(identifier.ToString(), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ServiceAlertMetadata> response = Response.FromValue(ServiceAlertMetadata.FromResponse(result), result);
                 if (response.Value == null)
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.AlertsManagement.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = AlertsRestClient.CreateGetServiceAlertMetadataRequest(identifier.ToString(), context);
+                using HttpMessage message = AlertsRestClient.CreateGetServiceAlertMetadataRequest(identifier.ToString(), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ServiceAlertMetadata> response = Response.FromValue(ServiceAlertMetadata.FromResponse(result), result);
                 if (response.Value == null)

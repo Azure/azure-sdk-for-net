@@ -297,7 +297,7 @@ namespace Azure.ResourceManager.Advisor.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = AdvisorClientRestClient.CreateAdvisorPredictRequest(Guid.Parse(Id.SubscriptionId), AdvisorPredictionContent.ToRequestContent(content), context);
+                using HttpMessage message = AdvisorClientRestClient.CreateAdvisorPredictRequest(Guid.Parse(Id.SubscriptionId), AdvisorPredictionContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<AdvisorPredictionResult> response = Response.FromValue(AdvisorPredictionResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -345,7 +345,7 @@ namespace Azure.ResourceManager.Advisor.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = AdvisorClientRestClient.CreateAdvisorPredictRequest(Guid.Parse(Id.SubscriptionId), AdvisorPredictionContent.ToRequestContent(content), context);
+                using HttpMessage message = AdvisorClientRestClient.CreateAdvisorPredictRequest(Guid.Parse(Id.SubscriptionId), AdvisorPredictionContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<AdvisorPredictionResult> response = Response.FromValue(AdvisorPredictionResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -450,7 +450,7 @@ namespace Azure.ResourceManager.Advisor.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = ConfigurationsRestClient.CreateCreateAdvisorConfigurationInSubscriptionRequest(Guid.Parse(Id.SubscriptionId), configurationName.ToString(), AdvisorConfigurationData.ToRequestContent(data), context);
+                using HttpMessage message = ConfigurationsRestClient.CreateCreateAdvisorConfigurationInSubscriptionRequest(Guid.Parse(Id.SubscriptionId), configurationName.ToString(), AdvisorConfigurationData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<AdvisorConfigurationData> response = Response.FromValue(AdvisorConfigurationData.FromResponse(result), result);
                 if (response.Value == null)
@@ -499,7 +499,7 @@ namespace Azure.ResourceManager.Advisor.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = ConfigurationsRestClient.CreateCreateAdvisorConfigurationInSubscriptionRequest(Guid.Parse(Id.SubscriptionId), configurationName.ToString(), AdvisorConfigurationData.ToRequestContent(data), context);
+                using HttpMessage message = ConfigurationsRestClient.CreateCreateAdvisorConfigurationInSubscriptionRequest(Guid.Parse(Id.SubscriptionId), configurationName.ToString(), AdvisorConfigurationData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<AdvisorConfigurationData> response = Response.FromValue(AdvisorConfigurationData.FromResponse(result), result);
                 if (response.Value == null)
@@ -543,7 +543,7 @@ namespace Azure.ResourceManager.Advisor.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = RecommendationsOperationGroupRestClient.CreateGenerateRecommendationRequest(Guid.Parse(Id.SubscriptionId), context);
+                using HttpMessage message = RecommendationsOperationGroupRestClient.CreateGenerateRecommendationRequest(Guid.Parse(Id.SubscriptionId), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 return response;
             }
@@ -582,7 +582,7 @@ namespace Azure.ResourceManager.Advisor.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = RecommendationsOperationGroupRestClient.CreateGenerateRecommendationRequest(Guid.Parse(Id.SubscriptionId), context);
+                using HttpMessage message = RecommendationsOperationGroupRestClient.CreateGenerateRecommendationRequest(Guid.Parse(Id.SubscriptionId), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 return response;
             }
@@ -622,7 +622,7 @@ namespace Azure.ResourceManager.Advisor.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = RecommendationsOperationGroupRestClient.CreateGetGenerateStatusRecommendationRequest(Guid.Parse(Id.SubscriptionId), operationId, context);
+                using HttpMessage message = RecommendationsOperationGroupRestClient.CreateGetGenerateStatusRecommendationRequest(Guid.Parse(Id.SubscriptionId), operationId, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 return response;
             }
@@ -662,7 +662,7 @@ namespace Azure.ResourceManager.Advisor.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = RecommendationsOperationGroupRestClient.CreateGetGenerateStatusRecommendationRequest(Guid.Parse(Id.SubscriptionId), operationId, context);
+                using HttpMessage message = RecommendationsOperationGroupRestClient.CreateGetGenerateStatusRecommendationRequest(Guid.Parse(Id.SubscriptionId), operationId, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 return response;
             }

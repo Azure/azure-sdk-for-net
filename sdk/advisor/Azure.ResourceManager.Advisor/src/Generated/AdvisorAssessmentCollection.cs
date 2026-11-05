@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Advisor
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _assessmentResultsRestClient.CreatePutRequest(Guid.Parse(Id.SubscriptionId), assessmentName, AdvisorAssessmentData.ToRequestContent(data), context);
+                using HttpMessage message = _assessmentResultsRestClient.CreatePutRequest(Guid.Parse(Id.SubscriptionId), assessmentName, AdvisorAssessmentData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<AdvisorAssessmentData> response = Response.FromValue(AdvisorAssessmentData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.Advisor
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _assessmentResultsRestClient.CreatePutRequest(Guid.Parse(Id.SubscriptionId), assessmentName, AdvisorAssessmentData.ToRequestContent(data), context);
+                using HttpMessage message = _assessmentResultsRestClient.CreatePutRequest(Guid.Parse(Id.SubscriptionId), assessmentName, AdvisorAssessmentData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<AdvisorAssessmentData> response = Response.FromValue(AdvisorAssessmentData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.Advisor
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _assessmentResultsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), assessmentName, context);
+                using HttpMessage message = _assessmentResultsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), assessmentName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<AdvisorAssessmentData> response = Response.FromValue(AdvisorAssessmentData.FromResponse(result), result);
                 if (response.Value == null)
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.Advisor
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _assessmentResultsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), assessmentName, context);
+                using HttpMessage message = _assessmentResultsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), assessmentName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<AdvisorAssessmentData> response = Response.FromValue(AdvisorAssessmentData.FromResponse(result), result);
                 if (response.Value == null)
@@ -368,7 +368,7 @@ namespace Azure.ResourceManager.Advisor
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _assessmentResultsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), assessmentName, context);
+                using HttpMessage message = _assessmentResultsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), assessmentName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<AdvisorAssessmentData> response = default;
@@ -425,7 +425,7 @@ namespace Azure.ResourceManager.Advisor
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _assessmentResultsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), assessmentName, context);
+                using HttpMessage message = _assessmentResultsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), assessmentName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<AdvisorAssessmentData> response = default;
@@ -482,7 +482,7 @@ namespace Azure.ResourceManager.Advisor
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _assessmentResultsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), assessmentName, context);
+                using HttpMessage message = _assessmentResultsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), assessmentName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<AdvisorAssessmentData> response = default;
@@ -543,7 +543,7 @@ namespace Azure.ResourceManager.Advisor
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _assessmentResultsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), assessmentName, context);
+                using HttpMessage message = _assessmentResultsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), assessmentName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<AdvisorAssessmentData> response = default;

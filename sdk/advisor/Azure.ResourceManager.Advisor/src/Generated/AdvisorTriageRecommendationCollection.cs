@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Advisor
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _triageRecommendationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Name, recommendationId, context);
+                using HttpMessage message = _triageRecommendationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Name, recommendationId, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<AdvisorTriageRecommendationData> response = Response.FromValue(AdvisorTriageRecommendationData.FromResponse(result), result);
                 if (response.Value == null)
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Advisor
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _triageRecommendationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Name, recommendationId, context);
+                using HttpMessage message = _triageRecommendationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Name, recommendationId, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<AdvisorTriageRecommendationData> response = Response.FromValue(AdvisorTriageRecommendationData.FromResponse(result), result);
                 if (response.Value == null)
@@ -259,7 +259,7 @@ namespace Azure.ResourceManager.Advisor
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _triageRecommendationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Name, recommendationId, context);
+                using HttpMessage message = _triageRecommendationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Name, recommendationId, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<AdvisorTriageRecommendationData> response = default;
@@ -316,7 +316,7 @@ namespace Azure.ResourceManager.Advisor
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _triageRecommendationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Name, recommendationId, context);
+                using HttpMessage message = _triageRecommendationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Name, recommendationId, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<AdvisorTriageRecommendationData> response = default;
@@ -373,7 +373,7 @@ namespace Azure.ResourceManager.Advisor
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _triageRecommendationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Name, recommendationId, context);
+                using HttpMessage message = _triageRecommendationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Name, recommendationId, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<AdvisorTriageRecommendationData> response = default;
@@ -434,7 +434,7 @@ namespace Azure.ResourceManager.Advisor
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _triageRecommendationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Name, recommendationId, context);
+                using HttpMessage message = _triageRecommendationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Name, recommendationId, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<AdvisorTriageRecommendationData> response = default;

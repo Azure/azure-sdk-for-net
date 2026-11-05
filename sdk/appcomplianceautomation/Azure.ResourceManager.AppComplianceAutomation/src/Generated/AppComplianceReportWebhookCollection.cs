@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _webhookRestClient.CreateCreateOrUpdateRequest(Id.Name, webhookName, AppComplianceReportWebhookData.ToRequestContent(data), context);
+                using HttpMessage message = _webhookRestClient.CreateCreateOrUpdateRequest(Id.Name, webhookName, AppComplianceReportWebhookData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<AppComplianceReportWebhookData> response = Response.FromValue(AppComplianceReportWebhookData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _webhookRestClient.CreateCreateOrUpdateRequest(Id.Name, webhookName, AppComplianceReportWebhookData.ToRequestContent(data), context);
+                using HttpMessage message = _webhookRestClient.CreateCreateOrUpdateRequest(Id.Name, webhookName, AppComplianceReportWebhookData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<AppComplianceReportWebhookData> response = Response.FromValue(AppComplianceReportWebhookData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _webhookRestClient.CreateGetRequest(Id.Name, webhookName, context);
+                using HttpMessage message = _webhookRestClient.CreateGetRequest(Id.Name, webhookName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<AppComplianceReportWebhookData> response = Response.FromValue(AppComplianceReportWebhookData.FromResponse(result), result);
                 if (response.Value == null)
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _webhookRestClient.CreateGetRequest(Id.Name, webhookName, context);
+                using HttpMessage message = _webhookRestClient.CreateGetRequest(Id.Name, webhookName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<AppComplianceReportWebhookData> response = Response.FromValue(AppComplianceReportWebhookData.FromResponse(result), result);
                 if (response.Value == null)
@@ -387,7 +387,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _webhookRestClient.CreateGetRequest(Id.Name, webhookName, context);
+                using HttpMessage message = _webhookRestClient.CreateGetRequest(Id.Name, webhookName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<AppComplianceReportWebhookData> response = default;
@@ -444,7 +444,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _webhookRestClient.CreateGetRequest(Id.Name, webhookName, context);
+                using HttpMessage message = _webhookRestClient.CreateGetRequest(Id.Name, webhookName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<AppComplianceReportWebhookData> response = default;
@@ -501,7 +501,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _webhookRestClient.CreateGetRequest(Id.Name, webhookName, context);
+                using HttpMessage message = _webhookRestClient.CreateGetRequest(Id.Name, webhookName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<AppComplianceReportWebhookData> response = default;
@@ -562,7 +562,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _webhookRestClient.CreateGetRequest(Id.Name, webhookName, context);
+                using HttpMessage message = _webhookRestClient.CreateGetRequest(Id.Name, webhookName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<AppComplianceReportWebhookData> response = default;
