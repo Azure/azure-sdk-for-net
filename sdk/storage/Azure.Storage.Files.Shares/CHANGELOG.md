@@ -1,6 +1,6 @@
 # Release History
 
-## 12.29.0-beta.1 (2026-11-04)
+## 12.29.0-beta.1 (2026-11-05)
 
 ### Features Added
 - Added support for `ShareFileClient` and `ShareDirectoryClient` constructed using File Id-based URLs. `ShareFileClient` constructed via File Id-based URLs can only perform `GetProperties` and `GetFileLinks` operations currently. `ShareDirectoryClient` constructed via File Id-based URLs can only perform `GetProperties` operation currently.
