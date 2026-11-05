@@ -209,7 +209,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests.E2ETests
         [InlineData(null, 200)]
         [InlineData("?key=value", 200)]
         [InlineData(null, 500)]
-        [InlineData(null, 0, true)]
+        [InlineData(null, 0, true, Skip = "https://github.com/Azure/azure-sdk-for-net/issues/64549")]
         public async Task HttpRequestsAreCapturedCorrectly(string? queryString, int expectedStatusCode, bool shouldThrowException = false)
         {
             using var testHttpServer = TestHttpServer.RunServer(
