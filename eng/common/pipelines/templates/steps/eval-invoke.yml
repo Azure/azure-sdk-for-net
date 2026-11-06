@@ -2,7 +2,7 @@
 # node script directly. UseAzSdkAuthentication=true wraps the same run in AzureCLI@2 so a live
 # MCP's Azure DevOps calls inherit the service-connection identity.
 # The shard's login-to-copilot template supplies the executor and prompt-judge token.
-# Authenticated callers pass a repo-owned service connection explicitly.
+# Callers may override the existing service connection through azureSubscription.
 
 parameters:
   - name: vallyRoot
@@ -10,13 +10,13 @@ parameters:
   - name: UseAzSdkAuthentication
     type: boolean
     default: false
-  - name: azureSubscription
-    type: string
-    default: ''
   - name: threshold
     # Pass-rate gate passed to `vally eval --threshold` and the shard verdict in invoke-eval-shard.js.
     type: number
     default: 0.8
+  - name: azureSubscription
+    type: string
+    default: opensource-api-connection
   - name: vallyArguments
     # Supplementary --tag/--runs/--workers/--timeout argument pairs, not shell text.
     # --tag does not filter the matrix; callers must keep every planned eval non-empty.
