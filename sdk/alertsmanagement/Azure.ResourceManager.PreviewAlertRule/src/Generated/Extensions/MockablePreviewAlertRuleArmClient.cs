@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.PreviewAlertRule.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = PreviewAlertRulesRestClient.CreatePreviewAlertRuleRequest(scope.ToString(), PreviewAlertRuleContent.ToRequestContent(content), context);
+                using HttpMessage message = PreviewAlertRulesRestClient.CreatePreviewAlertRuleRequest(scope.ToString(), PreviewAlertRuleContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<PreviewAlertRuleResult> response = Response.FromValue(PreviewAlertRuleResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.PreviewAlertRule.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = PreviewAlertRulesRestClient.CreatePreviewAlertRuleRequest(scope.ToString(), PreviewAlertRuleContent.ToRequestContent(content), context);
+                using HttpMessage message = PreviewAlertRulesRestClient.CreatePreviewAlertRuleRequest(scope.ToString(), PreviewAlertRuleContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<PreviewAlertRuleResult> response = Response.FromValue(PreviewAlertRuleResult.FromResponse(result), result);
                 if (response.Value == null)

@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.AppConfiguration
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _configurationStoresRestClient.CreateGetDeletedRequest(Guid.Parse(Id.SubscriptionId), location, configStoreName, context);
+                using HttpMessage message = _configurationStoresRestClient.CreateGetDeletedRequest(Guid.Parse(Id.SubscriptionId), location, configStoreName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<DeletedAppConfigurationStoreData> response = Response.FromValue(DeletedAppConfigurationStoreData.FromResponse(result), result);
                 if (response.Value == null)
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.AppConfiguration
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _configurationStoresRestClient.CreateGetDeletedRequest(Guid.Parse(Id.SubscriptionId), location, configStoreName, context);
+                using HttpMessage message = _configurationStoresRestClient.CreateGetDeletedRequest(Guid.Parse(Id.SubscriptionId), location, configStoreName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<DeletedAppConfigurationStoreData> response = Response.FromValue(DeletedAppConfigurationStoreData.FromResponse(result), result);
                 if (response.Value == null)
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.AppConfiguration
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _configurationStoresRestClient.CreateGetDeletedRequest(Guid.Parse(Id.SubscriptionId), location, configStoreName, context);
+                using HttpMessage message = _configurationStoresRestClient.CreateGetDeletedRequest(Guid.Parse(Id.SubscriptionId), location, configStoreName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<DeletedAppConfigurationStoreData> response = default;
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.AppConfiguration
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _configurationStoresRestClient.CreateGetDeletedRequest(Guid.Parse(Id.SubscriptionId), location, configStoreName, context);
+                using HttpMessage message = _configurationStoresRestClient.CreateGetDeletedRequest(Guid.Parse(Id.SubscriptionId), location, configStoreName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<DeletedAppConfigurationStoreData> response = default;
@@ -309,7 +309,7 @@ namespace Azure.ResourceManager.AppConfiguration
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _configurationStoresRestClient.CreateGetDeletedRequest(Guid.Parse(Id.SubscriptionId), location, configStoreName, context);
+                using HttpMessage message = _configurationStoresRestClient.CreateGetDeletedRequest(Guid.Parse(Id.SubscriptionId), location, configStoreName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<DeletedAppConfigurationStoreData> response = default;
@@ -371,7 +371,7 @@ namespace Azure.ResourceManager.AppConfiguration
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _configurationStoresRestClient.CreateGetDeletedRequest(Guid.Parse(Id.SubscriptionId), location, configStoreName, context);
+                using HttpMessage message = _configurationStoresRestClient.CreateGetDeletedRequest(Guid.Parse(Id.SubscriptionId), location, configStoreName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<DeletedAppConfigurationStoreData> response = default;

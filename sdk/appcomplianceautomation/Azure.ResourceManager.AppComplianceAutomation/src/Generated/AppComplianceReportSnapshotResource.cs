@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _snapshotRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _snapshotRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<AppComplianceReportSnapshotData> response = Response.FromValue(AppComplianceReportSnapshotData.FromResponse(result), result);
                 if (response.Value == null)
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _snapshotRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _snapshotRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<AppComplianceReportSnapshotData> response = Response.FromValue(AppComplianceReportSnapshotData.FromResponse(result), result);
                 if (response.Value == null)
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _snapshotRestClient.CreateDownloadRequest(Id.Parent.Name, Id.Name, SnapshotDownloadRequestContent.ToRequestContent(content), context);
+                using HttpMessage message = _snapshotRestClient.CreateDownloadRequest(Id.Parent.Name, Id.Name, SnapshotDownloadRequestContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 AppComplianceAutomationArmOperation<AppComplianceDownloadResult> operation = new AppComplianceAutomationArmOperation<AppComplianceDownloadResult>(
                     new AppComplianceDownloadResultOperationSource(),
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _snapshotRestClient.CreateDownloadRequest(Id.Parent.Name, Id.Name, SnapshotDownloadRequestContent.ToRequestContent(content), context);
+                using HttpMessage message = _snapshotRestClient.CreateDownloadRequest(Id.Parent.Name, Id.Name, SnapshotDownloadRequestContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 AppComplianceAutomationArmOperation<AppComplianceDownloadResult> operation = new AppComplianceAutomationArmOperation<AppComplianceDownloadResult>(
                     new AppComplianceDownloadResultOperationSource(),

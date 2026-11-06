@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _evidenceRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _evidenceRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<AppComplianceReportEvidenceData> response = Response.FromValue(AppComplianceReportEvidenceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _evidenceRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _evidenceRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<AppComplianceReportEvidenceData> response = Response.FromValue(AppComplianceReportEvidenceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _evidenceRestClient.CreateDeleteRequest(Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _evidenceRestClient.CreateDeleteRequest(Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
@@ -270,7 +270,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _evidenceRestClient.CreateDeleteRequest(Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _evidenceRestClient.CreateDeleteRequest(Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
@@ -324,7 +324,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _evidenceRestClient.CreateDownloadRequest(Id.Parent.Name, Id.Name, EvidenceFileDownloadRequestContent.ToRequestContent(content), context);
+                using HttpMessage message = _evidenceRestClient.CreateDownloadRequest(Id.Parent.Name, Id.Name, EvidenceFileDownloadRequestContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<EvidenceFileDownloadResult> response = Response.FromValue(EvidenceFileDownloadResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -376,7 +376,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _evidenceRestClient.CreateDownloadRequest(Id.Parent.Name, Id.Name, EvidenceFileDownloadRequestContent.ToRequestContent(content), context);
+                using HttpMessage message = _evidenceRestClient.CreateDownloadRequest(Id.Parent.Name, Id.Name, EvidenceFileDownloadRequestContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<EvidenceFileDownloadResult> response = Response.FromValue(EvidenceFileDownloadResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -431,7 +431,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _evidenceRestClient.CreateCreateOrUpdateRequest(Id.Parent.Name, Id.Name, AppComplianceReportEvidenceData.ToRequestContent(data), offerGuid, reportCreatorTenantId, context);
+                using HttpMessage message = _evidenceRestClient.CreateCreateOrUpdateRequest(Id.Parent.Name, Id.Name, AppComplianceReportEvidenceData.ToRequestContent(data), offerGuid, reportCreatorTenantId, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<AppComplianceReportEvidenceData> response = Response.FromValue(AppComplianceReportEvidenceData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -489,7 +489,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _evidenceRestClient.CreateCreateOrUpdateRequest(Id.Parent.Name, Id.Name, AppComplianceReportEvidenceData.ToRequestContent(data), offerGuid, reportCreatorTenantId, context);
+                using HttpMessage message = _evidenceRestClient.CreateCreateOrUpdateRequest(Id.Parent.Name, Id.Name, AppComplianceReportEvidenceData.ToRequestContent(data), offerGuid, reportCreatorTenantId, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<AppComplianceReportEvidenceData> response = Response.FromValue(AppComplianceReportEvidenceData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;

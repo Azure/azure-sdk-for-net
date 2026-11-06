@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.AppConfiguration
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _configurationStoresRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, configStoreName, AppConfigurationStoreData.ToRequestContent(data), context);
+                using HttpMessage message = _configurationStoresRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, configStoreName, AppConfigurationStoreData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 AppConfigurationArmOperation<AppConfigurationStoreResource> operation = new AppConfigurationArmOperation<AppConfigurationStoreResource>(
                     new AppConfigurationStoreResourceOperationSource(Client),
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.AppConfiguration
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _configurationStoresRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, configStoreName, AppConfigurationStoreData.ToRequestContent(data), context);
+                using HttpMessage message = _configurationStoresRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, configStoreName, AppConfigurationStoreData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 AppConfigurationArmOperation<AppConfigurationStoreResource> operation = new AppConfigurationArmOperation<AppConfigurationStoreResource>(
                     new AppConfigurationStoreResourceOperationSource(Client),
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.AppConfiguration
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _configurationStoresRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, configStoreName, context);
+                using HttpMessage message = _configurationStoresRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, configStoreName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<AppConfigurationStoreData> response = Response.FromValue(AppConfigurationStoreData.FromResponse(result), result);
                 if (response.Value == null)
@@ -259,7 +259,7 @@ namespace Azure.ResourceManager.AppConfiguration
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _configurationStoresRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, configStoreName, context);
+                using HttpMessage message = _configurationStoresRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, configStoreName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<AppConfigurationStoreData> response = Response.FromValue(AppConfigurationStoreData.FromResponse(result), result);
                 if (response.Value == null)
@@ -378,7 +378,7 @@ namespace Azure.ResourceManager.AppConfiguration
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _configurationStoresRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, configStoreName, context);
+                using HttpMessage message = _configurationStoresRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, configStoreName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<AppConfigurationStoreData> response = default;
@@ -435,7 +435,7 @@ namespace Azure.ResourceManager.AppConfiguration
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _configurationStoresRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, configStoreName, context);
+                using HttpMessage message = _configurationStoresRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, configStoreName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<AppConfigurationStoreData> response = default;
@@ -492,7 +492,7 @@ namespace Azure.ResourceManager.AppConfiguration
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _configurationStoresRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, configStoreName, context);
+                using HttpMessage message = _configurationStoresRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, configStoreName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<AppConfigurationStoreData> response = default;
@@ -553,7 +553,7 @@ namespace Azure.ResourceManager.AppConfiguration
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _configurationStoresRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, configStoreName, context);
+                using HttpMessage message = _configurationStoresRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, configStoreName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<AppConfigurationStoreData> response = default;

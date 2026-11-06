@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _apiGatewayRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _apiGatewayRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ApiGatewayData> response = Response.FromValue(ApiGatewayData.FromResponse(result), result);
                 if (response.Value == null)
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _apiGatewayRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _apiGatewayRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ApiGatewayData> response = Response.FromValue(ApiGatewayData.FromResponse(result), result);
                 if (response.Value == null)
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _apiGatewayRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ApiGatewayPatch.ToRequestContent(patch), context);
+                using HttpMessage message = _apiGatewayRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ApiGatewayPatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ApiManagementArmOperation<ApiGatewayResource> operation = new ApiManagementArmOperation<ApiGatewayResource>(
                     new ApiGatewayResourceOperationSource(Client),
@@ -290,7 +290,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _apiGatewayRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ApiGatewayPatch.ToRequestContent(patch), context);
+                using HttpMessage message = _apiGatewayRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ApiGatewayPatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ApiManagementArmOperation<ApiGatewayResource> operation = new ApiManagementArmOperation<ApiGatewayResource>(
                     new ApiGatewayResourceOperationSource(Client),
@@ -411,7 +411,7 @@ namespace Azure.ResourceManager.ApiManagement
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _apiGatewayRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _apiGatewayRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<ApiGatewayData> response = Response.FromValue(ApiGatewayData.FromResponse(result), result);
                     return Response.FromValue(new ApiGatewayResource(Client, response.Value), response.GetRawResponse());
@@ -459,7 +459,7 @@ namespace Azure.ResourceManager.ApiManagement
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _apiGatewayRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _apiGatewayRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<ApiGatewayData> response = Response.FromValue(ApiGatewayData.FromResponse(result), result);
                     return Response.FromValue(new ApiGatewayResource(Client, response.Value), response.GetRawResponse());
@@ -505,7 +505,7 @@ namespace Azure.ResourceManager.ApiManagement
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _apiGatewayRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _apiGatewayRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<ApiGatewayData> response = Response.FromValue(ApiGatewayData.FromResponse(result), result);
                     return Response.FromValue(new ApiGatewayResource(Client, response.Value), response.GetRawResponse());
@@ -547,7 +547,7 @@ namespace Azure.ResourceManager.ApiManagement
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _apiGatewayRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _apiGatewayRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<ApiGatewayData> response = Response.FromValue(ApiGatewayData.FromResponse(result), result);
                     return Response.FromValue(new ApiGatewayResource(Client, response.Value), response.GetRawResponse());
@@ -589,7 +589,7 @@ namespace Azure.ResourceManager.ApiManagement
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _apiGatewayRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _apiGatewayRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<ApiGatewayData> response = Response.FromValue(ApiGatewayData.FromResponse(result), result);
                     return Response.FromValue(new ApiGatewayResource(Client, response.Value), response.GetRawResponse());
@@ -635,7 +635,7 @@ namespace Azure.ResourceManager.ApiManagement
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _apiGatewayRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _apiGatewayRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<ApiGatewayData> response = Response.FromValue(ApiGatewayData.FromResponse(result), result);
                     return Response.FromValue(new ApiGatewayResource(Client, response.Value), response.GetRawResponse());

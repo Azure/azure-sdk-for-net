@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Advisor
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _suppressionContractsRestClient.CreateCreateRequest(Id.Parent.ToString(), Id.Name, name, AdvisorSuppressionContractData.ToRequestContent(data), context);
+                using HttpMessage message = _suppressionContractsRestClient.CreateCreateRequest(Id.Parent.ToString(), Id.Name, name, AdvisorSuppressionContractData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<AdvisorSuppressionContractData> response = Response.FromValue(AdvisorSuppressionContractData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.Advisor
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _suppressionContractsRestClient.CreateCreateRequest(Id.Parent.ToString(), Id.Name, name, AdvisorSuppressionContractData.ToRequestContent(data), context);
+                using HttpMessage message = _suppressionContractsRestClient.CreateCreateRequest(Id.Parent.ToString(), Id.Name, name, AdvisorSuppressionContractData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<AdvisorSuppressionContractData> response = Response.FromValue(AdvisorSuppressionContractData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.Advisor
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _suppressionContractsRestClient.CreateGetRequest(Id.Parent.ToString(), Id.Name, name, context);
+                using HttpMessage message = _suppressionContractsRestClient.CreateGetRequest(Id.Parent.ToString(), Id.Name, name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<AdvisorSuppressionContractData> response = Response.FromValue(AdvisorSuppressionContractData.FromResponse(result), result);
                 if (response.Value == null)
@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.Advisor
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _suppressionContractsRestClient.CreateGetRequest(Id.Parent.ToString(), Id.Name, name, context);
+                using HttpMessage message = _suppressionContractsRestClient.CreateGetRequest(Id.Parent.ToString(), Id.Name, name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<AdvisorSuppressionContractData> response = Response.FromValue(AdvisorSuppressionContractData.FromResponse(result), result);
                 if (response.Value == null)
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.Advisor
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _suppressionContractsRestClient.CreateGetRequest(Id.Parent.ToString(), Id.Name, name, context);
+                using HttpMessage message = _suppressionContractsRestClient.CreateGetRequest(Id.Parent.ToString(), Id.Name, name, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<AdvisorSuppressionContractData> response = default;
@@ -350,7 +350,7 @@ namespace Azure.ResourceManager.Advisor
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _suppressionContractsRestClient.CreateGetRequest(Id.Parent.ToString(), Id.Name, name, context);
+                using HttpMessage message = _suppressionContractsRestClient.CreateGetRequest(Id.Parent.ToString(), Id.Name, name, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<AdvisorSuppressionContractData> response = default;
@@ -407,7 +407,7 @@ namespace Azure.ResourceManager.Advisor
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _suppressionContractsRestClient.CreateGetRequest(Id.Parent.ToString(), Id.Name, name, context);
+                using HttpMessage message = _suppressionContractsRestClient.CreateGetRequest(Id.Parent.ToString(), Id.Name, name, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<AdvisorSuppressionContractData> response = default;
@@ -468,7 +468,7 @@ namespace Azure.ResourceManager.Advisor
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _suppressionContractsRestClient.CreateGetRequest(Id.Parent.ToString(), Id.Name, name, context);
+                using HttpMessage message = _suppressionContractsRestClient.CreateGetRequest(Id.Parent.ToString(), Id.Name, name, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<AdvisorSuppressionContractData> response = default;

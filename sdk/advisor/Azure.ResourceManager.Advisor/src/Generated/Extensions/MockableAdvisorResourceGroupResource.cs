@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.Advisor.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = ConfigurationsRestClient.CreateCreateAdvisorConfigurationInResourceGroupRequest(Guid.Parse(Id.SubscriptionId), configurationName.ToString(), Id.ResourceGroupName, AdvisorConfigurationData.ToRequestContent(data), context);
+                using HttpMessage message = ConfigurationsRestClient.CreateCreateAdvisorConfigurationInResourceGroupRequest(Guid.Parse(Id.SubscriptionId), configurationName.ToString(), Id.ResourceGroupName, AdvisorConfigurationData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<AdvisorConfigurationData> response = Response.FromValue(AdvisorConfigurationData.FromResponse(result), result);
                 if (response.Value == null)
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.Advisor.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = ConfigurationsRestClient.CreateCreateAdvisorConfigurationInResourceGroupRequest(Guid.Parse(Id.SubscriptionId), configurationName.ToString(), Id.ResourceGroupName, AdvisorConfigurationData.ToRequestContent(data), context);
+                using HttpMessage message = ConfigurationsRestClient.CreateCreateAdvisorConfigurationInResourceGroupRequest(Guid.Parse(Id.SubscriptionId), configurationName.ToString(), Id.ResourceGroupName, AdvisorConfigurationData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<AdvisorConfigurationData> response = Response.FromValue(AdvisorConfigurationData.FromResponse(result), result);
                 if (response.Value == null)

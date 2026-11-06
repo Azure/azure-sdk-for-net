@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Advisor
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _metadataEntitiesRestClient.CreateGetRequest(Id.Name, context);
+                using HttpMessage message = _metadataEntitiesRestClient.CreateGetRequest(Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<AdvisorMetadataEntityData> response = Response.FromValue(AdvisorMetadataEntityData.FromResponse(result), result);
                 if (response.Value == null)
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.Advisor
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _metadataEntitiesRestClient.CreateGetRequest(Id.Name, context);
+                using HttpMessage message = _metadataEntitiesRestClient.CreateGetRequest(Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<AdvisorMetadataEntityData> response = Response.FromValue(AdvisorMetadataEntityData.FromResponse(result), result);
                 if (response.Value == null)
