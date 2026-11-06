@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.FrontDoor
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkExperimentProfilesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _networkExperimentProfilesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<FrontDoorNetworkExperimentProfileData> response = Response.FromValue(FrontDoorNetworkExperimentProfileData.FromResponse(result), result);
                 if (response.Value == null)
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.FrontDoor
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkExperimentProfilesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _networkExperimentProfilesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<FrontDoorNetworkExperimentProfileData> response = Response.FromValue(FrontDoorNetworkExperimentProfileData.FromResponse(result), result);
                 if (response.Value == null)
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.FrontDoor
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkExperimentProfilesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, FrontDoorNetworkExperimentProfilePatch.ToRequestContent(patch), context);
+                using HttpMessage message = _networkExperimentProfilesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, FrontDoorNetworkExperimentProfilePatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 FrontDoorArmOperation<FrontDoorNetworkExperimentProfileResource> operation = new FrontDoorArmOperation<FrontDoorNetworkExperimentProfileResource>(
                     new FrontDoorNetworkExperimentProfileResourceOperationSource(Client),
@@ -290,7 +290,7 @@ namespace Azure.ResourceManager.FrontDoor
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkExperimentProfilesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, FrontDoorNetworkExperimentProfilePatch.ToRequestContent(patch), context);
+                using HttpMessage message = _networkExperimentProfilesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, FrontDoorNetworkExperimentProfilePatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 FrontDoorArmOperation<FrontDoorNetworkExperimentProfileResource> operation = new FrontDoorArmOperation<FrontDoorNetworkExperimentProfileResource>(
                     new FrontDoorNetworkExperimentProfileResourceOperationSource(Client),
@@ -345,7 +345,7 @@ namespace Azure.ResourceManager.FrontDoor
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkExperimentProfilesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _networkExperimentProfilesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 FrontDoorArmOperation operation = new FrontDoorArmOperation(_networkExperimentProfilesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -394,7 +394,7 @@ namespace Azure.ResourceManager.FrontDoor
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkExperimentProfilesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _networkExperimentProfilesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 FrontDoorArmOperation operation = new FrontDoorArmOperation(_networkExperimentProfilesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -509,7 +509,7 @@ namespace Azure.ResourceManager.FrontDoor
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _networkExperimentProfilesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _networkExperimentProfilesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<FrontDoorNetworkExperimentProfileData> response = Response.FromValue(FrontDoorNetworkExperimentProfileData.FromResponse(result), result);
                     return Response.FromValue(new FrontDoorNetworkExperimentProfileResource(Client, response.Value), response.GetRawResponse());
@@ -557,7 +557,7 @@ namespace Azure.ResourceManager.FrontDoor
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _networkExperimentProfilesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _networkExperimentProfilesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<FrontDoorNetworkExperimentProfileData> response = Response.FromValue(FrontDoorNetworkExperimentProfileData.FromResponse(result), result);
                     return Response.FromValue(new FrontDoorNetworkExperimentProfileResource(Client, response.Value), response.GetRawResponse());
@@ -603,7 +603,7 @@ namespace Azure.ResourceManager.FrontDoor
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _networkExperimentProfilesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _networkExperimentProfilesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<FrontDoorNetworkExperimentProfileData> response = Response.FromValue(FrontDoorNetworkExperimentProfileData.FromResponse(result), result);
                     return Response.FromValue(new FrontDoorNetworkExperimentProfileResource(Client, response.Value), response.GetRawResponse());
@@ -645,7 +645,7 @@ namespace Azure.ResourceManager.FrontDoor
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _networkExperimentProfilesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _networkExperimentProfilesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<FrontDoorNetworkExperimentProfileData> response = Response.FromValue(FrontDoorNetworkExperimentProfileData.FromResponse(result), result);
                     return Response.FromValue(new FrontDoorNetworkExperimentProfileResource(Client, response.Value), response.GetRawResponse());
@@ -687,7 +687,7 @@ namespace Azure.ResourceManager.FrontDoor
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _networkExperimentProfilesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _networkExperimentProfilesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<FrontDoorNetworkExperimentProfileData> response = Response.FromValue(FrontDoorNetworkExperimentProfileData.FromResponse(result), result);
                     return Response.FromValue(new FrontDoorNetworkExperimentProfileResource(Client, response.Value), response.GetRawResponse());
@@ -733,7 +733,7 @@ namespace Azure.ResourceManager.FrontDoor
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _networkExperimentProfilesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _networkExperimentProfilesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<FrontDoorNetworkExperimentProfileData> response = Response.FromValue(FrontDoorNetworkExperimentProfileData.FromResponse(result), result);
                     return Response.FromValue(new FrontDoorNetworkExperimentProfileResource(Client, response.Value), response.GetRawResponse());

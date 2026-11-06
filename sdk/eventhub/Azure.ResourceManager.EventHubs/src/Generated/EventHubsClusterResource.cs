@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.EventHubs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _clustersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _clustersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<EventHubsClusterData> response = Response.FromValue(EventHubsClusterData.FromResponse(result), result);
                 if (response.Value == null)
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.EventHubs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _clustersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _clustersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<EventHubsClusterData> response = Response.FromValue(EventHubsClusterData.FromResponse(result), result);
                 if (response.Value == null)
@@ -237,7 +237,7 @@ namespace Azure.ResourceManager.EventHubs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _clustersRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, EventHubsClusterData.ToRequestContent(data), context);
+                using HttpMessage message = _clustersRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, EventHubsClusterData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 EventHubsArmOperation<EventHubsClusterResource> operation = new EventHubsArmOperation<EventHubsClusterResource>(
                     new EventHubsClusterResourceOperationSource(Client),
@@ -296,7 +296,7 @@ namespace Azure.ResourceManager.EventHubs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _clustersRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, EventHubsClusterData.ToRequestContent(data), context);
+                using HttpMessage message = _clustersRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, EventHubsClusterData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 EventHubsArmOperation<EventHubsClusterResource> operation = new EventHubsArmOperation<EventHubsClusterResource>(
                     new EventHubsClusterResourceOperationSource(Client),
@@ -351,7 +351,7 @@ namespace Azure.ResourceManager.EventHubs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _clustersRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _clustersRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 EventHubsArmOperation operation = new EventHubsArmOperation(_clustersClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -400,7 +400,7 @@ namespace Azure.ResourceManager.EventHubs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _clustersRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _clustersRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 EventHubsArmOperation operation = new EventHubsArmOperation(_clustersClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -448,7 +448,7 @@ namespace Azure.ResourceManager.EventHubs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _configurationRestClient.CreateGetConfigurationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _configurationRestClient.CreateGetConfigurationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ClusterQuotaConfigurationProperties> response = Response.FromValue(ClusterQuotaConfigurationProperties.FromResponse(result), result);
                 if (response.Value == null)
@@ -496,7 +496,7 @@ namespace Azure.ResourceManager.EventHubs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _configurationRestClient.CreateGetConfigurationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _configurationRestClient.CreateGetConfigurationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ClusterQuotaConfigurationProperties> response = Response.FromValue(ClusterQuotaConfigurationProperties.FromResponse(result), result);
                 if (response.Value == null)
@@ -624,7 +624,7 @@ namespace Azure.ResourceManager.EventHubs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _configurationRestClient.CreatePatchConfigurationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ClusterQuotaConfigurationProperties.ToRequestContent(clusterQuotaConfigurationProperties), context);
+                using HttpMessage message = _configurationRestClient.CreatePatchConfigurationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ClusterQuotaConfigurationProperties.ToRequestContent(clusterQuotaConfigurationProperties), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ClusterQuotaConfigurationProperties> response = Response.FromValue(ClusterQuotaConfigurationProperties.FromResponse(result), result);
                 if (response.Value == null)
@@ -676,7 +676,7 @@ namespace Azure.ResourceManager.EventHubs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _configurationRestClient.CreatePatchConfigurationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ClusterQuotaConfigurationProperties.ToRequestContent(clusterQuotaConfigurationProperties), context);
+                using HttpMessage message = _configurationRestClient.CreatePatchConfigurationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ClusterQuotaConfigurationProperties.ToRequestContent(clusterQuotaConfigurationProperties), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ClusterQuotaConfigurationProperties> response = Response.FromValue(ClusterQuotaConfigurationProperties.FromResponse(result), result);
                 if (response.Value == null)
@@ -715,7 +715,7 @@ namespace Azure.ResourceManager.EventHubs
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _clustersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _clustersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<EventHubsClusterData> response = Response.FromValue(EventHubsClusterData.FromResponse(result), result);
                     return Response.FromValue(new EventHubsClusterResource(Client, response.Value), response.GetRawResponse());
@@ -763,7 +763,7 @@ namespace Azure.ResourceManager.EventHubs
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _clustersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _clustersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<EventHubsClusterData> response = Response.FromValue(EventHubsClusterData.FromResponse(result), result);
                     return Response.FromValue(new EventHubsClusterResource(Client, response.Value), response.GetRawResponse());
@@ -809,7 +809,7 @@ namespace Azure.ResourceManager.EventHubs
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _clustersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _clustersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<EventHubsClusterData> response = Response.FromValue(EventHubsClusterData.FromResponse(result), result);
                     return Response.FromValue(new EventHubsClusterResource(Client, response.Value), response.GetRawResponse());
@@ -851,7 +851,7 @@ namespace Azure.ResourceManager.EventHubs
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _clustersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _clustersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<EventHubsClusterData> response = Response.FromValue(EventHubsClusterData.FromResponse(result), result);
                     return Response.FromValue(new EventHubsClusterResource(Client, response.Value), response.GetRawResponse());
@@ -893,7 +893,7 @@ namespace Azure.ResourceManager.EventHubs
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _clustersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _clustersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<EventHubsClusterData> response = Response.FromValue(EventHubsClusterData.FromResponse(result), result);
                     return Response.FromValue(new EventHubsClusterResource(Client, response.Value), response.GetRawResponse());
@@ -939,7 +939,7 @@ namespace Azure.ResourceManager.EventHubs
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _clustersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _clustersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<EventHubsClusterData> response = Response.FromValue(EventHubsClusterData.FromResponse(result), result);
                     return Response.FromValue(new EventHubsClusterResource(Client, response.Value), response.GetRawResponse());

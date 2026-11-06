@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.HanaOnAzure
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sapMonitorsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, sapMonitorName, SapMonitorData.ToRequestContent(data), context);
+                using HttpMessage message = _sapMonitorsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, sapMonitorName, SapMonitorData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 HanaOnAzureArmOperation<SapMonitorResource> operation = new HanaOnAzureArmOperation<SapMonitorResource>(
                     new SapMonitorResourceOperationSource(Client),
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.HanaOnAzure
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sapMonitorsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, sapMonitorName, SapMonitorData.ToRequestContent(data), context);
+                using HttpMessage message = _sapMonitorsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, sapMonitorName, SapMonitorData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 HanaOnAzureArmOperation<SapMonitorResource> operation = new HanaOnAzureArmOperation<SapMonitorResource>(
                     new SapMonitorResourceOperationSource(Client),
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.HanaOnAzure
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sapMonitorsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, sapMonitorName, context);
+                using HttpMessage message = _sapMonitorsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, sapMonitorName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<SapMonitorData> response = Response.FromValue(SapMonitorData.FromResponse(result), result);
                 if (response.Value == null)
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.HanaOnAzure
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sapMonitorsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, sapMonitorName, context);
+                using HttpMessage message = _sapMonitorsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, sapMonitorName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<SapMonitorData> response = Response.FromValue(SapMonitorData.FromResponse(result), result);
                 if (response.Value == null)
@@ -299,7 +299,7 @@ namespace Azure.ResourceManager.HanaOnAzure
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sapMonitorsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, sapMonitorName, context);
+                using HttpMessage message = _sapMonitorsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, sapMonitorName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<SapMonitorData> response = default;
@@ -356,7 +356,7 @@ namespace Azure.ResourceManager.HanaOnAzure
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sapMonitorsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, sapMonitorName, context);
+                using HttpMessage message = _sapMonitorsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, sapMonitorName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<SapMonitorData> response = default;
@@ -413,7 +413,7 @@ namespace Azure.ResourceManager.HanaOnAzure
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sapMonitorsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, sapMonitorName, context);
+                using HttpMessage message = _sapMonitorsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, sapMonitorName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<SapMonitorData> response = default;
@@ -474,7 +474,7 @@ namespace Azure.ResourceManager.HanaOnAzure
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sapMonitorsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, sapMonitorName, context);
+                using HttpMessage message = _sapMonitorsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, sapMonitorName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<SapMonitorData> response = default;

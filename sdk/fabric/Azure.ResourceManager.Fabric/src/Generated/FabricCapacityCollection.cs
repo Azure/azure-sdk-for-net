@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Fabric
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _fabricCapacitiesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, capacityName, FabricCapacityData.ToRequestContent(data), context);
+                using HttpMessage message = _fabricCapacitiesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, capacityName, FabricCapacityData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 FabricArmOperation<FabricCapacityResource> operation = new FabricArmOperation<FabricCapacityResource>(
                     new FabricCapacityResourceOperationSource(Client),
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.Fabric
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _fabricCapacitiesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, capacityName, FabricCapacityData.ToRequestContent(data), context);
+                using HttpMessage message = _fabricCapacitiesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, capacityName, FabricCapacityData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 FabricArmOperation<FabricCapacityResource> operation = new FabricArmOperation<FabricCapacityResource>(
                     new FabricCapacityResourceOperationSource(Client),
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.Fabric
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _fabricCapacitiesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, capacityName, context);
+                using HttpMessage message = _fabricCapacitiesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, capacityName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<FabricCapacityData> response = Response.FromValue(FabricCapacityData.FromResponse(result), result);
                 if (response.Value == null)
@@ -259,7 +259,7 @@ namespace Azure.ResourceManager.Fabric
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _fabricCapacitiesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, capacityName, context);
+                using HttpMessage message = _fabricCapacitiesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, capacityName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<FabricCapacityData> response = Response.FromValue(FabricCapacityData.FromResponse(result), result);
                 if (response.Value == null)
@@ -364,7 +364,7 @@ namespace Azure.ResourceManager.Fabric
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _fabricCapacitiesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, capacityName, context);
+                using HttpMessage message = _fabricCapacitiesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, capacityName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<FabricCapacityData> response = default;
@@ -421,7 +421,7 @@ namespace Azure.ResourceManager.Fabric
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _fabricCapacitiesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, capacityName, context);
+                using HttpMessage message = _fabricCapacitiesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, capacityName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<FabricCapacityData> response = default;
@@ -478,7 +478,7 @@ namespace Azure.ResourceManager.Fabric
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _fabricCapacitiesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, capacityName, context);
+                using HttpMessage message = _fabricCapacitiesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, capacityName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<FabricCapacityData> response = default;
@@ -539,7 +539,7 @@ namespace Azure.ResourceManager.Fabric
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _fabricCapacitiesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, capacityName, context);
+                using HttpMessage message = _fabricCapacitiesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, capacityName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<FabricCapacityData> response = default;

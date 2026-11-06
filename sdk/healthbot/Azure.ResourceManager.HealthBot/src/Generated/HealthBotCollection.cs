@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.HealthBot
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _botsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, botName, HealthBotData.ToRequestContent(data), context);
+                using HttpMessage message = _botsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, botName, HealthBotData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 HealthBotArmOperation<HealthBotResource> operation = new HealthBotArmOperation<HealthBotResource>(
                     new HealthBotResourceOperationSource(Client),
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.HealthBot
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _botsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, botName, HealthBotData.ToRequestContent(data), context);
+                using HttpMessage message = _botsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, botName, HealthBotData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 HealthBotArmOperation<HealthBotResource> operation = new HealthBotArmOperation<HealthBotResource>(
                     new HealthBotResourceOperationSource(Client),
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.HealthBot
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _botsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, botName, context);
+                using HttpMessage message = _botsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, botName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<HealthBotData> response = Response.FromValue(HealthBotData.FromResponse(result), result);
                 if (response.Value == null)
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.HealthBot
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _botsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, botName, context);
+                using HttpMessage message = _botsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, botName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<HealthBotData> response = Response.FromValue(HealthBotData.FromResponse(result), result);
                 if (response.Value == null)
@@ -357,7 +357,7 @@ namespace Azure.ResourceManager.HealthBot
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _botsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, botName, context);
+                using HttpMessage message = _botsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, botName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<HealthBotData> response = default;
@@ -414,7 +414,7 @@ namespace Azure.ResourceManager.HealthBot
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _botsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, botName, context);
+                using HttpMessage message = _botsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, botName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<HealthBotData> response = default;
@@ -471,7 +471,7 @@ namespace Azure.ResourceManager.HealthBot
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _botsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, botName, context);
+                using HttpMessage message = _botsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, botName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<HealthBotData> response = default;
@@ -532,7 +532,7 @@ namespace Azure.ResourceManager.HealthBot
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _botsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, botName, context);
+                using HttpMessage message = _botsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, botName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<HealthBotData> response = default;
