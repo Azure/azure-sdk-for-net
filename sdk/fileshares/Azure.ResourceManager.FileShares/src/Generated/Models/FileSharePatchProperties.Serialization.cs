@@ -104,6 +104,11 @@ namespace Azure.ResourceManager.FileShares.Models
                 writer.WritePropertyName("publicNetworkAccess"u8);
                 writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
             }
+            if (Optional.IsDefined(Encryption))
+            {
+                writer.WritePropertyName("encryption"u8);
+                writer.WriteObjectValue(Encryption, options);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -152,6 +157,7 @@ namespace Azure.ResourceManager.FileShares.Models
             NfsProtocolProperties nfsProtocolProperties = default;
             PublicAccessProperties publicAccessProperties = default;
             FileSharePublicNetworkAccess? publicNetworkAccess = default;
+            FileShareEncryption encryption = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -209,6 +215,15 @@ namespace Azure.ResourceManager.FileShares.Models
                     publicNetworkAccess = new FileSharePublicNetworkAccess(prop.Value.GetString());
                     continue;
                 }
+                if (prop.NameEquals("encryption"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    encryption = FileShareEncryption.DeserializeFileShareEncryption(prop.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
@@ -221,6 +236,7 @@ namespace Azure.ResourceManager.FileShares.Models
                 nfsProtocolProperties,
                 publicAccessProperties,
                 publicNetworkAccess,
+                encryption,
                 additionalBinaryDataProperties);
         }
     }

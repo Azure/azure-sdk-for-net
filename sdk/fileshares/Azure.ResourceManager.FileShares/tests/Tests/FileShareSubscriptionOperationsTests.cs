@@ -42,7 +42,9 @@ namespace Azure.ResourceManager.FileShares.Tests
         [RecordedTest]
         public async Task GetProvisioningRecommendation()
         {
+            // Uses the 1.0.0 constructor; FileShareFeatureTests covers the 2026-09-01 input fields.
             var content = new FileShareProvisioningRecommendationContent(1024);
+            Assert.AreEqual(1024, content.FileShareProvisioningRecommendationInputProvisionedStorageInGiB);
 
             var result = await DefaultSubscription.GetProvisioningRecommendationAsync(
                 new AzureLocation(DefaultLocation), content);
