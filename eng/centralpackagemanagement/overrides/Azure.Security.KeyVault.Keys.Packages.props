@@ -1,0 +1,5 @@
+<Project>
+  <ItemGroup>
+    <PackageVersion Update="Azure.Core" Version="1.65.0-beta.1" />
+  </ItemGroup>
+</Project>
