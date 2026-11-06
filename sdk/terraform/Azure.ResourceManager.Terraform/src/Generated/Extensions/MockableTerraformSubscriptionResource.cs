@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Terraform.Mocking
 
         private ClientDiagnostics TerraformInterfaceClientDiagnostics => _terraformInterfaceClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Terraform.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private TerraformInterface TerraformInterfaceRestClient => _terraformInterfaceRestClient ??= new TerraformInterface(TerraformInterfaceClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-09-01-preview");
+        private TerraformInterface TerraformInterfaceRestClient => _terraformInterfaceRestClient ??= new TerraformInterface(TerraformInterfaceClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-09-01-preview");
 
         /// <summary>
         /// Exports the Terraform configuration of the specified resource(s).
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Terraform.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <description> 2026-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Terraform.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <description> 2026-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
