@@ -279,7 +279,7 @@ namespace Azure.AI.Projects.Agents.Telemetry
             using var memoryStream = new MemoryStream();
             content.WriteTo(memoryStream, CancellationToken.None);
             memoryStream.Position = 0;
-            BinaryData binaryData = BinaryData.FromStream(memoryStream);
+            BinaryData binaryData = null;
             if (content is MultiPartFormDataBinaryContent multiPartFormContent)
             {
                 string boundary = null;
@@ -301,7 +301,6 @@ namespace Azure.AI.Projects.Agents.Telemetry
                     string strContent = "Content-Type: application/json";
                     byte[] readBuffer = new byte[Math.Max(btBoundary.Length, 1000)];
                     List<byte> arJson = [];
-                    memoryStream.Position = 0;
                     int read = memoryStream.Read(readBuffer, 0, readBuffer.Length);
                     bool withinBoundaries = false, badContentType=false, withinContentType=false, doneReading=false;
                     LinkedList<byte> window = new();
@@ -382,6 +381,10 @@ namespace Azure.AI.Projects.Agents.Telemetry
                 {
                     return null;
                 }
+            }
+            else
+            {
+                binaryData = BinaryData.FromStream(memoryStream);
             }
             ProjectsAgentVersionCreationOptions creationOptions = ModelReaderWriter.Read<ProjectsAgentVersionCreationOptions>(
                 binaryData,

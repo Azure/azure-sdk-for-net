@@ -29,6 +29,10 @@ namespace Azure.AI.Projects.Agents.Tests;
 
 public class AgentsTests : AgentsTestBase
 {
+    private const string SourceName = "Azure.AI.Projects.Agents.AgentsClient";
+    private const string EnableSwitch = "Azure.Experimental.EnableGenAITracing";
+    private const string MessageEventsSwitch = "Azure.Experimental.UseMessageEvents";
+    private const string ContentSwitch = "Azure.Experimental.TraceGenAIMessageContent";
     public AgentsTests(bool isAsync) : base(isAsync)
     {
     }
@@ -1179,14 +1183,23 @@ public class AgentsTests : AgentsTestBase
         {
             if (longInput)
             {
-                IEnumerable<byte> longStr = Enumerable.Repeat((byte)'c', 1436);
-                File.WriteAllBytes(Path.Combine(tempDirectory, Path.GetRandomFileName()), [..longStr]);
+                Random rv = new Random(42);
+                byte[] randomBytes = new byte[14360];
+                for (int i = 0; i< randomBytes.Length; i++)
+                {
+                    randomBytes[i] = (byte)rv.Next(32, 126);
+                }
+                File.WriteAllBytes(Path.Combine(tempDirectory, Path.GetRandomFileName()), randomBytes);
             }
             else
             {
                 File.WriteAllText(Path.Combine(tempDirectory, Path.GetRandomFileName()), "E = m * c ^ 2");
             }
             dataZip = FileHelper.CreateAndReadZipFileFromDirectory(tempDirectory);
+            if (longInput)
+            {
+                Assert.That(dataZip.Length > 1000);
+            }
         }
         finally
         {
@@ -1212,6 +1225,9 @@ public class AgentsTests : AgentsTestBase
         string oldTracesEnabledInitialValue = Environment.GetEnvironmentVariable("AZURE_EXPERIMENTAL_ENABLE_GENAI_TRACING", EnvironmentVariableTarget.Process);
         string oldContentRecordingEnabledInitialValue = Environment.GetEnvironmentVariable("OTEL_INSTRUMENTATION_GENAI_CAPTURE_MESSAGE_CONTENT", EnvironmentVariableTarget.Process);
         string oldUseMessageEventsInitialValue = Environment.GetEnvironmentVariable("AZURE_EXPERIMENTAL_TRACING_GEN_AI_USE_MESSAGE_EVENTS", EnvironmentVariableTarget.Process);
+        bool hadEnableSwitch = AppContext.TryGetSwitch(EnableSwitch, out bool originalEnableSwitch);
+        bool hadContentSwitch = AppContext.TryGetSwitch(ContentSwitch, out bool originalContentSwitch);
+        bool hadMessageEventsSwitch = AppContext.TryGetSwitch(MessageEventsSwitch, out bool originalMessageEventsSwitch);
         try
         {
             Environment.SetEnvironmentVariable("AZURE_EXPERIMENTAL_ENABLE_GENAI_TRACING", "true", EnvironmentVariableTarget.Process);
@@ -1257,10 +1273,26 @@ public class AgentsTests : AgentsTestBase
         }
         finally
         {
-            // Set the environmenmt variable back.
+            // Set the environment variable back.
             Environment.SetEnvironmentVariable("AZURE_EXPERIMENTAL_ENABLE_GENAI_TRACING", oldTracesEnabledInitialValue, EnvironmentVariableTarget.Process);
             Environment.SetEnvironmentVariable("OTEL_INSTRUMENTATION_GENAI_CAPTURE_MESSAGE_CONTENT", oldContentRecordingEnabledInitialValue, EnvironmentVariableTarget.Process);
             Environment.SetEnvironmentVariable("AZURE_EXPERIMENTAL_TRACING_GEN_AI_USE_MESSAGE_EVENTS", oldUseMessageEventsInitialValue, EnvironmentVariableTarget.Process);
+            if (hadEnableSwitch)
+            {
+                AppContext.SetSwitch(EnableSwitch, originalEnableSwitch);
+            }
+            if (hadContentSwitch)
+            {
+                AppContext.SetSwitch(ContentSwitch, originalContentSwitch);
+            }
+            if (hadMessageEventsSwitch)
+            {
+                AppContext.SetSwitch(MessageEventsSwitch, originalMessageEventsSwitch);
+            }
+            Assembly assembly = typeof(AgentAdministrationClient).Assembly;
+            Type openTelemetryScopeType = assembly.GetType("Azure.AI.Projects.Agents.Telemetry.OpenTelemetryScope");
+            MethodInfo reinitializeConfigurationMethod = openTelemetryScopeType.GetMethod("ReinitializeConfiguration", BindingFlags.Static | BindingFlags.NonPublic);
+            reinitializeConfigurationMethod.Invoke(null, null);
             // Cleanup after telemetry test.
             _tracerProvider?.Dispose();
             _exporter.Clear();
