@@ -964,7 +964,7 @@
 # GitHub integration, CODEOWNERS, and bot rules
 /.github/                                                          @JonathanGiles @m-nash @JoshLove-msft @ArthurMa1978
 /.github/workflows/                                                @JonathanGiles @m-nash @JoshLove-msft
-/.github/CODEOWNERS                                                @JonathanGiles @m-nash @JoshLove-msft
+/.github/CODEOWNERS                                                @JonathanGiles @m-nash @JoshLove-msft @j7nw4r
 /.github/copilot-instructions.md                                   @JonathanGiles @m-nash @JoshLove-msft
 
 ###########################
