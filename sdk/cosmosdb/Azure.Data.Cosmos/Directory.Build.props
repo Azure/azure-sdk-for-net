@@ -1,0 +1,13 @@
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <SupportsNetStandard20>false</SupportsNetStandard20>
+  </PropertyGroup>
+
+  <Import Project="$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory).., Directory.Build.props))\Directory.Build.props" />
+
+  <!-- Supports only the two latest .NET releases (net10.0 to start); no .NET Standard or .NET Framework. Applies to src and tests. -->
+  <PropertyGroup>
+    <RequiredTargetFrameworks>net10.0</RequiredTargetFrameworks>
+    <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+  </PropertyGroup>
+</Project>
