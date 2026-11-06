@@ -1,0 +1,52 @@
+<Project>
+  <!-- VALIDATION ONLY: this target captures the current ProjectDependsOn/ResolveReferences
+       behavior as the MSBuildProjectReferenceOracle. Production graph generation and queries do
+       not import it. Validation injects it through CustomAfterTraversalTargets and writes all
+       evidence beneath artifacts/validation/RepositoryProjectGraph. -->
+  <!-- Match ProjectDependsOn's outer-to-inner dispatch, but return every compiler-reference
+       filename so validation can intersect all repository package identities after one build. -->
+  <Target Name="_SetCollectMSBuildProjectReferenceOracleInnerTarget">
+    <PropertyGroup>
+      <InnerTargets>CollectMSBuildProjectReferenceOracleInner</InnerTargets>
+    </PropertyGroup>
+  </Target>
+
+  <Target Name="CollectMSBuildProjectReferenceOracle"
+          DependsOnTargets="_SetCollectMSBuildProjectReferenceOracleInnerTarget;DispatchToInnerBuilds"
+          Condition="'$(IsCrossTargetingBuild)' == 'true'"
+          Returns="@(MSBuildProjectReferenceOracleRecord)">
+    <RemoveDuplicates Inputs="@(InnerOutput)">
+      <Output TaskParameter="Filtered" ItemName="MSBuildProjectReferenceOracleRecord" />
+    </RemoveDuplicates>
+  </Target>
+
+  <Target Name="CollectMSBuildProjectReferenceOracleInner"
+          DependsOnTargets="ResolveReferences"
+          Returns="@(MSBuildProjectReferenceOracleRecord)">
+    <ItemGroup Condition="'$(IsClientLibrary)' == 'true' and '$(IsGeneratorLibrary)' != 'true'">
+      <MSBuildProjectReferenceOracleRecord
+          Include="@(ReferencePath -> '%(Filename)|$(PackageRootDirectory)|$(MSBuildProjectFullPath)|$(TargetFramework)')" />
+    </ItemGroup>
+  </Target>
+
+  <!-- The Traversal SDK imports this file into service.proj through CustomAfterTraversalTargets.
+       Child projects receive the collector through the corresponding Microsoft.Common hooks. -->
+  <Target Name="CollectRepositoryDependencyRelationWithMSBuildProjectReferenceOracle">
+    <Error Condition="'$(OutputProjectFilePath)' == ''"
+           Text="OutputProjectFilePath is required." />
+    <MSBuild Projects="@(ProjectReference)"
+             Targets="CollectMSBuildProjectReferenceOracle"
+             BuildInParallel="$(BuildInParallel)"
+             SkipNonexistentProjects="false"
+             SkipNonexistentTargets="true"
+             Properties="CustomAfterMicrosoftCommonTargets=$(MSBuildThisFileFullPath);CustomAfterMicrosoftCommonCrossTargetingTargets=$(MSBuildThisFileFullPath)">
+      <Output ItemName="_MSBuildProjectReferenceOracleRecord" TaskParameter="TargetOutputs" />
+    </MSBuild>
+    <RemoveDuplicates Inputs="@(_MSBuildProjectReferenceOracleRecord)">
+      <Output TaskParameter="Filtered" ItemName="_DistinctMSBuildProjectReferenceOracleRecord" />
+    </RemoveDuplicates>
+    <WriteLinesToFile File="$(OutputProjectFilePath)"
+                      Lines="@(_DistinctMSBuildProjectReferenceOracleRecord)"
+                      Overwrite="true" />
+  </Target>
+</Project>
