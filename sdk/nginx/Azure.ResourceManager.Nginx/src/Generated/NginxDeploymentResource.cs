@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Nginx
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _nginxDeploymentsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _nginxDeploymentsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<NginxDeploymentData> response = Response.FromValue(NginxDeploymentData.FromResponse(result), result);
                 if (response.Value == null)
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.Nginx
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _nginxDeploymentsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _nginxDeploymentsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<NginxDeploymentData> response = Response.FromValue(NginxDeploymentData.FromResponse(result), result);
                 if (response.Value == null)
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.Nginx
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _nginxDeploymentsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, NginxDeploymentPatch.ToRequestContent(patch), context);
+                using HttpMessage message = _nginxDeploymentsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, NginxDeploymentPatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NginxArmOperation<NginxDeploymentResource> operation = new NginxArmOperation<NginxDeploymentResource>(
                     new NginxDeploymentResourceOperationSource(Client),
@@ -279,7 +279,7 @@ namespace Azure.ResourceManager.Nginx
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _nginxDeploymentsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, NginxDeploymentPatch.ToRequestContent(patch), context);
+                using HttpMessage message = _nginxDeploymentsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, NginxDeploymentPatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NginxArmOperation<NginxDeploymentResource> operation = new NginxArmOperation<NginxDeploymentResource>(
                     new NginxDeploymentResourceOperationSource(Client),
@@ -334,7 +334,7 @@ namespace Azure.ResourceManager.Nginx
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _nginxDeploymentsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _nginxDeploymentsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NginxArmOperation operation = new NginxArmOperation(_nginxDeploymentsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -383,7 +383,7 @@ namespace Azure.ResourceManager.Nginx
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _nginxDeploymentsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _nginxDeploymentsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NginxArmOperation operation = new NginxArmOperation(_nginxDeploymentsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -431,7 +431,7 @@ namespace Azure.ResourceManager.Nginx
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _nginxDeploymentsRestClient.CreateGetDefaultWafPoliciesRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _nginxDeploymentsRestClient.CreateGetDefaultWafPoliciesRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<NginxDeploymentDefaultWafPolicyListResult> response = Response.FromValue(NginxDeploymentDefaultWafPolicyListResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -479,7 +479,7 @@ namespace Azure.ResourceManager.Nginx
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _nginxDeploymentsRestClient.CreateGetDefaultWafPoliciesRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _nginxDeploymentsRestClient.CreateGetDefaultWafPoliciesRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<NginxDeploymentDefaultWafPolicyListResult> response = Response.FromValue(NginxDeploymentDefaultWafPolicyListResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -594,7 +594,7 @@ namespace Azure.ResourceManager.Nginx
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _nginxDeploymentsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _nginxDeploymentsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<NginxDeploymentData> response = Response.FromValue(NginxDeploymentData.FromResponse(result), result);
                     return Response.FromValue(new NginxDeploymentResource(Client, response.Value), response.GetRawResponse());
@@ -642,7 +642,7 @@ namespace Azure.ResourceManager.Nginx
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _nginxDeploymentsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _nginxDeploymentsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<NginxDeploymentData> response = Response.FromValue(NginxDeploymentData.FromResponse(result), result);
                     return Response.FromValue(new NginxDeploymentResource(Client, response.Value), response.GetRawResponse());
@@ -688,7 +688,7 @@ namespace Azure.ResourceManager.Nginx
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _nginxDeploymentsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _nginxDeploymentsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<NginxDeploymentData> response = Response.FromValue(NginxDeploymentData.FromResponse(result), result);
                     return Response.FromValue(new NginxDeploymentResource(Client, response.Value), response.GetRawResponse());
@@ -730,7 +730,7 @@ namespace Azure.ResourceManager.Nginx
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _nginxDeploymentsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _nginxDeploymentsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<NginxDeploymentData> response = Response.FromValue(NginxDeploymentData.FromResponse(result), result);
                     return Response.FromValue(new NginxDeploymentResource(Client, response.Value), response.GetRawResponse());
@@ -772,7 +772,7 @@ namespace Azure.ResourceManager.Nginx
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _nginxDeploymentsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _nginxDeploymentsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<NginxDeploymentData> response = Response.FromValue(NginxDeploymentData.FromResponse(result), result);
                     return Response.FromValue(new NginxDeploymentResource(Client, response.Value), response.GetRawResponse());
@@ -818,7 +818,7 @@ namespace Azure.ResourceManager.Nginx
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _nginxDeploymentsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _nginxDeploymentsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<NginxDeploymentData> response = Response.FromValue(NginxDeploymentData.FromResponse(result), result);
                     return Response.FromValue(new NginxDeploymentResource(Client, response.Value), response.GetRawResponse());

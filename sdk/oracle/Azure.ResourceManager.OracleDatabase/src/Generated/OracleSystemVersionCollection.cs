@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.OracleDatabase
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _systemVersionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, systemversionname, context);
+                using HttpMessage message = _systemVersionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, systemversionname, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<OracleSystemVersionData> response = Response.FromValue(OracleSystemVersionData.FromResponse(result), result);
                 if (response.Value == null)
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.OracleDatabase
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _systemVersionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, systemversionname, context);
+                using HttpMessage message = _systemVersionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, systemversionname, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<OracleSystemVersionData> response = Response.FromValue(OracleSystemVersionData.FromResponse(result), result);
                 if (response.Value == null)
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.OracleDatabase
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _systemVersionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, systemversionname, context);
+                using HttpMessage message = _systemVersionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, systemversionname, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<OracleSystemVersionData> response = default;
@@ -303,7 +303,7 @@ namespace Azure.ResourceManager.OracleDatabase
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _systemVersionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, systemversionname, context);
+                using HttpMessage message = _systemVersionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, systemversionname, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<OracleSystemVersionData> response = default;
@@ -360,7 +360,7 @@ namespace Azure.ResourceManager.OracleDatabase
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _systemVersionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, systemversionname, context);
+                using HttpMessage message = _systemVersionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, systemversionname, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<OracleSystemVersionData> response = default;
@@ -421,7 +421,7 @@ namespace Azure.ResourceManager.OracleDatabase
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _systemVersionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, systemversionname, context);
+                using HttpMessage message = _systemVersionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, systemversionname, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<OracleSystemVersionData> response = default;

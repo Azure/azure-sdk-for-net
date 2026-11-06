@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.NetApp
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _accountsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _accountsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<NetAppAccountData> response = Response.FromValue(NetAppAccountData.FromResponse(result), result);
                 if (response.Value == null)
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.NetApp
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _accountsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _accountsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<NetAppAccountData> response = Response.FromValue(NetAppAccountData.FromResponse(result), result);
                 if (response.Value == null)
@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.NetApp
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _accountsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, NetAppAccountPatch.ToRequestContent(patch), context);
+                using HttpMessage message = _accountsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, NetAppAccountPatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NetAppArmOperation<NetAppAccountResource> operation = new NetAppArmOperation<NetAppAccountResource>(
                     new NetAppAccountResourceOperationSource(Client),
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.NetApp
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _accountsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, NetAppAccountPatch.ToRequestContent(patch), context);
+                using HttpMessage message = _accountsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, NetAppAccountPatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NetAppArmOperation<NetAppAccountResource> operation = new NetAppArmOperation<NetAppAccountResource>(
                     new NetAppAccountResourceOperationSource(Client),
@@ -349,7 +349,7 @@ namespace Azure.ResourceManager.NetApp
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _accountsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _accountsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NetAppArmOperation operation = new NetAppArmOperation(_accountsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -398,7 +398,7 @@ namespace Azure.ResourceManager.NetApp
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _accountsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _accountsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NetAppArmOperation operation = new NetAppArmOperation(_accountsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -448,7 +448,7 @@ namespace Azure.ResourceManager.NetApp
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _accountsRestClient.CreateChangeKeyVaultRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, NetAppChangeKeyVault.ToRequestContent(body), context);
+                using HttpMessage message = _accountsRestClient.CreateChangeKeyVaultRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, NetAppChangeKeyVault.ToRequestContent(body), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NetAppArmOperation operation = new NetAppArmOperation(_accountsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -498,7 +498,7 @@ namespace Azure.ResourceManager.NetApp
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _accountsRestClient.CreateChangeKeyVaultRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, NetAppChangeKeyVault.ToRequestContent(body), context);
+                using HttpMessage message = _accountsRestClient.CreateChangeKeyVaultRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, NetAppChangeKeyVault.ToRequestContent(body), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NetAppArmOperation operation = new NetAppArmOperation(_accountsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -547,7 +547,7 @@ namespace Azure.ResourceManager.NetApp
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _accountsRestClient.CreateGetChangeKeyVaultInformationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _accountsRestClient.CreateGetChangeKeyVaultInformationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NetAppArmOperation<NetAppKeyVaultStatusResult> operation = new NetAppArmOperation<NetAppKeyVaultStatusResult>(
                     new NetAppKeyVaultStatusResultOperationSource(),
@@ -602,7 +602,7 @@ namespace Azure.ResourceManager.NetApp
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _accountsRestClient.CreateGetChangeKeyVaultInformationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _accountsRestClient.CreateGetChangeKeyVaultInformationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NetAppArmOperation<NetAppKeyVaultStatusResult> operation = new NetAppArmOperation<NetAppKeyVaultStatusResult>(
                     new NetAppKeyVaultStatusResultOperationSource(),
@@ -737,7 +737,7 @@ namespace Azure.ResourceManager.NetApp
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _backupsUnderAccountRestClient.CreateMigrateBackupsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, BackupsMigrationContent.ToRequestContent(content), context);
+                using HttpMessage message = _backupsUnderAccountRestClient.CreateMigrateBackupsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, BackupsMigrationContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NetAppArmOperation operation = new NetAppArmOperation(_backupsUnderAccountClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -790,7 +790,7 @@ namespace Azure.ResourceManager.NetApp
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _backupsUnderAccountRestClient.CreateMigrateBackupsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, BackupsMigrationContent.ToRequestContent(content), context);
+                using HttpMessage message = _backupsUnderAccountRestClient.CreateMigrateBackupsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, BackupsMigrationContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NetAppArmOperation operation = new NetAppArmOperation(_backupsUnderAccountClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -839,7 +839,7 @@ namespace Azure.ResourceManager.NetApp
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _accountsRestClient.CreateRefreshLdapBindPasswordRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _accountsRestClient.CreateRefreshLdapBindPasswordRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NetAppArmOperation operation = new NetAppArmOperation(_accountsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
@@ -888,7 +888,7 @@ namespace Azure.ResourceManager.NetApp
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _accountsRestClient.CreateRefreshLdapBindPasswordRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _accountsRestClient.CreateRefreshLdapBindPasswordRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NetAppArmOperation operation = new NetAppArmOperation(_accountsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
@@ -937,7 +937,7 @@ namespace Azure.ResourceManager.NetApp
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _accountsRestClient.CreateRenewCredentialsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _accountsRestClient.CreateRenewCredentialsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NetAppArmOperation operation = new NetAppArmOperation(_accountsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
@@ -986,7 +986,7 @@ namespace Azure.ResourceManager.NetApp
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _accountsRestClient.CreateRenewCredentialsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _accountsRestClient.CreateRenewCredentialsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NetAppArmOperation operation = new NetAppArmOperation(_accountsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
@@ -1036,7 +1036,7 @@ namespace Azure.ResourceManager.NetApp
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _accountsRestClient.CreateTransitionToCmkRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, NetAppEncryptionTransitionContent.ToRequestContent(content), context);
+                using HttpMessage message = _accountsRestClient.CreateTransitionToCmkRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, NetAppEncryptionTransitionContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NetAppArmOperation operation = new NetAppArmOperation(_accountsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -1086,7 +1086,7 @@ namespace Azure.ResourceManager.NetApp
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _accountsRestClient.CreateTransitionToCmkRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, NetAppEncryptionTransitionContent.ToRequestContent(content), context);
+                using HttpMessage message = _accountsRestClient.CreateTransitionToCmkRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, NetAppEncryptionTransitionContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NetAppArmOperation operation = new NetAppArmOperation(_accountsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -1125,7 +1125,7 @@ namespace Azure.ResourceManager.NetApp
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _accountsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _accountsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<NetAppAccountData> response = Response.FromValue(NetAppAccountData.FromResponse(result), result);
                     return Response.FromValue(new NetAppAccountResource(Client, response.Value), response.GetRawResponse());
@@ -1173,7 +1173,7 @@ namespace Azure.ResourceManager.NetApp
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _accountsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _accountsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<NetAppAccountData> response = Response.FromValue(NetAppAccountData.FromResponse(result), result);
                     return Response.FromValue(new NetAppAccountResource(Client, response.Value), response.GetRawResponse());
@@ -1219,7 +1219,7 @@ namespace Azure.ResourceManager.NetApp
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _accountsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _accountsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<NetAppAccountData> response = Response.FromValue(NetAppAccountData.FromResponse(result), result);
                     return Response.FromValue(new NetAppAccountResource(Client, response.Value), response.GetRawResponse());
@@ -1261,7 +1261,7 @@ namespace Azure.ResourceManager.NetApp
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _accountsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _accountsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<NetAppAccountData> response = Response.FromValue(NetAppAccountData.FromResponse(result), result);
                     return Response.FromValue(new NetAppAccountResource(Client, response.Value), response.GetRawResponse());
@@ -1303,7 +1303,7 @@ namespace Azure.ResourceManager.NetApp
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _accountsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _accountsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<NetAppAccountData> response = Response.FromValue(NetAppAccountData.FromResponse(result), result);
                     return Response.FromValue(new NetAppAccountResource(Client, response.Value), response.GetRawResponse());
@@ -1349,7 +1349,7 @@ namespace Azure.ResourceManager.NetApp
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _accountsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _accountsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<NetAppAccountData> response = Response.FromValue(NetAppAccountData.FromResponse(result), result);
                     return Response.FromValue(new NetAppAccountResource(Client, response.Value), response.GetRawResponse());

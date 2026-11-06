@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _expressRouteGatewaysRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _expressRouteGatewaysRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ExpressRouteGatewayData> response = Response.FromValue(ExpressRouteGatewayData.FromResponse(result), result);
                 if (response.Value == null)
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _expressRouteGatewaysRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _expressRouteGatewaysRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ExpressRouteGatewayData> response = Response.FromValue(ExpressRouteGatewayData.FromResponse(result), result);
                 if (response.Value == null)
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _expressRouteGatewaysRestClient.CreateUpdateTagsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, NetworkTagsObject.ToRequestContent(expressRouteGatewayParameters), context);
+                using HttpMessage message = _expressRouteGatewaysRestClient.CreateUpdateTagsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, NetworkTagsObject.ToRequestContent(expressRouteGatewayParameters), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NetworkArmOperation<ExpressRouteGatewayResource> operation = new NetworkArmOperation<ExpressRouteGatewayResource>(
                     new ExpressRouteGatewayResourceOperationSource(Client),
@@ -285,7 +285,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _expressRouteGatewaysRestClient.CreateUpdateTagsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, NetworkTagsObject.ToRequestContent(expressRouteGatewayParameters), context);
+                using HttpMessage message = _expressRouteGatewaysRestClient.CreateUpdateTagsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, NetworkTagsObject.ToRequestContent(expressRouteGatewayParameters), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NetworkArmOperation<ExpressRouteGatewayResource> operation = new NetworkArmOperation<ExpressRouteGatewayResource>(
                     new ExpressRouteGatewayResourceOperationSource(Client),
@@ -340,7 +340,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _expressRouteGatewaysRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _expressRouteGatewaysRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NetworkArmOperation operation = new NetworkArmOperation(_expressRouteGatewaysClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -389,7 +389,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _expressRouteGatewaysRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                using HttpMessage message = _expressRouteGatewaysRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NetworkArmOperation operation = new NetworkArmOperation(_expressRouteGatewaysClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -440,7 +440,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _expressRouteGatewaysRestClient.CreateGetFailoverAllTestsDetailsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, @type, fetchLatest, context);
+                using HttpMessage message = _expressRouteGatewaysRestClient.CreateGetFailoverAllTestsDetailsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, @type, fetchLatest, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NetworkArmOperation<IList<ExpressRouteFailoverTestDetails>> operation = new NetworkArmOperation<IList<ExpressRouteFailoverTestDetails>>(
                     new IListOfExpressRouteFailoverTestDetailsOperationSource(),
@@ -497,7 +497,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _expressRouteGatewaysRestClient.CreateGetFailoverAllTestsDetailsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, @type, fetchLatest, context);
+                using HttpMessage message = _expressRouteGatewaysRestClient.CreateGetFailoverAllTestsDetailsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, @type, fetchLatest, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NetworkArmOperation<IList<ExpressRouteFailoverTestDetails>> operation = new NetworkArmOperation<IList<ExpressRouteFailoverTestDetails>>(
                     new IListOfExpressRouteFailoverTestDetailsOperationSource(),
@@ -559,7 +559,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _expressRouteGatewaysRestClient.CreateGetFailoverSingleTestDetailsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, peeringLocation, failoverTestId, context);
+                using HttpMessage message = _expressRouteGatewaysRestClient.CreateGetFailoverSingleTestDetailsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, peeringLocation, failoverTestId, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NetworkArmOperation<IList<ExpressRouteFailoverSingleTestDetails>> operation = new NetworkArmOperation<IList<ExpressRouteFailoverSingleTestDetails>>(
                     new IListOfExpressRouteFailoverSingleTestDetailsOperationSource(),
@@ -621,7 +621,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _expressRouteGatewaysRestClient.CreateGetFailoverSingleTestDetailsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, peeringLocation, failoverTestId, context);
+                using HttpMessage message = _expressRouteGatewaysRestClient.CreateGetFailoverSingleTestDetailsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, peeringLocation, failoverTestId, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NetworkArmOperation<IList<ExpressRouteFailoverSingleTestDetails>> operation = new NetworkArmOperation<IList<ExpressRouteFailoverSingleTestDetails>>(
                     new IListOfExpressRouteFailoverSingleTestDetailsOperationSource(),
@@ -677,7 +677,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _expressRouteGatewaysRestClient.CreateGetResiliencyInformationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, attemptRefresh, context);
+                using HttpMessage message = _expressRouteGatewaysRestClient.CreateGetResiliencyInformationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, attemptRefresh, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NetworkArmOperation<GatewayResiliencyInformation> operation = new NetworkArmOperation<GatewayResiliencyInformation>(
                     new GatewayResiliencyInformationOperationSource(),
@@ -733,7 +733,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _expressRouteGatewaysRestClient.CreateGetResiliencyInformationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, attemptRefresh, context);
+                using HttpMessage message = _expressRouteGatewaysRestClient.CreateGetResiliencyInformationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, attemptRefresh, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NetworkArmOperation<GatewayResiliencyInformation> operation = new NetworkArmOperation<GatewayResiliencyInformation>(
                     new GatewayResiliencyInformationOperationSource(),
@@ -789,7 +789,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _expressRouteGatewaysRestClient.CreateGetRoutesInformationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, attemptRefresh, context);
+                using HttpMessage message = _expressRouteGatewaysRestClient.CreateGetRoutesInformationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, attemptRefresh, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NetworkArmOperation<GatewayRouteSetsInformation> operation = new NetworkArmOperation<GatewayRouteSetsInformation>(
                     new GatewayRouteSetsInformationOperationSource(),
@@ -845,7 +845,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _expressRouteGatewaysRestClient.CreateGetRoutesInformationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, attemptRefresh, context);
+                using HttpMessage message = _expressRouteGatewaysRestClient.CreateGetRoutesInformationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, attemptRefresh, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NetworkArmOperation<GatewayRouteSetsInformation> operation = new NetworkArmOperation<GatewayRouteSetsInformation>(
                     new GatewayRouteSetsInformationOperationSource(),
@@ -905,7 +905,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _expressRouteGatewaysRestClient.CreateStartSiteFailoverTestRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, peeringLocation, context);
+                using HttpMessage message = _expressRouteGatewaysRestClient.CreateStartSiteFailoverTestRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, peeringLocation, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NetworkArmOperation<string> operation = new NetworkArmOperation<string>(
                     new StringOperationSource(),
@@ -965,7 +965,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _expressRouteGatewaysRestClient.CreateStartSiteFailoverTestRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, peeringLocation, context);
+                using HttpMessage message = _expressRouteGatewaysRestClient.CreateStartSiteFailoverTestRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, peeringLocation, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NetworkArmOperation<string> operation = new NetworkArmOperation<string>(
                     new StringOperationSource(),
@@ -1024,7 +1024,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _expressRouteGatewaysRestClient.CreateStopSiteFailoverTestRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, null, context);
+                using HttpMessage message = _expressRouteGatewaysRestClient.CreateStopSiteFailoverTestRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, null, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NetworkArmOperation<string> operation = new NetworkArmOperation<string>(
                     new StringOperationSource(),
@@ -1083,7 +1083,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _expressRouteGatewaysRestClient.CreateStopSiteFailoverTestRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, null, context);
+                using HttpMessage message = _expressRouteGatewaysRestClient.CreateStopSiteFailoverTestRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, null, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NetworkArmOperation<string> operation = new NetworkArmOperation<string>(
                     new StringOperationSource(),
@@ -1128,7 +1128,7 @@ namespace Azure.ResourceManager.Network
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _expressRouteGatewaysRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _expressRouteGatewaysRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<ExpressRouteGatewayData> response = Response.FromValue(ExpressRouteGatewayData.FromResponse(result), result);
                     return Response.FromValue(new ExpressRouteGatewayResource(Client, response.Value), response.GetRawResponse());
@@ -1176,7 +1176,7 @@ namespace Azure.ResourceManager.Network
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _expressRouteGatewaysRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _expressRouteGatewaysRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<ExpressRouteGatewayData> response = Response.FromValue(ExpressRouteGatewayData.FromResponse(result), result);
                     return Response.FromValue(new ExpressRouteGatewayResource(Client, response.Value), response.GetRawResponse());
@@ -1222,7 +1222,7 @@ namespace Azure.ResourceManager.Network
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _expressRouteGatewaysRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _expressRouteGatewaysRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<ExpressRouteGatewayData> response = Response.FromValue(ExpressRouteGatewayData.FromResponse(result), result);
                     return Response.FromValue(new ExpressRouteGatewayResource(Client, response.Value), response.GetRawResponse());
@@ -1264,7 +1264,7 @@ namespace Azure.ResourceManager.Network
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _expressRouteGatewaysRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _expressRouteGatewaysRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<ExpressRouteGatewayData> response = Response.FromValue(ExpressRouteGatewayData.FromResponse(result), result);
                     return Response.FromValue(new ExpressRouteGatewayResource(Client, response.Value), response.GetRawResponse());
@@ -1306,7 +1306,7 @@ namespace Azure.ResourceManager.Network
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _expressRouteGatewaysRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _expressRouteGatewaysRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<ExpressRouteGatewayData> response = Response.FromValue(ExpressRouteGatewayData.FromResponse(result), result);
                     return Response.FromValue(new ExpressRouteGatewayResource(Client, response.Value), response.GetRawResponse());
@@ -1352,7 +1352,7 @@ namespace Azure.ResourceManager.Network
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _expressRouteGatewaysRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    using HttpMessage message = _expressRouteGatewaysRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<ExpressRouteGatewayData> response = Response.FromValue(ExpressRouteGatewayData.FromResponse(result), result);
                     return Response.FromValue(new ExpressRouteGatewayResource(Client, response.Value), response.GetRawResponse());

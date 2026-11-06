@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _firewallsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, firewallName, PaloAltoNetworksFirewallData.ToRequestContent(data), context);
+                using HttpMessage message = _firewallsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, firewallName, PaloAltoNetworksFirewallData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NgfwArmOperation<PaloAltoNetworksFirewallResource> operation = new NgfwArmOperation<PaloAltoNetworksFirewallResource>(
                     new PaloAltoNetworksFirewallResourceOperationSource(Client),
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _firewallsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, firewallName, PaloAltoNetworksFirewallData.ToRequestContent(data), context);
+                using HttpMessage message = _firewallsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, firewallName, PaloAltoNetworksFirewallData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NgfwArmOperation<PaloAltoNetworksFirewallResource> operation = new NgfwArmOperation<PaloAltoNetworksFirewallResource>(
                     new PaloAltoNetworksFirewallResourceOperationSource(Client),
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _firewallsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, firewallName, context);
+                using HttpMessage message = _firewallsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, firewallName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<PaloAltoNetworksFirewallData> response = Response.FromValue(PaloAltoNetworksFirewallData.FromResponse(result), result);
                 if (response.Value == null)
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _firewallsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, firewallName, context);
+                using HttpMessage message = _firewallsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, firewallName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<PaloAltoNetworksFirewallData> response = Response.FromValue(PaloAltoNetworksFirewallData.FromResponse(result), result);
                 if (response.Value == null)
@@ -357,7 +357,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _firewallsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, firewallName, context);
+                using HttpMessage message = _firewallsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, firewallName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<PaloAltoNetworksFirewallData> response = default;
@@ -414,7 +414,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _firewallsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, firewallName, context);
+                using HttpMessage message = _firewallsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, firewallName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<PaloAltoNetworksFirewallData> response = default;
@@ -471,7 +471,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _firewallsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, firewallName, context);
+                using HttpMessage message = _firewallsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, firewallName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<PaloAltoNetworksFirewallData> response = default;
@@ -532,7 +532,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _firewallsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, firewallName, context);
+                using HttpMessage message = _firewallsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, firewallName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<PaloAltoNetworksFirewallData> response = default;

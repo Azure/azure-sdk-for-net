@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.OracleDatabase
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _autonomousDatabaseVersionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, autonomousdbversionsname, context);
+                using HttpMessage message = _autonomousDatabaseVersionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, autonomousdbversionsname, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<AutonomousDBVersionData> response = Response.FromValue(AutonomousDBVersionData.FromResponse(result), result);
                 if (response.Value == null)
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.OracleDatabase
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _autonomousDatabaseVersionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, autonomousdbversionsname, context);
+                using HttpMessage message = _autonomousDatabaseVersionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, autonomousdbversionsname, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<AutonomousDBVersionData> response = Response.FromValue(AutonomousDBVersionData.FromResponse(result), result);
                 if (response.Value == null)
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.OracleDatabase
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _autonomousDatabaseVersionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, autonomousdbversionsname, context);
+                using HttpMessage message = _autonomousDatabaseVersionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, autonomousdbversionsname, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<AutonomousDBVersionData> response = default;
@@ -303,7 +303,7 @@ namespace Azure.ResourceManager.OracleDatabase
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _autonomousDatabaseVersionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, autonomousdbversionsname, context);
+                using HttpMessage message = _autonomousDatabaseVersionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, autonomousdbversionsname, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<AutonomousDBVersionData> response = default;
@@ -360,7 +360,7 @@ namespace Azure.ResourceManager.OracleDatabase
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _autonomousDatabaseVersionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, autonomousdbversionsname, context);
+                using HttpMessage message = _autonomousDatabaseVersionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, autonomousdbversionsname, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<AutonomousDBVersionData> response = default;
@@ -421,7 +421,7 @@ namespace Azure.ResourceManager.OracleDatabase
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _autonomousDatabaseVersionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, autonomousdbversionsname, context);
+                using HttpMessage message = _autonomousDatabaseVersionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, autonomousdbversionsname, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<AutonomousDBVersionData> response = default;

@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.NewRelicObservability
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _monitoredSubscriptionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configurationName.ToString(), NewRelicMonitoredSubscriptionData.ToRequestContent(data), context);
+                using HttpMessage message = _monitoredSubscriptionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configurationName.ToString(), NewRelicMonitoredSubscriptionData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NewRelicObservabilityArmOperation<NewRelicMonitoredSubscriptionResource> operation = new NewRelicObservabilityArmOperation<NewRelicMonitoredSubscriptionResource>(
                     new NewRelicMonitoredSubscriptionResourceOperationSource(Client),
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.NewRelicObservability
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _monitoredSubscriptionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configurationName.ToString(), NewRelicMonitoredSubscriptionData.ToRequestContent(data), context);
+                using HttpMessage message = _monitoredSubscriptionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configurationName.ToString(), NewRelicMonitoredSubscriptionData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NewRelicObservabilityArmOperation<NewRelicMonitoredSubscriptionResource> operation = new NewRelicObservabilityArmOperation<NewRelicMonitoredSubscriptionResource>(
                     new NewRelicMonitoredSubscriptionResourceOperationSource(Client),
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.NewRelicObservability
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _monitoredSubscriptionsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configurationName.ToString(), context);
+                using HttpMessage message = _monitoredSubscriptionsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configurationName.ToString(), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<NewRelicMonitoredSubscriptionData> response = Response.FromValue(NewRelicMonitoredSubscriptionData.FromResponse(result), result);
                 if (response.Value == null)
@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.NewRelicObservability
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _monitoredSubscriptionsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configurationName.ToString(), context);
+                using HttpMessage message = _monitoredSubscriptionsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configurationName.ToString(), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<NewRelicMonitoredSubscriptionData> response = Response.FromValue(NewRelicMonitoredSubscriptionData.FromResponse(result), result);
                 if (response.Value == null)
@@ -348,7 +348,7 @@ namespace Azure.ResourceManager.NewRelicObservability
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _monitoredSubscriptionsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configurationName.ToString(), context);
+                using HttpMessage message = _monitoredSubscriptionsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configurationName.ToString(), context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<NewRelicMonitoredSubscriptionData> response = default;
@@ -401,7 +401,7 @@ namespace Azure.ResourceManager.NewRelicObservability
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _monitoredSubscriptionsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configurationName.ToString(), context);
+                using HttpMessage message = _monitoredSubscriptionsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configurationName.ToString(), context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<NewRelicMonitoredSubscriptionData> response = default;
@@ -454,7 +454,7 @@ namespace Azure.ResourceManager.NewRelicObservability
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _monitoredSubscriptionsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configurationName.ToString(), context);
+                using HttpMessage message = _monitoredSubscriptionsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configurationName.ToString(), context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<NewRelicMonitoredSubscriptionData> response = default;
@@ -511,7 +511,7 @@ namespace Azure.ResourceManager.NewRelicObservability
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _monitoredSubscriptionsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configurationName.ToString(), context);
+                using HttpMessage message = _monitoredSubscriptionsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configurationName.ToString(), context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<NewRelicMonitoredSubscriptionData> response = default;

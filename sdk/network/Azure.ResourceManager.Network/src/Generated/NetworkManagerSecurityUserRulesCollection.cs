@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Network
     /// <summary>
     /// A class representing a collection of <see cref="NetworkManagerSecurityUserRulesResource"/> and their operations.
     /// Each <see cref="NetworkManagerSecurityUserRulesResource"/> in the collection will belong to the same instance of <see cref="NetworkManagerSecurityUserConfigurationResource"/>.
-    /// To get a <see cref="NetworkManagerSecurityUserRulesCollection"/> instance call the GetNetworkManagerSecurityUserRules method from an instance of <see cref="NetworkManagerSecurityUserConfigurationResource"/>.
+    /// To get a <see cref="NetworkManagerSecurityUserRulesCollection"/> instance call the GetAllNetworkManagerSecurityUserRules method from an instance of <see cref="NetworkManagerSecurityUserConfigurationResource"/>.
     /// </summary>
     public partial class NetworkManagerSecurityUserRulesCollection : ArmCollection, IEnumerable<NetworkManagerSecurityUserRulesResource>, IAsyncEnumerable<NetworkManagerSecurityUserRulesResource>
     {
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _securityUserRuleCollectionsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ruleCollectionName, NetworkManagerSecurityUserRulesData.ToRequestContent(data), context);
+                using HttpMessage message = _securityUserRuleCollectionsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ruleCollectionName, NetworkManagerSecurityUserRulesData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<NetworkManagerSecurityUserRulesData> response = Response.FromValue(NetworkManagerSecurityUserRulesData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _securityUserRuleCollectionsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ruleCollectionName, NetworkManagerSecurityUserRulesData.ToRequestContent(data), context);
+                using HttpMessage message = _securityUserRuleCollectionsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ruleCollectionName, NetworkManagerSecurityUserRulesData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<NetworkManagerSecurityUserRulesData> response = Response.FromValue(NetworkManagerSecurityUserRulesData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _securityUserRuleCollectionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ruleCollectionName, context);
+                using HttpMessage message = _securityUserRuleCollectionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ruleCollectionName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<NetworkManagerSecurityUserRulesData> response = Response.FromValue(NetworkManagerSecurityUserRulesData.FromResponse(result), result);
                 if (response.Value == null)
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _securityUserRuleCollectionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ruleCollectionName, context);
+                using HttpMessage message = _securityUserRuleCollectionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ruleCollectionName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<NetworkManagerSecurityUserRulesData> response = Response.FromValue(NetworkManagerSecurityUserRulesData.FromResponse(result), result);
                 if (response.Value == null)
@@ -373,7 +373,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _securityUserRuleCollectionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ruleCollectionName, context);
+                using HttpMessage message = _securityUserRuleCollectionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ruleCollectionName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<NetworkManagerSecurityUserRulesData> response = default;
@@ -430,7 +430,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _securityUserRuleCollectionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ruleCollectionName, context);
+                using HttpMessage message = _securityUserRuleCollectionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ruleCollectionName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<NetworkManagerSecurityUserRulesData> response = default;
@@ -487,7 +487,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _securityUserRuleCollectionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ruleCollectionName, context);
+                using HttpMessage message = _securityUserRuleCollectionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ruleCollectionName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<NetworkManagerSecurityUserRulesData> response = default;
@@ -548,7 +548,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _securityUserRuleCollectionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ruleCollectionName, context);
+                using HttpMessage message = _securityUserRuleCollectionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ruleCollectionName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<NetworkManagerSecurityUserRulesData> response = default;

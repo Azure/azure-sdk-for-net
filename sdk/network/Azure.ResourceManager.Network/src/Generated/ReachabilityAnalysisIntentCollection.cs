@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _reachabilityAnalysisIntentsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, reachabilityAnalysisIntentName, ReachabilityAnalysisIntentData.ToRequestContent(data), context);
+                using HttpMessage message = _reachabilityAnalysisIntentsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, reachabilityAnalysisIntentName, ReachabilityAnalysisIntentData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ReachabilityAnalysisIntentData> response = Response.FromValue(ReachabilityAnalysisIntentData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _reachabilityAnalysisIntentsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, reachabilityAnalysisIntentName, ReachabilityAnalysisIntentData.ToRequestContent(data), context);
+                using HttpMessage message = _reachabilityAnalysisIntentsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, reachabilityAnalysisIntentName, ReachabilityAnalysisIntentData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ReachabilityAnalysisIntentData> response = Response.FromValue(ReachabilityAnalysisIntentData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _reachabilityAnalysisIntentsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, reachabilityAnalysisIntentName, context);
+                using HttpMessage message = _reachabilityAnalysisIntentsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, reachabilityAnalysisIntentName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ReachabilityAnalysisIntentData> response = Response.FromValue(ReachabilityAnalysisIntentData.FromResponse(result), result);
                 if (response.Value == null)
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _reachabilityAnalysisIntentsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, reachabilityAnalysisIntentName, context);
+                using HttpMessage message = _reachabilityAnalysisIntentsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, reachabilityAnalysisIntentName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ReachabilityAnalysisIntentData> response = Response.FromValue(ReachabilityAnalysisIntentData.FromResponse(result), result);
                 if (response.Value == null)
@@ -385,7 +385,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _reachabilityAnalysisIntentsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, reachabilityAnalysisIntentName, context);
+                using HttpMessage message = _reachabilityAnalysisIntentsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, reachabilityAnalysisIntentName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ReachabilityAnalysisIntentData> response = default;
@@ -442,7 +442,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _reachabilityAnalysisIntentsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, reachabilityAnalysisIntentName, context);
+                using HttpMessage message = _reachabilityAnalysisIntentsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, reachabilityAnalysisIntentName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ReachabilityAnalysisIntentData> response = default;
@@ -499,7 +499,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _reachabilityAnalysisIntentsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, reachabilityAnalysisIntentName, context);
+                using HttpMessage message = _reachabilityAnalysisIntentsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, reachabilityAnalysisIntentName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ReachabilityAnalysisIntentData> response = default;
@@ -560,7 +560,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _reachabilityAnalysisIntentsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, reachabilityAnalysisIntentName, context);
+                using HttpMessage message = _reachabilityAnalysisIntentsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, reachabilityAnalysisIntentName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ReachabilityAnalysisIntentData> response = default;

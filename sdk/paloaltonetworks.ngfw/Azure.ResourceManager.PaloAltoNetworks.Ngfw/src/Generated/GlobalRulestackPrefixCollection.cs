@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _prefixListGlobalRulestackRestClient.CreateCreateOrUpdateRequest(Id.Name, name, GlobalRulestackPrefixData.ToRequestContent(data), context);
+                using HttpMessage message = _prefixListGlobalRulestackRestClient.CreateCreateOrUpdateRequest(Id.Name, name, GlobalRulestackPrefixData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NgfwArmOperation<GlobalRulestackPrefixResource> operation = new NgfwArmOperation<GlobalRulestackPrefixResource>(
                     new GlobalRulestackPrefixResourceOperationSource(Client),
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _prefixListGlobalRulestackRestClient.CreateCreateOrUpdateRequest(Id.Name, name, GlobalRulestackPrefixData.ToRequestContent(data), context);
+                using HttpMessage message = _prefixListGlobalRulestackRestClient.CreateCreateOrUpdateRequest(Id.Name, name, GlobalRulestackPrefixData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NgfwArmOperation<GlobalRulestackPrefixResource> operation = new NgfwArmOperation<GlobalRulestackPrefixResource>(
                     new GlobalRulestackPrefixResourceOperationSource(Client),
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _prefixListGlobalRulestackRestClient.CreateGetRequest(Id.Name, name, context);
+                using HttpMessage message = _prefixListGlobalRulestackRestClient.CreateGetRequest(Id.Name, name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<GlobalRulestackPrefixData> response = Response.FromValue(GlobalRulestackPrefixData.FromResponse(result), result);
                 if (response.Value == null)
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _prefixListGlobalRulestackRestClient.CreateGetRequest(Id.Name, name, context);
+                using HttpMessage message = _prefixListGlobalRulestackRestClient.CreateGetRequest(Id.Name, name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<GlobalRulestackPrefixData> response = Response.FromValue(GlobalRulestackPrefixData.FromResponse(result), result);
                 if (response.Value == null)
@@ -357,7 +357,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _prefixListGlobalRulestackRestClient.CreateGetRequest(Id.Name, name, context);
+                using HttpMessage message = _prefixListGlobalRulestackRestClient.CreateGetRequest(Id.Name, name, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<GlobalRulestackPrefixData> response = default;
@@ -414,7 +414,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _prefixListGlobalRulestackRestClient.CreateGetRequest(Id.Name, name, context);
+                using HttpMessage message = _prefixListGlobalRulestackRestClient.CreateGetRequest(Id.Name, name, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<GlobalRulestackPrefixData> response = default;
@@ -471,7 +471,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _prefixListGlobalRulestackRestClient.CreateGetRequest(Id.Name, name, context);
+                using HttpMessage message = _prefixListGlobalRulestackRestClient.CreateGetRequest(Id.Name, name, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<GlobalRulestackPrefixData> response = default;
@@ -532,7 +532,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _prefixListGlobalRulestackRestClient.CreateGetRequest(Id.Name, name, context);
+                using HttpMessage message = _prefixListGlobalRulestackRestClient.CreateGetRequest(Id.Name, name, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<GlobalRulestackPrefixData> response = default;
