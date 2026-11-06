@@ -2,12 +2,15 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Sockets;
 using System.Net.WebSockets;
+using System.Text;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.AI.Projects.Agents;
@@ -29,6 +32,80 @@ namespace Azure.AI.Projects.Tests;
 /// </summary>
 public class ProjectsRealtimeClientTests
 {
+    [Test]
+    public void AuthenticationUsesProviderCreatedSpecializedOptions()
+    {
+        ProviderTokenOptions created = null;
+        InvalidOperationException failure = new("Provider-options verification completed.");
+        LiveTestTokenProvider provider = new(_ => Task.FromException<AuthenticationToken>(failure), properties =>
+        {
+            Dictionary<string, object> normalized = properties.ToDictionary(pair => pair.Key, pair => pair.Value);
+            normalized["factory-normalized"] = "verified";
+            created = new ProviderTokenOptions(normalized);
+            return created;
+        });
+        AIProjectClient project = new(new Uri("https://example.test/api/projects/project"), provider);
+        ProjectsRealtimeClient realtime = project.ProjectsRealtimeClient;
+        int factoryCallsBeforeStartup = provider.FactoryCalls;
+
+        InvalidOperationException actual = Assert.ThrowsAsync<InvalidOperationException>(() =>
+            realtime.StartSessionAsync("agent", intent: null));
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(actual, Is.SameAs(failure));
+            Assert.That(provider.FactoryCalls, Is.EqualTo(factoryCallsBeforeStartup + 1));
+            Assert.That(provider.LastOptions, Is.SameAs(created).And.TypeOf<ProviderTokenOptions>());
+            Assert.That(provider.LastOptions.Properties["factory-normalized"], Is.EqualTo("verified"));
+            Assert.That(provider.AsyncCalls, Is.EqualTo(1));
+            Assert.That(provider.SyncCalls, Is.Zero);
+        });
+    }
+
+    [Test]
+    public void UnsupportedAuthenticationFlowIsRejectedBeforeRequestingAToken()
+    {
+        bool supported = true;
+        LiveTestTokenProvider provider = new(
+            _ => Task.FromException<AuthenticationToken>(new AssertionException("An unsupported flow must not request a token.")),
+            properties => supported ? new GetTokenOptions(properties) : null);
+        AIProjectClient project = new(new Uri("https://example.test/api/projects/project"), provider);
+        ProjectsRealtimeClient realtime = project.ProjectsRealtimeClient;
+        int factoryCallsBeforeStartup = provider.FactoryCalls;
+        supported = false;
+
+        InvalidOperationException error = Assert.ThrowsAsync<InvalidOperationException>(() =>
+            realtime.StartSessionAsync("agent", intent: null));
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(error.Message, Does.Contain("does not support").And.Contain("Realtime"));
+            Assert.That(provider.FactoryCalls, Is.EqualTo(factoryCallsBeforeStartup + 1));
+            Assert.That(provider.AsyncCalls, Is.Zero);
+            Assert.That(provider.SyncCalls, Is.Zero);
+        });
+    }
+
+    [Test]
+    public void TokenOptionsFactoryFailureIsPropagatedUnchanged()
+    {
+        bool starting = false;
+        InvalidOperationException failure = new("The provider rejected the requested authentication flow.");
+        LiveTestTokenProvider provider = new(
+            _ => Task.FromException<AuthenticationToken>(new AssertionException("A failing options factory must not request a token.")),
+            properties => starting ? throw failure : new GetTokenOptions(properties));
+        AIProjectClient project = new(new Uri("https://example.test/api/projects/project"), provider);
+        ProjectsRealtimeClient realtime = project.ProjectsRealtimeClient;
+        starting = true;
+
+        InvalidOperationException actual = Assert.ThrowsAsync<InvalidOperationException>(() =>
+            realtime.StartSessionAsync("agent", intent: null));
+
+        Assert.That(actual, Is.SameAs(failure));
+        Assert.That(provider.AsyncCalls, Is.Zero);
+        Assert.That(provider.SyncCalls, Is.Zero);
+    }
+
     // -----------------------------------------------------------------------
     // Verifies (without any live Foundry service, using a real loopback
     // HttpListener/WebSocket handshake): ProjectsRealtimeClient.StartSessionAsync
@@ -207,6 +284,164 @@ public class ProjectsRealtimeClientTests
         Assert.That(query, Does.Contain("store=true&transport=websocket"));
     }
 
+    [TestCase("Sec-WebSocket-Protocol")]
+    [TestCase("sec-websocket-protocol")]
+    [TestCase("SEC-WEBSOCKET-PROTOCOL")]
+    public async Task ExplicitRealtimeSubprotocolDoesNotDuplicateAutomaticNegotiation(string header)
+    {
+        RealtimeSessionClientOptions options = new();
+        options.Headers[header] = "realtime";
+
+        await CaptureHandshakeQueryAsync(options);
+
+        Assert.That(options.Headers[header], Is.EqualTo("realtime"), "Connection setup must not mutate caller-owned options.");
+    }
+
+    [TestCase("Authorization", "caller-token")]
+    [TestCase("authorization", "caller-token")]
+    [TestCase("Foundry-Features", "other-feature")]
+    [TestCase("foundry-features", "other-feature")]
+    [TestCase("Sec-WebSocket-Protocol", "unsupported")]
+    [TestCase("sec-websocket-protocol", "realtime,realtime")]
+    public void ManagedRealtimeHeadersRejectConflictingOverrides(string header, string value)
+    {
+        LiveTestTokenProvider provider = new();
+        AIProjectClient project = new(new Uri("https://example.test/api/projects/project"), provider);
+        RealtimeSessionClientOptions options = new();
+        options.Headers[header] = value;
+
+        ArgumentException error = Assert.ThrowsAsync<ArgumentException>(() =>
+            project.ProjectsRealtimeClient.StartSessionAsync("agent", null, options));
+
+        Assert.That(error.ParamName, Is.EqualTo("headers"));
+        Assert.That(provider.AsyncCalls, Is.Zero, "Invalid managed headers must be rejected before acquiring a credential.");
+    }
+
+    [TestCase(false)]
+    [TestCase(true)]
+    public async Task SynchronousReceiversYieldWithoutReadingAheadAndPreserveSocketOwnership(bool protocol)
+    {
+        int port = GetFreeTcpPort();
+        using HttpListener listener = new();
+        listener.Prefixes.Add($"http://127.0.0.1:{port}/");
+        listener.Start();
+        using CancellationTokenSource timeout = new(TimeSpan.FromSeconds(10));
+        TaskCompletionSource<bool> reading = new(TaskCreationOptions.RunContinuationsAsynchronously);
+        TaskCompletionSource<bool> firstDisposed = new(TaskCreationOptions.RunContinuationsAsynchronously);
+        Task server = Task.Run(async () =>
+        {
+            HttpListenerContext context = await listener.GetContextAsync();
+            using WebSocket socket = (await context.AcceptWebSocketAsync("realtime")).WebSocket;
+            await reading.Task;
+            await Task.Delay(50, timeout.Token);
+            await SendAsync("first");
+            await firstDisposed.Task;
+            await Task.Delay(50, timeout.Token);
+            await SendAsync("second");
+            await Task.Delay(200, timeout.Token);
+
+            Task SendAsync(string id) => socket.SendAsync(
+                new ArraySegment<byte>(Encoding.UTF8.GetBytes(
+                    "{\"type\":\"response.created\",\"response\":{\"id\":\"" + id + "\",\"status\":\"in_progress\"}}")),
+                WebSocketMessageType.Text, true, timeout.Token);
+        });
+        AIProjectClient project = new(new Uri($"http://127.0.0.1:{port}/api/projects/project"), new FakeTokenProvider());
+        using RealtimeSessionClient session = await project.ProjectsRealtimeClient.StartSessionAsync("agent", null, cancellationToken: timeout.Token);
+        Task<bool> reader = Task.Run(() =>
+        {
+            SynchronizationContext previous = SynchronizationContext.Current;
+            TrackingSynchronizationContext context = new();
+            SynchronizationContext.SetSynchronizationContext(context);
+            try
+            {
+                reading.TrySetResult(true);
+                ReadOne("first");
+                Assert.That(session.WebSocket.State, Is.EqualTo(WebSocketState.Open), "Disposing an event enumerator must not dispose its session.");
+                firstDisposed.TrySetResult(true);
+                ReadOne("second");
+                Assert.That(context.Posts, Is.Zero, "A blocking receiver must not capture the caller's synchronization context.");
+            }
+            finally
+            {
+                SynchronizationContext.SetSynchronizationContext(previous);
+            }
+            return true;
+
+            void ReadOne(string id)
+            {
+                if (protocol)
+                {
+                    using IEnumerator<ClientResult> events = session.ReceiveUpdates(new RequestOptions { CancellationToken = timeout.Token }).GetEnumerator();
+                    Assert.That(events.MoveNext(), Is.True);
+                    using JsonDocument document = JsonDocument.Parse(events.Current.GetRawResponse().Content);
+                    Assert.That(document.RootElement.GetProperty("response").GetProperty("id").GetString(), Is.EqualTo(id));
+                }
+                else
+                {
+                    using IEnumerator<RealtimeServerUpdate> events = session.ReceiveUpdates(timeout.Token).GetEnumerator();
+                    Assert.That(events.MoveNext(), Is.True);
+                    Assert.That(events.Current, Is.TypeOf<RealtimeServerUpdateResponseCreated>());
+                    Assert.That(((RealtimeServerUpdateResponseCreated)events.Current).Response.Id, Is.EqualTo(id));
+                }
+            }
+        });
+        try
+        {
+            await AwaitServerRequestAsync(reader);
+        }
+        finally
+        {
+            reading.TrySetResult(true);
+            firstDisposed.TrySetResult(true);
+        }
+        await server;
+    }
+
+    [TestCase(false)]
+    [TestCase(true)]
+    public async Task SynchronousReceiversPropagateCancellationOfPendingReads(bool protocol)
+    {
+        int port = GetFreeTcpPort();
+        using HttpListener listener = new();
+        listener.Prefixes.Add($"http://127.0.0.1:{port}/");
+        listener.Start();
+        using CancellationTokenSource timeout = new(TimeSpan.FromSeconds(10));
+        TaskCompletionSource<bool> finished = new(TaskCreationOptions.RunContinuationsAsynchronously);
+        Task server = Task.Run(async () =>
+        {
+            HttpListenerContext context = await listener.GetContextAsync();
+            using WebSocket socket = (await context.AcceptWebSocketAsync("realtime")).WebSocket;
+            await finished.Task;
+        });
+        AIProjectClient project = new(new Uri($"http://127.0.0.1:{port}/api/projects/project"), new FakeTokenProvider());
+        using RealtimeSessionClient session = await project.ProjectsRealtimeClient.StartSessionAsync("agent", null, cancellationToken: timeout.Token);
+        using CancellationTokenSource receiving = CancellationTokenSource.CreateLinkedTokenSource(timeout.Token);
+        receiving.CancelAfter(200);
+        try
+        {
+            Task<bool> reader = Task.Run(() =>
+            {
+                if (protocol)
+                {
+                    using IEnumerator<ClientResult> events = session.ReceiveUpdates(new RequestOptions { CancellationToken = receiving.Token }).GetEnumerator();
+                    Assert.Catch<OperationCanceledException>(() => events.MoveNext());
+                }
+                else
+                {
+                    using IEnumerator<RealtimeServerUpdate> events = session.ReceiveUpdates(receiving.Token).GetEnumerator();
+                    Assert.Catch<OperationCanceledException>(() => events.MoveNext());
+                }
+                return true;
+            });
+            await AwaitServerRequestAsync(reader);
+        }
+        finally
+        {
+            finished.TrySetResult(true);
+            await server;
+        }
+    }
+
     [Test]
     public void DefaultTransportValueIsRejectedBeforeConnecting()
     {
@@ -230,6 +465,7 @@ public class ProjectsRealtimeClientTests
         {
             HttpListenerContext context = await listener.GetContextAsync();
             string query = context.Request.Url.Query;
+            Assert.That(context.Request.Headers["Sec-WebSocket-Protocol"], Is.EqualTo("realtime"));
             HttpListenerWebSocketContext webSocket = await context.AcceptWebSocketAsync(subProtocol: "realtime");
             return (query, webSocket.WebSocket);
         });
@@ -274,6 +510,20 @@ public class ProjectsRealtimeClientTests
         tcpListener.Stop();
         return port;
     }
+
+    private sealed class TrackingSynchronizationContext : SynchronizationContext
+    {
+        private int _posts;
+        public int Posts => Volatile.Read(ref _posts);
+
+        public override void Post(SendOrPostCallback callback, object state)
+        {
+            Interlocked.Increment(ref _posts);
+            ThreadPool.QueueUserWorkItem(_ => callback(state));
+        }
+    }
+
+    private sealed class ProviderTokenOptions(IReadOnlyDictionary<string, object> properties) : GetTokenOptions(properties);
 
     private sealed class FakeTokenProvider : System.ClientModel.AuthenticationTokenProvider
     {

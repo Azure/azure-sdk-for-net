@@ -34,6 +34,9 @@
 - Preserved typed deserialization of existing delegate configurations that omit `subagent_type`.
 - Fixed telephony call-history pagination to stop on terminal pages and use the correct cursor when paging backward.
 
+### Sample Updates
+- Added Voice Agent REST administration, read-only telephony inspection, and campaign inspection samples, including typed address configuration without dispatching calls.
+
 ### Other Changes
 - Regenerated from `feature/foundry-release` at [`768c3a412129295692b60788fa76fc27b6d484ff`](https://github.com/Azure/azure-rest-api-specs/tree/768c3a412129295692b60788fa76fc27b6d484ff), using OpenAI TypeSpec 1.34.1.
 

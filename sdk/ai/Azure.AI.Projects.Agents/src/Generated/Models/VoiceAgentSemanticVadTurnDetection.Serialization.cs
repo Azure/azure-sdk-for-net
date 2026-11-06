@@ -75,7 +75,7 @@ namespace Azure.AI.Projects.Agents
             if (Optional.IsDefined(Eagerness))
             {
                 writer.WritePropertyName("eagerness"u8);
-                writer.WriteObjectValue<RealtimeSemanticVadEagernessLevel?>(Eagerness.Value, options);
+                writer.WriteStringValue(Eagerness.Value.ToString());
             }
             if (Optional.IsDefined(CreateResponse))
             {
@@ -142,7 +142,7 @@ namespace Azure.AI.Projects.Agents
                     {
                         continue;
                     }
-                    eagerness = ModelReaderWriter.Read<RealtimeSemanticVadEagernessLevel?>(prop.Value.GetUtf8Bytes(), options, AzureAIProjectsAgentsContext.Default);
+                    eagerness = new RealtimeSemanticVadEagernessLevel(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("create_response"u8))

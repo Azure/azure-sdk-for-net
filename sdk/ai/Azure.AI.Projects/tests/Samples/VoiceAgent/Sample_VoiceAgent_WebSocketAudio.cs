@@ -2,8 +2,9 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Buffers.Binary;
 using System.ClientModel;
+using System.IO;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.AI.Projects.Agents;
@@ -34,10 +35,16 @@ public class Sample_VoiceAgent_WebSocketAudio : SamplesBase
 #if SNIPPET
         string projectEndpoint = Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
         string modelDeploymentName = Environment.GetEnvironmentVariable("FOUNDRY_REALTIME_MODEL_NAME");
+        string speechPath = Environment.GetEnvironmentVariable("VOICE_SAMPLE_AUDIO_PATH");
 #else
         string projectEndpoint = TestEnvironment.FOUNDRY_PROJECT_ENDPOINT;
         string modelDeploymentName = TestEnvironment.FOUNDRY_REALTIME_MODEL_NAME;
+        string speechPath = Path.GetFullPath(Path.Combine(TestContext.CurrentContext.TestDirectory,
+            "..", "..", "..", "..", "..", "sdk", "openai", "Azure.AI.OpenAI", "tests", "Assets",
+            "whats_the_weather_pcm16_24khz_mono.wav"));
 #endif
+        using Stream speechFile = File.OpenRead(speechPath);
+        byte[] speech = ReadPcmWave(speechFile);
         const int audioSampleRate = 24000;
         string agentName = $"voice-audio-sample-{Guid.NewGuid():N}".Substring(0, 40);
         AIProjectClient projectClient = new(new Uri(projectEndpoint), new DefaultAzureCredential());
@@ -46,12 +53,14 @@ public class Sample_VoiceAgent_WebSocketAudio : SamplesBase
         {
             ModelType = VoiceModelType.SelfDeployed,
             Model = modelDeploymentName,
-            Instructions = "Respond briefly and helpfully.",
+            Instructions = "Identify the subject of the spoken question in one English sentence. " +
+                "You cannot access live information; do not invent facts or promise a lookup.",
             Audio = new VoiceAgentAudioConfig
             {
                 Input = new VoiceAgentAudioInputConfig
                 {
-                    Format = new RealtimePcmAudioFormat { Rate = audioSampleRate }
+                    Format = new RealtimePcmAudioFormat { Rate = audioSampleRate },
+                    TurnDetection = null
                 },
                 Output = new VoiceAgentAudioOutputConfig
                 {
@@ -65,7 +74,6 @@ public class Sample_VoiceAgent_WebSocketAudio : SamplesBase
         ProjectsAgentVersion agentVersion = createResult;
         Console.WriteLine($"Created voice agent {agentName} version {agentVersion.Version}: HTTP {createResult.GetRawResponse().Status}");
         #endregion
-
         try
         {
             #region Snippet:Sample_VoiceAgent_WebSocketAudio_Stream
@@ -77,23 +85,18 @@ public class Sample_VoiceAgent_WebSocketAudio : SamplesBase
             using ProjectsRealtimeSessionClient session = (ProjectsRealtimeSessionClient)
                 await projectClient.ProjectsRealtimeClient.StartSessionAsync(
                     agentName, intent: null, options: options, cancellationToken: timeout.Token);
-            await session.AddItemAsync(RealtimeItem.CreateUserMessageItem("Say hello in one short sentence."), timeout.Token);
-
             long inputAudioBytes = 0;
-            for (int chunkIndex = 0; chunkIndex < 5; chunkIndex++)
+            const int chunkBytes = 960;
+            for (int offset = 0; offset < speech.Length; offset += chunkBytes)
             {
-                int sampleCount = audioSampleRate / 10;
-                byte[] toneChunk = new byte[sampleCount * sizeof(short)];
-                for (int sampleIndex = 0; sampleIndex < sampleCount; sampleIndex++)
-                {
-                    double seconds = (chunkIndex * sampleCount + sampleIndex) / (double)audioSampleRate;
-                    short sample = (short)(3000 * Math.Sin(2 * Math.PI * 440 * seconds));
-                    BinaryPrimitives.WriteInt16LittleEndian(toneChunk.AsSpan(sampleIndex * sizeof(short)), sample);
-                }
-                await session.SendInputAudioAsync(BinaryData.FromBytes(toneChunk), timeout.Token);
-                inputAudioBytes += toneChunk.Length;
+                int count = Math.Min(chunkBytes, speech.Length - offset);
+                await session.SendInputAudioAsync(BinaryData.FromBytes(speech.AsMemory(offset, count)), timeout.Token);
+                inputAudioBytes += count;
+                await Task.Delay(TimeSpan.FromMilliseconds(20), timeout.Token);
             }
-            await session.StartResponseAsync(timeout.Token);
+            await session.CommitPendingAudioAsync(timeout.Token);
+            await session.StartResponseAsync(
+                new RealtimeResponseOptions { ToolChoice = RealtimeDefaultToolChoice.None }, timeout.Token);
 
             long outputAudioBytes = 0;
             string transcript = string.Empty;
@@ -131,6 +134,9 @@ public class Sample_VoiceAgent_WebSocketAudio : SamplesBase
                 throw new InvalidOperationException("The voice agent did not complete an audio exchange.");
             }
             #endregion
+#if !SNIPPET
+            Assert.That(transcript, Does.Contain("weather").IgnoreCase.Or.Contain("forecast").IgnoreCase.Or.Contain("conditions").IgnoreCase);
+#endif
         }
         finally
         {
@@ -140,5 +146,49 @@ public class Sample_VoiceAgent_WebSocketAudio : SamplesBase
             Console.WriteLine($"Deleted voice agent {agentName} version {agentVersion.Version}: HTTP {deleteResult.GetRawResponse().Status}");
             #endregion
         }
+    }
+
+    private static byte[] ReadPcmWave(Stream stream)
+    {
+        using BinaryReader reader = new(stream, Encoding.ASCII, leaveOpen: true);
+        if (new string(reader.ReadChars(4)) != "RIFF")
+        {
+            throw new InvalidDataException("Use a mono PCM16LE/24 kHz WAV recording.");
+        }
+        reader.ReadUInt32();
+        if (new string(reader.ReadChars(4)) != "WAVE")
+        {
+            throw new InvalidDataException("The recording is not a WAV file.");
+        }
+        bool pcm = false;
+        while (stream.Position + 8 <= stream.Length)
+        {
+            string chunk = new(reader.ReadChars(4));
+            uint length = reader.ReadUInt32();
+            long end = stream.Position + length;
+            if (end > stream.Length)
+            {
+                throw new EndOfStreamException("The WAV recording is truncated.");
+            }
+            if (chunk == "fmt ")
+            {
+                ushort format = reader.ReadUInt16();
+                ushort channels = reader.ReadUInt16();
+                uint rate = reader.ReadUInt32();
+                reader.ReadUInt32();
+                reader.ReadUInt16();
+                pcm = format == 1 && channels == 1 && rate == 24000 && reader.ReadUInt16() == 16;
+            }
+            else if (chunk == "data")
+            {
+                if (!pcm || length == 0 || length % 2 != 0 || length > int.MaxValue)
+                {
+                    throw new InvalidDataException("Use nonempty mono PCM16LE/24 kHz speech.");
+                }
+                return reader.ReadBytes((int)length);
+            }
+            stream.Position = end + (length & 1);
+        }
+        throw new InvalidDataException("No PCM audio was found in the recording.");
     }
 }

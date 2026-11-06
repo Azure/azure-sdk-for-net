@@ -4,15 +4,29 @@
 
 ### Features Added
 
+- Added experimental `ProjectsLiveClient`, `ProjectsLiveSessionClient`, and `ProjectsLiveSessionClientOptions` for native GPT Live Voice Agent sessions, including generated event streaming, raw audio, text guidance, Responses tool results, and confirmed native graceful shutdown.
+- Native Live connections require TLS-protected WebSocket endpoints and use the authentication token provider's options factory.
+- Added opt-in Voice Agent realtime tracing for connections, sessions, responses, tool milestones, audio usage, cancellation, and errors using the existing Foundry GenAI tracing settings. Added correlated, payload-free realtime diagnostic logs.
+- Included first-text/audio latency, reported audio formats and sample rates, session audio totals, consistent session lifecycle events, and bounded opt-in transcript/tool message content in Voice Agent telemetry.
 - Added Agent Insights analysis priorities, generated summaries, and run-input models aligned with the current service contract.
 
 ### Breaking Changes
 
+- Realtime connection options no longer allow overriding the client-managed `Authorization` or `Foundry-Features` headers; these overrides now throw `ArgumentException`.
 - `EvaluatorGenerationArtifacts.Reference` now uses `VersionedDatasetReference` instead of the removed `DatasetReference` model, retaining the required dataset version.
 - `AgentInsightMonitors.GetInsights` and `GetInsightsAsync` now accept `categories`, `severities`, and `statuses` collections instead of singular filters.
 - Agent Insights monitor/run creation now uses generated method parameters instead of `AgentInsightMonitorCreate` and `AgentInsightRunCreate`. The retired overview models were removed in favor of monitor summaries.
 
 ### Bugs Fixed
+
+- Realtime WebSocket authentication now honors provider-created token options and explicitly rejects unsupported authentication flows.
+- Fixed synchronous Realtime event streaming and connection failures when explicitly setting the `realtime` WebSocket subprotocol.
+
+### Sample Updates
+
+- Added native Live samples for connections, session controls, multi-turn text, audio streaming, function calling, and stored-conversation REST APIs, including synchronous/asynchronous typed/protocol overloads, typed delegation ownership and session updates, persistence finalization polling, speech-item validation, and coordinated audio cleanup and graceful shutdown.
+- Consolidated the Realtime WebSocket transport and saved-conversation samples into one end-to-end example with bounded requests, completed-response validation, and temporary-agent cleanup.
+- Added two focused Voice Agent samples: downloading audio retained after an interruption and delegating native GPT Live work to a Foundry-managed agent.
 
 ### Other Changes
 
@@ -33,6 +47,7 @@
 
 ### Sample Updates
 
+- Added Realtime function-calling and recorded-speech audio samples.
 - Added runnable Voice Agent REST and realtime telemetry samples using the existing Foundry tracing settings, OpenTelemetry console exporter, and correlated realtime diagnostic logs.
 
 ## 3.0.0-beta.5 (2026-10-16)

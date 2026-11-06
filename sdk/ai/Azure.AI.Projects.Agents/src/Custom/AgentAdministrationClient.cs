@@ -1156,6 +1156,8 @@ public partial class AgentAdministrationClient
     [Experimental("AAIP001")]
     public virtual ClientResult<ProjectsAgentRecord> GenerateAgent(GenerateVoiceAgentRequest body, CancellationToken cancellationToken = default)
     {
+        Argument.AssertNotNull(body, nameof(body));
+
         return GenerateAgent(
             body: ModelReaderWriter.Write(body, ModelReaderWriterOptions.Json, AzureAIProjectsAgentsContext.Default),
             cancellationToken: cancellationToken
@@ -1173,6 +1175,8 @@ public partial class AgentAdministrationClient
     [Experimental("AAIP001")]
     public virtual async Task<ClientResult<ProjectsAgentRecord>> GenerateAgentAsync(GenerateVoiceAgentRequest body, CancellationToken cancellationToken = default)
     {
+        Argument.AssertNotNull(body, nameof(body));
+
         return await GenerateAgentAsync(
             body: ModelReaderWriter.Write(body, ModelReaderWriterOptions.Json, AzureAIProjectsAgentsContext.Default),
             cancellationToken: cancellationToken
