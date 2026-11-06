@@ -14,7 +14,7 @@ using Azure.Provisioning.Resources;
 namespace Azure.Provisioning.ProvisioningTypeSpec.Preview
 {
     /// <summary> A private link resource for a configuration store. </summary>
-    public partial class ConfigurationStorePrivateLinkResource : ProvisionableResource
+    public partial class ConfigurationStoreConfigurationStorePrivateLinkResource : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;
         private BicepValue<string> _name;
@@ -22,10 +22,10 @@ namespace Azure.Provisioning.ProvisioningTypeSpec.Preview
         private ProvisioningTypeSpecPreviewPrivateLinkResourceProperties _properties;
         private ProvisioningResourceReference<ConfigurationStore> _parent;
 
-        /// <summary> Creates a new ConfigurationStorePrivateLinkResource. </summary>
+        /// <summary> Creates a new ConfigurationStoreConfigurationStorePrivateLinkResource. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
         /// <param name="resourceVersion"> The resource API version. </param>
-        internal ConfigurationStorePrivateLinkResource(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "ProvisioningTypeSpec/configurationStores/privateLinkResources", resourceVersion ?? "2024-03-01-preview")
+        internal ConfigurationStoreConfigurationStorePrivateLinkResource(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "ProvisioningTypeSpec/configurationStores/privateLinkResources", resourceVersion ?? "2024-03-01-preview")
         {
         }
 
@@ -89,7 +89,7 @@ namespace Azure.Provisioning.ProvisioningTypeSpec.Preview
             }
         }
 
-        /// <summary> Define all the provisionable properties for ConfigurationStorePrivateLinkResource. </summary>
+        /// <summary> Define all the provisionable properties for ConfigurationStoreConfigurationStorePrivateLinkResource. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
@@ -101,17 +101,17 @@ namespace Azure.Provisioning.ProvisioningTypeSpec.Preview
             DefineAdditionalProperties();
         }
 
-        /// <summary> Creates a reference to an existing ConfigurationStorePrivateLinkResource. </summary>
+        /// <summary> Creates a reference to an existing ConfigurationStoreConfigurationStorePrivateLinkResource. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
         /// <param name="resourceVersion"> The resource API version. </param>
-        public static ConfigurationStorePrivateLinkResource FromExisting(string bicepIdentifier, string resourceVersion = null)
+        public static ConfigurationStoreConfigurationStorePrivateLinkResource FromExisting(string bicepIdentifier, string resourceVersion = null)
         {
-            ConfigurationStorePrivateLinkResource result = new ConfigurationStorePrivateLinkResource(bicepIdentifier, resourceVersion);
+            ConfigurationStoreConfigurationStorePrivateLinkResource result = new ConfigurationStoreConfigurationStorePrivateLinkResource(bicepIdentifier, resourceVersion);
             result.IsExistingResource = true;
             return result;
         }
 
-        /// <summary> Define additional provisionable properties for ConfigurationStorePrivateLinkResource that are not part of the generated code. </summary>
+        /// <summary> Define additional provisionable properties for ConfigurationStoreConfigurationStorePrivateLinkResource that are not part of the generated code. </summary>
         partial void DefineAdditionalProperties();
 
         /// <summary></summary>

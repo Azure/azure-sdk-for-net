@@ -12,6 +12,12 @@ import { AzureMgmtEmitterOptionsSchema } from "../options.js";
 
 const diags: { [code: string]: DiagnosticDefinition<DiagnosticMessages> } = {
   ...httpClientCSharpLib.diagnostics,
+  "invalid-arm-service-version": {
+    severity: "error",
+    messages: {
+      default: paramMessage`Cannot resolve ARM service '${"namespace"}' at API version '${"version"}'. ${"reason"}`
+    }
+  },
   "malformed-resource-detected": {
     severity: "warning",
     messages: {
