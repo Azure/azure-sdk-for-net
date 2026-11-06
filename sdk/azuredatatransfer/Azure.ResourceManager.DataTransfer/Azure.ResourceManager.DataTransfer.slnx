@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="src/Azure.ResourceManager.DataTransfer.csproj" />
+  <Project Path="tests/Azure.ResourceManager.DataTransfer.Tests.csproj" />
+</Solution>
