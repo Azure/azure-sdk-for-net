@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Redis
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _linkedServerRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, linkedServerName, RedisLinkedServerWithPropertyCreateOrUpdateContent.ToRequestContent(content), context);
+                using HttpMessage message = _linkedServerRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, linkedServerName, RedisLinkedServerWithPropertyCreateOrUpdateContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RedisArmOperation<RedisLinkedServerWithPropertyResource> operation = new RedisArmOperation<RedisLinkedServerWithPropertyResource>(
                     new RedisLinkedServerWithPropertyResourceOperationSource(Client),
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.Redis
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _linkedServerRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, linkedServerName, RedisLinkedServerWithPropertyCreateOrUpdateContent.ToRequestContent(content), context);
+                using HttpMessage message = _linkedServerRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, linkedServerName, RedisLinkedServerWithPropertyCreateOrUpdateContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RedisArmOperation<RedisLinkedServerWithPropertyResource> operation = new RedisArmOperation<RedisLinkedServerWithPropertyResource>(
                     new RedisLinkedServerWithPropertyResourceOperationSource(Client),
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.Redis
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _linkedServerRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, linkedServerName, context);
+                using HttpMessage message = _linkedServerRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, linkedServerName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<RedisLinkedServerWithPropertyData> response = Response.FromValue(RedisLinkedServerWithPropertyData.FromResponse(result), result);
                 if (response.Value == null)
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.Redis
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _linkedServerRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, linkedServerName, context);
+                using HttpMessage message = _linkedServerRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, linkedServerName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<RedisLinkedServerWithPropertyData> response = Response.FromValue(RedisLinkedServerWithPropertyData.FromResponse(result), result);
                 if (response.Value == null)
@@ -370,7 +370,7 @@ namespace Azure.ResourceManager.Redis
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _linkedServerRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, linkedServerName, context);
+                using HttpMessage message = _linkedServerRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, linkedServerName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<RedisLinkedServerWithPropertyData> response = default;
@@ -427,7 +427,7 @@ namespace Azure.ResourceManager.Redis
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _linkedServerRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, linkedServerName, context);
+                using HttpMessage message = _linkedServerRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, linkedServerName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<RedisLinkedServerWithPropertyData> response = default;
@@ -484,7 +484,7 @@ namespace Azure.ResourceManager.Redis
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _linkedServerRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, linkedServerName, context);
+                using HttpMessage message = _linkedServerRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, linkedServerName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<RedisLinkedServerWithPropertyData> response = default;
@@ -545,7 +545,7 @@ namespace Azure.ResourceManager.Redis
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _linkedServerRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, linkedServerName, context);
+                using HttpMessage message = _linkedServerRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, linkedServerName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<RedisLinkedServerWithPropertyData> response = default;

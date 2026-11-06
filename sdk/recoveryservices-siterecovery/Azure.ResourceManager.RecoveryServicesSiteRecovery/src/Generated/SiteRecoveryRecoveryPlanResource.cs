@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _replicationRecoveryPlansRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _replicationRecoveryPlansRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<SiteRecoveryRecoveryPlanData> response = Response.FromValue(SiteRecoveryRecoveryPlanData.FromResponse(result), result);
                 if (response.Value == null)
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _replicationRecoveryPlansRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _replicationRecoveryPlansRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<SiteRecoveryRecoveryPlanData> response = Response.FromValue(SiteRecoveryRecoveryPlanData.FromResponse(result), result);
                 if (response.Value == null)
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _replicationRecoveryPlansRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, SiteRecoveryRecoveryPlanPatch.ToRequestContent(patch), context);
+                using HttpMessage message = _replicationRecoveryPlansRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, SiteRecoveryRecoveryPlanPatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryRecoveryPlanResource> operation = new RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryRecoveryPlanResource>(
                     new SiteRecoveryRecoveryPlanResourceOperationSource(Client),
@@ -285,7 +285,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _replicationRecoveryPlansRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, SiteRecoveryRecoveryPlanPatch.ToRequestContent(patch), context);
+                using HttpMessage message = _replicationRecoveryPlansRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, SiteRecoveryRecoveryPlanPatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryRecoveryPlanResource> operation = new RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryRecoveryPlanResource>(
                     new SiteRecoveryRecoveryPlanResourceOperationSource(Client),
@@ -340,7 +340,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _replicationRecoveryPlansRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _replicationRecoveryPlansRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RecoveryServicesSiteRecoveryArmOperation operation = new RecoveryServicesSiteRecoveryArmOperation(_replicationRecoveryPlansClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -389,7 +389,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _replicationRecoveryPlansRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _replicationRecoveryPlansRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RecoveryServicesSiteRecoveryArmOperation operation = new RecoveryServicesSiteRecoveryArmOperation(_replicationRecoveryPlansClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -438,7 +438,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _replicationRecoveryPlansRestClient.CreateFailoverCancelRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _replicationRecoveryPlansRestClient.CreateFailoverCancelRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryRecoveryPlanResource> operation = new RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryRecoveryPlanResource>(
                     new SiteRecoveryRecoveryPlanResourceOperationSource(Client),
@@ -493,7 +493,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _replicationRecoveryPlansRestClient.CreateFailoverCancelRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _replicationRecoveryPlansRestClient.CreateFailoverCancelRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryRecoveryPlanResource> operation = new RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryRecoveryPlanResource>(
                     new SiteRecoveryRecoveryPlanResourceOperationSource(Client),
@@ -548,7 +548,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _replicationRecoveryPlansRestClient.CreateFailoverCommitRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _replicationRecoveryPlansRestClient.CreateFailoverCommitRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryRecoveryPlanResource> operation = new RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryRecoveryPlanResource>(
                     new SiteRecoveryRecoveryPlanResourceOperationSource(Client),
@@ -603,7 +603,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _replicationRecoveryPlansRestClient.CreateFailoverCommitRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _replicationRecoveryPlansRestClient.CreateFailoverCommitRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryRecoveryPlanResource> operation = new RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryRecoveryPlanResource>(
                     new SiteRecoveryRecoveryPlanResourceOperationSource(Client),
@@ -662,7 +662,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _replicationRecoveryPlansRestClient.CreatePlannedFailoverRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, RecoveryPlanPlannedFailoverContent.ToRequestContent(content), context);
+                using HttpMessage message = _replicationRecoveryPlansRestClient.CreatePlannedFailoverRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, RecoveryPlanPlannedFailoverContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryRecoveryPlanResource> operation = new RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryRecoveryPlanResource>(
                     new SiteRecoveryRecoveryPlanResourceOperationSource(Client),
@@ -721,7 +721,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _replicationRecoveryPlansRestClient.CreatePlannedFailoverRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, RecoveryPlanPlannedFailoverContent.ToRequestContent(content), context);
+                using HttpMessage message = _replicationRecoveryPlansRestClient.CreatePlannedFailoverRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, RecoveryPlanPlannedFailoverContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryRecoveryPlanResource> operation = new RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryRecoveryPlanResource>(
                     new SiteRecoveryRecoveryPlanResourceOperationSource(Client),
@@ -776,7 +776,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _replicationRecoveryPlansRestClient.CreateReprotectRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _replicationRecoveryPlansRestClient.CreateReprotectRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryRecoveryPlanResource> operation = new RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryRecoveryPlanResource>(
                     new SiteRecoveryRecoveryPlanResourceOperationSource(Client),
@@ -831,7 +831,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _replicationRecoveryPlansRestClient.CreateReprotectRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _replicationRecoveryPlansRestClient.CreateReprotectRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryRecoveryPlanResource> operation = new RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryRecoveryPlanResource>(
                     new SiteRecoveryRecoveryPlanResourceOperationSource(Client),
@@ -890,7 +890,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _replicationRecoveryPlansRestClient.CreateTestFailoverRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, RecoveryPlanTestFailoverContent.ToRequestContent(content), context);
+                using HttpMessage message = _replicationRecoveryPlansRestClient.CreateTestFailoverRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, RecoveryPlanTestFailoverContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryRecoveryPlanResource> operation = new RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryRecoveryPlanResource>(
                     new SiteRecoveryRecoveryPlanResourceOperationSource(Client),
@@ -949,7 +949,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _replicationRecoveryPlansRestClient.CreateTestFailoverRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, RecoveryPlanTestFailoverContent.ToRequestContent(content), context);
+                using HttpMessage message = _replicationRecoveryPlansRestClient.CreateTestFailoverRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, RecoveryPlanTestFailoverContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryRecoveryPlanResource> operation = new RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryRecoveryPlanResource>(
                     new SiteRecoveryRecoveryPlanResourceOperationSource(Client),
@@ -1008,7 +1008,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _replicationRecoveryPlansRestClient.CreateTestFailoverCleanupRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, RecoveryPlanTestFailoverCleanupContent.ToRequestContent(content), context);
+                using HttpMessage message = _replicationRecoveryPlansRestClient.CreateTestFailoverCleanupRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, RecoveryPlanTestFailoverCleanupContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryRecoveryPlanResource> operation = new RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryRecoveryPlanResource>(
                     new SiteRecoveryRecoveryPlanResourceOperationSource(Client),
@@ -1067,7 +1067,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _replicationRecoveryPlansRestClient.CreateTestFailoverCleanupRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, RecoveryPlanTestFailoverCleanupContent.ToRequestContent(content), context);
+                using HttpMessage message = _replicationRecoveryPlansRestClient.CreateTestFailoverCleanupRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, RecoveryPlanTestFailoverCleanupContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryRecoveryPlanResource> operation = new RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryRecoveryPlanResource>(
                     new SiteRecoveryRecoveryPlanResourceOperationSource(Client),
@@ -1126,7 +1126,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _replicationRecoveryPlansRestClient.CreateUnplannedFailoverRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, RecoveryPlanUnplannedFailoverContent.ToRequestContent(content), context);
+                using HttpMessage message = _replicationRecoveryPlansRestClient.CreateUnplannedFailoverRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, RecoveryPlanUnplannedFailoverContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryRecoveryPlanResource> operation = new RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryRecoveryPlanResource>(
                     new SiteRecoveryRecoveryPlanResourceOperationSource(Client),
@@ -1185,7 +1185,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _replicationRecoveryPlansRestClient.CreateUnplannedFailoverRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, RecoveryPlanUnplannedFailoverContent.ToRequestContent(content), context);
+                using HttpMessage message = _replicationRecoveryPlansRestClient.CreateUnplannedFailoverRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, RecoveryPlanUnplannedFailoverContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryRecoveryPlanResource> operation = new RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryRecoveryPlanResource>(
                     new SiteRecoveryRecoveryPlanResourceOperationSource(Client),

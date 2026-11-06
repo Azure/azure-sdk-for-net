@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.RecoveryServices.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = RecoveryServicesOperationGroupRestClient.CreateGetRecoveryServiceCapabilitiesRequest(Id.SubscriptionId, location, ResourceCapabilities.ToRequestContent(input), context);
+                using HttpMessage message = RecoveryServicesOperationGroupRestClient.CreateGetRecoveryServiceCapabilitiesRequest(Id.SubscriptionId, location, ResourceCapabilities.ToRequestContent(input), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<CapabilitiesResult> response = Response.FromValue(CapabilitiesResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.RecoveryServices.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = RecoveryServicesOperationGroupRestClient.CreateGetRecoveryServiceCapabilitiesRequest(Id.SubscriptionId, location, ResourceCapabilities.ToRequestContent(input), context);
+                using HttpMessage message = RecoveryServicesOperationGroupRestClient.CreateGetRecoveryServiceCapabilitiesRequest(Id.SubscriptionId, location, ResourceCapabilities.ToRequestContent(input), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<CapabilitiesResult> response = Response.FromValue(CapabilitiesResult.FromResponse(result), result);
                 if (response.Value == null)

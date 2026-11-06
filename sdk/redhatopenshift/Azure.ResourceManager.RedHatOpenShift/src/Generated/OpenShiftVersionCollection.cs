@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.RedHatOpenShift
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _openShiftVersionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, openShiftVersion, context);
+                using HttpMessage message = _openShiftVersionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, openShiftVersion, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<OpenShiftVersionData> response = Response.FromValue(OpenShiftVersionData.FromResponse(result), result);
                 if (response.Value == null)
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.RedHatOpenShift
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _openShiftVersionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, openShiftVersion, context);
+                using HttpMessage message = _openShiftVersionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, openShiftVersion, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<OpenShiftVersionData> response = Response.FromValue(OpenShiftVersionData.FromResponse(result), result);
                 if (response.Value == null)
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.RedHatOpenShift
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _openShiftVersionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, openShiftVersion, context);
+                using HttpMessage message = _openShiftVersionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, openShiftVersion, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<OpenShiftVersionData> response = default;
@@ -303,7 +303,7 @@ namespace Azure.ResourceManager.RedHatOpenShift
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _openShiftVersionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, openShiftVersion, context);
+                using HttpMessage message = _openShiftVersionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, openShiftVersion, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<OpenShiftVersionData> response = default;
@@ -360,7 +360,7 @@ namespace Azure.ResourceManager.RedHatOpenShift
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _openShiftVersionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, openShiftVersion, context);
+                using HttpMessage message = _openShiftVersionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, openShiftVersion, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<OpenShiftVersionData> response = default;
@@ -421,7 +421,7 @@ namespace Azure.ResourceManager.RedHatOpenShift
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _openShiftVersionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, openShiftVersion, context);
+                using HttpMessage message = _openShiftVersionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, openShiftVersion, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<OpenShiftVersionData> response = default;

@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Relay
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _wcfRelaysRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, relayName, WcfRelayData.ToRequestContent(data), context);
+                using HttpMessage message = _wcfRelaysRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, relayName, WcfRelayData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<WcfRelayData> response = Response.FromValue(WcfRelayData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.Relay
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _wcfRelaysRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, relayName, WcfRelayData.ToRequestContent(data), context);
+                using HttpMessage message = _wcfRelaysRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, relayName, WcfRelayData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<WcfRelayData> response = Response.FromValue(WcfRelayData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.Relay
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _wcfRelaysRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, relayName, context);
+                using HttpMessage message = _wcfRelaysRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, relayName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<WcfRelayData> response = Response.FromValue(WcfRelayData.FromResponse(result), result);
                 if (response.Value == null)
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.Relay
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _wcfRelaysRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, relayName, context);
+                using HttpMessage message = _wcfRelaysRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, relayName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<WcfRelayData> response = Response.FromValue(WcfRelayData.FromResponse(result), result);
                 if (response.Value == null)
@@ -363,7 +363,7 @@ namespace Azure.ResourceManager.Relay
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _wcfRelaysRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, relayName, context);
+                using HttpMessage message = _wcfRelaysRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, relayName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<WcfRelayData> response = default;
@@ -420,7 +420,7 @@ namespace Azure.ResourceManager.Relay
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _wcfRelaysRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, relayName, context);
+                using HttpMessage message = _wcfRelaysRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, relayName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<WcfRelayData> response = default;
@@ -477,7 +477,7 @@ namespace Azure.ResourceManager.Relay
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _wcfRelaysRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, relayName, context);
+                using HttpMessage message = _wcfRelaysRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, relayName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<WcfRelayData> response = default;
@@ -538,7 +538,7 @@ namespace Azure.ResourceManager.Relay
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _wcfRelaysRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, relayName, context);
+                using HttpMessage message = _wcfRelaysRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, relayName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<WcfRelayData> response = default;

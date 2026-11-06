@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.Relay
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _namespacesRestClient.CreateCreateOrUpdateNetworkRuleSetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, RelayNetworkRuleSetData.ToRequestContent(data), context);
+                using HttpMessage message = _namespacesRestClient.CreateCreateOrUpdateNetworkRuleSetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, RelayNetworkRuleSetData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<RelayNetworkRuleSetData> response = Response.FromValue(RelayNetworkRuleSetData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.Relay
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _namespacesRestClient.CreateCreateOrUpdateNetworkRuleSetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, RelayNetworkRuleSetData.ToRequestContent(data), context);
+                using HttpMessage message = _namespacesRestClient.CreateCreateOrUpdateNetworkRuleSetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, RelayNetworkRuleSetData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<RelayNetworkRuleSetData> response = Response.FromValue(RelayNetworkRuleSetData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -240,7 +240,7 @@ namespace Azure.ResourceManager.Relay
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _namespacesRestClient.CreateGetNetworkRuleSetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, context);
+                using HttpMessage message = _namespacesRestClient.CreateGetNetworkRuleSetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<RelayNetworkRuleSetData> response = Response.FromValue(RelayNetworkRuleSetData.FromResponse(result), result);
                 if (response.Value == null)
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.Relay
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _namespacesRestClient.CreateGetNetworkRuleSetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, context);
+                using HttpMessage message = _namespacesRestClient.CreateGetNetworkRuleSetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<RelayNetworkRuleSetData> response = Response.FromValue(RelayNetworkRuleSetData.FromResponse(result), result);
                 if (response.Value == null)

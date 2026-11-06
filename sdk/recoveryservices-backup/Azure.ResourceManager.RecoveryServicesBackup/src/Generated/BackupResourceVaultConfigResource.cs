@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _backupResourceVaultConfigsRestClient.CreatePutRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, BackupResourceVaultConfigData.ToRequestContent(data), xMsAuthorizationAuxiliary, context);
+                using HttpMessage message = _backupResourceVaultConfigsRestClient.CreatePutRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, BackupResourceVaultConfigData.ToRequestContent(data), xMsAuthorizationAuxiliary, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<BackupResourceVaultConfigData> response = Response.FromValue(BackupResourceVaultConfigData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _backupResourceVaultConfigsRestClient.CreatePutRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, BackupResourceVaultConfigData.ToRequestContent(data), xMsAuthorizationAuxiliary, context);
+                using HttpMessage message = _backupResourceVaultConfigsRestClient.CreatePutRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, BackupResourceVaultConfigData.ToRequestContent(data), xMsAuthorizationAuxiliary, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<BackupResourceVaultConfigData> response = Response.FromValue(BackupResourceVaultConfigData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _backupResourceVaultConfigsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, context);
+                using HttpMessage message = _backupResourceVaultConfigsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<BackupResourceVaultConfigData> response = Response.FromValue(BackupResourceVaultConfigData.FromResponse(result), result);
                 if (response.Value == null)
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _backupResourceVaultConfigsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, context);
+                using HttpMessage message = _backupResourceVaultConfigsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<BackupResourceVaultConfigData> response = Response.FromValue(BackupResourceVaultConfigData.FromResponse(result), result);
                 if (response.Value == null)
@@ -340,7 +340,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _backupResourceVaultConfigsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, BackupResourceVaultConfigData.ToRequestContent(data), xMsAuthorizationAuxiliary, context);
+                using HttpMessage message = _backupResourceVaultConfigsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, BackupResourceVaultConfigData.ToRequestContent(data), xMsAuthorizationAuxiliary, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<BackupResourceVaultConfigData> response = Response.FromValue(BackupResourceVaultConfigData.FromResponse(result), result);
                 if (response.Value == null)
@@ -393,7 +393,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _backupResourceVaultConfigsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, BackupResourceVaultConfigData.ToRequestContent(data), xMsAuthorizationAuxiliary, context);
+                using HttpMessage message = _backupResourceVaultConfigsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, BackupResourceVaultConfigData.ToRequestContent(data), xMsAuthorizationAuxiliary, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<BackupResourceVaultConfigData> response = Response.FromValue(BackupResourceVaultConfigData.FromResponse(result), result);
                 if (response.Value == null)
@@ -432,7 +432,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _backupResourceVaultConfigsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, context);
+                    using HttpMessage message = _backupResourceVaultConfigsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<BackupResourceVaultConfigData> response = Response.FromValue(BackupResourceVaultConfigData.FromResponse(result), result);
                     return Response.FromValue(new BackupResourceVaultConfigResource(Client, response.Value), response.GetRawResponse());
@@ -480,7 +480,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _backupResourceVaultConfigsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, context);
+                    using HttpMessage message = _backupResourceVaultConfigsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<BackupResourceVaultConfigData> response = Response.FromValue(BackupResourceVaultConfigData.FromResponse(result), result);
                     return Response.FromValue(new BackupResourceVaultConfigResource(Client, response.Value), response.GetRawResponse());
@@ -526,7 +526,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _backupResourceVaultConfigsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, context);
+                    using HttpMessage message = _backupResourceVaultConfigsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<BackupResourceVaultConfigData> response = Response.FromValue(BackupResourceVaultConfigData.FromResponse(result), result);
                     return Response.FromValue(new BackupResourceVaultConfigResource(Client, response.Value), response.GetRawResponse());
@@ -568,7 +568,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _backupResourceVaultConfigsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, context);
+                    using HttpMessage message = _backupResourceVaultConfigsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<BackupResourceVaultConfigData> response = Response.FromValue(BackupResourceVaultConfigData.FromResponse(result), result);
                     return Response.FromValue(new BackupResourceVaultConfigResource(Client, response.Value), response.GetRawResponse());
@@ -610,7 +610,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _backupResourceVaultConfigsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, context);
+                    using HttpMessage message = _backupResourceVaultConfigsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<BackupResourceVaultConfigData> response = Response.FromValue(BackupResourceVaultConfigData.FromResponse(result), result);
                     return Response.FromValue(new BackupResourceVaultConfigResource(Client, response.Value), response.GetRawResponse());
@@ -656,7 +656,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _backupResourceVaultConfigsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, context);
+                    using HttpMessage message = _backupResourceVaultConfigsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<BackupResourceVaultConfigData> response = Response.FromValue(BackupResourceVaultConfigData.FromResponse(result), result);
                     return Response.FromValue(new BackupResourceVaultConfigResource(Client, response.Value), response.GetRawResponse());

@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Quota
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _currentUsagesBasesRestClient.CreateGetRequest(Id.ToString(), resourceName, context);
+                using HttpMessage message = _currentUsagesBasesRestClient.CreateGetRequest(Id.ToString(), resourceName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<CurrentUsagesBaseData> response = Response.FromValue(CurrentUsagesBaseData.FromResponse(result), result);
                 if (response.Value == null)
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Quota
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _currentUsagesBasesRestClient.CreateGetRequest(Id.ToString(), resourceName, context);
+                using HttpMessage message = _currentUsagesBasesRestClient.CreateGetRequest(Id.ToString(), resourceName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<CurrentUsagesBaseData> response = Response.FromValue(CurrentUsagesBaseData.FromResponse(result), result);
                 if (response.Value == null)
@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.Quota
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _currentUsagesBasesRestClient.CreateGetRequest(Id.ToString(), resourceName, context);
+                using HttpMessage message = _currentUsagesBasesRestClient.CreateGetRequest(Id.ToString(), resourceName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<CurrentUsagesBaseData> response = default;
@@ -302,7 +302,7 @@ namespace Azure.ResourceManager.Quota
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _currentUsagesBasesRestClient.CreateGetRequest(Id.ToString(), resourceName, context);
+                using HttpMessage message = _currentUsagesBasesRestClient.CreateGetRequest(Id.ToString(), resourceName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<CurrentUsagesBaseData> response = default;
@@ -363,7 +363,7 @@ namespace Azure.ResourceManager.Quota
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _currentUsagesBasesRestClient.CreateGetRequest(Id.ToString(), resourceName, context);
+                using HttpMessage message = _currentUsagesBasesRestClient.CreateGetRequest(Id.ToString(), resourceName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<CurrentUsagesBaseData> response = default;
@@ -428,7 +428,7 @@ namespace Azure.ResourceManager.Quota
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _currentUsagesBasesRestClient.CreateGetRequest(Id.ToString(), resourceName, context);
+                using HttpMessage message = _currentUsagesBasesRestClient.CreateGetRequest(Id.ToString(), resourceName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<CurrentUsagesBaseData> response = default;

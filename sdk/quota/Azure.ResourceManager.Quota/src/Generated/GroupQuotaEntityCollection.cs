@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Quota
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _groupQuotasEntitiesRestClient.CreateCreateOrUpdateRequest(Id.Name, groupQuotaName, GroupQuotaEntityData.ToRequestContent(data), context);
+                using HttpMessage message = _groupQuotasEntitiesRestClient.CreateCreateOrUpdateRequest(Id.Name, groupQuotaName, GroupQuotaEntityData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 QuotaArmOperation<GroupQuotaEntityResource> operation = new QuotaArmOperation<GroupQuotaEntityResource>(
                     new GroupQuotaEntityResourceOperationSource(Client),
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.Quota
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _groupQuotasEntitiesRestClient.CreateCreateOrUpdateRequest(Id.Name, groupQuotaName, GroupQuotaEntityData.ToRequestContent(data), context);
+                using HttpMessage message = _groupQuotasEntitiesRestClient.CreateCreateOrUpdateRequest(Id.Name, groupQuotaName, GroupQuotaEntityData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 QuotaArmOperation<GroupQuotaEntityResource> operation = new QuotaArmOperation<GroupQuotaEntityResource>(
                     new GroupQuotaEntityResourceOperationSource(Client),
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.Quota
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _groupQuotasEntitiesRestClient.CreateGetRequest(Id.Name, groupQuotaName, context);
+                using HttpMessage message = _groupQuotasEntitiesRestClient.CreateGetRequest(Id.Name, groupQuotaName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<GroupQuotaEntityData> response = Response.FromValue(GroupQuotaEntityData.FromResponse(result), result);
                 if (response.Value == null)
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.Quota
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _groupQuotasEntitiesRestClient.CreateGetRequest(Id.Name, groupQuotaName, context);
+                using HttpMessage message = _groupQuotasEntitiesRestClient.CreateGetRequest(Id.Name, groupQuotaName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<GroupQuotaEntityData> response = Response.FromValue(GroupQuotaEntityData.FromResponse(result), result);
                 if (response.Value == null)
@@ -356,7 +356,7 @@ namespace Azure.ResourceManager.Quota
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _groupQuotasEntitiesRestClient.CreateGetRequest(Id.Name, groupQuotaName, context);
+                using HttpMessage message = _groupQuotasEntitiesRestClient.CreateGetRequest(Id.Name, groupQuotaName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<GroupQuotaEntityData> response = default;
@@ -413,7 +413,7 @@ namespace Azure.ResourceManager.Quota
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _groupQuotasEntitiesRestClient.CreateGetRequest(Id.Name, groupQuotaName, context);
+                using HttpMessage message = _groupQuotasEntitiesRestClient.CreateGetRequest(Id.Name, groupQuotaName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<GroupQuotaEntityData> response = default;
@@ -470,7 +470,7 @@ namespace Azure.ResourceManager.Quota
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _groupQuotasEntitiesRestClient.CreateGetRequest(Id.Name, groupQuotaName, context);
+                using HttpMessage message = _groupQuotasEntitiesRestClient.CreateGetRequest(Id.Name, groupQuotaName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<GroupQuotaEntityData> response = default;
@@ -531,7 +531,7 @@ namespace Azure.ResourceManager.Quota
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _groupQuotasEntitiesRestClient.CreateGetRequest(Id.Name, groupQuotaName, context);
+                using HttpMessage message = _groupQuotasEntitiesRestClient.CreateGetRequest(Id.Name, groupQuotaName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<GroupQuotaEntityData> response = default;

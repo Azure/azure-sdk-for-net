@@ -295,7 +295,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = ReplicationEligibilityResultsRestClient.CreateGetAllRequest(Guid.Parse(scope.SubscriptionId), scope.ResourceGroupName, scope.Name, context);
+                using HttpMessage message = ReplicationEligibilityResultsRestClient.CreateGetAllRequest(Guid.Parse(scope.SubscriptionId), scope.ResourceGroupName, scope.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ReplicationEligibilityResultListResult> response = Response.FromValue(ReplicationEligibilityResultListResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -343,7 +343,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = ReplicationEligibilityResultsRestClient.CreateGetAllRequest(Guid.Parse(scope.SubscriptionId), scope.ResourceGroupName, scope.Name, context);
+                using HttpMessage message = ReplicationEligibilityResultsRestClient.CreateGetAllRequest(Guid.Parse(scope.SubscriptionId), scope.ResourceGroupName, scope.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ReplicationEligibilityResultListResult> response = Response.FromValue(ReplicationEligibilityResultListResult.FromResponse(result), result);
                 if (response.Value == null)

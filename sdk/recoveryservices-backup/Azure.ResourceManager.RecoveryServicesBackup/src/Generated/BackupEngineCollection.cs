@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _backupEnginesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, _vaultName, backupEngineName, filter, skipToken, context);
+                using HttpMessage message = _backupEnginesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, _vaultName, backupEngineName, filter, skipToken, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<BackupEngineData> response = Response.FromValue(BackupEngineData.FromResponse(result), result);
                 if (response.Value == null)
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _backupEnginesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, _vaultName, backupEngineName, filter, skipToken, context);
+                using HttpMessage message = _backupEnginesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, _vaultName, backupEngineName, filter, skipToken, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<BackupEngineData> response = Response.FromValue(BackupEngineData.FromResponse(result), result);
                 if (response.Value == null)
@@ -272,7 +272,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _backupEnginesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, _vaultName, backupEngineName, filter, skipToken, context);
+                using HttpMessage message = _backupEnginesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, _vaultName, backupEngineName, filter, skipToken, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<BackupEngineData> response = default;
@@ -331,7 +331,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _backupEnginesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, _vaultName, backupEngineName, filter, skipToken, context);
+                using HttpMessage message = _backupEnginesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, _vaultName, backupEngineName, filter, skipToken, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<BackupEngineData> response = default;
@@ -390,7 +390,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _backupEnginesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, _vaultName, backupEngineName, filter, skipToken, context);
+                using HttpMessage message = _backupEnginesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, _vaultName, backupEngineName, filter, skipToken, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<BackupEngineData> response = default;
@@ -453,7 +453,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _backupEnginesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, _vaultName, backupEngineName, filter, skipToken, context);
+                using HttpMessage message = _backupEnginesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, _vaultName, backupEngineName, filter, skipToken, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<BackupEngineData> response = default;
