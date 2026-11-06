@@ -54,19 +54,13 @@ namespace Azure.ResourceManager.IotHub.Models
         /// <param name="enableFileUploadNotifications"> If True, file upload notifications are enabled. </param>
         /// <param name="cloudToDevice"> The IoT hub cloud-to-device messaging properties. </param>
         /// <param name="comments"> IoT hub comments. </param>
-        /// <param name="deviceStreams"> The device streams properties of iothub. </param>
         /// <param name="features"> The capabilities and features enabled for the IoT hub. </param>
-        /// <param name="encryption"> The encryption properties for the IoT hub. </param>
         /// <param name="locations"> Primary and secondary location for iot hub. </param>
         /// <param name="enableDataResidency"> This property when set to true, will enable data residency, thus, disabling disaster recovery. </param>
-        /// <param name="rootCertificate"> This property store root certificate related information. </param>
-        /// <param name="ipVersion"> This property specifies the IP Version the hub is currently utilizing. </param>
-        /// <param name="connectionProfile"> The connection profile that the IoT hub uses for device connections. Defaults to 'Classic'. </param>
-        /// <param name="mqttV5Settings"> The custom topic configuration for an Event Grid-backed MQTT v5 IoT hub. This property is valid only when connectionProfile is 'MqttV5'. </param>
         /// <param name="deviceRegistry"> Represents properties related to the Azure Device Registry (ADR). </param>
         /// <param name="iotHubDetails"> Set of additional read-only properties for the IoT hub. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal IotHubProperties(IList<SharedAccessSignatureAuthorizationRule> authorizationPolicies, bool? disableLocalAuth, bool? disableDeviceSas, bool? disableModuleSas, bool? restrictOutboundNetworkAccess, IList<string> allowedFqdns, IotHubPublicNetworkAccess? publicNetworkAccess, IList<IotHubIPFilterRule> ipFilterRules, IotHubNetworkRuleSetProperties networkRuleSets, string minTlsVersion, IList<IotHubPrivateEndpointConnectionData> privateEndpointConnections, string provisioningState, string state, string hostName, string deviceHostName, string serviceHostName, IDictionary<string, EventHubCompatibleEndpointProperties> eventHubEndpoints, IotHubRoutingProperties routing, IDictionary<string, IotHubStorageEndpointProperties> storageEndpoints, IDictionary<string, MessagingEndpointProperties> messagingEndpoints, bool? enableFileUploadNotifications, CloudToDeviceProperties cloudToDevice, string comments, IotHubPropertiesDeviceStreams deviceStreams, IotHubCapability? features, IotHubEncryptionProperties encryption, IReadOnlyList<IotHubLocationDescription> locations, bool? enableDataResidency, IotHubRootCertificateProperties rootCertificate, IotHubIPVersion? ipVersion, IotHubConnectionProfile? connectionProfile, MqttV5Settings mqttV5Settings, IotHubDeviceRegistry deviceRegistry, IotHubDetails iotHubDetails, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal IotHubProperties(IList<SharedAccessSignatureAuthorizationRule> authorizationPolicies, bool? disableLocalAuth, bool? disableDeviceSas, bool? disableModuleSas, bool? restrictOutboundNetworkAccess, IList<string> allowedFqdns, IotHubPublicNetworkAccess? publicNetworkAccess, IList<IotHubIPFilterRule> ipFilterRules, IotHubNetworkRuleSetProperties networkRuleSets, string minTlsVersion, IList<IotHubPrivateEndpointConnectionData> privateEndpointConnections, string provisioningState, string state, string hostName, string deviceHostName, string serviceHostName, IDictionary<string, EventHubCompatibleEndpointProperties> eventHubEndpoints, IotHubRoutingProperties routing, IDictionary<string, IotHubStorageEndpointProperties> storageEndpoints, IDictionary<string, MessagingEndpointProperties> messagingEndpoints, bool? enableFileUploadNotifications, CloudToDeviceProperties cloudToDevice, string comments, IotHubCapability? features, IReadOnlyList<IotHubLocationDescription> locations, bool? enableDataResidency, IotHubDeviceRegistry deviceRegistry, IotHubDetails iotHubDetails, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AuthorizationPolicies = authorizationPolicies;
             DisableLocalAuth = disableLocalAuth;
@@ -91,15 +85,9 @@ namespace Azure.ResourceManager.IotHub.Models
             EnableFileUploadNotifications = enableFileUploadNotifications;
             CloudToDevice = cloudToDevice;
             Comments = comments;
-            DeviceStreams = deviceStreams;
             Features = features;
-            Encryption = encryption;
             Locations = locations;
             EnableDataResidency = enableDataResidency;
-            RootCertificate = rootCertificate;
-            IPVersion = ipVersion;
-            ConnectionProfile = connectionProfile;
-            MqttV5Settings = mqttV5Settings;
             DeviceRegistry = deviceRegistry;
             IotHubDetails = iotHubDetails;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -174,14 +162,8 @@ namespace Azure.ResourceManager.IotHub.Models
         /// <summary> IoT hub comments. </summary>
         public string Comments { get; set; }
 
-        /// <summary> The device streams properties of iothub. </summary>
-        internal IotHubPropertiesDeviceStreams DeviceStreams { get; set; }
-
         /// <summary> The capabilities and features enabled for the IoT hub. </summary>
         public IotHubCapability? Features { get; set; }
-
-        /// <summary> The encryption properties for the IoT hub. </summary>
-        public IotHubEncryptionProperties Encryption { get; set; }
 
         /// <summary> Primary and secondary location for iot hub. </summary>
         public IReadOnlyList<IotHubLocationDescription> Locations { get; }
@@ -189,49 +171,11 @@ namespace Azure.ResourceManager.IotHub.Models
         /// <summary> This property when set to true, will enable data residency, thus, disabling disaster recovery. </summary>
         public bool? EnableDataResidency { get; set; }
 
-        /// <summary> This property store root certificate related information. </summary>
-        public IotHubRootCertificateProperties RootCertificate { get; set; }
-
-        /// <summary> This property specifies the IP Version the hub is currently utilizing. </summary>
-        public IotHubIPVersion? IPVersion { get; set; }
-
-        /// <summary> The connection profile that the IoT hub uses for device connections. Defaults to 'Classic'. </summary>
-        public IotHubConnectionProfile? ConnectionProfile { get; set; }
-
-        /// <summary> The custom topic configuration for an Event Grid-backed MQTT v5 IoT hub. This property is valid only when connectionProfile is 'MqttV5'. </summary>
-        internal MqttV5Settings MqttV5Settings { get; set; }
-
         /// <summary> Represents properties related to the Azure Device Registry (ADR). </summary>
         public IotHubDeviceRegistry DeviceRegistry { get; }
 
         /// <summary> Set of additional read-only properties for the IoT hub. </summary>
         internal IotHubDetails IotHubDetails { get; }
-
-        /// <summary> List of Device Streams Endpoints. </summary>
-        public IList<string> DeviceStreamsStreamingEndpoints
-        {
-            get
-            {
-                if (DeviceStreams is null)
-                {
-                    DeviceStreams = new IotHubPropertiesDeviceStreams();
-                }
-                return DeviceStreams.StreamingEndpoints;
-            }
-        }
-
-        /// <summary> The customer-defined groups of topic templates that devices publish to. </summary>
-        public IList<MqttV5TopicGroup> MqttV5TopicGroups
-        {
-            get
-            {
-                if (MqttV5Settings is null)
-                {
-                    MqttV5Settings = new MqttV5Settings();
-                }
-                return MqttV5Settings.TopicGroups;
-            }
-        }
 
         /// <summary> The IoT hub Gateway version. </summary>
         public IotHubGatewayVersion? IotHubDetailsGatewayVersion

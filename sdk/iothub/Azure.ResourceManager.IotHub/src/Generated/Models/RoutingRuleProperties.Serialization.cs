@@ -88,11 +88,6 @@ namespace Azure.ResourceManager.IotHub.Models
                 writer.WritePropertyName("condition"u8);
                 writer.WriteStringValue(Condition);
             }
-            if (Optional.IsDefined(DataSchema))
-            {
-                writer.WritePropertyName("dataSchema"u8);
-                writer.WriteStringValue(DataSchema);
-            }
             writer.WritePropertyName("endpointNames"u8);
             writer.WriteStartArray();
             foreach (string item in EndpointNames)
@@ -152,7 +147,6 @@ namespace Azure.ResourceManager.IotHub.Models
             string name = default;
             IotHubRoutingSource source = default;
             string condition = default;
-            string dataSchema = default;
             IList<string> endpointNames = default;
             bool isEnabled = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -171,11 +165,6 @@ namespace Azure.ResourceManager.IotHub.Models
                 if (prop.NameEquals("condition"u8))
                 {
                     condition = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("dataSchema"u8))
-                {
-                    dataSchema = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("endpointNames"u8))
@@ -209,7 +198,6 @@ namespace Azure.ResourceManager.IotHub.Models
                 name,
                 source,
                 condition,
-                dataSchema,
                 endpointNames ?? new ChangeTrackingList<string>(),
                 isEnabled,
                 additionalBinaryDataProperties);
