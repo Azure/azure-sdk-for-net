@@ -27,7 +27,7 @@ namespace Azure.Provisioning.HealthcareApis
         private HealthcareApisIotConnectorProperties _properties;
         private BicepValue<ETag> _eTag;
         private ManagedServiceIdentity _identity;
-        private ResourceReference<HealthcareApisWorkspace> _parent;
+        private ProvisioningResourceReference<HealthcareApisWorkspace> _parent;
 
         /// <summary> Creates a new HealthcareApisIotConnector. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -220,7 +220,7 @@ namespace Azure.Provisioning.HealthcareApis
             _properties = DefineModelProperty<HealthcareApisIotConnectorProperties>(nameof(Properties), new string[] { "properties" });
             _eTag = DefineProperty<ETag>(nameof(ETag), new string[] { "etag" });
             _identity = DefineModelProperty<ManagedServiceIdentity>(nameof(Identity), new string[] { "identity" });
-            _parent = DefineResource<HealthcareApisWorkspace>(nameof(Parent), new string[] { "parent" });
+            _parent = new ProvisioningResourceReference<HealthcareApisWorkspace>(DefineProperty<string>(nameof(Parent), new string[] { "parent" }));
             DefineAdditionalProperties();
         }
 

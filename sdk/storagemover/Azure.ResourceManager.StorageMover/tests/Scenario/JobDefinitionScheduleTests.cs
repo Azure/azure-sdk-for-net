@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.StorageMover.Models;
@@ -132,6 +133,87 @@ namespace Azure.ResourceManager.StorageMover.Tests.Scenario
 
             // Clean up
             await jobDefinition.DeleteAsync(WaitUntil.Completed);
+        }
+
+        [Test]
+        [RecordedTest]
+        public async Task CreateJobDefinitionWithHourlyScheduleTest()
+        {
+            ResourceGroupResource resourceGroup = await CreateResourceGroup(DefaultSubscription, ResourceGroupNamePrefix, EuapLocation);
+            try
+            {
+                StorageMoverResource storageMover = (await resourceGroup.GetStorageMovers().CreateOrUpdateAsync(
+                    WaitUntil.Completed, Recording.GenerateAssetName(StorageMoverPrefix), new StorageMoverData(EuapLocation))).Value;
+                StorageMoverProjectResource project = (await storageMover.GetStorageMoverProjects().CreateOrUpdateAsync(
+                    WaitUntil.Completed, Recording.GenerateAssetName("project-"), new StorageMoverProjectData())).Value;
+                StorageMoverEndpointCollection endpoints = storageMover.GetStorageMoverEndpoints();
+                string sourceName = Recording.GenerateAssetName("smbfs-src-");
+                string targetName = Recording.GenerateAssetName("smbfs-tgt-");
+                await endpoints.CreateOrUpdateAsync(WaitUntil.Completed, sourceName, new StorageMoverEndpointData(
+                    new AzureStorageSmbFileShareEndpointProperties(new ResourceIdentifier(FakeStorageAccountId), "srcshare")
+                    {
+                        EndpointKind = StorageMoverEndpointKind.Source,
+                    }));
+                await endpoints.CreateOrUpdateAsync(WaitUntil.Completed, targetName, new StorageMoverEndpointData(
+                    new AzureStorageSmbFileShareEndpointProperties(new ResourceIdentifier(FakeStorageAccountId), "tgtshare")
+                    {
+                        EndpointKind = StorageMoverEndpointKind.Target,
+                    }));
+
+                JobDefinitionData CreateJobDefinition(string interval) => new JobDefinitionData(StorageMoverCopyMode.Additive, sourceName, targetName)
+                {
+                    JobType = JobType.CloudToCloud,
+                    Description = "Job definition with hourly schedule",
+                    Schedule = new StorageMoverScheduleInfo
+                    {
+                        Frequency = StorageMoverScheduleFrequency.Hourly,
+                        RepeatInterval = interval,
+                        IsActive = true,
+                        ExecutionTime = new StorageMoverSchedulerTime { Hour = 9, Minute = 0 },
+                        StartOn = Recording.Now.AddDays(1),
+                        EndOn = Recording.Now.AddDays(30),
+                    },
+                };
+
+                JobDefinitionCollection jobs = project.GetJobDefinitions();
+                string jobName = Recording.GenerateAssetName("jobdef-hourly-");
+                JobDefinitionResource job = (await jobs.CreateOrUpdateAsync(WaitUntil.Completed, jobName, CreateJobDefinition("4h"))).Value;
+                Assert.AreEqual(jobName, job.Data.Name);
+                Assert.AreEqual(StorageMoverScheduleFrequency.Hourly, job.Data.Schedule.Frequency);
+                Assert.AreEqual("4h", job.Data.Schedule.RepeatInterval);
+                Assert.IsTrue(job.Data.Schedule.IsActive);
+
+                job = (await jobs.GetAsync(jobName)).Value;
+                Assert.AreEqual(StorageMoverScheduleFrequency.Hourly, job.Data.Schedule.Frequency);
+                Assert.AreEqual("4h", job.Data.Schedule.RepeatInterval);
+
+                job = (await job.UpdateAsync(new JobDefinitionPatch
+                {
+                    Schedule = new StorageMoverScheduleInfo { RepeatInterval = "6h" },
+                })).Value;
+                Assert.AreEqual(StorageMoverScheduleFrequency.Hourly, job.Data.Schedule.Frequency);
+                Assert.AreEqual("6h", job.Data.Schedule.RepeatInterval);
+                Assert.IsTrue(job.Data.Schedule.IsActive);
+
+                job = (await job.UpdateAsync(new JobDefinitionPatch
+                {
+                    Schedule = new StorageMoverScheduleInfo { IsActive = false },
+                })).Value;
+                Assert.IsFalse(job.Data.Schedule.IsActive);
+                Assert.AreEqual("6h", job.Data.Schedule.RepeatInterval);
+
+                RequestFailedException exception = Assert.ThrowsAsync<RequestFailedException>(async () =>
+                    await jobs.CreateOrUpdateAsync(WaitUntil.Completed, Recording.GenerateAssetName("jobdef-hourly-bad-"), CreateJobDefinition("5h")));
+                Assert.AreEqual(400, exception.Status);
+                Assert.AreEqual("InvalidRequestPropertyValue", exception.ErrorCode);
+
+                await job.DeleteAsync(WaitUntil.Completed);
+                Assert.IsFalse(await jobs.ExistsAsync(jobName));
+            }
+            finally
+            {
+                await resourceGroup.DeleteAsync(WaitUntil.Completed);
+            }
         }
     }
 }
