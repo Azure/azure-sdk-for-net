@@ -25,6 +25,8 @@
 
 ### Bugs Fixed
 
+- Preserve native Agent Card identity on A2A protocol spans while retaining
+  Foundry deployment identity on the enclosing hosted invocation span.
 - Prevented a stale steering nudge from canceling a promoted turn after its pending-input queue has drained. Pending-input publication now follows the same turn as the cancellation signal.
 
 ## 1.0.0-beta.30 (2026-10-15)
