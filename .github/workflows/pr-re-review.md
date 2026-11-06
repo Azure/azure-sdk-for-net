@@ -62,7 +62,7 @@ safe-outputs:
     - name: Checkout trusted re-review publication guard
       uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
       with:
-        ref: ${{ github.sha }}
+        ref: ${{ github.event.pull_request.base.sha }}
         persist-credentials: false
         sparse-checkout: .github/workflows/pr-re-review
     - name: Require complete re-review coverage before publishing
@@ -70,6 +70,18 @@ safe-outputs:
       env:
         AGENT_OUTPUT: ${{ steps.setup-agent-output-env.outputs.GH_AW_AGENT_OUTPUT }}
       run: ./.github/workflows/pr-re-review/Invoke-PrReReviewGuard.ps1
+    - name: Reconcile re-review evidence with the trusted PR inventory
+      uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9.0.0
+      env:
+        AGENT_OUTPUT: ${{ steps.setup-agent-output-env.outputs.GH_AW_AGENT_OUTPUT }}
+      with:
+        script: |
+          const fs = require('node:fs');
+          const path = require('node:path');
+          const { validatePublication } = require(path.resolve('.github/workflows/pr-re-review/ReviewEvidence.cjs'));
+          const output = JSON.parse(fs.readFileSync(process.env.AGENT_OUTPUT, 'utf8'));
+          const session = fs.readFileSync('/tmp/gh-aw/agent-session.jsonl', 'utf8');
+          core.info(await validatePublication({ github, context, output, session }) || 'No completed review to publish.');
   jobs:
     unresolve-review-thread:
       description: "Reopen a review thread the agent concluded was resolved without adequate justification"
@@ -289,7 +301,7 @@ concurrency:
 
 <!-- After editing this file, run 'gh aw compile pr-re-review' to regenerate the lock file. -->
 
-You are the automated re-review follow-up for `${{ github.repository }}`, running after every new commit pushed to a pull request. GitHub's native Copilot code review (configured via `.github/skills/code-review/SKILL.md`) already performs the first-pass review on this PR. Your job is different: verify what happened since the last review and catch anything that was missed. Do not treat this as a generic from-scratch review — it is a follow-up pass layered on top of the existing review history.
+You are the automated re-review follow-up for `${{ github.repository }}`, running after every new commit pushed to a pull request. Verify prior review threads AND perform a fresh full review of every changed file. Prior reviews inform deduplication, not coverage: neither a resolved thread nor an earlier clean review exempts any changed code from independent assessment.
 
 Target pull request number: `${{ github.event.pull_request.number }}`. Target head commit: `${{ github.event.pull_request.head.sha }}`.
 
@@ -336,7 +348,7 @@ on top of that shared foundation.
 Read GitHub data with the GitHub MCP `pull_request_read` tool, and read file content with `get_file_contents` at the target head commit. Page every list to its end; a first page is not the full history.
 
 - `get`: the pull request, including its `changed_files` count.
-- `get_files`: every changed file and its `patch`. Request `perPage: 100` and increase `page` until you have `changed_files` files. GitHub omits the `patch` for very large files; read those files with `get_file_contents` instead.
+- `get_files`: every changed file and its `patch`. Use small batches (`perPage: 10`), starting at `page: 1`, and keep the same page size through the last page. Inventory counts and directory listings are not file reads. Record successful tool-call IDs for the payloads actually consumed. If a response is offloaded, read the entire saved payload with `view` (no range, or `view_range: [1, -1]`); a schema, preview, grep, or truncated read is not consumption. If it is still too large, restart pagination with a smaller page size. If GitHub omits a patch, read the file with `get_file_contents` at the head (base for removed files) and record its call ID as `contentCallId` alongside `readCallId`. If a payload cannot be read in full, report incomplete rather than fabricate evidence.
 - `get_review_comments`: every review thread with its resolution state and comments. Request `perPage: 100` and, while `pageInfo.hasNextPage` is true, request the next page with `after` set to the previous `pageInfo.endCursor`. Record the response's `totalCount`. If a thread's `total_count` exceeds the comments returned for it, that thread's history is incomplete.
 - `get_reviews`: all prior reviews submitted on this PR, paged with `page` and `perPage`, to see what earlier passes (the native Copilot reviewer, human reviewers, and this workflow's own earlier runs) already said.
 
@@ -364,6 +376,10 @@ For each thread that **is resolved**:
 
 Independently review every changed file from Step 1, one file at a time, using the shared rules, exactly as a first-pass review would, to catch anything missed by earlier passes (including commits pushed after the native reviewer's last pass). Before posting any new finding, confirm it is not already covered by an existing open thread (Step 2) or another reviewer's comment.
 
+Work in bounded batches and retain a file-specific assessment for each file, including generated files. For every assessment cite an actual patch excerpt and its successful read call ID; merely saying "generated" or "scope checked" is not an assessment. Access evidence does not establish semantic correctness.
+
+The checkout contains only `.github`. A failed local SDK read is a reason to continue through `get_file_contents` at the exact head, not to stop gathering context. Read relevant API listings, tests, and source contracts, not only project metadata. For new libraries, read unchanged `.github/CODEOWNERS` and check service-specific coverage. Trace semantic identifier types to the pinned upstream specification, even if an earlier thread fixed a different identifier. Inspect extensions on shared ARM resources in their public API context. Apply the canonical service-local spelling and release-intent-aware packaging rules.
+
 ## Step 4 - Confirm coverage, then submit one review
 
 Submit a review only when the re-review is complete:
@@ -380,7 +396,38 @@ When the re-review is complete, submit exactly one `submit_pull_request_review` 
 Coverage: <fetched>/<total> threads fetched, <verified>/<unresolved> unresolved threads verified, <reviewed>/<changed> changed files reviewed
 ```
 
-`<total>` is the `get_review_comments` `totalCount`, `<unresolved>` is the number of threads that were unresolved when you fetched them, and `<changed>` is the pull request's `changed_files`. Publication is blocked unless each count equals its total.
+`<total>` is the `get_review_comments` `totalCount`, `<unresolved>` is the number of threads that were unresolved when you fetched them, and `<changed>` is the pull request's `changed_files`. Publication independently fetches the complete inventory, verifies the head has not moved, and reconciles the totals and consumed file pages. Matching numbers alone never authorize publication.
+
+Include exactly one fenced `review-evidence` JSON block in the review body, optionally inside a `<details>` section. Preserve this per-file evidence even for a no-findings review:
+
+````text
+```review-evidence
+{
+  "head": "<full target head SHA>",
+  "files": [
+    {
+      "path": "<exact changed path>",
+      "readCallId": "<successful get_files call ID whose payload you fully read>",
+      "quote": "<exact nonempty excerpt from that file's patch>",
+      "assessment": "<file-specific reasoning, rules checked, result, and relevant context>"
+    }
+  ],
+  "context": [
+    {
+      "owner": "<source repository owner>",
+      "repo": "<source repository name>",
+      "path": "<context file path>",
+      "sha": "<full immutable commit SHA>",
+      "readCallId": "<successful get_file_contents call ID>",
+      "quote": "<exact nonempty file excerpt>",
+      "assessment": "<how this source supports the review>"
+    }
+  ]
+}
+```
+````
+
+List every changed path exactly once. Context entries must cite actual file content, not a directory listing, and new-library ownership requires a CODEOWNERS context entry at the target head. Keep enough room for the evidence and safe-output size limits; if you cannot preserve complete evidence, call `report_incomplete`. Do not substitute tool invocations for successful reads, or read counts for semantic assessments.
 
 The rest of the review body should summarize:
 

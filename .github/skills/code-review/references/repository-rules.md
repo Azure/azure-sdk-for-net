@@ -624,6 +624,11 @@ manually; that is the intended reading of the in-repo-analyzer rule above, not a
 - Version bumps: patch for bug fixes only — **no new public API in a patch release**; minor
   or major for new API or a new service API version. `CHANGELOG.md` must be updated in the
   same PR
+- **Release intent determines changelog readiness.** When the PR explicitly prepares a package
+  for release (release preparation metadata, title/body, or a maintainer's release request),
+  require an actual release date and remove empty scaffold sections from that release entry.
+  An ordinary development entry may legitimately remain `Unreleased`; do not infer release
+  intent solely from a version bump or the presence of a changelog.
 - A management library's major-version increase needs explicit .NET architecture approval for
   a coordinated management SDK major release. This coordination does not waive compatibility
   requirements.

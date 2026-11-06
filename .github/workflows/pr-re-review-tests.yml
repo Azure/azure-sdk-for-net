@@ -34,4 +34,4 @@ jobs:
           exit 0
 
       - name: Run unresolve-review-thread job tests
-        run: node --test .github/workflows/test/pr-re-review-unresolve-thread.test.cjs
+        run: node --test .github/workflows/test/pr-re-review-unresolve-thread.test.cjs .github/workflows/test/pr-re-review-evidence.test.cjs
